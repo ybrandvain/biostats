@@ -1,0 +1,180 @@
+# Motivating biology and datasets {.unnumbered}
+
+```{r}
+#| echo: false
+#| column: margin
+#| out-width: "100%"
+library(knitr)
+#include_graphics("../../figs/clarkia_and_its_data/darwin.png")
+```
+
+:::aside 
+
+::: {.text-center style="background-color: #f5f2e9; column: 'margin'; padding: 2px; border: 1px solid #d4c8b0; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1); font-family: 'Garamond', 'Georgia', serif; color: #3a3a3a; line-height: 1.8;  text-align: left;"}
+
+Thus, from the war of nature, from famine and death, the most exalted object which we are capable of conceiving,  namely, the production of the  ~~higher animals~~ <span style="color:pink;"><strong><em>Clarkia</em> flower</strong></span>, directly follows. There is grandeur in this view of life, with its  several powers, having been originally breathed by the Creator into a few forms or into one; and that, whilst this  planet has gone circling on according to the fixed law of gravity, from so simple a beginning endless forms most  beautiful and most wonderful have been, and are being evolved.
+<br> <br>
+<strong>— Charles Darwin, <em> <br>On the Origin of Species</em> (1859)</strong>
+:::
+
+:::
+
+
+
+<article class="drop-cap">Earth's vast biological diversity has been (and is being) created by the gradual splitting of one species into two, a process repeated countless times throughout history. For this reason, evolutionary biologists are fascinated by speciation. A crucial moment in speciation occurs when two populations, once separated, come back into contact. In many cases, they can still produce hybrids—but these hybrids are often unfit in one way or another.  </article> <br>      
+
+
+Wouldn't it be cool if, at this stage, the populations could evolve a mechanism to preferentially mate with their own kind? The adaptive evolution of avoiding mating with a closely related species—a process known as **reinforcement**—does just that. However, the evolution of reinforcement is complex and has only been conclusively documented in a handful of cases.  
+
+
+
+
+Dave Moeller and colleagues (including me) have been investigating one potential case of reinforcement. *Clarkia xantiana* subspecies *parviflora* (hereafter *parviflora*) is an annual flowering plant native to California. Unlike its outcrossing sister subspecies, *Clarkia xantiana* subspecies *xantiana* (hereafter *xantiana*), *parviflora* predominantly reproduces through self-pollination. 
+
+
+```{r}
+#| label: fig-reinf
+#| echo: false
+#| column: margin
+#| fig-cap: "*parviflora* petals tend to be larger as populations get further away from *xantiana*."
+#| fig-alt: "A scatter plot showing the relationship between the size of *Clarkia xantiana subspecies parviflora* petals (on a principal component scale) and the distance to the nearest *Clarkia xantiana subspecies xantiana* population (in kilometers). Each point represents a population, with a trend of increasing petal size as distance from *xantiana* increases. A dashed regression line indicates a positive correlation. Above the plot, a series of petal illustrations visually depict the trend, with petals increasing in size as distance increases."
+include_graphics("../../figs/clarkia_and_its_data/reinf.png")
+```
+
+
+Not all populations of *parviflora* self-fertilize at the same frequency. Dave has observed that populations sympatric with (i.e., occurring in the same area as) *xantiana* appear more likely to self-fertilize than allopatric populations (@fig-reinf). Over the past few years, we have conducted numerous studies to evaluate the hypothesis that this increased rate of self-fertilization has evolved via reinforcement as a mechanism to avoid hybridizing with *xantiana*. 
+
+
+Throughout this book, I will use data related to the topic of divergence, speciation, and reinforcement between *Clarkia* subspecies as a path through biostatistics. I hope that this approach allows you to engage with the statistics while not having to keep pace with a bunch of different biological examples. Below, I introduce the major datasets that we will explore.
+
+## RILs between sympatric and allopatric *parviflora*
+
+
+
+
+```{r}
+#| label: fig-ril
+#| echo: false
+#| column: margin
+#| fig-cap: "*Making a RIL population:* A cross between individuals from two populations is followed by multiple generations of self-fertilization. As a result, each \"line\" becomes a mosaic of ancestry blocks inherited from either initial parent of the RIL. The figure above (from @behrouzi2017) illustrates this process, with the original parental chromosome segments depicted in green and red."
+#| fig-alt: "Diagram illustrating the process of creating Recombinant Inbred Lines (RILs). The initial parental chromosomes are shown in green and red. Through multiple generations of self-fertilization, each RIL becomes a mosaic of ancestry blocks inherited from the two original parents, with segments of green and red recombined across the genome."
+include_graphics("../../figs/clarkia_and_its_data/ril_making.png")
+```
+
+
+To investigate which traits, if any, help *parviflora* populations sympatric with *xantiana* avoid hybridization, Dave generated Recombinant Inbred Lines (RILs). To do so, he crossed a *parviflora* plant from "Sawmill Road"—a population sympatric with *xantiana*—with a *parviflora* plant from "Long Valley," far from any *xantiana* populations. After this initial cross, lines were self-fertilized for eight generations. This process breaks up and shuffles genetic variation from the two parental populations while ensuring each line is genetically stable.
+
+By setting these RILs out in the field and observing how many pollinators visited each line, we hope to identify which traits influence pollinator visitation and ultimately hybridization. Because *parviflora* plants often self-pollinate and because pollinators effectively transfer pollen from the plentiful *xantiana* plants to *parviflora*, we assume that greater pollinator visitation corresponds to higher hybrid seed set. However, we will test this assumption!!!    
+
+
+
+
+
+### **RIL Data**  
+
+Below is the RIL dataset. You can learn about the columns (in the *Data dictionary* tab) and browse the data (in the *Data set* tab).  The full  data are available at  
+[this link](https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv). Aside from pollinator visitation and hybrid seed set, all phenotypes measured come not from the plants in the field, but means from replicates of the genotype grown in the greenhouse.   
+
+
+
+
+::: {.panel-tabset}
+
+
+##  RIL variation
+
+
+::: {style="background-color:  #FDEFB5; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+```{r}
+#| label: fig-rilcollage
+#| echo: false
+#| fig-cap: "An illustration o the variabiltiy in the recombinant inbred lines. Pictures by [Taz Mueller](https://www.bellmuseum.umn.edu/grad-awards/2022-graduate-award-and-fellowship-recipients/taz-mueller/) and arranged by [Brooke Kern](https://www.bellmuseum.umn.edu/grad-awards/2021-graduate-award-and-fellowship-recipients/brooke-kern/)."
+include_graphics("../../figs/clarkia_and_its_data/ril_collage3.png")
+```
+
+:::
+
+## Data Dictionary
+
+::: {style="background-color:  #FDEFB5; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+```{r}
+#| echo: false
+library(kableExtra)
+library(knitr)
+
+data_dict <- data.frame(
+  Variable_Name = c(
+    "ril", "location","prop_hybrid", 
+    "mean_visits", "growth_rate", "petal_color", "petal_area_mm",
+    "date_first_flw",
+    "node_first_flw",  "petal_perim_mm", "asd_mm",
+    "protandry", "stem_dia_mm", "lwc","crossDir","num_hybrid", "offspring_genotyped"
+  ),
+  Data_Type = c(
+    "Categorical (Factor/String)", "Categorical (Factor/String)", "Numeric (discrete)", 
+    "Numeric", "Numeric", "Categorical (Binary)", "Numeric",
+    "Date", "Numeric", "Numeric", "Numeric", 
+    "Numeric", "Numeric", "Numeric","Categorical (Binary)",  "Numeric (discrete)", "Numeric (discrete)"
+  ),
+  Description = c(
+    "Identifier for Recombinant Inbred Line (RIL). This is the 'genotype'.",
+    "Field site where the plant was grown.", "Proportion of genotyped seeds that were hybrids (see num_hybrid and offspring_genotyped for more information).",
+    "Average number of pollinator visits per plant over a 15-minute observation.",
+    "Growth rate of the plant.",
+    "Petal color phenotype (in this case 'pink' or 'white').",
+    "Date when the first flower opened (in Julian days, i.e., days since New Year's).",
+    "Node position of the first flower on the stem.",
+    "Petal area measured in square millimeters (mm²).",
+    "Petal perimeter measured in millimeters (mm).",
+    "The Anther-Stigma Distance (ASD) is the linear distance between the closest anther (the floral part that releases pollen) and the stigma (the floral part that accepts pollen) in a flower, measured in millimeters (mm). The smaller this distance, the more opportunity for self-fertilization.",
+    "Degree of protandry (e.g., time difference between male and female phase) measured in days. More protandry means more outcrossing.",
+    "Stem diameter measured in millimeters (mm).",
+    "Leaf water content (LWC).",
+    "Cross direction" , 
+    "The number ofseeds that where hybrid.",
+    "The number of seeds genotyped."
+  )
+)
+
+
+kable(data_dict, format = "html", escape = FALSE) %>%
+  kable_styling("striped", full_width = FALSE, bootstrap_options = c("hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = TRUE, color = "black") %>%
+  column_spec(2, italic = TRUE, color = "darkblue") %>%
+  column_spec(3, width = "30em")
+```
+
+:::
+
+##  Data set
+
+
+::: {style="background-color:  #FDEFB5; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+```{r}
+#| echo: false
+#| message: false
+#| warnings: false
+library(DT)
+library(readr)
+datatable(read_csv("https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"))
+```
+
+:::
+
+::: 
+
+
+### **RIL Hybridization Data**  
+
+
+Below is the hybridization dataset. For each plant in the field we genotyped eight seeds at species-specific markers to identify if they were the product of hybridization with *xantiana*. The phenotypes belong to the genotype of the maternal plant (i.e. they are the same as those in the pollinator visitation data set). I include data at both the level of the seed and a summary at the level of the maternal plant. 
+
+
+
+
+
+### **RIL Combined Data**    
