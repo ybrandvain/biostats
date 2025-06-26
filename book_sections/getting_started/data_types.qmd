@@ -1,0 +1,67 @@
+### • 1. Data types in R {.unnumbered}  
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:** You have loaded data into R and are curious about what "types" of data R thinks it is working with.     
+
+**Learning goals: By the end of this sub-chapter you should be able to**  
+
+1. List the different types of variables that R can keep in a vector.    
+2. Identify which type of variable is in a given column.  
+3. Ask logical questions of the data to make a logical vector.    
+:::     
+
+
+
+```{r}
+#| message: false
+#| echo: false
+# We do this every time we open R and want to use these packages.
+library(conflicted)
+library(readr)
+library(dplyr)
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link)
+```
+
+---   
+
+**R handles different types of data in specific ways**. Understanding these data types is crucial because what you can do with your data depends on how R interprets it. For example, although you know that `1 + "two"` equals `3`, R cannot add a number and a word. So, to use R effectively, you will need to make sure the type of data R has in memory matches the type it needs to have to do what you want. This will also help you understand `R`'s error messages and confusing results when things don't work as expected. 
+
+Looking back at the pollinator visitation dataset we loaded above, we see that (if you read it in with `read_csv()`) R tells you the class of each column before showing you its first few values. In that dataset, columns one, two, five, six, and fifteen  (note R provides a peek of the first few variables —  in this case, seven —  and then provides the names and data type for the rest)  —  `location`, `ril`, `growth_rate`, and `petal_color` —  are of class `<chr>`, while all other columns contain numbers (data of class `<dbl>`). What does this mean? Well it tells you what type of data `R` thinks is in that column.  Here are the most common options:
+
+
+- **Numeric:** Numbers, including **doubles** (`<dbl>`) and **integers** (`<int>`).  Integers keep track of whole numbers, while doubles keep track of decimals (but R often stores whole numbers as doubles). 
+- **Character:** Text, such as letters, words, and phrases (`<chr>`, e.g., `"pink"` or `"Clarkia xantiana"`).  
+- **Logical:** Boolean values—`TRUE` or `FALSE` (`<logi>`), often used for comparisons and conditional statements.  
+- **Factors:** Categorical variables that store predefined levels, often used in statistical modeling. While they resemble character data, they behave differently in analyses. We will ignore them in this chapter but revisit them later.  
+
+
+
+**When you load data into R, you should always check to ensure that the data are in the expected format.** Here we are surprised to see that `growth_rate` is a character, because it should be a number. A close inspection shows that in row three someone accidentally entered the letter `O` instead of the number zero (0) in what should be `1.80`.  
+
+```{r}
+#| echo: false
+#| column: margin
+ril_data |>
+  select(ril, growth_rate)|>
+  head(n=4)
+```
+
+:::fyi
+**Asking logical questions** We often generate logical variables by asking logical questions of the data. Here is how you do that in R. 
+
+
+
+| Question                             | R Syntax  |
+|--------------------------------------|----------|
+| Does *a* equal *b*?                 | *a == b* |
+| Does *a* not equal *b*?              | *a != b* |
+| Is *a* greater than *b*?             | *a > b*  |
+| Is *a* less than *b*?                | *a < b*  |
+| Is *a* greater than or equal to *b*? | *a >= b* |
+| Is *a* less than or equal to *b*?    | *a <= b* |
+:::
+

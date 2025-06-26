@@ -1,0 +1,77 @@
+### • 1. Orientation to RStudio {.unnumbered}
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:**  You have just downloaded R and RStudio, and want to understand all the stuff that you see when you open RStudio.        
+
+**Learning goals: By the end of this sub-chapter you should be able to**  
+
+1. Identify the **source pane** and what to do there.  
+2. Identify the **terminal pane** and what to see and do there.     
+3. Identify the **environment / history** pane, what to see and do there, and how to navigate tabs in this pane.  
+4. Identify the **file / plot / help / viewer** pane, what to see and do there, and how to navigate tabs in this pane.  
+
+:::     
+
+
+```{r}
+#| echo: false
+#| eval: false
+#| column: margin
+#| label: fig-Rstudio
+#| fig-cap: "What RStudio looks like when you first open it."
+#| fig-alt: "**Figure:** A screenshot of the RStudio interface upon opening a new session.  - The **console panel** (left) displays the R version (`R 4.4.1`) and startup information, including the following message:  R version 4.4.1 (2024-06-14) -- \"Race for Your Life\";   Copyright (C) 2024 The R Foundation for Statistical Computing   Platform: x86_64-apple-darwin20  ; R is free software and comes with ABSOLUTELY NO WARRANTY.   You are welcome to redistribute it under certain conditions.   Type 'license()' or 'licence()' for distribution details.  Natural language support but running in an English locale.  R is a collaborative project with many contributors.  Type 'contributors()' for more information and   'citation()' on how to cite R or R packages in publications.   Type 'demo()' for some demos, 'help()' for on-line help, or   'help.start()' for an HTML browser interface to help. Type 'q()' to quit R.  - The **environment panel** (top-right) is empty, showing the message \"Environment is empty,\" indicating no objects are currently loaded into memory.  - The **files, plots, packages, and help panel** (bottom-right) is empty, with no files, plots, or additional information displayed.  The RStudio top menu bar is visible, showing options like \"File,\" \"Edit,\" \"Code,\" \"View,\" and others. The current folder is labeled \"untitled folder.\""
+include_graphics("../../figs/intro_to_R/getting_started/initial_RStudio.png")
+```
+
+---  
+
+Above, you ran R in this web browser, but more often you will work with R in RStudio. When you open RStudio for the first time, you will see three primary panes. The one on the left works identically to the basic R console. Navigating to 'File > New File > R Script' opens a new script and reveals a fourth pane.
+
+:::aside
+**R Scripts** are ways to keep a record of your code so that you can pick up where you left off, build on previous work, and share your efforts. We will introduce R Scripts more formally soon!  
+:::
+
+```{r}
+#| echo: false
+#| eval: false
+#| column: margin
+#| label: fig-Rstudio2
+#| fig-cap: "An image of RStudio with a bunch of code before (**A**) and after (**B**) the code is entered into the working memory by highlighting it and clicking `Run`. Note that three things change after the code is executed. (1) The code appears in the R Console pane, (2) The assigned variables are displayed in the Environment pane, and (3) A plot appears in the plot pane."
+#| fig-alt: "**Figure A:** A screenshot of RStudio before running code. The R script editor contains the following code: library(readr); library(dplyr); library(ggplot2); visitation_link <- \"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/pollinator_visits.csv\"; visitation_data <- readr::read_csv(visitation_link); ggplot(visitation_data, aes(x = petal_area_mm, y = mean_visits))+  geom_point()+ scale_x_continuous(trans = \"log10\")+ scale_y_continuous(trans = \"log1p\")+  geom_smooth(method = \"lm\").   The console panel at the bottom is empty, with no output displayed. The environment panel on the right shows \"Environment is empty,\" indicating no objects have been created in memory. The file and plots panels are also empty. **Figure B:** A screenshot of RStudio after running the code. The same code is visible in the script editor, with the `Run` button highlighted. The console panel at the bottom shows the following output:   The environment panel on the right now contains two objects: The plots panel now shows our plot."
+include_graphics("../../figs/intro_to_R/getting_started/RStudio_before.png")
+```
+
+Like the R console above (and all computer languages) RStudio does not "know" what you wrote until you enter it into memory. There are a few ways to do this, but our preferred way is to highlight the code you intend to run, and then click the `Run` button in the top right portion of the R script pane. Alternatively, press Ctrl+Return for Windows/Linux or ⌘+Return on OS X. 
+
+
+```{r}
+#| echo: false
+#| column: body
+#| label: fig-Rstudio3
+#| fig-cap: "More panes = less pain. A brief tour of RStudio's panes."
+#| fig-alt: "**Figure:** A screenshot of the RStudio interface divided into four labeled panes.  - **Pane 1 (top-left):** The R script editor contains code. - **Pane 2 (bottom-left):** The console shows the execution of the script.  - **Pane 3 (top-right):** The environment panel lists two variables in R's working memory.- **Pane 4 (bottom-right):** The plots panel displays the  plots our code made." 
+library(knitr)
+include_graphics("../../figs/intro_to_R/getting_started/RStudio_big_pains.png")
+```
+
+@fig-Rstudio3 shows what your RStudio session might look like after doing just a little bit of work:  
+
+- **The source pane** Pane 1 is used for writing and editing scripts, R Markdown files etc. This is where you write reproducible code that can be saved and reused.  
+
+- **The console pane** Pane 2 is basically the *R command prompt* from vanilla `R`, it is where you directly interact with `R`. You can type commands here to execute them immediately. It will display output, messages, and error logs.  
+
+
+- **The environment / history pane** Pane 3 shows what `R` has in working memory and what it has done.  
+
+   -   The *Environment Tab* shows all objects (e.g., data frames, vectors) currently in memory.   
+   -   The *History Tab* shows all the commands you have run in your session. You can even search through your history, which can be easier than scrolling through the console.  
+
+- **The files / plots / help / viewer pane.** Pane 4 is remarkably useful!  
+
+   -   The *Plots Tab* shows the plots generated during your session. You can delete an individual plot by clicking the red X button, or delete all plots by clicking the broom button.
+
+   -   The *Help Tab:* allows you to access documentation and help files.
+

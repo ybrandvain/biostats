@@ -1,0 +1,127 @@
+### • 1. Functions and vectors {.unnumbered}
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:**  You are getting up and running in R and want to get started with the two workhorses of working in R — *functions* (how R does stuff) and *vectors* (how R stores stuff).          
+
+**Learning goals: By the end of this sub-chapter you should be able to**  
+
+1. Use R functions.  
+   - Understand that R functions take (zero or more) arguments
+   - And that they return something.    
+2. "Pipe" output from one R function into the next R function with the [pipe `|>` operator](https://stat.ethz.ch/R-manual/R-devel/library/base/html/pipeOp.html). 
+3. Use vectors in R.  
+
+:::     
+
+---  
+
+
+## R Functions  
+
+[**R functions:** See posit\'s [recipe for R functions](https://posit.cloud/learn/recipes/basics/BasicB4) for more detail.]{.column-margin}
+
+
+R comes with tons of built-in functions that do everything from basic math to advanced statistical modeling. So not only can we calculate the mean and variance in *Clarkia xantiana* petal lengths with the [`mean()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mean.html) and  [`var()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html) functions, respectively, but we can test the null hypothesis that mean petal size in *xantiana* is equal to that of *parviflora*  with the [`t.test()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/t.test.html) function. Functions are the foundation of how we do things in R -- they save time and ensure consistency across your analyses.
+
+
+
+
+**Functions take arguments**, which we put in parentheses. When  typing `sqrt(25)`, [`sqrt()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/MathFun.html) is the function, `25` is the argument, and `5` is the output.  
+
+
+```{r}
+#| column: margin
+# Natural log of 1000
+log(1000)             
+```  
+
+
+**Functions can take multiple arguments:**  If you don’t specify them all, R will either tell you to provide them, or assumes default values. For example, the `log` function defaults to the natural log (base *e*), so  `log(1000)` returns `r log(1000) |> round(digits = 3)`. If you want the logarithm with base 10, you need to specify it explicitly as `log(1000, 10)`, which returns `r log(1000, 10)`. Note that argument order matters:—`log(10, 1000)` returns `r log(10, 1000)`, while `log(1000, 10)` returns `r log(1000, 10)`. 
+
+
+```{r}
+#| column: margin
+# Log base 1000 of 10
+log(1000, base = 10)  
+```  
+
+:::protip
+
+### Tips for using functions in R
+
+#### **Use named arguments in functions**. 
+
+For example, typing *log(1000, base = 10)* makes what each value represents obvious (improving code readability), and allows flexibility in argument order (e.g. *log(base = 10, 1000)* gives the same value as *log(1000, base = 10)*). Thus, using named arguments makes your code readable and robust. 
+
+
+  
+#### **Use = to assign arguments in functions**   
+
+When specifying arguments inside a function, always use *=* (e.g., *log(1000, base = 10)*). Do not use *<-*, which is for assigning values to variables. Otherwise, R might mistakenly store the argument as a variable, leading to unexpected results.  
+
+
+
+#### **Pipe together functions with |>**    
+
+The pipe, |>, provides a clean way to pass the output of one function into another. For example, we can find the square root of the $\text{log}_{10}$ of 1000, rounded to two decimal places, as follows:  
+
+```{r}
+log(1000, base = 10)   |>  
+    sqrt()             |>  
+    round(digits = 2)
+```
+
+Notice that we did not explicitly provide an argument to [`sqrt()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/MathFun.html) — it simply used the output of `log(1000, base = 10)`. Similarly, the [`round()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Round.html) function then rounded the square root of 3 to two decimal places.  
+:::  
+
+
+
+## Working with vectors  
+
+
+If we observed one *Clarkia* plant with one flower, a second with two flowers, a third with three flowers, and a fourth with two flowers, we could find the mean number of flowers as `(1 + 2 + 3 + 2)/4` = `r (1 + 2 + 3 + 2)/4`, but this would be tedious and error-prone. It would be easier to store these values in an ordered sequence of values (called a **vector**) and then use the ([`mean()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mean.html)) function. 
+
+
+
+Vectors are the primary way that data is stored in `R`—even more complex data structures are often  built from  vectors. We create vectors with the combine function, [`c()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/c.html), which takes arguments that are the values in the vector.  
+
+```{r}
+# A vector of flower numbers
+  # 1st plant has one flower
+  # 2nd plant has two flowers
+  # 3rd plant has three flowers
+  # 4th plant has two flowers
+num_flowers <- c(1, 2, 3, 2)  # Create a vector for number of flowers per plant
+mean(num_flowers) # finding the mean flower number
+```
+
+```{r}
+#| column: margin
+# If each flower produces four petals  
+num_petals <- 4 * num_flowers
+num_petals
+```
+
+```{r}
+#| column: margin
+# If we wanted the log_2 of petal number 
+log(num_petals, base = 2) |>
+  round(digits = 3)
+```
+
+
+:::fyi 
+**Variable assignment can be optional:** In the code, I assigned observations to the vector, `num_flowers`, and then found the mean. But we could have skipped variable assignment—variable assignment — `mean(c(1, 2, 3, 2))` also returns `2`.  
+
+
+There are two good reasons not to skip variable assignment:    
+
+- *Variable assignment makes code easier to understand*. If I revisited my code in weeks I would know what the mean of this vector meant.   
+
+- *Variable assignment allows us to easily reuse the information* For example, below I can easily find the mean petal number.   
+:::
+

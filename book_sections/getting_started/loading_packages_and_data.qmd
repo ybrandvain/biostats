@@ -1,0 +1,82 @@
+### • 1. Load packages and data {.unnumbered}
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:**  you would like to get started having a peek into your data in R, and want to load the data and the packages to get started.        
+
+**Learning goals: By the end of this sub-chapter you should be able to**  
+
+1. Understand what an R package is 
+   - Install an  R package with the [`install.packages()`](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/install.packages.html) function (the first time you use it).   
+   - Load an R package with the [`library()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/library.html) function (in every R session in which you use the package).   
+2. Use the [`read_csv()`](https://readr.tidyverse.org/reference/read_delim.html) function in the [`readr`](https://readr.tidyverse.org/) package to load a file from the internet into R.  
+
+:::     
+
+---  
+
+## R packages
+
+
+While `R` has many built-in functions, **packages** provide even more functions to extend `R`'s capabilities. Packages can offer alternative (often more efficient and user-friendly) approaches to tasks that can be done with base `R` functions, or they can enable entirely new functionality that is not included in base `R` at all. In fact, `R` packages are a major way that the latest statistical and computational methods in various fields are shared with practitioners. 
+
+Below I introduce the [`readr`](https://readr.tidyverse.org/index.html),  and  [`dplyr`](https://dplyr.tidyverse.org/index.html) packages. Because these packages are so useful for streamlining data import, manipulation, and cleaning, I use them in nearly every R project.  I also introduce the [`conflicted`](https://conflicted.r-lib.org/) package, which identifies any functions with shared names across packages, and allows us to tell `R` which function we mean when more than one function has the same name. 
+
+
+**Install a package the first time you use it** The first time you need a package, install it with the [install.packages()](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/install.packages.html) function. Here the argument is the package (or vector of packages) you want to install. So, to install the packages above, type:
+
+```{r}
+#| eval: false
+# We do this the first time we need a package.
+install.packages(c("readr", "dplyr", "conflicted"))
+```
+
+**Load installed packages every time you open RStudio**  You only install a package once, but you must use the [`library()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/library.html) function, as I demonstrate below, to load installed packages every time you open R. 
+
+```{r}
+#| message: false
+# We do this every time we open R and want to use these packages.
+library(conflicted)
+library(readr)
+library(dplyr)
+```
+
+
+
+## Reading data into R
+
+Rather than typing large datasets into R, we usually want to read in data that is already stored somewhere. For now, we will load data saved as a csv file from the internet with the [`read_csv(link)`](https://readr.tidyverse.org/reference/read_delim.html) structure from the [`readr`](https://readr.tidyverse.org/) package. Later, we will revisit the challenge of importing data from other file types and locations into R.  
+
+:::{.aside}
+**Loading data:** See posit\'s [recipe for importing data](https://posit.cloud/learn/recipes/basics/ImportA1) for more detail. Note also that [`read.csv()`](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/read.table.html) is a base R function similar to [`read_csv()`](https://readr.tidyverse.org/reference/read_delim.html), but it behaves a bit differently -- for example it reads data in as a dataframe, not a tibble.   
+:::
+  
+
+Below, I show an example of reading pollinator visitation data from  [a link on my GitHub](https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/pollinator_visits.csv). After loading a dataset, you can see the first ten lines and all the columns that fit by simply typing its name. Alternatively, the [`View()`](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/View.html) function opens up the full spreadsheet for you to peruse.
+
+
+```{r}
+#| message: false
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link)
+ril_data
+```
+
+:::aside
+**`package::function()` format:** I read in the data with the [`read_csv()`]() function in the [readr package](https://readr.tidyverse.org/) by typing: `readr::read_csv()`, but typing [`read_csv()`](https://readr.tidyverse.org/reference/read_delim.html) gives the same result. The  `package::function()` format comes in handy when two functions in different packages have the same name.
+:::
+
+
+
+
+```{r}
+#| echo: false
+#| eval: false
+ril_data |>
+  mutate(across(where(is.numeric), ~ round(.x, 3)))|>
+  datatable(list(pageLength = 5))
+```
+
+

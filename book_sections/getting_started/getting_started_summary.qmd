@@ -1,0 +1,260 @@
+### • 1. Getting started summary {.unnumbered}
+
+---
+webr:
+  packages: ['dplyr', 'readr']
+  autoload-packages: false
+---
+
+
+```{r}
+#| echo: false
+#| column: margin
+library(knitr)
+library(webexercises)
+```
+
+
+
+
+```{r}
+#| echo: false
+#| eval: true
+#| column: margin
+#| fig-cap: "Some pretty R from [Allison Horst](https://allisonhorst.com/r-slack-emoji)."
+#| fig-alt: "Animated gif of the R logo with magenta and red hearts moving upward in a loop to the left of the \"R.\""
+#| label: fig-Rheart
+include_graphics("../../figs/intro_to_R/getting_started/Rgif.gif")
+```
+
+Links to  [Summary](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html).   [Chatbot tutor](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#chatbot-tutor). [Questions](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#practice-questions).  [Glossary](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#glossary-of-terms). [R functions](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#new-r-functions). [R packages](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#r-packages-introduced). [Additional resources](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#additional-resources).   
+
+
+
+### Chapter summary
+
+
+R is (much more than just) a simple calculator -- it can keep track of variables, and has functions to make plots, summarize data, and build statistical models. R also has many packages that can extend its capabilities. Now that we are familiar with R, RStudio, vectors, functions, data types and packages, we are ready to build our R skills even further to work with data!
+
+### Chatbot tutor
+
+Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/g-680a5b27740c8191b9cb63d729dc29fe-getting-started-with-r-tutor)) I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+
+
+### Practice Questions
+
+
+```{r}
+#| echo: false
+#| eval: true
+#| column: margin
+#| fig-cap: "Some encouragement from [Allison Horst](https://allisonhorst.com/r-slack-emoji)."
+#| fig-alt: "Animated gif with pastel lines in the background. The words \"CODE HERO\" in bold black text scroll across repeatedly."
+#| label: fig-encouragement
+include_graphics("../../figs/intro_to_R/getting_started/code_hero.gif")
+```
+
+
+The interactive R environment below allows you to work without switching tabs.  
+
+
+```{webr-r}
+# Loading packages. Note: there will be some red R output when loading dplyr. Don't worry about it!
+# Click "run" again and it will disappear! 
+library(readr)
+library(dplyr)
+
+
+```  
+
+
+:::exercises
+
+**Q1)** Entering *\"p\"^2* into R produces which error? `r longmcq(c("What error? It works great?", "Error: object p not found", "Error: object of type closure is not subsettable",answer = "Error in \"p\"^2 : non-numeric argument to binary operator"))`   
+
+
+
+**Q2)** Which logical question provides an unexpected answer? `r longmcq(c("(2.0 + 1.0) == 3.0", answer = "(0.2 + 0.1) == 0.3", "2^2 > 8", "(1/0) == (10 * 1/0)"))` 
+
+`r hide("Click here for an explanation")`
+
+This is a [floating-point precision issue](https://en.wikipedia.org/wiki/Floating-point_arithmetic#Accuracy_problems). In R (and most programming languages), some decimal values cannot be represented exactly in the binary code that they use under the hood. To see this, try *(0.2 + 0.1) - 0.3*:
+
+```{r}
+(0.2 + 0.1) - 0.3
+```
+
+If you are worried about floating point errors, use the  [*all.equal()*](https://stat.ethz.ch/R-manual/R-devel/library/base/html/all.equal.html) function instead of ==, or round to 10 decimal places before asking logical questions.
+
+`r unhide()`
+
+**Q3)** R has a built-in dataset called *iris*. You can look at it or give it to functions by typing *iris*. Which variable type is the *Species* in the *iris* dataset? `r longmcq(c("numeric", "logical", "character", answer = "factor"))` 
+
+**For the following questions consider the** ***diabetes dataset*** **available at: https://rb.gy/fan785**
+
+**Q4)** Which variable in the diabetes dataset is a character but should be a number?: `r longmcq(c(answer = "ratio", "location", "age",  "frame", "none"))`
+
+
+**Q5)** True OR False: The numeric variable, *bp.1d*, is a double, but could be changed to an integer without changing any of our analyses: `r torf(TRUE)`
+
+**Q6)** Which categorical variable in the dataset is ordinal? `r longmcq(c("id", "location", "gender", answer = "frame"))`
+
+**Q7)** You collected five leaves of the wild grape (*Vitis riparia*) and measured their length and width. You have a table of lengths and widths of each leaf and a formula for grape leaf area (below). 
+
+
+The area of a grape leaf is: 
+$$\text{leaf area } = 0.851 \times \text{ leaf length } \times \text{ leaf width}$$
+The data are here, each column is a leaf:
+
+```{r}
+#| echo: false
+kable(data.frame(length = c(5, 6.1, 5.8, 4.9, 6),
+                 width = c(3.2, 3, 4.1, 2.9, 4.5)) |>t())
+```
+
+
+
+The mean leaf area is `r fitb(16.8916, tol = .15)`
+
+
+
+
+`r hide("Click here for a hint")`
+
+
+-   First make vectors for length and width   
+   - length = c(5, 6.1, 5.8, 4.9, 6)
+   - width = c(3.2, 3, 4.1, 2.9, 4.5)
+
+- Then multiply these vectors by each other and 0.851.
+- Finally find the mean
+
+`r unhide()`
+
+`r hide("Click here for the solution")`
+
+```{r}
+# Create length and width vectors
+length <- c(5, 6.1, 5.8, 4.9, 6)
+width <- c(3.2, 3, 4.1, 2.9, 4.5)
+```
+
+```{r}
+leaf_areas <- 0.851 * length * width # find area
+mean(leaf_areas)                     # find mean
+
+# or in one step:
+(0.851 * length * width) |>
+  mean()
+```
+
+`r unhide()`
+
+
+
+::: 
+
+----
+
+
+
+### Glossary of Terms
+:::glossary
+
+
+
+- **R**: A programming language designed for statistical computing and data analysis.
+
+- **RStudio**: An Integrated Development Environment (IDE) that makes using R more user-friendly.
+
+- **Vector**: An ordered sequence of values of the same data type in R.
+
+- **Assignment Operator (<-)**: Used to store a value in a variable.
+
+
+- **Logical Operator**: A symbol used to compare values and return *TRUE* or *FALSE* (e.g., *==*, *!=*, *\>*, *\<*).
+
+- **Numeric Variable**: A variable that represents numbers, either as whole numbers (integers) or decimals (doubles).
+
+- **Character Variable**: A variable that stores text (e.g., \"Clarkia xantiana\").
+
+
+- **Package**: A collection of R functions and data sets that extend R’s capabilities.
+
+
+:::
+
+---
+
+### New R functions 
+
+
+:::functions
+
+
+- **[`c()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/c.html)**: Combines values into a vector.
+
+
+- **[`install.packages()`](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/install.packages.html)**: Installs an R package.
+
+- **[`library()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/library.html)**: Loads an installed R package for use.
+
+- **[`log()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html)**: Computes the logarithm of a number, with an optional base.
+
+- **[`mean()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mean.html)**: Calculates the average (mean) of a numeric vector.
+
+- **[`read_csv()`](https://readr.tidyverse.org/reference/read_delim.html)** *([readr](https://readr.tidyverse.org))*: Reads a CSV file into R as a data frame.
+
+
+- **[`round()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Round.html)**: Rounds a number to a specified number of decimal places.
+
+- **[`sqrt()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/MathFun.html)**: Finds the square root of a number.
+
+- **[`View()`](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/View.html)**: Opens a data frame in a spreadsheet-style viewer.
+
+:::
+
+---
+
+
+
+### R Packages Introduced
+
+:::packages
+
+
+- **[`base`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html)**: The core R package that provides fundamental functions like `c()`, `log()`, `sqrt()`, and `round()`.
+
+- **[`readr`](https://readr.tidyverse.org/)**: A tidyverse package for reading rectangular data files (e.g., `read_csv()`).
+
+- **[`dplyr`](https://dplyr.tidyverse.org/)**: A tidyverse package for data manipulation, including `mutate()`, `glimpse()`, and `across()`.
+
+- **[`conflicted`](https://conflicted.r-lib.org/)**: Helps resolve function name conflicts when multiple packages have functions with the same name.
+
+:::
+
+
+
+### Additional resources   
+
+These optional resources reinforce or go beyond what we have learned. 
+
+:::learnmore
+**R Recipes:**    
+
+- [Doing math in R](https://posit.cloud/learn/recipes/basics/BasicB1).   
+- [Using R functions](https://posit.cloud/learn/recipes/basics/BasicB4).   
+- [Importing data from a .csv](https://posit.cloud/learn/recipes/basics/ImportA1).    
+
+**Videos:**   
+
+- [Coding your Data Analysis for Success](https://www.youtube.com/watch?v=91LmBj29-Sc) (From Stat454).   
+- [Why use R?](https://vimeo.com/745909809) (Yaniv Talking).   
+- [Accessing R and RStudio](https://vimeo.com/746738789) (Yaniv Talking).   
+- [RStudio orientation](https://vimeo.com/746907243) (Yaniv Talking).   
+- [R functions](https://vimeo.com/999280671)  (Yaniv Talking).   
+- [R packages](https://vimeo.com/746968343) (Yaniv Talking).   
+- [Loading data into R](https://bookdown.org/ybrandvain/Applied_Biostats_2024/02-Rintro.html) (Yaniv Talking).    
+- [Data types](https://vimeo.com/747009618) (Yaniv Talking).  Uses [compression data](https://raw.githubusercontent.com/ybrandvain/datasets/master/compensation.csv) as an example.     
+
+::: 

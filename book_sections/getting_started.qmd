@@ -1,0 +1,151 @@
+---
+webr:
+  packages: ['dplyr', 'readr']
+  autoload-packages: false
+---
+
+# 1. Getting started with R
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:** You have heard about R and RStudio, and may have used them, but want a foundation so you can know what is going on as you do more and more with it.     
+
+**Learning goals: By the end of this chapter you should be able to**  
+
+1. Explain why we are using R and RStudio.    
+2. Use  vectors, do math, ask logical questions, and assign variables in R.  
+3. Use R functions, and understand what a function is.   
+4. Install R packages.  
+5. Load data into R, view it, and find the types of variables in each column.  
+6. Know your way around RStudio.
+:::     
+
+
+```{r}
+#| echo: false
+#| label: fig-pnas
+#| fig-cap: "Our R-generated figures concerning differentiation between *Clarkia xantiana* subspecies (from @sianta2024)."
+#| column: margin
+library(knitr)
+library(webexercises)
+library(DT)
+library(webexercises)
+include_graphics("../figs/intro_to_R/getting_started/pnas_clarkia.png")
+```
+
+<article class="drop-cap">Why are we learning a programming language, if we really just want to learn about *Clarkia xantiana*? Well, it's because scientists learn from data, ideally lots of data. R and other scripting languages allow us to:</article> 
+
+- Describe and visualize data,
+- Test null hypotheses,  
+- Develop complex models, and
+- Share our workflow so that our work can be reproduced, reevaluated, questioned, and improved. 
+
+
+
+
+## What is R? What is RStudio?
+
+
+`R` is a computer program built for data analysis. As opposed to GUIs, like Excel, or click-based stats programs, `R` is focused on writing and sharing scripts. This enables us to be shared and replicate analyses, ensuring that data manipulation occurs in a script. This practice both preserving the integrity of the original data, while providing tremendous flexibility. `R` has become the computer language of choice for most statistical work because it's free, allows for reproducible analyses, makes great figures, and has many "packages" that support the integration of novel statistical approaches. In a recent paper, we used `R` to analyze hundreds of *Clarkia* genomes and learn about the (@fig-pnas from @sianta2024). RStudio is an Integrated Development Environment (IDE)—a nice setup to interact with `R` and make it easier to use.
+
+> More precisely, R is a programming language that runs computations, while RStudio is an integrated development environment (IDE) that provides an interface by adding many convenient features and tools. So just as the way of having access to a speedometer, rearview mirrors, and a navigation system makes driving much easier, using RStudio’s interface makes using R much easier as well.
+>
+> --- From [Statistical Inference via Data Science: A ModernDive into R and the Tidyverse](https://moderndive.com/) [@ismay2019]
+
+
+
+
+## The Shortest Introduction to R  
+
+Before opening RStudio, let's get familiar with two key ays we use R -- (1) Using R as a calculator, and (2)  Storing information by assigning values to variables.  
+
+
+**R can perform simple (or complex) calculations.**[**Math in R:** See posit\'s [recipe for using R as a calculator](https://posit.cloud/learn/recipes/basics/BasicB1) for more detail.]{.column-margin} For example, entering `1 + 1` returns `2`, and entering `2^3` (two raised to the power of three) returns `8`. Try it yourself by running the code below, and then experiment with other simple calculations. 
+
+::: {.panel-tabset group="language"}
+
+## Challenge  
+
+[**Commenting code** The hash, #, tells R to stop reading your code. This allows you to "comment" your code -- keeping notes to yourself and other readers about what the code is doing. Commenting your code is very valuable and you should do it often!]{.column-margin}
+
+```{webr-r}
+1 + 1  # One plus one
+2^3    # Two cubed
+       # Try finding 1,122 squared
+```  
+
+## Solution  
+
+[**Commenting code** The hash, #, tells R to stop reading your code. This allows you to "comment" your code -- keeping notes to yourself and other readers about what the code is doing. Commenting your code is very valuable and you should do it often!]{.column-margin}
+
+```{webr-r}
+1 + 1    # One plus one
+2^3      # Two cubed
+1122^2   # 1,122 squared
+```  
+
+:::  
+
+**Storing values in variables** allows for efficient (and less error-prone) analyses, while paving the way to more complex calculations. In R, we assign values to variables using the assignment operator, `<-`.  For example, to store the value `1` in a variable named `x`, type `x <- 1`.   Now, `2 * x` will return `2`.  
+
+```{r}
+#| column: margin
+x <- 1 # Assign 1 to x
+2 *  x # Multiply x by 2
+```
+
+But `R` must "know" something before it can "remember" it. The code below aims to set `y` equal to five, and see what `y` plus one is (it should be six). However, it returns an error. Run the code to see the error message, then fix it!  
+
+
+
+::: {.panel-tabset group="language"}
+
+### Challenge  
+
+```{webr-r}
+# First, run this code and note the error.
+# Then, fix the code by assigning a value to y.
+y + 1  # y plus one
+y <- 5 # Set y equal to 5 
+```  
+
+`r hide("Hint")`
+R reads and executes each line of code sequentially, from top to bottom. Think about what `y + 1` means to R if it hasn’t seen a definition of `y` yet.
+`r unhide()`
+
+
+### Solution  
+
+```{webr-r}
+# Just switch the order!
+y <- 5  # Assign 5 to y
+y + 1   # y plus one
+```  
+
+`r hide("Hint")`
+In R, variables must be defined before they are used. When you try to use `y + 1` before assigning a value to `y`, R throws an error because it doesn’t know what `y` is yet. When we switch the order—assigning `y <- 5` before using `y + 1`—R understands the command and evaluates it properly.
+`r unhide()`
+
+:::  
+
+
+
+Now, try assigning different numbers to `x` and `y`, or even using them together in a calculation, such as `x + y`. Understanding this  concept of assigning values is critical to understanding how to use R.  
+
+
+## Let's get started with R 
+
+
+The following sections introduce the very basics of R including:   
+
+- [Functions and vectors in R](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/functions_and_vectors.html).   
+- [Loading packages and data into R](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/loading_packages_and_data.html).   
+- [Data types in R](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/data_types.html).    
+- [An orientation to RStudio](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/rstudio_orientation.html).  
+
+Then we [summarize the chapter](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html), present [practice questions](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#practice-questions), a [glossary](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#glossary-of-terms), a review of [R functions](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#new-r-functions) and [R packages](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#r-packages-introduced) introduced, and [provide links to additional resources](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#additional-resources).    
+
+
+
