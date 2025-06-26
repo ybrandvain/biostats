@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Types of Variables – Applied Biostatistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../book_sections/intro2r_index.html" rel="next">
+<link href="../../book_sections/clarkia_and_its_data/clarkia_and_its_data.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-d4394cde7c380170a4469b96acf338b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-90eb7791a5c5b81885cedfef0a190562.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../assets/sticky-notes.css">
+<link rel="stylesheet" href="../../assets/table-styles.css">
+<link rel="stylesheet" href="../../assets/webex.css">
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/example_mini/varType.html">Types of Variables</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      <img src="../../figs/fun_figs/stamp.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Applied Biostatistics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/clarkia_and_its_data/clarkia_and_its_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motivating biology and datasets</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/example_mini/varType.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Types of Variables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/intro2r_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intro to R</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/getting_started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Getting started with R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/getting_started/functions_and_vectors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Functions and vectors</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/getting_started/loading_packages_and_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Load packages and data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/getting_started/data_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Data types in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/getting_started/rstudio_orientation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Orientation to RStudio</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/getting_started/getting_started_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Getting started summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../toc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rest of Book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Types of Variables</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+<p><strong>Motivating scenario:</strong> It is the first day of this biostatistics course. You’ve heard this before but we’re easing into the class, and getting a feel for how this book works.</p>
+<p><strong>Learning goals: By the end of this chapter you should be able to</strong><br>
+1. Differentiate between categorical and numeric variables.<br>
+2. Distinguish between types of categorical (nominal, binary, ordinal) and types of numeric (continuous, discrete) variables.<br>
+3. Have a sense of why as statisticians, we must consider the type of data and variables in building models.<br>
+4. Know how to read this book - complete embedded quiz questions.</p>
+</div>
+<hr>
+<article class="drop-cap">
+<em>Clarkia xantiana</em> is a beautiful and fascinating plant native to the southern Sierra Nevada in California. This species comprises two subspecies: <em>C. xantiana ssp. xantiana</em> and <em>C. xantiana ssp. parviflora</em> (<a href="#fig-clarkiaspp" class="quarto-xref">Figure&nbsp;<span>1</span></a>).
+</article>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-clarkiaspp" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Image showing flowers from the species *Clarkia xantiana*. The top panel displays a single purple-pink *Clarkia xantiana ssp. xantiana* flower with prominent petals. The bottom panel shows two *Clarkia xantiana ssp. parviflora* flowers side by side: one with bright purple-pink petals and the other with pale white petals, highlighting the variation in petal coloration.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-clarkiaspp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../figs/vartype/clarkias.png" class="img-fluid figure-img" alt="Image showing flowers from the species *Clarkia xantiana*. The top panel displays a single purple-pink *Clarkia xantiana ssp. xantiana* flower with prominent petals. The bottom panel shows two *Clarkia xantiana ssp. parviflora* flowers side by side: one with bright purple-pink petals and the other with pale white petals, highlighting the variation in petal coloration." width="157">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-clarkiaspp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: <em>Clarkia xantiana</em> subspecies. A <em>Clarkia xantiana xantiana</em> flower on top, with white (left) and pink (right) <em>Clarkia xantiana parviflora</em> flowers below.
+</figcaption>
+</figure>
+</div>
+</div></div></div>
+<ul>
+<li><em>C. xantiana ssp. xantiana</em> (hereafter <em>xantiana</em>) is primarily outcrossing, with large, showy flowers that attract pollinators.<br>
+</li>
+<li><em>C. xantiana ssp. parviflora</em> (hereafter <em>parviflora</em>) largely self-fertilizes, with smaller (sometimes white) flowers and other floral features that encourage self-fertilization.</li>
+</ul>
+<p>Although these taxa hybridize in nature, they remain quite distinct, even in areas of sympatry where they exchange genes.</p>
+<p><a href="https://moellergroup.org/">Dave Moeller</a> and his colleagues (including me) have been studying this species for decades. Their research addresses fundamental questions in evolution, such as:</p>
+<ul>
+<li>Why do some species tolerate self-fertilization, while others do not?<br>
+</li>
+<li>How do major changes in reproductive systems evolve?<br>
+</li>
+<li>What influences the range of a species (i.e., where a species is found in nature)?<br>
+</li>
+<li>How do species coexist?<br>
+</li>
+<li>What mediates the extent of gene flow between species?<br>
+</li>
+<li>How is climate change affecting species ranges and persistence?</li>
+</ul>
+<p>To answer these big and exciting questions, Dave and his collaborators must break them down into smaller, direct scientific studies that can be addressed through a combination of experiments and observations. To conduct such studies, we must map these complex ideas onto measurable variables.</p>
+<p>For example, rather than directly comparing the flower images in <a href="#fig-clarkiaspp" class="quarto-xref">Figure&nbsp;<span>1</span></a>, we simplify these flowers into variables that summarize them. For instance, we could represent a flower using a set of variables such as flower color, petal length, the distance between stigma and style, etc.</p>
+<section id="explanatory-and-response-variables" class="level2">
+<h2 class="anchored" data-anchor-id="explanatory-and-response-variables">Explanatory and Response Variables</h2>
+<p>Dave and his team have conducted numerous studies to tackle these big questions. In most cases, they examine how the value of a <strong>response variable</strong> — <em>the outcome we aim to understand</em> — changes with different values of one or more <strong>explanatory variables</strong> (also called <em>predictor</em> or <em>independent variables</em>), which are thought to influence or be associated with the biological process of interest.</p>
+<p>Understanding the distinction between explanatory and response variables is crucial for framing hypotheses, designing experiments, and interpreting statistical results. However, this distinction often depends on how the research question is framed and can even vary within a single study. For example, in a recent study on predictors of pollinator visitation in <em>parviflora</em></p>
+<ul>
+<li><p>We first aimed to identify which loci in the genome predicted flower color and petal length in <em>parviflora</em>. Here, genotype was the explanatory variable, while the floral attributes (petal color and petal length) were the response variables.</p></li>
+<li><p>We then asked whether certain floral attributes (petal color and petal length) predicted pollinator visitation to <em>parviflora</em> plants. In this case, the floral attributes became the explanatory variables, and pollinator visitation was the response variable.</p></li>
+</ul>
+</section>
+<section id="types-of-variables" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="types-of-variables">Types of Variables</h2>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-clarkia_color_var_type" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two vertically stacked panels show reflectance spectra for two Clarkia xantiana Recombinant Inbred Lines (RILs) differing in petal color.  --- The top panel is labeled 'A109 (&quot;white&quot;)' with white text on a black background. Several reflectance curves (percent reflectance vs. wavelength, 400–1000 nm) are plotted, generally showing higher reflectance across all wavelengths. An inset photo shows a flower with white petals and small purple markings --- The bottom panel is labeled 'A114 (&quot;pink&quot;)' with pink text on a black background. Reflectance curves are shown, with lower reflectance overall and a pronounced dip around 550 nm, corresponding to stronger absorption in the green wavelengths. An inset photo shows a flower with bright pink petals and purple spots. Axes are labeled 'Reflectance (%)' (y-axis) and 'Wavelength (nm)' (x-axis), common across both panels.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-clarkia_color_var_type-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../figs/basics/vartype/petal_color.png" class="img-fluid figure-img" alt="Two vertically stacked panels show reflectance spectra for two Clarkia xantiana Recombinant Inbred Lines (RILs) differing in petal color.  --- The top panel is labeled 'A109 (&quot;white&quot;)' with white text on a black background. Several reflectance curves (percent reflectance vs. wavelength, 400–1000 nm) are plotted, generally showing higher reflectance across all wavelengths. An inset photo shows a flower with white petals and small purple markings --- The bottom panel is labeled 'A114 (&quot;pink&quot;)' with pink text on a black background. Reflectance curves are shown, with lower reflectance overall and a pronounced dip around 550 nm, corresponding to stronger absorption in the green wavelengths. An inset photo shows a flower with bright pink petals and purple spots. Axes are labeled 'Reflectance (%)' (y-axis) and 'Wavelength (nm)' (x-axis), common across both panels." width="300">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-clarkia_color_var_type-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: <strong>Which type of variable is color?</strong> Some variables (like color) can be treated as either categorical or continuous depending on the question. Because most <em>parviflora</em> plants are either pink or white, we treat color as a binary categorical variable. But, as shown above, color can be measured and analyzed quantiatively as well.
+</figcaption>
+</figure>
+</div>
+</div></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># INSERT POLINATOR OBSERVATION VIDEO </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Variables come in different flavors, and knowing the flavor of a variable is key to choosing appropriate summary statistics, data visualizations, and statistical models. Our <em>parviflora</em> pollinator visitation example above included both major types of variables (<a href="#fig-clarkiaspp" class="quarto-xref">Figure&nbsp;<span>1</span></a>):</p>
+<ul>
+<li><strong>Numeric variables</strong> are quantitative and have magnitude. For instance, we measured pollinator visits as the number of times a pollinator visited a flower during a [5-minute observation period], and petal length in centimeters.<br>
+</li>
+<li><strong>Categorical variables</strong> are qualitative. In our example, flower color and genotype were treated as categorical variables.</li>
+</ul>
+<p>Like much of stats – the line between these types of variables is blurry. For example, we often treat color as a category, but color can be measured quantitatively (<a href="#fig-clarkia_color_var_type" class="quarto-xref">Figure&nbsp;<span>2</span></a>). So depending on our question we may want to treat color as either a numeric or categorical variable.</p>
+<div class="fyi">
+<p><strong>Not All Numbers Are Numeric.</strong> For example, a gene ID may be represented as a number, but it is an arbitrary label rather than a measurement. Similarly, in our <em>Clarkia</em> studies, some sites were identified by numbers (e.g., <em>Site 22</em> or <em>Site 100</em>). However, <em>Site 22</em> is not “less than” <em>Site 100</em> — these are categorical variables, despite being represented numerically.</p>
+</div>
+<p>Within these two categories are further sub-flavors which allow us to further refine our statistical approach:</p>
+<section id="types-of-numeric-variables" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="types-of-numeric-variables">Types of Numeric Variables</h3>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-clarkia_petal" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The bottom picture, is a close-up image of a parviflora flower petal with a ruler measuring its length. The image illustrates two types of variables: petal color (categorical) and petal length (continuous numeric). The petal color is a soft pink, and the petal is laid next to a ruler to allow for precise measurement. The top three pictures  show a *Clarkia xantiana* flower with four, five, or six petals.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-clarkia_petal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../figs/basics/vartype/clarkias.png" class="img-fluid figure-img" alt="The bottom picture, is a close-up image of a parviflora flower petal with a ruler measuring its length. The image illustrates two types of variables: petal color (categorical) and petal length (continuous numeric). The petal color is a soft pink, and the petal is laid next to a ruler to allow for precise measurement. The top three pictures  show a *Clarkia xantiana* flower with four, five, or six petals." width="157">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-clarkia_petal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: <strong>Types of numeric variables</strong>. <br> <br><strong>A discrete variable:</strong> <em>Xantiana</em> flowers with four, five or six petals (photo courtesy of Dave Moeller). <br> <br> <strong>A continuous variable:</strong> <em>Parviflora</em> petal whose length is being measured. Image from <a href="https://ucjeps.berkeley.edu/eflora/eflora_display.php?name=Clarkia+xantiana+subsp.+parviflora">The University and Jepson Herbaria University of California, Berkeley</a>. Copyright from ©2020 Chris Winchell. (<a href="https://calphotos.berkeley.edu/cgi/img_query?enlarge=0000+0000+0620+1880">image link</a>)
+</figcaption>
+</figure>
+</div>
+</div></div></div>
+<p>Numeric variables can be categorized into two main types:</p>
+<ul>
+<li><p><strong>Discrete variables</strong> <em>come in chunks.</em> For instance, flowers receive zero, one, two, three, and so on, pollinators. Pollinators do not come in fractions, making this variable inherently discrete.</p></li>
+<li><p><strong>Continuous variables</strong> <em>can take any value within a range.</em> Classic examples include height, weight, and temperature. In our example, petal length is a continuous variable because it can be measured to any level of precision within its range.</p></li>
+</ul>
+<div class="fyi">
+<p><strong>Subtle Distinctions and Blurry Boundaries.</strong> The two cases above represent pretty clear distinctions between discrete and continuous variables, but sometimes such distinctions are more subtle.</p>
+<p>Consider the number of pollinators—these cannot be fractional, but the number of pollinators per minute can be fractional. There are other similarly blurry cases. For example, <em>time to first flower</em> is inherently continuous, but we often check on flowers only once per day, so it is measured as discrete. Similarly, in human studies, age is usually reported in whole months or years (discrete), rather than on the more continuous scale of fractional seconds. In such cases, the appropriate question is not “is my data discrete or continuous?” but rather “what process generated my data? and what statistical distribution do the data follow?</p>
+</div>
+</section>
+<section id="categorical-variables" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="categorical-variables">Categorical variables</h3>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-clarkia_specialist" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A close-up photograph of a *Clarkia* Evening Bee (*Hesperapis regularis*), a specialist bee species, visiting a *Clarkia* flower. The bee's black-and-white striped abdomen and translucent wings are prominently visible against the pink and purple petals of the flower.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-clarkia_specialist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../figs/varType/clarkia_eve_bee.png" class="img-fluid figure-img" alt="A close-up photograph of a *Clarkia* Evening Bee (*Hesperapis regularis*), a specialist bee species, visiting a *Clarkia* flower. The bee's black-and-white striped abdomen and translucent wings are prominently visible against the pink and purple petals of the flower." width="366">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-clarkia_specialist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: <strong>Species is a categorical variable</strong>: The <em>Clarkia</em> specialist – <em>Clarkia</em> Evening Bee, (<em>Hesperapis regularis</em>) on a <em>Clarkia</em> flower. Shared by © Gene H under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a> copyright on <a href="https://www.inaturalist.org/observations/115738401">iNaturalist</a>. In our <em>Clarkia</em> research, pollinator is usually nominal (that is which bee species), but is sometimes binary (<em>Clarkia</em> specialist, or non-specialist), and sometimes ordinal (e.g.&nbsp;frequent pollinator, rare pollinator, never pollinator).
+</figcaption>
+</figure>
+</div>
+</div></div></div>
+<p><em>Categorical variables are qualitative</em>, and include, nominal, binary, and ordinal variables.</p>
+<ul>
+<li><strong>Nominal variables</strong> <em>cannot be ordered and have names</em> – like sample ID, species, study site etc…<br>
+</li>
+<li><strong>Binary variables</strong> <em>are a type of nominal variable with only two options</em> (or for which we only consider two options. Alive/dead, pass/fail, on/off are classic binary variables). In our example of pollinator visitation in <em>parviflora</em>, we considered only two flower colors (pink/white) so flower color in this case is binary.<br>
+</li>
+<li><strong>Ordinal variables</strong> <em>can be ordered, but do not correspond to a magnitude</em>. For example, bronze, silver and gold medals in the Olympics are ranked from best to worst, but first is not some reliable distance away from second or third etc… In our pollinator example, we often may wish to distinguish between frequent pollinators (e.g.&nbsp;specialist bees, <a href="#fig-clarkia_specialist" class="quarto-xref">Figure&nbsp;<span>4</span></a>), common but less frequent pollinators (e.g.&nbsp;non-specialist bees), and rare/incidental pollinators (e.g.&nbsp;flies).</li>
+</ul>
+</section>
+</section>
+<section id="closing-resources" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="closing-resources">Closing Resources</h2>
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">Summary</h3>
+<p>Understanding the types of variables in our data can help us translate complex biological questions into measurable data that can be evaluated with the statistical tools we develop in this book. Variables can be categorized as numeric or categorical, and further subdivided into types like discrete, continuous, nominal, binary, or ordinal. These classifications influence how we summarize, visualize, analyze, and model<del>ize</del> our data.</p>
+</section>
+<section id="chatbot-tutor" class="level3">
+<h3 class="anchored" data-anchor-id="chatbot-tutor">Chatbot tutor</h3>
+<p>Please interact with this custom chatbot (<a href="https://chatgpt.com/g/g-6818e192720481919b967f72c85ae852-types-of-variables-tutor"><strong>link here</strong></a>) I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up and then stopping when you feel like you’ve got what you needed from it.</p>
+</section>
+<section id="practice-questions" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="practice-questions">Practice Questions</h3>
+<div class="page-columns page-full"><p>Try the questions below! </p><div class="no-row-height column-margin column-container"><span class=""><strong>Likert scales look like this:</strong><br>- <em>How do you feel about Clarkia?</em> <br>(1) Love it <br> (2) Like it <br> (3) Don’t care <br> (4) Do not like <br>(5) Hate it</span></div></div>
+<div class="exercises">
+<p><strong>Q1)</strong> In a species with pink or white flowers, flower color is a special kind of categorical variable known as a ___ variable <select class="webex-select"><option value="blank"></option><option value="">Nominal</option><option value="answer">Binary</option><option value="">Ordinal</option><option value="">Bimodal</option></select></p>
+<div class="webex-solution">
+<button>
+Click here for explanation
+</button>
+<p>This was a little tricky! <strong>The correct answer is Binary, because there are only two possible values.</strong> If you picked either “nominal” or “bimodal,” you’re pretty close and definitely thinking along the right path, but not quite there! So let’s walk through these “not quite right” answers:</p>
+<ul>
+<li><p><strong>Nominal:</strong> Petal color is nominal in the sense that “pink” isn’t greater or lesser than “white”—the categories have no natural order. But because there are only two options here, the more specific (and better) description is Binary.</p></li>
+<li><p><strong>Bimodal:</strong> A bimodal distribution refers to a numeric variable that has two distinct peaks or clusters. If we had measured flower color quantitatively—say, by recording percent reflectance at 550 nm—and the data clustered around two values (say, “mostly pink” vs.&nbsp;“mostly white”), then the distribution would be bimodal. (But even then, we’d probably simplify it to binary for analysis.)</p></li>
+</ul>
+<p>If you answered “ordinal,” you should probably take another look at the chapter—ordinal variables have a meaningful order, like “small,” “medium,” and “large.”</p>
+</div>
+<p>.</p>
+<p><strong>Q2)</strong> Which of these variables is best described as continuous? <select class="webex-select"><option value="blank"></option><option value="">Flower color (pink, white)</option><option value="answer">Petal length</option><option value="">Number of flowers on a plant</option></select></p>
+<p><strong>Q3)</strong> The number of offspring produced by a single animal in one breeding season is: <select class="webex-select"><option value="blank"></option><option value="">Binary</option><option value="">Continuous</option><option value="answer">Discrete</option></select></p>
+<p><strong>Q4)</strong> <em>TRUE or FALSE</em>: Populations of <em>Clarkia</em> that we named 100 and 22 are numeric <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select>.</p>
+<p><strong>Q5)</strong> <em>TRUE or FALSE:</em> A variable on a “<a href="https://en.wikipedia.org/wiki/Likert_scale">Likert scale</a>” (see margin for details) is clearly numeric <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select>.</p>
+<div class="webex-solution">
+<button>
+Click here for explanation
+</button>
+<p><strong>The word “clearly” is the key clue here.</strong> A Likert scale (like rating agreement from “Strongly disagree” to “Strongly agree”) is based on numbers (e.g., 1, 2, 3, 4, 5), but those numbers represent ordered categories, not truly continuous or clearly numeric values.</p>
+<p>In other words, while you can <em>treat</em> Likert scale data like numbers sometimes (e.g., calculating averages), the numbers themselves are standing in for categories with an order—not for measured quantities along a true number line. So while you might have seen Likert data analyzed using means, t-tests, or even regressions—treating them like numeric variables—this is a common (and sometimes reasonable) modeling shortcut. Conceptually, Likert data are still clearly ordinal: they are ordered categories, not continuous measurements.</p>
+<p>If you missed this, don’t worry — Likert scales can be a little tricky because they look numeric. But always pay close attention to what the numbers mean. If they’re just labeling ordered choices (rather than measuring something truly continuous, like height or weight), the variable is ordinal categorical, not clearly numeric.</p>
+</div>
+<p>.</p>
+<p><strong>Q6)</strong> The variable, kingdom (corresponding to one of the six kingdoms of life), is a ___ variable <select class="webex-select"><option value="blank"></option><option value="answer">Nominal</option><option value="">Binary</option><option value="">Ordinal</option><option value="">Discrete</option></select></p>
+<p><strong>Q7)</strong> <em>TRUE of FALSE:</em> A continuous variable can never be modeled as discrete and vice versa <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select></p>
+</div>
+<hr>
+</section>
+<section id="glossary-of-terms" class="level3">
+<h3 class="anchored" data-anchor-id="glossary-of-terms">Glossary of Terms</h3>
+<div class="glossary">
+<ul>
+<li><p><strong>Variable</strong>: A characteristic or attribute that can take on different values or categories in a dataset.</p>
+<ul>
+<li><p><strong>Explanatory Variable</strong>: Also known as a <em>predictor</em> or <em>independent variable</em>, this is a variable that is thought to influence or explain the variation in another variable.</p></li>
+<li><p><strong>Response Variable</strong>: Also known as a <em>dependent variable</em>, this is the outcome or effect being studied, which changes in response to the explanatory variable.</p></li>
+</ul></li>
+</ul>
+<hr>
+<ul>
+<li><p><strong>Numeric Variable</strong>: A variable that represents measurable quantities and has magnitude, either as counts (discrete) or as continuous values.</p>
+<ul>
+<li><p><strong>Discrete Variable</strong>: A numeric variable that represents distinct, separate values or counts (e.g., number of pollinators).</p></li>
+<li><p><strong>Continuous Variable</strong>: A numeric variable that can take any value within a range and is measured with precision (e.g., petal length).</p></li>
+</ul></li>
+</ul>
+<hr>
+<ul>
+<li><p><strong>Categorical Variable</strong>: A variable that represents categories or groups and is qualitative in nature.</p>
+<ul>
+<li><p><strong>Nominal Variable</strong>: A categorical variable without an inherent order (e.g., flower species or study site).</p></li>
+<li><p><strong>Binary Variable</strong>: A nominal variable with only two possible categories (e.g., alive/dead, pink/white).</p></li>
+<li><p><strong>Ordinal Variable</strong>: A categorical variable with a meaningful order, but without measurable distances between levels (e.g., gold, silver, bronze).</p></li>
+</ul></li>
+</ul>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  update_total_correct();
+}
+
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../book_sections/clarkia_and_its_data/clarkia_and_its_data.html" class="pagination-link" aria-label="Motivating biology and datasets">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Motivating biology and datasets</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../book_sections/intro2r_index.html" class="pagination-link" aria-label="Intro to R">
+        <span class="nav-page-text">Intro to R</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
