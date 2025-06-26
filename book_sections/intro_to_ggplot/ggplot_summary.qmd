@@ -1,0 +1,323 @@
+## • 3. ggplot summary {.unnumbered}
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr' ,'ggplot2']
+  autoload-packages: true
+---
+
+**Links to:** [Summary](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#chapter-summary). [Chatbot tutor](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#chatbot-tutor). [Questions](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#practice-questions). [Glossary](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#glossary-of-terms). [R functions](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#key-r-functions). [R packages](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#r-packages-introduced). [More resources](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#additional-resources). [Bonus](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#bonus-content-interactive-plots-with-ggplotly).
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(webexercises)
+library(tidyr)
+library(ggplot2)
+library(readr)
+library(dplyr)
+
+# load data
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- read_csv(ril_link, show_col_types = FALSE)|>
+  filter(!is.na(petal_color), !is.na(petal_area_mm), !is.na(asd_mm))
+```
+
+
+
+
+
+```{r}
+#| echo: false
+#| column: margin
+include_graphics("../../figs/intro_to_R/intro_to_ggplot/ggplo2_logo.png")
+```
+
+### Chapter Summary
+
+Effective data visualization begins with curiosity and clear biological questions. Before writing a single line of code, it's worth thinking about what you want to learn from your data and how best to visualize that information. Once we have developed some starting ideas and sketches, we are ready to use ggplot2's flexible framework to bring these ideas to life. Data visualization with ggplot2 is built around the idea that plots are constructed by layering components: you begin by mapping variables to aesthetic properties like position, color, or size, and then choose how to display those mapped variables using geometric elements like histograms, barplots, or points. With this approach you can iteratively build visualizations that reflect your questions and highlight meaningful patterns. 
+
+
+### Chatbot tutor  
+
+Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/g-681d8901c5bc819195bfa3ad35a99030-intro-to-ggplot-tutor)) I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+
+
+### Practice Questions
+
+
+Try the questions below. The R environment below will allow you to work without changing tabs.  
+
+
+```{webr-r}
+# load libraries
+library(ggplot2)
+library(readr)
+library(dplyr)
+
+# load data
+link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- read_csv(link, show_col_types = FALSE)|>
+  filter(!is.na(petal_color), !is.na(petal_area_mm), !is.na(asd_mm))
+
+# start plot
+ggplot(ril_data, aes(x = petal_area_mm , 
+                     y = asd_mm))
+
+# There will be a warning: "`curl` package not installed, falling back to using `url()`" IGNORE IT
+```  
+
+
+:::exercises
+
+
+**Q1)** How would you modify the code above to make a scatterplot to evaluate the relationship between petal area and anther stigma distance? `r longmcq(c("Its perfect, change nothing", answer = "add geom_point()", "add geom_scatter()", "add geom_histogram()"))`  
+
+`r hide("Click here for code")`
+
+```{r}
+ggplot(ril_data, aes(x = petal_area_mm , 
+                     y = asd_mm))+
+  geom_point()
+```
+
+`r unhide()`. 
+
+---  
+
+**Q2)** After fixing the code above, add a best fit trendline. What pattern do you see?  `r longmcq(c(answer = "A positive slope", "A negative slope", "no discernible linear relationship."))`   
+
+
+`r hide("Click here for code")`
+
+```{r}
+ggplot(ril_data, aes(x = petal_area_mm , y = asd_mm))+
+  geom_point()+
+  geom_smooth(method = "lm")
+```
+
+`r unhide()`. 
+
+---  
+
+**Q3)** Now add petal color to the mix, what do you see (choose the best answer)? `r longmcq(c("No difference between pink and white petals", "A steeper slope for pink than white petals", answer = "A greater asd for pink than white petals with the same petal area."))`
+
+
+`r hide("Click here for code and explanation")`
+
+The slopes may be a bit different, but its more obvious that the red line is higher than the turquoise. 
+
+```{r}
+ggplot(ril_data, aes(x = petal_area_mm , 
+                     y = asd_mm, 
+                     color = petal_color))+
+  geom_point()+
+  geom_smooth(method = "lm")
+```
+
+`r unhide()`. 
+
+--- 
+
+
+**Q4** Make a histogram of `asd_mm` with a binwidth of 0.25. What is the most common anther stigma distance (*asd_mm*) with this binning? `r longmcq(c("0.00", "0.25", answer = "0.50", "0.75", "1.00"))`
+
+
+`r hide("Click here for code and explanation")`
+
+
+```{r}
+ggplot(ril_data, aes(x = asd_mm))+
+  geom_histogram(binwidth = .25, color = "white")
+```
+
+`r unhide()`. 
+
+
+--- 
+
+
+
+
+**Q5** Consider the code below, what color are the bars? `r longmcq(c("green", "red", answer = "dark grey"))`
+
+```{r}
+#| eval: false
+ggplot(ril_data, aes(x = asd_mm, color = "green"))+
+    geom_histogram()
+```
+
+
+`r hide("Click here for explanation")`
+
+As you can see the bar's color is the standard dark grey. The lines around the bars are redish. This is because we mapped the variable "green" onto color. Instead keep it out of an `aes()` call. Also be sure to note the difference between `color` and `fill` arguments.  
+
+```{r}
+ggplot(ril_data, aes(x = asd_mm, color = "green"))+
+    geom_histogram()
+```  
+
+`r unhide()`
+
+
+--- 
+
+**Q6** Which code will make a histogram with green bars? `r longmcq(c("a", "b",answer = "c"))`
+
+```{r}
+#| eval: false
+#A 
+ggplot(ril_data, aes(x = asd_mm, fill = "green"))+
+    geom_histogram()
+
+#B
+ggplot(ril_data, aes(x = asd_mm, ))+
+    geom_histogram(color = "green")
+
+#C
+ggplot(ril_data, aes(x = asd_mm, ))+
+    geom_histogram(fill = "green")
+```
+---  
+
+
+::: 
+
+
+----
+
+
+
+### Glossary of Terms
+
+:::glossary
+
+- **Aesthetic Mappings (`aes()`)**: Defines how variables map onto plot elements (e.g., x/y position, color, size).  
+- **Geometric Objects (`geom_*()`)**: Defines how data is represented (e.g., `geom_point()` for scatterplots, `geom_bar()` for bar plots).  
+- **Faceting (`facet_wrap()` and `facet_grid()`)**: Divides plots into multiple panels based on categorical variables.  
+- **Overplotting**: When multiple data points overlap, making them hard to see. Can be addressed with `alpha`, `geom_jitter()`, or `geom_violin()`.  
+- **Small Multiples**: A visualization technique where multiple small plots show variations across categories (e.g., faceting by location).  
+
+:::
+
+---
+
+### Key R functions 
+
+
+:::functions
+
+- **[`ggplot()`](https://ggplot2.tidyverse.org/)** *([ggplot2](https://ggplot2.tidyverse.org/))*: The base function to create a ggplot.  
+- **[`aes()`](https://ggplot2.tidyverse.org/reference/aes.html)** *([ggplot2](https://ggplot2.tidyverse.org/))*: Defines how data is mapped to visual elements.  
+- **[`geom_point()`](https://ggplot2.tidyverse.org/reference/geom_point.html)** *([ggplot2](https://ggplot2.tidyverse.org/))*: Creates scatterplots.  
+- **[`geom_jitter()`](https://ggplot2.tidyverse.org/reference/geom_jitter.html)** *([ggplot2](https://ggplot2.tidyverse.org/))*: Jitters points to reduce overplotting.  
+- **[`geom_bar()`](https://ggplot2.tidyverse.org/reference/geom_bar.html)** *([ggplot2](https://ggplot2.tidyverse.org/))*: Creates bar plots from raw data.  
+- **[`geom_col()`](https://ggplot2.tidyverse.org/reference/geom_col.html)** *([ggplot2](https://ggplot2.tidyverse.org/))*: Creates bar plots from summarized data.  
+- **[`facet_wrap()`](https://ggplot2.tidyverse.org/reference/facet_wrap.html)** *([ggplot2](https://ggplot2.tidyverse.org/))*: Creates multiple panels for categorical variables.  
+- **[`facet_grid()`](https://ggplot2.tidyverse.org/reference/facet_grid.html)** *([ggplot2](https://ggplot2.tidyverse.org/))*: Creates a grid layout for multiple faceting variables.  
+- **[`scale_x_continuous()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)** *([ggplot2](https://ggplot2.tidyverse.org/))*: Modifies x-axis scales (e.g., log transformation).  
+
+:::
+
+---
+
+
+
+### R Packages Introduced
+
+:::packages
+
+
+- **[`ggplot2`](https://ggplot2.tidyverse.org/)**: The core package for data visualization in the `tidyverse`.
+
+:::
+
+
+
+### Additional resources  
+
+
+:::learnmore 
+
+**R Recipes:**    
+
+- [Visualize Two Vectors Using a Scatterplot](https://posit.cloud/learn/recipes/visualize/VisualizeA1A):  Learn how to create a scatterplot to visualize the relationship between two continuous variables.   
+- [Visualize Counts with a Bar Chart](https://posit.cloud/learn/recipes/visualize/VisualizeA4)Discover how to use bar charts to represent the counts of categorical data.        
+- [Visualize Grouped Counts with a Stacked Bar Chart](https://posit.cloud/learn/recipes/visualize/VisualizeA4a):  Understand how to create stacked bar charts to display counts of one categorical variable grouped by another.  
+- [Visualize a Distribution with a Histogram](https://posit.cloud/learn/recipes/visualize/VisualizeA5):  Learn to plot histograms to visualize the distribution of a continuous variable.  
+[Visualize a Distribution with a Density Plot](https://posit.cloud/learn/recipes/visualize/VisualizeA6):  Explore how to use density plots as an alternative to histograms for visualizing data distributions.  
+- [Visualize a Boxplot](https://posit.cloud/learn/recipes/visualize/VisualizeA7):  Find out how to create boxplots to summarize the distribution of a continuous variable and identify potential outliers.  
+
+
+
+**Other web resources:**    
+
+- [Chapter 3: Data visualization](https://r4ds.had.co.nz/data-visualisation.html): From R for data science (@grolemund2018).    
+
+- [Interactive web-based data visualization with R, plotly, and shiny](https://plotly-r.com/improving-ggplotly)
+
+
+**Videos:**  
+
+- [Basic Data Manipulation](https://www.youtube.com/watch?v=Gms3zSPqCk8&t=4s): From Stat454.    
+
+
+
+
+
+
+::: 
+
+--- 
+
+## Bonus content: Interactive plots with ggplotly
+ 
+Often data have strange outliers, or patterns you think you see but aren't sure about, or simply interesting data points. When I run into these issues during exploratory data analysis I often want to know more about individual data points. To do so, I make interactive graphs with the [`ggplotly()`](https://plotly.com/ggplot2/) function in the [`plotly`](https://plotly.com/r/) package. 
+
+*The example below shows how to do this.* Note that you can make up random aesthetics that you never use and they show up when you hover over points -- this helps with understanding outliers. You can also zoom in! 
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link)|>
+  dplyr::select(location,  ril, prop_hybrid,  mean_visits,  
+                petal_color, petal_area_mm,  asd_mm)|>
+  dplyr::mutate(visited = mean_visits > 0)
+```
+
+
+```{r}
+#| message: false
+#| warning: false
+library(plotly)
+big_plot <- ril_data |>
+  filter(!is.na(petal_color))|>
+  ggplot(aes(x = petal_area_mm, 
+             y = prop_hybrid,
+             ril = ril,
+             mean_visits =  mean_visits))+ 
+  geom_point(size = 3, alpha = .4)+
+  facet_grid(petal_color ~ location, labeller = "label_both")+
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplotly(big_plot)
+```

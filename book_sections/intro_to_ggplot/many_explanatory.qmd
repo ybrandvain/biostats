@@ -1,0 +1,209 @@
+### • 3. Many explanatory vars {.unnumbered}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link)|>
+  dplyr::select(location,  ril, prop_hybrid,  mean_visits,  
+                petal_color, petal_area_mm,  asd_mm)|>
+  dplyr::mutate(visited = mean_visits > 0)
+```
+
+
+```{r}
+#| echo: false
+include_graphics("../../figs/intro_to_R/intro_to_ggplot/clarkia_sketch_multexplain.png")
+```
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:**  You want to visualize associations between a response variable and numerous explanatory variables.      
+
+**Learning goals: By the end of this sub-chapter you should be able to**  
+
+1. Use the `color` or `fill` aesthetics  to map categorical variables.   
+2. Use "small multiples" with [`facet_wrap()`](https://ggplot2.tidyverse.org/reference/facet_wrap.html) and [`facet_grid()`](https://ggplot2.tidyverse.org/reference/facet_grid.html)  
+
+:::     
+
+
+
+--- 
+
+### The challenge of many explanatory variables   
+
+There is usually more than one thing going on in a scientific study, and we may want to see how different combinations of explanatory variables are associated with a response. This can be a challenge over the term, you will encounter many tips and tricks to help in this task. For now we will look at two useful approaches:   
+
+- Mapping different explanatory variables to different aesthetics.   
+- The use of "small multiples".
+
+### Multiple aesthetic mappings  
+
+We saw that the number of pollinators increased with petal size and was greater for pink than white flowers. However,  visualizing a response variable as a function of its multiple explanatory variables  together can help us home in on the patterns.  
+
+- To do so we can make a scatterplot and map petal color onto the color aesthetic.    
+- We can even use size and color as extra aesthetics to map onto. I show you how to do this,  but use it sparingly, because too many extra aesthetics may provide more distraction than insight. 
+
+```{r}
+#| echo: false
+#| column: margin
+include_graphics("../../figs/intro_to_R/intro_to_ggplot/jitter_sketch.png")
+```
+
+
+
+:::::: panel-tabset
+
+## Two explanatory variables  
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+
+```{r}
+#| message: false
+#| warning: false
+ril_data |>
+  filter(!is.na(petal_color))|>
+  ggplot(aes(x = petal_area_mm, 
+             y = mean_visits, 
+             color  = petal_color))+
+  geom_point(size = 3, alpha = .4)+
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+:::  
+
+## Three explanatory variables  
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+Here I added anther stigma distance as another explanatory variable by mapping it onto size. Note that:   
+
+- I removed the `size = 3` argument from `geom_point()` otherwise it would not map asd onto size.   
+- In this case, it did not reveal much and was probably not worth doing. 
+
+
+```{r}
+#| message: false
+#| warning: false
+
+ril_data |>
+  filter(!is.na(petal_color))|>
+  ggplot(aes(x = petal_area_mm, 
+             y = mean_visits, 
+             color  = petal_color))+
+  geom_point(aes(size = asd_mm), alpha = .4)+
+  geom_smooth(method = "lm",show.legend = FALSE, se = FALSE)
+```
+
+
+
+:::
+
+
+
+
+:::::: 
+
+
+**Interpretation:**     Returning to the motivating question, we see that visitation increases with both  petal area (positive slope) and pink petals. The proportion of seeds that are hybrids appears to increase with pollinator visitation. Later in the term we will address this question more rigorously.     
+
+### Small multiples  
+
+
+```{r}
+#| echo: false
+#| label: "fig-themoon"
+#| fig-cap: "Using *small multiples* to show the lunar phase moon over a month. From [this link](https://medium.com/@blakewilliford/information-design-9-29-ee995efb584e)"
+include_graphics("https://miro.medium.com/v2/resize:fit:1204/format:webp/0*TYxvPE_R0PYPLtYY.jpg")
+```
+
+:::aside 
+
+*At the heart of quantitative reasoning is a single question: Compared to what? Small multiple designs, multivariate and data bountiful, answer directly by visually enforcing comparisons of changes, of the differences among objects, of the scope of alternatives. For a wide range of problems in data presentation, small multiples are the best design solution.* <br>
+ 
+- Edward Tufte [@tufte_envisioning_1990]
+
+:::
+
+Edward Tufte, a major figure in the field of data visualization - popularized the concept of "small multiples" -- showing data with the same structure across various comparisons. He argued that such visualizations can help our eyes make powerful comparisons (See quote above). For example,  the lunar phase can be well visualized by using small multiples (@fig-themoon).  
+
+For our analyses, we may find that adding location as a variable helps us better see and understand patterns. Additionally, small multiples are sometimes preferable to mapping different categorical variables onto different aesthetics. I show these examples below:  
+
+
+
+
+:::::: panel-tabset
+
+## One explanatory "facet"  
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+We can add a small multiple with a "facet". For a single categorical variable, use the [`facet_wrap()`](https://ggplot2.tidyverse.org/reference/facet_wrap.html) function. Here are some notes and options:   
+
+- The first argument is `~ <Thing to facet by>`,  e.g. `~ location`.   
+- You can specify the number of rows or columns with `nrow` or `ncol` arguments.   
+- The `labeller = "label_both"` shows the variable name in addition to its value.  
+- Occasionally, you may want different facets on different scales. You can use the `scales` argument with options, `free_x`, `free_y`, and `free`.    
+
+```{r}
+#| message: false
+#| warning: false
+ril_data |>
+  filter(!is.na(petal_color))|>
+  ggplot(aes(x = petal_area_mm, 
+             y = prop_hybrid, 
+             color  = petal_color))+
+  geom_point(size = 3, alpha = .4)+
+  facet_wrap(~ location, nrow = 1, labeller = "label_both")+
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+:::  
+
+## Two explanatory "facets"  
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+For two categorical variables, use the [`facet_grid()`](https://ggplot2.tidyverse.org/reference/facet_grid.html) function. Here are some additional notes and options:   
+
+- The first argument is `<Row to facet by> ~ <Column to facet by>`,  e.g. `petal_color ~ location`.   
+- You can no longer  specify the number of rows or columns.    
+- I have shown the same data as the previous plot in a different way. But you can see that this adds room for mapping another variable.   
+
+```{r}
+#| message: false
+#| warning: false
+ril_data |>
+  filter(!is.na(petal_color))|>
+  ggplot(aes(x = petal_area_mm, 
+             y = prop_hybrid))+ 
+  geom_point(size = 3, alpha = .4)+
+  facet_grid(petal_color ~ location, labeller = "label_both")+
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+
+:::
+
+
+
+
+:::::: 
+

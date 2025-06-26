@@ -1,0 +1,89 @@
+### • 2. Selecting columns {.unnumbered}
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+```
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:**  you want to pick out a few columns to work with from a larger tibble.        
+
+**Learning goals: By the end of this sub-chapter you should be able to**  
+
+1. Use the [`dplyr`](https://dplyr.tidyverse.org/) function, [`select()`](https://dplyr.tidyverse.org/reference/select.html), to limit our data to a few variables of interest.  
+:::     
+
+
+```{r}
+#| echo: false
+#| column: margin
+#| label: fig-select
+#| fig-cap: "Using the `select()` function to retain specific columns from a dataset. The top table contains three columns: `prop_hyb` (proportion of hybrids), `n_assayed` (number of individuals assayed), and `n_hyb` (the computed number of hybrids). The `select(prop_hyb, n_hyb)` function is applied, keeping only the `prop_hyb` and `n_hyb` columns. The bottom table displays the resulting dataset after column selection."
+#| fig-alt: "A visual representation of using `select()` in `dplyr`. The top table contains three columns: `prop_hyb`, `n_assayed`, and `n_hyb`, showing values of hybrid proportions, sample sizes, and computed hybrid counts. Below, an R code snippet applies `select(prop_hyb, n_hyb)`, removing `n_assayed` and keeping only the first and last columns. The resulting table, displayed at the bottom, reflects the updated dataset with only `prop_hyb` and `n_hyb` remaining, shown with consistent formatting."  
+include_graphics("../../figs/intro_to_R/data_in_R/select.png")
+```
+
+--- 
+
+## [`select()`](https://dplyr.tidyverse.org/reference/select.html)ing columns of interest   
+
+
+
+The dataset above is not tiny -- seventeen columns accompany the 593 rows of data. To simplify our lives, let's use the [`dplyr`](https://dplyr.tidyverse.org/) function, [`select()`](https://dplyr.tidyverse.org/reference/select.html), to limit our data to a few variables of interest:  
+
+
+- `location`: The plant's location. The pollinator visitation experiment was limited to two locations  (either `SR` or `GC`), while the hybrid seed formation study was replicated at four locations (`SR`, `GC`, `LB` or `US`).  This should be a `<chr>` (character), and it is!
+- `prop_hybrid`: The proportion of genotyped seeds that were hybrids.   
+- `mean_visits`: The mean number of pollinator visits recorded (per fifteen minute pollinator observation) for that RIL genotype at that site.  This should be a number `<dbl>` (double), and it is.
+- `petal_area_mm`: The area of the petals (in mm).  This should be a number `<dbl>` (double), and it is!       
+- `asd_mm`: The distance between anther (the place where pollen comes from) and stigma (the place that pollen goes to) on a flower. The smaller this number, the easier it is for a plant to pollinated itself. This should be a number `<dbl>` (double), and it is. 
+- `growth_rate`: The variable we should have just fixed now it should be a number.    
+- `visited`: A logical variable indicating if the plant received any visits at all.  
+
+```{r}
+ril_data |> 
+  dplyr::select(location,   prop_hybrid,  mean_visits,  
+                petal_color, petal_area_mm,  asd_mm, 
+                growth_rate, visited)
+```
+
+
+
+
+::: {.callout-warning}
+## Warning: R does not remember this change until you assign it.
+
+So, now that we see that our code worked as expected, enter:
+
+
+```{r}
+ril_data <- ril_data |> 
+  dplyr::select(location,  prop_hybrid,  mean_visits,  
+                petal_color, petal_area_mm,  asd_mm,  
+                growth_rate, visited)
+```
+
+:::
+

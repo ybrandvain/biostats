@@ -1,0 +1,96 @@
+### • 2. Adding columns w mutate {.unnumbered}
+
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link)
+```
+
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:**  you want to change or add a column in a tibble.      
+
+**Learning goals: By the end of this sub-chapter you should be able to**  
+
+1. Add or change a column with the  [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html) function in  the [`dplyr`](https://dplyr.tidyverse.org/index.html) package.  
+2. Change between variable types in a column.  
+3. Change values conditionally with the [`case_when()`](https://dplyr.tidyverse.org/reference/case_when.html) function.  
+:::     
+
+
+```{r}
+#| echo: false
+#| column: margin
+#| label: fig-mutate
+#| fig-cap: "An illustration of the `mutate()` function. The top table represents the original dataset, containing columns for the proportion of hybrids (`prop_hyb`) and the number of individuals assayed (`n_assayed`). The `mutate()` function is then applied to compute `n_hyb`, the total number of hybrid individuals, by multiplying `prop_hyb` by `n_assayed`. The resulting dataset, shown in the bottom table, includes this newly created `n_hyb` column."  
+#| fig-alt: "A visual representation of a data transformation using `mutate()` in `dplyr`. The top table contains two columns: `prop_hyb` (proportion of hybrids) and `n_assayed` (number of individuals assayed), with values showing different proportions and a constant sample size of 8. Below, an R code snippet applies `mutate(n_hyb = prop_hyb * n_assayed)`, generating a new column, `n_hyb`, which contains the computed number of hybrids (0, 1, and 2, respectively). The updated dataset is displayed in a bottom table with the new `n_hyb` column highlighted in a darker shade." 
+include_graphics("../../figs/intro_to_R/data_in_R/mutate.png")
+```
+
+--- 
+
+
+
+## Changing or adding variables with [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html)
+
+Often we want to change the values in a column, or make a new column. For example in our data we may hope to:   
+
+
+- Convert `growth_rate` into a number, with the [`as.numeric()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/numeric.html) function. 
+- Add the logical variable, `visited`, which is TRUE if a plant had more than zero pollinators visit them, and is FALSE otherwise.
+
+The [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html) function in the [`dplyr`](https://dplyr.tidyverse.org/index.html) package can solve this. You can overwrite data in an existing column or make a new column as follows: 
+
+```{r}
+ril_data      |>
+  dplyr::mutate(growth_rate = as.numeric(growth_rate),   # make numeric
+                visited = mean_visits > 0)
+```
+
+
+:::fyi
+**Warning... ! NAs introduced by coercion:**  
+
+You can see that R gave us a warning. Warnings do not mean that something necessarily went wrong, but they do mean we should look and see what happened. In this case, we see that when trying to change the character string, `1.8O`, into a number R did not know what to do and converted it to NA. In the next bit of code I convert it into \"1.80\"  with the [`case_when()`](https://dplyr.tidyverse.org/reference/case_when.html) function.
+:::
+
+After confirming this worked, we can assign it to R's memory: In doing so, I even converted `1.8O` into `1.80` so we have an observation in that cell rather than missing data.  
+
+```{r}
+ril_data       <- ril_data      |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+```
+
+```{r}
+#| echo: false
+ril_data
+```
+
+::: {.callout-warning collapse="true"}   
+## Be careful combining classes with [`case_when()`](https://dplyr.tidyverse.org/reference/case_when.html) *Click the arrow to learn more*
+
+When I was trying to change the character "1.8O" into the 1.80, R kept saying: *Error in  dplyr::mutate()... Caused by error in case_when(): ! Can't combine  ..1 (right) <double> and ..2 (right) <character>*.  Unlike warnings, which tell you to watch out, errors tell you R cannot do what you're asking of it. It turns out that I could not assign the number 1.80 to the vector held in petal_area_mm because I could not blend characters add numbers. So, as you can see, I replaced \"1.8O\" with \"1.80\", and then I used [`as.numeric()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/numeric.html) to convert the vector to numeric.  
+
+:::
+

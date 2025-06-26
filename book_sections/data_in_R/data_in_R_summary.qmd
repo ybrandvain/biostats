@@ -1,0 +1,267 @@
+## • 2. Data in R summary {.unnumbered}
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr' ,'ggplot2']
+  autoload-packages: false
+---
+
+**Links to:** [Summary](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#chapter-summary). [Chatbot Tutor](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#chatbot-tutor).  [Questions](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#practice-questions). [Glossary](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#glossary-of-terms). [R functions](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#key-r-functions). [R packages](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#r-packages-introduced). [More resources](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#additional-resources).
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(webexercises)
+library(tidyr)
+library(ggplot2)
+library(readr)
+library(dplyr)
+
+# load data
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- read_csv(ril_link, show_col_types = FALSE)|>
+  filter(!is.na(petal_color), !is.na(petal_area_mm), !is.na(asd_mm))
+```
+
+
+
+## Chapter summary
+
+
+
+```{r}
+#| echo: false
+#| column: margin
+#| fig-alt: "A close-up photograph of a vibrant pink *Clarkia xantiana* flower with delicate, deeply lobed petals. The petals have a soft gradient, fading from a rich pink at the center to a lighter shade towards the edges. The reproductive structures—dark purple stamens with pollen-covered anthers and a protruding stigma—are prominently visible. The background is softly blurred, showing additional flowers and green stems in what appears to be a greenhouse or controlled growth environment."
+#| fig-cap: "A beautiful *Clarkia xantiana* flower."
+include_graphics("../../figs/intro_to_R/data_in_R/pretty_stressed_clarkia.png")
+```
+
+
+Keeping data in the tidy format—where each column represents a variable and each row represents an observation—allows you to fully leverage the powerful tools of the [**tidyverse**](https://www.tidyverse.org/). In the tidyverse, data are stored in tibbles, a modern update to data frames that enhances readability and maintains consistent data types. The [`dplyr`](https://dplyr.tidyverse.org/) package offers a suite of intuitive functions for transforming and analyzing data. For example, [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html) lets you create or modify variables, while [`summarize()`](https://dplyr.tidyverse.org/reference/summarise.html) computes summary statistics. When paired with [`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html), you can easily generate summaries across groups. Other essential functions include [`select()`](https://dplyr.tidyverse.org/reference/select.html) for choosing columns, [`filter()`](https://dplyr.tidyverse.org/reference/filter.html) for subsetting rows, [`rename()`](https://dplyr.tidyverse.org/reference/rename.html), and [`arrange()`](https://dplyr.tidyverse.org/reference/arrange.html) for ordering data. Together—and especially when used with the pipe operator (`group_by(...) |> summarize(...)`)—these tools enable clear, reproducible workflows. In the next chapter, you'll see how tidy data also powers beautiful and flexible plots using  [`ggplot2`](https://ggplot2.tidyverse.org/).
+
+
+### Chatbot tutor  
+
+Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/g-679eb4ffdb648191887186d9713ab2f8-data-in-r-tutor)) I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+
+### Practice Questions
+
+
+Try these questions! Use the R environment below to work without changing tabs.  
+
+
+```{webr-r}
+iris |>  
+  summarise(mean_sepal_length = mean(Sepal.Length))
+```  
+
+
+:::exercises
+
+
+**Q1)** The code above returns the error: \"Error: could not find function \"summarise\"\". How can you solve this? `r longmcq(c("Change \"summarise\" to \"summarize\"", answer = "load the dplyr library"))`  
+
+---  
+
+**Q2)** Revisit the pollinator visitation dataset we explored. Which location has a greater anther stigma distance (`asd_mm`)?  `r mcq(c(answer = "They are the same", "SM", "GC", "S6"))`   
+
+---  
+
+**Q3)** Consider the table below. The data are `r mcq(c("tidy", answer = "not tidy"))`
+
+
+```{r, echo=FALSE}
+head(ril_data)|> select(location, ril, mean_visits) |> t()|>kable()
+```
+
+
+`r hide("Click here for explanation")`
+
+Here the data are transposed, so the data are not tidy. Remember in tidy data each variable is a column, not a row. This is particularly hard for R because there are numerous types of data in a column. 
+
+`r unhide()`. 
+
+--- 
+
+
+**Q4** Consider the table below. The data are `r mcq(c("tidy",  answer ="not tidy "))`
+
+
+```{r, echo=FALSE}
+head(ril_data)|> select(location, ril, mean_visits) |> mutate(`location-ril` = paste(location,ril, sep = "-"))|> dplyr::select(`location-ril`, mean_visits) |>kable()
+```
+
+
+`r hide("Click here for explanation")`
+
+Here location and ril are combined in a single column, so the data are not tidy. Remember in tidy data each variable is its own  column. It would be hard to get e.g. means for RILs of locations in this format.  
+
+`r unhide()`
+
+--- 
+
+
+
+
+**Q5** Consider the table below. The data are `r mcq(c("tidy", answer = "not tidy"))`
+
+
+```{r, echo=FALSE}
+(bind_rows(head(ril_data), head(ril_data|> filter(location=="SR"), n=6) ))|> 
+  filter(location =="SR"|location == "GC")|>
+  select(location, ril, mean_visits) |> pivot_wider(id_cols = ril, names_from = location, values_from = mean_visits)|>kable()
+```
+
+
+
+`r hide("Click here for explanation")`
+
+This is known as "wide format" and is not tidy. Here the variable, location,  is used as a column heading. This can be a fine way to present data to people, but it's not how we are analyzing data.   
+
+`r unhide()`
+
+
+--- 
+
+**Q6** You should always make sure data are tidy when (pick best answer) `r longmcq(c("collecting data", "presenting data",answer = "analyzing data with dplyr",  "all of the above"))`
+
+---  
+
+**Q7** What is wrong with the code below (pick the most egregious issue). `r longmcq(c(answer = "I overwrote iris and lost the raw data", "I did not show the output", "I used summarise() rather than summarize()",  "I did not tell R to remove missing data when calculating the mean."))`
+
+```{r}
+iris <- iris |> 
+  summarise(mean_sepal_length =  mean(Sepal.Length))
+```
+
+---  
+
+**Q8** After running the code below, how many rows and columns will the output tibble have? *NOTE* The original data has 593 rows, 7 columns and 186 unique RILs*  `r mcq(c("1 row, 1 column", "1 row, 2 columns", "2 rows, 2 columns",answer = "186 rows, 2 columns","186 rows, 7 columns" ,"593 rows, 2 columns","593 rows, 7 columns"))`
+
+```{r}
+#| eval: false
+ril_data   |>
+    group_by(ril) |>
+    summarize(avg_visits = mean(mean_visits, na.rm = TRUE))
+```
+
+::: 
+
+
+----
+
+
+
+### Glossary of Terms
+
+:::glossary
+
+
+- **Tidy Data**   A structured format where:  
+   - Each **row** represents an **observation**.  
+   - Each **column** represents a **variable**.  
+   - Each **cell** contains a **single measurement**.    
+
+- **Tibbles:**  A modern form of a **data frame** in R with:   
+   - Cleaner printing (only first 10 rows, fits columns to screen).  
+   - Explicit display of **data types** (e.g., <dbl>, <chr>).  
+   - Strict subsetting (prevents automatic type conversion).  
+   - Character data is **not automatically converted to factors**.   
+
+- **Piping (|>) functions:**  A way to **chain operations together**, making code more readable and modular.    
+- **Grouping in Data Analysis:** Grouped operations allow calculations within subsets of data (e.g., mean visits per location). 
+- **Missing Data (`NA`):** R uses `NA` to represent missing values.   Operations with `NA` return `NA` unless handled explicitly (e.g., na.rm = TRUE to ignore missing values, use = \"pairwise.complete.obs\", etc).     
+- **Warnings**: Indicate a possible issue but allow code to run (e.g., NAs introduced by coercion).     
+- **Errors**: Stop execution completely when something is **invalid**.  
+
+
+
+:::
+
+---
+
+### Key R functions 
+
+
+:::functions
+
+
+- **[`read_csv()`](https://readr.tidyverse.org/reference/read_delim.html)** *([readr](https://readr.tidyverse.org/))*: Reads a CSV file into R as a **tibble**, automatically guessing column types.  
+
+- **[`select()`](https://dplyr.tidyverse.org/reference/select.html)** *([dplyr](https://dplyr.tidyverse.org/))*: Selects specific columns from a dataset.  
+
+- **[`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html)** *([dplyr](https://dplyr.tidyverse.org/))*: Creates or modifies columns in a dataset.  
+
+- **[`case_when()`](https://dplyr.tidyverse.org/reference/case_when.html)** *([dplyr](https://dplyr.tidyverse.org/))*: Replaces values conditionally within a column.  
+
+- **[`as.numeric()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/numeric.html)**: Converts a vector to a numeric data type.  
+
+- **[`summarize()`](https://dplyr.tidyverse.org/reference/summarise.html)** *([dplyr](https://dplyr.tidyverse.org/))*: Computes summary statistics on a dataset (e.g., mean, sum).  
+
+- **[`mean()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mean.html)**: Computes the mean (average) of a numeric vector.  
+
+   - **Argument: [`na.rm = TRUE`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mean.html)**: An argument used in functions like `mean()` and `sd()` to **remove missing values (`NA`) before computation**.  
+
+
+
+
+- **[`pull()`](https://dplyr.tidyverse.org/reference/pull.html)** *([dplyr](https://dplyr.tidyverse.org/))*: Extracts a single column from a tibble as a vector.  
+
+- **[`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html)** *([dplyr](https://dplyr.tidyverse.org/))*: Groups data by one or more variables for summary operations.  
+
+
+
+- **[`|>`](https://dplyr.tidyverse.org/articles/programming.html)** *([Base R Pipe Operator](https://stat.ethz.ch/R-manual/R-devel/library/base/html/pipe.html))*: Passes the result of one function into another, making code more readable.  
+
+
+:::
+
+---
+
+
+
+### R Packages Introduced
+
+:::packages
+
+
+- **[`readr`](https://readr.tidyverse.org/)**: A tidyverse package for reading rectangular data files (e.g., `read_csv()`).
+
+- **[`dplyr`](https://dplyr.tidyverse.org/)**: A tidyverse package for data manipulation, including `mutate()`, `glimpse()`, and `across()`.  
+
+:::
+
+
+
+### Additional resources  
+
+
+:::learnmore 
+
+**R Recipes:**    
+
+- [Selecting columns](https://posit.cloud/learn/recipes/transform/TransformA).   
+- [Add a new column (or modify an existing one)](https://posit.cloud/learn/recipes/transform/TransformF).   
+- [Summarize data](https://posit.cloud/learn/recipes/transform/TransformH).
+- [Summarize data by group](https://posit.cloud/learn/recipes/transform/TransformI). 
+
+**Other web resources:**    
+
+- [Chapter 10: Tidy data](https://r4ds.had.co.nz/tidy-data.html) from R for data science (@grolemund2018).    
+- [Animated dplyr functions](https://rfortherestofus.com/2024/07/dplyr-functions-animated) from R or the rest of us. 
+
+**Videos:**  
+
+- [Basic Data Manipulation](https://www.youtube.com/watch?v=Gms3zSPqCk8&t=4s) (From Stat454).    
+
+- [Calculations on tibble](https://www.youtube.com/watch?v=38BA_v7BwKk) (From Stat454).    
+
+
+::: 

@@ -1,0 +1,161 @@
+### • 2. Summarizing columns {.unnumbered}
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:**  you want to get summaries of your data.        
+
+**Learning goals: By the end of this sub-chapter you should be able to**  
+
+1. Use the [`summarize`](https://dplyr.tidyverse.org/reference/summarise.html) function in `R` to summarize the data.   
+2. Summarize by groups  with the [`group_by`](https://dplyr.tidyverse.org/reference/group_by.html) function.
+3. `ungroup()` the data to return to ungrouped operations.  
+
+:::     
+
+--- 
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)|> 
+  dplyr::select(location,   prop_hybrid,  mean_visits,  
+                petal_color, petal_area_mm,  asd_mm, 
+                growth_rate, visited)
+```
+
+
+
+
+## [`summarize()`](https://dplyr.tidyverse.org/reference/summarise.html)ing data
+
+We rarely want to look at entire datasets, we want to [`summarize()`](https://dplyr.tidyverse.org/reference/summarise.html) them (e.g. finding the mean, variance, etc..). 
+
+We [previously used the mean function](getting_started.qmd##working-with-vectors) to find the mean of a vector. When we want to summarize a variable in a tibble we use the function inside of [`summarize()`](https://dplyr.tidyverse.org/reference/summarise.html).  
+
+```{r}
+#| echo: false
+#| column: margin
+#| fig-cap: "Computing summary statistics with  `summarize()`. The top table contains two columns: `prop_hyb` (proportion of hybrids) and `n_hyb` (the number of hybrids). The `summarize(mean_hyb = mean(n_hyb))` function is applied to calculate the mean of `n_hyb`, producing a single-row output where `mean_hyb` represents the average number of hybrids across the dataset. The final result, shown in the bottom table, contains a single value of 1."
+#| fig-alt: "A visual representation of summarizing data using `summarize()` in `dplyr`. The top table contains two columns: `prop_hyb` and `n_hyb`, displaying hybrid proportions and counts. Below, an R code snippet applies `summarize(mean_hyb = mean(n_hyb))`, computing the average value of `n_hyb`. The bottom table shows the resulting dataset, reduced to a single row with a new column `mean_hyb`, which holds the computed mean value of 1."  
+include_graphics("../../figs/intro_to_R/data_in_R/summarize.png")
+```
+
+```{r}
+ril_data      |>
+  summarize(avg_visits = mean(mean_visits))
+```
+
+We notice two things.   
+
+1. The answer was NA. This is because there are `NA`s in the data. 
+
+
+2.  The results are a tibble. This is sometimes what we want and sometimes not. If you want a vector you can `pull()` the value.  
+
+:::protip
+**Summarize data in the face of NAs with the na.rm = TRUE argument.**
+
+
+
+```{r}
+ril_data      |>
+  summarize(avg_visits = mean(mean_visits, na.rm = TRUE))
+```
+
+**[pull()](https://dplyr.tidyverse.org/reference/pull.html)  columns from tibbles to extract vectors.**  
+
+Many R functions require vectors rather than tibbles. You can [pull()](https://dplyr.tidyverse.org/reference/pull.html) them out as follows:
+
+
+```{r}
+ril_data      |>
+  summarize(avg_visits = mean(mean_visits, na.rm = TRUE))|>
+  pull()
+```
+
+:::
+
+::: {.callout-note collapse="true"}       
+## "A visual explanation of the summarize() function from [R for the rest of us](https://rfortherestofus.com/2024/07/dplyr-functions-animated).  
+
+```{r}
+#| echo: false
+#| fig-cap: "A visual explanation of the summarize() function from [R for the rest of us](https://rfortherestofus.com/2024/07/dplyr-functions-animated)." 
+include_graphics("https://rfortherestofus.com/images/summarize.gif")
+```
+
+:::
+
+## Combine [`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html) and[`summarize()`](https://dplyr.tidyverse.org/reference/summarise.html) to describe groups 
+
+Say we were curious about differences in pollinator visitation by location. The code below combines  [`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html) and [`summarize()`](https://dplyr.tidyverse.org/reference/summarise.html) to show that site `SR` had nearly 10 times the mean pollinator visitation per 15 minute observation than did site `GC`. We also see a much stronger correlation between petal area and visitation in `SR` than in `GC`, but a stronger correlation between proportion hybrid and visitation in `GC` than in `SR`. Note  that the `NA` values for `LB` and `US` arise because we did not  conduct pollinator  observations at those locations. 
+
+```{r}
+ril_data      |>
+  group_by(location) |>
+  summarize(grand_mean = mean(mean_visits, na.rm = TRUE),
+            cor_visits_petal_area =  cor(mean_visits ,petal_area_mm, 
+                use = "pairwise.complete.obs"),
+            cor_visits_prop_hybrid =  cor(mean_visits , prop_hybrid, 
+                use = "pairwise.complete.obs")) # Like na.rm = TRUE, but for correlations
+```
+
+We can group by more than one variable. Grouping by location and color reveals not only that white flowers are visited less than pink flowers, but also that petal area has a similar correlation with pollinator visitation for pink and white flowers.
+
+```{r}
+ril_data      |>
+  group_by(location, petal_color) |>
+  summarize(avg_visits = mean(mean_visits, na.rm = TRUE),
+            cor_visits_petal_area =  cor(mean_visits ,petal_area_mm, 
+                use = "pairwise.complete.obs")) # Like na.rm = TRUE, but for correlations
+```
+
+
+::: {.callout-note collapse="true"}       
+## A visual explanation of group_by() + summarize() from [R for the rest of us](https://rfortherestofus.com/2024/07/dplyr-functions-animated)
+
+```{r}
+#| echo: false
+##| fig-cap: "A visual explanation of group_by() + summarize() from [R for the rest of us](https://rfortherestofus.com/2024/07/dplyr-functions-animated)." 
+include_graphics("https://rfortherestofus.com/images/group_by_summarize.gif")
+```
+
+:::
+
+### ungroup()  
+
+After summarizing, the data above are still grouped by location. You can see this under `#A tibble: 6 x 4` where it says `# Groups:   location [5]`. This tells us that the data are still grouped by location (these groups correspond to `GC`, `SR`, `US`, `LB` and missing location information `NA`). It's good practice to [`ungroup()`](https://dtplyr.tidyverse.org/reference/group_by.dtplyr_step.html)  next, so that R does not do anything unexpected.
+
+
+:::aside
+**Peeling of groups:** Above we grouped by location and petal_color in that order. When summarize data, by default, R peels off one group, following a "last one in is the first one out" rule. This is what is meant when R says: "`summarise()` has grouped output by 'location'...".
+:::
+
+```{r}
+# re-running code above and then ungrouping it.
+# note that the output no longer says `# Groups:   location [2]`
+ril_data      |>
+  group_by(location, petal_color) |>
+  summarize(avg_visits = mean(mean_visits, na.rm = TRUE),
+            cor_visits_petal_area =  cor(mean_visits ,petal_area_mm, 
+                use = "pairwise.complete.obs"))|>
+  ungroup()
+```

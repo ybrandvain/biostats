@@ -1,0 +1,149 @@
+### • 3. Two categorical variables {.unnumbered}
+
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link)|>
+  dplyr::select(location,  ril, prop_hybrid,  mean_visits,  
+                petal_color, petal_area_mm,  asd_mm)|>
+  dplyr::mutate(visited = mean_visits > 0)
+```
+
+
+```{r}
+#| echo: false
+include_graphics("../../figs/intro_to_R/intro_to_ggplot/clarkia_sketch_twocat.png")
+```
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:**  You want to explore how two categorical variables are associated.      
+
+**Learning goals: By the end of this sub-chapter you should be able to**  
+
+1. Make barplots with [`geom_bar()`](https://ggplot2.tidyverse.org/reference/geom_bar.html) and [`geom_col()`](https://ggplot2.tidyverse.org/reference/geom_bar.html).   
+2. Make stacked and grouped barplots.  
+3. Know when to use [`geom_bar()`](https://ggplot2.tidyverse.org/reference/geom_bar.html) and when to use [`geom_col()`](https://ggplot2.tidyverse.org/reference/geom_bar.html).     
+
+:::     
+
+
+
+--- 
+
+
+### Categorical explanatory and response variables 
+
+Above, we saw that most plants received no visits, so we might prefer to compare the proportion of plants that did and did not receive a visit from a pollinator by some explanatory variable (e.g. petal color or location). Recall that we have added the logical variable, `visited`, by typing  `mutate(visited = mean_visits > 0)`.  
+
+
+
+```{r}
+#| echo: false
+#| column: margin
+include_graphics("../../figs/intro_to_R/intro_to_ggplot/two_categoricals.png")
+```
+
+**Making  bar plots: A Step-by-Step guide.** There are two main geoms for making bar plots, depending on the structure of our data:  
+
+- If we have raw data (i.e. a huge dataset with values for each observation) use [`geom_bar()`](https://ggplot2.tidyverse.org/reference/geom_bar.html).  
+- If we have aggregated data (i.e. a summary of a huge dataset with counts for each combination of variables) use [`geom_col()`](https://ggplot2.tidyverse.org/reference/geom_bar.html)
+
+**Note:**  Here we map petal color onto the x-axis, and visited (TRUE / FALSE) onto the `fill` aesthetic. 
+
+:::::: panel-tabset
+
+## Stacked barplot 
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+
+
+```{r}
+#| message: false
+#| warning: false
+ril_data |> 
+    filter(!is.na(petal_color), !is.na(mean_visits))|>
+    mutate(visited = mean_visits >0)|>
+  ggplot(aes(x = petal_color, fill = visited))+
+  geom_bar()
+```
+
+::: 
+
+## Grouped barplot 
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+
+
+```{r}
+#| message: false
+#| warning: false
+ril_data |> 
+    filter(!is.na(petal_color), !is.na(mean_visits))|>
+    mutate(visited = mean_visits >0)|>
+  ggplot(aes(x = petal_color, fill = visited))+
+  geom_bar(position = "dodge")
+```
+
+
+:::
+
+## Aggregated data 
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+If you had aggregated data, like that below. We need to plot these data somewhat differently. There are two key differences: 
+
+1. We map our count (in this case `n`) onto the `y` aesthetic.   
+2. We use `geom_col()` instead of `geom_bar()`.  
+
+
+```{r}
+#| echo: false
+#| code-fold: true
+#| code-summary:  "Show code to make the tibble,  aggregated_pollinator_obs."
+aggregated_pollinator_obs <- ril_data |> 
+    filter(!is.na(petal_color), !is.na(mean_visits))|>
+    mutate(visited = mean_visits >0)|>
+    group_by(location, petal_color, visited)|>
+    tally()
+```
+```{r}
+#| echo: false
+kable(aggregated_pollinator_obs )
+```
+
+```{r}
+ggplot(data = aggregated_pollinator_obs, 
+       aes(x = petal_color, y = n, fill = visited))+
+  geom_col()
+```
+
+::: 
+
+::::::
+
+
+
+**Interpretation:**  We see that a greater proportion of pink-flowered plants receive visits compared to white-flowered plants. 

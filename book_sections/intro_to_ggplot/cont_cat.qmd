@@ -1,0 +1,172 @@
+### • 3. Continuous y/categorical x {.unnumbered}
+
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link)|>
+  dplyr::select(location,  ril, prop_hybrid,  mean_visits,  
+                petal_color, petal_area_mm,  asd_mm)|>
+  dplyr::mutate(visited = mean_visits > 0)
+```
+
+
+
+
+```{r}
+#| echo: false
+include_graphics("../../figs/intro_to_R/intro_to_ggplot/clarkia_sketch_catexplan.png")
+```
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:**  You want to compare a continuous variable across different levels of a categorical explanatory variable.      
+
+**Learning goals: By the end of this sub-chapter you should be able to**  
+
+1. Understand the challenge of overplotting.  
+2. Use [`geom_point`](https://ggplot2.tidyverse.org/reference/geom_point.html), [`geom_jitter()`](https://ggplot2.tidyverse.org/reference/geom_jitter.html) and/or [`geom_boxplot()`](https://ggplot2.tidyverse.org/reference/geom_boxplot.html)  to visualize the distribution. 
+   - Use the `size` and `alpha` arguments to adjust the size and transparency of points.  
+3. Combine [`geom_jitter()`](https://ggplot2.tidyverse.org/reference/geom_jitter.html) and/or [`geom_boxplot()`](https://ggplot2.tidyverse.org/reference/geom_boxplot.html), noting that 
+   - Order matters - always plot jittered points on top of (i.e. after) boxplots.   
+   - When showing boxplots and jittered points, make sure the boxplot does not show outliers, otherwise those points will be shown twice.  
+   
+:::     
+
+---  
+
+### Visualizing associations between a continuous response and a categorical explanatory variable.  
+
+
+We often want to know more than just the distribution of variables, we want to know which, if any, explanatory variables are associated with this variation. So, for example, we may want to know if pollinator visitation differs by location. In this case we map the categorical variable (location) onto the x-axis and the continuous response (visitation) onto the y-axis. 
+
+```{r}
+#| echo: false
+#| column: margin
+include_graphics("../../figs/intro_to_R/intro_to_ggplot/jitter_sketch.png")
+```
+
+
+To compare visitation by site, we start with this setup:  
+
+- Filter our data for samples from \"GC\" and \"SR\" (because we did not conduct pollinator observations at the other sites).   
+- Pipe this directly into our `ggplot()` function.  
+
+**Note:** We do not need to specify the data argument when piping data. That is because ggplot inherits data from the pipe.
+
+```{r}
+#| eval: false 
+ril_data |> 
+  filter(location == "GC" | location == "SR") |> # Pipe data into ggplot
+  ggplot(aes(x = location, y = mean_visits))
+```
+
+
+**Continuous response to a categorical explanatory variable: A Step-by-Step Guide:**   In the tabs below I show some options for our geom. 
+
+:::::: panel-tabset
+
+## `point()`
+
+
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**The Simplest Plot**  
+
+- Uses the `geom_point()` function to display the data.  
+- We can add a mean using `stat_summary()`.   
+
+**Note:** I plot the mean in red to make it stand out.   
+
+```{r}
+#| message: false 
+#| warning: false 
+ril_data |> 
+  filter(location == "GC" | location == "SR") |>  # Pipe data into ggplot
+  ggplot(aes(x = location, y = mean_visits)) +
+  geom_point(size =2, alpha = 0.5) +
+  stat_summary(size = 1.2, color = "red")
+```
+
+However, these figures can be difficult to interpret when many points overlap, making it hard to distinguish individual data points—this issue is known as **over-plotting**.  
+
+One way to address over-plotting is to adjust the **transparency** of points using the `alpha` argument. There are several other techniques to handle this, which we’ll explore in the next section.  
+
+
+:::
+
+## `jitter()`
+
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+Jitter plots spread out data along the x-axis. This works well with categorical predictors but can be misleading when used with continuous predictors. To improve clarity, I make a few adjustments in the [`geom_jitter()`](https://ggplot2.tidyverse.org/reference/geom_jitter.html) function:  
+
+- I set `height = 0` to keep the y-values unchanged. I always do this.  
+- I set `width = 0.3` to prevent points from overlapping too much between categories. You may experiment with this value to find the best fit for your plot.  
+- I make the points larger (`size = 3`) and partially transparent (`alpha = 0.5`) to help visualize overlap more effectively.  
+
+
+```{r}
+#| message: false 
+#| warning: false 
+ril_data |> 
+  filter(location == "GC" | location == "SR") |> # Pipe data into ggplot
+  ggplot(aes(x = location, y = mean_visits))+
+  geom_jitter(height = 0, width = .3, size = 3, alpha = .5)+
+  stat_summary(size = 1.2,color = "red")
+```
+
+
+:::
+
+
+
+## `boxplot() + jitter()`
+
+
+ 
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+We can add multiple `geom` layers to a plot. For example, we can combine a boxplot ([`geom_boxplot()`](https://ggplot2.tidyverse.org/reference/geom_boxplot.html)) with a jitter plot. However, there are a few important things to keep in mind:  
+
+- **Order matters.** `geom_boxplot() + geom_jitter()` places points over the boxplot, making the data visible, while `geom_jitter() + geom_boxplot()` places the boxplot on top, potentially obscuring the points.  
+- **Handling outliers.** `geom_boxplot()` automatically displays outliers as individual points, which is useful when we're not showing the raw data. However, if we add jittered points with `geom_jitter()`, these outliers will appear twice, potentially misleading us. To avoid this, I set `outlier.shape = NA` in the boxplot.  
+
+```{r}
+#| message: false 
+#| warning: false 
+ril_data |> 
+  filter(location == "GC" | location == "SR") |> # Pipe data into ggplot
+  ggplot(aes(x = location, y = mean_visits))+
+  geom_boxplot(outlier.shape = NA) + 
+  geom_jitter(height = 0, width = .3, size = 3, alpha = .5)
+```
+
+
+:::
+
+
+::::::
+
+**Interpretation:**     Returning to our motivating question, we see that plants at the `SR` population receive way more visits by pollinators than do plants at `GC`.  
+

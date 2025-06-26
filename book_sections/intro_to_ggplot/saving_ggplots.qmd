@@ -1,0 +1,82 @@
+### • 3. Saving a ggplot {.unnumbered}
+
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link)|>
+  dplyr::select(location,  ril, prop_hybrid,  mean_visits,  
+                petal_color, petal_area_mm,  asd_mm)|>
+  dplyr::mutate(visited = mean_visits > 0)
+```
+
+
+
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:**  You have made a plot and want to save it!
+
+**Learning goals: By the end of this sub-chapter you should be able to**   
+
+1. Save a ggplot using either a screen grab, RStudio's point-and-click options, or the [`ggsave()`](https://ggplot2.tidyverse.org/reference/ggsave.html) function.    
+2. Know the costs and benefits of each approach and when to use which. 
+
+:::     
+
+--- 
+
+### Saving Your ggplot.  
+
+You probably want to save your plot once you've made one you like. There are several ways to do this, each with its own pros and cons.
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| column: margin
+include_graphics("https://upload.wikimedia.org/wikipedia/commons/6/67/Green_floppy_disk_graphic.png?20150410181444")
+```
+
+The quickest approach is to simply take a screenshot -- I do this quite often, and it is great because the plot you save looks exactly like the one on your screen. However, these plots are not vectorized and can lose quality in other ways, so I usually use these as a quick first pass for exploratory data analysis, rather than a refined solution.  
+
+The next fastest way is to use RStudio’s built-in tools --  simply click on the plot in the Plots panel, then use the Export button to copy or save the image. This allows you to choose a file format (like PNG or PDF), set the dimensions, and adjust the resolution. This method is convenient and good for quick outputs, but it’s manual, which means it doesn’t lend itself to reproducible workflows — if you make changes and regenerate your plot later, you’ll have to go through the same export process again.
+
+For more control and reproducibility, I suggest using the [`ggsave()`](https://ggplot2.tidyverse.org/reference/ggsave.html) function. This function saves the most recently displayed plot by default, or you can specify a plot object manually. You can choose the file type simply by specifying the file extension (e.g., .png, .pdf, .svg) and control the size and resolution of the output. For example, the code below  will save a high-resolution pdf file, called `ril_visit_hist.pdf`:
+
+
+
+
+
+
+```{r}
+#| message: false
+#| warning: false
+#| eval: false
+ggplot(ril_data, aes(x = mean_visits))+
+  geom_histogram(binwidth = .2, color = "white", fill = "pink")
+
+ggsave("ril_visit_hist.pdf", width = 6, height = 4)
+```
+
+::: {.callout-warning}
+
+**When using either `ggsave()` or RStudio's built-in tools** always check that your saved plot looks as expected, as it is often slightly different than what you saw in your R session.  
+
+:::

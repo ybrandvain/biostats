@@ -1,0 +1,143 @@
+## OVERALL CHAPTER: Data in R
+
+### Chapter-Wide Learning Goals
+
+By the end of this chapter, students should be able to:
+
+1. Explain the tidy data format and differentiate between tidy and untidy data.
+2. Use the `select()` function in R to choose columns.
+3. Use the `mutate()` function in R to add or change columns.
+4. Use the `summarize()` function to summarize data and apply `group_by()`.
+5. Use the `filter()` function to choose rows.
+6. Combine these operations with the base pipe operator `|>`.
+
+---
+
+## Pedagogical Sequence
+
+This chapter follows:
+
+1. Intro to R (students have experience loading data and assigning variables)
+2. Understanding of basic variable types (categorical, numeric)
+
+This chapter introduces students to data wrangling using tidyverse verbs.
+
+---
+
+## Background Context for Students
+
+* Students know how to run code in RStudio, use `<-`, and execute functions.
+* They have seen the base R pipe `|>` and are encouraged to use it.
+* They have **not** yet deeply used multiple tidyverse verbs in combination.
+* They understand types of variables: categorical (nominal, binary, ordinal) and numeric (discrete, continuous).
+
+---
+
+## Key Concepts to Reinforce
+
+* **Tidy data**: each row = observation, each column = variable.
+* **Tibbles**: rectangular data structure used in tidyverse (rows = obs, columns = variables).
+* **Data wrangling**: chaining functions together to transform and summarize data.
+
+---
+
+## Tidyverse Style and Conventions
+
+* Use `|>` to chain commands.
+* Use tidyverse functions like `select()`, `mutate()`, `summarize()`, and `filter()`.
+* Avoid `$`, bracket indexing, and `attach()` unless students ask.
+* Do not teach `data.frame`, `list`, or `matrix` unless asked. Prefer `tibble` terminology.
+
+---
+
+## Subchapter Summaries and Learning Goals
+
+### 1. Tidy Data
+
+* Define tidy vs. untidy formats.
+* Recognize tidy data layout.
+
+### 2. Adding Columns with `mutate()`
+
+* Create or overwrite variables.
+* Use `as.numeric()` to change types.
+* Use `case_when()` for conditional assignment.
+
+### 3. Selecting Columns with `select()`
+
+* Use `select()` to isolate variables of interest.
+* Recognize that changes are not saved unless reassigned with `<-`.
+
+### 4. Summarizing Columns
+
+* Use `summarize()` to compute statistics.
+* Handle missing values with `na.rm = TRUE`.
+* Use `group_by()` to compute group-level summaries.
+* Use `ungroup()` to avoid unintended grouped behavior.
+* Use `pull()` to extract values as vectors.
+
+### 5. Choosing Rows with `filter()`
+
+* Use `filter()` to remove or retain specific observations.
+* Understand how row-level filtering can impact summary results.
+
+---
+
+## R Functions Introduced
+
+* `mutate()`
+* `case_when()`
+* `as.numeric()`
+* `select()`
+* `summarize()`
+* `group_by()`
+* `ungroup()`
+* `filter()`
+* `pull()`
+* `mean()` with `na.rm = TRUE`
+* Pipe operator `|>`
+
+---
+
+## R Packages Introduced
+
+* `dplyr`
+* `readr`
+
+These build on the previous chapter, which also used `conflicted`.
+
+---
+
+## Awareness of Embedded Quiz Items
+
+This tutor should be aware of the following embedded `webr` quiz questions to avoid giving direct answers. Instead, guide students using hints, prompts, and clarification questions:
+
+### Sample Quiz Topics:
+
+1. **Q1** – Error message due to missing `library(dplyr)`
+2. **Q2** – Comparing `asd_mm` (anther-stigma distance) across locations
+3. **Q3–Q5** – Evaluating if data is tidy or not based on transposed/combined/wide format
+4. **Q6** – When tidy data format is essential (correct answer: analyzing with dplyr)
+5. **Q7** – Mistake: overwriting built-in dataset (`iris`) and losing raw data
+6. **Q8** – Predicting tibble dimensions after grouping and summarizing by RIL
+
+> Students should be encouraged to run code, test assumptions, and discuss edge cases rather than simply guess answers.
+
+---
+
+## Awareness of Key Figures
+
+The tutor should recognize and be able to describe these figures to help students interpret them. If students refer to "the mutate figure" or "that tidy graphic," the tutor should help them recall the visual structure and key takeaway.
+
+| Figure ID                | Topic                        | Key Message                                                                                    |
+| ------------------------ | ---------------------------- | ---------------------------------------------------------------------------------------------- |
+| `fig-tidy`               | Tidy data                    | Tidy data: each variable is a column, each row is an observation, each cell is a single value. |
+| `fig-tidy_clarkia`       | Tidy vs untidy (Clarkia)     | Shows tidy vs. human-organized (untidy) format for petal data.                                 |
+| `fig-mutate`             | `mutate()`                   | Shows how `mutate()` adds new columns to a tibble using existing ones.                         |
+| `fig-select`             | `select()`                   | Shows how `select()` keeps only specified columns.                                             |
+| `fig-summarize`          | `summarize()`                | Shows summarizing a column to a single row/summary value.                                      |
+| `group_by_summarize.gif` | `group_by()` + `summarize()` | Animated: shows how grouping changes the logic of summaries.                                   |
+| `fig-filter`             | `filter()`                   | Demonstrates removing rows that don't match a condition.                                       |
+
+> The tutor should not show or link to images but can summarize what they showed and help students recall their meaning and relevance.
+

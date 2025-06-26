@@ -1,0 +1,152 @@
+### • 3. A continuous variable {.unnumbered}
+
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link)|>
+  dplyr::select(location,  ril, prop_hybrid,  mean_visits,  
+                petal_color, petal_area_mm,  asd_mm)|>
+  dplyr::mutate(visited = mean_visits > 0)
+```
+
+
+```{r}
+#| echo: false
+include_graphics("../../figs/intro_to_R/intro_to_ggplot/clarkia_sketch_hist.png")
+```
+
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:**  You want to see the distribution of a single continuous variable.      
+
+**Learning goals: By the end of this sub-chapter you should be able to**  
+
+1. Familiarize yourself with making plots using the ggplot2 package. 
+2. Use [`geom_histogram()`](https://ggplot2.tidyverse.org/reference/geom_histogram.html) to make a histogram. 
+   - Specify the width (with `binwidth`) or number (with `bins`) of bins in a histogram.  
+3. Use [`geom_density()`](https://ggplot2.tidyverse.org/reference/geom_density.html) to make a density plot. 
+4. Change the outline color (with `color`) and the fill color (with `fill`).   
+
+:::     
+
+--- 
+
+### Visualizing Distributions 
+
+Let's first consider the distribution of a single continuous variable—pollinator visitation. There are some natural questions we would want answered early on in our analysis:     
+
+- Are most flowers visited frequently, or do visits tend to be rare?  
+- Is the distribution symmetric, or is it skewed, with many flowers receiving few or no visits and a small number receiving many? 
+
+As we will see throughout the term, understanding the shape of our data helps guide our analysis. Let's start with two common visualizations for distributions:  
+
+```{r}
+#| echo: false
+#| column: margin
+include_graphics("../../figs/intro_to_R/intro_to_ggplot/hist_sketch.png")
+```
+
+- **A histogram** bins the x-axis variable (in this case, visitation) into intervals and shows the number of observations in each bin on the y-axis. This allows us to see how frequently different levels of visitation occur.    
+- **A density plot** fits a smooth function to the histogram, providing a continuous representation of the distribution. This smoothing can sometimes make patterns easier (or harder) to see. Later, we’ll see that density plots can also help compare distributions.  
+
+**Making  histograms & density plots: A Step-by-Step Guide.**   To create these visualizations in `ggplot2`, we need to (minimally) specify three key layers:  
+
+1. **The data layer:** This is the dataset we're plotting—in this case, `ril_data`. We pass this as an argument inside the [`ggplot()`](https://ggplot2.tidyverse.org/reference/ggplot.html) function, e.g., `ggplot(data = ril_data)`.  
+2. **The aesthetic mapping:** This tells R how to map each variable onto the plot. In a histogram, we map the variable whose distribution we want to visualize (in this case, `mean_visits`) onto the x-axis. We define this inside the `aes()` argument within [`ggplot()`](https://ggplot2.tidyverse.org/reference/ggplot.html), e.g., `ggplot(data = ril_data, aes(x = mean_visits))`.  
+3. **The geometric object (`geom`) that displays the data:** In this case, we use [`geom_histogram()`](https://ggplot2.tidyverse.org/reference/geom_histogram.html) for a histogram or [`geom_density()`](https://ggplot2.tidyverse.org/reference/geom_density.html) for a density plot. These are added to the plot using a `+`, as shown in the examples below.  
+
+
+:::::: panel-tabset
+
+## Set up 
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+Inside the [`ggplot()`](https://ggplot2.tidyverse.org/reference/ggplot.html) function, we tell R that we are working with the `ril_data`, and we map `mean_visits` onto x inside `aes()`. The result is a boring canvas, but it is the canvas we build on. 
+
+```{r}
+#| message: false
+#| warning: false
+ggplot(data = ril_data, aes(x = mean_visits))
+```
+
+:::
+
+
+## Adding a geom
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+But now we want to show the data. To do so we need to add our `geom`. In this case we show the data as a histogram. 
+
+The resulting plot shows that most plants get zero visits, but some get up to five visits. 
+
+```{r}
+#| message: false
+#| warning: false
+ggplot(ril_data,aes(x = mean_visits))+
+  geom_histogram()
+```
+
+
+:::
+
+## Elaborations   
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+To take a bit more control of my histogram, I like to   
+
+- Specify the number or width of bins (with the `binwidth` and `bins` arguments, respectively).   
+- Add white lines between bins to make them easier to see (with `color = "white"`).  
+- Spruce up the bins by specifying the color that fills them (with e.g. `fill = "pink"`).  
+
+```{r}
+#| message: false
+#| warning: false
+ggplot(ril_data, aes(x = mean_visits))+
+  geom_histogram(binwidth = .2, color = "white", fill = "pink")
+```
+
+
+:::
+
+## Density plot  
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+Now you can easily make a density plot if you prefer!
+
+```{r}
+#| message: false
+#| warning: false
+ggplot(ril_data, aes(x = mean_visits))+
+  geom_density(color = "white", fill = "pink")
+```
+
+
+:::
+
+::::::
+
+
+**Interpretation:**     Returning to our motivating questions, we see that  most plants receive no visits, but this distribution is skewed with some plants getting lots of visits.  
+

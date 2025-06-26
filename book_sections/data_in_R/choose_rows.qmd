@@ -1,0 +1,104 @@
+### • 2. Choose rows {.unnumbered}
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:**  you want to limit your analysis to rows with certain values.        
+
+**Learning goals: By the end of this sub-chapter you should be able to**  
+
+1. Use the [`filter`](https://dplyr.tidyverse.org/reference/filter.html) function to choose the rows you want to work with.  
+2. Display care so that you do not get the wrong answer when filtering your data.   
+
+:::     
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)|> 
+  dplyr::select(location,   prop_hybrid,  mean_visits,  
+                petal_color, petal_area_mm,  asd_mm, 
+                growth_rate, visited)
+```
+
+
+
+---   
+
+## Remove rows with filter() 
+
+There are reasons to remove rows by their values. For example, we could remove plants from  `US` and `LB` locations. We can achieve this with the [`filter()`](https://dplyr.tidyverse.org/reference/filter.html) function as follows:   
+
+```{r}
+#| echo: false
+#| column: margin
+#| label: fig-filter
+#| fig-cap: "Using `filter()` to subset data based on a condition. The top table contains two columns: `prop_hyb` (proportion of hybrids) and `petal_color` (flower color), with values including both \"white\" and \"pink\" flowers. The function `filter(petal_color == \"pink\")` is applied to retain only rows where `petal_color` is \"pink.\" The resulting dataset, shown in the bottom table, excludes the \"white\" flower row and keeps only the observations where petal color is \"pink.\""
+#| fig-alt: "A visual representation of filtering data using `filter()` in `dplyr`. The top table contains two columns: `prop_hyb` and `petal_color`, listing hybrid proportions alongside flower color (\"white\" and \"pink\"). Below, an R code snippet applies `filter(petal_color == \"pink\")`, removing rows where `petal_color` is not \"pink.\" The bottom table displays the filtered dataset, which includes only rows with pink flowers, while the white flower row has been excluded."
+include_graphics("../../figs/intro_to_R/data_in_R/filter.png")
+```
+
+
+- `ril_data |> filter(location == "GC" | location == "SR")`: To only retain samples from `GC` or (noted by `|`) `SR`. Recall that `==` asks the logical question, "Does the location equal `SR`?" So combined, the code reads "Retain only samples with location equal to `SR` or location equal to `GC`."  
+
+OR, equivalently 
+
+- `ril_data |> filter(location != "US" & location != "LB")`: To remove samples from `US` and (noted by `&`) `LB`. Recall that `!=` asks the logical question, "Does the location not equal `US`?" Combined the code reads "Retain only samples with location not equal to `US`  and with location not equal to `LB`."  
+
+```{r}
+# rerunning the code summarizing visitation by 
+# location and petal color and then ungrouping it
+# but filtering out plants from locations US and LB
+# note that the output no longer says `# Groups:   location [2]`
+ril_data      |>
+  filter(location != "US" & location != "LB")|>
+  group_by(location, petal_color) |>
+  summarize(avg_visits = mean(mean_visits, na.rm = TRUE),
+            cor_visits_petal_area =  cor(mean_visits ,petal_area_mm, 
+                use = "pairwise.complete.obs"))|>
+  ungroup()
+```
+
+
+:::warning
+**Warning! Remove one thing can change another:**  
+
+Think hard about removing things (e.g. missing data), and if you decide to remove things, consider where in the pipeline you are doing so. Removing one thing can change another. For example, compare: 
+
+
+```{r}
+ril_data |>
+  filter(!is.na(petal_color))|>
+  summarise(avg_visits = mean(mean_visits, na.rm = TRUE))
+```
+
+and
+
+```{r}
+ril_data |>
+  summarise(avg_visits = mean(mean_visits, na.rm = TRUE))
+```
+
+These answers differ because when we removed plants with no petal color information we also removed their pollinator visitation values.
+
+:::
+ 
