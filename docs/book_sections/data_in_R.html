@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>• 1. Load packages and data – Applied Biostatistics</title>
+<title>2. Data in R – Applied Biostatistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -54,27 +54,47 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<link href="../../book_sections/getting_started/data_types.html" rel="next">
-<link href="../../book_sections/getting_started/functions_and_vectors.html" rel="prev">
-<script src="../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-d4394cde7c380170a4469b96acf338b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-90eb7791a5c5b81885cedfef0a190562.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../book_sections/data_in_R/add_vars.html" rel="next">
+<link href="../book_sections/getting_started/getting_started_summary.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d4394cde7c380170a4469b96acf338b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-90eb7791a5c5b81885cedfef0a190562.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -104,9 +124,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="../../assets/sticky-notes.css">
-<link rel="stylesheet" href="../../assets/table-styles.css">
-<link rel="stylesheet" href="../../assets/webex.css">
+<link rel="stylesheet" href="../assets/sticky-notes.css">
+<link rel="stylesheet" href="../assets/table-styles.css">
+<link rel="stylesheet" href="../assets/webex.css">
 </head>
 
 <body class="nav-sidebar floating slimcontent">
@@ -118,7 +138,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/getting_started.html">1. Getting started with R</a></li><li class="breadcrumb-item"><a href="../../book_sections/getting_started/loading_packages_and_data.html">• 1. Load packages and data</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book_sections/data_in_R.html">2. Data in R</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -132,11 +152,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="../../index.html" class="sidebar-logo-link">
-      <img src="../../figs/fun_figs/stamp.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../figs/fun_figs/stamp.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="../../">Applied Biostatistics</a> 
+      <a href="../">Applied Biostatistics</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -148,31 +168,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/clarkia_and_its_data/clarkia_and_its_data.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/clarkia_and_its_data/clarkia_and_its_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Motivating biology and datasets</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/example_mini/varType.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/example_mini/varType.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Types of Variables</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro2r_index.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/intro2r_index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SECTION I: Intro to R</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../book_sections/getting_started.html" class="sidebar-item-text sidebar-link">
+            <a href="../book_sections/getting_started.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">1. Getting started with R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -181,31 +201,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/getting_started/functions_and_vectors.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/getting_started/functions_and_vectors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Functions and vectors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/getting_started/loading_packages_and_data.html" class="sidebar-item-text sidebar-link active">
+  <a href="../book_sections/getting_started/loading_packages_and_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Load packages and data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/getting_started/data_types.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/getting_started/data_types.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Data types in R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/getting_started/rstudio_orientation.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/getting_started/rstudio_orientation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Orientation to RStudio</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/getting_started/getting_started_summary.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/getting_started/getting_started_summary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Getting started summary</span></a>
   </div>
 </li>
@@ -213,7 +233,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../book_sections/data_in_R.html" class="sidebar-item-text sidebar-link">
+            <a href="../book_sections/data_in_R.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">2. Data in R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -222,31 +242,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/data_in_R/add_vars.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/data_in_R/add_vars.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 2. Adding columns w mutate</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/data_in_R/select_vars.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/data_in_R/select_vars.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 2. Selecting columns</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/data_in_R/summarize_vars.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/data_in_R/summarize_vars.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 2. Summarizing columns</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/data_in_R/choose_rows.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/data_in_R/choose_rows.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 2. Choose rows</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/data_in_R/data_in_R_summary.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/data_in_R/data_in_R_summary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 2. Data in R summary</span></a>
   </div>
 </li>
@@ -254,7 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link">
+            <a href="../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">3. Introduction to ggplot</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -263,43 +283,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro_to_ggplot/one_continuous.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/intro_to_ggplot/one_continuous.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. A continuous variable</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro_to_ggplot/saving_ggplots.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/intro_to_ggplot/saving_ggplots.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. Saving a ggplot</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro_to_ggplot/cont_cat.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/intro_to_ggplot/cont_cat.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. Continuous y/categorical x</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro_to_ggplot/two_categorical.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/intro_to_ggplot/two_categorical.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. Two categorical variables</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro_to_ggplot/two_continuous.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/intro_to_ggplot/two_continuous.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. Two continuous variables</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro_to_ggplot/many_explanatory.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/intro_to_ggplot/many_explanatory.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. Many explanatory vars</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro_to_ggplot/ggplot_summary.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/intro_to_ggplot/ggplot_summary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. ggplot summary</span></a>
   </div>
 </li>
@@ -307,7 +327,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../book_sections/reproducible_science.html" class="sidebar-item-text sidebar-link">
+            <a href="../book_sections/reproducible_science.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">4. Reproducible Science</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -316,19 +336,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/reproducible_science/collecting_data.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/reproducible_science/collecting_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 4. Collecting data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/reproducible_science/reproducible_analyses.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/reproducible_science/reproducible_analyses.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 4. Reproducible analyses</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/reproducible_science/reproducible_summary.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/reproducible_science/reproducible_summary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 4. Reproducibility summary</span></a>
   </div>
 </li>
@@ -336,13 +356,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../toc.html" class="sidebar-item-text sidebar-link">
+  <a href="../toc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Rest of Book</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -356,9 +376,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/getting_started.html">1. Getting started with R</a></li><li class="breadcrumb-item"><a href="../../book_sections/getting_started/loading_packages_and_data.html">• 1. Load packages and data</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">• 1. Load packages and data</h1>
+<h1 class="title">2. Data in R</h1>
 </div>
 
 
@@ -375,49 +395,139 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-josh_tweet" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A tweet from Schraiber, which reads: &quot; say this all the time but: learning dplyr + ggplot was one of the highest payoff things I've done in my career.&quot;">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-josh_tweet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figs/intro_to_R/data_in_R/josh_tweet.png" class="img-fluid figure-img" alt="A tweet from Schraiber, which reads: &quot; say this all the time but: learning dplyr + ggplot was one of the highest payoff things I've done in my career.&quot;" width="569">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-josh_tweet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: This stuff is useful. <a href="https://twitter.com/LucyStats/status/1087770108443815936">link to tweet here</a>
+</figcaption>
+</figure>
+</div>
+</div></div></div>
 <div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<p><strong>Motivating scenario:</strong> you would like to get started having a peek into your data in R, and want to load the data and the packages to get started.</p>
-<p><strong>Learning goals: By the end of this sub-chapter you should be able to</strong></p>
+<p><strong>Motivating scenario:</strong> You understand the very basics of R, and can load data into it. But now you want to actually do things!</p>
+<p><strong>Learning goals: By the end of this chapter you should be able to</strong></p>
 <ol type="1">
-<li>Understand what an R package is
-<ul>
-<li>Install an R package with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/install.packages.html"><code>install.packages()</code></a> function (the first time you use it).<br>
+<li>Explain the tidy data format and differentiate between tidy and untidy data.<br>
 </li>
-<li>Load an R package with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/library.html"><code>library()</code></a> function (in every R session in which you use the package).<br>
+<li>Use the <a href="https://dplyr.tidyverse.org/reference/select.html"><code>select()</code></a> function in <code>R</code> to choose columns to work with.<br>
+</li>
+<li>Use the <a href="https://dplyr.tidyverse.org/reference/mutate.html"><code>mutate()</code></a> function in <code>R</code> to add or over-write columns.<br>
+</li>
+<li>Use the <a href="https://dplyr.tidyverse.org/reference/summarise.html"><code>summarize()</code></a> function in <code>R</code> to summarize the data.
+<ul>
+<li>And doing so by groups with the <a href="https://dplyr.tidyverse.org/reference/group_by.html"><code>group_by()</code></a> function.<br>
 </li>
 </ul></li>
-<li>Use the <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a> function in the <a href="https://readr.tidyverse.org/"><code>readr</code></a> package to load a file from the internet into R.</li>
+<li>Use the <a href="https://dplyr.tidyverse.org/reference/filter.html"><code>filter()</code></a> function to choose the rows you want to work with.<br>
+</li>
+<li>Combine these operations with the pipe <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/pipeOp.html"><code>|&gt;</code></a> operator.<br>
+</li>
 </ol>
 </div>
 <hr>
-<section id="r-packages" class="level2">
-<h2 class="anchored" data-anchor-id="r-packages">R packages</h2>
-<p>While <code>R</code> has many built-in functions, <strong>packages</strong> provide even more functions to extend <code>R</code>’s capabilities. Packages can offer alternative (often more efficient and user-friendly) approaches to tasks that can be done with base <code>R</code> functions, or they can enable entirely new functionality that is not included in base <code>R</code> at all. In fact, <code>R</code> packages are a major way that the latest statistical and computational methods in various fields are shared with practitioners.</p>
-<p>Below I introduce the <a href="https://readr.tidyverse.org/index.html"><code>readr</code></a>, and <a href="https://dplyr.tidyverse.org/index.html"><code>dplyr</code></a> packages. Because these packages are so useful for streamlining data import, manipulation, and cleaning, I use them in nearly every R project. I also introduce the <a href="https://conflicted.r-lib.org/"><code>conflicted</code></a> package, which identifies any functions with shared names across packages, and allows us to tell <code>R</code> which function we mean when more than one function has the same name.</p>
-<p><strong>Install a package the first time you use it</strong> The first time you need a package, install it with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/install.packages.html">install.packages()</a> function. Here the argument is the package (or vector of packages) you want to install. So, to install the packages above, type:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We do this the first time we need a package.</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"readr"</span>, <span class="st">"dplyr"</span>, <span class="st">"conflicted"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<article class="drop-cap">
+Science fundamentally relies on the collection and analysis of data to draw meaningful conclusions about the natural world. Data are at the core of this endeavor; it provides the foundation for testing hypotheses, refining theories, and driving new discoveries. Thus, while theory is important to science, data is king. So we need to be able to analyze data. This chapter will provide you with some key tools for the standard scientific tasks of organizing, exploring, and analyzing data effectively, and reproducibly.
+</article>
+<hr>
+<section id="tidy-data" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="tidy-data">Tidy data</h2>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-tidy" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Illustration of tidy data principles. The image features a quote from Hadley Wickham: 'Tidy data is a standard way of mapping the meaning of a dataset to its structure.' The text explains that in tidy data, each variable forms a column, each observation forms a row, and each cell is a single measurement. A small table is included as an example, where column headers ('site,' 'ril,' 'visits') represent variables, and each row represents an observation. Emphasized text and highlighting visually reinforce key concepts.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tidy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figs/intro_to_R/data_in_R/tidy.png" class="img-fluid figure-img" alt="Illustration of tidy data principles. The image features a quote from Hadley Wickham: 'Tidy data is a standard way of mapping the meaning of a dataset to its structure.' The text explains that in tidy data, each variable forms a column, each observation forms a row, and each cell is a single measurement. A small table is included as an example, where column headers ('site,' 'ril,' 'visits') represent variables, and each row represents an observation. Emphasized text and highlighting visually reinforce key concepts." width="400">
 </div>
-<p><strong>Load installed packages every time you open RStudio</strong> You only install a package once, but you must use the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/library.html"><code>library()</code></a> function, as I demonstrate below, to load installed packages every time you open R.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We do this every time we open R and want to use these packages.</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(conflicted)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tidy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: A visual explanation of tidy data. Modified from <span class="citation" data-cites="wickham2014">Wickham (<a href="#ref-wickham2014" role="doc-biblioref">2014</a>)</span>.
+</figcaption>
+</figure>
 </div>
-</section>
-<section id="reading-data-into-r" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="reading-data-into-r">Reading data into R</h2>
-<p>Rather than typing large datasets into R, we usually want to read in data that is already stored somewhere. For now, we will load data saved as a csv file from the internet with the <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv(link)</code></a> structure from the <a href="https://readr.tidyverse.org/"><code>readr</code></a> package. Later, we will revisit the challenge of importing data from other file types and locations into R.</p>
+</div></div></div>
+<blockquote class="blockquote">
+<p>Like families, tidy datasets are all alike but every messy dataset is messy in its own way. Tidy datasets provide a standardized way to link the structure of a dataset (its physical layout) with its semantics (its meaning).</p>
+<p>Hadley Wickham. <em>Tidy data</em>. <span class="citation" data-cites="wickham2014">Wickham (<a href="#ref-wickham2014" role="doc-biblioref">2014</a>)</span>.</p>
+</blockquote>
+<p>Data can be structured in different ways: in a tidy format, each variable has its own column, and each row represents an observation. In contrast, messy data might combine multiple variables into a single column or store observations in a less structured format. <a href="#fig-tidy" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-tidy</span></a> A shows “long” data with one variable per column. <a href="#fig-tidy" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-tidy</span></a> B contains boxes (rather than rows or columns) with petals from a given flower laid out neatly, and information about the flower and plant written beneath it. Both formats have their costs and benefits:</p>
+<ul>
+<li><strong><a href="#fig-tidy" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-tidy</span></a> A is “tidy”:</strong> Each row is an observation (a petal), and each column is a variable related to that observation. Because this style is so predictable, this format simplifies computational analyses.<br>
+</li>
+<li><strong><a href="#fig-tidy" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-tidy</span></a> B is not “tidy”:</strong> There are not simple rows and columns, and variables are combined in a long string. This format is useful in many ways—for example, humans can easily identify patterns, and data can be stored compactly.</li>
+</ul>
+<p>Note that the tidy data format is not necessarily “prettier” or easier to read – in fact, in visual presentation of data for people, we often choose an untidy format. But when analyzing data on our computer, a tidy format simplifies our work. For this reason we will work with tidy data when possible in this book.</p>
 
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p><strong>Loading data:</strong> See posit's <a href="https://posit.cloud/learn/recipes/basics/ImportA1">recipe for importing data</a> for more detail. Note also that <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/read.table.html"><code>read.csv()</code></a> is a base R function similar to <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a>, but it behaves a bit differently – for example it reads data in as a dataframe, not a tibble.</p>
-</div></div><p>Below, I show an example of reading pollinator visitation data from <a href="https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/pollinator_visits.csv">a link on my GitHub</a>. After loading a dataset, you can see the first ten lines and all the columns that fit by simply typing its name. Alternatively, the <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/View.html"><code>View()</code></a> function opens up the full spreadsheet for you to peruse.</p>
+<p>Because all untidy data are different, there is no way to uniformly tidy an untidy dataset. However, the <a href="https://tidyr.tidyverse.org/">tidyr package</a> has many useful functions. Specifically, the <a href="https://tidyr.tidyverse.org/reference/pivot_longer.html"><code>pivot_longer()</code></a> function allows for converting data from wide format to long format.</p>
+</div></div><div class="cell">
+<div class="cell-output-display">
+<div id="fig-tidy_clarkia" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A. A table with images of Clarkia petals. Each row is a petal. Columns are: Spp; Pop; Plant; Flower; Petal; Image.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tidy_clarkia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figs/intro_to_R/data_in_R/tidy_clarkia.png" class="img-fluid figure-img" style="width:100.0%" alt="A. A table with images of Clarkia petals. Each row is a petal. Columns are: Spp; Pop; Plant; Flower; Petal; Image.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tidy_clarkia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: An example of tidy versus untidy data. <strong>A)</strong> A table where each row is an observation (a petal), and each column is a variable (e.g.&nbsp;pop, plant, image etc…). <strong>B)</strong> A nicely arranged (but not tidy) sheet of <em>Clarkia xantiana</em> petals - arranged by flower.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="tibbles" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="tibbles">Tibbles</h2>
+<p>A tibble is the name for the primary structure that holds data in the tidyverse. A tibble—much like a spreadsheet—does not automatically make data tidy, but encourages a structured, consistent format that works well with tidyverse functions.</p>
+<ul>
+<li><p><strong>In a tibble, each column is a vector.</strong> This means that all entries in a column must be of the same class. If you mix numeric and character values in a column, every entry becomes a character.</p></li>
+<li><p><strong>In a tibble, each row unites observations.</strong> A row can have any mix of data types.</p></li>
+</ul>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p><strong>Tibbles vs.&nbsp;Data Frames</strong> For base R users – A tibble is much like a data frame, but some minor features distinguish them. See <a href="https://r4ds.had.co.nz/tibbles.html">Chapter 10 of <span class="citation" data-cites="grolemund2018">Grolemund &amp; Wickham (<span>2018</span>)</span></a> for more info.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Tibble</th>
+<th>Data Frame</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>What you see on screen</strong></td>
+<td>First ten rows &amp; cols that fit</td>
+<td>Entire dataset</td>
+</tr>
+<tr class="even">
+<td><strong>Data Types Displayed</strong></td>
+<td>Yes – <em>&lt;dbl&gt;</em>, <em>&lt;chr&gt;</em>, etc</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td><strong>Subsetting to one column returns</strong></td>
+<td>A tibble</td>
+<td>A vector</td>
+</tr>
+</tbody>
+</table>
+</div></div><p>The <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a> function that we <a href="../book_sections/getting_started.html#reading-data-into-r">introduced earlier</a> to load data imports data as a tibble. Looking at the data below, you are probably surprised to see that growth rate is a character <code>&lt;chr&gt;</code>, because it should be a number <code>&lt;dbl&gt;</code>. A little digging reveals that the entry in the third row has a growth rate of <code>1.8O</code> (with the letter, O, at the end) which should be <code>1.80</code> (with the number 0 at the end)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(ril_link)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ril_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(ril_link)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>ril_data </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 593 × 17
    ril   location prop_hybrid mean_visits growth_rate petal_color petal_area_mm
@@ -438,12 +548,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #   lwc &lt;dbl&gt;, crossDir &lt;chr&gt;, num_hybrid &lt;dbl&gt;, offspring_genotyped &lt;dbl&gt;</code></pre>
 </div>
 </div>
+</section>
+<section id="lets-get-ready-to-deal-with-data-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="lets-get-ready-to-deal-with-data-in-r">Let’s get ready to deal with data in R</h2>
+<p>The following sections introduce the very basics of R including:</p>
+<ul>
+<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/add_vars.html">Adding columns with mutate</a>.<br>
+</li>
+<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/select_vars.html">Selecting columns</a>.<br>
+</li>
+<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/summarize_vars.html">Summarizing columns</a>.<br>
+</li>
+<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/choose_rows.html">Choosing rows</a>.</li>
+</ul>
+<p>Then we <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#chapter-summary">summarize the chapter</a>, present <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#practice-questions">practice questions</a>, a <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#glossary-of-terms">glossary</a>, a review of <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#key-r-functions">R functions</a> and <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#r-packages-introduced">R packages</a> introduced, and <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#additional-resources">present additional resources</a>.</p>
 
 
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p><strong><code>package::function()</code> format:</strong> I read in the data with the <a href=""><code>read_csv()</code></a> function in the <a href="https://readr.tidyverse.org/">readr package</a> by typing: <code>readr::read_csv()</code>, but typing <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a> gives the same result. The <code>package::function()</code> format comes in handy when two functions in different packages have the same name.</p>
-</div></div></section>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-grolemund2018" class="csl-entry" role="listitem">
+Grolemund, G., &amp; Wickham, H. (2018). <em>R for data science</em>.
+</div>
+<div id="ref-wickham2014" class="csl-entry" role="listitem">
+Wickham, H. (2014). Tidy data. <em>Journal of Statistical Software</em>, <em>59</em>(10), 1–23. <a href="https://doi.org/10.18637/jss.v059.i10">https://doi.org/10.18637/jss.v059.i10</a>
+</div>
+</div>
+</section>
 
 </main> <!-- /main -->
 <script>
@@ -1076,13 +1205,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../book_sections/getting_started/functions_and_vectors.html" class="pagination-link" aria-label="• 1. Functions and vectors">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 1. Functions and vectors</span>
+      <a href="../book_sections/getting_started/getting_started_summary.html" class="pagination-link" aria-label="• 1. Getting started summary">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 1. Getting started summary</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../book_sections/getting_started/data_types.html" class="pagination-link" aria-label="• 1. Data types in R">
-        <span class="nav-page-text">• 1. Data types in R</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../book_sections/data_in_R/add_vars.html" class="pagination-link" aria-label="• 2. Adding columns w mutate">
+        <span class="nav-page-text">• 2. Adding columns w mutate</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

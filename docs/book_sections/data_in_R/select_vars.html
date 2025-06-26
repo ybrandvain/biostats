@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>• 1. Load packages and data – Applied Biostatistics</title>
+<title>• 2. Selecting columns – Applied Biostatistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../book_sections/getting_started/data_types.html" rel="next">
-<link href="../../book_sections/getting_started/functions_and_vectors.html" rel="prev">
+<link href="../../book_sections/data_in_R/summarize_vars.html" rel="next">
+<link href="../../book_sections/data_in_R/add_vars.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/getting_started.html">1. Getting started with R</a></li><li class="breadcrumb-item"><a href="../../book_sections/getting_started/loading_packages_and_data.html">• 1. Load packages and data</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/data_in_R.html">2. Data in R</a></li><li class="breadcrumb-item"><a href="../../book_sections/data_in_R/select_vars.html">• 2. Selecting columns</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -187,7 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/getting_started/loading_packages_and_data.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../book_sections/getting_started/loading_packages_and_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Load packages and data</span></a>
   </div>
 </li>
@@ -228,7 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/data_in_R/select_vars.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/data_in_R/select_vars.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">• 2. Selecting columns</span></a>
   </div>
 </li>
@@ -356,9 +356,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/getting_started.html">1. Getting started with R</a></li><li class="breadcrumb-item"><a href="../../book_sections/getting_started/loading_packages_and_data.html">• 1. Load packages and data</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/data_in_R.html">2. Data in R</a></li><li class="breadcrumb-item"><a href="../../book_sections/data_in_R/select_vars.html">• 2. Selecting columns</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">• 1. Load packages and data</h1>
+<h1 class="title">• 2. Selecting columns</h1>
 </div>
 
 
@@ -376,74 +376,88 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<p><strong>Motivating scenario:</strong> you would like to get started having a peek into your data in R, and want to load the data and the packages to get started.</p>
+<p><strong>Motivating scenario:</strong> you want to pick out a few columns to work with from a larger tibble.</p>
 <p><strong>Learning goals: By the end of this sub-chapter you should be able to</strong></p>
 <ol type="1">
-<li>Understand what an R package is
-<ul>
-<li>Install an R package with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/install.packages.html"><code>install.packages()</code></a> function (the first time you use it).<br>
+<li>Use the <a href="https://dplyr.tidyverse.org/"><code>dplyr</code></a> function, <a href="https://dplyr.tidyverse.org/reference/select.html"><code>select()</code></a>, to limit our data to a few variables of interest.<br>
 </li>
-<li>Load an R package with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/library.html"><code>library()</code></a> function (in every R session in which you use the package).<br>
-</li>
-</ul></li>
-<li>Use the <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a> function in the <a href="https://readr.tidyverse.org/"><code>readr</code></a> package to load a file from the internet into R.</li>
 </ol>
 </div>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-select" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A visual representation of using `select()` in `dplyr`. The top table contains three columns: `prop_hyb`, `n_assayed`, and `n_hyb`, showing values of hybrid proportions, sample sizes, and computed hybrid counts. Below, an R code snippet applies `select(prop_hyb, n_hyb)`, removing `n_assayed` and keeping only the first and last columns. The resulting table, displayed at the bottom, reflects the updated dataset with only `prop_hyb` and `n_hyb` remaining, shown with consistent formatting.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-select-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../figs/intro_to_R/data_in_R/select.png" class="img-fluid figure-img" alt="A visual representation of using `select()` in `dplyr`. The top table contains three columns: `prop_hyb`, `n_assayed`, and `n_hyb`, showing values of hybrid proportions, sample sizes, and computed hybrid counts. Below, an R code snippet applies `select(prop_hyb, n_hyb)`, removing `n_assayed` and keeping only the first and last columns. The resulting table, displayed at the bottom, reflects the updated dataset with only `prop_hyb` and `n_hyb` remaining, shown with consistent formatting." width="372">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-select-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Using the <code>select()</code> function to retain specific columns from a dataset. The top table contains three columns: <code>prop_hyb</code> (proportion of hybrids), <code>n_assayed</code> (number of individuals assayed), and <code>n_hyb</code> (the computed number of hybrids). The <code>select(prop_hyb, n_hyb)</code> function is applied, keeping only the <code>prop_hyb</code> and <code>n_hyb</code> columns. The bottom table displays the resulting dataset after column selection.
+</figcaption>
+</figure>
+</div>
+</div></div></div>
 <hr>
-<section id="r-packages" class="level2">
-<h2 class="anchored" data-anchor-id="r-packages">R packages</h2>
-<p>While <code>R</code> has many built-in functions, <strong>packages</strong> provide even more functions to extend <code>R</code>’s capabilities. Packages can offer alternative (often more efficient and user-friendly) approaches to tasks that can be done with base <code>R</code> functions, or they can enable entirely new functionality that is not included in base <code>R</code> at all. In fact, <code>R</code> packages are a major way that the latest statistical and computational methods in various fields are shared with practitioners.</p>
-<p>Below I introduce the <a href="https://readr.tidyverse.org/index.html"><code>readr</code></a>, and <a href="https://dplyr.tidyverse.org/index.html"><code>dplyr</code></a> packages. Because these packages are so useful for streamlining data import, manipulation, and cleaning, I use them in nearly every R project. I also introduce the <a href="https://conflicted.r-lib.org/"><code>conflicted</code></a> package, which identifies any functions with shared names across packages, and allows us to tell <code>R</code> which function we mean when more than one function has the same name.</p>
-<p><strong>Install a package the first time you use it</strong> The first time you need a package, install it with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/install.packages.html">install.packages()</a> function. Here the argument is the package (or vector of packages) you want to install. So, to install the packages above, type:</p>
+<section id="selecting-columns-of-interest" class="level2">
+<h2 class="anchored" data-anchor-id="selecting-columns-of-interest"><a href="https://dplyr.tidyverse.org/reference/select.html"><code>select()</code></a>ing columns of interest</h2>
+<p>The dataset above is not tiny – seventeen columns accompany the 593 rows of data. To simplify our lives, let’s use the <a href="https://dplyr.tidyverse.org/"><code>dplyr</code></a> function, <a href="https://dplyr.tidyverse.org/reference/select.html"><code>select()</code></a>, to limit our data to a few variables of interest:</p>
+<ul>
+<li><code>location</code>: The plant’s location. The pollinator visitation experiment was limited to two locations (either <code>SR</code> or <code>GC</code>), while the hybrid seed formation study was replicated at four locations (<code>SR</code>, <code>GC</code>, <code>LB</code> or <code>US</code>). This should be a <code>&lt;chr&gt;</code> (character), and it is!</li>
+<li><code>prop_hybrid</code>: The proportion of genotyped seeds that were hybrids.<br>
+</li>
+<li><code>mean_visits</code>: The mean number of pollinator visits recorded (per fifteen minute pollinator observation) for that RIL genotype at that site. This should be a number <code>&lt;dbl&gt;</code> (double), and it is.</li>
+<li><code>petal_area_mm</code>: The area of the petals (in mm). This should be a number <code>&lt;dbl&gt;</code> (double), and it is!<br>
+</li>
+<li><code>asd_mm</code>: The distance between anther (the place where pollen comes from) and stigma (the place that pollen goes to) on a flower. The smaller this number, the easier it is for a plant to pollinated itself. This should be a number <code>&lt;dbl&gt;</code> (double), and it is.</li>
+<li><code>growth_rate</code>: The variable we should have just fixed now it should be a number.<br>
+</li>
+<li><code>visited</code>: A logical variable indicating if the plant received any visits at all.</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We do this the first time we need a package.</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"readr"</span>, <span class="st">"dplyr"</span>, <span class="st">"conflicted"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>Load installed packages every time you open RStudio</strong> You only install a package once, but you must use the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/library.html"><code>library()</code></a> function, as I demonstrate below, to load installed packages every time you open R.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We do this every time we open R and want to use these packages.</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(conflicted)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="reading-data-into-r" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="reading-data-into-r">Reading data into R</h2>
-<p>Rather than typing large datasets into R, we usually want to read in data that is already stored somewhere. For now, we will load data saved as a csv file from the internet with the <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv(link)</code></a> structure from the <a href="https://readr.tidyverse.org/"><code>readr</code></a> package. Later, we will revisit the challenge of importing data from other file types and locations into R.</p>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p><strong>Loading data:</strong> See posit's <a href="https://posit.cloud/learn/recipes/basics/ImportA1">recipe for importing data</a> for more detail. Note also that <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/read.table.html"><code>read.csv()</code></a> is a base R function similar to <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a>, but it behaves a bit differently – for example it reads data in as a dataframe, not a tibble.</p>
-</div></div><p>Below, I show an example of reading pollinator visitation data from <a href="https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/pollinator_visits.csv">a link on my GitHub</a>. After loading a dataset, you can see the first ten lines and all the columns that fit by simply typing its name. Alternatively, the <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/View.html"><code>View()</code></a> function opens up the full spreadsheet for you to peruse.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(ril_link)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ril_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ril_data <span class="sc">|&gt;</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(location,   prop_hybrid,  mean_visits,  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                petal_color, petal_area_mm,  asd_mm, </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                growth_rate, visited)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 593 × 17
-   ril   location prop_hybrid mean_visits growth_rate petal_color petal_area_mm
-   &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;               &lt;dbl&gt;
- 1 A1    GC             0           0     1.272       white                44.0
- 2 A100  GC             0.125       0.188 1.448       pink                 55.8
- 3 A102  GC             0.25        0.25  1.8O        pink                 51.7
- 4 A104  GC             0           0     0.816       white                57.3
- 5 A106  GC             0           0     0.728       white                68.6
- 6 A107  GC             0.125       0     1.764       pink                 66.3
- 7 A108  GC            NA          NA     1.584       &lt;NA&gt;                 51.5
- 8 A109  GC             0           0     1.476       white                48.1
- 9 A111  GC             0          NA     1.144       white                51.6
-10 A112  GC             0.25        0     1           white                89.8
+<pre><code># A tibble: 593 × 8
+   location prop_hybrid mean_visits petal_color petal_area_mm asd_mm growth_rate
+   &lt;chr&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;
+ 1 GC             0           0     white                44.0  0.447       1.27 
+ 2 GC             0.125       0.188 pink                 55.8  1.07        1.45 
+ 3 GC             0.25        0.25  pink                 51.7  0.674       1.8  
+ 4 GC             0           0     white                57.3  0.959       0.816
+ 5 GC             0           0     white                68.6  1.41        0.728
+ 6 GC             0.125       0     pink                 66.3  0.788       1.76 
+ 7 GC            NA          NA     &lt;NA&gt;                 51.5  0.6         1.58 
+ 8 GC             0           0     white                48.1  0.561       1.48 
+ 9 GC             0          NA     white                51.6  1.02        1.14 
+10 GC             0.25        0     white                89.8  0.618       1    
 # ℹ 583 more rows
-# ℹ 10 more variables: date_first_flw &lt;dbl&gt;, node_first_flw &lt;dbl&gt;,
-#   petal_perim_mm &lt;dbl&gt;, asd_mm &lt;dbl&gt;, protandry &lt;dbl&gt;, stem_dia_mm &lt;dbl&gt;,
-#   lwc &lt;dbl&gt;, crossDir &lt;chr&gt;, num_hybrid &lt;dbl&gt;, offspring_genotyped &lt;dbl&gt;</code></pre>
+# ℹ 1 more variable: visited &lt;lgl&gt;</code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning: R does not remember this change until you assign it.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>So, now that we see that our code worked as expected, enter:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> ril_data <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(location,  prop_hybrid,  mean_visits,  </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                petal_color, petal_area_mm,  asd_mm,  </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                growth_rate, visited)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 
 
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p><strong><code>package::function()</code> format:</strong> I read in the data with the <a href=""><code>read_csv()</code></a> function in the <a href="https://readr.tidyverse.org/">readr package</a> by typing: <code>readr::read_csv()</code>, but typing <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a> gives the same result. The <code>package::function()</code> format comes in handy when two functions in different packages have the same name.</p>
-</div></div></section>
+</section>
 
 </main> <!-- /main -->
 <script>
@@ -1076,13 +1090,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../book_sections/getting_started/functions_and_vectors.html" class="pagination-link" aria-label="• 1. Functions and vectors">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 1. Functions and vectors</span>
+      <a href="../../book_sections/data_in_R/add_vars.html" class="pagination-link" aria-label="• 2. Adding columns w mutate">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 2. Adding columns w mutate</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../book_sections/getting_started/data_types.html" class="pagination-link" aria-label="• 1. Data types in R">
-        <span class="nav-page-text">• 1. Data types in R</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../book_sections/data_in_R/summarize_vars.html" class="pagination-link" aria-label="• 2. Summarizing columns">
+        <span class="nav-page-text">• 2. Summarizing columns</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

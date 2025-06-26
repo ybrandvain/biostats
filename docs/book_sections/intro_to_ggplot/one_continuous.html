@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>• 1. Load packages and data – Applied Biostatistics</title>
+<title>• 3. A continuous variable – Applied Biostatistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../book_sections/getting_started/data_types.html" rel="next">
-<link href="../../book_sections/getting_started/functions_and_vectors.html" rel="prev">
+<link href="../../book_sections/intro_to_ggplot/saving_ggplots.html" rel="next">
+<link href="../../book_sections/intro_to_ggplot.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/getting_started.html">1. Getting started with R</a></li><li class="breadcrumb-item"><a href="../../book_sections/getting_started/loading_packages_and_data.html">• 1. Load packages and data</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/intro_to_ggplot.html">3. Introduction to ggplot</a></li><li class="breadcrumb-item"><a href="../../book_sections/intro_to_ggplot/one_continuous.html">• 3. A continuous variable</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -187,7 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/getting_started/loading_packages_and_data.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../book_sections/getting_started/loading_packages_and_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Load packages and data</span></a>
   </div>
 </li>
@@ -263,7 +263,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro_to_ggplot/one_continuous.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/intro_to_ggplot/one_continuous.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">• 3. A continuous variable</span></a>
   </div>
 </li>
@@ -356,9 +356,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/getting_started.html">1. Getting started with R</a></li><li class="breadcrumb-item"><a href="../../book_sections/getting_started/loading_packages_and_data.html">• 1. Load packages and data</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/intro_to_ggplot.html">3. Introduction to ggplot</a></li><li class="breadcrumb-item"><a href="../../book_sections/intro_to_ggplot/one_continuous.html">• 3. A continuous variable</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">• 1. Load packages and data</h1>
+<h1 class="title">• 3. A continuous variable</h1>
 </div>
 
 
@@ -375,75 +375,141 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="../../figs/intro_to_R/intro_to_ggplot/clarkia_sketch_hist.png" class="img-fluid figure-img" width="743"></p>
+</figure>
+</div>
+</div>
+</div>
 <div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<p><strong>Motivating scenario:</strong> you would like to get started having a peek into your data in R, and want to load the data and the packages to get started.</p>
+<p><strong>Motivating scenario:</strong> You want to see the distribution of a single continuous variable.</p>
 <p><strong>Learning goals: By the end of this sub-chapter you should be able to</strong></p>
 <ol type="1">
-<li>Understand what an R package is
+<li>Familiarize yourself with making plots using the ggplot2 package.</li>
+<li>Use <a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html"><code>geom_histogram()</code></a> to make a histogram.
 <ul>
-<li>Install an R package with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/install.packages.html"><code>install.packages()</code></a> function (the first time you use it).<br>
-</li>
-<li>Load an R package with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/library.html"><code>library()</code></a> function (in every R session in which you use the package).<br>
+<li>Specify the width (with <code>binwidth</code>) or number (with <code>bins</code>) of bins in a histogram.<br>
 </li>
 </ul></li>
-<li>Use the <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a> function in the <a href="https://readr.tidyverse.org/"><code>readr</code></a> package to load a file from the internet into R.</li>
+<li>Use <a href="https://ggplot2.tidyverse.org/reference/geom_density.html"><code>geom_density()</code></a> to make a density plot.</li>
+<li>Change the outline color (with <code>color</code>) and the fill color (with <code>fill</code>).</li>
 </ol>
 </div>
 <hr>
-<section id="r-packages" class="level2">
-<h2 class="anchored" data-anchor-id="r-packages">R packages</h2>
-<p>While <code>R</code> has many built-in functions, <strong>packages</strong> provide even more functions to extend <code>R</code>’s capabilities. Packages can offer alternative (often more efficient and user-friendly) approaches to tasks that can be done with base <code>R</code> functions, or they can enable entirely new functionality that is not included in base <code>R</code> at all. In fact, <code>R</code> packages are a major way that the latest statistical and computational methods in various fields are shared with practitioners.</p>
-<p>Below I introduce the <a href="https://readr.tidyverse.org/index.html"><code>readr</code></a>, and <a href="https://dplyr.tidyverse.org/index.html"><code>dplyr</code></a> packages. Because these packages are so useful for streamlining data import, manipulation, and cleaning, I use them in nearly every R project. I also introduce the <a href="https://conflicted.r-lib.org/"><code>conflicted</code></a> package, which identifies any functions with shared names across packages, and allows us to tell <code>R</code> which function we mean when more than one function has the same name.</p>
-<p><strong>Install a package the first time you use it</strong> The first time you need a package, install it with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/install.packages.html">install.packages()</a> function. Here the argument is the package (or vector of packages) you want to install. So, to install the packages above, type:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We do this the first time we need a package.</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"readr"</span>, <span class="st">"dplyr"</span>, <span class="st">"conflicted"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="visualizing-distributions" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="visualizing-distributions">Visualizing Distributions</h3>
+<p>Let’s first consider the distribution of a single continuous variable—pollinator visitation. There are some natural questions we would want answered early on in our analysis:</p>
+<ul>
+<li>Are most flowers visited frequently, or do visits tend to be rare?<br>
+</li>
+<li>Is the distribution symmetric, or is it skewed, with many flowers receiving few or no visits and a small number receiving many?</li>
+</ul>
+<p>As we will see throughout the term, understanding the shape of our data helps guide our analysis. Let’s start with two common visualizations for distributions:</p>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="../../figs/intro_to_R/intro_to_ggplot/hist_sketch.png" class="img-fluid figure-img" width="178"></p>
+</figure>
 </div>
-<p><strong>Load installed packages every time you open RStudio</strong> You only install a package once, but you must use the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/library.html"><code>library()</code></a> function, as I demonstrate below, to load installed packages every time you open R.</p>
+</div></div></div>
+<ul>
+<li><strong>A histogram</strong> bins the x-axis variable (in this case, visitation) into intervals and shows the number of observations in each bin on the y-axis. This allows us to see how frequently different levels of visitation occur.<br>
+</li>
+<li><strong>A density plot</strong> fits a smooth function to the histogram, providing a continuous representation of the distribution. This smoothing can sometimes make patterns easier (or harder) to see. Later, we’ll see that density plots can also help compare distributions.</li>
+</ul>
+<p><strong>Making histograms &amp; density plots: A Step-by-Step Guide.</strong> To create these visualizations in <code>ggplot2</code>, we need to (minimally) specify three key layers:</p>
+<ol type="1">
+<li><strong>The data layer:</strong> This is the dataset we’re plotting—in this case, <code>ril_data</code>. We pass this as an argument inside the <a href="https://ggplot2.tidyverse.org/reference/ggplot.html"><code>ggplot()</code></a> function, e.g., <code>ggplot(data = ril_data)</code>.<br>
+</li>
+<li><strong>The aesthetic mapping:</strong> This tells R how to map each variable onto the plot. In a histogram, we map the variable whose distribution we want to visualize (in this case, <code>mean_visits</code>) onto the x-axis. We define this inside the <code>aes()</code> argument within <a href="https://ggplot2.tidyverse.org/reference/ggplot.html"><code>ggplot()</code></a>, e.g., <code>ggplot(data = ril_data, aes(x = mean_visits))</code>.<br>
+</li>
+<li><strong>The geometric object (<code>geom</code>) that displays the data:</strong> In this case, we use <a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html"><code>geom_histogram()</code></a> for a histogram or <a href="https://ggplot2.tidyverse.org/reference/geom_density.html"><code>geom_density()</code></a> for a density plot. These are added to the plot using a <code>+</code>, as shown in the examples below.</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Set up</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Adding a geom</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Elaborations</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">Density plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+<p>Inside the <a href="https://ggplot2.tidyverse.org/reference/ggplot.html"><code>ggplot()</code></a> function, we tell R that we are working with the <code>ril_data</code>, and we map <code>mean_visits</code> onto x inside <code>aes()</code>. The result is a boring canvas, but it is the canvas we build on.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We do this every time we open R and want to use these packages.</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(conflicted)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ril_data, <span class="fu">aes</span>(<span class="at">x =</span> mean_visits))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="one_continuous_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+<p>But now we want to show the data. To do so we need to add our <code>geom</code>. In this case we show the data as a histogram.</p>
+<p>The resulting plot shows that most plants get zero visits, but some get up to five visits.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ril_data,<span class="fu">aes</span>(<span class="at">x =</span> mean_visits))<span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="one_continuous_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+<p>To take a bit more control of my histogram, I like to</p>
+<ul>
+<li>Specify the number or width of bins (with the <code>binwidth</code> and <code>bins</code> arguments, respectively).<br>
+</li>
+<li>Add white lines between bins to make them easier to see (with <code>color = "white"</code>).<br>
+</li>
+<li>Spruce up the bins by specifying the color that fills them (with e.g.&nbsp;<code>fill = "pink"</code>).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ril_data, <span class="fu">aes</span>(<span class="at">x =</span> mean_visits))<span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> .<span class="dv">2</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">fill =</span> <span class="st">"pink"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="one_continuous_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+<p>Now you can easily make a density plot if you prefer!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ril_data, <span class="fu">aes</span>(<span class="at">x =</span> mean_visits))<span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">fill =</span> <span class="st">"pink"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="one_continuous_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Interpretation:</strong> Returning to our motivating questions, we see that most plants receive no visits, but this distribution is skewed with some plants getting lots of visits.</p>
+
+
 </section>
-<section id="reading-data-into-r" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="reading-data-into-r">Reading data into R</h2>
-<p>Rather than typing large datasets into R, we usually want to read in data that is already stored somewhere. For now, we will load data saved as a csv file from the internet with the <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv(link)</code></a> structure from the <a href="https://readr.tidyverse.org/"><code>readr</code></a> package. Later, we will revisit the challenge of importing data from other file types and locations into R.</p>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p><strong>Loading data:</strong> See posit's <a href="https://posit.cloud/learn/recipes/basics/ImportA1">recipe for importing data</a> for more detail. Note also that <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/read.table.html"><code>read.csv()</code></a> is a base R function similar to <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a>, but it behaves a bit differently – for example it reads data in as a dataframe, not a tibble.</p>
-</div></div><p>Below, I show an example of reading pollinator visitation data from <a href="https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/pollinator_visits.csv">a link on my GitHub</a>. After loading a dataset, you can see the first ten lines and all the columns that fit by simply typing its name. Alternatively, the <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/View.html"><code>View()</code></a> function opens up the full spreadsheet for you to peruse.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(ril_link)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ril_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 593 × 17
-   ril   location prop_hybrid mean_visits growth_rate petal_color petal_area_mm
-   &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;               &lt;dbl&gt;
- 1 A1    GC             0           0     1.272       white                44.0
- 2 A100  GC             0.125       0.188 1.448       pink                 55.8
- 3 A102  GC             0.25        0.25  1.8O        pink                 51.7
- 4 A104  GC             0           0     0.816       white                57.3
- 5 A106  GC             0           0     0.728       white                68.6
- 6 A107  GC             0.125       0     1.764       pink                 66.3
- 7 A108  GC            NA          NA     1.584       &lt;NA&gt;                 51.5
- 8 A109  GC             0           0     1.476       white                48.1
- 9 A111  GC             0          NA     1.144       white                51.6
-10 A112  GC             0.25        0     1           white                89.8
-# ℹ 583 more rows
-# ℹ 10 more variables: date_first_flw &lt;dbl&gt;, node_first_flw &lt;dbl&gt;,
-#   petal_perim_mm &lt;dbl&gt;, asd_mm &lt;dbl&gt;, protandry &lt;dbl&gt;, stem_dia_mm &lt;dbl&gt;,
-#   lwc &lt;dbl&gt;, crossDir &lt;chr&gt;, num_hybrid &lt;dbl&gt;, offspring_genotyped &lt;dbl&gt;</code></pre>
-</div>
-</div>
-
-
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p><strong><code>package::function()</code> format:</strong> I read in the data with the <a href=""><code>read_csv()</code></a> function in the <a href="https://readr.tidyverse.org/">readr package</a> by typing: <code>readr::read_csv()</code>, but typing <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a> gives the same result. The <code>package::function()</code> format comes in handy when two functions in different packages have the same name.</p>
-</div></div></section>
 
 </main> <!-- /main -->
 <script>
@@ -1076,13 +1142,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../book_sections/getting_started/functions_and_vectors.html" class="pagination-link" aria-label="• 1. Functions and vectors">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 1. Functions and vectors</span>
+      <a href="../../book_sections/intro_to_ggplot.html" class="pagination-link" aria-label="3. Introduction to ggplot">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">3. Introduction to ggplot</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../book_sections/getting_started/data_types.html" class="pagination-link" aria-label="• 1. Data types in R">
-        <span class="nav-page-text">• 1. Data types in R</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../book_sections/intro_to_ggplot/saving_ggplots.html" class="pagination-link" aria-label="• 3. Saving a ggplot">
+        <span class="nav-page-text">• 3. Saving a ggplot</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

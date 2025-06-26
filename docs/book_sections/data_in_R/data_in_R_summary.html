@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1. Getting started with R – Applied Biostatistics</title>
+<title>• 2. Data in R summary – Applied Biostatistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -77,24 +77,24 @@ div.csl-indent {
 }</style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../book_sections/getting_started/functions_and_vectors.html" rel="next">
-<link href="../book_sections/intro2r_index.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d4394cde7c380170a4469b96acf338b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-90eb7791a5c5b81885cedfef0a190562.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../book_sections/intro_to_ggplot.html" rel="next">
+<link href="../../book_sections/data_in_R/choose_rows.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-d4394cde7c380170a4469b96acf338b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-90eb7791a5c5b81885cedfef0a190562.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -400,7 +400,7 @@ iframe.qwebr-output-code-browse {
 // Document level settings ----
 
 // Determine if we need to install R packages
-globalThis.qwebrInstallRPackagesList = ['dplyr', 'readr'];
+globalThis.qwebrInstallRPackagesList = ['dplyr', 'readr', 'ggplot2'];
 
 // Specify possible locations to search for the repository
 globalThis.qwebrPackageRepoURLS = ['https://repo.r-wasm.org/'];
@@ -422,7 +422,7 @@ globalThis.qwebrCustomizedWebROptions = {
 };
 
 // Store cell data
-globalThis.qwebrCellDetails = [{"code":"1 + 1  # One plus one\n2^3    # Two cubed\n       # Try finding 1,122 squared","id":1,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-1","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"1 + 1    # One plus one\n2^3      # Two cubed\n1122^2   # 1,122 squared","id":2,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-2","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# First, run this code and note the error.\n# Then, fix the code by assigning a value to y.\ny + 1  # y plus one\ny <- 5 # Set y equal to 5 ","id":3,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-3","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# Just switch the order!\ny <- 5  # Assign 5 to y\ny + 1   # y plus one","id":4,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-4","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
+globalThis.qwebrCellDetails = [{"code":"iris |>  \n  summarise(mean_sepal_length = mean(Sepal.Length))","id":1,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-1","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
 
 </script>
 <script type="module">
@@ -1677,9 +1677,9 @@ globalThis.qwebrExecuteCode = async function (
 </script>
 
 
-<link rel="stylesheet" href="../assets/sticky-notes.css">
-<link rel="stylesheet" href="../assets/table-styles.css">
-<link rel="stylesheet" href="../assets/webex.css">
+<link rel="stylesheet" href="../../assets/sticky-notes.css">
+<link rel="stylesheet" href="../../assets/table-styles.css">
+<link rel="stylesheet" href="../../assets/webex.css">
 </head>
 
 <body class="nav-sidebar floating slimcontent">
@@ -1691,7 +1691,7 @@ globalThis.qwebrExecuteCode = async function (
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book_sections/getting_started.html">1. Getting started with R</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/data_in_R.html">2. Data in R</a></li><li class="breadcrumb-item"><a href="../../book_sections/data_in_R/data_in_R_summary.html">• 2. Data in R summary</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -1705,11 +1705,11 @@ globalThis.qwebrExecuteCode = async function (
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="../index.html" class="sidebar-logo-link">
-      <img src="../figs/fun_figs/stamp.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <a href="../../index.html" class="sidebar-logo-link">
+      <img src="../../figs/fun_figs/stamp.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Applied Biostatistics</a> 
+      <a href="../../">Applied Biostatistics</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -1721,31 +1721,31 @@ globalThis.qwebrExecuteCode = async function (
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/clarkia_and_its_data/clarkia_and_its_data.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/clarkia_and_its_data/clarkia_and_its_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Motivating biology and datasets</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/example_mini/varType.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/example_mini/varType.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Types of Variables</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/intro2r_index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/intro2r_index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SECTION I: Intro to R</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../book_sections/getting_started.html" class="sidebar-item-text sidebar-link active">
+            <a href="../../book_sections/getting_started.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">1. Getting started with R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -1754,31 +1754,31 @@ globalThis.qwebrExecuteCode = async function (
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/getting_started/functions_and_vectors.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/getting_started/functions_and_vectors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Functions and vectors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/getting_started/loading_packages_and_data.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/getting_started/loading_packages_and_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Load packages and data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/getting_started/data_types.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/getting_started/data_types.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Data types in R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/getting_started/rstudio_orientation.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/getting_started/rstudio_orientation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Orientation to RStudio</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/getting_started/getting_started_summary.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/getting_started/getting_started_summary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Getting started summary</span></a>
   </div>
 </li>
@@ -1786,7 +1786,7 @@ globalThis.qwebrExecuteCode = async function (
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../book_sections/data_in_R.html" class="sidebar-item-text sidebar-link">
+            <a href="../../book_sections/data_in_R.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2. Data in R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -1795,31 +1795,31 @@ globalThis.qwebrExecuteCode = async function (
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/data_in_R/add_vars.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/data_in_R/add_vars.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 2. Adding columns w mutate</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/data_in_R/select_vars.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/data_in_R/select_vars.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 2. Selecting columns</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/data_in_R/summarize_vars.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/data_in_R/summarize_vars.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 2. Summarizing columns</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/data_in_R/choose_rows.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/data_in_R/choose_rows.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 2. Choose rows</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/data_in_R/data_in_R_summary.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/data_in_R/data_in_R_summary.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">• 2. Data in R summary</span></a>
   </div>
 </li>
@@ -1827,7 +1827,7 @@ globalThis.qwebrExecuteCode = async function (
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link">
+            <a href="../../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">3. Introduction to ggplot</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -1836,43 +1836,43 @@ globalThis.qwebrExecuteCode = async function (
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/intro_to_ggplot/one_continuous.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/intro_to_ggplot/one_continuous.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. A continuous variable</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/intro_to_ggplot/saving_ggplots.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/intro_to_ggplot/saving_ggplots.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. Saving a ggplot</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/intro_to_ggplot/cont_cat.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/intro_to_ggplot/cont_cat.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. Continuous y/categorical x</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/intro_to_ggplot/two_categorical.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/intro_to_ggplot/two_categorical.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. Two categorical variables</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/intro_to_ggplot/two_continuous.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/intro_to_ggplot/two_continuous.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. Two continuous variables</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/intro_to_ggplot/many_explanatory.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/intro_to_ggplot/many_explanatory.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. Many explanatory vars</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/intro_to_ggplot/ggplot_summary.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/intro_to_ggplot/ggplot_summary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. ggplot summary</span></a>
   </div>
 </li>
@@ -1880,7 +1880,7 @@ globalThis.qwebrExecuteCode = async function (
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../book_sections/reproducible_science.html" class="sidebar-item-text sidebar-link">
+            <a href="../../book_sections/reproducible_science.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">4. Reproducible Science</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -1889,19 +1889,19 @@ globalThis.qwebrExecuteCode = async function (
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/reproducible_science/collecting_data.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/reproducible_science/collecting_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 4. Collecting data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/reproducible_science/reproducible_analyses.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/reproducible_science/reproducible_analyses.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 4. Reproducible analyses</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book_sections/reproducible_science/reproducible_summary.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/reproducible_science/reproducible_summary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 4. Reproducibility summary</span></a>
   </div>
 </li>
@@ -1909,13 +1909,13 @@ globalThis.qwebrExecuteCode = async function (
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../toc.html" class="sidebar-item-text sidebar-link">
+  <a href="../../toc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Rest of Book</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references.html" class="sidebar-item-text sidebar-link">
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -2213,9 +2213,9 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 }
 </script>
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/data_in_R.html">2. Data in R</a></li><li class="breadcrumb-item"><a href="../../book_sections/data_in_R/data_in_R_summary.html">• 2. Data in R summary</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">1. Getting started with R</h1>
+<h1 class="title">• 2. Data in R summary</h1>
 </div>
 
 
@@ -2232,133 +2232,299 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </header>
 
 
-<div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<p><strong>Motivating scenario:</strong> You have heard about R and RStudio, and may have used them, but want a foundation so you can know what is going on as you do more and more with it.</p>
-<p><strong>Learning goals: By the end of this chapter you should be able to</strong></p>
-<ol type="1">
-<li>Explain why we are using R and RStudio.<br>
-</li>
-<li>Use vectors, do math, ask logical questions, and assign variables in R.<br>
-</li>
-<li>Use R functions, and understand what a function is.<br>
-</li>
-<li>Install R packages.<br>
-</li>
-<li>Load data into R, view it, and find the types of variables in each column.<br>
-</li>
-<li>Know your way around RStudio.</li>
-</ol>
-</div>
+<p><strong>Links to:</strong> <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#chapter-summary">Summary</a>. <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#chatbot-tutor">Chatbot Tutor</a>. <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#practice-questions">Questions</a>. <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#glossary-of-terms">Glossary</a>. <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#key-r-functions">R functions</a>. <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#r-packages-introduced">R packages</a>. <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#additional-resources">More resources</a>.</p>
+<section id="chapter-summary" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="chapter-summary">Chapter summary</h2>
 <div class="cell page-columns page-full">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-pnas" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-pnas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../figs/intro_to_R/getting_started/pnas_clarkia.png" class="img-fluid figure-img" width="393">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pnas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Our R-generated figures concerning differentiation between <em>Clarkia xantiana</em> subspecies (from <span class="citation" data-cites="sianta2024">Sianta et al. (<a href="#ref-sianta2024" role="doc-biblioref">2024</a>)</span>).
-</figcaption>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../figs/intro_to_R/data_in_R/pretty_stressed_clarkia.png" class="img-fluid figure-img" alt="A close-up photograph of a vibrant pink *Clarkia xantiana* flower with delicate, deeply lobed petals. The petals have a soft gradient, fading from a rich pink at the center to a lighter shade towards the edges. The reproductive structures—dark purple stamens with pollen-covered anthers and a protruding stigma—are prominently visible. The background is softly blurred, showing additional flowers and green stems in what appears to be a greenhouse or controlled growth environment." width="686"></p>
+<figcaption>A beautiful <em>Clarkia xantiana</em> flower.</figcaption>
 </figure>
 </div>
 </div></div></div>
-<article class="drop-cap">
-Why are we learning a programming language, if we really just want to learn about <em>Clarkia xantiana</em>? Well, it’s because scientists learn from data, ideally lots of data. R and other scripting languages allow us to:
-</article>
-<ul>
-<li>Describe and visualize data,</li>
-<li>Test null hypotheses,<br>
-</li>
-<li>Develop complex models, and</li>
-<li>Share our workflow so that our work can be reproduced, reevaluated, questioned, and improved.</li>
-</ul>
-<section id="what-is-r-what-is-rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-r-what-is-rstudio">What is R? What is RStudio?</h2>
-<p><code>R</code> is a computer program built for data analysis. As opposed to GUIs, like Excel, or click-based stats programs, <code>R</code> is focused on writing and sharing scripts. This enables us to be shared and replicate analyses, ensuring that data manipulation occurs in a script. This practice both preserving the integrity of the original data, while providing tremendous flexibility. <code>R</code> has become the computer language of choice for most statistical work because it’s free, allows for reproducible analyses, makes great figures, and has many “packages” that support the integration of novel statistical approaches. In a recent paper, we used <code>R</code> to analyze hundreds of <em>Clarkia</em> genomes and learn about the (<a href="#fig-pnas" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-pnas</span></a> from <span class="citation" data-cites="sianta2024">Sianta et al. (<a href="#ref-sianta2024" role="doc-biblioref">2024</a>)</span>). RStudio is an Integrated Development Environment (IDE)—a nice setup to interact with <code>R</code> and make it easier to use.</p>
-<blockquote class="blockquote">
-<p>More precisely, R is a programming language that runs computations, while RStudio is an integrated development environment (IDE) that provides an interface by adding many convenient features and tools. So just as the way of having access to a speedometer, rearview mirrors, and a navigation system makes driving much easier, using RStudio’s interface makes using R much easier as well.</p>
-<p>— From <a href="https://moderndive.com/">Statistical Inference via Data Science: A ModernDive into R and the Tidyverse</a> <span class="citation" data-cites="ismay2019">(<a href="#ref-ismay2019" role="doc-biblioref">Ismay &amp; Kim, 2019</a>)</span></p>
-</blockquote>
+<p>Keeping data in the tidy format—where each column represents a variable and each row represents an observation—allows you to fully leverage the powerful tools of the <a href="https://www.tidyverse.org/"><strong>tidyverse</strong></a>. In the tidyverse, data are stored in tibbles, a modern update to data frames that enhances readability and maintains consistent data types. The <a href="https://dplyr.tidyverse.org/"><code>dplyr</code></a> package offers a suite of intuitive functions for transforming and analyzing data. For example, <a href="https://dplyr.tidyverse.org/reference/mutate.html"><code>mutate()</code></a> lets you create or modify variables, while <a href="https://dplyr.tidyverse.org/reference/summarise.html"><code>summarize()</code></a> computes summary statistics. When paired with <a href="https://dplyr.tidyverse.org/reference/group_by.html"><code>group_by()</code></a>, you can easily generate summaries across groups. Other essential functions include <a href="https://dplyr.tidyverse.org/reference/select.html"><code>select()</code></a> for choosing columns, <a href="https://dplyr.tidyverse.org/reference/filter.html"><code>filter()</code></a> for subsetting rows, <a href="https://dplyr.tidyverse.org/reference/rename.html"><code>rename()</code></a>, and <a href="https://dplyr.tidyverse.org/reference/arrange.html"><code>arrange()</code></a> for ordering data. Together—and especially when used with the pipe operator (<code>group_by(...) |&gt; summarize(...)</code>)—these tools enable clear, reproducible workflows. In the next chapter, you’ll see how tidy data also powers beautiful and flexible plots using <a href="https://ggplot2.tidyverse.org/"><code>ggplot2</code></a>.</p>
+<section id="chatbot-tutor" class="level3">
+<h3 class="anchored" data-anchor-id="chatbot-tutor">Chatbot tutor</h3>
+<p>Please interact with this custom chatbot (<a href="https://chatgpt.com/g/g-679eb4ffdb648191887186d9713ab2f8-data-in-r-tutor"><strong>link here</strong></a>) I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up and then stopping when you feel like you got what you needed from it.</p>
 </section>
-<section id="the-shortest-introduction-to-r" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="the-shortest-introduction-to-r">The Shortest Introduction to R</h2>
-<p>Before opening RStudio, let’s get familiar with two key ays we use R – (1) Using R as a calculator, and (2) Storing information by assigning values to variables.</p>
-<div class="page-columns page-full"><p><strong>R can perform simple (or complex) calculations.</strong> For example, entering <code>1 + 1</code> returns <code>2</code>, and entering <code>2^3</code> (two raised to the power of three) returns <code>8</code>. Try it yourself by running the code below, and then experiment with other simple calculations.</p><div class="no-row-height column-margin column-container"><span class=""><strong>Math in R:</strong> See posit's <a href="https://posit.cloud/learn/recipes/basics/BasicB1">recipe for using R as a calculator</a> for more detail.</span></div></div>
-<div class="tabset-margin-container page-columns page-full"><div class="no-row-height column-margin column-container"><span class="tabset-margin-content tabset-1-1-tab-margin-content"><strong>Commenting code</strong> The hash, #, tells R to stop reading your code. This allows you to “comment” your code – keeping notes to yourself and other readers about what the code is doing. Commenting your code is very valuable and you should do it often!</span><span class="tabset-margin-content tabset-1-2-tab-margin-content collapse"><strong>Commenting code</strong> The hash, #, tells R to stop reading your code. This allows you to “comment” your code – keeping notes to yourself and other readers about what the code is doing. Commenting your code is very valuable and you should do it often!</span></div></div><div class="panel-tabset" data-group="language">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Challenge</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Solution</a></li></ul>
-<div class="tab-content" data-group="language">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p></p>
+<section id="practice-questions" class="level3">
+<h3 class="anchored" data-anchor-id="practice-questions">Practice Questions</h3>
+<p>Try these questions! Use the R environment below to work without changing tabs.</p>
 <div id="qwebr-insertion-location-1"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<div class="exercises">
+<strong>Q1)</strong> The code above returns the error: "Error: could not find function "summarise"". How can you solve this?
+<div id="radio_MRZUGSLCUC" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_MRZUGSLCUC" value=""> <span>Change “summarise” to “summarize”</span></label><label><input type="radio" autocomplete="off" name="radio_MRZUGSLCUC" value="answer"> <span>load the dplyr library</span></label>
 </div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p></p>
-<div id="qwebr-insertion-location-2"></div>
-<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<hr>
+<p><strong>Q2)</strong> Revisit the pollinator visitation dataset we explored. Which location has a greater anther stigma distance (<code>asd_mm</code>)? <select class="webex-select"><option value="blank"></option><option value="answer">They are the same</option><option value="">SM</option><option value="">GC</option><option value="">S6</option></select></p>
+<hr>
+<p><strong>Q3)</strong> Consider the table below. The data are <select class="webex-select"><option value="blank"></option><option value="">tidy</option><option value="answer">not tidy</option></select></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">location</td>
+<td style="text-align: left;">GC</td>
+<td style="text-align: left;">GC</td>
+<td style="text-align: left;">GC</td>
+<td style="text-align: left;">GC</td>
+<td style="text-align: left;">GC</td>
+<td style="text-align: left;">GC</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ril</td>
+<td style="text-align: left;">A1</td>
+<td style="text-align: left;">A100</td>
+<td style="text-align: left;">A102</td>
+<td style="text-align: left;">A104</td>
+<td style="text-align: left;">A106</td>
+<td style="text-align: left;">A107</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">mean_visits</td>
+<td style="text-align: left;">0.0000</td>
+<td style="text-align: left;">0.1875</td>
+<td style="text-align: left;">0.2500</td>
+<td style="text-align: left;">0.0000</td>
+<td style="text-align: left;">0.0000</td>
+<td style="text-align: left;">0.0000</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-</div>
-<p><strong>Storing values in variables</strong> allows for efficient (and less error-prone) analyses, while paving the way to more complex calculations. In R, we assign values to variables using the assignment operator, <code>&lt;-</code>. For example, to store the value <code>1</code> in a variable named <code>x</code>, type <code>x &lt;- 1</code>. Now, <code>2 * x</code> will return <code>2</code>.</p>
-
-<div class="no-row-height column-margin column-container"><div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># Assign 1 to x</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span>  x <span class="co"># Multiply x by 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
-</div></div><p>But <code>R</code> must “know” something before it can “remember” it. The code below aims to set <code>y</code> equal to five, and see what <code>y</code> plus one is (it should be six). However, it returns an error. Run the code to see the error message, then fix it!</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Challenge</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Solution</a></li></ul>
-<div class="tab-content" data-group="language">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div id="qwebr-insertion-location-3"></div>
-<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="webex-solution">
 <button>
-Hint
+Click here for explanation
 </button>
-<p>R reads and executes each line of code sequentially, from top to bottom. Think about what <code>y + 1</code> means to R if it hasn’t seen a definition of <code>y</code> yet.</p>
+<p>Here the data are transposed, so the data are not tidy. Remember in tidy data each variable is a column, not a row. This is particularly hard for R because there are numerous types of data in a column.</p>
+</div>
+<p>.</p>
+<hr>
+<p><strong>Q4</strong> Consider the table below. The data are <select class="webex-select"><option value="blank"></option><option value="">tidy</option><option value="answer">not tidy </option></select></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">location-ril</th>
+<th style="text-align: right;">mean_visits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">GC-A1</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GC-A100</td>
+<td style="text-align: right;">0.1875</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GC-A102</td>
+<td style="text-align: right;">0.2500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GC-A104</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GC-A106</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GC-A107</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div id="qwebr-insertion-location-4"></div>
-<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="webex-solution">
 <button>
-Hint
+Click here for explanation
 </button>
-<p>In R, variables must be defined before they are used. When you try to use <code>y + 1</code> before assigning a value to <code>y</code>, R throws an error because it doesn’t know what <code>y</code> is yet. When we switch the order—assigning <code>y &lt;- 5</code> before using <code>y + 1</code>—R understands the command and evaluates it properly.</p>
+<p>Here location and ril are combined in a single column, so the data are not tidy. Remember in tidy data each variable is its own column. It would be hard to get e.g.&nbsp;means for RILs of locations in this format.</p>
+</div>
+<hr>
+<p><strong>Q5</strong> Consider the table below. The data are <select class="webex-select"><option value="blank"></option><option value="">tidy</option><option value="answer">not tidy</option></select></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">ril</th>
+<th style="text-align: right;">GC</th>
+<th style="text-align: right;">SR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A1</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0.6667</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A100</td>
+<td style="text-align: right;">0.1875</td>
+<td style="text-align: right;">0.5833</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A102</td>
+<td style="text-align: right;">0.2500</td>
+<td style="text-align: right;">0.6667</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A104</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">1.7500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A106</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0.5000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A107</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">1.5000</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
+<div class="webex-solution">
+<button>
+Click here for explanation
+</button>
+<p>This is known as “wide format” and is not tidy. Here the variable, location, is used as a column heading. This can be a fine way to present data to people, but it’s not how we are analyzing data.</p>
+</div>
+<hr>
+<strong>Q6</strong> You should always make sure data are tidy when (pick best answer)
+<div id="radio_CFIEBTHOTY" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_CFIEBTHOTY" value=""> <span>collecting data</span></label><label><input type="radio" autocomplete="off" name="radio_CFIEBTHOTY" value=""> <span>presenting data</span></label><label><input type="radio" autocomplete="off" name="radio_CFIEBTHOTY" value="answer"> <span>analyzing data with dplyr</span></label><label><input type="radio" autocomplete="off" name="radio_CFIEBTHOTY" value=""> <span>all of the above</span></label>
+</div>
+<hr>
+<strong>Q7</strong> What is wrong with the code below (pick the most egregious issue).
+<div id="radio_XRORSVLVNO" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XRORSVLVNO" value="answer"> <span>I overwrote iris and lost the raw data</span></label><label><input type="radio" autocomplete="off" name="radio_XRORSVLVNO" value=""> <span>I did not show the output</span></label><label><input type="radio" autocomplete="off" name="radio_XRORSVLVNO" value=""> <span>I used summarise() rather than summarize()</span></label><label><input type="radio" autocomplete="off" name="radio_XRORSVLVNO" value=""> <span>I did not tell R to remove missing data when calculating the mean.</span></label>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> iris <span class="sc">|&gt;</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_sepal_length =</span>  <span class="fu">mean</span>(Sepal.Length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<p><strong>Q8</strong> After running the code below, how many rows and columns will the output tibble have? <em>NOTE</em> The original data has 593 rows, 7 columns and 186 unique RILs* <select class="webex-select"><option value="blank"></option><option value="">1 row, 1 column</option><option value="">1 row, 2 columns</option><option value="">2 rows, 2 columns</option><option value="answer">186 rows, 2 columns</option><option value="">186 rows, 7 columns</option><option value="">593 rows, 2 columns</option><option value="">593 rows, 7 columns</option></select></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ril_data   <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(ril) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>Now, try assigning different numbers to <code>x</code> and <code>y</code>, or even using them together in a calculation, such as <code>x + y</code>. Understanding this concept of assigning values is critical to understanding how to use R.</p>
+<hr>
 </section>
-<section id="lets-get-started-with-r" class="level2">
-<h2 class="anchored" data-anchor-id="lets-get-started-with-r">Let’s get started with R</h2>
-<p>The following sections introduce the very basics of R including:</p>
+<section id="glossary-of-terms" class="level3">
+<h3 class="anchored" data-anchor-id="glossary-of-terms">Glossary of Terms</h3>
+<div class="glossary">
 <ul>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/functions_and_vectors.html">Functions and vectors in R</a>.<br>
+<li><strong>Tidy Data</strong> A structured format where:
+<ul>
+<li>Each <strong>row</strong> represents an <strong>observation</strong>.<br>
 </li>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/loading_packages_and_data.html">Loading packages and data into R</a>.<br>
+<li>Each <strong>column</strong> represents a <strong>variable</strong>.<br>
 </li>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/data_types.html">Data types in R</a>.<br>
+<li>Each <strong>cell</strong> contains a <strong>single measurement</strong>.</li>
+</ul></li>
+<li><strong>Tibbles:</strong> A modern form of a <strong>data frame</strong> in R with:
+<ul>
+<li>Cleaner printing (only first 10 rows, fits columns to screen).<br>
 </li>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/rstudio_orientation.html">An orientation to RStudio</a>.</li>
+<li>Explicit display of <strong>data types</strong> (e.g., <dbl>, <chr>).<br>
+</chr></dbl></li>
+<li>Strict subsetting (prevents automatic type conversion).<br>
+</li>
+<li>Character data is <strong>not automatically converted to factors</strong>.</li>
+</ul></li>
+<li><strong>Piping (|&gt;) functions:</strong> A way to <strong>chain operations together</strong>, making code more readable and modular.<br>
+</li>
+<li><strong>Grouping in Data Analysis:</strong> Grouped operations allow calculations within subsets of data (e.g., mean visits per location).</li>
+<li><strong>Missing Data (<code>NA</code>):</strong> R uses <code>NA</code> to represent missing values. Operations with <code>NA</code> return <code>NA</code> unless handled explicitly (e.g., na.rm = TRUE to ignore missing values, use = "pairwise.complete.obs", etc).<br>
+</li>
+<li><strong>Warnings</strong>: Indicate a possible issue but allow code to run (e.g., NAs introduced by coercion).<br>
+</li>
+<li><strong>Errors</strong>: Stop execution completely when something is <strong>invalid</strong>.</li>
 </ul>
-<p>Then we <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html">summarize the chapter</a>, present <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#practice-questions">practice questions</a>, a <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#glossary-of-terms">glossary</a>, a review of <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#new-r-functions">R functions</a> and <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#r-packages-introduced">R packages</a> introduced, and <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#additional-resources">provide links to additional resources</a>.</p>
+</div>
+<hr>
+</section>
+<section id="key-r-functions" class="level3">
+<h3 class="anchored" data-anchor-id="key-r-functions">Key R functions</h3>
+<div class="functions">
+<ul>
+<li><p><strong><a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a></strong> <em>(<a href="https://readr.tidyverse.org/">readr</a>)</em>: Reads a CSV file into R as a <strong>tibble</strong>, automatically guessing column types.</p></li>
+<li><p><strong><a href="https://dplyr.tidyverse.org/reference/select.html"><code>select()</code></a></strong> <em>(<a href="https://dplyr.tidyverse.org/">dplyr</a>)</em>: Selects specific columns from a dataset.</p></li>
+<li><p><strong><a href="https://dplyr.tidyverse.org/reference/mutate.html"><code>mutate()</code></a></strong> <em>(<a href="https://dplyr.tidyverse.org/">dplyr</a>)</em>: Creates or modifies columns in a dataset.</p></li>
+<li><p><strong><a href="https://dplyr.tidyverse.org/reference/case_when.html"><code>case_when()</code></a></strong> <em>(<a href="https://dplyr.tidyverse.org/">dplyr</a>)</em>: Replaces values conditionally within a column.</p></li>
+<li><p><strong><a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/numeric.html"><code>as.numeric()</code></a></strong>: Converts a vector to a numeric data type.</p></li>
+<li><p><strong><a href="https://dplyr.tidyverse.org/reference/summarise.html"><code>summarize()</code></a></strong> <em>(<a href="https://dplyr.tidyverse.org/">dplyr</a>)</em>: Computes summary statistics on a dataset (e.g., mean, sum).</p></li>
+<li><p><strong><a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/mean.html"><code>mean()</code></a></strong>: Computes the mean (average) of a numeric vector.</p>
+<ul>
+<li><strong>Argument: <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/mean.html"><code>na.rm = TRUE</code></a></strong>: An argument used in functions like <code>mean()</code> and <code>sd()</code> to <strong>remove missing values (<code>NA</code>) before computation</strong>.</li>
+</ul></li>
+<li><p><strong><a href="https://dplyr.tidyverse.org/reference/pull.html"><code>pull()</code></a></strong> <em>(<a href="https://dplyr.tidyverse.org/">dplyr</a>)</em>: Extracts a single column from a tibble as a vector.</p></li>
+<li><p><strong><a href="https://dplyr.tidyverse.org/reference/group_by.html"><code>group_by()</code></a></strong> <em>(<a href="https://dplyr.tidyverse.org/">dplyr</a>)</em>: Groups data by one or more variables for summary operations.</p></li>
+<li><p><strong><a href="https://dplyr.tidyverse.org/articles/programming.html"><code>|&gt;</code></a></strong> <em>(<a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/pipe.html">Base R Pipe Operator</a>)</em>: Passes the result of one function into another, making code more readable.</p></li>
+</ul>
+</div>
+<hr>
+</section>
+<section id="r-packages-introduced" class="level3">
+<h3 class="anchored" data-anchor-id="r-packages-introduced">R Packages Introduced</h3>
+<div class="packages">
+<ul>
+<li><p><strong><a href="https://readr.tidyverse.org/"><code>readr</code></a></strong>: A tidyverse package for reading rectangular data files (e.g., <code>read_csv()</code>).</p></li>
+<li><p><strong><a href="https://dplyr.tidyverse.org/"><code>dplyr</code></a></strong>: A tidyverse package for data manipulation, including <code>mutate()</code>, <code>glimpse()</code>, and <code>across()</code>.</p></li>
+</ul>
+</div>
+</section>
+<section id="additional-resources" class="level3">
+<h3 class="anchored" data-anchor-id="additional-resources">Additional resources</h3>
+<div class="learnmore">
+<p><strong>R Recipes:</strong></p>
+<ul>
+<li><a href="https://posit.cloud/learn/recipes/transform/TransformA">Selecting columns</a>.<br>
+</li>
+<li><a href="https://posit.cloud/learn/recipes/transform/TransformF">Add a new column (or modify an existing one)</a>.<br>
+</li>
+<li><a href="https://posit.cloud/learn/recipes/transform/TransformH">Summarize data</a>.</li>
+<li><a href="https://posit.cloud/learn/recipes/transform/TransformI">Summarize data by group</a>.</li>
+</ul>
+<p><strong>Other web resources:</strong></p>
+<ul>
+<li><a href="https://r4ds.had.co.nz/tidy-data.html">Chapter 10: Tidy data</a> from R for data science (<span class="citation" data-cites="grolemund2018">Grolemund &amp; Wickham (<a href="#ref-grolemund2018" role="doc-biblioref">2018</a>)</span>).<br>
+</li>
+<li><a href="https://rfortherestofus.com/2024/07/dplyr-functions-animated">Animated dplyr functions</a> from R or the rest of us.</li>
+</ul>
+<p><strong>Videos:</strong></p>
+<ul>
+<li><p><a href="https://www.youtube.com/watch?v=Gms3zSPqCk8&amp;t=4s">Basic Data Manipulation</a> (From Stat454).</p></li>
+<li><p><a href="https://www.youtube.com/watch?v=38BA_v7BwKk">Calculations on tibble</a> (From Stat454).</p></li>
+</ul>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-ismay2019" class="csl-entry" role="listitem">
-Ismay, C., &amp; Kim, A. Y. (2019). <em>Statistical inference via data science: A ModernDive into r and the tidyverse</em>. CRC Press.
-</div>
-<div id="ref-sianta2024" class="csl-entry" role="listitem">
-Sianta, S. A., Moeller, D. A., &amp; Brandvain, Y. (2024). The extent of introgression between incipient &lt;i&gt;clarkia&lt;/i&gt; species is determined by temporal environmental variation and mating system. <em>Proceedings of the National Academy of Sciences</em>, <em>121</em>(12), e2316008121. <a href="https://doi.org/10.1073/pnas.2316008121">https://doi.org/10.1073/pnas.2316008121</a>
+<div id="ref-grolemund2018" class="csl-entry" role="listitem">
+Grolemund, G., &amp; Wickham, H. (2018). <em>R for data science</em>.
 </div>
 </div>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -2992,13 +3158,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../book_sections/intro2r_index.html" class="pagination-link" aria-label="SECTION I: Intro to R">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">SECTION I: Intro to R</span>
+      <a href="../../book_sections/data_in_R/choose_rows.html" class="pagination-link" aria-label="• 2. Choose rows">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 2. Choose rows</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../book_sections/getting_started/functions_and_vectors.html" class="pagination-link" aria-label="• 1. Functions and vectors">
-        <span class="nav-page-text">• 1. Functions and vectors</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../book_sections/intro_to_ggplot.html" class="pagination-link" aria-label="3. Introduction to ggplot">
+        <span class="nav-page-text">3. Introduction to ggplot</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

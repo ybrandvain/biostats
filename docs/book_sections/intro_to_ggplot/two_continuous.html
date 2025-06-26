@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>• 1. Load packages and data – Applied Biostatistics</title>
+<title>• 3. Two continuous variables – Applied Biostatistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../book_sections/getting_started/data_types.html" rel="next">
-<link href="../../book_sections/getting_started/functions_and_vectors.html" rel="prev">
+<link href="../../book_sections/intro_to_ggplot/many_explanatory.html" rel="next">
+<link href="../../book_sections/intro_to_ggplot/two_categorical.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/getting_started.html">1. Getting started with R</a></li><li class="breadcrumb-item"><a href="../../book_sections/getting_started/loading_packages_and_data.html">• 1. Load packages and data</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/intro_to_ggplot.html">3. Introduction to ggplot</a></li><li class="breadcrumb-item"><a href="../../book_sections/intro_to_ggplot/two_continuous.html">• 3. Two continuous variables</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -187,7 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/getting_started/loading_packages_and_data.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../book_sections/getting_started/loading_packages_and_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Load packages and data</span></a>
   </div>
 </li>
@@ -287,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro_to_ggplot/two_continuous.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/intro_to_ggplot/two_continuous.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">• 3. Two continuous variables</span></a>
   </div>
 </li>
@@ -356,9 +356,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/getting_started.html">1. Getting started with R</a></li><li class="breadcrumb-item"><a href="../../book_sections/getting_started/loading_packages_and_data.html">• 1. Load packages and data</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/intro_to_ggplot.html">3. Introduction to ggplot</a></li><li class="breadcrumb-item"><a href="../../book_sections/intro_to_ggplot/two_continuous.html">• 3. Two continuous variables</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">• 1. Load packages and data</h1>
+<h1 class="title">• 3. Two continuous variables</h1>
 </div>
 
 
@@ -375,75 +375,141 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="../../figs/intro_to_R/intro_to_ggplot/clarkia_sketch_twoconts.png" class="img-fluid figure-img" width="948"></p>
+</figure>
+</div>
+</div>
+</div>
 <div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<p><strong>Motivating scenario:</strong> you would like to get started having a peek into your data in R, and want to load the data and the packages to get started.</p>
+<p><strong>Motivating scenario:</strong> You want to visualize the relationship between two continuous variables.</p>
 <p><strong>Learning goals: By the end of this sub-chapter you should be able to</strong></p>
 <ol type="1">
-<li>Understand what an R package is
+<li>Make a scatterplot with <a href="https://ggplot2.tidyverse.org/reference/geom_point.html"><code>geom_point()</code></a>.<br>
+</li>
+<li>Show trends with <a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html"><code>geom_smooth()</code></a>.
 <ul>
-<li>Install an R package with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/install.packages.html"><code>install.packages()</code></a> function (the first time you use it).<br>
+<li>Show a linear regression with <code>method = "lm"</code><br>
 </li>
-<li>Load an R package with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/library.html"><code>library()</code></a> function (in every R session in which you use the package).<br>
-</li>
+<li>Show a moving average with <code>method = "loess"</code></li>
+<li>Optionally suppress the grey ribbon by setting <code>se = FALSE</code>.</li>
 </ul></li>
-<li>Use the <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a> function in the <a href="https://readr.tidyverse.org/"><code>readr</code></a> package to load a file from the internet into R.</li>
+<li>Transform the scale of x or y axis with e.g.&nbsp;<a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html"><code>scale_x_continuous(trans = "log1p")</code></a>.</li>
 </ol>
 </div>
 <hr>
-<section id="r-packages" class="level2">
-<h2 class="anchored" data-anchor-id="r-packages">R packages</h2>
-<p>While <code>R</code> has many built-in functions, <strong>packages</strong> provide even more functions to extend <code>R</code>’s capabilities. Packages can offer alternative (often more efficient and user-friendly) approaches to tasks that can be done with base <code>R</code> functions, or they can enable entirely new functionality that is not included in base <code>R</code> at all. In fact, <code>R</code> packages are a major way that the latest statistical and computational methods in various fields are shared with practitioners.</p>
-<p>Below I introduce the <a href="https://readr.tidyverse.org/index.html"><code>readr</code></a>, and <a href="https://dplyr.tidyverse.org/index.html"><code>dplyr</code></a> packages. Because these packages are so useful for streamlining data import, manipulation, and cleaning, I use them in nearly every R project. I also introduce the <a href="https://conflicted.r-lib.org/"><code>conflicted</code></a> package, which identifies any functions with shared names across packages, and allows us to tell <code>R</code> which function we mean when more than one function has the same name.</p>
-<p><strong>Install a package the first time you use it</strong> The first time you need a package, install it with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/install.packages.html">install.packages()</a> function. Here the argument is the package (or vector of packages) you want to install. So, to install the packages above, type:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We do this the first time we need a package.</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"readr"</span>, <span class="st">"dplyr"</span>, <span class="st">"conflicted"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="visualizing-associations-between-continuous-variables." class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="visualizing-associations-between-continuous-variables.">Visualizing associations between continuous variables.</h3>
+<p>When Brooke watched pollinators visit <em>parviflora</em> recombinant inbred lines (RILs), she was hoping that these observations also informed the probability of hybrid seed set. The first step in evaluating this hypothesis is to generate a scatterplot – a visualization that shows the association between continuous variables.</p>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="../../figs/intro_to_R/intro_to_ggplot/jitter_sketch.png" class="img-fluid figure-img" width="162"></p>
+</figure>
 </div>
-<p><strong>Load installed packages every time you open RStudio</strong> You only install a package once, but you must use the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/library.html"><code>library()</code></a> function, as I demonstrate below, to load installed packages every time you open R.</p>
+</div></div></div>
+<p>We use <a href="https://ggplot2.tidyverse.org/reference/geom_point.html"><code>geom_point()</code></a> to make such a plot and add trends with <a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html"><code>geom_smooth()</code></a>. There are numerous types of trendlines we could add with the <code>method</code> argument:</p>
+<ul>
+<li>To add the best fit linear model type <code>method = lm</code>.<br>
+</li>
+<li>To add a smoothed moving average type <code>method = loess</code>.</li>
+</ul>
+<p>By default ggplot adds uncertainty about its guess of the line with a grey background. This is sometimes helpful but can get in the way. To remove it type <code>se = FALSE</code>.</p>
+<p>At times transforming the data makes patterns easier to see. We can transform our presentation of the data with the <code>trans</code> argument in the <a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html"><code>scale_x_continuous()</code></a> (or <a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html"><code>scale_y_continuous()</code></a>) functions.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page"><code>point()</code></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">transform</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">linear trend</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">smoothed average</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+<p>We present the data with <a href="https://ggplot2.tidyverse.org/reference/geom_point.html"><code>geom_point()</code></a>. Because some data points overlapped</p>
+<ul>
+<li>I increased the point size (<code>size = 3</code>) and<br>
+</li>
+<li>I made the points partially transparent (<code>alpha = 0.4</code>).</li>
+</ul>
+<p>A small jitter could have been ok, but jittering continuous values gives me the ick, because I want my data presented faithfully.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We do this every time we open R and want to use these packages.</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(conflicted)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ril_data, <span class="fu">aes</span>(<span class="at">x =</span> mean_visits, <span class="at">y  =</span> prop_hybrid))<span class="sc">+</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> .<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="two_continuous_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+<p>Sometimes nonlinear scales better reveal trends. Transforming the scale on which the data are presented (rather than transforming the data itself) is nice because we retain original values.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ril_data, <span class="fu">aes</span>(<span class="at">x =</span> mean_visits, <span class="at">y  =</span> prop_hybrid))<span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> .<span class="dv">4</span>)<span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">"log1p"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="two_continuous_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="fyi">
+<p><strong>Take care not to lose data when transforming:</strong> The log of any number less than or equal to zero is undefined. To avoid losing these data points, I transformed the data as <code>log(x+1)</code> with the <code>"log1p"</code> transformation. If the data were all greater than one, I could have used the <code>log</code> <code>log10</code> or <code>sqrt</code> transform.</p>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+<p>The <code>geom_smooth()</code> allows us to highlight patterns in our data. There are lots of ways to draw trends through data, and we can specify how we want to do so with the <code>method</code> argument.</p>
+<p>Here I present the standard “best-fit” line with <code>method = "lm"</code>. The grey area around that line represents plausible lines that would also have been statistically acceptable (more on that later).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ril_data, <span class="fu">aes</span>(<span class="at">x =</span> mean_visits, <span class="at">y  =</span> prop_hybrid))<span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> .<span class="dv">4</span>)<span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)<span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">"log1p"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="two_continuous_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+<p>Sometimes a simple line does not do a great job of highlighting patterns. Specifying <code>method = loess</code> presents a smoothed moving average.</p>
+<p>In addition to showing that moving average, I show you how to suppress that grey area with <code>se = FALSE</code>. I tend to like to include the uncertainty in our estimated trend so I usually don’t do this, but sometimes showing the uncertainty hides other features of the data, so I wanted to empower you.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ril_data, <span class="fu">aes</span>(<span class="at">x =</span> mean_visits, <span class="at">y  =</span> prop_hybrid))<span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> .<span class="dv">4</span>)<span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>)<span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">"log1p"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="two_continuous_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Interpretation:</strong> Returning to our motivating question, we see that the proportion of seeds that are hybrids appears to increase with pollinator visitation. Later in the term we will address this question more rigorously.</p>
+
+
 </section>
-<section id="reading-data-into-r" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="reading-data-into-r">Reading data into R</h2>
-<p>Rather than typing large datasets into R, we usually want to read in data that is already stored somewhere. For now, we will load data saved as a csv file from the internet with the <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv(link)</code></a> structure from the <a href="https://readr.tidyverse.org/"><code>readr</code></a> package. Later, we will revisit the challenge of importing data from other file types and locations into R.</p>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p><strong>Loading data:</strong> See posit's <a href="https://posit.cloud/learn/recipes/basics/ImportA1">recipe for importing data</a> for more detail. Note also that <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/read.table.html"><code>read.csv()</code></a> is a base R function similar to <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a>, but it behaves a bit differently – for example it reads data in as a dataframe, not a tibble.</p>
-</div></div><p>Below, I show an example of reading pollinator visitation data from <a href="https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/pollinator_visits.csv">a link on my GitHub</a>. After loading a dataset, you can see the first ten lines and all the columns that fit by simply typing its name. Alternatively, the <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/View.html"><code>View()</code></a> function opens up the full spreadsheet for you to peruse.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(ril_link)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ril_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 593 × 17
-   ril   location prop_hybrid mean_visits growth_rate petal_color petal_area_mm
-   &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;               &lt;dbl&gt;
- 1 A1    GC             0           0     1.272       white                44.0
- 2 A100  GC             0.125       0.188 1.448       pink                 55.8
- 3 A102  GC             0.25        0.25  1.8O        pink                 51.7
- 4 A104  GC             0           0     0.816       white                57.3
- 5 A106  GC             0           0     0.728       white                68.6
- 6 A107  GC             0.125       0     1.764       pink                 66.3
- 7 A108  GC            NA          NA     1.584       &lt;NA&gt;                 51.5
- 8 A109  GC             0           0     1.476       white                48.1
- 9 A111  GC             0          NA     1.144       white                51.6
-10 A112  GC             0.25        0     1           white                89.8
-# ℹ 583 more rows
-# ℹ 10 more variables: date_first_flw &lt;dbl&gt;, node_first_flw &lt;dbl&gt;,
-#   petal_perim_mm &lt;dbl&gt;, asd_mm &lt;dbl&gt;, protandry &lt;dbl&gt;, stem_dia_mm &lt;dbl&gt;,
-#   lwc &lt;dbl&gt;, crossDir &lt;chr&gt;, num_hybrid &lt;dbl&gt;, offspring_genotyped &lt;dbl&gt;</code></pre>
-</div>
-</div>
-
-
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p><strong><code>package::function()</code> format:</strong> I read in the data with the <a href=""><code>read_csv()</code></a> function in the <a href="https://readr.tidyverse.org/">readr package</a> by typing: <code>readr::read_csv()</code>, but typing <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a> gives the same result. The <code>package::function()</code> format comes in handy when two functions in different packages have the same name.</p>
-</div></div></section>
 
 </main> <!-- /main -->
 <script>
@@ -1076,13 +1142,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../book_sections/getting_started/functions_and_vectors.html" class="pagination-link" aria-label="• 1. Functions and vectors">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 1. Functions and vectors</span>
+      <a href="../../book_sections/intro_to_ggplot/two_categorical.html" class="pagination-link" aria-label="• 3. Two categorical variables">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 3. Two categorical variables</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../book_sections/getting_started/data_types.html" class="pagination-link" aria-label="• 1. Data types in R">
-        <span class="nav-page-text">• 1. Data types in R</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../book_sections/intro_to_ggplot/many_explanatory.html" class="pagination-link" aria-label="• 3. Many explanatory vars">
+        <span class="nav-page-text">• 3. Many explanatory vars</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
