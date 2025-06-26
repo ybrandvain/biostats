@@ -1,0 +1,47 @@
+project:
+  type: book
+  output-dir: docs
+  preview:
+    browser: true
+
+
+book:
+  title: "Applied Biostatistics"
+  author: "Yaniv Brandvain"
+  date: today
+  sidebar:
+    search: true
+    background: '#3A5F0B' #"#9f86c0"
+    logo: "figs/fun_figs/stamp.png"
+  chapters:
+    - index.qmd
+    - book_sections/clarkia_and_its_data/clarkia_and_its_data.qmd
+    - book_sections/example_mini/varType.qmd
+    - toc.qmd
+    - references.qmd
+
+
+ 
+
+
+bibliography: ["assets/modeling.bib", "assets/packages.bib"]
+csl: 'assets/apa-single-spaced.csl'
+
+format:
+  html:
+    theme: 
+      - flatly
+      - "assets/theme_corrected.scss"
+    css: ["assets/sticky-notes.css", "assets/table-styles.css", "assets/webex.css"]
+    include-after-body: assets/webex.js
+    code-copy: true
+    highlight-style: zenburn
+    mainfont: 'Crimson Text'
+    fontsize: '14pt'
+    linestretch: '1.5em'
+    linkcolor: '#20a2a3' 
+    toc: false
+    link-external-newwindow: true
+editor: source
+filters:
+ - webr
