@@ -1,0 +1,107 @@
+
+# SECTION I: Intro to R   {.unnumbered}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(knitr)
+```
+
+
+
+<article class="drop-cap">To effectively and efficiently analyze and visualize data you need a computer. To make your work readily reproducible, a scripting language like R helps a lot. While there are "point and click" programs that you can use to conduct some statistical analyses, these are often expensive and/or limited. So our goal in this section is to get everyone onboard with using R for stats.</article><br>
+
+```{r}
+#| echo: false
+#| column: margin 
+#| label: fig-experience
+#| fig-cap: "Most of you have very little programming experience, but some of you have a lot of experience."
+par(mar = c(6, 8, 4, 1))
+hist(c(1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 5, 5, 5, 5, 7, 8), 
+     breaks = 1:11 - 0.5,
+     main = "Previous Programming\nExperience (n=18)",
+     xlab = "low                                             high",
+     col = "cornflowerblue",
+     xaxt = "n", cex.axis = 1.75, cex.lab = 2, cex.main = 2)
+axis(1, at = 1:10, labels = 1:10, cex.axis = 1.75)
+```
+
+- **Get everyone up to speed on reading, writing, and debugging code in `R`:** Students in this course typically have a wide range of prior programming experience (@fig-experience). I aim to quickly get beginners up to speed, and hope that advanced users will discover new techniques and have opportunities to support their peers.
+
+- **Focus on understanding `R`'s philosophy and solving programming problems:** We are not here to write fancy code. We are here to do stats. Make sure your code works and is readable. Do not aim for perfection.
+
+- **Prepare for standard usage of R in statistics:** Later the stats get tough. By that point R should be routine.
+
+## A "tidyverse" Approach
+
+```{r}
+#| echo: false
+#| label: fig-hex
+#| fig-alt: "A collection of hexagonal stickers representing popular packages in the Tidyverse, an ecosystem of R packages for data science. Each hex showcases a different package: dplyr (pliers illustration), tibble (stylized data table in a space theme), ggplot2 (scatterplot icon), readr (document and table icon), tidyr (highlighters zooming through space), stringr (violin), forcats (three black cats in a box), lubridate (calendar and clock), and purrr (a peacefully sleeping cat). The hexes are arranged in a honeycomb pattern."
+#| fig-cap: "A collection of Tidyverse hex stickers representing key R packages for data science, including dplyr, ggplot2, tidyr, readr, and more—each with a unique thematic design."  
+#| column: margin 
+include_graphics("../figs/intro_to_R/intro_to_R/hex.png")
+```
+
+As `R` has evolved over time and its capabilities can be extended with packages (we will discuss this soon), different "dialects" of `R` have emerged. While many of you have likely seen **Base `R`**  -- built on the standard `R` program you download, here we will use   **Tidyverse** -- a specific and highly standardized set of packages designed for data science workflows  (@fig-hex). As a broad overgeneralization, Base R allows for much more control of what you are doing but requires more programming skill, while tidyverse allows you to do a lot with less programming skill.
+
+I focus on tidyverse programming, not because it is better than base R, but because learning tidyverse is a powerful way to do a lot without learning a lot of formal programming. This means that you will be well prepared for a lot of complex data analysis. If you continue to pursue advanced programming in R (or other languages) you will have some programming concepts to catch up on.
+
+If you already know how to accomplish certain tasks with base R tools, I encourage you to invest the time in learning the equivalent approaches in tidyverse. While it may feel redundant at first, this foundation knowledge will make you a more versatile and effective R programmer in the long term, and will allow you to make sense of what we do throughout the term.
+
+
+## Important hints for R coding
+
+Years of learning and teaching have taught me the following key points about learning R. These amount to the simple observation that a student's mindset and attitude towards learning and using R is the most important key to their success.  I summarize these tips in the video and bullet points, below.
+
+```{r}
+#| echo: false
+#| label: "fig-r_mindset"
+#| fig-cap: "Video of Yaniv\\'s hints for succesfull R coding."
+include_url("https://player.vimeo.com/video/745985537")
+```
+
+
+```{r}
+#| echo: false
+#| fig-cap: "Replace your automatic negative thoughts with balanced alternatives."
+#| fig-alt: "(1) Automatic thought: \"I must be a moron if I can't perform this simple maintenance task.\" Balanced alternative: \"This isn't something I do very often, so it's unreasonable to expect that I'd automatically be an expert at it.\" (2) \"The documentation is useless and doesn’t help me at all.\" Balanced alternative: \"It's not possible to document every possible situation; but I can still read the docs and learn something.\". (3) Automatic thought: \"This isn’t something I do very often, so it’s unreasonable to expect that I’d automatically be an expert at it.\" Balanced alternative: \"This was a total waste of time. I'll never get those 4 hours back again.	Maybe I didn’t succeed in my original goal, but I made some progress and gained valuable insights for the next time I try.\""
+#| label: fig-balanced
+#| column: margin 
+include_graphics("../figs/intro_to_R/intro_to_R/balanced.png")
+```
+
+
+
+- **Be patient with yourself.** Every expert R programmer started exactly where you are now. Your understanding will grow naturally as you tackle real problems and challenges. Do not beat yourself up, you are learning. Replace automatic negative thoughts with balanced thoughts (@fig-balanced).
+
+- **`R` is literally a language.** Languages take a while to learn -- at first, looking at an unfamiliar alphabet or hearing people speak a foreign language makes no sense. Aluksi vieraan aakkoston katsominen tai vieraan kielen puhumisen kuuleminen ei tunnu lainkaan järkevältä. With time and effort, you can make sense of a bunch of words and sentences but it takes time. You are not dumb for not understanding the sentence I pasted above (and if you do understand it is because you know Finnish, not because you are smart).
+
+- **You don't need to memorize anything.** You have access to dictionaries, translators, LLMs etc etc. That said, these tools or more useful the more you know.  
+
+- **Do not compare yourself to others.** R will come fast to some, and slower to others. This has absolutely nothing to do with either your intelligence or your long-term potential as a competent R user. 
+
+- **Start small and don't be afraid to experiment.** There is nothing wrong about typing code that is imperfect and/or does not work out. Start with the simplest way of addressing your problem and see how far you get. Start small, maybe with some basic data analysis or creating a simple plot. Each little victory builds your confidence. You can always try new and more complex approaches as you go.
+
+## What's ahead?
+
+
+
+```{r}
+#| echo: false
+#| label: "fig-wereoff"
+#| fig-alt: "A nice picture of Clarkia's home." 
+#| fig-cap: "A pretty scene of Clarkia's home showing the world we get to investigate as we get equipped with R."
+include_graphics("../figs/intro_to_R/intro_to_R/pretty_scene.png")
+```
+
+Now we begin our intro to R. While we will keep practicing what we have learned and learning new R stuff all term, the  next four chapters, listed below will get you started:
+
+- **[Getting up and Running](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started.html).** This section introduces RStudio, math in R, vectors, variable assignment, using functions, r packages, loading data (from the internet), and data types. There is a lot here! 
+
+- **[Data in R](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R.html).**   Here we continue on our introduction to R. We first introduce the concept of tidy data, and introduce the capabilities of the tidyverse package, [dplyr](https://dplyr.tidyverse.org/).   
+
+- **[Intro to ggplot](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot.html).** The ggplot package allows us to make nice plots quickly. We will get started understanding how ggplot thinks, and introduce the wide variety of figures you can make. Later in this term we will make better figures in [ggplot](https://ggplot2.tidyverse.org/).
+
+- **[Reproducible science](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/reproducible_science.html).** We consider how to collect data, and store it in a folder. We then introduce the concept of [R projects](https://r4ds.hadley.nz/workflow-scripts#projects) and loading data from our computer. Finally, we introduce the idea of saving [R scripts](https://r4ds.hadley.nz/workflow-scripts#scripts).
