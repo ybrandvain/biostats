@@ -186,6 +186,12 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../book_sections/intro2r_index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SECTION I: Intro to R</span></a>
   </div>
@@ -378,7 +384,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">2. Data in R</h1>
+<h1 class="title"><span id="data_in_R" class="quarto-section-identifier">2. Data in R</span></h1>
 </div>
 
 
@@ -446,20 +452,20 @@ Science fundamentally relies on the collection and analysis of data to draw mean
 <img src="../figs/intro_to_R/data_in_R/tidy.png" class="img-fluid figure-img" alt="Illustration of tidy data principles. The image features a quote from Hadley Wickham: 'Tidy data is a standard way of mapping the meaning of a dataset to its structure.' The text explains that in tidy data, each variable forms a column, each observation forms a row, and each cell is a single measurement. A small table is included as an example, where column headers ('site,' 'ril,' 'visits') represent variables, and each row represents an observation. Emphasized text and highlighting visually reinforce key concepts." width="400">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tidy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: A visual explanation of tidy data. Modified from <span class="citation" data-cites="wickham2014">Wickham (<a href="#ref-wickham2014" role="doc-biblioref">2014</a>)</span>.
+Figure&nbsp;2: A visual explanation of tidy data. Modified from <span class="citation" data-cites="wickham2014">Wickham (<a href="../references.html#ref-wickham2014" role="doc-biblioref">2014</a>)</span>.
 </figcaption>
 </figure>
 </div>
 </div></div></div>
 <blockquote class="blockquote">
 <p>Like families, tidy datasets are all alike but every messy dataset is messy in its own way. Tidy datasets provide a standardized way to link the structure of a dataset (its physical layout) with its semantics (its meaning).</p>
-<p>Hadley Wickham. <em>Tidy data</em>. <span class="citation" data-cites="wickham2014">Wickham (<a href="#ref-wickham2014" role="doc-biblioref">2014</a>)</span>.</p>
+<p>Hadley Wickham. <em>Tidy data</em>. <span class="citation" data-cites="wickham2014">Wickham (<a href="../references.html#ref-wickham2014" role="doc-biblioref">2014</a>)</span>.</p>
 </blockquote>
-<p>Data can be structured in different ways: in a tidy format, each variable has its own column, and each row represents an observation. In contrast, messy data might combine multiple variables into a single column or store observations in a less structured format. <a href="#fig-tidy" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-tidy</span></a> A shows “long” data with one variable per column. <a href="#fig-tidy" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-tidy</span></a> B contains boxes (rather than rows or columns) with petals from a given flower laid out neatly, and information about the flower and plant written beneath it. Both formats have their costs and benefits:</p>
+<p>Data can be structured in different ways: in a tidy format, each variable has its own column, and each row represents an observation. In contrast, messy data might combine multiple variables into a single column or store observations in a less structured format. <a href="#fig-tidy" class="quarto-xref">Figure&nbsp;<span>2</span></a> A shows “long” data with one variable per column. <a href="#fig-tidy" class="quarto-xref">Figure&nbsp;<span>2</span></a> B contains boxes (rather than rows or columns) with petals from a given flower laid out neatly, and information about the flower and plant written beneath it. Both formats have their costs and benefits:</p>
 <ul>
-<li><strong><a href="#fig-tidy" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-tidy</span></a> A is “tidy”:</strong> Each row is an observation (a petal), and each column is a variable related to that observation. Because this style is so predictable, this format simplifies computational analyses.<br>
+<li><strong><a href="#fig-tidy" class="quarto-xref">Figure&nbsp;<span>2</span></a> A is “tidy”:</strong> Each row is an observation (a petal), and each column is a variable related to that observation. Because this style is so predictable, this format simplifies computational analyses.<br>
 </li>
-<li><strong><a href="#fig-tidy" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-tidy</span></a> B is not “tidy”:</strong> There are not simple rows and columns, and variables are combined in a long string. This format is useful in many ways—for example, humans can easily identify patterns, and data can be stored compactly.</li>
+<li><strong><a href="#fig-tidy" class="quarto-xref">Figure&nbsp;<span>2</span></a> B is not “tidy”:</strong> There are not simple rows and columns, and variables are combined in a long string. This format is useful in many ways—for example, humans can easily identify patterns, and data can be stored compactly.</li>
 </ul>
 <p>Note that the tidy data format is not necessarily “prettier” or easier to read – in fact, in visual presentation of data for people, we often choose an untidy format. But when analyzing data on our computer, a tidy format simplifies our work. For this reason we will work with tidy data when possible in this book.</p>
 
@@ -553,18 +559,18 @@ Figure&nbsp;3: An example of tidy versus untidy data. <strong>A)</strong> A tabl
 <h2 class="anchored" data-anchor-id="lets-get-ready-to-deal-with-data-in-r">Let’s get ready to deal with data in R</h2>
 <p>The following sections introduce the very basics of R including:</p>
 <ul>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/add_vars.html">Adding columns with mutate</a>.<br>
+<li><a href="data_in_R/add_vars.html">Adding columns with mutate</a>.<br>
 </li>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/select_vars.html">Selecting columns</a>.<br>
+<li><a href="data_in_R/select_vars.html">Selecting columns</a>.<br>
 </li>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/summarize_vars.html">Summarizing columns</a>.<br>
+<li><a href="data_in_R/summarize_vars.html">Summarizing columns</a>.<br>
 </li>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/choose_rows.html">Choosing rows</a>.</li>
+<li><a href="data_in_R/choose_rows.html">Choosing rows</a>.</li>
 </ul>
-<p>Then we <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#chapter-summary">summarize the chapter</a>, present <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#practice-questions">practice questions</a>, a <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#glossary-of-terms">glossary</a>, a review of <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#key-r-functions">R functions</a> and <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#r-packages-introduced">R packages</a> introduced, and <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#additional-resources">present additional resources</a>.</p>
+<p>Then we <a href="data_in_R/data_in_R_summary.html#data_in_R_summarySummary">summarize the chapter</a>, present a <a href="data_in_R/data_in_R_summary.html#data_in_R_summaryChatbot">chatbot tutor</a>, <a href="data_in_R/data_in_R_summary.html#data_in_R_summaryPractice_questions">practice questions</a>, a <a href="data_in_R/data_in_R_summary.html#data_in_R_summaryGlossary_of_terms">glossary</a>, a review of <a href="data_in_R/data_in_R_summary.html#data_in_R_summaryNew_r_functions">R functions</a> and <a href="data_in_R/data_in_R_summary.html#data_in_R_summaryR_packages_introduced">R packages</a> introduced, and <a href="data_in_R/data_in_R_summary.html#data_in_R_summaryAdditional_resources">provide links to additional resources</a>.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-grolemund2018" class="csl-entry" role="listitem">
 Grolemund, G., &amp; Wickham, H. (2018). <em>R for data science</em>.
 </div>

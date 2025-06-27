@@ -31,7 +31,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../book_sections/getting_started.html" rel="next">
-<link href="../book_sections/example_mini/varType.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -128,6 +127,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../book_sections/example_mini/varType.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Types of Variables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -324,7 +329,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">SECTION I: Intro to R</h1>
+<h1 class="title"><span id="intro2r" class="quarto-section-identifier">SECTION I: Intro to R</span></h1>
 </div>
 
 
@@ -360,12 +365,12 @@ Figure&nbsp;1: Most of you have very little programming experience, but some of 
 </div>
 </div></div></div>
 <ul>
-<li><p><strong>Get everyone up to speed on reading, writing, and debugging code in <code>R</code>:</strong> Students in this course typically have a wide range of prior programming experience (<a href="#fig-experience" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-experience</span></a>). I aim to quickly get beginners up to speed, and hope that advanced users will discover new techniques and have opportunities to support their peers.</p></li>
+<li><p><strong>Get everyone up to speed on reading, writing, and debugging code in <code>R</code>:</strong> Students in this course typically have a wide range of prior programming experience (<a href="#fig-experience" class="quarto-xref">Figure&nbsp;<span>1</span></a>). I aim to quickly get beginners up to speed, and hope that advanced users will discover new techniques and have opportunities to support their peers.</p></li>
 <li><p><strong>Focus on understanding <code>R</code>’s philosophy and solving programming problems:</strong> We are not here to write fancy code. We are here to do stats. Make sure your code works and is readable. Do not aim for perfection.</p></li>
 <li><p><strong>Prepare for standard usage of R in statistics:</strong> Later the stats get tough. By that point R should be routine.</p></li>
 </ul>
-<section id="a-tidyverse-approach" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="a-tidyverse-approach">A “tidyverse” Approach</h2>
+<section id="intro2rTidy" class="level2 unnumbered page-columns page-full">
+<h2 class="unnumbered anchored" data-anchor-id="intro2rTidy">A “tidyverse” Approach</h2>
 <div class="cell page-columns page-full">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
@@ -380,7 +385,7 @@ Figure&nbsp;2: A collection of Tidyverse hex stickers representing key R package
 </figure>
 </div>
 </div></div></div>
-<p>As <code>R</code> has evolved over time and its capabilities can be extended with packages (we will discuss this soon), different “dialects” of <code>R</code> have emerged. While many of you have likely seen <strong>Base <code>R</code></strong> – built on the standard <code>R</code> program you download, here we will use <strong>Tidyverse</strong> – a specific and highly standardized set of packages designed for data science workflows (<a href="#fig-hex" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-hex</span></a>). As a broad overgeneralization, Base R allows for much more control of what you are doing but requires more programming skill, while tidyverse allows you to do a lot with less programming skill.</p>
+<p>As <code>R</code> has evolved over time and its capabilities can be extended with packages (we will discuss this soon), different “dialects” of <code>R</code> have emerged. While many of you have likely seen <strong>Base <code>R</code></strong> – built on the standard <code>R</code> program you download, here we will use <strong>Tidyverse</strong> – a specific and highly standardized set of packages designed for data science workflows (<a href="#fig-hex" class="quarto-xref">Figure&nbsp;<span>2</span></a>). As a broad overgeneralization, Base R allows for much more control of what you are doing but requires more programming skill, while tidyverse allows you to do a lot with less programming skill.</p>
 <p>I focus on tidyverse programming, not because it is better than base R, but because learning tidyverse is a powerful way to do a lot without learning a lot of formal programming. This means that you will be well prepared for a lot of complex data analysis. If you continue to pursue advanced programming in R (or other languages) you will have some programming concepts to catch up on.</p>
 <p>If you already know how to accomplish certain tasks with base R tools, I encourage you to invest the time in learning the equivalent approaches in tidyverse. While it may feel redundant at first, this foundation knowledge will make you a more versatile and effective R programmer in the long term, and will allow you to make sense of what we do throughout the term.</p>
 </section>
@@ -406,7 +411,7 @@ Figure&nbsp;3: Replace your automatic negative thoughts with balanced alternativ
 </div>
 </div></div></div>
 <ul>
-<li><p><strong>Be patient with yourself.</strong> Every expert R programmer started exactly where you are now. Your understanding will grow naturally as you tackle real problems and challenges. Do not beat yourself up, you are learning. Replace automatic negative thoughts with balanced thoughts (<a href="#fig-balanced" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-balanced</span></a>).</p></li>
+<li><p><strong>Be patient with yourself.</strong> Every expert R programmer started exactly where you are now. Your understanding will grow naturally as you tackle real problems and challenges. Do not beat yourself up, you are learning. Replace automatic negative thoughts with balanced thoughts (<a href="#fig-balanced" class="quarto-xref">Figure&nbsp;<span>3</span></a>).</p></li>
 <li><p><strong><code>R</code> is literally a language.</strong> Languages take a while to learn – at first, looking at an unfamiliar alphabet or hearing people speak a foreign language makes no sense. Aluksi vieraan aakkoston katsominen tai vieraan kielen puhumisen kuuleminen ei tunnu lainkaan järkevältä. With time and effort, you can make sense of a bunch of words and sentences but it takes time. You are not dumb for not understanding the sentence I pasted above (and if you do understand it is because you know Finnish, not because you are smart).</p></li>
 <li><p><strong>You don’t need to memorize anything.</strong> You have access to dictionaries, translators, LLMs etc etc. That said, these tools or more useful the more you know.</p></li>
 <li><p><strong>Do not compare yourself to others.</strong> R will come fast to some, and slower to others. This has absolutely nothing to do with either your intelligence or your long-term potential as a competent R user.</p></li>
@@ -1071,9 +1076,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../book_sections/example_mini/varType.html" class="pagination-link" aria-label="Types of Variables">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Types of Variables</span>
-      </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../book_sections/getting_started.html" class="pagination-link" aria-label="1. Getting started with R">

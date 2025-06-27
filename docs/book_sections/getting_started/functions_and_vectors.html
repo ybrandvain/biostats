@@ -195,6 +195,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../book_sections/intro2r_index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SECTION I: Intro to R</span></a>
   </div>
@@ -387,7 +393,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/getting_started.html">1. Getting started with R</a></li><li class="breadcrumb-item"><a href="../../book_sections/getting_started/functions_and_vectors.html">• 1. Functions and vectors</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">• 1. Functions and vectors</h1>
+<h1 class="title"><span id="functions_and_vectors" class="quarto-section-identifier">• 1. Functions and vectors</span></h1>
 </div>
 
 
@@ -464,8 +470,8 @@ window.Quarto = {
 </section>
 </section>
 </section>
-<section id="working-with-vectors" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="working-with-vectors">Working with vectors</h2>
+<section id="vectors" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="vectors">Working with vectors</h2>
 <p>If we observed one <em>Clarkia</em> plant with one flower, a second with two flowers, a third with three flowers, and a fourth with two flowers, we could find the mean number of flowers as <code>(1 + 2 + 3 + 2)/4</code> = 2, but this would be tedious and error-prone. It would be easier to store these values in an ordered sequence of values (called a <strong>vector</strong>) and then use the (<a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/mean.html"><code>mean()</code></a>) function.</p>
 <p>Vectors are the primary way that data is stored in <code>R</code>—even more complex data structures are often built from vectors. We create vectors with the combine function, <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/c.html"><code>c()</code></a>, which takes arguments that are the values in the vector.</p>
 <div class="cell">

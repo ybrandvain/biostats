@@ -1739,6 +1739,12 @@ globalThis.qwebrExecuteCode = async function (
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../book_sections/intro2r_index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SECTION I: Intro to R</span></a>
   </div>
@@ -2232,9 +2238,9 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </header>
 
 
-<p><strong>Links to:</strong> <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#chapter-summary">Summary</a>. <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#chatbot-tutor">Chatbot Tutor</a>. <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#practice-questions">Questions</a>. <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#glossary-of-terms">Glossary</a>. <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#key-r-functions">R functions</a>. <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#r-packages-introduced">R packages</a>. <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#additional-resources">More resources</a>.</p>
-<section id="chapter-summary" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="chapter-summary">Chapter summary</h2>
+<p><strong>Links to:</strong> <a href="#data_in_R_summarySummary">Summary</a>, <a href="#data_in_R_summaryChatbot">Chatbot Tutor</a>, <a href="#data_in_R_summaryPractice_questions">Practice Questions</a>, <a href="#data_in_R_summaryGlossary_of_terms">Glossary</a>, <a href="#data_in_R_summaryNew_r_functions">R functions</a>, <a href="#data_in_R_summaryR_packages_introduced">R packages</a> introduced, and <a href="#data_in_R_summaryAdditional_resources">Additional resources</a>.</p>
+<section id="data_in_R_summarySummary" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="data_in_R_summarySummary">Chapter summary</h2>
 <div class="cell page-columns page-full">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
@@ -2246,19 +2252,21 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </div>
 </div></div></div>
 <p>Keeping data in the tidy format—where each column represents a variable and each row represents an observation—allows you to fully leverage the powerful tools of the <a href="https://www.tidyverse.org/"><strong>tidyverse</strong></a>. In the tidyverse, data are stored in tibbles, a modern update to data frames that enhances readability and maintains consistent data types. The <a href="https://dplyr.tidyverse.org/"><code>dplyr</code></a> package offers a suite of intuitive functions for transforming and analyzing data. For example, <a href="https://dplyr.tidyverse.org/reference/mutate.html"><code>mutate()</code></a> lets you create or modify variables, while <a href="https://dplyr.tidyverse.org/reference/summarise.html"><code>summarize()</code></a> computes summary statistics. When paired with <a href="https://dplyr.tidyverse.org/reference/group_by.html"><code>group_by()</code></a>, you can easily generate summaries across groups. Other essential functions include <a href="https://dplyr.tidyverse.org/reference/select.html"><code>select()</code></a> for choosing columns, <a href="https://dplyr.tidyverse.org/reference/filter.html"><code>filter()</code></a> for subsetting rows, <a href="https://dplyr.tidyverse.org/reference/rename.html"><code>rename()</code></a>, and <a href="https://dplyr.tidyverse.org/reference/arrange.html"><code>arrange()</code></a> for ordering data. Together—and especially when used with the pipe operator (<code>group_by(...) |&gt; summarize(...)</code>)—these tools enable clear, reproducible workflows. In the next chapter, you’ll see how tidy data also powers beautiful and flexible plots using <a href="https://ggplot2.tidyverse.org/"><code>ggplot2</code></a>.</p>
-<section id="chatbot-tutor" class="level3">
-<h3 class="anchored" data-anchor-id="chatbot-tutor">Chatbot tutor</h3>
+<section id="data_in_R_summaryChatbot" class="level3">
+<h3 class="anchored" data-anchor-id="data_in_R_summaryChatbot">Chatbot tutor</h3>
+<div class="tutor">
 <p>Please interact with this custom chatbot (<a href="https://chatgpt.com/g/g-679eb4ffdb648191887186d9713ab2f8-data-in-r-tutor"><strong>link here</strong></a>) I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up and then stopping when you feel like you got what you needed from it.</p>
+</div>
 </section>
-<section id="practice-questions" class="level3">
-<h3 class="anchored" data-anchor-id="practice-questions">Practice Questions</h3>
+<section id="data_in_R_summaryPractice_questions" class="level3">
+<h3 class="anchored" data-anchor-id="data_in_R_summaryPractice_questions">Practice Questions</h3>
 <p>Try these questions! Use the R environment below to work without changing tabs.</p>
 <div id="qwebr-insertion-location-1"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="exercises">
 <strong>Q1)</strong> The code above returns the error: "Error: could not find function "summarise"". How can you solve this?
-<div id="radio_MRZUGSLCUC" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_MRZUGSLCUC" value=""> <span>Change “summarise” to “summarize”</span></label><label><input type="radio" autocomplete="off" name="radio_MRZUGSLCUC" value="answer"> <span>load the dplyr library</span></label>
+<div id="radio_LSSQFWJECQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_LSSQFWJECQ" value=""> <span>Change “summarise” to “summarize”</span></label><label><input type="radio" autocomplete="off" name="radio_LSSQFWJECQ" value="answer"> <span>load the dplyr library</span></label>
 </div>
 <hr>
 <p><strong>Q2)</strong> Revisit the pollinator visitation dataset we explored. Which location has a greater anther stigma distance (<code>asd_mm</code>)? <select class="webex-select"><option value="blank"></option><option value="answer">They are the same</option><option value="">SM</option><option value="">GC</option><option value="">S6</option></select></p>
@@ -2407,13 +2415,13 @@ Click here for explanation
 </div>
 <hr>
 <strong>Q6</strong> You should always make sure data are tidy when (pick best answer)
-<div id="radio_CFIEBTHOTY" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_CFIEBTHOTY" value=""> <span>collecting data</span></label><label><input type="radio" autocomplete="off" name="radio_CFIEBTHOTY" value=""> <span>presenting data</span></label><label><input type="radio" autocomplete="off" name="radio_CFIEBTHOTY" value="answer"> <span>analyzing data with dplyr</span></label><label><input type="radio" autocomplete="off" name="radio_CFIEBTHOTY" value=""> <span>all of the above</span></label>
+<div id="radio_AQTVZHRBHS" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_AQTVZHRBHS" value=""> <span>collecting data</span></label><label><input type="radio" autocomplete="off" name="radio_AQTVZHRBHS" value=""> <span>presenting data</span></label><label><input type="radio" autocomplete="off" name="radio_AQTVZHRBHS" value="answer"> <span>analyzing data with dplyr</span></label><label><input type="radio" autocomplete="off" name="radio_AQTVZHRBHS" value=""> <span>all of the above</span></label>
 </div>
 <hr>
 <strong>Q7</strong> What is wrong with the code below (pick the most egregious issue).
-<div id="radio_XRORSVLVNO" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_XRORSVLVNO" value="answer"> <span>I overwrote iris and lost the raw data</span></label><label><input type="radio" autocomplete="off" name="radio_XRORSVLVNO" value=""> <span>I did not show the output</span></label><label><input type="radio" autocomplete="off" name="radio_XRORSVLVNO" value=""> <span>I used summarise() rather than summarize()</span></label><label><input type="radio" autocomplete="off" name="radio_XRORSVLVNO" value=""> <span>I did not tell R to remove missing data when calculating the mean.</span></label>
+<div id="radio_GEQYPGYXJG" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_GEQYPGYXJG" value="answer"> <span>I overwrote iris and lost the raw data</span></label><label><input type="radio" autocomplete="off" name="radio_GEQYPGYXJG" value=""> <span>I did not show the output</span></label><label><input type="radio" autocomplete="off" name="radio_GEQYPGYXJG" value=""> <span>I used summarise() rather than summarize()</span></label><label><input type="radio" autocomplete="off" name="radio_GEQYPGYXJG" value=""> <span>I did not tell R to remove missing data when calculating the mean.</span></label>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> iris <span class="sc">|&gt;</span> </span>
@@ -2429,8 +2437,8 @@ Click here for explanation
 </div>
 <hr>
 </section>
-<section id="glossary-of-terms" class="level3">
-<h3 class="anchored" data-anchor-id="glossary-of-terms">Glossary of Terms</h3>
+<section id="data_in_R_summaryGlossary_of_terms" class="level3">
+<h3 class="anchored" data-anchor-id="data_in_R_summaryGlossary_of_terms">Glossary of Terms</h3>
 <div class="glossary">
 <ul>
 <li><strong>Tidy Data</strong> A structured format where:
@@ -2463,8 +2471,8 @@ Click here for explanation
 </div>
 <hr>
 </section>
-<section id="key-r-functions" class="level3">
-<h3 class="anchored" data-anchor-id="key-r-functions">Key R functions</h3>
+<section id="data_in_R_summaryNew_r_functions" class="level3">
+<h3 class="anchored" data-anchor-id="data_in_R_summaryNew_r_functions">Key R functions</h3>
 <div class="functions">
 <ul>
 <li><p><strong><a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a></strong> <em>(<a href="https://readr.tidyverse.org/">readr</a>)</em>: Reads a CSV file into R as a <strong>tibble</strong>, automatically guessing column types.</p></li>
@@ -2484,8 +2492,8 @@ Click here for explanation
 </div>
 <hr>
 </section>
-<section id="r-packages-introduced" class="level3">
-<h3 class="anchored" data-anchor-id="r-packages-introduced">R Packages Introduced</h3>
+<section id="data_in_R_summaryR_packages_introduced" class="level3">
+<h3 class="anchored" data-anchor-id="data_in_R_summaryR_packages_introduced">R Packages Introduced</h3>
 <div class="packages">
 <ul>
 <li><p><strong><a href="https://readr.tidyverse.org/"><code>readr</code></a></strong>: A tidyverse package for reading rectangular data files (e.g., <code>read_csv()</code>).</p></li>
@@ -2493,8 +2501,8 @@ Click here for explanation
 </ul>
 </div>
 </section>
-<section id="additional-resources" class="level3">
-<h3 class="anchored" data-anchor-id="additional-resources">Additional resources</h3>
+<section id="data_in_R_summaryAdditional_resources" class="level3">
+<h3 class="anchored" data-anchor-id="data_in_R_summaryAdditional_resources">Additional resources</h3>
 <div class="learnmore">
 <p><strong>R Recipes:</strong></p>
 <ul>
@@ -2507,7 +2515,7 @@ Click here for explanation
 </ul>
 <p><strong>Other web resources:</strong></p>
 <ul>
-<li><a href="https://r4ds.had.co.nz/tidy-data.html">Chapter 10: Tidy data</a> from R for data science (<span class="citation" data-cites="grolemund2018">Grolemund &amp; Wickham (<a href="#ref-grolemund2018" role="doc-biblioref">2018</a>)</span>).<br>
+<li><a href="https://r4ds.had.co.nz/tidy-data.html">Chapter 10: Tidy data</a> from R for data science (<span class="citation" data-cites="grolemund2018">Grolemund &amp; Wickham (<a href="../../references.html#ref-grolemund2018" role="doc-biblioref">2018</a>)</span>).<br>
 </li>
 <li><a href="https://rfortherestofus.com/2024/07/dplyr-functions-animated">Animated dplyr functions</a> from R or the rest of us.</li>
 </ul>
@@ -2519,7 +2527,7 @@ Click here for explanation
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-grolemund2018" class="csl-entry" role="listitem">
 Grolemund, G., &amp; Wickham, H. (2018). <em>R for data science</em>.
 </div>

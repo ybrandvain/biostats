@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>• 2. Choose rows – Applied Biostatistics</title>
+<title>• 4. Reproducible analyses – Applied Biostatistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../book_sections/data_in_R/data_in_R_summary.html" rel="next">
-<link href="../../book_sections/data_in_R/summarize_vars.html" rel="prev">
+<link href="../../book_sections/reproducible_science/reproducible_summary.html" rel="next">
+<link href="../../book_sections/reproducible_science/collecting_data.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/data_in_R.html">2. Data in R</a></li><li class="breadcrumb-item"><a href="../../book_sections/data_in_R/choose_rows.html">• 2. Choose rows</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science.html">4. Reproducible Science</a></li><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science/reproducible_analyses.html">• 4. Reproducible analyses</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -246,7 +246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/data_in_R/choose_rows.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../book_sections/data_in_R/choose_rows.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 2. Choose rows</span></a>
   </div>
 </li>
@@ -328,7 +328,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/reproducible_science/reproducible_analyses.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/reproducible_science/reproducible_analyses.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">• 4. Reproducible analyses</span></a>
   </div>
 </li>
@@ -362,9 +362,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/data_in_R.html">2. Data in R</a></li><li class="breadcrumb-item"><a href="../../book_sections/data_in_R/choose_rows.html">• 2. Choose rows</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science.html">4. Reproducible Science</a></li><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science/reproducible_analyses.html">• 4. Reproducible analyses</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="choose_rows" class="quarto-section-identifier">• 2. Choose rows</span></h1>
+<h1 class="title"><span id="reproducible_analyses" class="quarto-section-identifier">• 4. Reproducible analyses</span></h1>
 </div>
 
 
@@ -381,94 +381,278 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p><strong>This section includes background on:</strong> <a href="#making-an-r-project">Making an R project</a>, <a href="#loading-data">Loading data into R</a>, <a href="#r-scripts-commenting-code-cleaning-tidying-data">Writing and saving R scripts (with comments)</a>, <a href="#cleaning-data">Cleaning</a> and <a href="#tidying-data">tidying</a> data, and finally <a href="#reproducible-code-a-checklist-from-amnat">a reproducible code checklist (modified from The American Naturalist)</a>.</p>
 <div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<p><strong>Motivating scenario:</strong> you want to limit your analysis to rows with certain values.</p>
-<p><strong>Learning goals: By the end of this sub-chapter you should be able to</strong></p>
-<ol type="1">
-<li>Use the <a href="https://dplyr.tidyverse.org/reference/filter.html"><code>filter</code></a> function to choose the rows you want to work with.<br>
+<p><strong>Motivating scenario:</strong> You are conducting a data analysis.</p>
+<p><strong>Learning goals: By the end of this chapter you should be able to</strong></p>
+<ul>
+<li>Make an R Project, and open up R Studio via an R Project.<br>
 </li>
-<li>Display care so that you do not get the wrong answer when filtering your data.</li>
-</ol>
+<li>Load data into R from your computer.<br>
+</li>
+<li>Write an R script, following best practices for reproducible code.</li>
+</ul>
 </div>
 <hr>
-<section id="remove-rows-with-filter" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="remove-rows-with-filter">Remove rows with filter()</h2>
-<p>There are reasons to remove rows by their values. For example, we could remove plants from <code>US</code> and <code>LB</code> locations. We can achieve this with the <a href="https://dplyr.tidyverse.org/reference/filter.html"><code>filter()</code></a> function as follows:</p>
+<p>In addition to the high-minded values of transparency and sharing scientific progress, there is a pragmatic and selfish reason to make you work reproducible.</p>
+<blockquote class="blockquote">
+<p><strong>As a scientist, “your closest collaborator is you six months ago, but you don’t reply to emails.”</strong></p>
+<p>Quote attributed to <a href="https://eeb.ku.edu/people/mark-holder">Mark Holder</a>.</p>
+</blockquote>
+<p>This humorous observation highlights a very real challenge. Research is complex and can stretch over months or even years. Well-documented data and code, allows you to retrace your steps, understand your past analyses, and explain your results. By keeping a good record of your workflows, you make your future self’s life much easier.</p>
+<section id="r-projects-storing-and-loading-data" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="r-projects-storing-and-loading-data">R Projects, Storing, and Loading data</h2>
 <div class="cell page-columns page-full">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-filter" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A visual representation of filtering data using `filter()` in `dplyr`. The top table contains two columns: `prop_hyb` and `petal_color`, listing hybrid proportions alongside flower color (&quot;white&quot; and &quot;pink&quot;). Below, an R code snippet applies `filter(petal_color == &quot;pink&quot;)`, removing rows where `petal_color` is not &quot;pink.&quot; The bottom table displays the filtered dataset, which includes only rows with pink flowers, while the white flower row has been excluded.">
+<div id="fig-Rproject" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-filter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/intro_to_R/data_in_R/filter.png" class="img-fluid figure-img" alt="A visual representation of filtering data using `filter()` in `dplyr`. The top table contains two columns: `prop_hyb` and `petal_color`, listing hybrid proportions alongside flower color (&quot;white&quot; and &quot;pink&quot;). Below, an R code snippet applies `filter(petal_color == &quot;pink&quot;)`, removing rows where `petal_color` is not &quot;pink.&quot; The bottom table displays the filtered dataset, which includes only rows with pink flowers, while the white flower row has been excluded." width="365">
+<div aria-describedby="fig-Rproject-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../figs/intro_to_R/reproducible_science/file_tab_Rproject.png" class="img-fluid figure-img" width="252">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-filter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Using <code>filter()</code> to subset data based on a condition. The top table contains two columns: <code>prop_hyb</code> (proportion of hybrids) and <code>petal_color</code> (flower color), with values including both “white” and “pink” flowers. The function <code>filter(petal_color == "pink")</code> is applied to retain only rows where <code>petal_color</code> is “pink.” The resulting dataset, shown in the bottom table, excludes the “white” flower row and keeps only the observations where petal color is “pink.”
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Rproject-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: A screenshot of the files pane of RStudio. This displayes the folder containing my RProject, my data, and data dictionary. If you do this, there is no need to use the <code>setwd()</code> function or to use a long, “absolute path” to the data.
 </figcaption>
 </figure>
 </div>
 </div></div></div>
+<p>I have <a href="https://ybrandvain.quarto.pub/applied-biostatistics/book_sections/intro_to_R/getting_started/loading_packages_and_data.html#reading-data-into-r">previously introduced an easy way to load data from the internet into R</a>, but often data is on our computer, not the internet. Loading data from your computer to R can be a difficult challenge, but if you follow the guide below you will see that it can be very easy.</p>
+<section id="making-an-r-project" class="level3">
+<h3 class="anchored" data-anchor-id="making-an-r-project">Making an R project</h3>
+<p>The first step towards reproducible analyses is making an R project. I do this by clicking “File” &gt; “New Project” and I usually use an existing directory (Navigating to the folder with my data and data dictionary that we just made).</p>
+<blockquote class="blockquote">
+<p>Now every time you use R to work on these data, open R by double clicking on this project (or if R is already open, navigate to “Open Project”).</p>
+</blockquote>
+</section>
+<section id="loading-data" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="loading-data">Loading data</h3>
+<p>Now if your project and data are in the same folder, loading the data is super easy. Again just used the <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a> function in the <a href="https://readr.tidyverse.org/"><code>readr</code></a> package with an argument of the filename (in quotes) to read in the data!</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>Some people like a different structure of files in their R project – they like the project in the main folder and then a bunch of sub-folders like <code>data</code> and <code>scripts</code> and <code>figures</code>. If you are using this organization, just add the subfolder in the path (e.g.&nbsp;<code>read_csv("data/my_data.csv")</code> ).</p>
+</div></div><div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"clarkia_rils.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="protip">
+<p><strong>Read excel files into R</strong> with the <strong><a href="https://readxl.tidyverse.org/reference/read_excel.html"><code>read_xlsx()</code></a></strong> from the <a href="https://readxl.tidyverse.org/"><code>readxl</code></a> package). You can even specify the sheet as an argument!</p>
+</div>
+</section>
+</section>
+<section id="r-scripts-commenting-code-cleaning-tidying-data" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="r-scripts-commenting-code-cleaning-tidying-data">R Scripts, Commenting Code, + Cleaning &amp; Tidying data</h2>
+<p>We have just run a few lines of code – loading the <code>readr</code> library and assigning the data in <code>clarkia_rils.csv</code> to the variable, <code>ril_data</code>.</p>
+<p>We will likely want to remember that we have done this, and build off it in the future. To do so let’s open up an R Script – by navigating to <code>File</code>, <code>New File</code>, <code>R Script</code>.</p>
+<p>A new file, likely called <code>Untitled 1</code> will show up in the R Scripts pane of your R Studio session. After giving it a more descriptive name, be sure save all of the code you are using for these analyses in this file.</p>
+<p>Here I introduce the best practices for writing an R script (Part I). I revisit these in greater depth later in the chapter.</p>
 <ul>
-<li><code>ril_data |&gt; filter(location == "GC" | location == "SR")</code>: To only retain samples from <code>GC</code> or (noted by <code>|</code>) <code>SR</code>. Recall that <code>==</code> asks the logical question, “Does the location equal <code>SR</code>?” So combined, the code reads “Retain only samples with location equal to <code>SR</code> or location equal to <code>GC</code>.”</li>
-</ul>
-<p>OR, equivalently</p>
+<li>First include your name, and the goal of the script as comments on the opening lines.<br>
+</li>
+<li>Next load all packages you will use. Don’t worry, you can go back and add more later.
 <ul>
-<li><code>ril_data |&gt; filter(location != "US" &amp; location != "LB")</code>: To remove samples from <code>US</code> and (noted by <code>&amp;</code>) <code>LB</code>. Recall that <code>!=</code> asks the logical question, “Does the location not equal <code>US</code>?” Combined the code reads “Retain only samples with location not equal to <code>US</code> and with location not equal to <code>LB</code>.”</li>
+<li><strong>Do not include <code>install.packages()</code> in your script:</strong> You only want to do this once, so it should not be part of a reproducible pipeline. People can see they need to install the package from you loading it.<br>
+</li>
+</ul></li>
+<li>Next load all the data you will use.<br>
+</li>
+<li>Then get started coding.<br>
+</li>
+<li>Be sure to comment your code with the <code>#</code>.</li>
 </ul>
+<section id="cleaning-data" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="cleaning-data">Cleaning data</h3>
+<p>We previously said not to make column names too long, yet in our dataset, we have the variable <code>petal_area_mm</code>. We can use the <a href="https://dplyr.tidyverse.org/reference/rename.html"><code>rename()</code></a> function in the <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a> package to give columns better names.</p>
+<p>I do this below in my complete and well-commented R script, which I conclude with a small plot. Notice that anyone could use this script and get exactly what I got.</p>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="reproducible_analyses_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div></div></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rerunning the code summarizing visitation by </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># location and petal color and then ungrouping it</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># but filtering out plants from locations US and LB</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># note that the output no longer says `# Groups:   location [2]`</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>ril_data      <span class="sc">|&gt;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(location <span class="sc">!=</span> <span class="st">"US"</span> <span class="sc">&amp;</span> location <span class="sc">!=</span> <span class="st">"LB"</span>)<span class="sc">|&gt;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location, petal_color) <span class="sc">|&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">cor_visits_petal_area =</span>  <span class="fu">cor</span>(mean_visits ,petal_area_mm, </span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>))<span class="sc">|&gt;</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'location'. You can override using the
-`.groups` argument.</code></pre>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Yaniv Brandvain. March 07 2025</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Code to load RIL data, and make a histogram of petal area facetted by petal color</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)                                      <span class="co"># Load the readr package to load our data</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)                                    <span class="co"># Load the ggplot2 package to make graphs</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"clarkia_rils.csv"</span>) <span class="sc">|&gt;</span>         <span class="co"># load the RIL data</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(petal_color))          <span class="sc">|&gt;</span>         <span class="co"># remove missing petal color data</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">petal_area =</span> petal_area_mm)                <span class="co"># rename petal_area_mm as petal_area</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ril_data, <span class="fu">aes</span>(<span class="at">x =</span> petal_area))<span class="sc">+</span>              <span class="co"># set up a plot with petal_area on x</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">10</span>, <span class="at">color =</span> <span class="st">"white"</span>)<span class="sc">+</span>   <span class="co"># make it a histogram, with a bins of width 10 and separated by white lines </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>petal_color, <span class="at">ncol =</span> <span class="dv">1</span>)                <span class="co"># wrap by petal color, with one column</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 4
-  location petal_color avg_visits cor_visits_petal_area
-  &lt;chr&gt;    &lt;chr&gt;            &lt;dbl&gt;                 &lt;dbl&gt;
-1 GC       pink            0.193                 0.0899
-2 GC       white           0.0104                0.0886
-3 GC       &lt;NA&gt;            0.2                   0.443 
-4 SR       pink            1.76                  0.387 
-5 SR       white           0.733                 0.458 
-6 SR       &lt;NA&gt;            1.04                  0.717 </code></pre>
+<div class="fyi">
+<p>If your data set has many column names that are difficult to use in R, the <a href="https://sfirke.github.io/janitor/reference/clean_names.html"><code>clean_names()</code></a> function in the <a href="https://sfirke.github.io/janitor/index.html"><code>janitor</code></a> package fixes a bunch of them at once.</p>
 </div>
-</div>
-<div class="warning">
-<p><strong>Warning! Remove one thing can change another:</strong></p>
-<p>Think hard about removing things (e.g.&nbsp;missing data), and if you decide to remove things, consider where in the pipeline you are doing so. Removing one thing can change another. For example, compare:</p>
+</section>
+</section>
+<section id="tidying-data" class="level2">
+<h2 class="anchored" data-anchor-id="tidying-data">Tidying data</h2>
+<p>We have <a href="https://ybrandvain.quarto.pub/applied-biostatistics/book_sections/intro_to_R/data_in_R.html#tidy-data">previously seen that there are many ways for data to be untidy</a>. One common untidy data format is the “wide format”, below. Here, the columns <code>SR</code> and <code>GC</code> describe the proportion of hybrid seed on each ril (row) observed in each of these two locations. You can use the <code>pivot_longer()</code> function in the <code>tidyr</code> package, to tidy such data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ril_data <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(petal_color))<span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 1
-  avg_visits
-       &lt;dbl&gt;
-1      0.705</code></pre>
+<details class="code-fold">
+<summary>Code to create untidy_ril</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>untidy_ril <span class="ot">&lt;-</span> ril_data <span class="sc">|&gt;</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ril, location,prop_hybrid)<span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(location <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"GC"</span>,<span class="st">"SR"</span>))<span class="sc">|&gt;</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="st">"ril"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> location,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> prop_hybrid)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>untidy_ril<span class="sc">|&gt;</span><span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)<span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">ril</th>
+<th style="text-align: right;">GC</th>
+<th style="text-align: right;">SR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A1</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A100</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A102</td>
+<td style="text-align: right;">0.250</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A104</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A106</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<p>and</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ril_data <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 1
-  avg_visits
-       &lt;dbl&gt;
-1      0.693</code></pre>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pivot_longer</span>(untidy_ril, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"GC"</span>,<span class="st">"SR"</span>),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">names_to =</span> <span class="st">"location"</span>, </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">values_to =</span> <span class="st">"prop_hybrid"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)<span class="sc">|&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">ril</th>
+<th style="text-align: left;">location</th>
+<th style="text-align: right;">prop_hybrid</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A1</td>
+<td style="text-align: left;">GC</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A1</td>
+<td style="text-align: left;">SR</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A100</td>
+<td style="text-align: left;">GC</td>
+<td style="text-align: right;">0.125</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A100</td>
+<td style="text-align: left;">SR</td>
+<td style="text-align: right;">0.250</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A102</td>
+<td style="text-align: left;">GC</td>
+<td style="text-align: right;">0.250</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A102</td>
+<td style="text-align: left;">SR</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A104</td>
+<td style="text-align: left;">GC</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A104</td>
+<td style="text-align: left;">SR</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A106</td>
+<td style="text-align: left;">GC</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A106</td>
+<td style="text-align: left;">SR</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<p>These answers differ because when we removed plants with no petal color information we also removed their pollinator visitation values.</p>
+</section>
+<section id="reproducible-code-a-checklist-from-amnat" class="level2">
+<h2 class="anchored" data-anchor-id="reproducible-code-a-checklist-from-amnat">Reproducible Code: A Checklist From AmNat</h2>
+<p>What you do to data and how you analyze it is as much a part of science as how you collect it. As such, it is essential to make sure your code:</p>
+<ol type="a">
+<li>Reliably works – even on other computers<br>
+</li>
+<li>And can be understood.</li>
+</ol>
+<p>The principles from <a href="https://comments.amnat.org/2021/12/guidelines-for-archiving-code-with-data.html">The American Naturalist’s policy</a> about this are pasted in the box below:</p>
+<div class="learnmore" style="width: 140%; margin-right: -40%;">
+<p><strong>REQUIRED:</strong></p>
+<ul>
+<li><p>Scripts should start by loading required packages, then importing raw data from files archived in your data repository.</p></li>
+<li><p>Use relative paths to files and folders (e.g.&nbsp;avoid <code>setwd()</code> with an absolute path in R), so other users can replicate your data input steps on their own computers.</p></li>
+<li><p>Make sure your code works. Shut down your R. (or type <code>rm(list=ls())</code> into the console and run the code again. You should get the same results. If not, go back and fix your mistakes.</p></li>
+<li><p>Annotate your code with comments indicating what the purpose of each set of commands is (i.e., “why?”). If the functioning of the code (i.e., “how”) is unclear, strongly consider re-writing it to be clearer/simpler. In-line comments can provide specific details about a particular command.</p>
+<ul>
+<li>Note that ChatGPT is very good at commenting your code.</li>
+</ul></li>
+<li><p>Annotate code to indicate how commands correspond to figure numbers, table numbers, or subheadings of results within the manuscript.</p></li>
+<li><p>If you are adapting other researcher’s published code for your own purposes, acknowledge and cite the sources you are using. Likewise, cite the authors of packages that you use in your published article.</p></li>
+</ul>
+<p><strong>RECOMMENDED:</strong></p>
+<ul>
+<li><p>Test code ideally on a pristine machine without any packages installed, but at least using a new session.</p></li>
+<li><p>Use informative names for input files, variables, and functions (and describe them in the README file).</p></li>
+<li><p>Any data manipulations (merging, sorting, transforming, filtering) should be done in your script, for fully transparent documentation of any changes to the data.</p></li>
+<li><p>Organize your code by splitting it into logical sections, such as importing and cleaning data, transformations, analysis and graphics and tables. Sections can be separate script files run in order (as explained in your README) or blocks of code within one script that are separated by clear breaks (e.g., comment lines, #————–), or a series of function calls (which can facilitate reuse of code).</p></li>
+<li><p>Label code sections with headers that match the figure number, table number, or text subheading of the paper.</p></li>
+<li><p>Omit extraneous code not used for generating the results of your publication, or place any such code in a Coda at the end of your script.<br>
+</p></li>
+</ul>
 </div>
 
 
@@ -1105,13 +1289,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../book_sections/data_in_R/summarize_vars.html" class="pagination-link" aria-label="• 2. Summarizing columns">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 2. Summarizing columns</span>
+      <a href="../../book_sections/reproducible_science/collecting_data.html" class="pagination-link" aria-label="• 4. Collecting data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 4. Collecting data</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../book_sections/data_in_R/data_in_R_summary.html" class="pagination-link" aria-label="• 2. Data in R summary">
-        <span class="nav-page-text">• 2. Data in R summary</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../book_sections/reproducible_science/reproducible_summary.html" class="pagination-link" aria-label="• 4. Reproducibility summary">
+        <span class="nav-page-text">• 4. Reproducibility summary</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

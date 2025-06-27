@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>• 2. Choose rows – Applied Biostatistics</title>
+<title>4. Reproducible Science – Applied Biostatistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,61 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<link href="../../book_sections/data_in_R/data_in_R_summary.html" rel="next">
-<link href="../../book_sections/data_in_R/summarize_vars.html" rel="prev">
-<script src="../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-d4394cde7c380170a4469b96acf338b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-90eb7791a5c5b81885cedfef0a190562.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../book_sections/reproducible_science/collecting_data.html" rel="next">
+<link href="../book_sections/intro_to_ggplot/ggplot_summary.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d4394cde7c380170a4469b96acf338b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-90eb7791a5c5b81885cedfef0a190562.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -104,12 +70,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="../../assets/sticky-notes.css">
-<link rel="stylesheet" href="../../assets/table-styles.css">
-<link rel="stylesheet" href="../../assets/webex.css">
+<link rel="stylesheet" href="../assets/sticky-notes.css">
+<link rel="stylesheet" href="../assets/table-styles.css">
+<link rel="stylesheet" href="../assets/webex.css">
 </head>
 
-<body class="nav-sidebar floating slimcontent">
+<body class="nav-sidebar floating fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -118,7 +84,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/data_in_R.html">2. Data in R</a></li><li class="breadcrumb-item"><a href="../../book_sections/data_in_R/choose_rows.html">• 2. Choose rows</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book_sections/reproducible_science.html">4. Reproducible Science</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -132,11 +98,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="../../index.html" class="sidebar-logo-link">
-      <img src="../../figs/fun_figs/stamp.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../figs/fun_figs/stamp.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="../../">Applied Biostatistics</a> 
+      <a href="../">Applied Biostatistics</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -148,37 +114,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/clarkia_and_its_data/clarkia_and_its_data.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/clarkia_and_its_data/clarkia_and_its_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Motivating biology and datasets</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/example_mini/varType.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/example_mini/varType.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Types of Variables</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/filler.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">—————————————</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro2r_index.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/intro2r_index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SECTION I: Intro to R</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../book_sections/getting_started.html" class="sidebar-item-text sidebar-link">
+            <a href="../book_sections/getting_started.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">1. Getting started with R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -187,31 +153,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/getting_started/functions_and_vectors.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/getting_started/functions_and_vectors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Functions and vectors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/getting_started/loading_packages_and_data.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/getting_started/loading_packages_and_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Load packages and data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/getting_started/data_types.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/getting_started/data_types.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Data types in R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/getting_started/rstudio_orientation.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/getting_started/rstudio_orientation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Orientation to RStudio</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/getting_started/getting_started_summary.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/getting_started/getting_started_summary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 1. Getting started summary</span></a>
   </div>
 </li>
@@ -219,7 +185,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../book_sections/data_in_R.html" class="sidebar-item-text sidebar-link">
+            <a href="../book_sections/data_in_R.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2. Data in R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -228,31 +194,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/data_in_R/add_vars.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/data_in_R/add_vars.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 2. Adding columns w mutate</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/data_in_R/select_vars.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/data_in_R/select_vars.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 2. Selecting columns</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/data_in_R/summarize_vars.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/data_in_R/summarize_vars.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 2. Summarizing columns</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/data_in_R/choose_rows.html" class="sidebar-item-text sidebar-link active">
+  <a href="../book_sections/data_in_R/choose_rows.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 2. Choose rows</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/data_in_R/data_in_R_summary.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/data_in_R/data_in_R_summary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 2. Data in R summary</span></a>
   </div>
 </li>
@@ -260,7 +226,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link">
+            <a href="../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">3. Introduction to ggplot</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -269,43 +235,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro_to_ggplot/one_continuous.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/intro_to_ggplot/one_continuous.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. A continuous variable</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro_to_ggplot/saving_ggplots.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/intro_to_ggplot/saving_ggplots.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. Saving a ggplot</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro_to_ggplot/cont_cat.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/intro_to_ggplot/cont_cat.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. Continuous y/categorical x</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro_to_ggplot/two_categorical.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/intro_to_ggplot/two_categorical.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. Two categorical variables</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro_to_ggplot/two_continuous.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/intro_to_ggplot/two_continuous.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. Two continuous variables</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro_to_ggplot/many_explanatory.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/intro_to_ggplot/many_explanatory.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. Many explanatory vars</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/intro_to_ggplot/ggplot_summary.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/intro_to_ggplot/ggplot_summary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 3. ggplot summary</span></a>
   </div>
 </li>
@@ -313,7 +279,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../book_sections/reproducible_science.html" class="sidebar-item-text sidebar-link">
+            <a href="../book_sections/reproducible_science.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">4. Reproducible Science</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -322,19 +288,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/reproducible_science/collecting_data.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/reproducible_science/collecting_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 4. Collecting data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/reproducible_science/reproducible_analyses.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/reproducible_science/reproducible_analyses.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 4. Reproducible analyses</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/reproducible_science/reproducible_summary.html" class="sidebar-item-text sidebar-link">
+  <a href="../book_sections/reproducible_science/reproducible_summary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 4. Reproducibility summary</span></a>
   </div>
 </li>
@@ -342,13 +308,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../toc.html" class="sidebar-item-text sidebar-link">
+  <a href="../toc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Rest of Book</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -357,14 +323,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-    </div>
+    
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/data_in_R.html">2. Data in R</a></li><li class="breadcrumb-item"><a href="../../book_sections/data_in_R/choose_rows.html">• 2. Choose rows</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="choose_rows" class="quarto-section-identifier">• 2. Choose rows</span></h1>
+<h1 class="title"><span id="reproducible_science" class="quarto-section-identifier">4. Reproducible Science</span></h1>
 </div>
 
 
@@ -381,95 +346,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p><strong>This section includes background on:</strong></p>
 <div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<p><strong>Motivating scenario:</strong> you want to limit your analysis to rows with certain values.</p>
-<p><strong>Learning goals: By the end of this sub-chapter you should be able to</strong></p>
-<ol type="1">
-<li>Use the <a href="https://dplyr.tidyverse.org/reference/filter.html"><code>filter</code></a> function to choose the rows you want to work with.<br>
+<p><strong>Motivating scenario:</strong> You are conducting a scientific research project and want to make sure that your project is reliable and repeatable.</p>
+<p><strong>Learning goals: By the end of this chapter you should be able to</strong></p>
+<ul>
+<li>Make a data sheet.</li>
+<li>Label samples.<br>
 </li>
-<li>Display care so that you do not get the wrong answer when filtering your data.</li>
-</ol>
+<li>Describe best principles for collecting, storing, and maintaining data.<br>
+</li>
+<li>Organize data in folders.</li>
+<li>Load data into R using a project</li>
+<li>Write code that allows for readers to understand, replicate, and extend your work.</li>
+</ul>
 </div>
 <hr>
-<section id="remove-rows-with-filter" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="remove-rows-with-filter">Remove rows with filter()</h2>
-<p>There are reasons to remove rows by their values. For example, we could remove plants from <code>US</code> and <code>LB</code> locations. We can achieve this with the <a href="https://dplyr.tidyverse.org/reference/filter.html"><code>filter()</code></a> function as follows:</p>
-<div class="cell page-columns page-full">
-
-<div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-filter" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A visual representation of filtering data using `filter()` in `dplyr`. The top table contains two columns: `prop_hyb` and `petal_color`, listing hybrid proportions alongside flower color (&quot;white&quot; and &quot;pink&quot;). Below, an R code snippet applies `filter(petal_color == &quot;pink&quot;)`, removing rows where `petal_color` is not &quot;pink.&quot; The bottom table displays the filtered dataset, which includes only rows with pink flowers, while the white flower row has been excluded.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-filter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/intro_to_R/data_in_R/filter.png" class="img-fluid figure-img" alt="A visual representation of filtering data using `filter()` in `dplyr`. The top table contains two columns: `prop_hyb` and `petal_color`, listing hybrid proportions alongside flower color (&quot;white&quot; and &quot;pink&quot;). Below, an R code snippet applies `filter(petal_color == &quot;pink&quot;)`, removing rows where `petal_color` is not &quot;pink.&quot; The bottom table displays the filtered dataset, which includes only rows with pink flowers, while the white flower row has been excluded." width="365">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-filter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Using <code>filter()</code> to subset data based on a condition. The top table contains two columns: <code>prop_hyb</code> (proportion of hybrids) and <code>petal_color</code> (flower color), with values including both “white” and “pink” flowers. The function <code>filter(petal_color == "pink")</code> is applied to retain only rows where <code>petal_color</code> is “pink.” The resulting dataset, shown in the bottom table, excludes the “white” flower row and keeps only the observations where petal color is “pink.”
-</figcaption>
-</figure>
-</div>
-</div></div></div>
+<article class="drop-cap">
+Since January 2022, <a href="https://www.journals.uchicago.edu/journals/an/about">The American Naturalist</a> has required authors to include all data and code underlying their conclusions. This policy reflects a broader shift in the scientific community—researchers now expect data to be shared and analyses to be reproducible. This push for reproducibility has tremendous benefits for everyone involved:
+</article>
 <ul>
-<li><code>ril_data |&gt; filter(location == "GC" | location == "SR")</code>: To only retain samples from <code>GC</code> or (noted by <code>|</code>) <code>SR</code>. Recall that <code>==</code> asks the logical question, “Does the location equal <code>SR</code>?” So combined, the code reads “Retain only samples with location equal to <code>SR</code> or location equal to <code>GC</code>.”</li>
+<li>Researchers can build trust with the public and other scientists by making the entire scientific process transparent.<br>
+</li>
+<li>Scientists can build upon their own work and that of others without having to dig through old notes or rely on the memory of a busy colleague to reconstruct past analyses.<br>
+</li>
+<li>Others can assess how sensitive a result is to specific assumptions and decisions.</li>
 </ul>
-<p>OR, equivalently</p>
+<p>In my roles as a biostatistics professor and Data Editor at <a href="https://www.journals.uchicago.edu/journals/an/about">The American Naturalist</a>, I have found that the greatest beneficiary of reproducible research is often the lead author themselves. In this chapter, we will work through the process of creating reproducible research—from collecting data in the field to writing and sharing R scripts that document your analyses.</p>
+<blockquote class="blockquote">
+<p><em>The best time to make your research reproducible is while planning your project. The second best time is now.</em><br><br></p>
+</blockquote>
+<section id="making-science-reproducible" class="level2">
+<h2 class="anchored" data-anchor-id="making-science-reproducible">Making science reproducible</h2>
+<p>This chapter walks you through the key steps for making your science reproducible—from field notes to final scripts. You will learn how to:</p>
 <ul>
-<li><code>ril_data |&gt; filter(location != "US" &amp; location != "LB")</code>: To remove samples from <code>US</code> and (noted by <code>&amp;</code>) <code>LB</code>. Recall that <code>!=</code> asks the logical question, “Does the location not equal <code>US</code>?” Combined the code reads “Retain only samples with location not equal to <code>US</code> and with location not equal to <code>LB</code>.”</li>
+<li><a href="reproducible_science/collecting_data.html">Appropriately collect and store data</a>, including <a href="reproducible_science/collecting_data.html#making-rules-for-data-collection">Making rules for data collection</a>, <a href="reproducible_science/collecting_data.html#making-a-spreadsheet-for-data-entry">Making a spreadsheet for data entry</a>, <a href="reproducible_science/collecting_data.html#making-data-field-sheets">Making data (field) sheets</a>, <a href="reproducible_science/collecting_data.html#data-collection-and-data-entry-checklist">A checklist for data collection</a>, <a href="reproducible_science/collecting_data.html#making-a-readme-andor-data-dictionary">Making a README and/or data dictionary</a>, and <a href="reproducible_science/collecting_data.html#long-term-public-data-storage">Long term public data storage</a>.<br>
+</li>
+<li><a href="reproducible_science/reproducible_analyses.html">Develop reproducible computational strategies</a>, including: <a href="reproducible_science/reproducible_analyses.html#making-an-r-project">Making an R project</a>, <a href="reproducible_science/reproducible_analyses.html#loading-data">Loading data into R</a>, <a href="reproducible_science/reproducible_analyses.html#r-scripts-commenting-code-cleaning-tidying-data">Writing and saving R scripts (with comments)</a>, <a href="reproducible_science/reproducible_analyses.html#cleaning-data">Cleaning</a> and <a href="reproducible_science/reproducible_analyses.html#tidying-data">tidying</a> data, and finally <a href="#reproducible-code-american-naturalist-checklist">a reproducible code checklist (modified from The American Naturalist)</a>.</li>
 </ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rerunning the code summarizing visitation by </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># location and petal color and then ungrouping it</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># but filtering out plants from locations US and LB</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># note that the output no longer says `# Groups:   location [2]`</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>ril_data      <span class="sc">|&gt;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(location <span class="sc">!=</span> <span class="st">"US"</span> <span class="sc">&amp;</span> location <span class="sc">!=</span> <span class="st">"LB"</span>)<span class="sc">|&gt;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location, petal_color) <span class="sc">|&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">cor_visits_petal_area =</span>  <span class="fu">cor</span>(mean_visits ,petal_area_mm, </span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>))<span class="sc">|&gt;</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'location'. You can override using the
-`.groups` argument.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 4
-  location petal_color avg_visits cor_visits_petal_area
-  &lt;chr&gt;    &lt;chr&gt;            &lt;dbl&gt;                 &lt;dbl&gt;
-1 GC       pink            0.193                 0.0899
-2 GC       white           0.0104                0.0886
-3 GC       &lt;NA&gt;            0.2                   0.443 
-4 SR       pink            1.76                  0.387 
-5 SR       white           0.733                 0.458 
-6 SR       &lt;NA&gt;            1.04                  0.717 </code></pre>
-</div>
-</div>
-<div class="warning">
-<p><strong>Warning! Remove one thing can change another:</strong></p>
-<p>Think hard about removing things (e.g.&nbsp;missing data), and if you decide to remove things, consider where in the pipeline you are doing so. Removing one thing can change another. For example, compare:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ril_data <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(petal_color))<span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 1
-  avg_visits
-       &lt;dbl&gt;
-1      0.705</code></pre>
-</div>
-</div>
-<p>and</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ril_data <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 1
-  avg_visits
-       &lt;dbl&gt;
-1      0.693</code></pre>
-</div>
-</div>
-<p>These answers differ because when we removed plants with no petal color information we also removed their pollinator visitation values.</p>
-</div>
+<p>Then we <a href="reproducible_science/reproducible_summary.html#reproducible_summarySummary">summarize the chapter</a>, present a <a href="reproducible_science/reproducible_summary.html#reproducible_summaryChatbot">chatbot tutor</a>, <a href="reproducible_science/reproducible_summary.html#reproducible_summaryPractice_questions">practice questions</a>, a <a href="reproducible_science/reproducible_summary.html#reproducible_summaryGlossary_of_terms">glossary</a>, a review of <a href="reproducible_science/reproducible_summary.html#reproducible_summaryNew_r_functions">R functions</a> and <a href="reproducible_science/reproducible_summary.html#reproducible_summaryR_packages_introduced">R packages</a> introduced, and <a href="reproducible_science/reproducible_summary.html#reproducible_summaryAdditional_resources">provide links to additional resources</a>.</p>
 
 
 </section>
@@ -1105,13 +1020,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../book_sections/data_in_R/summarize_vars.html" class="pagination-link" aria-label="• 2. Summarizing columns">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 2. Summarizing columns</span>
+      <a href="../book_sections/intro_to_ggplot/ggplot_summary.html" class="pagination-link" aria-label="• 3. ggplot summary">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 3. ggplot summary</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../book_sections/data_in_R/data_in_R_summary.html" class="pagination-link" aria-label="• 2. Data in R summary">
-        <span class="nav-page-text">• 2. Data in R summary</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../book_sections/reproducible_science/collecting_data.html" class="pagination-link" aria-label="• 4. Collecting data">
+        <span class="nav-page-text">• 4. Collecting data</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -1739,6 +1739,12 @@ globalThis.qwebrExecuteCode = async function (
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../book_sections/intro2r_index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SECTION I: Intro to R</span></a>
   </div>
@@ -2215,7 +2221,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">1. Getting started with R</h1>
+<h1 class="title"><span id="getting_started" class="quarto-section-identifier">1. Getting started with R</span></h1>
 </div>
 
 
@@ -2258,7 +2264,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <img src="../figs/intro_to_R/getting_started/pnas_clarkia.png" class="img-fluid figure-img" width="393">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pnas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Our R-generated figures concerning differentiation between <em>Clarkia xantiana</em> subspecies (from <span class="citation" data-cites="sianta2024">Sianta et al. (<a href="#ref-sianta2024" role="doc-biblioref">2024</a>)</span>).
+Figure&nbsp;1: Our R-generated figures concerning differentiation between <em>Clarkia xantiana</em> subspecies (from <span class="citation" data-cites="sianta2024">Sianta et al. (<a href="../references.html#ref-sianta2024" role="doc-biblioref">2024</a>)</span>).
 </figcaption>
 </figure>
 </div>
@@ -2275,10 +2281,10 @@ Why are we learning a programming language, if we really just want to learn abou
 </ul>
 <section id="what-is-r-what-is-rstudio" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-r-what-is-rstudio">What is R? What is RStudio?</h2>
-<p><code>R</code> is a computer program built for data analysis. As opposed to GUIs, like Excel, or click-based stats programs, <code>R</code> is focused on writing and sharing scripts. This enables us to be shared and replicate analyses, ensuring that data manipulation occurs in a script. This practice both preserving the integrity of the original data, while providing tremendous flexibility. <code>R</code> has become the computer language of choice for most statistical work because it’s free, allows for reproducible analyses, makes great figures, and has many “packages” that support the integration of novel statistical approaches. In a recent paper, we used <code>R</code> to analyze hundreds of <em>Clarkia</em> genomes and learn about the (<a href="#fig-pnas" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-pnas</span></a> from <span class="citation" data-cites="sianta2024">Sianta et al. (<a href="#ref-sianta2024" role="doc-biblioref">2024</a>)</span>). RStudio is an Integrated Development Environment (IDE)—a nice setup to interact with <code>R</code> and make it easier to use.</p>
+<p><code>R</code> is a computer program built for data analysis. As opposed to GUIs, like Excel, or click-based stats programs, <code>R</code> is focused on writing and sharing scripts. This enables us to be shared and replicate analyses, ensuring that data manipulation occurs in a script. This practice both preserving the integrity of the original data, while providing tremendous flexibility. <code>R</code> has become the computer language of choice for most statistical work because it’s free, allows for reproducible analyses, makes great figures, and has many “packages” that support the integration of novel statistical approaches. In a recent paper, we used <code>R</code> to analyze hundreds of <em>Clarkia</em> genomes and learn about the (<a href="#fig-pnas" class="quarto-xref">Figure&nbsp;<span>1</span></a> from <span class="citation" data-cites="sianta2024">Sianta et al. (<a href="../references.html#ref-sianta2024" role="doc-biblioref">2024</a>)</span>). RStudio is an Integrated Development Environment (IDE)—a nice setup to interact with <code>R</code> and make it easier to use.</p>
 <blockquote class="blockquote">
 <p>More precisely, R is a programming language that runs computations, while RStudio is an integrated development environment (IDE) that provides an interface by adding many convenient features and tools. So just as the way of having access to a speedometer, rearview mirrors, and a navigation system makes driving much easier, using RStudio’s interface makes using R much easier as well.</p>
-<p>— From <a href="https://moderndive.com/">Statistical Inference via Data Science: A ModernDive into R and the Tidyverse</a> <span class="citation" data-cites="ismay2019">(<a href="#ref-ismay2019" role="doc-biblioref">Ismay &amp; Kim, 2019</a>)</span></p>
+<p>— From <a href="https://moderndive.com/">Statistical Inference via Data Science: A ModernDive into R and the Tidyverse</a> <span class="citation" data-cites="ismay2019">(<a href="../references.html#ref-ismay2019" role="doc-biblioref">Ismay &amp; Kim, 2019</a>)</span></p>
 </blockquote>
 </section>
 <section id="the-shortest-introduction-to-r" class="level2 page-columns page-full">
@@ -2340,18 +2346,18 @@ Hint
 <h2 class="anchored" data-anchor-id="lets-get-started-with-r">Let’s get started with R</h2>
 <p>The following sections introduce the very basics of R including:</p>
 <ul>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/functions_and_vectors.html">Functions and vectors in R</a>.<br>
+<li><a href="getting_started/functions_and_vectors.html">Functions and vectors in R</a>.<br>
 </li>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/loading_packages_and_data.html">Loading packages and data into R</a>.<br>
+<li><a href="getting_started/loading_packages_and_data.html">Loading packages and data into R</a>.<br>
 </li>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/data_types.html">Data types in R</a>.<br>
+<li><a href="getting_started/data_types.html">Data types in R</a>.<br>
 </li>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/rstudio_orientation.html">An orientation to RStudio</a>.</li>
+<li><a href="getting_started/rstudio_orientation.html">An orientation to RStudio</a>.</li>
 </ul>
-<p>Then we <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html">summarize the chapter</a>, present <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#practice-questions">practice questions</a>, a <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#glossary-of-terms">glossary</a>, a review of <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#new-r-functions">R functions</a> and <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#r-packages-introduced">R packages</a> introduced, and <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/getting_started/getting_started_summary.html#additional-resources">provide links to additional resources</a>.</p>
+<p>Then we <a href="getting_started/getting_started_summary.html#getting_started_summarySummary">summarize the chapter</a>, present a <a href="getting_started/getting_started_summary.html#getting_started_summaryChatbot">chatbot tutor</a>, <a href="getting_started/getting_started_summary.html#getting_started_summaryPractice_questions">practice questions</a>, a <a href="getting_started/getting_started_summary.html#getting_started_summaryGlossary_of_terms">glossary</a>, a review of <a href="getting_started/getting_started_summary.html#getting_started_summaryNew_r_functions">R functions</a> and <a href="getting_started/getting_started_summary.html#getting_started_summaryR_packages_introduced">R packages</a> introduced, and <a href="getting_started/getting_started_summary.html#getting_started_summaryAdditional_resources">provide links to additional resources</a>.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-ismay2019" class="csl-entry" role="listitem">
 Ismay, C., &amp; Kim, A. Y. (2019). <em>Statistical inference via data science: A ModernDive into r and the tidyverse</em>. CRC Press.
 </div>

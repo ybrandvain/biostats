@@ -166,6 +166,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../book_sections/intro2r_index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SECTION I: Intro to R</span></a>
   </div>
@@ -358,7 +364,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">3. Introduction to ggplot</h1>
+<h1 class="title"><span id="intro_to_ggplot" class="quarto-section-identifier">3. Introduction to ggplot</span></h1>
 </div>
 
 
@@ -398,7 +404,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div></div><hr>
 <section id="always-visualize-your-data." class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="always-visualize-your-data.">Always visualize your data.</h2>
-<p><a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe’s quartet</a> famously displays four data sets with identical summary statistics but very different interpretations (<a href="#fig-anscombe" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-anscombe</span></a>, <a href="#tbl-anscombe" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-anscombe</span></a>). The key lesson from Anscombe’s quartet is that statistical summaries can miss the story in our data, and therefore must be accompanied by clear visualization of patterns in the data.</p>
+<p><a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe’s quartet</a> famously displays four data sets with identical summary statistics but very different interpretations (<a href="#fig-anscombe" class="quarto-xref">Figure&nbsp;<span>1</span></a>, <a href="#tbl-anscombe" class="quarto-xref">Table&nbsp;<span>1</span></a>). The key lesson from Anscombe’s quartet is that statistical summaries can miss the story in our data, and therefore must be accompanied by clear visualization of patterns in the data.</p>
 <div class="cell page-columns page-full" data-tbl-cap-location="bottom">
 <div id="tbl-anscombe" class="cell quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-cap-location="bottom">
 <figure class="quarto-float quarto-float-tbl figure page-columns page-full">
@@ -518,7 +524,7 @@ Figure&nbsp;2: <a href="https://x.com/webbshasta/status/1263894431268106241">Twe
 </div>
 </div></div></div>
 <p><strong>Let’s sketch some potential plots to address these questions</strong>.</p>
-<p>I recommend sketching out what you want your plot to look like and what alternative results would look like (<a href="#fig-sketch" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-sketch</span></a>). This helps to ensure that you are making the plot you want, not the one R gives you. In this case, some potentially important questions are:</p>
+<p>I recommend sketching out what you want your plot to look like and what alternative results would look like (<a href="#fig-sketch" class="quarto-xref">Figure&nbsp;<span>2</span></a>). This helps to ensure that you are making the plot you want, not the one R gives you. In this case, some potentially important questions are:</p>
 <ul>
 <li>What is the distribution of the number of pollinator visits?</li>
 <li>Do we see different visitation by location?<br>
@@ -529,7 +535,7 @@ Figure&nbsp;2: <a href="https://x.com/webbshasta/status/1263894431268106241">Twe
 </li>
 <li>Does pollinator visitation predict hybridization rate?</li>
 </ul>
-<p>See <a href="#fig-clarkia_sketch" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-clarkia_sketch</span></a> for examples of how these may look.</p>
+<p>See <a href="#fig-clarkia_sketch" class="quarto-xref">Figure&nbsp;<span>3</span></a> for examples of how these may look.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-clarkia_sketch" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -582,18 +588,20 @@ Figure&nbsp;3: Brainstorming potential figures.
 <h2 class="anchored" data-anchor-id="making-ggplots">Making ggplots:</h2>
 <p>The following sections show how to make plots that:</p>
 <ul>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/one_continuous.html">Visualize the distribution of a single continuous variable.</a></li>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_R/intro_to_ggplot/saving_ggplots.html">Saving a ggplot.</a></li>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/cont_cat.html">Compare a continuous variable for different categorical variables.</a><br>
+<li><a href="intro_to_ggplot/one_continuous.html">Visualize the distribution of a single continuous variable</a>.<br>
 </li>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/two_categorical.html">Visualize associations between two categorical variables.</a><br>
+<li><a href="intro_to_ggplot/saving_ggplots.html">Saving a ggplot</a>.<br>
 </li>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/two_continuous.html">Visualize associations between two continuous variables.</a><br>
+<li><a href="intro_to_ggplot/cont_cat.html">Compare a continuous variable for different categorical variables</a>.<br>
 </li>
-<li><a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/many_explanatory.html">Visualize multiple explanatory variables.</a></li>
+<li><a href="intro_to_ggplot/two_categorical.html">Visualize associations between two categorical variables</a>.<br>
+</li>
+<li><a href="intro_to_ggplot/two_continuous.html">Visualize associations between two continuous variables</a>.<br>
+</li>
+<li><a href="intro_to_ggplot/many_explanatory.html">Visualize multiple explanatory variables</a>.</li>
 </ul>
-<p>Then we <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#chapter-summary">summarize the chapter</a>, present <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#practice-questions">practice questions</a>, a <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#glossary-of-terms">glossary</a>, a review of <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#key-r-functions">R functions</a> and <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections//intro_to_ggplot/ggplot_summary.html#r-packages-introduced">R packages</a> introduced, and <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#additional-resources">present additional resources</a>.</p>
-<p>Finally, for the true aficionados, I <a href="https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#bonus-content-interactive-plots-with-ggplotly">introduce ggplotly</a> as a great way to get to know your data.</p>
+<p>Then we <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summarySummary">summarize the chapter</a>, present a <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryChatbot">chatbot tutor</a>, <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryPractice_questions">practice questions</a>, a <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryGlossary_of_terms">glossary</a>, a review of <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryNew_r_functions">R functions</a> and <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryR_packages_introduced">R packages</a> introduced, and <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryAdditional_resources">provide links to additional resources</a>.</p>
+<p>Finally, for the true aficionados, I <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryGgploty">introduce ggplotly</a> as a great way to get to know your data.</p>
 
 
 </section>
