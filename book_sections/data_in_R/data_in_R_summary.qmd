@@ -7,7 +7,7 @@ webr:
   autoload-packages: false
 ---
 
-**Links to:** [Summary](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#chapter-summary). [Chatbot Tutor](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#chatbot-tutor).  [Questions](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#practice-questions). [Glossary](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#glossary-of-terms). [R functions](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#key-r-functions). [R packages](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#r-packages-introduced). [More resources](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/data_in_R/data_in_R_summary.html#additional-resources).
+**Links to:**  [Summary](#data_in_R_summarySummary),  [Chatbot Tutor](#data_in_R_summaryChatbot), [Practice Questions](#data_in_R_summaryPractice_questions),  [Glossary](#data_in_R_summaryGlossary_of_terms),  [R functions](#data_in_R_summaryNew_r_functions),  [R packages](#data_in_R_summaryR_packages_introduced) introduced, and [Additional resources](#data_in_R_summaryAdditional_resources).    
 
 ```{r}
 #| echo: false
@@ -31,8 +31,7 @@ ril_data <- read_csv(ril_link, show_col_types = FALSE)|>
 
 
 
-## Chapter summary
-
+## Chapter summary {#data_in_R_summarySummary}
 
 
 ```{r}
@@ -47,11 +46,13 @@ include_graphics("../../figs/intro_to_R/data_in_R/pretty_stressed_clarkia.png")
 Keeping data in the tidy format—where each column represents a variable and each row represents an observation—allows you to fully leverage the powerful tools of the [**tidyverse**](https://www.tidyverse.org/). In the tidyverse, data are stored in tibbles, a modern update to data frames that enhances readability and maintains consistent data types. The [`dplyr`](https://dplyr.tidyverse.org/) package offers a suite of intuitive functions for transforming and analyzing data. For example, [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html) lets you create or modify variables, while [`summarize()`](https://dplyr.tidyverse.org/reference/summarise.html) computes summary statistics. When paired with [`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html), you can easily generate summaries across groups. Other essential functions include [`select()`](https://dplyr.tidyverse.org/reference/select.html) for choosing columns, [`filter()`](https://dplyr.tidyverse.org/reference/filter.html) for subsetting rows, [`rename()`](https://dplyr.tidyverse.org/reference/rename.html), and [`arrange()`](https://dplyr.tidyverse.org/reference/arrange.html) for ordering data. Together—and especially when used with the pipe operator (`group_by(...) |> summarize(...)`)—these tools enable clear, reproducible workflows. In the next chapter, you'll see how tidy data also powers beautiful and flexible plots using  [`ggplot2`](https://ggplot2.tidyverse.org/).
 
 
-### Chatbot tutor  
+### Chatbot tutor   {#data_in_R_summaryChatbot}
 
+:::tutor
 Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/g-679eb4ffdb648191887186d9713ab2f8-data-in-r-tutor)) I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+:::
 
-### Practice Questions
+### Practice Questions {#data_in_R_summaryPractice_questions} 
 
 
 Try these questions! Use the R environment below to work without changing tabs.  
@@ -159,7 +160,7 @@ ril_data   |>
 
 
 
-### Glossary of Terms
+### Glossary of Terms  {#data_in_R_summaryGlossary_of_terms} 
 
 :::glossary
 
@@ -187,7 +188,7 @@ ril_data   |>
 
 ---
 
-### Key R functions 
+### Key R functions  {#data_in_R_summaryNew_r_functions}  
 
 
 :::functions
@@ -227,7 +228,8 @@ ril_data   |>
 
 
 
-### R Packages Introduced
+### R Packages Introduced {#data_in_R_summaryR_packages_introduced}  
+
 
 :::packages
 
@@ -240,7 +242,7 @@ ril_data   |>
 
 
 
-### Additional resources  
+### Additional resources   {#data_in_R_summaryAdditional_resources}
 
 
 :::learnmore 

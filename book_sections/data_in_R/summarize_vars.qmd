@@ -1,4 +1,5 @@
-### • 2. Summarizing columns {.unnumbered}
+### • 2. Summarizing columns {.unnumbered #summarize_vars}
+
 
 
 
@@ -48,7 +49,7 @@ ril_data <- readr::read_csv(ril_link) |>
 
 We rarely want to look at entire datasets, we want to [`summarize()`](https://dplyr.tidyverse.org/reference/summarise.html) them (e.g. finding the mean, variance, etc..). 
 
-We [previously used the mean function](getting_started.qmd##working-with-vectors) to find the mean of a vector. When we want to summarize a variable in a tibble we use the function inside of [`summarize()`](https://dplyr.tidyverse.org/reference/summarise.html).  
+We [previously used the mean function](#vectors) to find the mean of a vector. When we want to summarize a variable in a tibble we use the function inside of [`summarize()`](https://dplyr.tidyverse.org/reference/summarise.html).  
 
 ```{r}
 #| echo: false

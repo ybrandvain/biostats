@@ -1,0 +1,220 @@
+## • 4. Reproducibility summary {.unnumbered}
+
+**Links to:** [Summary](#reproducible_summarySummary),  [Chatbot Tutor](#reproducible_summaryChatbot), [Practice Questions](#reproducible_summaryPractice_questions),  [Glossary](#reproducible_summaryGlossary_of_terms), [R functions](#reproducible_summaryNew_r_functions) and [R packages](#reproducible_summaryR_packages_introduced), and [Additional resources](#reproducible_summaryAdditional_resources).    
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(webexercises)
+library(tidyr)
+library(ggplot2)
+library(readr)
+library(dplyr)
+#https://coursekata.org/preview/ec26c7bd-0ade-480b-a307-13c141fe28cb/program?version=76314360-dd94-4593-bf1c-4ce440b73eaa&book=3cc54c0e-3b8a-4804-9a2e-186c8c2bf28f
+```
+
+## Chapter Summary  {#reproducible_summarySummary}  
+
+
+Reproducibility is a cornerstone of good science, ensuring that research is transparent, reliable, and easy to build upon. This chapter covered best practices for collecting, organizing, and analyzing data in a reproducible manner.  
+
+Before collecting data, establish clear rules for measurement, naming conventions, and data entry to maintain consistency. Field sheets should be well-structured, and tidy.  Additionally, creating a data dictionary and README document ensures that variables and project details are well-documented. Finally, storing data and scripts in public repositories supports transparency and open science. 
+
+In analysis, using an R Project helps keep files organized, and loading data with relative paths avoids location issues. Writing well-structured R scripts with clear comments makes workflows understandable and repeatable. By prioritizing reproducibility you not only strengthen the integrity of your work, but also make future analyses smoother for yourself and others.
+
+
+
+### Chatbot tutor  {#reproducible_summaryChatbot}
+
+:::tutor
+Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/g-681d8db6f8688191847ab02451805eeb-reproducible-science-tutor)) I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+:::
+
+
+### Practice Questions {#reproducible_summaryPractice_questions}
+
+
+Try these questions!   
+
+
+
+:::exercises
+
+
+
+**Q1)** What is the biggest mistake in the table below?  `r longmcq(c("ID should be lower case","Its perfect, change nothing", answer = "the column name, *weight* is not sufficiently descriptive, it should include the units.", "date_colleted_empty_means_same_as_above is too wordy, replace with *date*", answer = "Values for date_collected_empty_means_same_as_above are implied.","date is in Year-Month-Day format, while Month-Day-Year format is preffered."))`  
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(lubridate)
+tibble(
+  ID             = c("1-A1","1-1B","3-7","2-B","1-A5"),
+  weight         = c(104, 210, 150, 176,110),
+  date_collected_empty_means_same_as_above = c("2024-03-01", "","" , "2024-03-15","" ))|>
+  kable()
+```
+`r hide("Click here for explanation")`
+
+While some of these (like the long name for date) are clearly shortcomings, spreadsheets should never leave values implied. 
+
+`r unhide()`. 
+
+---  
+
+
+**Q2)** What would you expect in a data dictionary accompanying the table above? (select all correct) `r longmcq(c(answer = "The units for weight.",answer = "A statement that date is in Year-Month-Day format", answer = "A statement explaining that in the  date colleted column, empty means same as above."))`  
+
+
+---  
+
+
+**Q3)** How do you read data from a Excel sheet, called *raw_data* in an Excel filed named *bird_data.xlsx* located  inside the R project  you are working in? `r longmcq(c( "You cannot load excel files into R. You must save it as a csv, and read it in with read_csv().",answer = "Assuming the readxl package is installed and loaded, type read_xlsx(file = \"bird_data.xlsx\", sheet = \"raw_data\").",  "While you can read excel into R, you cannot specify the sheet."))`  
+
+---  
+
+**Q4)** What should you do to make code reproducible?  (pick the best answer) `r longmcq(c("Specify the working directory with setwd()","Show the packages installed with install.packages()", answer = "Restart R once your done, and rerun your script to see if it works"))`
+
+::: 
+
+
+----
+
+
+
+### Glossary of Terms {#reproducible_summaryGlossary_of_terms} 
+
+:::glossary
+
+
+**Absolute Path** – A file location specified from the root directory (e.g., `/Users/username/Documents/data.csv`), which can cause issues when sharing code across different computers. Using **relative paths** instead is recommended.  
+
+**Data Dictionary** – A structured document that defines each variable in a dataset, including its name, description, units, and expected values. It helps ensure data clarity and consistency.  
+
+**Data Validation** – A method for reducing errors in data entry by restricting input values (e.g., dropdown lists for categorical variables, ranges for numerical values).  
+
+**Field Sheet** – A structured data collection form used in the field or lab, designed for clarity and ease of data entry.  
+
+**Metadata** – Additional information describing a dataset, such as when, where, and how data were collected, the units of measurement, and details about the variables.  
+
+**R Project** – A self-contained environment in RStudio that organizes files, code, and data in a structured way, making analysis more reproducible.  
+
+**Raw Data** – The original, unmodified data collected from an experiment or survey. It should always be preserved in its original form, with any modifications performed in separate scripts.  
+
+**README File** – A text file that provides an overview of a dataset, including project details, data sources, file descriptions, and instructions for use.  
+
+**Reproducibility** – The ability to re-run an analysis and obtain the same results using the same data and code. This requires careful documentation, structured data storage, and clear coding practices.  
+
+**Relative Path** – A file path that specifies a location relative to the current working directory (e.g., `data/my_file.csv`), making it easier to share and reproduce analyses.  
+
+**Tidy Data** – A dataset format where each variable has its own column, each observation has its own row, and each value is in its own cell.  
+
+
+:::
+
+---
+
+### Key R functions  {#reproducible_summaryNew_r_functions}  
+
+
+
+:::functions
+
+
+- **[`clean_names(data)`](https://sfirke.github.io/janitor/reference/clean_names.html)** – Standardizes column names (from the [`janitor`](https://sfirke.github.io/janitor/index.html) package).  
+
+
+- **[`drop_na(data)`](https://tidyr.tidyverse.org/reference/drop_na.html)** – Removes rows with missing values (from the [`tidyr`](https://tidyr.tidyverse.org/) package)).  
+
+
+- **[`read_csv("file.csv")`](https://readr.tidyverse.org/reference/read_delim.html)** – Reads a CSV file into R as a tibble (from the [`readr`](https://readr.tidyverse.org/) package).  
+
+- **[`read_xlsx("file.xlsx", sheet = "sheetname")`](https://readxl.tidyverse.org/reference/read_excel.html)** – Reads an excel sheet into R as a tibble (from the [`readxl`](https://readxl.tidyverse.org/) package).  
+
+
+- **[`rename(data, new_name = old_name)`](https://dplyr.tidyverse.org/reference/rename.html)** – Renames columns in a dataset (from the [`dplyr`](https://dplyr.tidyverse.org/) package).  
+
+- **[`pivot_longer(data, cols, names_to, values_to)`](https://tidyr.tidyverse.org/reference/pivot_longer.html)** – Converts wide-format data to long format (from the [`tidyr`](https://tidyr.tidyverse.org/) package).  
+
+ 
+
+- **[`sessionInfo()`](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/sessionInfo.html)** – Displays session details, including loaded packages (useful for reproducibility).  
+
+
+:::
+
+---
+
+
+
+### R Packages Introduced {#reproducible_summaryR_packages_introduced} 
+
+:::packages
+
+
+- **[`readr`](https://readr.tidyverse.org/)** – Provides fast and flexible functions for reading tabular data (here we revisited [`read_csv()`](https://readr.tidyverse.org/reference/read_delim.html) for CSV files).  
+
+- **[`dplyr`](https://dplyr.tidyverse.org/)** – A grammar for data manipulation. Here we introduced the [`rename(data, new_name = old_name)`](https://dplyr.tidyverse.org/reference/rename.html) function to give columns better names.    
+
+- **[`tidyr`](https://tidyr.tidyverse.org/)** – Helps tidy messy data. Here we introduced [`pivot_longer()`](https://tidyr.tidyverse.org/reference/pivot_longer.html) to make wide data long.    
+
+- **[`janitor`](https://sfirke.github.io/janitor/)** – Cleans and standardizes data, including `clean_names()`](https://sfirke.github.io/janitor/reference/clean_names.html) for formatting column names.  
+
+
+:::
+
+
+
+
+
+### Additional resources {#reproducible_summaryAdditional_resources} 
+
+
+:::learnmore 
+
+**R Recipes:**      
+
+- [Read a .csv](https://posit.cloud/learn/recipes/basics/ImportA1):  Learn how to read a csv into R as a tibble.       
+- [Read an Excel file](https://posit.cloud/learn/recipes/basics/ImportF): Learn how to read an excel file into R as a tibble.    
+- [Obey R's naming rules](https://posit.cloud/learn/recipes/basics/BasicB3A):  You want to give a valid name to an object in R.  
+- [Rename columns in a table](https://posit.cloud/learn/recipes/transform/TransformC): You want to rename one or more columns in a data frame.
+
+
+
+
+**Other web resources:**    
+
+- *[Data Organization in Spreadsheets](https://www.tandfonline.com/doi/citedby/10.1080/00031305.2017.1375989?scroll=top&needAccess=true)* [@broman2018].       
+
+- *[Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf):* [@TidyData].     
+
+-  *[Ten Simple Rules for Reproducible Computational Research](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285):* [@sandve2013].       
+
+- [NYT article: For big data scientists hurdle to insights is janitor work.](https://www.nytimes.com/2014/08/18/technology/for-big-data-scientists-hurdle-to-insights-is-janitor-work.html)
+   
+- [Style guide](https://datamgmtinedresearch.com/style): Chapter 9 of *Data management in large-scale education research* by @lewis2024.  Includes sections on [general good practices](https://datamgmtinedresearch.com/style#style-practices), [file naming](https://datamgmtinedresearch.com/style#style-file), and [variable naming](https://datamgmtinedresearch.com/style#style-varname). 
+
+- [Data Storage and security](https://datamgmtinedresearch.com/store): Chapter 13 of *Data management in large-scale education research* by @lewis2024.  
+
+**Videos:**  
+
+- [Data integrity](https://www.youtube.com/embed/G9LDtFMsUmY): (By [Kate Laskowski](https://laskowskilab.faculty.ucdavis.edu/people/kate-laskowski/) who was the victim of data fabrication by her collaborator (and my former roommate) Jonathan Pruitt).    
+
+- [Tidying data with `pivor_longer`](https://www.youtube.com/embed/qivE6exNsZI?end=340) (From Stat454)
+
+
+
+
+::: 
+
+
+
+
+

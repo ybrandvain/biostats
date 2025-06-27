@@ -1,0 +1,118 @@
+## CHAPTER: Reproducible Science
+
+### Chapter-Wide Learning Goals
+
+By the end of this chapter, students should be able to:
+
+1. Describe principles for collecting, labeling, storing, and documenting data.
+2. Make tidy, consistent data sheets for field or lab collection.
+3. Understand the role of a README and data dictionary.
+4. Create a folder structure and initiate an R Project for reproducible analysis.
+5. Load data into R using relative paths.
+6. Write reproducible R scripts with informative comments.
+7. Clean and tidy data in R.
+8. Apply best practices for writing and organizing code.
+
+---
+
+## Pedagogical Sequence
+
+This chapter follows:
+
+1. Types of Variables (students understand variable types)
+2. Data in R (students use `filter()`, `mutate()`, `group_by()`, `read_csv()`)
+3. Intro to ggplot (students have created simple plots)
+
+This chapter introduces higher-level practices for project setup, data entry standards, and coding workflow.
+
+---
+
+## Background Context for Students
+
+* Students have not necessarily conducted fieldwork or coded reproducibly before.
+* They have some exposure to reading and writing R scripts.
+* They may confuse absolute vs. relative paths.
+* They may not know how to structure folders or create projects.
+* They are encouraged to reflect on real-world scientific practices (lab notebooks, naming files, data storage).
+* They should begin thinking of themselves as future researchers.
+
+---
+
+## Key Concepts to Reinforce
+
+* Start reproducibility at the beginning of a project.
+* Use consistent naming and data entry practices.
+* Always save raw data; never overwrite.
+* Store data and scripts together in a logical structure.
+* R Projects help make paths reliable.
+* Every data transformation should happen in a script.
+* Scripts should begin with author, date, and purpose.
+* Avoid using Excel formatting (e.g., bold/color) as data.
+* Code should work if rerun from scratch.
+
+---
+
+## Figures to Reference
+
+| Figure ID             | Topic             | Key Message                                                              |
+| --------------------- | ----------------- | ------------------------------------------------------------------------ |
+| `fig-data_collection` | Fieldwork image   | Visual context for data collection from real biology.                    |
+| `fig-datasheet`       | Field data sheet  | Highlights layout, metadata, and organization for real-world collection. |
+| `fig-good_names`      | Variable naming   | Illustrates good vs bad naming conventions.                              |
+| `fig-datadictionary`  | Data dictionary   | Shows metadata structure for variables.                                  |
+| `fig-Rproject`        | RStudio file pane | Reinforces folder structure and R Project file organization.             |
+
+> These figures are embedded in the textbook. The tutor should reference them conversationally to help students recall key lessons, not display or link directly.
+
+---
+
+## R Functions Introduced
+
+* `read_csv()` — read a .csv file into R
+* `read_xlsx()` — read Excel file into R
+* `rename()` — rename variables
+* `pivot_longer()` — convert wide to long
+* `clean_names()` — clean variable names (janitor)
+* `sessionInfo()` — print R session info for reproducibility
+
+---
+
+## R Packages Introduced
+
+* `readr` — data import
+* `readxl` — Excel import
+* `dplyr` — renaming, filtering
+* `tidyr` — reshaping
+* `janitor` — cleaning names
+
+---
+
+## Awareness of Embedded Quiz Items
+
+The tutor should not give direct answers, but can support student thinking through:
+
+* Prompting them to examine spreadsheet structures
+* Reminding them what a data dictionary includes
+* Recommending a reproducible R workflow
+
+---
+
+## Quiz Topics Covered
+
+* Tidy vs untidy data
+* Proper file naming and variable naming
+* What belongs in a README or data dictionary
+* Why to avoid `setwd()`
+* How to load data from a project folder
+* Writing and commenting a reproducible script
+
+---
+
+## Tutoring Tone and Tactics
+
+* Emphasize real-world relevance ("future you will thank you")
+* Gently challenge assumptions about what counts as data
+* Ask students to describe their current organization habits
+* Encourage sketching folder structure or planning ahead
+* Keep code examples minimal unless asked to elaborate
+* Praise students for investing in reproducibility

@@ -7,8 +7,8 @@ webr:
   autoload-packages: true
 ---
 
-**Links to:** [Summary](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#chapter-summary). [Chatbot tutor](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#chatbot-tutor). [Questions](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#practice-questions). [Glossary](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#glossary-of-terms). [R functions](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#key-r-functions). [R packages](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#r-packages-introduced). [More resources](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#additional-resources). [Bonus](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot/ggplot_summary.html#bonus-content-interactive-plots-with-ggplotly).
 
+**Links to:** [Summary](#ggplot_summarySummary), [Chatbot Tutor](#ggplot_summaryChatbot), [Practice Questions](#ggplot_summaryPractice_questions), [Glossary](#ggplot_summaryGlossary_of_terms),  [R functions](#ggplot_summaryNew_r_functions) and [R packages](#ggplot_summaryR_packages_introduced), and [Additional resources](#ggplot_summaryAdditional_resources) + [BONUS CONTENT:  ggplotly](#ggplot_summaryGgploty).   
 
 ```{r}
 #| echo: false
@@ -40,18 +40,19 @@ ril_data <- read_csv(ril_link, show_col_types = FALSE)|>
 include_graphics("../../figs/intro_to_R/intro_to_ggplot/ggplo2_logo.png")
 ```
 
-### Chapter Summary
+### Chapter Summary {#ggplot_summarySummary}
 
+  
 Effective data visualization begins with curiosity and clear biological questions. Before writing a single line of code, it's worth thinking about what you want to learn from your data and how best to visualize that information. Once we have developed some starting ideas and sketches, we are ready to use ggplot2's flexible framework to bring these ideas to life. Data visualization with ggplot2 is built around the idea that plots are constructed by layering components: you begin by mapping variables to aesthetic properties like position, color, or size, and then choose how to display those mapped variables using geometric elements like histograms, barplots, or points. With this approach you can iteratively build visualizations that reflect your questions and highlight meaningful patterns. 
 
 
-### Chatbot tutor  
+### Chatbot tutor  {#ggplot_summaryChatbot} 
 
+:::tutor
 Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/g-681d8901c5bc819195bfa3ad35a99030-intro-to-ggplot-tutor)) I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+:::
 
-
-### Practice Questions
-
+### Practice Questions  {#ggplot_summaryPractice_questions} 
 
 Try the questions below. The R environment below will allow you to work without changing tabs.  
 
@@ -195,7 +196,7 @@ ggplot(ril_data, aes(x = asd_mm, ))+
 
 
 
-### Glossary of Terms
+### Glossary of Terms {#ggplot_summaryGlossary_of_terms} 
 
 :::glossary
 
@@ -209,7 +210,7 @@ ggplot(ril_data, aes(x = asd_mm, ))+
 
 ---
 
-### Key R functions 
+### Key R functions  {#ggplot_summaryNew_r_functions}
 
 
 :::functions
@@ -230,7 +231,8 @@ ggplot(ril_data, aes(x = asd_mm, ))+
 
 
 
-### R Packages Introduced
+### R Packages Introduced  {#ggplot_summaryR_packages_introduced} 
+
 
 :::packages
 
@@ -241,7 +243,7 @@ ggplot(ril_data, aes(x = asd_mm, ))+
 
 
 
-### Additional resources  
+### Additional resources  {#ggplot_summaryAdditional_resources} 
 
 
 :::learnmore 
@@ -277,7 +279,7 @@ ggplot(ril_data, aes(x = asd_mm, ))+
 
 --- 
 
-## Bonus content: Interactive plots with ggplotly
+## Bonus content: Interactive plots with ggplotly {#ggplot_summaryGgploty}
  
 Often data have strange outliers, or patterns you think you see but aren't sure about, or simply interesting data points. When I run into these issues during exploratory data analysis I often want to know more about individual data points. To do so, I make interactive graphs with the [`ggplotly()`](https://plotly.com/ggplot2/) function in the [`plotly`](https://plotly.com/r/) package. 
 

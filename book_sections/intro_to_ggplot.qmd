@@ -1,0 +1,255 @@
+---
+webr:
+  packages: ['ggplot2','dplyr', 'readr']
+  autoload-packages: false
+---
+
+
+# 3. Introduction to ggplot {#intro_to_ggplot}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../_common.R") 
+```
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:**  you have a fresh new data set and want to check it out. How do you go about looking into it?     
+
+**Learning goals: By the end of this chapter you should be able to**  
+
+1. Know why we make plots.  
+2. Connect your plotting ideas to your biological motivation.  
+3. Build and save a simple ggplot.   
+4. Explain the idea of mapping data onto aesthetics, and the use of different geoms.   
+5. Match common plots to common data types.     
+6. Use geoms in ggplot to generate the common plots (above).   
+
+:::     
+
+
+```{r}
+#| column: margin
+#| message: false
+#| warning: false
+#| echo: false
+tidy_anscombe <- data.frame(anscombe) %>%
+  pivot_longer(cols = everything(), names_to = "variable", values_to = "value") %>%
+  mutate(
+    dataset = str_extract(variable, "\\d"),  # Extract dataset number
+    type = str_extract(variable, "[xy]")  ) |>     # Extract variable type (x or y)
+  select(-variable) %>%
+  group_by(dataset ,type )|>
+  mutate(id = paste(dataset,1:n(),sep = "_"))|># Remove the old variable column
+  pivot_wider(id_cols = id, names_from = type, values_from = value)|>  # Reshape to get x and y
+  mutate(dataset = str_remove(id,"_.*"))
+```
+
+
+---
+
+## Always visualize your data.  
+
+[Anscombe's quartet](https://en.wikipedia.org/wiki/Anscombe%27s_quartet) famously  displays four data sets with identical summary statistics but very different interpretations (@fig-anscombe, @tbl-anscombe). The key lesson from Anscombe's quartet is that statistical summaries can miss the story in our data, and therefore must be accompanied by clear visualization of patterns in the data. 
+
+
+```{r}
+#| column: body
+#| message: false
+#| warning: false
+#| out-width: "50%"
+#| echo: false
+#| label: tbl-anscombe
+#| tbl-cap:  "Summary statistics for Anscombe's quartet."
+#| tbl-cap-location: bottom
+tidy_anscombe|>
+  group_by(dataset)|>
+  summarise(sd.x=sd(x),sd.y = sd(y), cor = cor(x,y), mean.x = mean(x), mean.y = mean(y))|>
+  mutate_at(-1,round,digits = 2)|> 
+  kable()
+```
+
+
+
+```{r}
+#| label: fig-anscombe
+#| echo: false
+#| fig-height: 2.5
+#| fig-cap: "Four datasets with identical summary statistics but distinct visual patterns. Each panel represents a dataset with nearly identical means (shown in red), variances, correlations, and regression lines (shown in blue), yet their scatterplots reveal strikingly different structures."
+#| fig-alt: "A set of four scatterplots, each displaying a different dataset known as Anscombe’s Quartet. Despite having nearly identical statistical summaries, the plots show distinct patterns: one appears as a typical linear relationship, another is curved, a third has a vertical outlier, and the fourth consists of nearly identical points with one extreme value. This highlights the importance of data visualization in statistical analysis."
+#| message: false
+#| warning: false
+ggplot(tidy_anscombe,aes(x = x, y=y))+
+  geom_point(size = 3, alpha = .6)+
+  facet_wrap(~dataset, nrow =1, labeller = "label_both")+
+   geom_smooth(method = "lm", se = FALSE, color = "blue", fullrange = TRUE, lty = 2) +
+  geom_point(data = tidy_anscombe |> 
+               group_by(dataset) |> 
+               summarise_all(mean),
+             size = 5, color ="red",shape= 17, alpha = .5)+
+  labs(title = "Anscombe's quartet")+
+  theme_light()
+
+
+```
+
+
+Therefore before diving into formal analysis, we always generate **exploratory plots** to uncover key patterns, detect data quality issues, and reveal the underlying structure of the data. One quick exploratory plot is rarely enough though, as you get to know and model your data, you will develop additional visualizations to dig deeper into the story. 
+
+
+
+Ultimately, after a combination of exploratory plots, summary statistics, and statistical modelling has helped you understand the data, you will generate well-crafted **explanatory plots** to communicate your insight elegantly to your audience. We will focus on the process of making explanatory plots in a later chapter.  
+
+
+:::protip
+
+**Detect data quality issues early**  It is common to split up data collect to a team and maybe someone enters data in centimeters, and someone else in inches (etc). Or maybe for a data point or two a decimal point was lost,  a value is way bigger than it should be. Everytime  you collect and enter data you should make some plots to help identify any such data issues.
+
+:::
+
+
+--- 
+
+## Focus on biological questions.    
+
+Before starting your R coding, consider the plots you want to make and why. It is all too easy to get stuck in the  R vortex—making plots simply because they’re easy to create, visually appealing, fun, or challenging, and before you know it you've wasted an hour doing something that did not move your analysis or understanding forward. So before make a (set of) plot(s) always consider   
+
+- **The thing you want to know**, and how it relates to the motivating biology. This includes
+   - Identifying explanatory and response variables, and 
+   - Distinguishing between key explanatory variables from covariates that you may not care about but need to include.   
+- **That the visualization of data reflects your  biological motivation**.This is particularly tricky for categorical variables which R loves to put in alphabetical order but  may likely have a reasonable order to highlight patterns or biology. 
+
+--- 
+
+**For the** ***Clarkia*** **RIL datasets:**.      
+
+We primarily want to know which (if any) phenotypes influence the amount of pollinator visitation and hybrid seed formation.       
+
+- Our response variables are hybrid seed production and pollinator visitation (and perhaps we would like to know the extent to which pollinator visitation predicts the proportion of hybrid seed).   
+- Our explanatory variables that we care a lot about include: petal area, petal color, herkogamy, protandry etc... We also want to account for differences in the location of the experiment, even though this is not motivating our study.  
+- We also may want to evaluate the extent to which correlation between traits were broken up  as we made the RILs. If trait correlations persists in the RILs it means that we cannot fully dissect the contribution of each trait to the outcome we care about, and that the genetic and/or physiological linkage between traits may have prevented evolution from acting independently on these traits.    
+- In this case there is not a natural order to our categorical variables, so we do not need to think too hard about that. 
+
+
+
+```{r}
+#| echo: false
+#| label: fig-sketch
+#| fig-cap: "[Tweet](https://x.com/webbshasta/status/1263894431268106241) from [Shasta E. Webb](https://www.shastawebb.com/) (\\@webbshasta) about how she makes a plot. \"My approach to figure-making in #ggplot ALWAYS begins with sketching out what I want the final product to look like. It feels a bit analog but helps me determine which #geom or #theme I need, what arrangement will look best, & what illustrations/images will spice it up. #rstats\""
+#| column: margin
+include_graphics("../figs/intro_to_R/intro_to_ggplot/webbshasta - 1263894431268106241.mp4")
+```
+
+
+
+**Let's sketch some potential plots to address these questions**. 
+
+
+I recommend sketching out what you want your plot to look like and what alternative results would look like (@fig-sketch). This helps to ensure that you are making the plot you want, not the one R gives you. In this case, some potentially important questions are:  
+
+
+- What is the  distribution of the number of pollinator visits? 
+- Do we see different visitation by location?  
+- Are pink flowers more likely to be visited than white flowers?   
+- How does the number of visits change with petal area, and does this depend on petal color?    
+- Does pollinator visitation predict hybridization rate?  
+
+
+
+See @fig-clarkia_sketch for examples of how these may look.
+
+
+
+```{r}
+#| label: fig-clarkia_sketch
+#| fig-cap: "Brainstorming potential figures."
+#| echo: false
+include_graphics("../figs/intro_to_R/intro_to_ggplot/clarkia_sketch.png")
+```
+
+
+
+
+
+
+
+## The idea of `ggplot`   
+
+```{r}
+#| fig-cap: "Watch [this video](https://www.youtube.com/watch?v=cqcQT44mJTM?end=64) about getting started with ggplot2 (It is 7 min and 17 sec long), from STAT 545."
+#| echo: false
+include_url("https://www.youtube.com/embed/cqcQT44mJTM?end=64")
+```
+
+
+As described in the [video above](https://www.youtube.com/watch?v=cqcQT44mJTM) `ggplot` is based on the grammar of graphics, a framework for constructing plots by mapping data to visual aesthetics.. A major idea here is that plots are made up of data that we map onto aesthetic attributes, and that we build up plots layer by layer.
+
+Let's unpack this sentence, because there's a lot there. Say we wanted to make a very simple plot e.g. observations for categorical data, or a simple histogram for a single continuous variable. Here we are mapping this variable onto a single aesthetic attribute – the x-axis.
+
+:::note
+**We are using the `ggplot2` package to make plots.**   
+
+If you do not have ggplot2 installed, type:
+
+```{r}
+#| eval: false
+install.packages("ggplot2") # Do this the 1st time!
+```
+
+If you have `ggplot2` installed or you just installed it, every time you start a new R session you still need to enter 
+
+```{r}
+library(ggplot2)
+```
+
+
+
+:::
+
+
+```{r}
+#| message: false
+#| warning: false
+#| code-fold: true
+#| code-summary:  "Show code to load and format the data set, so we are where we left off."
+library(readr)
+library(dplyr)
+library(ggplot2)
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link)|>
+  dplyr::select(location,  ril, prop_hybrid,  mean_visits,  
+                petal_color, petal_area_mm,  asd_mm)|>
+  dplyr::mutate(visited = mean_visits > 0)
+```
+
+
+## Making ggplots: 
+
+The following sections show how to make plots that:  
+
+- [Visualize the distribution of a single continuous variable](#one_continuous).  
+- [Saving a ggplot](#saving_ggplots).  
+- [Compare a continuous variable for different categorical variables](#cont_cat).     
+- [Visualize associations between two categorical variables](#two_categorical).   
+- [Visualize associations between two continuous variables](#two_continuous).     
+- [Visualize multiple explanatory variables](#many_explanatory).  
+
+
+Then we [summarize the chapter](#ggplot_summarySummary), present  a [chatbot tutor](#ggplot_summaryChatbot), [practice questions](#ggplot_summaryPractice_questions), a [glossary](#ggplot_summaryGlossary_of_terms),  a review of [R functions](#ggplot_summaryNew_r_functions) and [R packages](#ggplot_summaryR_packages_introduced) introduced, and [provide links to additional resources](#ggplot_summaryAdditional_resources).    
+
+
+Finally, for the true aficionados, I [introduce ggplotly](#ggplot_summaryGgploty) as a great way to get to know your data.  
+

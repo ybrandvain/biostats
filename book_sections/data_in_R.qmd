@@ -1,0 +1,140 @@
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr']
+  autoload-packages: false
+---
+
+
+# 2. Data in R {#data_in_R}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(webexercises)
+library(tidyr)
+```
+
+
+
+```{r}
+#| label: fig-josh_tweet
+#| fig-cap: "This stuff is useful. [link to tweet here](https://twitter.com/LucyStats/status/1087770108443815936)"
+#| fig-alt: "A tweet from Schraiber, which reads: \" say this all the time but: learning dplyr + ggplot was one of the highest payoff things I've done in my career.\""
+#| column: margin
+#| echo: false
+include_graphics("../figs/intro_to_R/data_in_R/josh_tweet.png")
+```
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:** You understand the very basics of R, and can load data into it. But now you want to actually do things!   
+
+**Learning goals: By the end of this chapter you should be able to**  
+
+1. Explain the tidy data format and differentiate between tidy and untidy data.    
+2. Use the [`select()`](https://dplyr.tidyverse.org/reference/select.html) function in `R` to choose columns to work with.   
+3. Use the [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html) function in `R` to add or over-write columns.     
+4. Use the [`summarize()`](https://dplyr.tidyverse.org/reference/summarise.html) function in `R` to summarize the data.   
+   - And doing so by groups with the [`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html) function.   
+5. Use the [`filter()`](https://dplyr.tidyverse.org/reference/filter.html) function to choose the rows you want to work with.   
+6. Combine these operations with the pipe  [`|>`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/pipeOp.html) operator.  
+:::     
+
+
+---
+
+
+<article class="drop-cap">Science fundamentally relies on the collection and analysis of data to draw meaningful conclusions about the natural world. Data are at the core of this endeavor; it provides the foundation for testing hypotheses, refining theories, and driving new discoveries. Thus, while theory is important to science, data is king. So we need to be able to analyze data. This chapter will provide you with some key tools for the standard scientific tasks of organizing, exploring, and analyzing data effectively,  and reproducibly. </article> 
+
+
+---
+
+## Tidy data
+
+
+```{r}
+#| label: fig-tidy
+#| fig-cap: "A visual explanation of tidy data. Modified from @wickham2014."
+#| fig-alt: "Illustration of tidy data principles. The image features a quote from Hadley Wickham: 'Tidy data is a standard way of mapping the meaning of a dataset to its structure.' The text explains that in tidy data, each variable forms a column, each observation forms a row, and each cell is a single measurement. A small table is included as an example, where column headers ('site,' 'ril,' 'visits') represent variables, and each row represents an observation. Emphasized text and highlighting visually reinforce key concepts."
+#| column: margin
+#| echo: false
+include_graphics("../figs/intro_to_R/data_in_R/tidy.png")
+```
+
+
+> Like families, tidy datasets are all alike but every messy dataset is messy in its own way. Tidy datasets provide a standardized way to link the structure of a dataset (its physical layout) with its semantics (its meaning).
+>
+> Hadley Wickham. *Tidy data*. @wickham2014.
+
+Data can be structured in different ways: in a tidy format, each variable has its own column, and each row represents an observation. In contrast, messy data might combine multiple variables into a single column or store observations in a less structured format.  @fig-tidy A  shows "long" data with one variable per column. @fig-tidy B contains boxes (rather than rows or columns) with petals from a given flower laid  out neatly, and information about the flower and plant written beneath it. Both formats have their costs and benefits:   
+
+- **@fig-tidy A is  "tidy":** Each row is an observation (a petal), and each column is a variable related to that observation. Because this style is so predictable, this format simplifies computational analyses.  
+- **@fig-tidy B is  not "tidy":** There are not simple rows and columns, and variables are combined in a long string. This format is useful in many ways—for example, humans can easily identify patterns, and data can be stored compactly. 
+
+Note that the tidy data format is not necessarily "prettier" or easier to read -- in fact, in visual presentation of data for people, we often choose an untidy format. But when analyzing data on our computer, a tidy format simplifies our work. For this reason we will work with tidy data when possible in this book. 
+
+:::aside
+Because all untidy data are different, there is no way to uniformly tidy an untidy dataset. However, the [tidyr package](https://tidyr.tidyverse.org/)  has many useful functions. Specifically, the [`pivot_longer()`](https://tidyr.tidyverse.org/reference/pivot_longer.html) function allows for converting data from wide format to long format.
+:::
+
+```{r}
+#| label: fig-tidy_clarkia
+#| out-width: "100%"
+#| fig-cap: "An example of tidy versus untidy data. **A)** A table where each row is an observation (a petal), and each column is a variable (e.g. pop, plant, image etc...). **B)** A nicely arranged (but not tidy) sheet of *Clarkia xantiana* petals - arranged by flower."
+#| fig-alt: "A. A table with images of Clarkia petals. Each row is a petal. Columns are: Spp; Pop; Plant; Flower; Petal; Image."
+#| echo: false
+include_graphics("../figs/intro_to_R/data_in_R/tidy_clarkia.png")
+```
+
+## Tibbles 
+
+A tibble is the name for the primary structure that holds data in the tidyverse. A tibble—much like a spreadsheet—does not automatically make data tidy, but encourages a structured, consistent format that works well with tidyverse functions.
+
+- **In a tibble, each column is a vector.** This means that all entries in a column must be of the same class. If you mix numeric and character values in a column, every entry becomes a character.  
+
+- **In a tibble, each row unites observations.** A row can have any mix of data types. 
+
+:::{.aside}
+**Tibbles vs. Data Frames**  For base R users -- A tibble is much like a data frame, but some minor features distinguish them. See [Chapter 10 of @grolemund2018](https://r4ds.had.co.nz/tibbles.html) for more info.
+
+| Feature               | Tibble                            | Data Frame                          |
+|-----------------------|--------------------------------|--------------------------------|
+| **What you see on screen**          | First ten rows & cols that fit|  Entire dataset |
+| **Data Types Displayed** | Yes -- *\<dbl\>*, *\<chr\>*, etc | No |
+| **Subsetting to one column returns** | A tibble | A vector |
+:::
+  
+
+The [`read_csv()`](https://readr.tidyverse.org/reference/read_delim.html) function that we [introduced earlier](getting_started.qmd#reading-data-into-r) to load data imports data as a tibble. Looking at the data below, you are probably surprised to see that growth rate is a character `<chr>`, because it should be a number `<dbl>`. A little digging reveals that the entry in the third row has a growth rate of `1.8O` (with the letter, O, at the end) which should be `1.80` (with the number 0 at the end)
+
+```{r}
+#| message: false
+library(readr)
+library(dplyr)
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link)
+ril_data 
+```
+
+
+## Let's get ready to deal with data in R 
+
+The following sections introduce the very basics of R including:     
+
+- [Adding columns with mutate](#add_vars).    
+- [Selecting columns](#select_vars).   
+- [Summarizing columns](#summarize_vars).   
+- [Choosing rows](#choose_rows).
+
+
+Then we [summarize the chapter](#data_in_R_summarySummary), present  a [chatbot tutor](#data_in_R_summaryChatbot), [practice questions](#data_in_R_summaryPractice_questions), a [glossary](#data_in_R_summaryGlossary_of_terms),  a review of [R functions](#data_in_R_summaryNew_r_functions) and [R packages](#data_in_R_summaryR_packages_introduced) introduced, and [provide links to additional resources](#data_in_R_summaryAdditional_resources).    
+
+
