@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>• 4. Collecting data – Applied Biostatistics</title>
+<title>• 6. Two numeric vars – Applied Biostatistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -50,8 +64,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../book_sections/reproducible_science/reproducible_analyses.html" rel="next">
-<link href="../../book_sections/reproducible_science.html" rel="prev">
+<link href="../../book_sections/associations/summarizing_associations.html" rel="next">
+<link href="../../book_sections/associations/two_categorical_vars.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -89,6 +103,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../assets/sticky-notes.css">
 <link rel="stylesheet" href="../../assets/table-styles.css">
@@ -104,7 +147,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science.html">4. Reproducible Science</a></li><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science/collecting_data.html">• 4. Collecting data</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/associations.html">6. Associations</a></li><li class="breadcrumb-item"><a href="../../book_sections/associations/cont_cont.html">• 6. Two numeric vars</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -308,7 +351,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/reproducible_science/collecting_data.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../book_sections/reproducible_science/collecting_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 4. Collecting data</span></a>
   </div>
 </li>
@@ -402,7 +445,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/associations/cont_cont.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/associations/cont_cont.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">• 6. Two numeric vars</span></a>
   </div>
 </li>
@@ -612,9 +655,9 @@ div.csl-indent {
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science.html">4. Reproducible Science</a></li><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science/collecting_data.html">• 4. Collecting data</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/associations.html">6. Associations</a></li><li class="breadcrumb-item"><a href="../../book_sections/associations/cont_cont.html">• 6. Two numeric vars</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="collecting_data" class="quarto-section-identifier">• 4. Collecting data</span></h1>
+<h1 class="title"><span id="cont_cont" class="quarto-section-identifier">• 6. Two numeric vars</span></h1>
 </div>
 
 
@@ -631,147 +674,188 @@ div.csl-indent {
 </header>
 
 
-<p><strong>This section includes background on:</strong> <a href="#making-rules-for-data-collection">Making rules for data collection</a>, <a href="#making-a-spreadsheet-for-data-entry">Making a spreadsheet for data entry</a>, <a href="#making-data-field-sheets">Making data (field) sheets</a>, <a href="#data-collection-and-data-entry-checklist">A checklist for data collection</a>, <a href="#making-a-readme-andor-data-dictionary">Making a README and/or data dictionary</a>, and <a href="#long-term-public-data-storage">Long term public data storage</a>.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code for selecting data from a few columns from RILs planted at GC</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(ril_link) <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">growth_rate =</span> <span class="fu">case_when</span>(growth_rate <span class="sc">==</span><span class="st">"1.8O"</span> <span class="sc">~</span> <span class="st">"1.80"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">.default =</span> growth_rate),  </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">growth_rate =</span> <span class="fu">as.numeric</span>(growth_rate),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">visited =</span> mean_visits <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="ot">&lt;-</span> ril_data <span class="sc">|&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(location <span class="sc">==</span> <span class="st">"GC"</span>, <span class="sc">!</span><span class="fu">is.na</span>(prop_hybrid), <span class="sc">!</span> <span class="fu">is.na</span>(mean_visits))<span class="sc">|&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm,visited )<span class="sc">|&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log10_petal_area_mm =</span> <span class="fu">log10</span>(petal_area_mm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
 <div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<p><strong>Motivating scenario:</strong> You are getting ready to collect, enter, and store data.</p>
-<p><strong>Learning goals: By the end of this chapter you should be able to</strong></p>
-<ul>
-<li>Make a data sheet.</li>
-<li>Label samples.<br>
-</li>
-<li>Describe best principles for collecting, storing, and maintaining data.</li>
-</ul>
+<p><strong>Motivating Scenario:</strong><br>
+You are continuing your exploration of a new dataset. After checking its shape and making transformations you thought were appropriate, you’re now ready to explore how two numeric variables are associated.</p>
+<p><strong>Learning Goals: By the end of this subchapter, you should be able to:</strong></p>
+<ol type="1">
+<li><p><strong>Calculate and explain a covariance:</strong> Both as the “mean of the product minus the product of the mean” and the “mean of cross products”.</p></li>
+<li><p><strong>Calculate and explain a correlation coefficient</strong> and why this standardized measure can be more useful than covariance when comparing associations.</p></li>
+</ol>
 </div>
 <hr>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-data_collection" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Researchers conducting fieldwork on a steep hillside covered in blooming *Clarkia xantiana* flowers. One researcher in the foreground, wearing a blue beanie and dark clothing, is seated among the flowers, writing on a clipboard. Another researcher in a red jacket is also recording data, while a third person in a hat is partially visible. The background features rolling, dry, shrub-covered hills under an overcast sky.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-data_collection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/intro_to_R/reproducible_science/more_xan.png" class="img-fluid figure-img" alt="Researchers conducting fieldwork on a steep hillside covered in blooming *Clarkia xantiana* flowers. One researcher in the foreground, wearing a blue beanie and dark clothing, is seated among the flowers, writing on a clipboard. Another researcher in a red jacket is also recording data, while a third person in a hat is partially visible. The background features rolling, dry, shrub-covered hills under an overcast sky." width="686">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-data_collection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Researchers collecting data on <em>Clarkia</em> pollinator visitation.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<hr>
-<p>Sometimes, data come from running a sample through a machine, resulting in a computer readout of our data (e.g., genotypes, gene expression, mass spectrometer, spectrophotometer, etc.). Other times, we collect data through counting, observing, and similar methods, and we enter our data by hand. Either way, there is likely some key data or metadata for which we are responsible (e.g., information about our sample). Below,we focus on how we collect and store our data, assuming that our study and sampling scheme have already been designed. Issues in study design and sampling will be discussed in later chapters.</p>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<blockquote class="blockquote">
-<p><em>On two occasions I have been asked, “Pray, Mr.&nbsp;Babbage, if you put into the machine wrong figures, will the right answers come out?” … I am not able rightly to apprehend the kind of confusion of ideas that could provoke such a question.</em><br><br></p>
-<p>Page 64 of “Passages from the Life of a Philosopher” <span class="citation" data-cites="babbage1864">Babbage (<a href="../../references.html#ref-babbage1864" role="doc-biblioref">1864</a>)</span>.</p>
-</blockquote>
-</div></div><section id="making-rules-for-data-collection" class="level2">
-<h2 class="anchored" data-anchor-id="making-rules-for-data-collection">Making rules for data collection</h2>
-<p>Before we collect data, we need to decide what data to collect. Even in a well-designed study where we want to observe flower color at a field site, we must consider, “What are my options?”, for example:</p>
-<ul>
-<li>Should the options be “white” and “pink,” or should we distinguish between darker and lighter shades?<br>
-</li>
-<li>If we’re measuring tree diameter, at what height on the tree should we measure the diameter?<br>
-</li>
-<li>When measuring something quantitative, what units are we reporting?</li>
-</ul>
-<p>Some of these questions have answers that are more correct, while for others, it’s crucial to agree on a consistent approach and ensure each team member uses the same method.</p>
-<p>Similarly, it’s important to have consistent and unique names – for example, my collaborators and I study <em>Clarkia</em> plants at numerous sites – include <strong>S</strong>quirrel <strong>M</strong>ountain and <strong>S</strong>aw<strong>M</strong>ill – which one should we call SM (there is a similar issue in state abbreviation – we live in <strong>M</strong>i<strong>N</strong>nesota (MN), not <strong>MI</strong>nnesota, to differentiate our state from <strong>MI</strong>chigan (MI)). These questions highlight the need for thoughtful data planning, ensuring that every variable is measured consistently.</p>
-<p>Once you have figured out what you want to measure, how you will measure and report it, and other useful info (e.g., date, time, collector), you are ready to make a data sheet for field collection, a database for analysis, and a README or data dictionary.</p>
-</section>
-<section id="making-a-spreadsheet-for-data-entry" class="level2">
-<h2 class="anchored" data-anchor-id="making-a-spreadsheet-for-data-entry">Making a spreadsheet for data entry</h2>
-<p>After deciding on consistent rules for data collection, we need a standardized format to enter the data. This is especially important when numerous people and/or teams are collecting data at different sites or years. Spreadsheets for data entry should be structured similarly to field sheets (described below) so that it is easy to enter data without needing too much thought.</p>
-<p>Some information (e.g., year, person, field site) might be the same for an entire field sheet, so it can either be written once at the top or explicitly added to each observation in the spreadsheet (copy-pasting can help here).</p>
-</section>
-<section id="making-data-field-sheets" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="making-data-field-sheets">Making Data (field) sheets</h2>
-<p><em>When collecting data or samples, you need a well-designed data (field) sheet</em>. The field sheet should closely resemble your spreadsheet but with a few extra considerations for readability and usability. Ask yourself: How easy is this to read? How easy is it to fill out? Each column and row should be clearly defined so it’s obvious what goes where. Consider the physical layout too—does the sheet fit on one piece of paper? Should it be printed in landscape or portrait orientation? Print a draft to see if there’s enough space for writing. A “notes” column can be useful but should remain empty for most entries, used only for unusual or exceptional cases that might need attention during analysis.</p>
-<p>It’s also smart to include metadata at the top—things like the date, location, and who collected the data. Whether this metadata gets its own column or is written at the top depends on practical needs—if one person is responsible for an entire sheet, maybe it belongs at the top, not repeated for every sample (contrary to the example in <a href="#fig-datasheet" class="quarto-xref">Figure&nbsp;<span>2</span></a>).</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-datasheet" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A black-and-white field data sheet template with blank spaces for entering site name, date, time, weather conditions (cloud cover, wind, humidity, temperature), plant descriptions, personnel contact information, and other notes. Below these fields is a structured table with column headers: Species, ID#, Sex, Location Description, Time, GPS, Photos?, Collector, and Notes, with multiple empty rows for data entry.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-datasheet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/intro_to_R/reproducible_science/sample_datasheet.png" class="img-fluid figure-img" style="width:200.0%" alt="A black-and-white field data sheet template with blank spaces for entering site name, date, time, weather conditions (cloud cover, wind, humidity, temperature), plant descriptions, personnel contact information, and other notes. Below these fields is a structured table with column headers: Species, ID#, Sex, Location Description, Time, GPS, Photos?, Collector, and Notes, with multiple empty rows for data entry.">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-datasheet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Example field data sheet designed for recording ecological and biological observations. The form includes sections for site information, environmental conditions, personnel details, and a structured table for recording species, individual IDs, sex, location descriptions, time, GPS coordinates, photos, collector name, and additional notes.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<section id="data-collection-and-data-entry-checklist" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="data-collection-and-data-entry-checklist">Data collection and data entry checklist:</h3>
-<ul>
-<li><em>Be consistent and deliberate:</em> You should refer to a thing in the same thoughtful way throughout a column. Take, for example, gender as a nominal variable. Data validation approaches, above, can help.</li>
-</ul>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p><span style="color: red;">A bad organization would be:</span> male, female, Male, M, Non-binary, Female.<br>
-<span style="color: blue;">A good organization would be:</span> male, female, male, male, non-binary, female.<br>
-<span style="color: blue;">A just as good organization would be:</span> Male, Female, Male, Male, Non-binary, Female.</p>
-</div></div><ul>
-<li><em>Use good names for things:</em> Names should be concise and descriptive. They need not tell the entire story. For example, units are better kept in a data dictionary (<a href="#fig-datadictionary" class="quarto-xref">Figure&nbsp;<span>4</span></a>) than column name. This makes downstream analyses easier. Avoiding spaces and special characters makes column names easier to work with in R.</li>
-</ul>
 <div class="cell page-columns page-full">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-good_names" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A table comparing bad and good variable naming practices. The top section, labeled &quot;Bad&quot; in red, contains three tables with problematic variable names such as &quot;#Bugs,&quot; &quot;X1,&quot; and &quot;Num_bugs_5_to_2_pm.&quot; These names include special characters, unclear abbreviations, or excessive detail. The bottom section, labeled &quot;Good&quot; in blue, presents two tables with improved names like &quot;numBugs&quot; and &quot;n_Bugs,&quot; which follow consistent, clear, and readable naming conventions.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-good_names-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/intro_to_R/reproducible_science/goodNames4Things.png" class="img-fluid figure-img" alt="A table comparing bad and good variable naming practices. The top section, labeled &quot;Bad&quot; in red, contains three tables with problematic variable names such as &quot;#Bugs,&quot; &quot;X1,&quot; and &quot;Num_bugs_5_to_2_pm.&quot; These names include special characters, unclear abbreviations, or excessive detail. The bottom section, labeled &quot;Good&quot; in blue, presents two tables with improved names like &quot;numBugs&quot; and &quot;n_Bugs,&quot; which follow consistent, clear, and readable naming conventions." width="367">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-good_names-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: A comparison of bad and good variable naming conventions in a dataset. The top section (labeled “Bad” in red) displays poor naming choices, including spaces, special characters, unclear abbreviations, and inconsistent formatting. The bottom section (labeled “Good” in blue) demonstrates improved naming conventions with consistent formatting, clear descriptions, and no special characters.
-</figcaption>
+<div>
+<figure class="figure">
+<p><img src="cont_cont_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div></div></div>
-<ul>
-<li><p><em>Save in a good place</em>. Make a folder for your project. Keep your data sheet (and data dictionary) there. Try to keep all that you need for the project in this folder, but try not to let it get too complex. Some people like to add more order with additional subfolders for larger projects. <br> <br></p></li>
-<li><p><em>Save early and often:</em> You are welcome. <br> <br></p></li>
-<li><p><em>Backup your data, do not touch the original data file and do not perform calculations on it.</em> In addition to scans of your data (if collected on paper) also save your data on both your computer and a locked, un-editable location on the cloud (e.g.&nbsp;google docs, dropbox, etc.). When you want to do something to your data do it in R, and keep the code that did it. This will ensure that you know every step of data manipulation, QC etc. <br> <br></p></li>
-<li><p><em>Do Not Use Font Color or Highlighting as Data.</em> You may be tempted to encode information with bolded text, highlighting, or text color. Don’t do this! Be sure that all information is in a readable column. These extra markings will either be lost or add an extra degree of difficulty to your analysis. Reserve such markings for the presentation of data.<br> <br></p></li>
-<li><p><em>No values should be implied</em> Never leave an entry blank as “shorthand for same as above”. Similarly, never denote the first replicate (or treatment, or whatever) by its order in a spreadsheet, but rather make this explicit with a value in a column. Data order could get jumbled and besides it would take quite a bit of effort to go from implied order to a statistical analysis. It is ok to skip this while taking data in the field, but make sure no values are implied when entering data into a computer.<br> <br></p></li>
-<li><p><em>Data should be tidy (aka rectangular):</em> Ideally data should be entered as tidy (Each variable must have its own column. Each observation must have its own row. Each value must have its own cell). However, you must balance two practice considerations – “What is the best way to collect and enter data?” vs “What is the easiest way to analyze data?” So consider the future computational pain of tidying untidy data when ultimately deciding on the best way to format your spreadsheet (above). <br> <br></p></li>
-<li><p><em>Use data validation approaches:</em> When making a spreadsheet, think about future-you (or your collaborator) who will analyze the data. Typos and inconsistencies in values (e.g., “Male,” “male,” and “M” for “male”) create unnecessary headaches. Accidentally inputting the wrong measure (e.g., putting height where weight should be, or reporting values in kg rather than lb) sucks. <br> Both Excel and Google Sheets (and likely most spreadsheet programs) have a simple solution: use the “Data validation” feature in the “Data” drop-down menu to limit the potential categorical values or set a range for continuous values that users can enter into your spreadsheet. This helps ensure the data are correct.</p></li>
-</ul>
-</section>
-<section id="making-a-readme-andor-data-dictionary" class="level3">
-<h3 class="anchored" data-anchor-id="making-a-readme-andor-data-dictionary">Making a README and/or “data dictionary”</h3>
-<p>A data dictionary is a separate file (or sheet within a file, if you prefer) that explains all the variables in your dataset. It should include the exact variable names from the data file, a version of the variable name that you might use in visualizations, and a longer explanation of what each variable means. Additionally, it is important to list the measurement units and the expected minimum and maximum values for each variable, so anyone using the data knows what to expect.</p>
-<p>Alongside your data dictionary, you should also create a README file that provides an overview of the project and dataset, explaining the purpose of the study and how the data were collected. The README should include a description of each row and column in the dataset. While there may be some overlap with the data dictionary, this is fine. The data dictionary can serve as a quick reference for plotting and performing quality control, whereas the README provides a higher-level summary, designed for those who may not have been directly involved in the project but are seriously interested in the data.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-datadictionary" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A screenshot of a data dictionary table with four columns labeled &quot;name,&quot; &quot;plot_name,&quot; &quot;group,&quot; and &quot;description.&quot; The table defines variables used in a dataset, such as &quot;mouse&quot; (animal identifier), &quot;sex&quot; (Male or Female), &quot;sac_date&quot; (date of sacrifice), and other clinical or demographic variables like coat color and days on diet. The descriptions provide explanations for each variable's meaning and classification.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-datadictionary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="http://www.tandfonline.com/cms/asset/a0ee9bd4-ec62-4aa0-85cd-ef3514ba63bd/utas_a_1375989_f0009_b.jpg" class="img-fluid figure-img" alt="A screenshot of a data dictionary table with four columns labeled &quot;name,&quot; &quot;plot_name,&quot; &quot;group,&quot; and &quot;description.&quot; The table defines variables used in a dataset, such as &quot;mouse&quot; (animal identifier), &quot;sex&quot; (Male or Female), &quot;sac_date&quot; (date of sacrifice), and other clinical or demographic variables like coat color and days on diet. The descriptions provide explanations for each variable's meaning and classification.">
+<section id="cont_cont_the-covariance" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="cont_cont_the-covariance">The covariance</h2>
+<p>The covariance can also be used to describe the association between two numeric variables. For example, in our <em>Clarkia</em> RIL data, we could describe the association between <span class="math inline">\(\text{log}_{10}\)</span> petal area and the proportion of hybrid seeds using a covariance. As with two categorical variables, the covariance between two numeric variables reflects how much the observed association differs from what we’d expect if the variables were independent. There are two ways to calculate covariance — I introduce both here because each provides a different lens for understanding the concept, and each connects deeply to core ideas in statistics.</p>
+<section id="the-covariance-as-a-deviation-from-expectations" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="the-covariance-as-a-deviation-from-expectations">The covariance as a deviation from expectations</h3>
+<p>In the previous section, I introduced the covariance as the difference between the proportion of observations with a specific pair of values for two variables (e.g., pink flowers and being visited by a pollinator) and how frequently we would expect to see this pairing if the variables were independent: <span class="math inline">\(\text{Covariance}_{A,B} = (P_{AB}-P_{A} \times P_{B})\)</span>. Because we can think of proportions as a mean, we can use this same math to describe the covariance of two numeric variables, <em>X</em> and <em>Y</em>, as the difference between the mean of the products and the product of the means:</p>
+<p><span class="math display">\[\text{Covariance}_{X,Y} = (\overline{XY}-\overline{X} \times \overline{Y})\]</span></p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>As in the previous section this formula is slightly wrong because it implicitly has a denominator of <span class="math inline">\(n\)</span>, not <span class="math inline">\(n-1\)</span>. We apply <a href="https://en.wikipedia.org/wiki/Bessel%27s_correction">Bessel’s correction</a> to get the precise covariance (multiplying our answer by <span class="math inline">\(\frac{n}{n-1}\)</span>). But when <span class="math inline">\(n\)</span> is big, this is close enough.</p>
+</div></div><p>So, we can find the covariance between (<span class="math inline">\(\text{log}_{10}\)</span>) petal area and the proportion of hybrid seeds as the mean of a plant’s (<span class="math inline">\(\text{log}_{10}\)</span>) petal area times its proportion of hybrid seeds minus the mean (<span class="math inline">\(\text{log}_{10}\)</span>) petal area times the mean proportion of hybrid seeds, which equals 0.00756 (after applying Bessel’s correction).</p>
+<div class="cell column-page-right">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(log10_petal_area_mm), <span class="sc">!</span><span class="fu">is.na</span>(prop_hybrid))<span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_product        =</span> <span class="fu">mean</span>(log10_petal_area_mm <span class="sc">*</span> prop_hybrid),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">product_of_mean     =</span>  <span class="fu">mean</span>(log10_petal_area_mm) <span class="sc">*</span> <span class="fu">mean</span>(prop_hybrid),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">approx_covariance   =</span> mean_product <span class="sc">-</span> product_of_mean,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">actual_covariance   =</span> approx_covariance <span class="sc">*</span> <span class="fu">n</span>() <span class="sc">/</span>(<span class="fu">n</span>() <span class="sc">-</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-datadictionary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Example data dictionary from <span class="citation" data-cites="broman2018">(<a href="../../references.html#ref-broman2018" role="doc-biblioref">Broman &amp; Woo, 2018</a>)</span>. This table provides structured metadata for a dataset, including variable names, descriptions, and group classifications. It ensures clarity in data documentation by defining each column’s purpose and expected values. See the <a href="https://ybrandvain.quarto.pub/applied-biostatistics/book_sections/clarkia_and_its_data/clarkia_and_its_data.html">Clarkia RIL data dictionary here</a> for another example.
+<hr>
+</section>
+<section id="the-covariance-as-the-mean-of-cross-products" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="the-covariance-as-the-mean-of-cross-products">The covariance as the mean of cross products</h3>
+<p>Alternatively, we can think of the covariance as how far an individual’s value of X and Y jointly differ from their means. In this formulation,</p>
+<ol type="1">
+<li>Find the deviation of X and Y from their means for each individual– <span class="math inline">\((X_i-\overline{X})\)</span>, and <span class="math inline">\((Y_i-\overline{Y})\)</span>, respectively (<a href="../ordination/pcaII.html#fig-cov" class="quarto-xref">Figure&nbsp;<span>1</span></a>, left).<br>
+</li>
+<li>Take the product of these values to find the cross product (the area of a given rectangle in <a href="../ordination/pcaII.html#fig-cov" class="quarto-xref">Figure&nbsp;<span>1</span></a>, left).<br>
+</li>
+<li>Sum them to find the sum of cross products (<a href="../ordination/pcaII.html#fig-cov" class="quarto-xref">Figure&nbsp;<span>1</span></a>, right, top).<br>
+</li>
+<li>Divide by the sample size minus one (<a href="../ordination/pcaII.html#fig-cov" class="quarto-xref">Figure&nbsp;<span>1</span></a>, right, bottom).</li>
+</ol>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>The equation for the covariance <span class="math inline">\(\text{Cov}_{X,Y} = \frac{\Sigma{(X_i-\overline{X})(Y_i-\overline{Y})}}{(n-1)}\)</span> should remind you of the equation for the variance <span class="math inline">\(\text{Var}_{X} = \frac{\Sigma{(X_i-\overline{X})(X_i-\overline{X})}}{(n-1)}\)</span> (compare <a href="../ordination/pcaII.html#fig-cov" class="quarto-xref">Figure&nbsp;<span>1</span></a> to <a href="https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/univariate_summaries/summarizing_variability.html#fig-ss">Figure 2 from 5. Summarizing variability</a>). In fact the variance is simply the covariance of a variable with itself. See our section on summarizing variability for a refresher <a href="https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/univariate_summaries/summarizing_variability.html#parametric-summaries-of-variability">link</a>. In fact you, can calcualte the variance as the mean of the square minus the sqaure of the mean.</p>
+</div></div><p>This essentially finds the mean cross products, with Bessel’s correction:</p>
+<p><span class="math display">\[\text{Covariance }_{X,Y} = \frac{\Sigma{(X_i-\overline{X})(Y_i-\overline{Y})}}{(n-1)}\]</span></p>
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-cov" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Animated figure illustrating the computation of covariance between log-transformed petal area and proportion hybrid. The left panel highlights how each observation contributes a cross product represented as a rectangle, based on deviation from the mean. The center panel accumulates cross products, and the right panel tracks the cumulative sum and the evolving covariance estimate across all observations.">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-cov-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
+<img src="../../figs/summarizing_data/associations/crossprods.gif" class="img-fluid figure-img column-page-right" alt="Animated figure illustrating the computation of covariance between log-transformed petal area and proportion hybrid. The left panel highlights how each observation contributes a cross product represented as a rectangle, based on deviation from the mean. The center panel accumulates cross products, and the right panel tracks the cumulative sum and the evolving covariance estimate across all observations.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cov-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: An animation to help understand the covariance. <em>Left:</em> We plot each point as the difference between x and y and their means. The area of that rectangle is the cross product. <em>Middle:</em> Shows how these cross products accumulate. <em>Right:</em> The cummulative sum of cross products and the running covariance estimate. The lower plot (covariance) is simply the top plot divided by (x-1).
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="long-term-public-data-storage" class="level3">
-<h3 class="anchored" data-anchor-id="long-term-public-data-storage">Long-term public data storage</h3>
-<p>A key to the scientific method is reproducibility. This is why scientific papers have a methods section. Nowadays - the internet allows for even more detailed sharing of methods. Additionally it is the expectation in most fields that data is made available after publication on repositories like <a href="https://datadryad.org/stash">data DRYAD</a> or <a href="https://conservancy.umn.edu/collections/6c548d8b-0f3a-4f6b-b16e-4154c88136c0">DRUM</a>.</p>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-babbage1864" class="csl-entry" role="listitem">
-Babbage, C. (1864). <em>Passages from the life of a philosopher</em>. Longman; Co.
-</div>
-<div id="ref-broman2018" class="csl-entry" role="listitem">
-Broman, K. W., &amp; Woo, K. H. (2018). Data organization in spreadsheets. <em>The American Statistician</em>, <em>72</em>(1), 2–10. <a href="https://doi.org/10.1080/00031305.2017.1375989">https://doi.org/10.1080/00031305.2017.1375989</a>
-</div>
+<p>The flipbook below works you through how to conduct these calculations:</p>
+<div class="cell">
+<iframe src="https://ybrandvain.github.io/flipbooks/cov_flipbook.html" width="100%" height="400px" data-external="1">
+</iframe>
 </div>
 </section>
+<section id="the-cov-function" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="the-cov-function">The <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html"><code>cov()</code></a> function</h3>
+<p>Both ways of computing the covariance — as the mean of cross-products and as the difference between the product of means and mean of products — are helpful for understanding association. But students are practical and often ask: “Which of these formulae should we use to calculate the covariance?” There are a few answers to this question — the first is “it depends,” the second is “whichever you like,” and the third is “neither, just use the <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html"><code>cov()</code></a> function in R.” Here’s how:</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>The <code>use = "pairwise.complete.obs"</code> argument tells R to ignore NA values when calculating the covariance — just like <code>na.rm = TRUE</code> does when calculating the mean. You can use this argument or filter out NA values first.</p>
+</div></div><div class="cell column-page-right">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">covariance =</span> <span class="fu">cov</span>(log10_petal_area_mm, prop_hybrid, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  covariance
+       &lt;dbl&gt;
+1    0.00756</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="cont_cont_the-correlation" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="cont_cont_the-correlation">The correlation</h2>
+<p>Much like the variance and the difference in means, the covariance is a very useful mathematical description, but its biological meaning can be difficult to interpret and communicate. We therefore usually present the correlation coefficient (represented by the letter, <em>r</em>) – a summary of the strength and direction of a linear association between two variables. This also corresponds to how closely the points fall along a straight line in a scatterplot: the stronger the correlation, the more the points cluster along a line (positive or negative).</p>
+<ul>
+<li><p><strong>Large absolute values of</strong> <strong><em>r</em></strong> indicate that we can quite accurately predict one variable from the other (i.e.&nbsp;points are near a line on a scatterplot).</p></li>
+<li><p><strong><em>r</em></strong> <strong>values near zero</strong> mean that we cannot accurately predict values of one variable from another (i.e.&nbsp;points are not near a line on a scatterplot).<br>
+</p></li>
+<li><p><strong>The sign of</strong> <strong><em>r</em></strong> describes if the values increase with each other (<span class="math inline">\(r &gt; 0\)</span>, a positive slope), or if one variable decreases as the other increases ($ r &lt; 0$, a negative slope).</p></li>
+</ul>
+<p>Mathematically <em>r</em> is simply the covariance divided by the product of standard deviations (<span class="math inline">\(s_X\)</span> and <span class="math inline">\(s_Y\)</span>), and we can find it in <code>R</code> with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html"><code>cor()</code></a> function:</p>
+<p><span class="math display">\[r_{X,Y} = \frac{\text{Covariance}_{X,Y}}{s_X \times s_Y}\]</span></p>
+<div class="cell column-page-right">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(log10_petal_area_mm), <span class="sc">!</span><span class="fu">is.na</span>(prop_hybrid))<span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">covariance   =</span> <span class="fu">cov</span>(log10_petal_area_mm, prop_hybrid),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">cor_from_cov =</span> covariance <span class="sc">/</span> (<span class="fu">sd</span>(log10_petal_area_mm) <span class="sc">*</span> <span class="fu">sd</span>(prop_hybrid)),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">cor_from_function =</span> <span class="fu">cor</span>(log10_petal_area_mm, prop_hybrid))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  covariance cor_from_cov cor_from_function
+       &lt;dbl&gt;        &lt;dbl&gt;             &lt;dbl&gt;
+1    0.00756        0.317             0.317</code></pre>
+</div>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Size</th>
+<th>Range of <span class="math inline">\(|r|\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Not worth reporting</td>
+<td>&lt; 0.005</td>
+</tr>
+<tr class="even">
+<td>Tiny</td>
+<td>0.005 – 0.10</td>
+</tr>
+<tr class="odd">
+<td>Small</td>
+<td>0.01 – 0.20</td>
+</tr>
+<tr class="even">
+<td><strong>Medium</strong></td>
+<td><strong>0.2 – 0.35</strong></td>
+</tr>
+<tr class="odd">
+<td>Large</td>
+<td>0.35 – 0.50</td>
+</tr>
+<tr class="even">
+<td>Very large</td>
+<td>0.50 – 0.75</td>
+</tr>
+<tr class="odd">
+<td>Huge</td>
+<td><span class="math inline">\(&gt; 0.75\)</span></td>
+</tr>
+</tbody>
+</table>
+</div></div><p>As in Cohen’s D, what is a “large” or “small” correlation coefficient depends on the study, the question and the field of study, but there are rough guides (see table on right). So our observed correlation between <span class="math inline">\(log_{10}\)</span> petal area and proportion hybrid is worth paying attention to, but not massive.</p>
+</section>
+<section id="coming-up-next" class="level2">
+<h2 class="anchored" data-anchor-id="coming-up-next">Coming up next</h2>
+<p>These summaries — covariance and correlation — give us tools to describe how two numeric variables relate. Later, we’ll return to these ideas in the context of linear models, where we formalize the idea of one variable predicting another.</p>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1405,13 +1489,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../book_sections/reproducible_science.html" class="pagination-link" aria-label="4. Reproducible Science">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">4. Reproducible Science</span>
+      <a href="../../book_sections/associations/two_categorical_vars.html" class="pagination-link" aria-label="• 6. Two categorical vars">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 6. Two categorical vars</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../book_sections/reproducible_science/reproducible_analyses.html" class="pagination-link" aria-label="• 4. Reproducible analyses">
-        <span class="nav-page-text">• 4. Reproducible analyses</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../book_sections/associations/summarizing_associations.html" class="pagination-link" aria-label="• 6. Association Summary">
+        <span class="nav-page-text">• 6. Association Summary</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

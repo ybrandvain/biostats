@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>• 4. Collecting data – Applied Biostatistics</title>
+<title>[• 9. Audience &amp; Format ]{#audience&amp;delivery .quarto-section-identifier} – Applied Biostatistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -50,8 +30,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../book_sections/reproducible_science/reproducible_analyses.html" rel="next">
-<link href="../../book_sections/reproducible_science.html" rel="prev">
+<link href="../../book_sections/data_viz/honest_plots.html" rel="next">
+<link href="../../book_sections/data_viz.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -88,6 +68,50 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<link href="../../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="../../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="../../site_libs/jquery-3.5.1/jquery.min.js"></script>
+<script src="../../site_libs/proj4js-2.3.15/proj4.js"></script>
+<link href="../../site_libs/highcharts-9.3.1/css/motion.css" rel="stylesheet">
+<script src="../../site_libs/highcharts-9.3.1/highcharts.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/highcharts-3d.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/highcharts-more.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/stock.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/map.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/data.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/exporting.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/offline-exporting.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/drilldown.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/item-series.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/overlapping-datalabels.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/annotations.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/export-data.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/funnel.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/heatmap.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/treemap.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/sankey.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/dependency-wheel.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/organization.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/solid-gauge.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/streamgraph.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/sunburst.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/vector.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/wordcloud.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/xrange.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/tilemap.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/venn.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/gantt.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/timeline.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/parallel-coordinates.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/bullet.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/coloraxis.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/dumbbell.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/lollipop.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/series-label.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/plugins/motion.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/custom/reset.js"></script>
+<script src="../../site_libs/highcharts-9.3.1/modules/boost.js"></script>
+<script src="../../site_libs/highchart-binding-0.9.4/highchart.js"></script>
 
 
 <link rel="stylesheet" href="../../assets/sticky-notes.css">
@@ -104,7 +128,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science.html">4. Reproducible Science</a></li><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science/collecting_data.html">• 4. Collecting data</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/data_viz.html">9. Better Figures</a></li><li class="breadcrumb-item"><a href="../../book_sections/data_viz/audience&amp;delivery.html">• 9. Audience &amp; Format</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -308,7 +332,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/reproducible_science/collecting_data.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../book_sections/reproducible_science/collecting_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 4. Collecting data</span></a>
   </div>
 </li>
@@ -507,7 +531,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/data_viz/audience&amp;delivery.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/data_viz/audience&amp;delivery.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">• 9. Audience &amp; Format</span></a>
   </div>
 </li>
@@ -612,9 +636,9 @@ div.csl-indent {
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science.html">4. Reproducible Science</a></li><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science/collecting_data.html">• 4. Collecting data</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/data_viz.html">9. Better Figures</a></li><li class="breadcrumb-item"><a href="../../book_sections/data_viz/audience&amp;delivery.html">• 9. Audience &amp; Format</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="collecting_data" class="quarto-section-identifier">• 4. Collecting data</span></h1>
+<h1 class="title">[• 9. Audience &amp; Format ]{#audience&amp;delivery .quarto-section-identifier}</h1>
 </div>
 
 
@@ -631,147 +655,214 @@ div.csl-indent {
 </header>
 
 
-<p><strong>This section includes background on:</strong> <a href="#making-rules-for-data-collection">Making rules for data collection</a>, <a href="#making-a-spreadsheet-for-data-entry">Making a spreadsheet for data entry</a>, <a href="#making-data-field-sheets">Making data (field) sheets</a>, <a href="#data-collection-and-data-entry-checklist">A checklist for data collection</a>, <a href="#making-a-readme-andor-data-dictionary">Making a README and/or data dictionary</a>, and <a href="#long-term-public-data-storage">Long term public data storage</a>.</p>
 <div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<p><strong>Motivating scenario:</strong> You are getting ready to collect, enter, and store data.</p>
-<p><strong>Learning goals: By the end of this chapter you should be able to</strong></p>
-<ul>
-<li>Make a data sheet.</li>
-<li>Label samples.<br>
+<p><strong>Motivating Scenario:</strong><br>
+You have figured out the story you plan to tell with your data.But before you dive too deep, pause for a moment: Who’s going to see this plot? And how are they going to see it? And how can we use this information to make our plot most impact.</p>
+<p><strong>Learning Goals: By the end of this subchapter, you should be able to:</strong></p>
+<ol type="1">
+<li>Identify key types of audiences for scientific figures, and recognize what each needs from a plot.<br>
 </li>
-<li>Describe best principles for collecting, storing, and maintaining data.</li>
-</ul>
+<li>Describe how figures function differently in talks, posters, papers, and online formats.<br>
+</li>
+<li>Make thoughtful tradeoffs between detail, clarity, and interpretability depending on audience and format.<br>
+4 <strong>Build a workflow</strong> that separates early exploratory plotting from later communication-focused refinement.
+<ul>
+<li>Know that “<em>premature optimization is the root of all evil.</em>”</li>
+</ul></li>
+</ol>
 </div>
 <hr>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-data_collection" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Researchers conducting fieldwork on a steep hillside covered in blooming *Clarkia xantiana* flowers. One researcher in the foreground, wearing a blue beanie and dark clothing, is seated among the flowers, writing on a clipboard. Another researcher in a red jacket is also recording data, while a third person in a hat is partially visible. The background features rolling, dry, shrub-covered hills under an overcast sky.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-data_collection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/intro_to_R/reproducible_science/more_xan.png" class="img-fluid figure-img" alt="Researchers conducting fieldwork on a steep hillside covered in blooming *Clarkia xantiana* flowers. One researcher in the foreground, wearing a blue beanie and dark clothing, is seated among the flowers, writing on a clipboard. Another researcher in a red jacket is also recording data, while a third person in a hat is partially visible. The background features rolling, dry, shrub-covered hills under an overcast sky." width="686">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-data_collection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Researchers collecting data on <em>Clarkia</em> pollinator visitation.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<hr>
-<p>Sometimes, data come from running a sample through a machine, resulting in a computer readout of our data (e.g., genotypes, gene expression, mass spectrometer, spectrophotometer, etc.). Other times, we collect data through counting, observing, and similar methods, and we enter our data by hand. Either way, there is likely some key data or metadata for which we are responsible (e.g., information about our sample). Below,we focus on how we collect and store our data, assuming that our study and sampling scheme have already been designed. Issues in study design and sampling will be discussed in later chapters.</p>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<blockquote class="blockquote">
-<p><em>On two occasions I have been asked, “Pray, Mr.&nbsp;Babbage, if you put into the machine wrong figures, will the right answers come out?” … I am not able rightly to apprehend the kind of confusion of ideas that could provoke such a question.</em><br><br></p>
-<p>Page 64 of “Passages from the Life of a Philosopher” <span class="citation" data-cites="babbage1864">Babbage (<a href="../../references.html#ref-babbage1864" role="doc-biblioref">1864</a>)</span>.</p>
-</blockquote>
-</div></div><section id="making-rules-for-data-collection" class="level2">
-<h2 class="anchored" data-anchor-id="making-rules-for-data-collection">Making rules for data collection</h2>
-<p>Before we collect data, we need to decide what data to collect. Even in a well-designed study where we want to observe flower color at a field site, we must consider, “What are my options?”, for example:</p>
-<ul>
-<li>Should the options be “white” and “pink,” or should we distinguish between darker and lighter shades?<br>
-</li>
-<li>If we’re measuring tree diameter, at what height on the tree should we measure the diameter?<br>
-</li>
-<li>When measuring something quantitative, what units are we reporting?</li>
-</ul>
-<p>Some of these questions have answers that are more correct, while for others, it’s crucial to agree on a consistent approach and ensure each team member uses the same method.</p>
-<p>Similarly, it’s important to have consistent and unique names – for example, my collaborators and I study <em>Clarkia</em> plants at numerous sites – include <strong>S</strong>quirrel <strong>M</strong>ountain and <strong>S</strong>aw<strong>M</strong>ill – which one should we call SM (there is a similar issue in state abbreviation – we live in <strong>M</strong>i<strong>N</strong>nesota (MN), not <strong>MI</strong>nnesota, to differentiate our state from <strong>MI</strong>chigan (MI)). These questions highlight the need for thoughtful data planning, ensuring that every variable is measured consistently.</p>
-<p>Once you have figured out what you want to measure, how you will measure and report it, and other useful info (e.g., date, time, collector), you are ready to make a data sheet for field collection, a database for analysis, and a README or data dictionary.</p>
-</section>
-<section id="making-a-spreadsheet-for-data-entry" class="level2">
-<h2 class="anchored" data-anchor-id="making-a-spreadsheet-for-data-entry">Making a spreadsheet for data entry</h2>
-<p>After deciding on consistent rules for data collection, we need a standardized format to enter the data. This is especially important when numerous people and/or teams are collecting data at different sites or years. Spreadsheets for data entry should be structured similarly to field sheets (described below) so that it is easy to enter data without needing too much thought.</p>
-<p>Some information (e.g., year, person, field site) might be the same for an entire field sheet, so it can either be written once at the top or explicitly added to each observation in the spreadsheet (copy-pasting can help here).</p>
-</section>
-<section id="making-data-field-sheets" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="making-data-field-sheets">Making Data (field) sheets</h2>
-<p><em>When collecting data or samples, you need a well-designed data (field) sheet</em>. The field sheet should closely resemble your spreadsheet but with a few extra considerations for readability and usability. Ask yourself: How easy is this to read? How easy is it to fill out? Each column and row should be clearly defined so it’s obvious what goes where. Consider the physical layout too—does the sheet fit on one piece of paper? Should it be printed in landscape or portrait orientation? Print a draft to see if there’s enough space for writing. A “notes” column can be useful but should remain empty for most entries, used only for unusual or exceptional cases that might need attention during analysis.</p>
-<p>It’s also smart to include metadata at the top—things like the date, location, and who collected the data. Whether this metadata gets its own column or is written at the top depends on practical needs—if one person is responsible for an entire sheet, maybe it belongs at the top, not repeated for every sample (contrary to the example in <a href="#fig-datasheet" class="quarto-xref">Figure&nbsp;<span>2</span></a>).</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-datasheet" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A black-and-white field data sheet template with blank spaces for entering site name, date, time, weather conditions (cloud cover, wind, humidity, temperature), plant descriptions, personnel contact information, and other notes. Below these fields is a structured table with column headers: Species, ID#, Sex, Location Description, Time, GPS, Photos?, Collector, and Notes, with multiple empty rows for data entry.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-datasheet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/intro_to_R/reproducible_science/sample_datasheet.png" class="img-fluid figure-img" style="width:200.0%" alt="A black-and-white field data sheet template with blank spaces for entering site name, date, time, weather conditions (cloud cover, wind, humidity, temperature), plant descriptions, personnel contact information, and other notes. Below these fields is a structured table with column headers: Species, ID#, Sex, Location Description, Time, GPS, Photos?, Collector, and Notes, with multiple empty rows for data entry.">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-datasheet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Example field data sheet designed for recording ecological and biological observations. The form includes sections for site information, environmental conditions, personnel details, and a structured table for recording species, individual IDs, sex, location descriptions, time, GPS coordinates, photos, collector name, and additional notes.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<section id="data-collection-and-data-entry-checklist" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="data-collection-and-data-entry-checklist">Data collection and data entry checklist:</h3>
-<ul>
-<li><em>Be consistent and deliberate:</em> You should refer to a thing in the same thoughtful way throughout a column. Take, for example, gender as a nominal variable. Data validation approaches, above, can help.</li>
-</ul>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p><span style="color: red;">A bad organization would be:</span> male, female, Male, M, Non-binary, Female.<br>
-<span style="color: blue;">A good organization would be:</span> male, female, male, male, non-binary, female.<br>
-<span style="color: blue;">A just as good organization would be:</span> Male, Female, Male, Male, Non-binary, Female.</p>
-</div></div><ul>
-<li><em>Use good names for things:</em> Names should be concise and descriptive. They need not tell the entire story. For example, units are better kept in a data dictionary (<a href="#fig-datadictionary" class="quarto-xref">Figure&nbsp;<span>4</span></a>) than column name. This makes downstream analyses easier. Avoiding spaces and special characters makes column names easier to work with in R.</li>
-</ul>
+<section id="the-audience-and-the-format" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="the-audience-and-the-format">The Audience and the Format</h2>
+<p>Labeling something as a “good plot” or a “bad plot” is overly simplistic. Sure, there are features that make a plot “better” or “worse”, but plots do not have an independent existence. Plots are presented to specific audiences in specific contexts. Considering your audience and the presentation format is key to making a truly effective visualization.</p>
+<section id="the-audience" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="the-audience">The Audience</h3>
 <div class="cell page-columns page-full">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-good_names" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A table comparing bad and good variable naming practices. The top section, labeled &quot;Bad&quot; in red, contains three tables with problematic variable names such as &quot;#Bugs,&quot; &quot;X1,&quot; and &quot;Num_bugs_5_to_2_pm.&quot; These names include special characters, unclear abbreviations, or excessive detail. The bottom section, labeled &quot;Good&quot; in blue, presents two tables with improved names like &quot;numBugs&quot; and &quot;n_Bugs,&quot; which follow consistent, clear, and readable naming conventions.">
+<div id="fig-audience" class="quarto-float quarto-figure quarto-figure-center anchored" alt="An audience of people attentively tuned to the front of the room.">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-good_names-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/intro_to_R/reproducible_science/goodNames4Things.png" class="img-fluid figure-img" alt="A table comparing bad and good variable naming practices. The top section, labeled &quot;Bad&quot; in red, contains three tables with problematic variable names such as &quot;#Bugs,&quot; &quot;X1,&quot; and &quot;Num_bugs_5_to_2_pm.&quot; These names include special characters, unclear abbreviations, or excessive detail. The bottom section, labeled &quot;Good&quot; in blue, presents two tables with improved names like &quot;numBugs&quot; and &quot;n_Bugs,&quot; which follow consistent, clear, and readable naming conventions." width="367">
+<div aria-describedby="fig-audience-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/be/-_EU_DRONES_CONFERENCE-20240410-LR-485_%2853649174575%29.jpg" class="img-fluid figure-img" alt="An audience of people attentively tuned to the front of the room.">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-good_names-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: A comparison of bad and good variable naming conventions in a dataset. The top section (labeled “Bad” in red) displays poor naming choices, including spaces, special characters, unclear abbreviations, and inconsistent formatting. The bottom section (labeled “Good” in blue) demonstrates improved naming conventions with consistent formatting, clear descriptions, and no special characters.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-audience-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: An audience at a sceintific meeting (The 20204 EU Drones Conference to be precise). <a href="https://commons.wikimedia.org/wiki/File:-_EU_DRONES_CONFERENCE-20240410-LR-485_(53649174575).jpg">Photo posted to wikimedia commons</a> and shared under Creative Commons Attribution 2.0 Generic License by the Belgian Presidency of the Council of the EU 2024.
 </figcaption>
 </figure>
 </div>
 </div></div></div>
+<p>We tell stories to an audience, not a wall. Just as you would communicate differently with a friend versus a colleague, your plot should be tailored to its intended audience. When designing a figure, ask yourself: (1) <em>Who is this for?</em> (2) <em>What background knowledge or context do they bring</em> (3) <em>What do they need from this?</em> (4) <em>What do you want from them – Feedback? Funding? Action? Respect etc…?</em></p>
+<p>“Archetypes” of a potential audience for your plot include:</p>
 <ul>
-<li><p><em>Save in a good place</em>. Make a folder for your project. Keep your data sheet (and data dictionary) there. Try to keep all that you need for the project in this folder, but try not to let it get too complex. Some people like to add more order with additional subfolders for larger projects. <br> <br></p></li>
-<li><p><em>Save early and often:</em> You are welcome. <br> <br></p></li>
-<li><p><em>Backup your data, do not touch the original data file and do not perform calculations on it.</em> In addition to scans of your data (if collected on paper) also save your data on both your computer and a locked, un-editable location on the cloud (e.g.&nbsp;google docs, dropbox, etc.). When you want to do something to your data do it in R, and keep the code that did it. This will ensure that you know every step of data manipulation, QC etc. <br> <br></p></li>
-<li><p><em>Do Not Use Font Color or Highlighting as Data.</em> You may be tempted to encode information with bolded text, highlighting, or text color. Don’t do this! Be sure that all information is in a readable column. These extra markings will either be lost or add an extra degree of difficulty to your analysis. Reserve such markings for the presentation of data.<br> <br></p></li>
-<li><p><em>No values should be implied</em> Never leave an entry blank as “shorthand for same as above”. Similarly, never denote the first replicate (or treatment, or whatever) by its order in a spreadsheet, but rather make this explicit with a value in a column. Data order could get jumbled and besides it would take quite a bit of effort to go from implied order to a statistical analysis. It is ok to skip this while taking data in the field, but make sure no values are implied when entering data into a computer.<br> <br></p></li>
-<li><p><em>Data should be tidy (aka rectangular):</em> Ideally data should be entered as tidy (Each variable must have its own column. Each observation must have its own row. Each value must have its own cell). However, you must balance two practice considerations – “What is the best way to collect and enter data?” vs “What is the easiest way to analyze data?” So consider the future computational pain of tidying untidy data when ultimately deciding on the best way to format your spreadsheet (above). <br> <br></p></li>
-<li><p><em>Use data validation approaches:</em> When making a spreadsheet, think about future-you (or your collaborator) who will analyze the data. Typos and inconsistencies in values (e.g., “Male,” “male,” and “M” for “male”) create unnecessary headaches. Accidentally inputting the wrong measure (e.g., putting height where weight should be, or reporting values in kg rather than lb) sucks. <br> Both Excel and Google Sheets (and likely most spreadsheet programs) have a simple solution: use the “Data validation” feature in the “Data” drop-down menu to limit the potential categorical values or set a range for continuous values that users can enter into your spreadsheet. This helps ensure the data are correct.</p></li>
+<li><p>🫵 <em>You and Your Team:</em> You are the first person to look at your plot. You want to know that you are not fooling yourself. You are deeply familiar with the data, methods and many peculiarities of the study.</p>
+<ul>
+<li><em>For this audience:</em> You may want to color points by technical covariates (e.g.&nbsp;when the reading was taken, who took it? which machine was used? etc) and use tools like <a href="https://plotly.com/ggplot2/">plotly</a> to understand outliers so that you don’t waste weeks digging into the wrong story.</li>
+</ul></li>
+<li><p>🧠 <em>The Expert Critical Reader:</em> This is the scientific audience for academic articles. Often a peer, a reviewer, or even a competitor. The expert wants precision, detail, honesty and clarity. The expert wants to quickly know what you did and what it means, but may be quite critical of your results so would like to be able to evaluate the evidence for themselves.</p>
+<ul>
+<li><em>For this audience:</em> You will likely want to guide their interpretation but while showing all the data and empowering them to verify your conclusions.</li>
+</ul></li>
+<li><p>🤷 <em>The Curious Novice:</em> Not everyone encountering your work will be an expert. You might communicate your work to students just beginning to master the subject, or biologists from a related subdiscipline. This audience too, would like to be critical, but often needs additional context, background, and structure to make the most of a plot.</p>
+<ul>
+<li><em>For this audience:</em> Your main job here is as a teacher. You should explain your plots very clearly, and their points should be obvious.</li>
+</ul></li>
+<li><p>📣 <em>The Public or Non-Expert:</em> You might present your work to a broad audience (e.g.&nbsp;TEDx style), to a lawyer, a jury, a politician etc. These people are likely interested in your work (they’re here aren’t they?), and do want to be able to evaluate its legitimacy, but may not have statistical or biological expertise.</p>
+<ul>
+<li><em>For this audience:</em> Your main job here is as a convincer. As the expert, you aim to help this audience see things your way. Make your plots clear and easily digestible. You should largely refer to published studies for legitimacy, but be prepared to handle questions from engaged participants.</li>
+</ul></li>
 </ul>
 </section>
-<section id="making-a-readme-andor-data-dictionary" class="level3">
-<h3 class="anchored" data-anchor-id="making-a-readme-andor-data-dictionary">Making a README and/or “data dictionary”</h3>
-<p>A data dictionary is a separate file (or sheet within a file, if you prefer) that explains all the variables in your dataset. It should include the exact variable names from the data file, a version of the variable name that you might use in visualizations, and a longer explanation of what each variable means. Additionally, it is important to list the measurement units and the expected minimum and maximum values for each variable, so anyone using the data knows what to expect.</p>
-<p>Alongside your data dictionary, you should also create a README file that provides an overview of the project and dataset, explaining the purpose of the study and how the data were collected. The README should include a description of each row and column in the dataset. While there may be some overlap with the data dictionary, this is fine. The data dictionary can serve as a quick reference for plotting and performing quality control, whereas the README provides a higher-level summary, designed for those who may not have been directly involved in the project but are seriously interested in the data.</p>
+<section id="tailoring-presentations-to-their-format" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="tailoring-presentations-to-their-format">Tailoring Presentations to Their Format</h3>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-datadictionary" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A screenshot of a data dictionary table with four columns labeled &quot;name,&quot; &quot;plot_name,&quot; &quot;group,&quot; and &quot;description.&quot; The table defines variables used in a dataset, such as &quot;mouse&quot; (animal identifier), &quot;sex&quot; (Male or Female), &quot;sac_date&quot; (date of sacrifice), and other clinical or demographic variables like coat color and days on diet. The descriptions provide explanations for each variable's meaning and classification.">
+<div id="fig-mandm" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A scanned image of a typed list under the heading 'Munchies'. The list includes potato chips, nuts, and pretzels. A red arrow points to the line that reads: 'M &amp; M's (WARNING: ABSOLUTELY NO BROWN ONES)'.">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-datadictionary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="http://www.tandfonline.com/cms/asset/a0ee9bd4-ec62-4aa0-85cd-ef3514ba63bd/utas_a_1375989_f0009_b.jpg" class="img-fluid figure-img" alt="A screenshot of a data dictionary table with four columns labeled &quot;name,&quot; &quot;plot_name,&quot; &quot;group,&quot; and &quot;description.&quot; The table defines variables used in a dataset, such as &quot;mouse&quot; (animal identifier), &quot;sex&quot; (Male or Female), &quot;sac_date&quot; (date of sacrifice), and other clinical or demographic variables like coat color and days on diet. The descriptions provide explanations for each variable's meaning and classification.">
+<div aria-describedby="fig-mandm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://www.snopes.com/uploads/2014/12/vanhalenrider.jpg" class="img-fluid figure-img" alt="A scanned image of a typed list under the heading 'Munchies'. The list includes potato chips, nuts, and pretzels. A red arrow points to the line that reads: 'M &amp; M's (WARNING: ABSOLUTELY NO BROWN ONES)'.">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-datadictionary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Example data dictionary from <span class="citation" data-cites="broman2018">(<a href="../../references.html#ref-broman2018" role="doc-biblioref">Broman &amp; Woo, 2018</a>)</span>. This table provides structured metadata for a dataset, including variable names, descriptions, and group classifications. It ensures clarity in data documentation by defining each column’s purpose and expected values. See the <a href="https://ybrandvain.quarto.pub/applied-biostatistics/book_sections/clarkia_and_its_data/clarkia_and_its_data.html">Clarkia RIL data dictionary here</a> for another example.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mandm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: A snippet from Van Halen’s 1982 tour rider detailing the ‘Munchies’ requirements, accessed from <a href="https://www.snopes.com/fact-check/brown-out/">snopes.com</a>.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
+<blockquote class="blockquote">
+<p>In one notable incident, officials at what is now Colorado State University Pueblo refused to honor the request, leading the band to go on a rampage that involved throwing food all over a dining area as well as “unmentionable” acts in a nearby restroom. However, even more damage was caused to the basketball floor in the gymnasium due to the weight of the stage brought in.</p>
+<footer>
+— <a href="https://en.wikipedia.org/wiki/Van_Halen#Contract_riders">Wikipedia</a>
+</footer>
+</blockquote>
+</div></div><p>Science is communicated in many formats. Here’s how to tailor your plots to different mediums:</p>
+<hr>
+<ul>
+<li><strong>📘 Books / Papers:</strong> These plots are static and need to be self-contained. Readers should be able to understand the plot and its main point without relying on the accompanying text. You don’t know how people will read your paper.</li>
+</ul>
+<div class="protip">
+<p><strong>Plots as “Brown M&amp;Ms”</strong><br>
+The American hard rock band Van Halen had a strange issue in their “rider” - they insisted on having a bowl of M&amp;Ms but no brown M&amp;Ms <a href="#fig-mandm" class="quarto-xref">Figure&nbsp;<span>2</span></a>. While they did have a very rock bad diva response to this being broke (see the quote o the right), this request was more than a rock-diva thing. As <a href="https://www.youtube.com/watch?v=_IxqdAgNJck">explained by vocalist David Lee Roth</a> this request was a way to ensure that the venue had closely read the requirements for the show to ensure safety (as aluded to at the end of the Wikipedia quote).</p>
+<p>In the same way, scientists use visual cues to make rapid judgments about the quality and trustworthiness of research. A sloppy, unpolished plot acts like a brown M&amp;M in the candy bowl; it’s a red flag that signals a potential lack of care that could extend to the data analysis itself (evenif the analysis is fine). A polished, professional plot does the opposite: it signals that the author is careful and trustworthy. It tells the reader they are in good hands.</p>
+</div>
+<hr>
+<ul>
+<li><p><strong>🎤 Public Talks:</strong> In presentations, you control the flow of information. A successful plot in a scientific talk:</p>
+<ul>
+<li>Builds up figures slide by slide, to encourage audience understanding and engagement.</li>
+<li>Uses large text, big points, and wide lines so that it is legible from the back of the room.</li>
+<li>Favors results and interpretation over details.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<iframe src="https://ybrandvain.github.io/flipbooks/talk_plot_flipbook.html" width="100%" height="400px" data-external="1">
+</iframe>
+</div>
+<hr>
+<ul>
+<li><p><strong>🖼️ Posters:</strong>. Because your poster will be presented alongside tens or hundreds of others in a big room (<a href="#fig-postersesh" class="quarto-xref">Figure&nbsp;<span>3</span></a> A), your poster and its figures should be designed to draw viewers in and encourage them to engage. Posters are arguably the most difficult format in science communication, so here are some tips:</p>
+<ul>
+<li><em>Make it stand out:</em> You’re often in a room with tens to hundreds of posters, and people are circulating casually, often with a coffee or drink in hand. Catch their eye. <strong>There is a time and place for charjunk and that time and place is a poster session.</strong><br>
+</li>
+<li><em>Use as little text as possible:</em> Once you’ve removed unnecessary text, go back and remove even more.</li>
+<li><em>Make all graphical elements big:</em> Text, points, labels—all of it.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-postersesh" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Side-by-side panels. Panel A shows a crowded scientific conference poster session with many people browsing posters in a packed hall. Panel B is a scatterplot of Iris flower data with Sepal Length on the x-axis and Petal Length on the y-axis. Three species are plotted with large colored points and distinct shapes: red circles for I. setosa, blue triangles for I. versicolor, and green squares for I. virginica. Each species is directly labeled in matching color and accompanied by a small photograph of the corresponding flower.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-postersesh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../figs/summarizing_data/data_viz/poster_image.png" class="img-fluid figure-img" alt="Side-by-side panels. Panel A shows a crowded scientific conference poster session with many people browsing posters in a packed hall. Panel B is a scatterplot of Iris flower data with Sepal Length on the x-axis and Petal Length on the y-axis. Three species are plotted with large colored points and distinct shapes: red circles for I. setosa, blue triangles for I. versicolor, and green squares for I. virginica. Each species is directly labeled in matching color and accompanied by a small photograph of the corresponding flower." width="914">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-postersesh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: (A) A typical scientific poster session—crowded, fast-moving, and visually competitive. (B) A redesigned scatterplot of Iris data intended for a poster, using large points, direct species labels, and photographs of the flowers to make the plot visually engaging and immediately interpretable.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<ul>
+<li><strong>💻 Digital Formats:</strong> Online formats allow for interactive elements, GIFs, and animations. These can help readers explore your data themselves, making the story more intuitive and engaging, but don’t overdo it. You should focus on helping readers engage with the plot to absorb the key results, not distract them from those results. As you can tell from my efforts in this book, this is my favorite context.</li>
+</ul>
+<div class="cell">
+<div id="fig-highcharter" class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-highcharter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="highchart html-widget html-fill-item" id="htmlwidget-542eb2773b651077e71e" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-542eb2773b651077e71e">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":null},"yAxis":{"title":{"text":"Petal Length","style":{"fontSize":"18px","fontWeight":"bold"}},"type":"linear","labels":{"style":{"fontSize":"14px"}}},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":true},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"name":"setosa","data":[{"Sepal.Length":5.1,"Sepal.Width":3.5,"Petal.Length":1.4,"Petal.Width":0.2,"Species":"setosa","x":5.1,"y":1.4},{"Sepal.Length":4.9,"Sepal.Width":3,"Petal.Length":1.4,"Petal.Width":0.2,"Species":"setosa","x":4.9,"y":1.4},{"Sepal.Length":4.7,"Sepal.Width":3.2,"Petal.Length":1.3,"Petal.Width":0.2,"Species":"setosa","x":4.7,"y":1.3},{"Sepal.Length":4.6,"Sepal.Width":3.1,"Petal.Length":1.5,"Petal.Width":0.2,"Species":"setosa","x":4.6,"y":1.5},{"Sepal.Length":5,"Sepal.Width":3.6,"Petal.Length":1.4,"Petal.Width":0.2,"Species":"setosa","x":5,"y":1.4},{"Sepal.Length":5.4,"Sepal.Width":3.9,"Petal.Length":1.7,"Petal.Width":0.4,"Species":"setosa","x":5.4,"y":1.7},{"Sepal.Length":4.6,"Sepal.Width":3.4,"Petal.Length":1.4,"Petal.Width":0.3,"Species":"setosa","x":4.6,"y":1.4},{"Sepal.Length":5,"Sepal.Width":3.4,"Petal.Length":1.5,"Petal.Width":0.2,"Species":"setosa","x":5,"y":1.5},{"Sepal.Length":4.4,"Sepal.Width":2.9,"Petal.Length":1.4,"Petal.Width":0.2,"Species":"setosa","x":4.4,"y":1.4},{"Sepal.Length":4.9,"Sepal.Width":3.1,"Petal.Length":1.5,"Petal.Width":0.1,"Species":"setosa","x":4.9,"y":1.5},{"Sepal.Length":5.4,"Sepal.Width":3.7,"Petal.Length":1.5,"Petal.Width":0.2,"Species":"setosa","x":5.4,"y":1.5},{"Sepal.Length":4.8,"Sepal.Width":3.4,"Petal.Length":1.6,"Petal.Width":0.2,"Species":"setosa","x":4.8,"y":1.6},{"Sepal.Length":4.8,"Sepal.Width":3,"Petal.Length":1.4,"Petal.Width":0.1,"Species":"setosa","x":4.8,"y":1.4},{"Sepal.Length":4.3,"Sepal.Width":3,"Petal.Length":1.1,"Petal.Width":0.1,"Species":"setosa","x":4.3,"y":1.1},{"Sepal.Length":5.8,"Sepal.Width":4,"Petal.Length":1.2,"Petal.Width":0.2,"Species":"setosa","x":5.8,"y":1.2},{"Sepal.Length":5.7,"Sepal.Width":4.4,"Petal.Length":1.5,"Petal.Width":0.4,"Species":"setosa","x":5.7,"y":1.5},{"Sepal.Length":5.4,"Sepal.Width":3.9,"Petal.Length":1.3,"Petal.Width":0.4,"Species":"setosa","x":5.4,"y":1.3},{"Sepal.Length":5.1,"Sepal.Width":3.5,"Petal.Length":1.4,"Petal.Width":0.3,"Species":"setosa","x":5.1,"y":1.4},{"Sepal.Length":5.7,"Sepal.Width":3.8,"Petal.Length":1.7,"Petal.Width":0.3,"Species":"setosa","x":5.7,"y":1.7},{"Sepal.Length":5.1,"Sepal.Width":3.8,"Petal.Length":1.5,"Petal.Width":0.3,"Species":"setosa","x":5.1,"y":1.5},{"Sepal.Length":5.4,"Sepal.Width":3.4,"Petal.Length":1.7,"Petal.Width":0.2,"Species":"setosa","x":5.4,"y":1.7},{"Sepal.Length":5.1,"Sepal.Width":3.7,"Petal.Length":1.5,"Petal.Width":0.4,"Species":"setosa","x":5.1,"y":1.5},{"Sepal.Length":4.6,"Sepal.Width":3.6,"Petal.Length":1,"Petal.Width":0.2,"Species":"setosa","x":4.6,"y":1},{"Sepal.Length":5.1,"Sepal.Width":3.3,"Petal.Length":1.7,"Petal.Width":0.5,"Species":"setosa","x":5.1,"y":1.7},{"Sepal.Length":4.8,"Sepal.Width":3.4,"Petal.Length":1.9,"Petal.Width":0.2,"Species":"setosa","x":4.8,"y":1.9},{"Sepal.Length":5,"Sepal.Width":3,"Petal.Length":1.6,"Petal.Width":0.2,"Species":"setosa","x":5,"y":1.6},{"Sepal.Length":5,"Sepal.Width":3.4,"Petal.Length":1.6,"Petal.Width":0.4,"Species":"setosa","x":5,"y":1.6},{"Sepal.Length":5.2,"Sepal.Width":3.5,"Petal.Length":1.5,"Petal.Width":0.2,"Species":"setosa","x":5.2,"y":1.5},{"Sepal.Length":5.2,"Sepal.Width":3.4,"Petal.Length":1.4,"Petal.Width":0.2,"Species":"setosa","x":5.2,"y":1.4},{"Sepal.Length":4.7,"Sepal.Width":3.2,"Petal.Length":1.6,"Petal.Width":0.2,"Species":"setosa","x":4.7,"y":1.6},{"Sepal.Length":4.8,"Sepal.Width":3.1,"Petal.Length":1.6,"Petal.Width":0.2,"Species":"setosa","x":4.8,"y":1.6},{"Sepal.Length":5.4,"Sepal.Width":3.4,"Petal.Length":1.5,"Petal.Width":0.4,"Species":"setosa","x":5.4,"y":1.5},{"Sepal.Length":5.2,"Sepal.Width":4.1,"Petal.Length":1.5,"Petal.Width":0.1,"Species":"setosa","x":5.2,"y":1.5},{"Sepal.Length":5.5,"Sepal.Width":4.2,"Petal.Length":1.4,"Petal.Width":0.2,"Species":"setosa","x":5.5,"y":1.4},{"Sepal.Length":4.9,"Sepal.Width":3.1,"Petal.Length":1.5,"Petal.Width":0.2,"Species":"setosa","x":4.9,"y":1.5},{"Sepal.Length":5,"Sepal.Width":3.2,"Petal.Length":1.2,"Petal.Width":0.2,"Species":"setosa","x":5,"y":1.2},{"Sepal.Length":5.5,"Sepal.Width":3.5,"Petal.Length":1.3,"Petal.Width":0.2,"Species":"setosa","x":5.5,"y":1.3},{"Sepal.Length":4.9,"Sepal.Width":3.6,"Petal.Length":1.4,"Petal.Width":0.1,"Species":"setosa","x":4.9,"y":1.4},{"Sepal.Length":4.4,"Sepal.Width":3,"Petal.Length":1.3,"Petal.Width":0.2,"Species":"setosa","x":4.4,"y":1.3},{"Sepal.Length":5.1,"Sepal.Width":3.4,"Petal.Length":1.5,"Petal.Width":0.2,"Species":"setosa","x":5.1,"y":1.5},{"Sepal.Length":5,"Sepal.Width":3.5,"Petal.Length":1.3,"Petal.Width":0.3,"Species":"setosa","x":5,"y":1.3},{"Sepal.Length":4.5,"Sepal.Width":2.3,"Petal.Length":1.3,"Petal.Width":0.3,"Species":"setosa","x":4.5,"y":1.3},{"Sepal.Length":4.4,"Sepal.Width":3.2,"Petal.Length":1.3,"Petal.Width":0.2,"Species":"setosa","x":4.4,"y":1.3},{"Sepal.Length":5,"Sepal.Width":3.5,"Petal.Length":1.6,"Petal.Width":0.6,"Species":"setosa","x":5,"y":1.6},{"Sepal.Length":5.1,"Sepal.Width":3.8,"Petal.Length":1.9,"Petal.Width":0.4,"Species":"setosa","x":5.1,"y":1.9},{"Sepal.Length":4.8,"Sepal.Width":3,"Petal.Length":1.4,"Petal.Width":0.3,"Species":"setosa","x":4.8,"y":1.4},{"Sepal.Length":5.1,"Sepal.Width":3.8,"Petal.Length":1.6,"Petal.Width":0.2,"Species":"setosa","x":5.1,"y":1.6},{"Sepal.Length":4.6,"Sepal.Width":3.2,"Petal.Length":1.4,"Petal.Width":0.2,"Species":"setosa","x":4.6,"y":1.4},{"Sepal.Length":5.3,"Sepal.Width":3.7,"Petal.Length":1.5,"Petal.Width":0.2,"Species":"setosa","x":5.3,"y":1.5},{"Sepal.Length":5,"Sepal.Width":3.3,"Petal.Length":1.4,"Petal.Width":0.2,"Species":"setosa","x":5,"y":1.4}],"type":"scatter"},{"name":"versicolor","data":[{"Sepal.Length":7,"Sepal.Width":3.2,"Petal.Length":4.7,"Petal.Width":1.4,"Species":"versicolor","x":7,"y":4.7},{"Sepal.Length":6.4,"Sepal.Width":3.2,"Petal.Length":4.5,"Petal.Width":1.5,"Species":"versicolor","x":6.4,"y":4.5},{"Sepal.Length":6.9,"Sepal.Width":3.1,"Petal.Length":4.9,"Petal.Width":1.5,"Species":"versicolor","x":6.9,"y":4.9},{"Sepal.Length":5.5,"Sepal.Width":2.3,"Petal.Length":4,"Petal.Width":1.3,"Species":"versicolor","x":5.5,"y":4},{"Sepal.Length":6.5,"Sepal.Width":2.8,"Petal.Length":4.6,"Petal.Width":1.5,"Species":"versicolor","x":6.5,"y":4.6},{"Sepal.Length":5.7,"Sepal.Width":2.8,"Petal.Length":4.5,"Petal.Width":1.3,"Species":"versicolor","x":5.7,"y":4.5},{"Sepal.Length":6.3,"Sepal.Width":3.3,"Petal.Length":4.7,"Petal.Width":1.6,"Species":"versicolor","x":6.3,"y":4.7},{"Sepal.Length":4.9,"Sepal.Width":2.4,"Petal.Length":3.3,"Petal.Width":1,"Species":"versicolor","x":4.9,"y":3.3},{"Sepal.Length":6.6,"Sepal.Width":2.9,"Petal.Length":4.6,"Petal.Width":1.3,"Species":"versicolor","x":6.6,"y":4.6},{"Sepal.Length":5.2,"Sepal.Width":2.7,"Petal.Length":3.9,"Petal.Width":1.4,"Species":"versicolor","x":5.2,"y":3.9},{"Sepal.Length":5,"Sepal.Width":2,"Petal.Length":3.5,"Petal.Width":1,"Species":"versicolor","x":5,"y":3.5},{"Sepal.Length":5.9,"Sepal.Width":3,"Petal.Length":4.2,"Petal.Width":1.5,"Species":"versicolor","x":5.9,"y":4.2},{"Sepal.Length":6,"Sepal.Width":2.2,"Petal.Length":4,"Petal.Width":1,"Species":"versicolor","x":6,"y":4},{"Sepal.Length":6.1,"Sepal.Width":2.9,"Petal.Length":4.7,"Petal.Width":1.4,"Species":"versicolor","x":6.1,"y":4.7},{"Sepal.Length":5.6,"Sepal.Width":2.9,"Petal.Length":3.6,"Petal.Width":1.3,"Species":"versicolor","x":5.6,"y":3.6},{"Sepal.Length":6.7,"Sepal.Width":3.1,"Petal.Length":4.4,"Petal.Width":1.4,"Species":"versicolor","x":6.7,"y":4.4},{"Sepal.Length":5.6,"Sepal.Width":3,"Petal.Length":4.5,"Petal.Width":1.5,"Species":"versicolor","x":5.6,"y":4.5},{"Sepal.Length":5.8,"Sepal.Width":2.7,"Petal.Length":4.1,"Petal.Width":1,"Species":"versicolor","x":5.8,"y":4.1},{"Sepal.Length":6.2,"Sepal.Width":2.2,"Petal.Length":4.5,"Petal.Width":1.5,"Species":"versicolor","x":6.2,"y":4.5},{"Sepal.Length":5.6,"Sepal.Width":2.5,"Petal.Length":3.9,"Petal.Width":1.1,"Species":"versicolor","x":5.6,"y":3.9},{"Sepal.Length":5.9,"Sepal.Width":3.2,"Petal.Length":4.8,"Petal.Width":1.8,"Species":"versicolor","x":5.9,"y":4.8},{"Sepal.Length":6.1,"Sepal.Width":2.8,"Petal.Length":4,"Petal.Width":1.3,"Species":"versicolor","x":6.1,"y":4},{"Sepal.Length":6.3,"Sepal.Width":2.5,"Petal.Length":4.9,"Petal.Width":1.5,"Species":"versicolor","x":6.3,"y":4.9},{"Sepal.Length":6.1,"Sepal.Width":2.8,"Petal.Length":4.7,"Petal.Width":1.2,"Species":"versicolor","x":6.1,"y":4.7},{"Sepal.Length":6.4,"Sepal.Width":2.9,"Petal.Length":4.3,"Petal.Width":1.3,"Species":"versicolor","x":6.4,"y":4.3},{"Sepal.Length":6.6,"Sepal.Width":3,"Petal.Length":4.4,"Petal.Width":1.4,"Species":"versicolor","x":6.6,"y":4.4},{"Sepal.Length":6.8,"Sepal.Width":2.8,"Petal.Length":4.8,"Petal.Width":1.4,"Species":"versicolor","x":6.8,"y":4.8},{"Sepal.Length":6.7,"Sepal.Width":3,"Petal.Length":5,"Petal.Width":1.7,"Species":"versicolor","x":6.7,"y":5},{"Sepal.Length":6,"Sepal.Width":2.9,"Petal.Length":4.5,"Petal.Width":1.5,"Species":"versicolor","x":6,"y":4.5},{"Sepal.Length":5.7,"Sepal.Width":2.6,"Petal.Length":3.5,"Petal.Width":1,"Species":"versicolor","x":5.7,"y":3.5},{"Sepal.Length":5.5,"Sepal.Width":2.4,"Petal.Length":3.8,"Petal.Width":1.1,"Species":"versicolor","x":5.5,"y":3.8},{"Sepal.Length":5.5,"Sepal.Width":2.4,"Petal.Length":3.7,"Petal.Width":1,"Species":"versicolor","x":5.5,"y":3.7},{"Sepal.Length":5.8,"Sepal.Width":2.7,"Petal.Length":3.9,"Petal.Width":1.2,"Species":"versicolor","x":5.8,"y":3.9},{"Sepal.Length":6,"Sepal.Width":2.7,"Petal.Length":5.1,"Petal.Width":1.6,"Species":"versicolor","x":6,"y":5.1},{"Sepal.Length":5.4,"Sepal.Width":3,"Petal.Length":4.5,"Petal.Width":1.5,"Species":"versicolor","x":5.4,"y":4.5},{"Sepal.Length":6,"Sepal.Width":3.4,"Petal.Length":4.5,"Petal.Width":1.6,"Species":"versicolor","x":6,"y":4.5},{"Sepal.Length":6.7,"Sepal.Width":3.1,"Petal.Length":4.7,"Petal.Width":1.5,"Species":"versicolor","x":6.7,"y":4.7},{"Sepal.Length":6.3,"Sepal.Width":2.3,"Petal.Length":4.4,"Petal.Width":1.3,"Species":"versicolor","x":6.3,"y":4.4},{"Sepal.Length":5.6,"Sepal.Width":3,"Petal.Length":4.1,"Petal.Width":1.3,"Species":"versicolor","x":5.6,"y":4.1},{"Sepal.Length":5.5,"Sepal.Width":2.5,"Petal.Length":4,"Petal.Width":1.3,"Species":"versicolor","x":5.5,"y":4},{"Sepal.Length":5.5,"Sepal.Width":2.6,"Petal.Length":4.4,"Petal.Width":1.2,"Species":"versicolor","x":5.5,"y":4.4},{"Sepal.Length":6.1,"Sepal.Width":3,"Petal.Length":4.6,"Petal.Width":1.4,"Species":"versicolor","x":6.1,"y":4.6},{"Sepal.Length":5.8,"Sepal.Width":2.6,"Petal.Length":4,"Petal.Width":1.2,"Species":"versicolor","x":5.8,"y":4},{"Sepal.Length":5,"Sepal.Width":2.3,"Petal.Length":3.3,"Petal.Width":1,"Species":"versicolor","x":5,"y":3.3},{"Sepal.Length":5.6,"Sepal.Width":2.7,"Petal.Length":4.2,"Petal.Width":1.3,"Species":"versicolor","x":5.6,"y":4.2},{"Sepal.Length":5.7,"Sepal.Width":3,"Petal.Length":4.2,"Petal.Width":1.2,"Species":"versicolor","x":5.7,"y":4.2},{"Sepal.Length":5.7,"Sepal.Width":2.9,"Petal.Length":4.2,"Petal.Width":1.3,"Species":"versicolor","x":5.7,"y":4.2},{"Sepal.Length":6.2,"Sepal.Width":2.9,"Petal.Length":4.3,"Petal.Width":1.3,"Species":"versicolor","x":6.2,"y":4.3},{"Sepal.Length":5.1,"Sepal.Width":2.5,"Petal.Length":3,"Petal.Width":1.1,"Species":"versicolor","x":5.1,"y":3},{"Sepal.Length":5.7,"Sepal.Width":2.8,"Petal.Length":4.1,"Petal.Width":1.3,"Species":"versicolor","x":5.7,"y":4.1}],"type":"scatter"},{"name":"virginica","data":[{"Sepal.Length":6.3,"Sepal.Width":3.3,"Petal.Length":6,"Petal.Width":2.5,"Species":"virginica","x":6.3,"y":6},{"Sepal.Length":5.8,"Sepal.Width":2.7,"Petal.Length":5.1,"Petal.Width":1.9,"Species":"virginica","x":5.8,"y":5.1},{"Sepal.Length":7.1,"Sepal.Width":3,"Petal.Length":5.9,"Petal.Width":2.1,"Species":"virginica","x":7.1,"y":5.9},{"Sepal.Length":6.3,"Sepal.Width":2.9,"Petal.Length":5.6,"Petal.Width":1.8,"Species":"virginica","x":6.3,"y":5.6},{"Sepal.Length":6.5,"Sepal.Width":3,"Petal.Length":5.8,"Petal.Width":2.2,"Species":"virginica","x":6.5,"y":5.8},{"Sepal.Length":7.6,"Sepal.Width":3,"Petal.Length":6.6,"Petal.Width":2.1,"Species":"virginica","x":7.6,"y":6.6},{"Sepal.Length":4.9,"Sepal.Width":2.5,"Petal.Length":4.5,"Petal.Width":1.7,"Species":"virginica","x":4.9,"y":4.5},{"Sepal.Length":7.3,"Sepal.Width":2.9,"Petal.Length":6.3,"Petal.Width":1.8,"Species":"virginica","x":7.3,"y":6.3},{"Sepal.Length":6.7,"Sepal.Width":2.5,"Petal.Length":5.8,"Petal.Width":1.8,"Species":"virginica","x":6.7,"y":5.8},{"Sepal.Length":7.2,"Sepal.Width":3.6,"Petal.Length":6.1,"Petal.Width":2.5,"Species":"virginica","x":7.2,"y":6.1},{"Sepal.Length":6.5,"Sepal.Width":3.2,"Petal.Length":5.1,"Petal.Width":2,"Species":"virginica","x":6.5,"y":5.1},{"Sepal.Length":6.4,"Sepal.Width":2.7,"Petal.Length":5.3,"Petal.Width":1.9,"Species":"virginica","x":6.4,"y":5.3},{"Sepal.Length":6.8,"Sepal.Width":3,"Petal.Length":5.5,"Petal.Width":2.1,"Species":"virginica","x":6.8,"y":5.5},{"Sepal.Length":5.7,"Sepal.Width":2.5,"Petal.Length":5,"Petal.Width":2,"Species":"virginica","x":5.7,"y":5},{"Sepal.Length":5.8,"Sepal.Width":2.8,"Petal.Length":5.1,"Petal.Width":2.4,"Species":"virginica","x":5.8,"y":5.1},{"Sepal.Length":6.4,"Sepal.Width":3.2,"Petal.Length":5.3,"Petal.Width":2.3,"Species":"virginica","x":6.4,"y":5.3},{"Sepal.Length":6.5,"Sepal.Width":3,"Petal.Length":5.5,"Petal.Width":1.8,"Species":"virginica","x":6.5,"y":5.5},{"Sepal.Length":7.7,"Sepal.Width":3.8,"Petal.Length":6.7,"Petal.Width":2.2,"Species":"virginica","x":7.7,"y":6.7},{"Sepal.Length":7.7,"Sepal.Width":2.6,"Petal.Length":6.9,"Petal.Width":2.3,"Species":"virginica","x":7.7,"y":6.9},{"Sepal.Length":6,"Sepal.Width":2.2,"Petal.Length":5,"Petal.Width":1.5,"Species":"virginica","x":6,"y":5},{"Sepal.Length":6.9,"Sepal.Width":3.2,"Petal.Length":5.7,"Petal.Width":2.3,"Species":"virginica","x":6.9,"y":5.7},{"Sepal.Length":5.6,"Sepal.Width":2.8,"Petal.Length":4.9,"Petal.Width":2,"Species":"virginica","x":5.6,"y":4.9},{"Sepal.Length":7.7,"Sepal.Width":2.8,"Petal.Length":6.7,"Petal.Width":2,"Species":"virginica","x":7.7,"y":6.7},{"Sepal.Length":6.3,"Sepal.Width":2.7,"Petal.Length":4.9,"Petal.Width":1.8,"Species":"virginica","x":6.3,"y":4.9},{"Sepal.Length":6.7,"Sepal.Width":3.3,"Petal.Length":5.7,"Petal.Width":2.1,"Species":"virginica","x":6.7,"y":5.7},{"Sepal.Length":7.2,"Sepal.Width":3.2,"Petal.Length":6,"Petal.Width":1.8,"Species":"virginica","x":7.2,"y":6},{"Sepal.Length":6.2,"Sepal.Width":2.8,"Petal.Length":4.8,"Petal.Width":1.8,"Species":"virginica","x":6.2,"y":4.8},{"Sepal.Length":6.1,"Sepal.Width":3,"Petal.Length":4.9,"Petal.Width":1.8,"Species":"virginica","x":6.1,"y":4.9},{"Sepal.Length":6.4,"Sepal.Width":2.8,"Petal.Length":5.6,"Petal.Width":2.1,"Species":"virginica","x":6.4,"y":5.6},{"Sepal.Length":7.2,"Sepal.Width":3,"Petal.Length":5.8,"Petal.Width":1.6,"Species":"virginica","x":7.2,"y":5.8},{"Sepal.Length":7.4,"Sepal.Width":2.8,"Petal.Length":6.1,"Petal.Width":1.9,"Species":"virginica","x":7.4,"y":6.1},{"Sepal.Length":7.9,"Sepal.Width":3.8,"Petal.Length":6.4,"Petal.Width":2,"Species":"virginica","x":7.9,"y":6.4},{"Sepal.Length":6.4,"Sepal.Width":2.8,"Petal.Length":5.6,"Petal.Width":2.2,"Species":"virginica","x":6.4,"y":5.6},{"Sepal.Length":6.3,"Sepal.Width":2.8,"Petal.Length":5.1,"Petal.Width":1.5,"Species":"virginica","x":6.3,"y":5.1},{"Sepal.Length":6.1,"Sepal.Width":2.6,"Petal.Length":5.6,"Petal.Width":1.4,"Species":"virginica","x":6.1,"y":5.6},{"Sepal.Length":7.7,"Sepal.Width":3,"Petal.Length":6.1,"Petal.Width":2.3,"Species":"virginica","x":7.7,"y":6.1},{"Sepal.Length":6.3,"Sepal.Width":3.4,"Petal.Length":5.6,"Petal.Width":2.4,"Species":"virginica","x":6.3,"y":5.6},{"Sepal.Length":6.4,"Sepal.Width":3.1,"Petal.Length":5.5,"Petal.Width":1.8,"Species":"virginica","x":6.4,"y":5.5},{"Sepal.Length":6,"Sepal.Width":3,"Petal.Length":4.8,"Petal.Width":1.8,"Species":"virginica","x":6,"y":4.8},{"Sepal.Length":6.9,"Sepal.Width":3.1,"Petal.Length":5.4,"Petal.Width":2.1,"Species":"virginica","x":6.9,"y":5.4},{"Sepal.Length":6.7,"Sepal.Width":3.1,"Petal.Length":5.6,"Petal.Width":2.4,"Species":"virginica","x":6.7,"y":5.6},{"Sepal.Length":6.9,"Sepal.Width":3.1,"Petal.Length":5.1,"Petal.Width":2.3,"Species":"virginica","x":6.9,"y":5.1},{"Sepal.Length":5.8,"Sepal.Width":2.7,"Petal.Length":5.1,"Petal.Width":1.9,"Species":"virginica","x":5.8,"y":5.1},{"Sepal.Length":6.8,"Sepal.Width":3.2,"Petal.Length":5.9,"Petal.Width":2.3,"Species":"virginica","x":6.8,"y":5.9},{"Sepal.Length":6.7,"Sepal.Width":3.3,"Petal.Length":5.7,"Petal.Width":2.5,"Species":"virginica","x":6.7,"y":5.7},{"Sepal.Length":6.7,"Sepal.Width":3,"Petal.Length":5.2,"Petal.Width":2.3,"Species":"virginica","x":6.7,"y":5.2},{"Sepal.Length":6.3,"Sepal.Width":2.5,"Petal.Length":5,"Petal.Width":1.9,"Species":"virginica","x":6.3,"y":5},{"Sepal.Length":6.5,"Sepal.Width":3,"Petal.Length":5.2,"Petal.Width":2,"Species":"virginica","x":6.5,"y":5.2},{"Sepal.Length":6.2,"Sepal.Width":3.4,"Petal.Length":5.4,"Petal.Width":2.3,"Species":"virginica","x":6.2,"y":5.4},{"Sepal.Length":5.9,"Sepal.Width":3,"Petal.Length":5.1,"Petal.Width":1.8,"Species":"virginica","x":5.9,"y":5.1}],"type":"scatter"},{"data":[[4.3,1.369068033244637],[4.330612244897959,1.37309757449841],[4.361224489795918,1.377127115752184],[4.391836734693877,1.381156657005957],[4.422448979591836,1.385186198259731],[4.453061224489796,1.389215739513505],[4.483673469387755,1.393245280767279],[4.514285714285714,1.397274822021052],[4.544897959183674,1.401304363274826],[4.575510204081633,1.405333904528599],[4.606122448979591,1.409363445782373],[4.636734693877551,1.413392987036147],[4.66734693877551,1.41742252828992],[4.697959183673469,1.421452069543694],[4.728571428571429,1.425481610797467],[4.759183673469388,1.429511152051241],[4.789795918367346,1.433540693305015],[4.820408163265306,1.437570234558788],[4.851020408163265,1.441599775812562],[4.881632653061224,1.445629317066335],[4.912244897959184,1.449658858320109],[4.942857142857143,1.453688399573883],[4.973469387755102,1.457717940827656],[5.004081632653061,1.46174748208143],[5.03469387755102,1.465777023335203],[5.065306122448979,1.469806564588977],[5.095918367346939,1.47383610584275],[5.126530612244898,1.477865647096524],[5.157142857142857,1.481895188350298],[5.187755102040816,1.485924729604071],[5.218367346938775,1.489954270857845],[5.248979591836735,1.493983812111619],[5.279591836734694,1.498013353365392],[5.310204081632653,1.502042894619166],[5.340816326530613,1.50607243587294],[5.371428571428571,1.510101977126713],[5.40204081632653,1.514131518380487],[5.43265306122449,1.51816105963426],[5.463265306122449,1.522190600888034],[5.493877551020407,1.526220142141808],[5.524489795918367,1.530249683395581],[5.555102040816326,1.534279224649355],[5.585714285714285,1.538308765903128],[5.616326530612245,1.542338307156902],[5.646938775510204,1.546367848410676],[5.677551020408163,1.550397389664449],[5.708163265306123,1.554426930918223],[5.738775510204081,1.558456472171996],[5.76938775510204,1.56248601342577],[5.8,1.566515554679544]],"type":"line","name":"setosa trend","color":"#1f77b4","marker":{"enabled":false},"enableMouseTracking":false,"showInLegend":false},{"data":[[4.9,3.548817329493228],[4.942857142857143,3.578237462029361],[4.985714285714286,3.607657594565493],[5.028571428571428,3.637077727101625],[5.071428571428572,3.666497859637758],[5.114285714285715,3.69591799217389],[5.157142857142857,3.725338124710022],[5.2,3.754758257246154],[5.242857142857143,3.784178389782287],[5.285714285714286,3.813598522318419],[5.328571428571429,3.843018654854552],[5.371428571428572,3.872438787390684],[5.414285714285715,3.901858919926816],[5.457142857142857,3.931279052462948],[5.5,3.96069918499908],[5.542857142857143,3.990119317535213],[5.585714285714286,4.019539450071345],[5.628571428571429,4.048959582607478],[5.671428571428572,4.07837971514361],[5.714285714285714,4.107799847679742],[5.757142857142857,4.137219980215875],[5.800000000000001,4.166640112752007],[5.842857142857143,4.19606024528814],[5.885714285714286,4.225480377824272],[5.928571428571429,4.254900510360404],[5.971428571428572,4.284320642896536],[6.014285714285714,4.313740775432668],[6.057142857142857,4.343160907968801],[6.1,4.372581040504933],[6.142857142857143,4.402001173041066],[6.185714285714286,4.431421305577198],[6.228571428571429,4.46084143811333],[6.271428571428571,4.490261570649462],[6.314285714285715,4.519681703185595],[6.357142857142858,4.549101835721728],[6.4,4.57852196825786],[6.442857142857143,4.607942100793992],[6.485714285714286,4.637362233330124],[6.528571428571428,4.666782365866256],[6.571428571428571,4.696202498402388],[6.614285714285714,4.725622630938521],[6.657142857142857,4.755042763474654],[6.7,4.784462896010786],[6.742857142857143,4.813883028546918],[6.785714285714286,4.84330316108305],[6.828571428571429,4.872723293619183],[6.871428571428572,4.902143426155315],[6.914285714285715,4.931563558691447],[6.957142857142857,4.96098369122758],[7,4.990403823763712]],"type":"line","name":"versicolor trend","color":"#ff7f0e","marker":{"enabled":false},"enableMouseTracking":false,"showInLegend":false},{"data":[[4.9,4.285863684083016],[4.961224489795919,4.331786995667199],[5.022448979591837,4.377710307251381],[5.083673469387755,4.423633618835565],[5.144897959183674,4.469556930419748],[5.206122448979592,4.515480242003931],[5.267346938775511,4.561403553588114],[5.328571428571429,4.607326865172297],[5.389795918367347,4.65325017675648],[5.451020408163266,4.699173488340663],[5.512244897959184,4.745096799924847],[5.573469387755102,4.791020111509029],[5.634693877551021,4.836943423093213],[5.695918367346939,4.882866734677396],[5.757142857142857,4.928790046261579],[5.818367346938776,4.974713357845762],[5.879591836734694,5.020636669429945],[5.940816326530612,5.066559981014128],[6.002040816326531,5.112483292598311],[6.06326530612245,5.158406604182495],[6.124489795918368,5.204329915766678],[6.185714285714286,5.250253227350861],[6.246938775510205,5.296176538935044],[6.308163265306122,5.342099850519227],[6.369387755102041,5.388023162103409],[6.43061224489796,5.433946473687593],[6.491836734693878,5.479869785271776],[6.553061224489796,5.525793096855959],[6.614285714285715,5.571716408440142],[6.675510204081633,5.617639720024325],[6.736734693877551,5.663563031608508],[6.79795918367347,5.709486343192691],[6.859183673469389,5.755409654776875],[6.920408163265306,5.801332966361057],[6.981632653061225,5.847256277945241],[7.042857142857143,5.893179589529423],[7.104081632653061,5.939102901113607],[7.16530612244898,5.98502621269779],[7.226530612244899,6.030949524281973],[7.287755102040816,6.076872835866156],[7.348979591836735,6.122796147450339],[7.410204081632653,6.168719459034522],[7.471428571428572,6.214642770618705],[7.53265306122449,6.260566082202888],[7.593877551020409,6.306489393787071],[7.655102040816327,6.352412705371254],[7.716326530612245,6.398336016955438],[7.777551020408163,6.44425932853962],[7.838775510204082,6.490182640123804],[7.9,6.536105951707987]],"type":"line","name":"virginica trend","color":"#2ca02c","marker":{"enabled":false},"enableMouseTracking":false,"showInLegend":false}],"xAxis":{"type":"linear","title":{"text":"Sepal Length","style":{"fontSize":"18px","fontWeight":"bold"}},"labels":{"style":{"fontSize":"14px"}}},"colors":["#1f77b4","#ff7f0e","#2ca02c"],"legend":{"enabled":true},"annotations":[{"labelOptions":{"style":{"fontSize":"14px","fontWeight":"bold"},"backgroundColor":"rgba(255,255,255,0.8)","borderColor":"rgba(0,0,0,0.2)","borderRadius":3,"borderWidth":1},"labels":[{"x":5.899999999999999,"y":{"1":1.566515554679544},"text":"setosa","color":"#1f77b4"},{"x":7.1,"y":{"1":4.990403823763712},"text":"versicolor","color":"#ff7f0e"},{"x":8,"y":{"1":6.536105951707987},"text":"virginica","color":"#2ca02c"}]}]},"theme":{"chart":{"backgroundColor":"transparent"},"colors":["#7cb5ec","#434348","#90ed7d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"]},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-highcharter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: <strong>Interactive iris plot with trendlines and direct labels.</strong> This interactive scatterplot shows Sepal Length versus Petal Length for three <em>Iris</em> species. Each species is plotted in a distinct color and shape, with accompanying trendlines and direct labels. Designed for digital formats, this figure allows for hover-based exploration, emphasizing user engagement and interpretability.
+</figcaption>
+</figure>
+</div>
+</div>
+<hr>
+<p><strong>Summary of the impact of medium on plot development.</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 41%">
+<col style="width: 48%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Format</th>
+<th>Key Feature</th>
+<th>Prioritize</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Paper</td>
+<td>Static, standalone</td>
+<td>Clarity, context in figure</td>
+</tr>
+<tr class="even">
+<td>Talk</td>
+<td>Controlled pacing</td>
+<td>Simplicity, build-up, big elements</td>
+</tr>
+<tr class="odd">
+<td>Poster</td>
+<td>Competitive and noisy setting</td>
+<td>Visual impact, minimal text</td>
+</tr>
+<tr class="even">
+<td>Digital</td>
+<td>Dynamic &amp; user-driven</td>
+<td>Interactivity, clarity</td>
+</tr>
+</tbody>
+</table>
+<hr>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<blockquote class="blockquote">
+<p>We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil. Yet we should not pass up our opportunities in that critical 3%</p>
+<footer>
+— <a href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a>
+</footer>
+</blockquote>
+</div></div></section>
+<section id="premature-optimization-is-the-root-of-all-evil" class="level3 protip">
+<h3 class="anchored" data-anchor-id="premature-optimization-is-the-root-of-all-evil">Premature optimization is the root of all evil</h3>
+<p>Although Donald Knuth was talking about optimizing computer programs, the same logic applies to figures. In research or publication contexts, refining the plot can be worth the time - but only after the scientific story is sound. Perfecting a plot before it is ready to be presented can be a massive time sink. I therefore recommend the following workflow to make great plots without wasting too much time:</p>
+<ul>
+<li><p>Make quick, rough plots to start exploring the stories in your data.</p></li>
+<li><p>Make additional plots and summaries to see if you fooled yourself and/or if an artifact can better explain your data than your hypothesis.</p></li>
+<li><p>Make a good “base plot” that clearly and honestly shows the point and circulate this to friends collaborators etc.</p></li>
+<li><p>Save the code for this plot and don’t lose it.</p></li>
+<li><p>🛑STOP🛑 working on the plot for a while. Do everything else to make your science good. Resist the urge to keep tweaking at this stage - your time is better spent elsewhere for now.</p></li>
+<li><p><strong>Once you are ready to present the work</strong> take steps towards further refining the plot following the concepts outlined in the rest of this chapter. <em>Now is the time to make this figure shine!!!</em> Do most of this in R - but feel free to spruce a quick thing up some other way (e.g.&nbsp;powerpoint / illustrator etc…) if it’s fast one-off.<br>
+</p></li>
+</ul>
 </section>
-<section id="long-term-public-data-storage" class="level3">
-<h3 class="anchored" data-anchor-id="long-term-public-data-storage">Long-term public data storage</h3>
-<p>A key to the scientific method is reproducibility. This is why scientific papers have a methods section. Nowadays - the internet allows for even more detailed sharing of methods. Additionally it is the expectation in most fields that data is made available after publication on repositories like <a href="https://datadryad.org/stash">data DRYAD</a> or <a href="https://conservancy.umn.edu/collections/6c548d8b-0f3a-4f6b-b16e-4154c88136c0">DRUM</a>.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-babbage1864" class="csl-entry" role="listitem">
-Babbage, C. (1864). <em>Passages from the life of a philosopher</em>. Longman; Co.
-</div>
-<div id="ref-broman2018" class="csl-entry" role="listitem">
-Broman, K. W., &amp; Woo, K. H. (2018). Data organization in spreadsheets. <em>The American Statistician</em>, <em>72</em>(1), 2–10. <a href="https://doi.org/10.1080/00031305.2017.1375989">https://doi.org/10.1080/00031305.2017.1375989</a>
-</div>
-</div>
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1405,13 +1496,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../book_sections/reproducible_science.html" class="pagination-link" aria-label="4. Reproducible Science">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">4. Reproducible Science</span>
+      <a href="../../book_sections/data_viz.html" class="pagination-link" aria-label="9. Better Figures">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">9. Better Figures</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../book_sections/reproducible_science/reproducible_analyses.html" class="pagination-link" aria-label="• 4. Reproducible analyses">
-        <span class="nav-page-text">• 4. Reproducible analyses</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../book_sections/data_viz/honest_plots.html" class="pagination-link" aria-label="• 9. Honest plots">
+        <span class="nav-page-text">• 9. Honest plots</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

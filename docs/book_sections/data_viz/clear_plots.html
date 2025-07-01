@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>• 4. Collecting data – Applied Biostatistics</title>
+<title>• 9. Clear plots – Applied Biostatistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -50,8 +30,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../book_sections/reproducible_science/reproducible_analyses.html" rel="next">
-<link href="../../book_sections/reproducible_science.html" rel="prev">
+<link href="../../book_sections/data_viz/avoid_distractions.html" rel="next">
+<link href="../../book_sections/data_viz/transparent_plots.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -89,6 +69,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../assets/sticky-notes.css">
 <link rel="stylesheet" href="../../assets/table-styles.css">
@@ -104,7 +113,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science.html">4. Reproducible Science</a></li><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science/collecting_data.html">• 4. Collecting data</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/data_viz.html">9. Better Figures</a></li><li class="breadcrumb-item"><a href="../../book_sections/data_viz/clear_plots.html">• 9. Clear plots</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -308,7 +317,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/reproducible_science/collecting_data.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../book_sections/reproducible_science/collecting_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 4. Collecting data</span></a>
   </div>
 </li>
@@ -525,7 +534,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/data_viz/clear_plots.html" class="sidebar-item-text sidebar-link">
+  <a href="../../book_sections/data_viz/clear_plots.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">• 9. Clear plots</span></a>
   </div>
 </li>
@@ -612,9 +621,9 @@ div.csl-indent {
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science.html">4. Reproducible Science</a></li><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science/collecting_data.html">• 4. Collecting data</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/data_viz.html">9. Better Figures</a></li><li class="breadcrumb-item"><a href="../../book_sections/data_viz/clear_plots.html">• 9. Clear plots</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="collecting_data" class="quarto-section-identifier">• 4. Collecting data</span></h1>
+<h1 class="title"><span id="clear_plots" class="quarto-section-identifier">• 9. Clear plots</span></h1>
 </div>
 
 
@@ -631,146 +640,202 @@ div.csl-indent {
 </header>
 
 
-<p><strong>This section includes background on:</strong> <a href="#making-rules-for-data-collection">Making rules for data collection</a>, <a href="#making-a-spreadsheet-for-data-entry">Making a spreadsheet for data entry</a>, <a href="#making-data-field-sheets">Making data (field) sheets</a>, <a href="#data-collection-and-data-entry-checklist">A checklist for data collection</a>, <a href="#making-a-readme-andor-data-dictionary">Making a README and/or data dictionary</a>, and <a href="#long-term-public-data-storage">Long term public data storage</a>.</p>
 <div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<p><strong>Motivating scenario:</strong> You are getting ready to collect, enter, and store data.</p>
-<p><strong>Learning goals: By the end of this chapter you should be able to</strong></p>
+<p><strong>Motivating Scenario:</strong><br>
+You’re making a figure to share your results—or trying to understand someone else’s—and you want the message to be clear, not confusing or misleading.</p>
+<p><strong>Learning Goals: By the end of this subchapter, you should be able to:</strong></p>
+<ol type="1">
+<li><strong>Design plots that highlight key patterns</strong> in your data by:</li>
+</ol>
 <ul>
-<li>Make a data sheet.</li>
-<li>Label samples.<br>
+<li>Making important comparisons visually obvious.<br>
 </li>
-<li>Describe best principles for collecting, storing, and maintaining data.</li>
+<li>De-emphasizing irrelevant or distracting elements.</li>
 </ul>
+<ol start="2" type="1">
+<li><strong>Use labeling and layout choices to reduce confusion</strong>, including:</li>
+</ol>
+<ul>
+<li>Making axes readable.<br>
+</li>
+<li>Using direct labeling when appropriate.<br>
+</li>
+<li>Avoiding cluttered legends and ambiguous abbreviations.</li>
+</ul>
+<ol start="3" type="1">
+<li><p><strong>Maintain consistency across plots</strong> (e.g., colors, category orders) so readers can more easily interpret your figures as a coherent set.</p></li>
+<li><p><strong>Recognize when plot design may unintentionally mislead</strong>, by</p></li>
+</ol>
+<ul>
+<li>Misusing axis breaks.<br>
+</li>
+<li>Truncating the y-axis without signaling it.<br>
+</li>
+<li>Showing too narrow a window and hiding long-term patterns.</li>
+</ul>
+<ol start="5" type="1">
+<li><strong>Critique and revise unclear plots</strong> whether you or someone else made them.</li>
+</ol>
 </div>
 <hr>
+<section id="good-figures-are-clear" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="good-figures-are-clear">Good Figures Are Clear</h2>
+<p>Good plots are clear, with messages that stand out. To achieve clarity in a plot, we need to make labels informative and readable, minimize cognitive burden, make the point obvious, and avoid distractions.</p>
+<ul>
+<li><p><strong>Have Informative and Readable Labels</strong> This should go without saying, but make sure that your labels can be read and that readers know what these labels mean. Sometimes labels are unclear because authors simply don’t look at the figures, other times they use shorthand that might be clear to experts or the team working on the project, but not to outsiders or non-experts.</p></li>
+<li><p><strong>Minimize cognitive burden</strong> Two of my favorite books are <em>Crime and Punishment</em> and <em>100 Years of Solitude</em>. While they’re great stories, I remember struggling when trying to track relationships between characters or remember that Raskolnikov and Rodya are the same person. Scientific communication is not <span class="math inline">\(19^{th}\)</span> century Russian literature – as science communicators we strive to be consistent and to minimize how much your reader has to keep in their mind.</p></li>
+<li><p><strong>Make points obvious</strong> A scientific figure should tell a story, but it shouldn’t be a mystery or a puzzle. Science is complicated enough, and people who read science are often busy - so the message of a plot should be clear. Readers should use their brains making sense of the implications of scientific findings, not figuring out what the finding is.</p></li>
+<li><p><strong>Avoid distractions</strong> Readers should focus on your story, not on unnecessary visuals or effects.</p></li>
+</ul>
+<section id="clear-plots-highlight-patterns" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="clear-plots-highlight-patterns">Clear Plots Highlight Patterns</h3>
+<p>Good plots do more than “show the data.” They help your reader see what matters, fast. That means intentionally designing plots to make important patterns and comparisons obvious - especially the ones that are central to your scientific story.</p>
+<section id="bring-out-key-comparisons" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="bring-out-key-comparisons"><strong>Bring Out Key Comparisons</strong></h4>
+<p>Because data cannot speak, we can’t just “present the data.” Good plots are designed to help readers see and evaluate the patterns central to the story you’re telling. Just like in storytelling, emphasizing the wrong details can distract and mislead. This is important becase the same dataset can tell very different stories depending on how it is plotted. This often means guiding your reader’s eye with color, layout, or label placement.</p>
+<p><a href="#fig-modernaplots" class="quarto-xref">Figure&nbsp;<span>1</span></a> shows one such example:</p>
+<ul>
+<li><p>Because most people at a given time do not have COVID-19 including the “non-covid” cases makes it hard to see any difference between the placebo and the mRNA vaccine (<a href="#fig-modernaplots" class="quarto-xref">Figure&nbsp;<span>1</span></a> A-B).</p></li>
+<li><p>By focusing on the proportion of severe vs.&nbsp;mild COVID cases in the placebo and vaccine group, <a href="#fig-modernaplots" class="quarto-xref">Figure&nbsp;<span>1</span></a> C shows that vaccinated folks have proportionally fewer cases of extreme COVID among the vaccinated. But it does not provide information about the total number of infections.</p></li>
+<li><p><a href="#fig-modernaplots" class="quarto-xref">Figure&nbsp;<span>1</span></a> D-F show both the reduced number of cases and the lower proportion of severe COVID among vaccinated participants.</p></li>
+</ul>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-data_collection" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Researchers conducting fieldwork on a steep hillside covered in blooming *Clarkia xantiana* flowers. One researcher in the foreground, wearing a blue beanie and dark clothing, is seated among the flowers, writing on a clipboard. Another researcher in a red jacket is also recording data, while a third person in a hat is partially visible. The background features rolling, dry, shrub-covered hills under an overcast sky.">
+<div id="fig-modernaplots" class="quarto-float quarto-figure quarto-figure-center anchored" alt="This multi-panel figure (labeled a–f) presents different ways to visualize outcomes from a Moderna COVID-19 vaccine trial. Panels (a) and (b) show total participant counts in the placebo and mRNA-1273 groups, making it hard to detect differences since most participants didn’t develop COVID. Panel (c) focuses only on those who became infected, displaying a stacked bar plot that emphasizes the lower proportion of severe cases in the vaccine group but omits total infection counts. Panel (d) uses a slope chart to show the drop in both mild and severe cases among vaccinated individuals. Panels (e) and (f) use stacked bar charts to highlight both the overall reduction in cases and the shift toward milder outcomes in the vaccine group. The color legend indicates outcomes: black for severe COVID, light blue for mild COVID, and dark gray (in some panels) for no COVID. Together, these panels demonstrate how different design choices can shape how data are interpreted.">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-data_collection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/intro_to_R/reproducible_science/more_xan.png" class="img-fluid figure-img" alt="Researchers conducting fieldwork on a steep hillside covered in blooming *Clarkia xantiana* flowers. One researcher in the foreground, wearing a blue beanie and dark clothing, is seated among the flowers, writing on a clipboard. Another researcher in a red jacket is also recording data, while a third person in a hat is partially visible. The background features rolling, dry, shrub-covered hills under an overcast sky." width="686">
+<div aria-describedby="fig-modernaplots-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../figs/summarizing_data/data_viz/modernaplots-1.png" class="img-fluid figure-img" alt="This multi-panel figure (labeled a–f) presents different ways to visualize outcomes from a Moderna COVID-19 vaccine trial. Panels (a) and (b) show total participant counts in the placebo and mRNA-1273 groups, making it hard to detect differences since most participants didn’t develop COVID. Panel (c) focuses only on those who became infected, displaying a stacked bar plot that emphasizes the lower proportion of severe cases in the vaccine group but omits total infection counts. Panel (d) uses a slope chart to show the drop in both mild and severe cases among vaccinated individuals. Panels (e) and (f) use stacked bar charts to highlight both the overall reduction in cases and the shift toward milder outcomes in the vaccine group. The color legend indicates outcomes: black for severe COVID, light blue for mild COVID, and dark gray (in some panels) for no COVID. Together, these panels demonstrate how different design choices can shape how data are interpreted." width="768">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-data_collection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Researchers collecting data on <em>Clarkia</em> pollinator visitation.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-modernaplots-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: <strong>Same data, different message:</strong> Various plots of the Moderna vaccine trial data tell different stories. <strong>(a)</strong> and <strong>(b)</strong> imply the vaccine isn’t effective by highlighting that most participants didn’t develop COVID. <strong>(c)</strong> compares the severity of cases by treatment but hides the vaccine’s effect on infection risk. <strong>(d)</strong> and <strong>(e)</strong> emphasize the severity of cases, while <strong>(f)</strong> highlights vaccine efficacy but makes it harder to compare severity. <strong>(f)</strong> is my favorite despite this.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<hr>
-<p>Sometimes, data come from running a sample through a machine, resulting in a computer readout of our data (e.g., genotypes, gene expression, mass spectrometer, spectrophotometer, etc.). Other times, we collect data through counting, observing, and similar methods, and we enter our data by hand. Either way, there is likely some key data or metadata for which we are responsible (e.g., information about our sample). Below,we focus on how we collect and store our data, assuming that our study and sampling scheme have already been designed. Issues in study design and sampling will be discussed in later chapters.</p>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<blockquote class="blockquote">
-<p><em>On two occasions I have been asked, “Pray, Mr.&nbsp;Babbage, if you put into the machine wrong figures, will the right answers come out?” … I am not able rightly to apprehend the kind of confusion of ideas that could provoke such a question.</em><br><br></p>
-<p>Page 64 of “Passages from the Life of a Philosopher” <span class="citation" data-cites="babbage1864">Babbage (<a href="../../references.html#ref-babbage1864" role="doc-biblioref">1864</a>)</span>.</p>
-</blockquote>
-</div></div><section id="making-rules-for-data-collection" class="level2">
-<h2 class="anchored" data-anchor-id="making-rules-for-data-collection">Making rules for data collection</h2>
-<p>Before we collect data, we need to decide what data to collect. Even in a well-designed study where we want to observe flower color at a field site, we must consider, “What are my options?”, for example:</p>
-<ul>
-<li>Should the options be “white” and “pink,” or should we distinguish between darker and lighter shades?<br>
-</li>
-<li>If we’re measuring tree diameter, at what height on the tree should we measure the diameter?<br>
-</li>
-<li>When measuring something quantitative, what units are we reporting?</li>
-</ul>
-<p>Some of these questions have answers that are more correct, while for others, it’s crucial to agree on a consistent approach and ensure each team member uses the same method.</p>
-<p>Similarly, it’s important to have consistent and unique names – for example, my collaborators and I study <em>Clarkia</em> plants at numerous sites – include <strong>S</strong>quirrel <strong>M</strong>ountain and <strong>S</strong>aw<strong>M</strong>ill – which one should we call SM (there is a similar issue in state abbreviation – we live in <strong>M</strong>i<strong>N</strong>nesota (MN), not <strong>MI</strong>nnesota, to differentiate our state from <strong>MI</strong>chigan (MI)). These questions highlight the need for thoughtful data planning, ensuring that every variable is measured consistently.</p>
-<p>Once you have figured out what you want to measure, how you will measure and report it, and other useful info (e.g., date, time, collector), you are ready to make a data sheet for field collection, a database for analysis, and a README or data dictionary.</p>
 </section>
-<section id="making-a-spreadsheet-for-data-entry" class="level2">
-<h2 class="anchored" data-anchor-id="making-a-spreadsheet-for-data-entry">Making a spreadsheet for data entry</h2>
-<p>After deciding on consistent rules for data collection, we need a standardized format to enter the data. This is especially important when numerous people and/or teams are collecting data at different sites or years. Spreadsheets for data entry should be structured similarly to field sheets (described below) so that it is easy to enter data without needing too much thought.</p>
-<p>Some information (e.g., year, person, field site) might be the same for an entire field sheet, so it can either be written once at the top or explicitly added to each observation in the spreadsheet (copy-pasting can help here).</p>
-</section>
-<section id="making-data-field-sheets" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="making-data-field-sheets">Making Data (field) sheets</h2>
-<p><em>When collecting data or samples, you need a well-designed data (field) sheet</em>. The field sheet should closely resemble your spreadsheet but with a few extra considerations for readability and usability. Ask yourself: How easy is this to read? How easy is it to fill out? Each column and row should be clearly defined so it’s obvious what goes where. Consider the physical layout too—does the sheet fit on one piece of paper? Should it be printed in landscape or portrait orientation? Print a draft to see if there’s enough space for writing. A “notes” column can be useful but should remain empty for most entries, used only for unusual or exceptional cases that might need attention during analysis.</p>
-<p>It’s also smart to include metadata at the top—things like the date, location, and who collected the data. Whether this metadata gets its own column or is written at the top depends on practical needs—if one person is responsible for an entire sheet, maybe it belongs at the top, not repeated for every sample (contrary to the example in <a href="#fig-datasheet" class="quarto-xref">Figure&nbsp;<span>2</span></a>).</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-datasheet" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A black-and-white field data sheet template with blank spaces for entering site name, date, time, weather conditions (cloud cover, wind, humidity, temperature), plant descriptions, personnel contact information, and other notes. Below these fields is a structured table with column headers: Species, ID#, Sex, Location Description, Time, GPS, Photos?, Collector, and Notes, with multiple empty rows for data entry.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-datasheet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/intro_to_R/reproducible_science/sample_datasheet.png" class="img-fluid figure-img" style="width:200.0%" alt="A black-and-white field data sheet template with blank spaces for entering site name, date, time, weather conditions (cloud cover, wind, humidity, temperature), plant descriptions, personnel contact information, and other notes. Below these fields is a structured table with column headers: Species, ID#, Sex, Location Description, Time, GPS, Photos?, Collector, and Notes, with multiple empty rows for data entry.">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-datasheet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Example field data sheet designed for recording ecological and biological observations. The form includes sections for site information, environmental conditions, personnel details, and a structured table for recording species, individual IDs, sex, location descriptions, time, GPS coordinates, photos, collector name, and additional notes.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<section id="data-collection-and-data-entry-checklist" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="data-collection-and-data-entry-checklist">Data collection and data entry checklist:</h3>
-<ul>
-<li><em>Be consistent and deliberate:</em> You should refer to a thing in the same thoughtful way throughout a column. Take, for example, gender as a nominal variable. Data validation approaches, above, can help.</li>
-</ul>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p><span style="color: red;">A bad organization would be:</span> male, female, Male, M, Non-binary, Female.<br>
-<span style="color: blue;">A good organization would be:</span> male, female, male, male, non-binary, female.<br>
-<span style="color: blue;">A just as good organization would be:</span> Male, Female, Male, Male, Non-binary, Female.</p>
-</div></div><ul>
-<li><em>Use good names for things:</em> Names should be concise and descriptive. They need not tell the entire story. For example, units are better kept in a data dictionary (<a href="#fig-datadictionary" class="quarto-xref">Figure&nbsp;<span>4</span></a>) than column name. This makes downstream analyses easier. Avoiding spaces and special characters makes column names easier to work with in R.</li>
-</ul>
+<section id="consider-how-people-process-images" class="level4 unnumbered page-columns page-full">
+<h4 class="unnumbered anchored" data-anchor-id="consider-how-people-process-images"><strong>Consider How People Process Images</strong></h4>
+<p>When creating a plot, consider not just the data but how readers will interpret it. You don’t need to be a graphic designer to make a good plot. Try asking a friend what they see in your plot—can they easily spot the pattern or comparison you want to highlight?</p>
+<p>Let’s try this by looking at <a href="#fig-broman" class="quarto-xref">Figure&nbsp;<span>2</span></a> (you be the friend), which like <a href="#fig-modernaplots" class="quarto-xref">Figure&nbsp;<span>1</span></a> shows different presentations of the same data. As you examine these plots consider which one allows you to best estimate the difference in X and Y.</p>
 <div class="cell page-columns page-full">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-good_names" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A table comparing bad and good variable naming practices. The top section, labeled &quot;Bad&quot; in red, contains three tables with problematic variable names such as &quot;#Bugs,&quot; &quot;X1,&quot; and &quot;Num_bugs_5_to_2_pm.&quot; These names include special characters, unclear abbreviations, or excessive detail. The bottom section, labeled &quot;Good&quot; in blue, presents two tables with improved names like &quot;numBugs&quot; and &quot;n_Bugs,&quot; which follow consistent, clear, and readable naming conventions.">
+<div id="fig-broman" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Six versions of the same dataset showing values for categories X and Y using different plot types. Panel A uses grouped bar charts with individual subgroups; Panel B highlights only X and Y in color while leaving other bars gray; Panel C shows stacked bar charts; Panel D uses stacked bars with color emphasis on X and Y; Panel E is a stacked bar chart reordered to place X and Y on top; Panel F is a pie chart with colored slices for X and Y. These variations illustrate how different designs affect our ability to compare categories.">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-good_names-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/intro_to_R/reproducible_science/goodNames4Things.png" class="img-fluid figure-img" alt="A table comparing bad and good variable naming practices. The top section, labeled &quot;Bad&quot; in red, contains three tables with problematic variable names such as &quot;#Bugs,&quot; &quot;X1,&quot; and &quot;Num_bugs_5_to_2_pm.&quot; These names include special characters, unclear abbreviations, or excessive detail. The bottom section, labeled &quot;Good&quot; in blue, presents two tables with improved names like &quot;numBugs&quot; and &quot;n_Bugs,&quot; which follow consistent, clear, and readable naming conventions." width="367">
+<div aria-describedby="fig-broman-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../figs/summarizing_data/data_viz/broman2.png" class="img-fluid figure-img" style="width:75.0%" alt="Six versions of the same dataset showing values for categories X and Y using different plot types. Panel A uses grouped bar charts with individual subgroups; Panel B highlights only X and Y in color while leaving other bars gray; Panel C shows stacked bar charts; Panel D uses stacked bars with color emphasis on X and Y; Panel E is a stacked bar chart reordered to place X and Y on top; Panel F is a pie chart with colored slices for X and Y. These variations illustrate how different designs affect our ability to compare categories.">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-good_names-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: A comparison of bad and good variable naming conventions in a dataset. The top section (labeled “Bad” in red) displays poor naming choices, including spaces, special characters, unclear abbreviations, and inconsistent formatting. The bottom section (labeled “Good” in blue) demonstrates improved naming conventions with consistent formatting, clear descriptions, and no special characters.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-broman-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Facilitate comparisons – Which plot makes it easiest to compare X and Y? Image from slide 28 of <a href="https://www.biostat.wisc.edu/~kbroman/presentations/graphs2018.pdf">this presentation</a> by <a href="https://kbroman.org/">Karl Broman</a>.
 </figcaption>
 </figure>
 </div>
 </div></div></div>
-<ul>
-<li><p><em>Save in a good place</em>. Make a folder for your project. Keep your data sheet (and data dictionary) there. Try to keep all that you need for the project in this folder, but try not to let it get too complex. Some people like to add more order with additional subfolders for larger projects. <br> <br></p></li>
-<li><p><em>Save early and often:</em> You are welcome. <br> <br></p></li>
-<li><p><em>Backup your data, do not touch the original data file and do not perform calculations on it.</em> In addition to scans of your data (if collected on paper) also save your data on both your computer and a locked, un-editable location on the cloud (e.g.&nbsp;google docs, dropbox, etc.). When you want to do something to your data do it in R, and keep the code that did it. This will ensure that you know every step of data manipulation, QC etc. <br> <br></p></li>
-<li><p><em>Do Not Use Font Color or Highlighting as Data.</em> You may be tempted to encode information with bolded text, highlighting, or text color. Don’t do this! Be sure that all information is in a readable column. These extra markings will either be lost or add an extra degree of difficulty to your analysis. Reserve such markings for the presentation of data.<br> <br></p></li>
-<li><p><em>No values should be implied</em> Never leave an entry blank as “shorthand for same as above”. Similarly, never denote the first replicate (or treatment, or whatever) by its order in a spreadsheet, but rather make this explicit with a value in a column. Data order could get jumbled and besides it would take quite a bit of effort to go from implied order to a statistical analysis. It is ok to skip this while taking data in the field, but make sure no values are implied when entering data into a computer.<br> <br></p></li>
-<li><p><em>Data should be tidy (aka rectangular):</em> Ideally data should be entered as tidy (Each variable must have its own column. Each observation must have its own row. Each value must have its own cell). However, you must balance two practice considerations – “What is the best way to collect and enter data?” vs “What is the easiest way to analyze data?” So consider the future computational pain of tidying untidy data when ultimately deciding on the best way to format your spreadsheet (above). <br> <br></p></li>
-<li><p><em>Use data validation approaches:</em> When making a spreadsheet, think about future-you (or your collaborator) who will analyze the data. Typos and inconsistencies in values (e.g., “Male,” “male,” and “M” for “male”) create unnecessary headaches. Accidentally inputting the wrong measure (e.g., putting height where weight should be, or reporting values in kg rather than lb) sucks. <br> Both Excel and Google Sheets (and likely most spreadsheet programs) have a simple solution: use the “Data validation” feature in the “Data” drop-down menu to limit the potential categorical values or set a range for continuous values that users can enter into your spreadsheet. This helps ensure the data are correct.</p></li>
-</ul>
+<iframe src="../../broman_chatbot.html" width="100%" height="520px" style="border:0px solid #ccc;">
+</iframe>
 </section>
-<section id="making-a-readme-andor-data-dictionary" class="level3">
-<h3 class="anchored" data-anchor-id="making-a-readme-andor-data-dictionary">Making a README and/or “data dictionary”</h3>
-<p>A data dictionary is a separate file (or sheet within a file, if you prefer) that explains all the variables in your dataset. It should include the exact variable names from the data file, a version of the variable name that you might use in visualizations, and a longer explanation of what each variable means. Additionally, it is important to list the measurement units and the expected minimum and maximum values for each variable, so anyone using the data knows what to expect.</p>
-<p>Alongside your data dictionary, you should also create a README file that provides an overview of the project and dataset, explaining the purpose of the study and how the data were collected. The README should include a description of each row and column in the dataset. While there may be some overlap with the data dictionary, this is fine. The data dictionary can serve as a quick reference for plotting and performing quality control, whereas the README provides a higher-level summary, designed for those who may not have been directly involved in the project but are seriously interested in the data.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-datadictionary" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A screenshot of a data dictionary table with four columns labeled &quot;name,&quot; &quot;plot_name,&quot; &quot;group,&quot; and &quot;description.&quot; The table defines variables used in a dataset, such as &quot;mouse&quot; (animal identifier), &quot;sex&quot; (Male or Female), &quot;sac_date&quot; (date of sacrifice), and other clinical or demographic variables like coat color and days on diet. The descriptions provide explanations for each variable's meaning and classification.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-datadictionary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="http://www.tandfonline.com/cms/asset/a0ee9bd4-ec62-4aa0-85cd-ef3514ba63bd/utas_a_1375989_f0009_b.jpg" class="img-fluid figure-img" alt="A screenshot of a data dictionary table with four columns labeled &quot;name,&quot; &quot;plot_name,&quot; &quot;group,&quot; and &quot;description.&quot; The table defines variables used in a dataset, such as &quot;mouse&quot; (animal identifier), &quot;sex&quot; (Male or Female), &quot;sac_date&quot; (date of sacrifice), and other clinical or demographic variables like coat color and days on diet. The descriptions provide explanations for each variable's meaning and classification.">
+</section>
+<section id="goodlabels" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="goodlabels">Clear Plots Use Informative and Readable Labels</h3>
+<p>Beyond comparisons, clarity often breaks down when readers can’t read axis labels. Often labels for categorical variables are quite long, potentially running over each other and making them difficult to read. Poor plots like <a href="#fig-xlab" class="quarto-xref">Figure&nbsp;<span>3</span></a> A, pollute the literature, and arise when authors don’t check how their plot labels render. <a href="#fig-xlab" class="quarto-xref">Figure&nbsp;<span>3</span></a> b-d show alternatives:</p>
+<ul>
+<li><strong>b</strong> Abbreviates to prevent labels from jumbling into each other. This definitely helps, but now the reader must think for a bit to connect the label to the actual variable.<br>
+</li>
+<li><strong>c</strong> Rotates the labels 90 degrees. This too is helpfull, but we rarely read at this angle.<br>
+</li>
+<li><strong>d</strong> Flips the axes. The last option is my favorite because it is the most natural to read.</li>
+</ul>
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-xlab" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Four versions of a dot-and-error-bar plot showing student-to-teacher ratios across world regions. Plot A has overlapping x-axis labels. Plot B uses short abbreviations like 'Af' and 'As'. Plot C rotates the long labels 90 degrees. Plot D switches axes, placing the region names on the y-axis for easier reading. Plot D is labeled 'winner' and is the most readable.">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-xlab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
+<img src="../../figs/summarizing_data/data_viz/xlab-1.png" class="img-fluid figure-img column-page-right" style="width:95.0%" alt="Four versions of a dot-and-error-bar plot showing student-to-teacher ratios across world regions. Plot A has overlapping x-axis labels. Plot B uses short abbreviations like 'Af' and 'As'. Plot C rotates the long labels 90 degrees. Plot D switches axes, placing the region names on the y-axis for easier reading. Plot D is labeled 'winner' and is the most readable.">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-datadictionary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Example data dictionary from <span class="citation" data-cites="broman2018">(<a href="../../references.html#ref-broman2018" role="doc-biblioref">Broman &amp; Woo, 2018</a>)</span>. This table provides structured metadata for a dataset, including variable names, descriptions, and group classifications. It ensures clarity in data documentation by defining each column’s purpose and expected values. See the <a href="https://ybrandvain.quarto.pub/applied-biostatistics/book_sections/clarkia_and_its_data/clarkia_and_its_data.html">Clarkia RIL data dictionary here</a> for another example.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-xlab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Different ways to handle long category labels. Plot A shows overlapping text that is difficult to read. Plot B uses abbreviations, C rotates the labels 90 degrees, and D flips the plot to use the y-axis for labels. Plot D is the clearest and most readable, making comparisons easy.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="long-term-public-data-storage" class="level3">
-<h3 class="anchored" data-anchor-id="long-term-public-data-storage">Long-term public data storage</h3>
-<p>A key to the scientific method is reproducibility. This is why scientific papers have a methods section. Nowadays - the internet allows for even more detailed sharing of methods. Additionally it is the expectation in most fields that data is made available after publication on repositories like <a href="https://datadryad.org/stash">data DRYAD</a> or <a href="https://conservancy.umn.edu/collections/6c548d8b-0f3a-4f6b-b16e-4154c88136c0">DRUM</a>.</p>
+<section id="clear-plots-are-consistent" class="level3">
+<h3 class="anchored" data-anchor-id="clear-plots-are-consistent">Clear Plots Are Consistent</h3>
+<p>Visual consistency across figures can support storytelling, or undermine it when neglected. In a project with multiple plots, visual consistency helps readers follow your story. Unfortunately, R doesn’t remember color assignments unless you explicitly set them. This becomes a problem when you subset data - for example, plotting just two groups from an earlier plot that included six.</p>
+<p>In <a href="#fig-consistent" class="quarto-xref">Figure&nbsp;<span>4</span></a> a, South America and Asia appear in new default colors (blue and red), breaking the visual connection to earlier plots (e.g. <a href="#fig-xlab" class="quarto-xref">Figure&nbsp;<span>3</span></a>) where they were purple and brown. This disrupts the reader’s expectations. You can fix this by explicitly assigning colors, as shown in b, or go further and order the legend to match the plot layout, as in c.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-consistent" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three density plots comparing student-to-teacher ratios in South America and Asia. Panel A shows inconsistent colors: South America is blue and Asia red, differing from prior plots. Panel B fixes this by using consistent colors—South America in pink and Asia in gold. Panel C maintains those colors and also reorders the legend to match the plot's layer order, enhancing visual clarity.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-consistent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../figs/summarizing_data/data_viz/consistent.png" class="img-fluid figure-img" alt="Three density plots comparing student-to-teacher ratios in South America and Asia. Panel A shows inconsistent colors: South America is blue and Asia red, differing from prior plots. Panel B fixes this by using consistent colors—South America in pink and Asia in gold. Panel C maintains those colors and also reorders the legend to match the plot's layer order, enhancing visual clarity." width="1075">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-consistent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Maintaining consistency in color and legend order helps readers make comparisons across figures. (a) shows a mismatch in colors due to default reassignments. (b) fixes the color mapping to match earlier plots. (c) improves further by reordering the legend to match the visual flow.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="fyi">
+<p>Maintaining consistency in color mapping, as shown in Figure @ref(fig-consistent)c, and sorting labels sensibly makes plots even easier to process.</p>
+</div>
+</section>
+<section id="clear-plots-use-direct-labeling-when-helpful" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="clear-plots-use-direct-labeling-when-helpful">Clear Plots Use Direct Labeling (When Helpful)</h3>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-direct" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Density plot of student_ratio for two regions: South America and Asia. The plot uses filled curves colored pink and brown for each region, with the labels &quot;S. America&quot; and &quot;Asia&quot; written directly on the plot in matching colors.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-direct-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../figs/summarizing_data/data_viz/directlab-1.png" class="img-fluid figure-img" alt="Density plot of student_ratio for two regions: South America and Asia. The plot uses filled curves colored pink and brown for each region, with the labels &quot;S. America&quot; and &quot;Asia&quot; written directly on the plot in matching colors." width="288">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-direct-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Density plot showing student_ratio values for two regions (South America and Asia), with direct labels placed on the respective curves instead of using a separate legend. This use of direct labeling reduces the cognitive burden.
+</figcaption>
+</figure>
+</div>
+</div></div></div>
+<p><a href="#fig-direct" class="quarto-xref">Figure&nbsp;<span>5</span></a> improves on Figure <a href="#fig-consistent" class="quarto-xref">Figure&nbsp;<span>4</span></a> C by using direct labeling instead of a legend. Readers no longer need to scan over to the legend, decode which color is which, and then return to the data to interpret what they’re seeing. Instead, the category labels are placed right on the plot, where the data are. This reduces cognitive load, and brings the readers’ attention where it belongs – the data.</p>
+</section>
+<section id="clear-plots-order-categories-sensibly" class="level3">
+<h3 class="anchored" data-anchor-id="clear-plots-order-categories-sensibly">Clear Plots Order Categories Sensibly</h3>
+<p>How you order categorical variables on an axis can dramatically affect a plot’s readability. Be deliberate about how you order categories on the x-axis (when categorical). Here are three guiding principles to help you:</p>
+<ul>
+<li><strong>If the data are ordinal</strong> (e.g., months of the year), place them in their natural order.</li>
+<li><strong>For nominal categories</strong> order by a meaningful statistic (e.g.&nbsp;decreasing mean or median) to make trends or extremes stand out.<br>
+</li>
+<li><strong>For many low-frequency categories</strong>, consider grouping them into “Other” and placing it last.</li>
+</ul>
+<p><a href="#fig-order" class="quarto-xref">Figure&nbsp;<span>6</span></a> compares the default alphabetical order of continents (panel A) with the same plot reordered by the mean student–teacher ratio (panel B). The second version reveals the pattern more clearly and makes it easier to identify the lowest- and highest-ratio regions.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-order" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two similar plots showing student–teacher ratios across six world regions. Panel A shows the categories ordered alphabetically, making trends harder to spot. Panel B reorders regions by decreasing student–teacher ratio, allowing viewers to more easily compare values and identify extremes.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-order-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../figs/summarizing_data/data_viz/order-1.png" class="img-fluid figure-img" alt="Two similar plots showing student–teacher ratios across six world regions. Panel A shows the categories ordered alphabetically, making trends harder to spot. Panel B reorders regions by decreasing student–teacher ratio, allowing viewers to more easily compare values and identify extremes." width="460">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-order-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Ordering categories by value makes patterns more interpretable. Panel A uses alphabetical order, while Panel B sorts by the mean student–teacher ratio, making differences easier to spot.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="protip">
+<p><strong>By default, R arranges categories alphabetically.</strong> This is rarely what you want. The <a href="https://forcats.tidyverse.org/"><code>forcats</code></a> package gives you tools to arrange categorical variables more sensibly:</p>
+<ul>
+<li><p><a href="https://forcats.tidyverse.org/reference/fct_relevel.html"><code>fct_relevel()</code></a> allows you to manually reorder factor levels in a specific order. This is great for ordinal variables like “high”, “medium”, “low”.</p></li>
+<li><p><a href="https://forcats.tidyverse.org/reference/fct_reorder.html"><code>fct_reorder()</code></a> allows you to reorder factor levels based on a summary of another variable for when you want nominal categorical variables ordered by means, medians, etc. (as in <a href="#fig-order" class="quarto-xref">Figure&nbsp;<span>6</span></a> B).</p></li>
+<li><p><a href="https://forcats.tidyverse.org/reference/fct_lump.html"><code>fct_lump_*()</code></a> allows you to group rare categories in “other”.<br>
+</p></li>
+</ul>
+</div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-babbage1864" class="csl-entry" role="listitem">
-Babbage, C. (1864). <em>Passages from the life of a philosopher</em>. Longman; Co.
-</div>
-<div id="ref-broman2018" class="csl-entry" role="listitem">
-Broman, K. W., &amp; Woo, K. H. (2018). Data organization in spreadsheets. <em>The American Statistician</em>, <em>72</em>(1), 2–10. <a href="https://doi.org/10.1080/00031305.2017.1375989">https://doi.org/10.1080/00031305.2017.1375989</a>
-</div>
-</div>
 </section>
 </section>
 
@@ -1405,13 +1470,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../book_sections/reproducible_science.html" class="pagination-link" aria-label="4. Reproducible Science">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">4. Reproducible Science</span>
+      <a href="../../book_sections/data_viz/transparent_plots.html" class="pagination-link" aria-label="• 9. Transparent plots">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 9. Transparent plots</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../book_sections/reproducible_science/reproducible_analyses.html" class="pagination-link" aria-label="• 4. Reproducible analyses">
-        <span class="nav-page-text">• 4. Reproducible analyses</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../book_sections/data_viz/avoid_distractions.html" class="pagination-link" aria-label="• 9. Avoid Distractions">
+        <span class="nav-page-text">• 9. Avoid Distractions</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
