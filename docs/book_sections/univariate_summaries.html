@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3. Introduction to ggplot – Applied Biostatistics</title>
+<title>5. Simple Summaries – Applied Biostatistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../book_sections/intro_to_ggplot/one_continuous.html" rel="next">
-<link href="../book_sections/data_in_R/data_in_R_summary.html" rel="prev">
+<link href="../book_sections/univariate_summaries/summarizing_shape.html" rel="next">
+<link href="../book_sections/summarizing_data_index.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book_sections/intro_to_ggplot.html">3. Introduction to ggplot</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book_sections/univariate_summaries.html">5. Simple Summaries</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -260,7 +260,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link active">
+            <a href="../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">3. Introduction to ggplot</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -354,7 +354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../book_sections/univariate_summaries.html" class="sidebar-item-text sidebar-link">
+            <a href="../book_sections/univariate_summaries.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">5. Simple Summaries</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -628,7 +628,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="intro_to_ggplot" class="quarto-section-identifier">3. Introduction to ggplot</span></h1>
+<h1 class="title"><span id="univariate_summaries" class="quarto-section-identifier">5. Simple Summaries</span></h1>
 </div>
 
 
@@ -646,226 +646,200 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<p><strong>Motivating scenario:</strong> you have a fresh new data set and want to check it out. How do you go about looking into it?</p>
-<p><strong>Learning goals: By the end of this chapter you should be able to</strong></p>
+<p><strong>Motivating Scenario:</strong><br>
+You have a fresh new dataset and want to check it out. How do you go about understanding numeric variables of interest?</p>
+<p><strong>Learning Goals: By the end of this chapter, you should be able to:</strong></p>
 <ol type="1">
-<li>Know why we make plots.<br>
+<li><strong>Interpret a histogram and connect it to key descriptions of data, and to:</strong>
+<ul>
+<li>Responsibly interpret a given numerical summary.<br>
 </li>
-<li>Connect your plotting ideas to your biological motivation.<br>
+<li>Evaluate which summary is most informative for a given variable.<br>
 </li>
-<li>Build and save a simple ggplot.<br>
+<li>Use histograms to visually assess measures of central tendency and spread.</li>
+</ul></li>
+<li><strong>Explain and interpret summaries of the location of a numeric variable.</strong>
+<ul>
+<li>Understand the mathematics behind these summaries and calculate them manually.<br>
 </li>
-<li>Explain the idea of mapping data onto aesthetics, and the use of different geoms.<br>
+<li>Use R to calculate and visualize them.</li>
+</ul></li>
+<li><strong>Explain and interpret summaries of the spread of a numeric variable.</strong>
+<ul>
+<li>Understand the mathematics behind these summaries and calculate them manually.<br>
 </li>
-<li>Match common plots to common data types.<br>
+<li>Use R to calculate and visualize them.</li>
+</ul></li>
+<li><strong>Recognize the difference between parametric and non-parametric summaries.</strong>
+<ul>
+<li>Identify situations where parametric vs.&nbsp;non-parametric summaries are appropriate.<br>
 </li>
-<li>Use geoms in ggplot to generate the common plots (above).</li>
+<li>Read off standard non-parametric summaries from a boxplot.</li>
+</ul></li>
 </ol>
 </div>
-
-<div class="no-row-height column-margin column-container"><div class="cell">
-
-</div></div><hr>
-<section id="always-visualize-your-data." class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="always-visualize-your-data.">Always visualize your data.</h2>
-<p><a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe’s quartet</a> famously displays four data sets with identical summary statistics but very different interpretations (<a href="#fig-anscombe" class="quarto-xref">Figure&nbsp;<span>1</span></a>, <a href="#tbl-anscombe" class="quarto-xref">Table&nbsp;<span>1</span></a>). The key lesson from Anscombe’s quartet is that statistical summaries can miss the story in our data, and therefore must be accompanied by clear visualization of patterns in the data.</p>
-<div class="cell page-columns page-full" data-tbl-cap-location="bottom">
-<div id="tbl-anscombe" class="cell quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-cap-location="bottom">
-<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
-<div aria-describedby="tbl-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
-<div class="cell-output-display column-body">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">dataset</th>
-<th style="text-align: right;">sd.x</th>
-<th style="text-align: right;">sd.y</th>
-<th style="text-align: right;">cor</th>
-<th style="text-align: right;">mean.x</th>
-<th style="text-align: right;">mean.y</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">3.32</td>
-<td style="text-align: right;">2.03</td>
-<td style="text-align: right;">0.82</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">7.5</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2</td>
-<td style="text-align: right;">3.32</td>
-<td style="text-align: right;">2.03</td>
-<td style="text-align: right;">0.82</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">7.5</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">3</td>
-<td style="text-align: right;">3.32</td>
-<td style="text-align: right;">2.03</td>
-<td style="text-align: right;">0.82</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">7.5</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">4</td>
-<td style="text-align: right;">3.32</td>
-<td style="text-align: right;">2.03</td>
-<td style="text-align: right;">0.82</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">7.5</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: Summary statistics for Anscombe’s quartet.
-</figcaption>
-</figure>
-</div>
-</div>
+<hr>
 <div class="cell">
-<div class="cell-output-display">
-<div id="fig-anscombe" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A set of four scatterplots, each displaying a different dataset known as Anscombe’s Quartet. Despite having nearly identical statistical summaries, the plots show distinct patterns: one appears as a typical linear relationship, another is curved, a third has a vertical outlier, and the fourth consists of nearly identical points with one extreme value. This highlights the importance of data visualization in statistical analysis.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="intro_to_ggplot_files/figure-html/fig-anscombe-1.png" class="img-fluid figure-img" alt="A set of four scatterplots, each displaying a different dataset known as Anscombe’s Quartet. Despite having nearly identical statistical summaries, the plots show distinct patterns: one appears as a typical linear relationship, another is curved, a third has a vertical outlier, and the fourth consists of nearly identical points with one extreme value. This highlights the importance of data visualization in statistical analysis." width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Four datasets with identical summary statistics but distinct visual patterns. Each panel represents a dataset with nearly identical means (shown in red), variances, correlations, and regression lines (shown in blue), yet their scatterplots reveal strikingly different structures.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>Therefore before diving into formal analysis, we always generate <strong>exploratory plots</strong> to uncover key patterns, detect data quality issues, and reveal the underlying structure of the data. One quick exploratory plot is rarely enough though, as you get to know and model your data, you will develop additional visualizations to dig deeper into the story.</p>
-<p>Ultimately, after a combination of exploratory plots, summary statistics, and statistical modelling has helped you understand the data, you will generate well-crafted <strong>explanatory plots</strong> to communicate your insight elegantly to your audience. We will focus on the process of making explanatory plots in a later chapter.</p>
-<div class="protip">
-<p><strong>Detect data quality issues early</strong> It is common to split up data collect to a team and maybe someone enters data in centimeters, and someone else in inches (etc). Or maybe for a data point or two a decimal point was lost, a value is way bigger than it should be. Everytime you collect and enter data you should make some plots to help identify any such data issues.</p>
+<details class="code-fold">
+<summary>Code for selecting data from a few columns from RILs planted at GC</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(ril_link) <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">growth_rate =</span> <span class="fu">case_when</span>(growth_rate <span class="sc">==</span><span class="st">"1.8O"</span> <span class="sc">~</span> <span class="st">"1.80"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">.default =</span> growth_rate),  </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">growth_rate =</span> <span class="fu">as.numeric</span>(growth_rate),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">visited =</span> mean_visits <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="ot">&lt;-</span> ril_data <span class="sc">|&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(location <span class="sc">==</span> <span class="st">"GC"</span>, <span class="sc">!</span><span class="fu">is.na</span>(prop_hybrid), <span class="sc">!</span> <span class="fu">is.na</span>(mean_visits))<span class="sc">|&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <hr>
-</section>
-<section id="focus-on-biological-questions." class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="focus-on-biological-questions.">Focus on biological questions.</h2>
-<p>Before starting your R coding, consider the plots you want to make and why. It is all too easy to get stuck in the R vortex—making plots simply because they’re easy to create, visually appealing, fun, or challenging, and before you know it you’ve wasted an hour doing something that did not move your analysis or understanding forward. So before make a (set of) plot(s) always consider</p>
-<ul>
-<li><strong>The thing you want to know</strong>, and how it relates to the motivating biology. This includes
-<ul>
-<li>Identifying explanatory and response variables, and</li>
-<li>Distinguishing between key explanatory variables from covariates that you may not care about but need to include.<br>
-</li>
-</ul></li>
-<li><strong>That the visualization of data reflects your biological motivation</strong>.This is particularly tricky for categorical variables which R loves to put in alphabetical order but may likely have a reasonable order to highlight patterns or biology.</li>
-</ul>
-<hr>
-<p><strong>For the</strong> <strong><em>Clarkia</em></strong> <strong>RIL datasets:</strong>.</p>
-<p>We primarily want to know which (if any) phenotypes influence the amount of pollinator visitation and hybrid seed formation.</p>
-<ul>
-<li>Our response variables are hybrid seed production and pollinator visitation (and perhaps we would like to know the extent to which pollinator visitation predicts the proportion of hybrid seed).<br>
-</li>
-<li>Our explanatory variables that we care a lot about include: petal area, petal color, herkogamy, protandry etc… We also want to account for differences in the location of the experiment, even though this is not motivating our study.<br>
-</li>
-<li>We also may want to evaluate the extent to which correlation between traits were broken up as we made the RILs. If trait correlations persists in the RILs it means that we cannot fully dissect the contribution of each trait to the outcome we care about, and that the genetic and/or physiological linkage between traits may have prevented evolution from acting independently on these traits.<br>
-</li>
-<li>In this case there is not a natural order to our categorical variables, so we do not need to think too hard about that.</li>
-</ul>
-<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell fig-column-margin">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(petal_color))<span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> petal_color))<span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div><div class="cell page-columns page-full">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-sketch" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-pinkwhite" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<video src="../figs/intro_to_R/intro_to_ggplot/webbshasta%20-%201263894431268106241.mp4" class="img-fluid" controls=""><a href="../figs/intro_to_R/intro_to_ggplot/webbshasta - 1263894431268106241.mp4">Video</a></video>
+<div aria-describedby="fig-pinkwhite-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="univariate_summaries_files/figure-html/fig-pinkwhite-1.png" class="img-fluid figure-img" width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: <a href="https://x.com/webbshasta/status/1263894431268106241">Tweet</a> from <a href="https://www.shastawebb.com/">Shasta E. Webb</a> (@webbshasta) about how she makes a plot. “My approach to figure-making in #ggplot ALWAYS begins with sketching out what I want the final product to look like. It feels a bit analog but helps me determine which #geom or #theme I need, what arrangement will look best, &amp; what illustrations/images will spice it up. #rstats”
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pinkwhite-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: A bar plot showing the number of pink and white flowered plants, experimentally planted at location GC.
 </figcaption>
 </figure>
 </div>
 </div></div></div>
-<p><strong>Let’s sketch some potential plots to address these questions</strong>.</p>
-<p>I recommend sketching out what you want your plot to look like and what alternative results would look like (<a href="#fig-sketch" class="quarto-xref">Figure&nbsp;<span>2</span></a>). This helps to ensure that you are making the plot you want, not the one R gives you. In this case, some potentially important questions are:</p>
-<ul>
-<li>What is the distribution of the number of pollinator visits?</li>
-<li>Do we see different visitation by location?<br>
-</li>
-<li>Are pink flowers more likely to be visited than white flowers?<br>
-</li>
-<li>How does the number of visits change with petal area, and does this depend on petal color?<br>
-</li>
-<li>Does pollinator visitation predict hybridization rate?</li>
-</ul>
-<p>See <a href="#fig-clarkia_sketch" class="quarto-xref">Figure&nbsp;<span>3</span></a> for examples of how these may look.</p>
+<article class="drop-cap">
+We begin our summary of variation in continuous variables in a somewhat unlikely place – a bar plot of a binary variable. Standard bar plots have a y-axis which starts at zero and shows the number of observations in each category, displayed on the x-axis. So, for example, <a href="#fig-pinkwhite" class="quarto-xref">Figure&nbsp;<span>1</span></a> shows that there are nearly fifty pink flowered RILs and closer to forty white flowered RILs planted at location GC. Bar plots can have any number of categories on the x-axis – but binary variables have a special characteristic – if we think of one option (say pink) as zero, and the other option (say white) as one, the mean tells us that 46.15% of the RILs planted had white flowers. Of course, this is a strange mean, as these plants were either pink or white, and none were 46.15% white, but it is a mean, nonetheless.
+</article>
 <div class="cell">
-<div class="cell-output-display">
-<div id="fig-clarkia_sketch" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-clarkia_sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../figs/intro_to_R/intro_to_ggplot/clarkia_sketch.png" class="img-fluid figure-img" width="753">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean</span>(petal_color <span class="sc">==</span> <span class="st">"white"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4615385</code></pre>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-clarkia_sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Brainstorming potential figures.
+</div>
+<hr>
+<section id="histograms" class="level2">
+<h2 class="anchored" data-anchor-id="histograms">Histograms</h2>
+<p>We can similarly display discrete numerical variables as a bar plot. So, for example, the x-axis of <a href="#fig-num_hyb" class="quarto-xref">Figure&nbsp;<span>2</span></a> (in the <em>Num hybrid bar plot</em> tab) shows the number of a mother’s seeds that we found to be hybrids, and the y-axis shows the number of mothers with x seeds shown to be hybrid.</p>
+<p>Unfortunately, <a href="#fig-num_hyb" class="quarto-xref">Figure&nbsp;<span>2</span></a> is somewhat misleading – we aimed to genotype eight seeds per plant, but we sometimes missed this goal. <a href="#fig-prop_hyb" class="quarto-xref">Figure&nbsp;<span>3</span></a> (in the <em>Prop hybrid bar plot</em> tab) is more honest, as it shows the proportion, but it is a bit distracting and confusing – there are occasional weird dips which represent – not a biological fact of <em>parviflora</em> hybridization, but experimental weirdness of a non-standard sample size across mothers.</p>
+<p><a href="#fig-prop_hyb_hist" class="quarto-xref">Figure&nbsp;<span>4</span></a> (in the <em>Prop hybrid hist</em> tab) is a histogram that displays the distribution of the proportion of hybrid seeds per RIL. A histogram is much like a bar plot, but rather than referring to a single value of the x-variable, in a histogram, values of x are binned.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Num hybrid bar plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Prop hybrid bar plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Prop hybrid hist</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> num_hybrid))<span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()<span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-num_hyb" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-num_hyb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="univariate_summaries_files/figure-html/fig-num_hyb-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-num_hyb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: A bar plot showing the number of genotyped seeds of each mom shown to be hybrid.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="the-idea-of-ggplot" class="level2">
-<h2 class="anchored" data-anchor-id="the-idea-of-ggplot">The idea of <code>ggplot</code></h2>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
 <div class="cell">
-<iframe src="https://www.youtube.com/embed/cqcQT44mJTM?end=64" width="672" height="400px" data-external="1">
-</iframe>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> prop_hybrid))<span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-prop_hyb" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prop_hyb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="univariate_summaries_files/figure-html/fig-prop_hyb-1.png" class="img-fluid figure-img" width="672">
 </div>
-<p>As described in the <a href="https://www.youtube.com/watch?v=cqcQT44mJTM">video above</a> <code>ggplot</code> is based on the grammar of graphics, a framework for constructing plots by mapping data to visual aesthetics.. A major idea here is that plots are made up of data that we map onto aesthetic attributes, and that we build up plots layer by layer.</p>
-<p>Let’s unpack this sentence, because there’s a lot there. Say we wanted to make a very simple plot e.g.&nbsp;observations for categorical data, or a simple histogram for a single continuous variable. Here we are mapping this variable onto a single aesthetic attribute – the x-axis.</p>
-<div class="note">
-<p><strong>We are using the <code>ggplot2</code> package to make plots.</strong></p>
-<p>If you do not have ggplot2 installed, type:</p>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prop_hyb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: A bar plot showing the proportion of genotyped plants shown to be hybrid. Most of the time, we genotyped eight seeds per mom.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>) <span class="co"># Do this the 1st time!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> prop_hybrid))<span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">8</span>, <span class="at">color =</span> <span class="st">"white"</span>)<span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">8</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-prop_hyb_hist" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prop_hyb_hist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="univariate_summaries_files/figure-html/fig-prop_hyb_hist-1.png" class="img-fluid figure-img" width="672">
 </div>
-<p>If you have <code>ggplot2</code> installed or you just installed it, every time you start a new R session you still need to enter</p>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prop_hyb_hist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: A histogram showing the proportion of genotyped plants shown to be hybrid. Most of the time, we genotyped eight seeds per mom.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>It helps to remember that in contrast to a bar plot, where the value on the x axis is the value of all the observations in that bar, in a histogram this value is the center of the range of values in the bin. So in <a href="#fig-prop_hyb_hist" class="quarto-xref">Figure&nbsp;<span>4</span></a> the first bin corresponds to values between -0.0625 and 0.0625, and the second bin (centered on 1/8th) corresponds to proportions between 0.0625 and 0.1875, etc… . The x-axis of <a href="#fig-prop_hyb_hist2" class="quarto-xref">Figure&nbsp;<span>5</span></a> shows this more explicitly, but it is too busy, and complex for standard presentation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-prop_hyb_hist2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prop_hyb_hist2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="univariate_summaries_files/figure-html/fig-prop_hyb_hist2-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prop_hyb_hist2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: A histogram showing the proportion of genotyped plants shown to be hybrid. Most of the time, we genotyped eight seeds per mom. This is identical to Figure <a href="#fig-prop_hyb_hist" class="quarto-xref">Figure&nbsp;<span>4</span></a>, except, the x-label shows the range of x values rather than the center of thebins.
+</figcaption>
+</figure>
 </div>
 </div>
-<div class="cell">
-<details class="code-fold">
-<summary>Show code to load and format the data set, so we are where we left off.</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(ril_link)<span class="sc">|&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(location,  ril, prop_hybrid,  mean_visits,  </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                petal_color, petal_area_mm,  asd_mm)<span class="sc">|&gt;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">visited =</span> mean_visits <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
-</section>
-<section id="making-ggplots" class="level2">
-<h2 class="anchored" data-anchor-id="making-ggplots">Making ggplots:</h2>
-<p>The following sections show how to make plots that:</p>
+<div class="protip">
+<p>When making a histogram, you are in charge of the bin size. In <code>ggplot2</code> you can specify this with one of two arguments:</p>
 <ul>
-<li><a href="intro_to_ggplot/one_continuous.html">Visualize the distribution of a single continuous variable</a>.<br>
+<li><code>binwidth</code>: Which tells R how big to make the the bins.<br>
 </li>
-<li><a href="intro_to_ggplot/saving_ggplots.html">Saving a ggplot</a>.<br>
-</li>
-<li><a href="intro_to_ggplot/cont_cat.html">Compare a continuous variable for different categorical variables</a>.<br>
-</li>
-<li><a href="intro_to_ggplot/two_categorical.html">Visualize associations between two categorical variables</a>.<br>
-</li>
-<li><a href="intro_to_ggplot/two_continuous.html">Visualize associations between two continuous variables</a>.<br>
-</li>
-<li><a href="intro_to_ggplot/many_explanatory.html">Visualize multiple explanatory variables</a>.</li>
+<li><code>bins</code>: Which tells R how many equally sized bins to split the data into.</li>
 </ul>
-<p>Then we <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summarySummary">summarize the chapter</a>, present a <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryChatbot">chatbot tutor</a>, <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryPractice_questions">practice questions</a>, a <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryGlossary_of_terms">glossary</a>, a review of <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryNew_r_functions">R functions</a> and <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryR_packages_introduced">R packages</a> introduced, and <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryAdditional_resources">provide links to additional resources</a>.</p>
-<p>Finally, for the true aficionados, I <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryGgploty">introduce ggplotly</a> as a great way to get to know your data.</p>
+<p>There is not a universally correct answer for the appropriate bin size – it will vary by data set. It takes thought and expertise. It is best to experiment some until you find the binning that honestly reflects the variability in your data. This reflects a trade-off between capturing the variability, without distracting the reader with every bump or dip. I usually start with about thirty bins and then dial that number up or down until I feel like the variability in the data is well-communicated by the plot.</p>
+</div>
+</section>
+<section id="lets-get-started-with-univariate-summaries" class="level2">
+<h2 class="anchored" data-anchor-id="lets-get-started-with-univariate-summaries">Let’s get started with univariate summaries!</h2>
+<p>The following sections introduce how to summarize a single variable by:</p>
+<ul>
+<li><a href="univariate_summaries/summarizing_shape.html">Describing its shape</a> including its <a href="univariate_summaries/summarizing_shape.html#summarizing_shape_skew">skew</a>, and <a href="univariate_summaries/summarizing_shape.html#summarizing_shape_number-of-modes">number of modes</a>.<br>
+</li>
+<li><a href="univariate_summaries/changing_shape.html">Changing its shape (if necessary)</a>, including <a href="univariate_summaries/changing_shape.html#changing_shape_to-transform-or-not-to-transform-that-is-the-question">when to transform</a>, <a href="univariate_summaries/changing_shape.html#changing_shape_rules-for-transforming-data">rules of transformation</a>, <a href="univariate_summaries/changing_shape.html#changing_shape_transformation-in-r">how to transform variables in R</a>, and a <a href="univariate_summaries/changing_shape.html#changing_shape_common-transformations">table of common transformations</a>.<br>
+</li>
+<li><a href="univariate_summaries/summarizing_center.html">Describing its center</a>, including standard <a href="univariate_summaries/summarizing_center.html#summarizing_center_nonparametric-summaries">non-parametric</a> and <a href="univariate_summaries/summarizing_center.html#summarizing_center_parametric-summaries">parametric summaries</a>, <a href="univariate_summaries/summarizing_center.html#summarizing_center_which-summaries-to-use-when">when to use which</a>, and some <a href="univariate_summaries/summarizing_center.html#summarizing_center_use-full-but-used-less-summaries">useful but used-less summaries</a>.<br>
+</li>
+<li><a href="univariate_summaries/summarizing_variability.html">Describing its width</a> including <a href="#summarizing_variability_nonparametric-measures-of-variability">nonparametric</a> and <a href="univariate_summaries/summarizing_variability.html#summarizing_variability_parametric-summaries-of-variability">parametric summaries</a>, with a <a href="univariate_summaries/summarizing_variability.html#summarizing_variability_parametric-summaries-of-variability-example">worked example</a> with mathematical calculations, R functions, and an illustrative plot or visualization.</li>
+</ul>
+<p>Then we <a href="#summarizing_summaries_chapter-summary">summarize the chapter</a>, present <a href="univariate_summaries/summarizing_summaries.html#summarizing_summaries_practice-questions">practice questions</a>, a <a href="univariate_summaries/summarizing_summaries.html#summarizing_summaries_glossary-of-terms">glossary</a>, a review of <a href="univariate_summaries/summarizing_summaries.html#summarizing_summaries_key-r-functions">R functions</a> and <a href="univariate_summaries/summarizing_summaries.html#summarizing_summaries_r-packages-introduced">R packages</a> introduced, and <a href="#summarizing_summaries_additional-resources">present additional resources</a>.</p>
 
 
 </section>
@@ -1501,13 +1475,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../book_sections/data_in_R/data_in_R_summary.html" class="pagination-link" aria-label="• 2. Data in R summary">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 2. Data in R summary</span>
+      <a href="../book_sections/summarizing_data_index.html" class="pagination-link" aria-label="Section II: Summarizing data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Section II: Summarizing data</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../book_sections/intro_to_ggplot/one_continuous.html" class="pagination-link" aria-label="• 3. A continuous variable">
-        <span class="nav-page-text">• 3. A continuous variable</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../book_sections/univariate_summaries/summarizing_shape.html" class="pagination-link" aria-label="• 5. Summarizing shape">
+        <span class="nav-page-text">• 5. Summarizing shape</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

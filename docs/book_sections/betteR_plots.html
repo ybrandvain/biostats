@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3. Introduction to ggplot – Applied Biostatistics</title>
+<title>10. Better Figures in R – Applied Biostatistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,41 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-</style>
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -64,8 +50,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../book_sections/intro_to_ggplot/one_continuous.html" rel="next">
-<link href="../book_sections/data_in_R/data_in_R_summary.html" rel="prev">
+<link href="../book_sections/betteR_plots/plotting_tools.html" rel="next">
+<link href="../book_sections/data_viz/dataviz_summary.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -118,7 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book_sections/intro_to_ggplot.html">3. Introduction to ggplot</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book_sections/betteR_plots.html">10. Better Figures in R</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -260,7 +246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link active">
+            <a href="../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">3. Introduction to ggplot</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -571,7 +557,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../book_sections/betteR_plots.html" class="sidebar-item-text sidebar-link">
+            <a href="../book_sections/betteR_plots.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">10. Better Figures in R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -628,7 +614,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="intro_to_ggplot" class="quarto-section-identifier">3. Introduction to ggplot</span></h1>
+<h1 class="title"><span id="betteR_plots" class="quarto-section-identifier">10. Better Figures in R</span></h1>
 </div>
 
 
@@ -645,229 +631,132 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<p><strong>Motivating scenario:</strong> you have a fresh new data set and want to check it out. How do you go about looking into it?</p>
-<p><strong>Learning goals: By the end of this chapter you should be able to</strong></p>
-<ol type="1">
-<li>Know why we make plots.<br>
-</li>
-<li>Connect your plotting ideas to your biological motivation.<br>
-</li>
-<li>Build and save a simple ggplot.<br>
-</li>
-<li>Explain the idea of mapping data onto aesthetics, and the use of different geoms.<br>
-</li>
-<li>Match common plots to common data types.<br>
-</li>
-<li>Use geoms in ggplot to generate the common plots (above).</li>
-</ol>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../figs/summarizing_data/betteR_plots/masterpiece.png" class="img-fluid figure-img" alt="A fuzzy monster in a beret and scarf, critiquing their own column graph on a canvas in front of them while other assistant monsters (also in berets) carry over boxes full of elements that can be used to customize a graph (like themes and geometric shapes). In the background is a wall with framed data visualizations. Stylized text reads “ggplot2: build a data masterpiece." width="960"></p>
+<figcaption>You can use ggplot to build really nice figures. <a href="https://allisonhorst.com/r-packages-functions">Artwork</a> by <a href="https://bsky.app/profile/allisonhorst.bsky.social"><code>@allison_horst</code></a> <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY</a>.</figcaption>
+</figure>
 </div>
-
-<div class="no-row-height column-margin column-container"><div class="cell">
-
-</div></div><hr>
-<section id="always-visualize-your-data." class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="always-visualize-your-data.">Always visualize your data.</h2>
-<p><a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe’s quartet</a> famously displays four data sets with identical summary statistics but very different interpretations (<a href="#fig-anscombe" class="quarto-xref">Figure&nbsp;<span>1</span></a>, <a href="#tbl-anscombe" class="quarto-xref">Table&nbsp;<span>1</span></a>). The key lesson from Anscombe’s quartet is that statistical summaries can miss the story in our data, and therefore must be accompanied by clear visualization of patterns in the data.</p>
-<div class="cell page-columns page-full" data-tbl-cap-location="bottom">
-<div id="tbl-anscombe" class="cell quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-cap-location="bottom">
-<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
-<div aria-describedby="tbl-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
-<div class="cell-output-display column-body">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+</div></div></div>
+<section id="creating-engaging-attractive-plots-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="creating-engaging-attractive-plots-in-r">Creating Engaging, Attractive Plots in R</h2>
+<p>You’ve already been introduced to the basics of <a href="https://bookdown.org/ybrandvain/Applied_Biostats_2024/05-intro2ggplot.html">ggplot</a> and explored the key elements that make for <a href="https://bookdown.org/ybrandvain/Applied_Biostats_2024/10-betteRfigs.html">effective figures</a>. But at this point, you might be feeling a bit frustrated. You know how to generate plots in R, and you understand what makes a plot good, yet creating polished, impactful visuals in R still seems challenging. My advice is threefold:</p>
+<ol type="1">
+<li><p><strong>Start with the right plot for your data.</strong> For most exploratory plots—which will make up about 95% of what you create—this is key. Often, a well-chosen plot paired with a couple of quick R tricks can make your visuals clear and informative.</p></li>
+<li><p><strong>This chapter is here to guide you through the rest.</strong> For more advanced plotting and customization, take a look at these excellent resources: <a href="https://r-graphics.org/">The R Graphics Cookbook</a> <span class="citation" data-cites="chang2020">(<a href="../references.html#ref-chang2020" role="doc-biblioref">Chang, 2020</a>)</span>, <a href="https://ggplot2-book.org/">ggplot2: Elegant Graphics for Data Analysis</a> <span class="citation" data-cites="wickham2016">(<a href="../references.html#ref-wickham2016" role="doc-biblioref">Wickham, 2016</a>)</span>, <a href="https://socviz.co/">Data Visualization: A Practical Introduction</a> <span class="citation" data-cites="healy2018">(<a href="../references.html#ref-healy2018" role="doc-biblioref">Healy, 2018</a>)</span>, and <a href="https://rkabacoff.github.io/datavis/">Modern Data Visualization with R</a> <span class="citation" data-cites="kabacoff2024">(<a href="../references.html#ref-kabacoff2024" role="doc-biblioref">Kabacoff, 2024</a>)</span>.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The right (gg)plot for your data (click to expand)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
 <thead>
 <tr class="header">
-<th style="text-align: left;">dataset</th>
-<th style="text-align: right;">sd.x</th>
-<th style="text-align: right;">sd.y</th>
-<th style="text-align: right;">cor</th>
-<th style="text-align: right;">mean.x</th>
-<th style="text-align: right;">mean.y</th>
+<th><strong>Data Type</strong></th>
+<th><strong>Suggested Plot(s)</strong></th>
+<th><strong>Likely geom</strong></th>
+<th><strong>What It Shows</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">3.32</td>
-<td style="text-align: right;">2.03</td>
-<td style="text-align: right;">0.82</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">7.5</td>
+<td>One numeric variable</td>
+<td>Histogram, Density plot</td>
+<td><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html"><code>geom_histogram</code></a>, <a href="https://ggplot2.tidyverse.org/reference/geom_density.html"><code>geom_density</code></a></td>
+<td>Distribution shape, spread, skew, outliers</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">2</td>
-<td style="text-align: right;">3.32</td>
-<td style="text-align: right;">2.03</td>
-<td style="text-align: right;">0.82</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">7.5</td>
+<td>One categorical + one numeric variable</td>
+<td>Boxplot, Violin plot, Sina plot</td>
+<td><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html"><code>geom_boxplot</code></a>, <a href="https://ggplot2.tidyverse.org/reference/geom_violin.html"><code>geom_violin</code></a>, <a href="https://ggforce.data-imaginist.com/reference/geom_sina.html"><code>geom_sina</code></a></td>
+<td>Group comparisons, spread, outliers</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">3</td>
-<td style="text-align: right;">3.32</td>
-<td style="text-align: right;">2.03</td>
-<td style="text-align: right;">0.82</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">7.5</td>
+<td>Two numeric variables</td>
+<td>Scatterplot</td>
+<td><a href="https://ggplot2.tidyverse.org/reference/geom_point.html"><code>geom_point</code></a> + <a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html"><code>geom_smooth</code></a></td>
+<td>Trends, clusters, correlation, outliers</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">4</td>
-<td style="text-align: right;">3.32</td>
-<td style="text-align: right;">2.03</td>
-<td style="text-align: right;">0.82</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">7.5</td>
+<td>Categorical counts or proportions</td>
+<td>Bar plot, Stacked bar plot, Mosaic plot</td>
+<td><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html"><code>geom_bar</code></a>, <a href="https://ggplot2.tidyverse.org/reference/geom_bar.html"><code>geom_col</code></a>, <a href="https://haleyjeppson.github.io/ggmosaic/reference/geom_mosaic.html"><code>geom_mosaic</code></a></td>
+<td>Frequencies, relative proportions</td>
+</tr>
+<tr class="odd">
+<td>Time series (numeric over time)</td>
+<td>Line plot</td>
+<td><a href="https://ggplot2.tidyverse.org/reference/geom_line.html"><code>geom_line</code></a></td>
+<td>Trends over time</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: Summary statistics for Anscombe’s quartet.
-</figcaption>
-</figure>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-anscombe" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A set of four scatterplots, each displaying a different dataset known as Anscombe’s Quartet. Despite having nearly identical statistical summaries, the plots show distinct patterns: one appears as a typical linear relationship, another is curved, a third has a vertical outlier, and the fourth consists of nearly identical points with one extreme value. This highlights the importance of data visualization in statistical analysis.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="intro_to_ggplot_files/figure-html/fig-anscombe-1.png" class="img-fluid figure-img" alt="A set of four scatterplots, each displaying a different dataset known as Anscombe’s Quartet. Despite having nearly identical statistical summaries, the plots show distinct patterns: one appears as a typical linear relationship, another is curved, a third has a vertical outlier, and the fourth consists of nearly identical points with one extreme value. This highlights the importance of data visualization in statistical analysis." width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Four datasets with identical summary statistics but distinct visual patterns. Each panel represents a dataset with nearly identical means (shown in red), variances, correlations, and regression lines (shown in blue), yet their scatterplots reveal strikingly different structures.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>Therefore before diving into formal analysis, we always generate <strong>exploratory plots</strong> to uncover key patterns, detect data quality issues, and reveal the underlying structure of the data. One quick exploratory plot is rarely enough though, as you get to know and model your data, you will develop additional visualizations to dig deeper into the story.</p>
-<p>Ultimately, after a combination of exploratory plots, summary statistics, and statistical modelling has helped you understand the data, you will generate well-crafted <strong>explanatory plots</strong> to communicate your insight elegantly to your audience. We will focus on the process of making explanatory plots in a later chapter.</p>
-<div class="protip">
-<p><strong>Detect data quality issues early</strong> It is common to split up data collect to a team and maybe someone enters data in centimeters, and someone else in inches (etc). Or maybe for a data point or two a decimal point was lost, a value is way bigger than it should be. Everytime you collect and enter data you should make some plots to help identify any such data issues.</p>
-</div>
-<hr>
-</section>
-<section id="focus-on-biological-questions." class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="focus-on-biological-questions.">Focus on biological questions.</h2>
-<p>Before starting your R coding, consider the plots you want to make and why. It is all too easy to get stuck in the R vortex—making plots simply because they’re easy to create, visually appealing, fun, or challenging, and before you know it you’ve wasted an hour doing something that did not move your analysis or understanding forward. So before make a (set of) plot(s) always consider</p>
-<ul>
-<li><strong>The thing you want to know</strong>, and how it relates to the motivating biology. This includes
-<ul>
-<li>Identifying explanatory and response variables, and</li>
-<li>Distinguishing between key explanatory variables from covariates that you may not care about but need to include.<br>
-</li>
-</ul></li>
-<li><strong>That the visualization of data reflects your biological motivation</strong>.This is particularly tricky for categorical variables which R loves to put in alphabetical order but may likely have a reasonable order to highlight patterns or biology.</li>
-</ul>
-<hr>
-<p><strong>For the</strong> <strong><em>Clarkia</em></strong> <strong>RIL datasets:</strong>.</p>
-<p>We primarily want to know which (if any) phenotypes influence the amount of pollinator visitation and hybrid seed formation.</p>
-<ul>
-<li>Our response variables are hybrid seed production and pollinator visitation (and perhaps we would like to know the extent to which pollinator visitation predicts the proportion of hybrid seed).<br>
-</li>
-<li>Our explanatory variables that we care a lot about include: petal area, petal color, herkogamy, protandry etc… We also want to account for differences in the location of the experiment, even though this is not motivating our study.<br>
-</li>
-<li>We also may want to evaluate the extent to which correlation between traits were broken up as we made the RILs. If trait correlations persists in the RILs it means that we cannot fully dissect the contribution of each trait to the outcome we care about, and that the genetic and/or physiological linkage between traits may have prevented evolution from acting independently on these traits.<br>
-</li>
-<li>In this case there is not a natural order to our categorical variables, so we do not need to think too hard about that.</li>
-</ul>
-<div class="cell page-columns page-full">
-
-<div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-sketch" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<video src="../figs/intro_to_R/intro_to_ggplot/webbshasta%20-%201263894431268106241.mp4" class="img-fluid" controls=""><a href="../figs/intro_to_R/intro_to_ggplot/webbshasta - 1263894431268106241.mp4">Video</a></video>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: <a href="https://x.com/webbshasta/status/1263894431268106241">Tweet</a> from <a href="https://www.shastawebb.com/">Shasta E. Webb</a> (@webbshasta) about how she makes a plot. “My approach to figure-making in #ggplot ALWAYS begins with sketching out what I want the final product to look like. It feels a bit analog but helps me determine which #geom or #theme I need, what arrangement will look best, &amp; what illustrations/images will spice it up. #rstats”
-</figcaption>
-</figure>
-</div>
-</div></div></div>
-<p><strong>Let’s sketch some potential plots to address these questions</strong>.</p>
-<p>I recommend sketching out what you want your plot to look like and what alternative results would look like (<a href="#fig-sketch" class="quarto-xref">Figure&nbsp;<span>2</span></a>). This helps to ensure that you are making the plot you want, not the one R gives you. In this case, some potentially important questions are:</p>
-<ul>
-<li>What is the distribution of the number of pollinator visits?</li>
-<li>Do we see different visitation by location?<br>
-</li>
-<li>Are pink flowers more likely to be visited than white flowers?<br>
-</li>
-<li>How does the number of visits change with petal area, and does this depend on petal color?<br>
-</li>
-<li>Does pollinator visitation predict hybridization rate?</li>
-</ul>
-<p>See <a href="#fig-clarkia_sketch" class="quarto-xref">Figure&nbsp;<span>3</span></a> for examples of how these may look.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-clarkia_sketch" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-clarkia_sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../figs/intro_to_R/intro_to_ggplot/clarkia_sketch.png" class="img-fluid figure-img" width="753">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-clarkia_sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Brainstorming potential figures.
-</figcaption>
-</figure>
-</div>
-</div>
 </div>
 </section>
-<section id="the-idea-of-ggplot" class="level2">
-<h2 class="anchored" data-anchor-id="the-idea-of-ggplot">The idea of <code>ggplot</code></h2>
-<div class="cell">
-<iframe src="https://www.youtube.com/embed/cqcQT44mJTM?end=64" width="672" height="400px" data-external="1">
-</iframe>
-</div>
-<p>As described in the <a href="https://www.youtube.com/watch?v=cqcQT44mJTM">video above</a> <code>ggplot</code> is based on the grammar of graphics, a framework for constructing plots by mapping data to visual aesthetics.. A major idea here is that plots are made up of data that we map onto aesthetic attributes, and that we build up plots layer by layer.</p>
-<p>Let’s unpack this sentence, because there’s a lot there. Say we wanted to make a very simple plot e.g.&nbsp;observations for categorical data, or a simple histogram for a single continuous variable. Here we are mapping this variable onto a single aesthetic attribute – the x-axis.</p>
-<div class="note">
-<p><strong>We are using the <code>ggplot2</code> package to make plots.</strong></p>
-<p>If you do not have ggplot2 installed, type:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>) <span class="co"># Do this the 1st time!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>If you have <code>ggplot2</code> installed or you just installed it, every time you start a new R session you still need to enter</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<div class="cell">
-<details class="code-fold">
-<summary>Show code to load and format the data set, so we are where we left off.</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(ril_link)<span class="sc">|&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(location,  ril, prop_hybrid,  mean_visits,  </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                petal_color, petal_area_mm,  asd_mm)<span class="sc">|&gt;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">visited =</span> mean_visits <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="making-ggplots" class="level2">
-<h2 class="anchored" data-anchor-id="making-ggplots">Making ggplots:</h2>
-<p>The following sections show how to make plots that:</p>
+<section id="review-what-makes-a-good-plot" class="level2">
+<h2 class="anchored" data-anchor-id="review-what-makes-a-good-plot">Review: What Makes a Good Plot</h2>
 <ul>
-<li><a href="intro_to_ggplot/one_continuous.html">Visualize the distribution of a single continuous variable</a>.<br>
+<li><strong>Good plots tell the story of the data.</strong><br>
 </li>
-<li><a href="intro_to_ggplot/saving_ggplots.html">Saving a ggplot</a>.<br>
+<li><strong>Good plots are tailored to the audience and the method of presentation.</strong><br>
 </li>
-<li><a href="intro_to_ggplot/cont_cat.html">Compare a continuous variable for different categorical variables</a>.<br>
-</li>
-<li><a href="intro_to_ggplot/two_categorical.html">Visualize associations between two categorical variables</a>.<br>
-</li>
-<li><a href="intro_to_ggplot/two_continuous.html">Visualize associations between two continuous variables</a>.<br>
-</li>
-<li><a href="intro_to_ggplot/many_explanatory.html">Visualize multiple explanatory variables</a>.</li>
+<li><strong>Good plots are Honest, Transparent, Clear, and Accessible.</strong></li>
 </ul>
-<p>Then we <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summarySummary">summarize the chapter</a>, present a <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryChatbot">chatbot tutor</a>, <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryPractice_questions">practice questions</a>, a <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryGlossary_of_terms">glossary</a>, a review of <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryNew_r_functions">R functions</a> and <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryR_packages_introduced">R packages</a> introduced, and <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryAdditional_resources">provide links to additional resources</a>.</p>
-<p>Finally, for the true aficionados, I <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryGgploty">introduce ggplotly</a> as a great way to get to know your data.</p>
+<p>We’ll explore these concepts in this chapter, with a particular focus on creating honest, transparent, and clear plots, as this is where R offers the most opportunities for customization.</p>
+</section>
+<section id="review-avoiding-data-viz-time-sinks" class="level2">
+<h2 class="anchored" data-anchor-id="review-avoiding-data-viz-time-sinks">Review: Avoiding data viz time sinks</h2>
+<div class="warning">
+<p>Making and critiquing plots is one of my favorite parts of science — I absolutely love it! <strong>However, I know it can be a major time sink</strong>, and we want to avoid that. We already discussed this once.</p>
+</div>
+<p>Here are my tips for preventing yourself from getting bogged down by every figure:</p>
+<ul>
+<li><strong>Know your goal:</strong> Determine whether you’re creating an exploratory or explanatory figure. Don’t waste time perfecting an exploratory plot — it is meant for quick insights, not for publication.</li>
+<li><strong>Standardize your process:</strong> Develop a few go-to themes and color schemes that you use frequently. Save and reuse these templates so you can produce attractive plots without customizing each one from scratch.</li>
+<li><strong>Master the basics:</strong> Get comfortable with the most common tasks you’ll perform in <code>ggplot2</code>. Keep the <a href="https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">ggplot cheat sheet</a> handy, and bookmark additional resources that suit your workflow.</li>
+<li><a href="https://stackify.com/premature-optimization-evil/"><strong>Premature optimization is the root of all evil:</strong></a> Save detailed customizations (e.g., annotations, special formatting) for last. This way, you can focus on the essential elements of the plot first without getting bogged down in complex code prematurely.<br>
+</li>
+<li><strong>Get help</strong>: Reach out to friends, use Google, consult books, or turn to Generative AI and other resources to solve problems quickly. Remember, the more specific your question, the better the help you’ll receive!</li>
+</ul>
+</section>
+<section id="whats-ahead-and-how-to-thrive" class="level2">
+<h2 class="anchored" data-anchor-id="whats-ahead-and-how-to-thrive">What’s ahead and how to thrive</h2>
+<p>In this chapter, we’ll tackle the challenge of creating great plots by breaking it down into three key parts.</p>
+<ul>
+<li><p>First, in <a href="betteR_plots/plotting_tools.html">Tools for BetteR Plots</a>, we’ll build a problem-solving toolkit. You’ll learn how to find answers, use help files, and leverage modern resources to help you make the plots you want to make.</p></li>
+<li><p>Next, in <a href="betteR_plots/cleaR_plots.html">Making cleaR Plots</a>, we’ll put that toolkit to use in a detailed, step-by-step ‘makeover’ of a messy plot, transforming it into a clear, publication-ready figure.</p></li>
+<li><p>Finally, in <a href="#plots_foR_medium">Plots for the Medium</a>, we’ll learn how to adapt our visualizations for specific contexts like scientific papers, talks, and posters, because a great plot is always tailored to its audience.</p></li>
+</ul>
+<p>Ass usual, we conclude with a <a href="betteR_plots/betteR_plots_summary.html">chapter summary</a>.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-chang2020" class="csl-entry" role="listitem">
+Chang, W. (2020). <em>R graphics cookbook: Practical recipes for visualizing data</em>. <a href="https://r-graphics.org/">https://r-graphics.org/</a>
+</div>
+<div id="ref-healy2018" class="csl-entry" role="listitem">
+Healy, K. (2018). <em>Data visualization: A practical introduction</em>. Princeton University Press.
+</div>
+<div id="ref-kabacoff2024" class="csl-entry" role="listitem">
+Kabacoff, R. (2024). <em>Modern data visualization with r</em>. CRC Press.
+</div>
+<div id="ref-wickham2016" class="csl-entry" role="listitem">
+Wickham, H. (2016). <em>ggplot2: Elegant graphics for data analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -1501,13 +1390,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../book_sections/data_in_R/data_in_R_summary.html" class="pagination-link" aria-label="• 2. Data in R summary">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 2. Data in R summary</span>
+      <a href="../book_sections/data_viz/dataviz_summary.html" class="pagination-link" aria-label="• 9. Dataviz Summary">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 9. Dataviz Summary</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../book_sections/intro_to_ggplot/one_continuous.html" class="pagination-link" aria-label="• 3. A continuous variable">
-        <span class="nav-page-text">• 3. A continuous variable</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../book_sections/betteR_plots/plotting_tools.html" class="pagination-link" aria-label="• 10. Tools for BetteR plots">
+        <span class="nav-page-text">• 10. Tools for BetteR plots</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3. Introduction to ggplot – Applied Biostatistics</title>
+<title>7. Linear Models – Applied Biostatistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,41 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-</style>
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -64,8 +50,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../book_sections/intro_to_ggplot/one_continuous.html" rel="next">
-<link href="../book_sections/data_in_R/data_in_R_summary.html" rel="prev">
+<link href="../book_sections/linear_models/mean.html" rel="next">
+<link href="../book_sections/associations/summarizing_associations.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -103,6 +89,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../assets/sticky-notes.css">
 <link rel="stylesheet" href="../assets/table-styles.css">
@@ -118,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book_sections/intro_to_ggplot.html">3. Introduction to ggplot</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book_sections/linear_models.html">7. Linear Models</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -260,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link active">
+            <a href="../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">3. Introduction to ggplot</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -430,7 +445,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../book_sections/linear_models.html" class="sidebar-item-text sidebar-link">
+            <a href="../book_sections/linear_models.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">7. Linear Models</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -628,7 +643,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="intro_to_ggplot" class="quarto-section-identifier">3. Introduction to ggplot</span></h1>
+<h1 class="title"><span id="linear_models" class="quarto-section-identifier">7. Linear Models</span></h1>
 </div>
 
 
@@ -646,228 +661,142 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<p><strong>Motivating scenario:</strong> you have a fresh new data set and want to check it out. How do you go about looking into it?</p>
-<p><strong>Learning goals: By the end of this chapter you should be able to</strong></p>
+<p><strong>Motivating Scenario:</strong> You want to move beyond simply plotting and summarizing associations and start modeling relationships between variables.</p>
+<p><strong>Learning Goals: By the end of this chapter, you should be able to:</strong></p>
 <ol type="1">
-<li>Know why we make plots.<br>
-</li>
-<li>Connect your plotting ideas to your biological motivation.<br>
-</li>
-<li>Build and save a simple ggplot.<br>
-</li>
-<li>Explain the idea of mapping data onto aesthetics, and the use of different geoms.<br>
-</li>
-<li>Match common plots to common data types.<br>
-</li>
-<li>Use geoms in ggplot to generate the common plots (above).</li>
+<li><p><strong>Explain what a linear model is and what it does</strong>.</p>
+<ul>
+<li>Understand a linear model as a way of estimating the conditional mean of a response variable.</li>
+</ul></li>
+<li><p><strong>Interpret the components of a linear model</strong></p>
+<ul>
+<li><p>Explain the meaning of intercepts, slopes (effect sizes), and predicted values.</p></li>
+<li><p>Define and interpret residuals and the residual standard deviation.</p></li>
+</ul></li>
+<li><p><strong>Estimate a slope from a dataset</strong> with math and with R.</p></li>
+<li><p><strong>Estimate a conditional mean from a linear model with multiple explanatory variables.</strong></p></li>
 </ol>
 </div>
-
-<div class="no-row-height column-margin column-container"><div class="cell">
-
-</div></div><hr>
-<section id="always-visualize-your-data." class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="always-visualize-your-data.">Always visualize your data.</h2>
-<p><a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe’s quartet</a> famously displays four data sets with identical summary statistics but very different interpretations (<a href="#fig-anscombe" class="quarto-xref">Figure&nbsp;<span>1</span></a>, <a href="#tbl-anscombe" class="quarto-xref">Table&nbsp;<span>1</span></a>). The key lesson from Anscombe’s quartet is that statistical summaries can miss the story in our data, and therefore must be accompanied by clear visualization of patterns in the data.</p>
-<div class="cell page-columns page-full" data-tbl-cap-location="bottom">
-<div id="tbl-anscombe" class="cell quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-cap-location="bottom">
-<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
-<div aria-describedby="tbl-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
-<div class="cell-output-display column-body">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">dataset</th>
-<th style="text-align: right;">sd.x</th>
-<th style="text-align: right;">sd.y</th>
-<th style="text-align: right;">cor</th>
-<th style="text-align: right;">mean.x</th>
-<th style="text-align: right;">mean.y</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">3.32</td>
-<td style="text-align: right;">2.03</td>
-<td style="text-align: right;">0.82</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">7.5</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2</td>
-<td style="text-align: right;">3.32</td>
-<td style="text-align: right;">2.03</td>
-<td style="text-align: right;">0.82</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">7.5</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">3</td>
-<td style="text-align: right;">3.32</td>
-<td style="text-align: right;">2.03</td>
-<td style="text-align: right;">0.82</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">7.5</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">4</td>
-<td style="text-align: right;">3.32</td>
-<td style="text-align: right;">2.03</td>
-<td style="text-align: right;">0.82</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">7.5</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: Summary statistics for Anscombe’s quartet.
-</figcaption>
-</figure>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-anscombe" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A set of four scatterplots, each displaying a different dataset known as Anscombe’s Quartet. Despite having nearly identical statistical summaries, the plots show distinct patterns: one appears as a typical linear relationship, another is curved, a third has a vertical outlier, and the fourth consists of nearly identical points with one extreme value. This highlights the importance of data visualization in statistical analysis.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="intro_to_ggplot_files/figure-html/fig-anscombe-1.png" class="img-fluid figure-img" alt="A set of four scatterplots, each displaying a different dataset known as Anscombe’s Quartet. Despite having nearly identical statistical summaries, the plots show distinct patterns: one appears as a typical linear relationship, another is curved, a third has a vertical outlier, and the fourth consists of nearly identical points with one extreme value. This highlights the importance of data visualization in statistical analysis." width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Four datasets with identical summary statistics but distinct visual patterns. Each panel represents a dataset with nearly identical means (shown in red), variances, correlations, and regression lines (shown in blue), yet their scatterplots reveal strikingly different structures.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>Therefore before diving into formal analysis, we always generate <strong>exploratory plots</strong> to uncover key patterns, detect data quality issues, and reveal the underlying structure of the data. One quick exploratory plot is rarely enough though, as you get to know and model your data, you will develop additional visualizations to dig deeper into the story.</p>
-<p>Ultimately, after a combination of exploratory plots, summary statistics, and statistical modelling has helped you understand the data, you will generate well-crafted <strong>explanatory plots</strong> to communicate your insight elegantly to your audience. We will focus on the process of making explanatory plots in a later chapter.</p>
-<div class="protip">
-<p><strong>Detect data quality issues early</strong> It is common to split up data collect to a team and maybe someone enters data in centimeters, and someone else in inches (etc). Or maybe for a data point or two a decimal point was lost, a value is way bigger than it should be. Everytime you collect and enter data you should make some plots to help identify any such data issues.</p>
-</div>
 <hr>
-</section>
-<section id="focus-on-biological-questions." class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="focus-on-biological-questions.">Focus on biological questions.</h2>
-<p>Before starting your R coding, consider the plots you want to make and why. It is all too easy to get stuck in the R vortex—making plots simply because they’re easy to create, visually appealing, fun, or challenging, and before you know it you’ve wasted an hour doing something that did not move your analysis or understanding forward. So before make a (set of) plot(s) always consider</p>
-<ul>
-<li><strong>The thing you want to know</strong>, and how it relates to the motivating biology. This includes
-<ul>
-<li>Identifying explanatory and response variables, and</li>
-<li>Distinguishing between key explanatory variables from covariates that you may not care about but need to include.<br>
-</li>
-</ul></li>
-<li><strong>That the visualization of data reflects your biological motivation</strong>.This is particularly tricky for categorical variables which R loves to put in alphabetical order but may likely have a reasonable order to highlight patterns or biology.</li>
-</ul>
-<hr>
-<p><strong>For the</strong> <strong><em>Clarkia</em></strong> <strong>RIL datasets:</strong>.</p>
-<p>We primarily want to know which (if any) phenotypes influence the amount of pollinator visitation and hybrid seed formation.</p>
-<ul>
-<li>Our response variables are hybrid seed production and pollinator visitation (and perhaps we would like to know the extent to which pollinator visitation predicts the proportion of hybrid seed).<br>
-</li>
-<li>Our explanatory variables that we care a lot about include: petal area, petal color, herkogamy, protandry etc… We also want to account for differences in the location of the experiment, even though this is not motivating our study.<br>
-</li>
-<li>We also may want to evaluate the extent to which correlation between traits were broken up as we made the RILs. If trait correlations persists in the RILs it means that we cannot fully dissect the contribution of each trait to the outcome we care about, and that the genetic and/or physiological linkage between traits may have prevented evolution from acting independently on these traits.<br>
-</li>
-<li>In this case there is not a natural order to our categorical variables, so we do not need to think too hard about that.</li>
-</ul>
+<article class="drop-cap">
+Reality is messy. There’s too much going on to notice everything at once. That’s why we make models — simplified, abstract descriptions of the world — that help us focus on patterns we care about. Models aren’t perfect copies of reality — they leave things out — and that’s the point. A good model keeps what’s important and ignores the rest. In statistics, models help us summarize what we observe, understand relationships, make predictions, and even allow us to test hypotheses.
+</article>
+<p>In this section, we’ll introduce statistical models as simplified descriptions of the world. You’ll notice that you’re already familiar with some simple models. For example, the mean and variance provide a basic model for a single numeric variable, while a conditional mean and pooled variance describe a numeric response variable with a categorical explanatory variable.</p>
 <div class="cell page-columns page-full">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-sketch" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-holiday" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A two-panel figure. Panel A shows a diagram of double-strand break repair: broken DNA strands undergo resection, strand invasion, and DNA synthesis, leading to either double-strand break repair (DSBR) or synthesis-dependent strand annealing (SDSA) pathways, resulting in crossover or non-crossover products. Panel B is a bar graph showing frequencies of different DNA joint molecule types (X-shape, Type I, Type II, Complex) across three conditions (without RecU, RecU with low magnesium, and RecU with high magnesium). The X-shape structure is most common, with lower frequencies of other types.">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<video src="../figs/intro_to_R/intro_to_ggplot/webbshasta%20-%201263894431268106241.mp4" class="img-fluid" controls=""><a href="../figs/intro_to_R/intro_to_ggplot/webbshasta - 1263894431268106241.mp4">Video</a></video>
+<div aria-describedby="fig-holiday-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figs/summarizing_data/linear_models/holiday_junction_b.png" class="img-fluid figure-img" alt="A two-panel figure. Panel A shows a diagram of double-strand break repair: broken DNA strands undergo resection, strand invasion, and DNA synthesis, leading to either double-strand break repair (DSBR) or synthesis-dependent strand annealing (SDSA) pathways, resulting in crossover or non-crossover products. Panel B is a bar graph showing frequencies of different DNA joint molecule types (X-shape, Type I, Type II, Complex) across three conditions (without RecU, RecU with low magnesium, and RecU with high magnesium). The X-shape structure is most common, with lower frequencies of other types." width="477">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: <a href="https://x.com/webbshasta/status/1263894431268106241">Tweet</a> from <a href="https://www.shastawebb.com/">Shasta E. Webb</a> (@webbshasta) about how she makes a plot. “My approach to figure-making in #ggplot ALWAYS begins with sketching out what I want the final product to look like. It feels a bit analog but helps me determine which #geom or #theme I need, what arrangement will look best, &amp; what illustrations/images will spice it up. #rstats”
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-holiday-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The Holiday Junction – one of my favorite scientific models, and an associated statistical model. (A) A scientific model of the idealized process of double-strand break repair (DSBR) and synthesis-dependent strand annealing (SDSA) pathways, leading to crossover or non-crossover products. From <a href="https://en.wikipedia.org/wiki/Holliday_junction">wikipedia</a>. (B) A statistical model of the observed frequencies of different DNA joint molecule types (X-shape, Type I, Type II, Complex) under different biochemical conditions (with or without RecU protein, and varying magnesium concentrations). From <span class="citation" data-cites="suzuki2014">Suzuki et al. (<a href="../references.html#ref-suzuki2014" role="doc-biblioref">2014</a>)</span>
 </figcaption>
 </figure>
 </div>
 </div></div></div>
-<p><strong>Let’s sketch some potential plots to address these questions</strong>.</p>
-<p>I recommend sketching out what you want your plot to look like and what alternative results would look like (<a href="#fig-sketch" class="quarto-xref">Figure&nbsp;<span>2</span></a>). This helps to ensure that you are making the plot you want, not the one R gives you. In this case, some potentially important questions are:</p>
+<section id="statistical-models-are-not-scientific-models" class="level2">
+<h2 class="anchored" data-anchor-id="statistical-models-are-not-scientific-models">Statistical models are not scientific models</h2>
+<p>This is a <strong>BIO</strong>statistics book. It is written by and for biologists interested in biological ideas. We are inspired by biological questions generated by scientific understanding and scientific models of the world. However, a major way in which we evaluate such scientific models is via statistical models and hypotheses. Confusing a statistical model for a scientific model is a common and understandable mistake that we should avoid. Scientific models and statistical models are different:</p>
 <ul>
-<li>What is the distribution of the number of pollinator visits?</li>
-<li>Do we see different visitation by location?<br>
-</li>
-<li>Are pink flowers more likely to be visited than white flowers?<br>
-</li>
-<li>How does the number of visits change with petal area, and does this depend on petal color?<br>
-</li>
-<li>Does pollinator visitation predict hybridization rate?</li>
+<li><p><strong>Scientific models</strong> are based on our understanding of the science – in this case biology. Biological models come from us making simplified abstractions of complex systems (like considering predator-prey interactions, plant pollination, cancer progression, or meiosis (<a href="#fig-holiday" class="quarto-xref">Figure&nbsp;<span>1</span></a> A)). Great scientific models explain what we see, make interesting predictions, and are consistent with our broader scientific understanding.</p></li>
+<li><p><strong>Statistical models</strong> on the other hand, are mathematical ways to describe patterns in data (e.g. <a href="#fig-holiday" class="quarto-xref">Figure&nbsp;<span>1</span></a> B). Statistical models know nothing about Lotka-Voltera, pollination or human physiology.</p></li>
 </ul>
-<p>See <a href="#fig-clarkia_sketch" class="quarto-xref">Figure&nbsp;<span>3</span></a> for examples of how these may look.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-clarkia_sketch" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-clarkia_sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../figs/intro_to_R/intro_to_ggplot/clarkia_sketch.png" class="img-fluid figure-img" width="753">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-clarkia_sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Brainstorming potential figures.
-</figcaption>
-</figure>
-</div>
-</div>
+<p>Because statistical models know nothing about science it is our job to build scientific studies best suited for clean statistical interpretation, build statistical models that best represent our biological questions, and interpret statistical results as statistical. We must always recenter biology in interpreting any statistical outcome.</p>
+<section id="scientific-statistical-models-the-clarkia-case-study" class="level3">
+<h3 class="anchored" data-anchor-id="scientific-statistical-models-the-clarkia-case-study">Scientific &amp; statistical models: The <em>Clarkia</em> case study</h3>
+<p>In our <em>Clarkia</em> example, the big-picture scientific model is that when <em>parviflora</em> came back into contact with its close relative, <em>xantiana</em>, it evolved traits — such as smaller petals — to avoid producing hybrids. No single statistical model or study fully captures this scientific model. Instead, we design experiments to evaluate pieces of the model. For example, we:</p>
+<ol type="1">
+<li><p><strong>Compare petal area</strong> between <em>parviflora</em> plants from populations that occur with <em>xantiana</em> (sympatric populations) and those from populations far away from <em>xantiana</em> (allopatric populations).</p></li>
+<li><p><strong>Conduct an experiment</strong> by planting individuals from sympatric and allopatric <em>parviflora</em> populations in the same environment as <em>xantiana</em>, and comparing the amount of hybrid seed set by plants from each origin.</p></li>
+<li><p><strong>Generate Recombinant Inbred Lines (RILs)</strong> between sympatric and allopatric <em>parviflora</em> populations, and examine whether petal area is associated with the proportion of hybrid seeds produced.</p></li>
+</ol>
+<p>As you can see, statistical models don’t “know” anything about biology — they simply describe patterns in data. It’s up to us, as biologists, to design experiments carefully, choose the right statistical models, and interpret results in light of our biological hypotheses.</p>
+</section>
+</section>
+<section id="linear-models" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="linear-models">Linear models</h2>
+<p>Linear models are among the most common types of statistical model. Linear models estimate the conditional mean of the <span class="math inline">\(i^{th}\)</span> observation of a uous response variable, <span class="math inline">\(\hat{Y}_i\)</span> for a (combination) of value(s) of the explanatory variables (<span class="math inline">\(\text{explanatory variables}_i\)</span>):</p>
+<p><span class="math display">\[\begin{equation}
+\hat{Y}_i = f(\text{explanatory variables}_i)
+\end{equation}\]</span></p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p><strong>Conditional mean:</strong> The expected value of a response variable given specific values of the explanatory variables (i.e., the model’s best guess for the response based on the explanatory variables).</p>
+</div></div><p>These models are “linear” because we get this estimate of the conditional mean, <span class="math inline">\(\hat{Y}_i\)</span>, by adding up all components of the model. That is, each explanatory variable <span class="math inline">\(y_{j,i}\)</span> is multiplied by its effect size <span class="math inline">\(b_j\)</span>. So, for example, <span class="math inline">\(\hat{Y}_i\)</span> equals the parameter estimate for the “intercept”, <span class="math inline">\(a\)</span> plus its value for the first explanatory variable, <span class="math inline">\(y_{1,i}\)</span>, times the effect of this variable, <span class="math inline">\(b_1\)</span>, plus its value for the second explanatory variable, <span class="math inline">\(y_{2,i}\)</span> times the effect of this variable, <span class="math inline">\(b_2\)</span>, and so on for all included predictors.</p>
+<p><span class="math display">\[\begin{equation}
+\hat{Y}_i = a + b_1  y_{1,i} + b_2 y_{2,i} + \dots{}
+\end{equation}\]</span></p>
+<div class="learnmore">
+<p><strong>OPTIONAL / ADVANCED, FOR MATH NERDS:</strong>. If you have a background in linear algebra, it might help to see a linear model in matrix notation.</p>
+<p>The first matrix below is known as the <em>design matrix</em>. Each row corresponds to an individual, and each entry in the <span class="math inline">\(i\)</span>th row corresponds to that individual’s value for a given explanatory variable. We take the dot product of this matrix and our estimated parameters to get the predictions for each individual. The equation below has <span class="math inline">\(n\)</span> individuals and <span class="math inline">\(k\)</span> explanatory variables. Note that every individual has a value of 1 for the intercept.</p>
+<p><span class="math display">\[\begin{equation}
+\begin{pmatrix}
+    1 &amp; y_{1,1} &amp; y_{2,1} &amp; \dots  &amp; y_{k,1} \\
+    1 &amp; y_{1,2} &amp; y_{2,2} &amp; \dots  &amp; y_{k,2} \\
+    \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    1 &amp; y_{1,n} &amp; y_{2,n} &amp; \dots  &amp; y_{k,n}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+    a \\
+    b_{1}\\
+    b_{2}\\
+    \vdots  \\
+     b_{k}
+\end{pmatrix}
+=
+\begin{pmatrix}
+    \hat{Y}_1 \\
+    \hat{Y}_2\\
+    \vdots  \\
+    \hat{Y}_n
+\end{pmatrix}
+\end{equation}\]</span></p>
 </div>
 </section>
-<section id="the-idea-of-ggplot" class="level2">
-<h2 class="anchored" data-anchor-id="the-idea-of-ggplot">The idea of <code>ggplot</code></h2>
-<div class="cell">
-<iframe src="https://www.youtube.com/embed/cqcQT44mJTM?end=64" width="672" height="400px" data-external="1">
-</iframe>
-</div>
-<p>As described in the <a href="https://www.youtube.com/watch?v=cqcQT44mJTM">video above</a> <code>ggplot</code> is based on the grammar of graphics, a framework for constructing plots by mapping data to visual aesthetics.. A major idea here is that plots are made up of data that we map onto aesthetic attributes, and that we build up plots layer by layer.</p>
-<p>Let’s unpack this sentence, because there’s a lot there. Say we wanted to make a very simple plot e.g.&nbsp;observations for categorical data, or a simple histogram for a single continuous variable. Here we are mapping this variable onto a single aesthetic attribute – the x-axis.</p>
-<div class="note">
-<p><strong>We are using the <code>ggplot2</code> package to make plots.</strong></p>
-<p>If you do not have ggplot2 installed, type:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>) <span class="co"># Do this the 1st time!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>If you have <code>ggplot2</code> installed or you just installed it, every time you start a new R session you still need to enter</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<div class="cell">
-<details class="code-fold">
-<summary>Show code to load and format the data set, so we are where we left off.</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(ril_link)<span class="sc">|&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(location,  ril, prop_hybrid,  mean_visits,  </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                petal_color, petal_area_mm,  asd_mm)<span class="sc">|&gt;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">visited =</span> mean_visits <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
+<section id="residuals-and-variance-in-linear-models" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="residuals-and-variance-in-linear-models">Residuals and Variance in Linear Models</h2>
+<p>As with a simple mean, actual observations usually differ from their predicted (conditional mean) values.<br>
+The difference between an observed value for an individual (<span class="math inline">\(Y_i\)</span>) and the predicted value from the linear model (<span class="math inline">\(\hat{Y}_i\)</span>) is called the residual, <span class="math inline">\(e_i\)</span>:</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p><strong>Residual:</strong> The difference between an observed value and its predicted value from a linear model (i.e., the conditional mean given that observation’s values for the explanatory variables).</p>
+</div></div><p><span class="math display">\[e_i = Y_i - \hat{Y}_i\]</span></p>
+<p>You can also rearrange this to think about it the other way around:</p>
+<p><span class="math display">\[Y_i = \hat{Y}_i + e_i\]</span></p>
+<p>Just like when we summarized variability around a simple mean, we can summarize variability around a model’s predictions by looking at the spread of the residuals. That is, linear models don’t just give us a conditional mean — they also give us a way to estimate how far observations tend to vary around that mean.</p>
+<p>We calculate the residual variance (and residual standard deviation) of the residuals like this:</p>
+<p><span class="math display">\[\text{Residual variance} = \frac{ \sum e_i^2}{n-1}\]</span></p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p><strong>A small caveat:</strong> The equation for the residual variance is a bit off — the denominator should actually be <span class="math inline">\(n - p\)</span>, where <span class="math inline">\(p\)</span> is the number of parameters estimated in our model (including the intercept). But it’s close enough for now. We can worry about being precise later — in much of statistics, being approximately right is good enough. <br><br> <br></p>
+</div></div><p>We can use the residual variance to find the residual standard deviation: <span class="math inline">\(\text{Residual standard deviation} = \sqrt{\frac{\sum e_i^2}{n-1}}\)</span>.</p>
+<p>We can think of the residual standard deviation as telling us, on average, how far away from their predicted value individuals are expected to be. In fact, when we calculated the pooled standard deviation earlier, we were already doing a special case of what we now call the residual standard deviation — just in the simple situation of two groups.</p>
 </section>
-<section id="making-ggplots" class="level2">
-<h2 class="anchored" data-anchor-id="making-ggplots">Making ggplots:</h2>
-<p>The following sections show how to make plots that:</p>
+<section id="assumptions-caveats-and-our-limited-ambitions" class="level2">
+<h2 class="anchored" data-anchor-id="assumptions-caveats-and-our-limited-ambitions">Assumptions, Caveats and our limited ambitions</h2>
+<p>In this section, we focus on building and interpreting linear models as descriptions of data. We will put off a formal discussion of what makes a linear model reasonable — and how to diagnose whether a model fits its assumptions — until later. In the meantime, as we build and interpret models, we’ll keep an informal eye out for clues that something might be wrong — but we’ll learn formal tools to evaluate if a specific model meets assumptions of a linear model later.</p>
+<p>This doesn’t mean that interpreting linear models is more important than evaluating whether they are any good (in fact, in real research, interpreting and evaluating models are inseparable). It just means it’s hard to teach a bunch of interconnected ideas and approaches all at once — and after years of experimentation, I’ve found this approach to be the most successful. That said, before you conduct any serious linear modeling work, you should definitely jump ahead and read <strong>PART 3</strong> of this book, where we discuss model assumptions and how to check them carefully.</p>
+</section>
+<section id="lets-get-started-introducing-linear-models-as-summaries" class="level2">
+<h2 class="anchored" data-anchor-id="lets-get-started-introducing-linear-models-as-summaries">Let’s get started introducing linear models as summaries!</h2>
+<p>Throughout this chapter we will model a single response variable – the proportion of hybrids that a mom produced. As you see below, much of this chapter recasts concepts you have already learned in the framework of a linear model.</p>
 <ul>
-<li><a href="intro_to_ggplot/one_continuous.html">Visualize the distribution of a single continuous variable</a>.<br>
-</li>
-<li><a href="intro_to_ggplot/saving_ggplots.html">Saving a ggplot</a>.<br>
-</li>
-<li><a href="intro_to_ggplot/cont_cat.html">Compare a continuous variable for different categorical variables</a>.<br>
-</li>
-<li><a href="intro_to_ggplot/two_categorical.html">Visualize associations between two categorical variables</a>.<br>
-</li>
-<li><a href="intro_to_ggplot/two_continuous.html">Visualize associations between two continuous variables</a>.<br>
-</li>
-<li><a href="intro_to_ggplot/many_explanatory.html">Visualize multiple explanatory variables</a>.</li>
+<li><p>We will start with the <a href="https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/linear_models/mean.html">simplest linear model – the mean</a>. While we have already introduced the mean, introducing it in the context of a linear model helps us prepare for our next steps!</p></li>
+<li><p>We will then introduce <a href="https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/linear_models/lm_cat_pred.html">linear models with an explanatory categorical predictor</a>. Starting with a binary predictor (petal color), we will recast our understanding of a conditional mean in the context of a linear model. We will then expand to a categorical explanatory variable with multiple levels (location).</p></li>
+<li><p>Next we show how <a href="https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/linear_models/regression.html">linear models can predict one numeric variable from another</a> – in this case we predict proportion hybrid seed from petal area. Building on our understanding of covariance and correlation, we introduce the slope and intercept.</p></li>
+<li><p>Finally we introduce <a href="https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/linear_models/two_predictors.html">linear models with two predictors</a>. Specifically, we extend beyond what we have learned so far - we build a linear model to predict a numeric response (proportion of hybrid seeds) from a categorical (petal color) and numeric (petal area) predictor.</p></li>
 </ul>
-<p>Then we <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summarySummary">summarize the chapter</a>, present a <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryChatbot">chatbot tutor</a>, <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryPractice_questions">practice questions</a>, a <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryGlossary_of_terms">glossary</a>, a review of <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryNew_r_functions">R functions</a> and <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryR_packages_introduced">R packages</a> introduced, and <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryAdditional_resources">provide links to additional resources</a>.</p>
-<p>Finally, for the true aficionados, I <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryGgploty">introduce ggplotly</a> as a great way to get to know your data.</p>
+<p>We conclude (as usual) with a <a href="https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/linear_models/lm_summary.html">chapter summary</a>, <a href="https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/linear_models/lm_summary.html#practice-questions">practice questions</a>, a <a href="https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/linear_models/lm_summary.html#glossary-of-terms">glossary</a>, a review of <a href="https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/linear_models/lm_summary.html#key-r-functions">R functions</a> and <a href="https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/linear_models/lm_summary.html#r-packages-introduced">R packages</a> introduced, and <a href="https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/linear_models/lm_summary.html#additional-resources">present additional resources</a>. On the whole, this chapter extends our ability to summarize data while preparing us for the more sophisticated linear modeling and hypothesis testing we will pursue later in the book.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-suzuki2014" class="csl-entry" role="listitem">
+Suzuki, Y., Endo, M., Cañas, C., Ayora, S., Alonso, J. C., Sugiyama, H., &amp; Takeyasu, K. (2014). Direct analysis of holliday junction resolving enzyme in a DNA origami nanostructure. <em>Nucleic Acids Research</em>, <em>42</em>(11), 7421–7428. <a href="https://doi.org/10.1093/nar/gku320">https://doi.org/10.1093/nar/gku320</a>
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -1501,13 +1430,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../book_sections/data_in_R/data_in_R_summary.html" class="pagination-link" aria-label="• 2. Data in R summary">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 2. Data in R summary</span>
+      <a href="../book_sections/associations/summarizing_associations.html" class="pagination-link" aria-label="• 6. Association Summary">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 6. Association Summary</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../book_sections/intro_to_ggplot/one_continuous.html" class="pagination-link" aria-label="• 3. A continuous variable">
-        <span class="nav-page-text">• 3. A continuous variable</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../book_sections/linear_models/mean.html" class="pagination-link" aria-label="• 7. Mean">
+        <span class="nav-page-text">• 7. Mean</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

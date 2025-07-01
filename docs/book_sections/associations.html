@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3. Introduction to ggplot – Applied Biostatistics</title>
+<title>6. Associations – Applied Biostatistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../book_sections/intro_to_ggplot/one_continuous.html" rel="next">
-<link href="../book_sections/data_in_R/data_in_R_summary.html" rel="prev">
+<link href="../book_sections/associations/cat_cont.html" rel="next">
+<link href="../book_sections/univariate_summaries/summarizing_summaries.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book_sections/intro_to_ggplot.html">3. Introduction to ggplot</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book_sections/associations.html">6. Associations</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -260,7 +260,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link active">
+            <a href="../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">3. Introduction to ggplot</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -395,7 +395,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../book_sections/associations.html" class="sidebar-item-text sidebar-link">
+            <a href="../book_sections/associations.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">6. Associations</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -628,7 +628,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="intro_to_ggplot" class="quarto-section-identifier">3. Introduction to ggplot</span></h1>
+<h1 class="title"><span id="associations" class="quarto-section-identifier">6. Associations</span></h1>
 </div>
 
 
@@ -646,226 +646,247 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<p><strong>Motivating scenario:</strong> you have a fresh new data set and want to check it out. How do you go about looking into it?</p>
-<p><strong>Learning goals: By the end of this chapter you should be able to</strong></p>
+<p><strong>Motivating Scenario:</strong><br>
+You’re curious to know the extent to which two variables are associated and need background on standard ways to summarize associations.</p>
+<p><strong>Learning Goals: By the end of this chapter, you should be able to:</strong></p>
 <ol type="1">
-<li>Know why we make plots.<br>
+<li><p><strong>Recognize the difference between correlation and causation</strong></p>
+<ul>
+<li>Memorize the phrase “<em>Correlation does not necessarily imply causation</em>,” explain what it means and why it’s important in statistics, and know that this is true of all measures of association.<br>
 </li>
-<li>Connect your plotting ideas to your biological motivation.<br>
+<li>Identify when correlation may or may not reflect a causal relationship.</li>
+</ul></li>
+<li><p><strong>Explain and interpret summaries of associations between two binary or two continuous variables</strong></p>
+<ul>
+<li>Describe associations between two binary variables using observed and expected joint probabilities.<br>
 </li>
-<li>Build and save a simple ggplot.<br>
+<li>Understand the mathematics behind covariance, correlation, and sums of cross products.<br>
 </li>
-<li>Explain the idea of mapping data onto aesthetics, and the use of different geoms.<br>
+<li>Use R to calculate and interpret summaries of association.<br>
 </li>
-<li>Match common plots to common data types.<br>
-</li>
-<li>Use geoms in ggplot to generate the common plots (above).</li>
+<li>Use R to visualize associations between variables.</li>
+</ul></li>
 </ol>
 </div>
-
-<div class="no-row-height column-margin column-container"><div class="cell">
-
-</div></div><hr>
-<section id="always-visualize-your-data." class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="always-visualize-your-data.">Always visualize your data.</h2>
-<p><a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe’s quartet</a> famously displays four data sets with identical summary statistics but very different interpretations (<a href="#fig-anscombe" class="quarto-xref">Figure&nbsp;<span>1</span></a>, <a href="#tbl-anscombe" class="quarto-xref">Table&nbsp;<span>1</span></a>). The key lesson from Anscombe’s quartet is that statistical summaries can miss the story in our data, and therefore must be accompanied by clear visualization of patterns in the data.</p>
-<div class="cell page-columns page-full" data-tbl-cap-location="bottom">
-<div id="tbl-anscombe" class="cell quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-cap-location="bottom">
-<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
-<div aria-describedby="tbl-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
-<div class="cell-output-display column-body">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">dataset</th>
-<th style="text-align: right;">sd.x</th>
-<th style="text-align: right;">sd.y</th>
-<th style="text-align: right;">cor</th>
-<th style="text-align: right;">mean.x</th>
-<th style="text-align: right;">mean.y</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">3.32</td>
-<td style="text-align: right;">2.03</td>
-<td style="text-align: right;">0.82</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">7.5</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2</td>
-<td style="text-align: right;">3.32</td>
-<td style="text-align: right;">2.03</td>
-<td style="text-align: right;">0.82</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">7.5</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">3</td>
-<td style="text-align: right;">3.32</td>
-<td style="text-align: right;">2.03</td>
-<td style="text-align: right;">0.82</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">7.5</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">4</td>
-<td style="text-align: right;">3.32</td>
-<td style="text-align: right;">2.03</td>
-<td style="text-align: right;">0.82</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">7.5</td>
-</tr>
-</tbody>
-</table>
+<hr>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(gc_rils)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell page-columns page-full" data-cap-location="margin">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-allcor" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="A matrix of plots showing pairwise relationships among variables in the Clarkia xantiana dataset. The matrix includes bar plots for categorical variables, histograms and density plots for distributions, scatterplots for continuous variables, and boxplots comparing continuous and categorical variables. Correlation coefficients are displayed in the upper triangle for numeric pairs. The figure visually summarizes a range of associations among traits such as petal color, pollinator visitation, petal area, anther–stigma distance, and hybridization rate." data-cap-location="margin">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-allcor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="associations_files/figure-html/fig-allcor-1.png" class="img-fluid figure-img" alt="A matrix of plots showing pairwise relationships among variables in the Clarkia xantiana dataset. The matrix includes bar plots for categorical variables, histograms and density plots for distributions, scatterplots for continuous variables, and boxplots comparing continuous and categorical variables. Correlation coefficients are displayed in the upper triangle for numeric pairs. The figure visually summarizes a range of associations among traits such as petal color, pollinator visitation, petal area, anther–stigma distance, and hybridization rate." width="864">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: Summary statistics for Anscombe’s quartet.
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-allcor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: A matrix of plots showing associations among several variables in the RIL dataset. It includes combinations of categorical and continuous variables related to floral traits, pollinator visitation, and hybrid seed formation. The diagonals show distributions of individual variables, while the upper triangle displays correlation coefficients, and the lower triangle shows scatterplots or boxplots depending on the variable type.
 </figcaption>
 </figure>
 </div>
 </div>
+</div>
+<article class="drop-cap">
+Summarizing a single variable can be illuminating – but we usually want to know more than that in our biostatistical adventures-we want to know about associations between variables. A careful study of <a href="#fig-allcor" class="quarto-xref">Figure&nbsp;<span>1</span></a> (plus a bit more information) shows some potentially interesting associations:
+</article>
+<ul>
+<li>Pink flowers seem to have a better chance of receiving at least one pollinator than do white flowers.<br>
+</li>
+<li>Despite our attempts to genetically disentangle floral traits by creating Recombinant Inbred Lines (RILs), an association between petal area and anther stigma distance remains. <br></li>
+</ul>
+<p>Of course, it’s not just the association between variables we care about — it’s what such associations imply. We want to:</p>
+<ul>
+<li>Predict one variable from another.<br>
+</li>
+<li>Anticipate what some intervention will do to a biological system.</li>
+</ul>
+<p>In future chapters we will see when and how we can achieve these higher goals. But for now, know that while such goals are noble,</p>
+<blockquote class="blockquote">
+<p>We cannot make causal claims or even good predictions from correlations alone.</p>
+</blockquote>
+<section id="correlation-is-not-causation" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="correlation-is-not-causation">Correlation is not causation</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-anscombe" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A set of four scatterplots, each displaying a different dataset known as Anscombe’s Quartet. Despite having nearly identical statistical summaries, the plots show distinct patterns: one appears as a typical linear relationship, another is curved, a third has a vertical outlier, and the fourth consists of nearly identical points with one extreme value. This highlights the importance of data visualization in statistical analysis.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="intro_to_ggplot_files/figure-html/fig-anscombe-1.png" class="img-fluid figure-img" alt="A set of four scatterplots, each displaying a different dataset known as Anscombe’s Quartet. Despite having nearly identical statistical summaries, the plots show distinct patterns: one appears as a typical linear relationship, another is curved, a third has a vertical outlier, and the fourth consists of nearly identical points with one extreme value. This highlights the importance of data visualization in statistical analysis." width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Four datasets with identical summary statistics but distinct visual patterns. Each panel represents a dataset with nearly identical means (shown in red), variances, correlations, and regression lines (shown in blue), yet their scatterplots reveal strikingly different structures.
-</figcaption>
+<div>
+<figure class="figure">
+<p><img src="../figs/summarizing_data/associations/corneqcaus.png" class="img-fluid figure-img" width="705"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Therefore before diving into formal analysis, we always generate <strong>exploratory plots</strong> to uncover key patterns, detect data quality issues, and reveal the underlying structure of the data. One quick exploratory plot is rarely enough though, as you get to know and model your data, you will develop additional visualizations to dig deeper into the story.</p>
-<p>Ultimately, after a combination of exploratory plots, summary statistics, and statistical modelling has helped you understand the data, you will generate well-crafted <strong>explanatory plots</strong> to communicate your insight elegantly to your audience. We will focus on the process of making explanatory plots in a later chapter.</p>
-<div class="protip">
-<p><strong>Detect data quality issues early</strong> It is common to split up data collect to a team and maybe someone enters data in centimeters, and someone else in inches (etc). Or maybe for a data point or two a decimal point was lost, a value is way bigger than it should be. Everytime you collect and enter data you should make some plots to help identify any such data issues.</p>
-</div>
-<hr>
-</section>
-<section id="focus-on-biological-questions." class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="focus-on-biological-questions.">Focus on biological questions.</h2>
-<p>Before starting your R coding, consider the plots you want to make and why. It is all too easy to get stuck in the R vortex—making plots simply because they’re easy to create, visually appealing, fun, or challenging, and before you know it you’ve wasted an hour doing something that did not move your analysis or understanding forward. So before make a (set of) plot(s) always consider</p>
+<p><strong>“Correlation is not causation.”</strong> You’ve probably heard that before — but what does it actually mean? Let’s start by unpacking the two key concepts in that statement:</p>
 <ul>
-<li><strong>The thing you want to know</strong>, and how it relates to the motivating biology. This includes
+<li><strong>Correlation</strong> means that two variables are associated.
 <ul>
-<li>Identifying explanatory and response variables, and</li>
-<li>Distinguishing between key explanatory variables from covariates that you may not care about but need to include.<br>
+<li>A positive association means that when one variable is large (or small) the other is often big (or large).<br>
 </li>
+<li>A negative association means that when one variable is large (or small) the other is often small (or large).</li>
 </ul></li>
-<li><strong>That the visualization of data reflects your biological motivation</strong>.This is particularly tricky for categorical variables which R loves to put in alphabetical order but may likely have a reasonable order to highlight patterns or biology.</li>
-</ul>
-<hr>
-<p><strong>For the</strong> <strong><em>Clarkia</em></strong> <strong>RIL datasets:</strong>.</p>
-<p>We primarily want to know which (if any) phenotypes influence the amount of pollinator visitation and hybrid seed formation.</p>
-<ul>
-<li>Our response variables are hybrid seed production and pollinator visitation (and perhaps we would like to know the extent to which pollinator visitation predicts the proportion of hybrid seed).<br>
-</li>
-<li>Our explanatory variables that we care a lot about include: petal area, petal color, herkogamy, protandry etc… We also want to account for differences in the location of the experiment, even though this is not motivating our study.<br>
-</li>
-<li>We also may want to evaluate the extent to which correlation between traits were broken up as we made the RILs. If trait correlations persists in the RILs it means that we cannot fully dissect the contribution of each trait to the outcome we care about, and that the genetic and/or physiological linkage between traits may have prevented evolution from acting independently on these traits.<br>
-</li>
-<li>In this case there is not a natural order to our categorical variables, so we do not need to think too hard about that.</li>
+<li><strong>Causation</strong> means that changing one variable produces a change in the other. (For a deeper dive, see <a href="https://en.wikipedia.org/wiki/Causality">Wikipedia</a>.)</li>
 </ul>
 <div class="cell page-columns page-full">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-sketch" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-train" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<video src="../figs/intro_to_R/intro_to_ggplot/webbshasta%20-%201263894431268106241.mp4" class="img-fluid" controls=""><a href="../figs/intro_to_R/intro_to_ggplot/webbshasta - 1263894431268106241.mp4">Video</a></video>
+<div aria-describedby="fig-train-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<video src="../figs/summarizing_data/associations/AmeetRKini%20-%201186491285919731713.mp4" class="img-fluid" controls=""><a href="../figs/summarizing_data/associations/AmeetRKini - 1186491285919731713.mp4">Video</a></video>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: <a href="https://x.com/webbshasta/status/1263894431268106241">Tweet</a> from <a href="https://www.shastawebb.com/">Shasta E. Webb</a> (@webbshasta) about how she makes a plot. “My approach to figure-making in #ggplot ALWAYS begins with sketching out what I want the final product to look like. It feels a bit analog but helps me determine which #geom or #theme I need, what arrangement will look best, &amp; what illustrations/images will spice it up. #rstats”
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-train-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: This man is not starting and stopping the train. (<a href="https://x.com/universoviral/status/1155765554583613441">tweet</a>)
 </figcaption>
 </figure>
 </div>
 </div></div></div>
-<p><strong>Let’s sketch some potential plots to address these questions</strong>.</p>
-<p>I recommend sketching out what you want your plot to look like and what alternative results would look like (<a href="#fig-sketch" class="quarto-xref">Figure&nbsp;<span>2</span></a>). This helps to ensure that you are making the plot you want, not the one R gives you. In this case, some potentially important questions are:</p>
+<p>Correlation is often confused for causation because it’s easy to assume that if two things are associated, one must be causing the other — especially when the association feels intuitive or lines up with our expectations, but this is wrong. While correlation may hint at causation, a direct cause is neither necessary nor sufficient to generate a correlation. Take the video in <a href="#fig-train" class="quarto-xref">Figure&nbsp;<span>2</span></a> – an alien might think this man is starting and stopping the train, but clearly he has nothing to do with the train starting or stopping.</p>
+<p>There are three basic reasons why and when we can have a correlation without a causal relationship– Coincidence, Confound, and Reverse causation.</p>
 <ul>
-<li>What is the distribution of the number of pollinator visits?</li>
-<li>Do we see different visitation by location?<br>
-</li>
-<li>Are pink flowers more likely to be visited than white flowers?<br>
-</li>
-<li>How does the number of visits change with petal area, and does this depend on petal color?<br>
-</li>
-<li>Does pollinator visitation predict hybridization rate?</li>
+<li><strong>Coincidence:</strong> Chance is surprisingly powerful. In a world full of many possible combinations between variables, some strong associations will arise purely by luck. Later sections of the book will show how to evaluate the “NULL” hypothesis that an observed association arose by chance.</li>
 </ul>
-<p>See <a href="#fig-clarkia_sketch" class="quarto-xref">Figure&nbsp;<span>3</span></a> for examples of how these may look.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-clarkia_sketch" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div class="cell page-columns page-full" data-fg-alt="Three scatterplots labeled A, B, and C, showing pairwise relationships among traits in parviflora recombinant inbred lines. Plot A shows a positive relationship between anther–stigma distance and proportion hybrid. Plot B shows a positive association between petal area and anther–stigma distance. Plot C shows a positive association between petal area and proportion hybrid. Each plot includes a fitted regression line. Together, these plots suggest that petal area might confound the relationship between anther–stigma distance and hybridization rate.">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-confound" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-clarkia_sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../figs/intro_to_R/intro_to_ggplot/clarkia_sketch.png" class="img-fluid figure-img" width="753">
+<div aria-describedby="fig-confound-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="associations_files/figure-html/fig-confound-1.png" class="img-fluid figure-img" width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-clarkia_sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Brainstorming potential figures.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-confound-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: <strong>Potential confounding</strong> in parviflora RILs. The observed association between proportion hybrid seed and anther–stigma distance (<strong>A</strong>), might be due to the fact that both anther–stigma distance (<strong>B</strong>), and proportion hybrid seed increases with petal area (<strong>C</strong>), rather than a causal effect of anther–stigma distance itself.<br><br><br>
+</figcaption>
+</figure>
+</div>
+</div></div></div>
+<ul>
+<li><strong>Confounding:</strong> An association between two variables may reflect not a causal connection between them – but rather the fact that both are caused by a third variable (known as a confound). Such confounding may be at play in our RIL data – we observe that anther–stigma distance is associated with the proportion hybrid seed, but anther–stigma distance is also associated petal area (presumably because both are caused by flower growth), which itself is associated with the proportion of hybrids (<a href="#fig-confound" class="quarto-xref">Figure&nbsp;<span>3</span></a>). So, does petal area or anther stigma distance (or both or neither) cause an increase in proportion of hybrid seed? The answer awaits better data, or at least better analyses (see section on causal inference), but I suspect that petal area, not anther stigma distance “causes” proportion hybrid. Unfortunately, we rarely know the confound, let alone its value. So, interpreting any association as causation requires exceptional caution.</li>
+</ul>
+<ol start="3" type="1">
+<li><strong>Reverse causation:</strong> <a href="#fig-switchx" class="quarto-xref">Figure&nbsp;<span>4</span></a> shows that pink flowers are more likely to receive a pollinator than are white flowers. We assume this means that pink attracts pollinators– and with the caveat that we must watch out for coincidence and confounds, this conclusion makes sense. However, an association alone cannot tell if pink flowers attracted pollinators or if pollinator visitation turned plants pink. In this case the answer is clear – petal color was measured for RILs in the greenhouse, and there’s no biological mechanism by which a pollinator could change petal color. However, these answers require us to bring in biological knowledge – the data alone can’t tell us which way the effect goes.</li>
+</ol>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-switchx" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two bar plots showing the relationship between petal color (pink or white) and pollinator visitation (visited or not visited). The left plot places visit status on the x-axis and shows the proportion of pink and white flowers within each visit category. The right plot reverses this, placing petal color on the x-axis and showing the proportion of flowers that were visited or not. Both plots show that pink flowers are more likely to be visited, but the choice of x-axis can influence how we interpret the relationship, emphasizing the importance of considering — but not assuming — causal direction.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-switchx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="associations_files/figure-html/fig-switchx-1.png" class="img-fluid figure-img" alt="Two bar plots showing the relationship between petal color (pink or white) and pollinator visitation (visited or not visited). The left plot places visit status on the x-axis and shows the proportion of pink and white flowers within each visit category. The right plot reverses this, placing petal color on the x-axis and showing the proportion of flowers that were visited or not. Both plots show that pink flowers are more likely to be visited, but the choice of x-axis can influence how we interpret the relationship, emphasizing the importance of considering — but not assuming — causal direction." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-switchx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: <strong>Visualizing an association between petal color and pollinator visitation.</strong> Both panels show that pink-petaled flowers are more likely to be visited by pollinators than white-petaled flowers. In the left panel, visit status is on the x-axis and petal color is shown within bars; in the right panel, petal color is on the x-axis and visit status is shown within bars. While the association is the same, the visual framing shifts the way we interpret direction — we typically place and think of explanatory variables (causes) on the x-axis and outcomes on the y-axis. However, these alternative visualizations make it clear that the data cannot speak to cause.
+</figcaption>
+</figure>
+</div>
+</div></div></div>
+<p>This issue isn’t just theoretical — I’m currently grappling with a real case in which the direction of causation is unclear. In natural hybrid zones, white-flowered <em>parviflora</em> plants tend to carry less genetic ancestry from <em>xantiana</em> (their sister taxon) than do pink-flowered <em>parviflora</em> plants. There are two potential explanations for this observation:</p>
+<ol type="1">
+<li><p>Perhaps, as the RIL data suggests, white-flowered <em>parviflora</em> plants are less likely to hybridize with <em>xantiana</em> than are pink-flowered <em>parviflora</em>, so white-flowered plants have less <em>xantiana</em> ancestry (pink flowers cause more gene flow).</p></li>
+<li><p>Alternatively, all <em>xantiana</em> are pink-flowered, white-flowered <em>parviflora</em> can be white or pink. So maybe the pink flowers are actually caused by ancestry inherited from <em>xantiana</em> (more gene flow causes pink flowers).</p></li>
+</ol>
+<p>I do not yet know the answer.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YANIV ADD FIGURE FROM SHELLEY</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Making things independent
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If we cannot break the association between anther stigma distance and petal area by genetic crosses maybe we could do so by physical manipulation. For example, we could use tape or some other approach to move stigmas closer to or further from anthers.</p>
+</div>
+</div>
+</div>
+<section id="causation-without-correlation" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="causation-without-correlation">Causation without correlation</h3>
+<p><strong>Not only does correlation not imply causation, but we can have causation with no association.</strong></p>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-VORP" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatterplot showing NBA players' height (x-axis) versus their Value Over Replacement Player (VORP) (y-axis). Each point represents a player. A faint blue regression line runs slightly upward but remains almost flat, illustrating a very weak positive association between height and VORP. Notable players are labeled: Shai Gilgeous-Alexander (6'4.5&quot;), Giannis Antetokounmpo (6'11&quot;), and Nikola Jokić (6'11.5&quot;). The plot visually emphasizes that despite differences in height, there is little to no clear relationship between a player’s height and their value contribution above replacement level.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-VORP-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="associations_files/figure-html/fig-VORP-1.png" class="img-fluid figure-img" alt="Scatterplot showing NBA players' height (x-axis) versus their Value Over Replacement Player (VORP) (y-axis). Each point represents a player. A faint blue regression line runs slightly upward but remains almost flat, illustrating a very weak positive association between height and VORP. Notable players are labeled: Shai Gilgeous-Alexander (6'4.5&quot;), Giannis Antetokounmpo (6'11&quot;), and Nikola Jokić (6'11.5&quot;). The plot visually emphasizes that despite differences in height, there is little to no clear relationship between a player’s height and their value contribution above replacement level." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-VORP-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: No relationship between height and Value over Replacement Player in the 2024-2025 NBA season.
+</figcaption>
+</figure>
+</div>
+</div></div></div>
+<p>No one will doubt that height gives a basketball player an advantage. Yet if we look across all NBA players, we see no relationship between height and standard measures of player success (e.g.&nbsp;salary, or “Value of Replacement Player” etc <a href="#fig-VORP" class="quarto-xref">Figure&nbsp;<span>5</span></a>), How can this be? The answer is that to make it to the NBA you have to be very good or very tall (and usually both) – so (6 foot 4, Shai Gilgeous-Alexander) has a value just a bit higher than (6 foot 11) Giannis Antetokounmpo.</p>
+<p>A related, but different issue – known as <a href="https://en.wikipedia.org/wiki/Countergradient_variation"><strong>Countergradient variation</strong></a> is observed in ecological genetics. Here, measures of some trait, like growth rate, are similar across the species range (e.g.&nbsp;between northern and southern populations), but when grown in a common environment, the populations differ (e.g.&nbsp;the northern population grows faster). This might reflect divergence among population as a consequence of natural selection that may favor greater efficiency or acquisition of energy in northern regions.</p>
+</section>
+</section>
+<section id="making-predictions-is-hard" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="making-predictions-is-hard">Making predictions is hard</h2>
+<blockquote class="blockquote">
+<p>Making predictions is hard, especially about the future.</p>
+<p>– Attributed to Yogi Berra</p>
+</blockquote>
+<p>Associations describe data we have – they do not necessarily apply to other data. Of course, understanding such associations might help us make predictions, but we must consider the range and context of our data.</p>
+
+<div class="no-row-height column-margin column-container"><div class="cell">
+<iframe src="https://www.youtube.com/embed/2iiw4Z95pgE?si=ic-tbiX10wUajp2e" width="100%" height="400px" data-external="1">
+</iframe>
+</div></div><p>Their are different kinds of predictions we might want to make.</p>
+<ul>
+<li><p>We may want to predict what we would expect for unsampled individuals from the same population as we are describing. In this case, a statistical association can be pretty useful.</p></li>
+<li><p>We may want to predict what we would expect for individuals from a different population than what we are describing. In this case, a statistical association might help, but need some care.</p></li>
+<li><p>We may want to predict what we would expect if we experimentally changed one of the value of an explanatory variable (e.g.&nbsp;if “I experimentally decreased anther-stigma distance, would plants set more hybrid seed?”) This is a causal prediction!</p></li>
+</ul>
+<p>Misalignment between expectations and the reality is a common trope in comedy and drama. For example, hilarity may ensue when an exotic dancer in a firefighter or police costume is mistaken for a true firefighter or policeman (See the scene from <a href="https://en.wikipedia.org/wiki/Arrested_Development">Arrested Development</a> on the right (<a href="https://www.youtube.com/watch?v=2iiw4Z95pgE">youtube link</a>)). Such jokes show that we have an intuitive understanding that predictions can be wrong, and that the context plays a key role in our ability to make good predictions.</p>
+<p>We again see such a case in our RIL data - leaf water content reliably predicts the proportion of hybrid seed set at three experimental locations, but is completely unrelated to proportion of hybrid seed at Upper Sawmill Road (location: US, <a href="#fig-lwc" class="quarto-xref">Figure&nbsp;<span>6</span></a>).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code to make the plot, below.</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(ril_data, <span class="sc">!</span><span class="fu">is.na</span>(location)) <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span> lwc,<span class="at">y =</span>prop_hybrid))<span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>location,<span class="at">labeller =</span> <span class="st">"label_both"</span>,<span class="at">nrow=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> .<span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">linewidth =</span> <span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Leaf water content"</span>, </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Proportion hybrid"</span>)<span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(.<span class="dv">78</span>,.<span class="dv">88</span>,.<span class="dv">04</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-lwc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lwc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="associations_files/figure-html/fig-lwc-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lwc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: <strong>Predictions might not generalize.</strong> The proportion of hybrid seed set reliably decreases with leaf water content in three locations (GC, LB, SR), but at the upper sawmill road site (US), there is no clear relationship. This cautions against assuming generalizable predictive patterns across environments.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="the-idea-of-ggplot" class="level2">
-<h2 class="anchored" data-anchor-id="the-idea-of-ggplot">The idea of <code>ggplot</code></h2>
-<div class="cell">
-<iframe src="https://www.youtube.com/embed/cqcQT44mJTM?end=64" width="672" height="400px" data-external="1">
-</iframe>
-</div>
-<p>As described in the <a href="https://www.youtube.com/watch?v=cqcQT44mJTM">video above</a> <code>ggplot</code> is based on the grammar of graphics, a framework for constructing plots by mapping data to visual aesthetics.. A major idea here is that plots are made up of data that we map onto aesthetic attributes, and that we build up plots layer by layer.</p>
-<p>Let’s unpack this sentence, because there’s a lot there. Say we wanted to make a very simple plot e.g.&nbsp;observations for categorical data, or a simple histogram for a single continuous variable. Here we are mapping this variable onto a single aesthetic attribute – the x-axis.</p>
-<div class="note">
-<p><strong>We are using the <code>ggplot2</code> package to make plots.</strong></p>
-<p>If you do not have ggplot2 installed, type:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>) <span class="co"># Do this the 1st time!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>If you have <code>ggplot2</code> installed or you just installed it, every time you start a new R session you still need to enter</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<div class="cell">
-<details class="code-fold">
-<summary>Show code to load and format the data set, so we are where we left off.</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(ril_link)<span class="sc">|&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(location,  ril, prop_hybrid,  mean_visits,  </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                petal_color, petal_area_mm,  asd_mm)<span class="sc">|&gt;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">visited =</span> mean_visits <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
+<section id="there-is-still-value-in-finding-associations" class="level2">
+<h2 class="anchored" data-anchor-id="there-is-still-value-in-finding-associations">There is still value in finding associations</h2>
+<p>The caveats above are important, but they should not stop us from finding associations. With appropriate experimental designs, statistical analyses, biological knowledge, and humility in interpretation, quantifying associations is among the most important ways to summarize and understand data.</p>
+<p>The following sections provide the underlying logic, mathematical formulas, and R functions to summarize associations.</p>
 </section>
-<section id="making-ggplots" class="level2">
-<h2 class="anchored" data-anchor-id="making-ggplots">Making ggplots:</h2>
-<p>The following sections show how to make plots that:</p>
+<section id="lets-get-started-with-summarizing-associations" class="level2">
+<h2 class="anchored" data-anchor-id="lets-get-started-with-summarizing-associations">Let’s get started with summarizing associations!</h2>
+<p>The following sections introduce how to summarize associations between variables by:</p>
 <ul>
-<li><a href="intro_to_ggplot/one_continuous.html">Visualize the distribution of a single continuous variable</a>.<br>
+<li><a href="associations/cat_cont.html">Describing associations between a categorical explanatory and numeric response variable</a> including <a href="associations/cat_cont.html#cat_cont_summarizing-associations-difference-in-conditional-means">differences in conditional means</a>, and <a href="associations/cat_cont.html#cat_cont_summarizing-associations-cohens-d">Cohen’s D</a>, and tools for <a href="associations/cat_cont.html#cat_cont_visualizing-a-categorical-x-and-numeric-y">visualizing associations between a categorical explanatory variable and a numeric response</a>.<br>
 </li>
-<li><a href="intro_to_ggplot/saving_ggplots.html">Saving a ggplot</a>.<br>
+<li><a href="associations/two_categorical_vars.html">Describing associations between two categorical variables</a>, including <a href="associations/two_categorical_vars.html#two_categorical_vars_deviation-from-independence-conditional-proportions">differences in conditional proportions</a>, and the <a href="associations/two_categorical_vars.html#two_categorical_vars_deviations-from-independence-the-covariance">covariance</a>.<br>
 </li>
-<li><a href="intro_to_ggplot/cont_cat.html">Compare a continuous variable for different categorical variables</a>.<br>
-</li>
-<li><a href="intro_to_ggplot/two_categorical.html">Visualize associations between two categorical variables</a>.<br>
-</li>
-<li><a href="intro_to_ggplot/two_continuous.html">Visualize associations between two continuous variables</a>.<br>
-</li>
-<li><a href="intro_to_ggplot/many_explanatory.html">Visualize multiple explanatory variables</a>.</li>
+<li><a href="associations/cont_cont.html">Describing associations between two continuous variables</a>, including the <a href="associations/cont_cont.html#cont_cont_the-covariance">covariance</a> and the <a href="associations/cont_cont.html#cont_cont_the-correlation">correlation</a>.</li>
 </ul>
-<p>Then we <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summarySummary">summarize the chapter</a>, present a <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryChatbot">chatbot tutor</a>, <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryPractice_questions">practice questions</a>, a <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryGlossary_of_terms">glossary</a>, a review of <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryNew_r_functions">R functions</a> and <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryR_packages_introduced">R packages</a> introduced, and <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryAdditional_resources">provide links to additional resources</a>.</p>
-<p>Finally, for the true aficionados, I <a href="intro_to_ggplot/ggplot_summary.html#ggplot_summaryGgploty">introduce ggplotly</a> as a great way to get to know your data.</p>
+<p>Then we <a href="#summarizing_associations">summarize the chapter</a>, present <a href="associations/summarizing_associations.html#summarizing_associations_practice-questions">practice questions</a>, a <a href="associations/summarizing_associations.html#summarizing_associations_glossary-of-terms">glossary</a>, a review of <a href="associations/summarizing_associations.html#summarizing_associations_key-r-functions">R functions</a> and <a href="associations/summarizing_associations.html#summarizing_associations_r-packages-introduced">R packages</a> introduced, and <a href="associations/summarizing_associations.html#summarizing_associations_additional-resources">present additional resources</a>.</p>
+<p>Luckily, these summaries are remarkably similar, so much of the learning in each section of this chapter reinforces what was learned in the others.</p>
 
 
 </section>
@@ -1501,13 +1522,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../book_sections/data_in_R/data_in_R_summary.html" class="pagination-link" aria-label="• 2. Data in R summary">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 2. Data in R summary</span>
+      <a href="../book_sections/univariate_summaries/summarizing_summaries.html" class="pagination-link" aria-label="• 5. Summarizing summary">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 5. Summarizing summary</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../book_sections/intro_to_ggplot/one_continuous.html" class="pagination-link" aria-label="• 3. A continuous variable">
-        <span class="nav-page-text">• 3. A continuous variable</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../book_sections/associations/cat_cont.html" class="pagination-link" aria-label="• 6. Categorical + numeric">
+        <span class="nav-page-text">• 6. Categorical + numeric</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
