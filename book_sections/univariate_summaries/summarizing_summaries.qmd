@@ -1,0 +1,468 @@
+## • 5. Summarizing summary {.unnumbered}
+
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr' ,'ggplot2', 'palmerpenguins']
+  autoload-packages: true
+---
+
+
+Links to: [Summary](#summarizing_summaries_chapter-summary). [Chatbot tutor](#data_in_R_summaryChatbot) [Questions](#summarizing_summaries_practice-questions). [Glossary](#summarizing_summaries_glossary-of-terms). [R functions](#summarizing_summaries_key-r-functions). [R packages](#summarizing_summaries_r-packages-introduced). [More resources](#summarizing_summaries_additional-resources).  
+
+
+  
+
+## Chapter Summary  
+
+
+
+```{r}
+#| echo: false
+#| column: margin
+#| fig-alt: "A close-up photograph of a vibrant pink *Clarkia xantiana* flower with delicate, deeply lobed petals. The petals have a soft gradient, fading from a rich pink at the center to a lighter shade towards the edges. The reproductive structures—dark purple stamens with pollen-covered anthers and a protruding stigma—are prominently visible. The background is softly blurred, showing additional flowers and green stems in what appears to be a greenhouse or controlled growth environment."
+#| fig-cap: "A beautiful *Clarkia xantiana* flower."
+library(knitr)
+library(webexercises)
+include_graphics("../../figs/pretty_stressed_clarkia.png")
+```
+
+Because they can be used to parameterize an entire distribution, the mean and variance (or its square root, the standard deviation) are the most common summaries of a variable’s center and spread. However, these summaries are most meaningful when the data resemble a bell curve. To make informed choices about how to summarize a variable, we must first consider its shape, typically visualized with a histogram.  When data are skewed or uneven, we can either transform the variable to make its distribution more balanced, or use alternative summaries like the median and interquartile range, which better capture the center and spread in such cases.
+
+### Chatbot tutor   {#data_in_R_summaryChatbot}  
+
+:::tutor
+Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/g-683138e4af688191a0d0fe7c9a3badc4-univariate-summaries-tutor)) I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+:::
+
+
+
+## Practice Questions  {#summarizing_summaries_practice-questions}      
+
+
+Try these questions! By using the R environment you can work without leaving this "book".  
+
+
+
+
+
+::: {.panel-tabset group="language"}
+### Iris  
+
+```{webr-r}
+library(ggplot2)
+library(dplyr)
+
+iris |>
+  ggplot(aes(x = Sepal.Width, fill = 'white'))+
+  geom_histogram(bins = 10)
+```  
+
+### Faithful  
+
+```{webr-r}
+library(ggplot2)
+library(dplyr)
+
+ggplot(faithful, aes(x =  waiting))+
+  geom_histogram(bins = 4, color = white)
+```  
+
+### Rivers
+
+
+```{webr-r}
+library(ggplot2)
+library(dplyr)
+
+tibble(rivers = rivers) |>
+  mutate(log10_rivers = __) |> 
+  ggplot(aes(x = log10_rivers))+
+  geom_histogram(bins = ____ )
+
+```
+
+:::  
+
+:::exercises
+
+**The tabs above** -- Iris, Faithful, and Rivers -- all attempt to make histograms, but include errors, and may have improper bin sizes.  (Click the Iris  tab if they are initially empty).
+
+
+**Q1)** Iris, Faithful, and Rivers -- all attempt to make histograms, but include errors. Which code snippet makes the best version of the Iris plot
+ (ignoring bin size)? `r longmcq(c("ggplot(iris,aes(x = Sepal.Width, fill = \'white\'))+ geom_histogram()", "ggplot(iris,aes(x = Sepal.Width, color = \'white\'))+ geom_histogram()", answer = "ggplot(iris,aes(x = Sepal.Width))+ geom_histogram(color = \'white\')", "ggplot(iris,aes(x = Sepal.Width))+ geom_histogram(color = white)", "ggplot(iris,aes(x = Sepal.Width))+ geom_histogram(fill = 'white')"))`  
+
+
+---  
+
+**Before addressing this set of questions fix the errors in the histograms of Iris, Faithful, and Rivers, and adjust the bin size of each plot until you think it is appropriate.**  (Click any of the tabs if they are initially empty).  
+
+
+**Q2a)** Which variable is best described as bimodal? `r mcq(c("Iris sepal width", answer = "Waiting time between eruptions of old faithful.", "log-10 river length"))`
+
+**Q2b)** Which variable is best described as unimodal and symmetric? `r mcq(c( answer =  "Iris sepal width", "Waiting time between eruptions of old faithful.", "log-10 river length"))`
+
+**Q2c)** Which variable is best described as unimodal and right skewed? `r mcq(c(   "Iris sepal width", "Waiting time between eruptions of old faithful.", answer = "log-10 river length"))`
+
+---  
+
+:::
+
+
+
+### Penguins
+
+```{webr-r}
+library(palmerpenguins)
+library(ggplot2)
+library(dplyr)
+
+penguins |>
+  group_by(species)|>
+  summarise(n_samples = n(),
+     sum_mass = sum(body_mass_g, na.rm = TRUE),
+     mean_mass_1 = sum_mass / n_samples,
+     mean_mass_2 = mean(body_mass_g, na.rm = T))
+```
+
+:::exercises
+
+**Q3)** I calculate means in two different ways above and get different answers. Which is correct? `r mcq(c("mean_mass_1",  answer= "mean_mass_2", "it depends"))`
+
+**Q4)** What went wrong in calculating these means?  `r longmcq(c(answer = "n()  counts the number of entries, but we need the number of non-NA entries.",  "na.rm should be set to TRUE, not T", "The denominator for the mean is (n - 1), not n.", "Nothing -- they are both potentially correct depedning on your goals."))`
+
+
+---  
+
+**Q5)** Accounting for species differences in mean body mass, which penguin species shows the greatest variability in body mass? `r mcq(c(answer = "Adelie", "Chinstrap", "Gentoo" ))`
+
+
+`r hide("Click here for code")`
+
+```{r}
+#| message: false
+#| warning: false
+library(palmerpenguins)
+library(ggplot2)
+library(dplyr)
+
+penguins |>
+  group_by(species)|>
+  summarize(mean_mass = mean(body_mass_g, na.rm = T),
+            sd_mass   = sd(body_mass_g, na.rm = T),
+            coef_var_mass =   sd_mass / mean_mass 
+  )
+```
+
+`r unhide()`. 
+
+---
+
+**For the next set of questions consider the boxplot below,** which summarizes the level of Lake Huron in feet every year from 1875 to 1972. 
+
+```{r}
+#| fig.width: 7
+#| fig.height: 1.5
+#| echo: false
+#| message: false
+#| warning: false
+ggplot(tibble(LakeHuron), aes(x =LakeHuron))+
+    geom_boxplot(varwidth = .5)+scale_y_continuous(limits = c(-.6,.6))
+
+```
+
+
+
+
+**Q6a)** The mean is roughly   `r longmcq(c("Six", answer = "One and three quarters", "Five hundred and seventy nine" , answer =  "We cannot estimate the mean from this plot."))`
+
+
+**Q6b)** The median is roughly   `r longmcq(c("Six", answer = "One and three quarters", answer =  "Five hundred and seventy nine" , "We cannot estimate the median from this plot."))`
+
+**Q6c)** The mode is roughly   `r longmcq(c("Six", answer = "One and three quarters",  "Five hundred and seventy nine" ,  answer =  "We cannot estimate the mode from this plot."))`
+
+
+
+**Q6d)** The interquartile range is roughly   `r longmcq(c("Six", answer = "One and three quarters",  "The median", "Five hundred and seventy nine" , "We cannot estimate the IQR from this plot."))`
+
+**Q6e)** The  range is roughly   `r longmcq(c( answer =  "Six", "One and three quarters",  "The median",  "Five hundred and seventy nine" , "We cannot estimate the range from this plot."))`
+
+**Q6f)** The  variance  is roughly   `r longmcq(c("Six", "One and three quarters",  "The median",   "Five hundred and seventy nine" , answer = "We cannot estimate the variance from this plot."))`
+
+---  
+
+**Brooke planted RILs at four different locations,  and found tremendous variation in the proportion of hybrid seed across locations.** The first step in quantifying this variation is to calculate the sum of squares, so let's do it. Use the image below (@fig-ss) to calculates sum of squares for proportion hybrid seeds across plants planted at four different locations.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-height: 2.75
+#| label: fig-ss
+library(ggplot2)
+library(dplyr)
+source("../../_common.R") 
+tibble( location = c("GC","LB","SR","US"),
+        prop_hyb = c(0.15, 0.23,0.18,0.03))|>
+  mutate(grand_mean = round(mean(prop_hyb), digits = 2),
+         diff_from_mean = prop_hyb - grand_mean,
+         squared_diff = diff_from_mean^2,
+         group = factor(1:n()))|>
+  mutate(bigger = ifelse(diff_from_mean >=0 , prop_hyb, grand_mean),
+         smaller = ifelse(diff_from_mean <=0 , prop_hyb, grand_mean),
+         to_print = paste( "x = ", prop_hyb, sep= ""))|>
+  ggplot(aes(x = prop_hyb, y = prop_hyb))+
+  geom_hline(yintercept = c(.15  ), alpha = .4, color = "red")+
+  geom_vline(xintercept = c(.15  ), alpha = .4, color = "red")+
+  facet_wrap(~location, nrow=1, labeller = "label_both")+
+  scale_x_continuous(limits = c(0,.3), breaks = c(0,.15,.3), labels = c("0", ".15","0.3"))+
+  scale_y_continuous(limits = c(0,.3), breaks = c(0,.15,.3), labels = c("0", "0.15","0.3"))+
+  geom_rect( aes(xmax = bigger,xmin = smaller, ymax = bigger, ymin = smaller),
+             alpha = .8, fill = "pink")+
+  geom_point(size = 2, alpha = .5)+
+  geom_segment( aes(x = bigger,xend = smaller,  y = smaller, yend = smaller))+
+  geom_segment( aes(y = bigger,yend = smaller,  x = smaller, xend = smaller))+
+  geom_segment( aes(x = smaller,xend = bigger,  y = bigger, yend = bigger))+
+  geom_segment( aes(y = smaller,yend = bigger,  x = bigger, xend = bigger))+
+  geom_label(x = -.01, y = .28, aes(label = to_print), hjust = 0)+
+  labs(title = "Grand mean Proportion Hybrid = 0.15",  
+       x= "Proportion hybrid", y= "Proportion hybrid")
+
+```
+
+:::
+
+```{webr-r}
+# Use R as a calculator to find the sum of squares for the example above
+
+
+
+```
+
+:::exercises
+
+**Q7a)** The sum of squares for differences between proportion hybrids at each location and the grand mean equals:   `r fitb(0.0217,tol = .002)`   
+
+**Q7b)**  So **the variance is** `r fitb(0.0072,tol = .0006)`
+
+**Q7c)** The **standard deviation** is `r fitb(0.08485281,tol = 0.035)` 
+
+**Q7d)**  Accounting for differences in their means, how does the variability in the proportion of hybrid seed across locations compare to the variability in petal area among RILs? ([refer to this section for reference](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/univariate_summaries/summarizing_variability.html#parametric-summaries-of-variability-example))  `r longmcq(c( "They are very similar", "Petal area among RILs is roughly thirty times as variable", answer = "The proportion of hybrid seed among sites is roughly two times as variable", "You cannot compare variability for different traits measured on such different scales" ))` 
+
+
+`r hide("Click here for hint")`
+
+We can compare the variability of traits measured on different scales by dividing the standard deviation by the mean. This gives us the **coefficient of variation (CV)**, a standardized measure of spread.
+
+
+`r unhide()`. 
+
+**Q8)**  Why is it important to standardize by the mean when comparing variability between variables?   <br><br>  <html><textarea rows="6" cols="50" placeholder="Your answer here..."></textarea></html>
+
+```{r}
+#| eval: false
+#| echo: false
+#- **First:** Think and draft an answer.    
+#- **Then:** Interact with this chatbot to refine your answer.     
+
+
+#`r hide("This connects to GPT-4o-mini. Click here for my prompt")`
+
+#*My prompt:* "You are a helpful assistant for a statistics textbook. This is for college students and graduate students who have likely heard the terms mean median and mode before. This comes after our section on univariate summaries of shape, center and variability. The students have just had a homework question to 'compare the variability (accounting for differences in means) in proportion hybrid seed set across experimental field sites (measured as proportion) and petal area of Recombinant Inbred Lines aka RILs (measured in mm2)'. Help them work through this next question -- 'Why is it important to standardize by the mean when comparing variability between variables?'. Here are some rules for you. 1) Do not give any help until they hazard an attempt to answer the question, if they ask for help without trying to answer, say something like 'Im happy to help once you give it a first shot'. 2) Do not tell them the answer, but do guide them to the answer. 3) Be encouraging and supportive. 4) Do tell them when their answer is pretty good. 5) After their first attempt do give them hints, and work them through examples / logic. For example, you can work them through what the standard deviation in proportion hybrid seed would be if it was measured as percent rather than proportion, or what the standard deviation in petal area would be if it was measured in cm2 rather than mm2.  6) Remember 'good enough is good enough.' Once they have tried more than one AND have a complete sentence, which shows that they clearly understand this issue, say something like 'great job, this is good enough to submit -- but I am here to help you if you want to further refine your answer.' -- it can be annoying and dispiriting when you keep asking for a better version when the version the students have is already good. Ok enough rules, here is some additional useful context: the standard deviation in proportion hybrid seed across locations is  0.08165 and the mean is 0.15 (so the coefficient of variation is 0.566), while the standard deviation for petal area is 14.26, and the mean is 62 (so the coefficient of variation is 0.23)."
+
+#`r unhide()` 
+
+
+#<iframe src="../../chatbot_coef_var.html" width="100%" height="800px" style="border:0px solid #ccc;"></iframe>
+```
+
+:::
+
+## Glossary of Terms  {#summarizing_summaries_glossary-of-terms}   
+
+:::glossary
+
+#### 📐 **1. Shape and Distribution**
+
+- **Skewness**: A measure of asymmetry in a distribution.  
+  - *Right-skewed*: Most values are small, with a long tail of large values.  
+  - *Left-skewed*: Most values are large, with a long tail of small values.  
+
+- **Mode**: The most frequently occurring value (or values) in a dataset.  
+
+- **Unimodal / Bimodal / Multimodal**: Describes the number of peaks (modes) in a distribution.  
+  - *Unimodal*: One peak  
+  - *Bimodal*: Two peaks, possibly indicating two subgroups  
+  - *Multimodal*: More than two peaks  
+
+---
+
+#### 🔁 **2. Transformations and Data Shape**
+
+- **Transformation**: A mathematical function applied to data to change its shape or scale. Often used to reduce skew or satisfy model assumptions.
+
+- **Monotonic Transformation**: A transformation that preserves the order of values (e.g., if $x_1 > x_2$, then $f(x_1) > f(x_2)$). Required for valid shape-changing operations.
+
+- **Log Transformation (`log()`, `log10()`)**: Reduces right skew by compressing large values.  
+  - ✅ Use for right-skewed data (e.g., area, income, growth).  
+  - ⚠️ *Don’t use with zero or negative values* — log is undefined in those cases. A workaround is `log(x + 1)` for count data.
+
+- **Square Root Transformation (`sqrt()`)**: Less aggressive than log. Preserves order while compressing large values.  
+  - ✅ Use for right-skewed data like enzyme activity or count data.  
+  - ⚠️ Not defined for negative values.
+
+- **Reciprocal / Inverse (`1/x`)**: Emphasizes small values and compresses large ones.  
+  - ✅ Use for rates or time-based data (e.g., reaction time).  
+  - ⚠️ Undefined for zero values; extremely sensitive to small values.
+
+- **Square / Cube (`x^2`, `x^3`)**: Spreads data out, emphasizing large values.  
+  - ✅ Can reduce left skew.  
+  - ⚠️ Squaring loses sign if data contains negatives; avoid if data include both positive and negative values.
+
+
+
+---
+
+#### 🎯 **3. Summarizing the Center (Central Tendency)**
+
+- **Mean (`mean()`)**: The arithmetic average. Sensitive to outliers.  
+  - $\overline{X} = \frac{1}{n} \sum_{i=1}^{n} x_i$
+
+- **Median (`median()`)**: The middle value of a sorted dataset. Robust to outliers.
+
+- **Mode**: Most frequent value or value bin.
+
+- **Trimmed Mean**: Mean after removing fixed percentages of extreme values. Balances robustness and efficiency.
+
+- **Geometric Mean**: The nth root of the product of values.  
+  - ✅ Appropriate for multiplicative data (e.g., growth rates, ratios, log-normal data).  
+  - ⚠️ Don’t use with zeros or negative values — the geometric mean is undefined.  
+  - 🧠 *Tip*: Especially useful for right-skewed, strictly positive data that spans multiple orders of magnitude.
+
+
+
+- **Harmonic Mean**: The reciprocal of the mean of reciprocals.  
+  - ✅ Useful when averaging ratios or rates (e.g., speed, population size in genetics).  
+  - ⚠️ Very sensitive to small values and *undefined for zero or negative numbers*.  
+  - 🧠 *Tip*: Use when the quantity being averaged is in the denominator (e.g., "miles per hour").  
+
+---
+
+#### 📉 **4. Summarizing Variability**
+
+- **Range**: Difference between maximum and minimum. Sensitive to outliers.
+
+- **Interquartile Range (IQR) (`IQR()`):** Middle 50% of data. Robust and often paired with the median.
+
+- **Mean Absolute Deviation (MAD) (`mad()`):** The average absolute deviation from the mean or median. Robust and intuitive.  
+  - $\text{MAD} = \frac{1}{n} \sum |x_i - \bar{x}|$
+
+- **Sum of Squares (SS)**: Total squared deviation from the mean.  
+  - $SS = \sum (x_i - \bar{x})^2$
+
+- **Variance (`var()`)**: The average squared deviation from the mean.  
+  - $s^2 = \frac{SS}{n - 1}$
+
+- **Standard Deviation (`sd()`)**: Square root of variance. Easier to interpret due to linear units.  
+  - $s = \sqrt{s^2}$
+
+- **Coefficient of Variation (CV)**: Standard deviation divided by the mean. Unitless and good for comparing across traits or units.  
+  - $CV = \frac{s}{\bar{x}}$
+
+---
+
+#### 📊 **5. Visualizing Distributions**
+
+- **Histogram**: Shows frequency of values within bins. Useful for assessing shape, skewness, and modes.
+
+- **Boxplot**: Summarizes median, quartiles, range, and outliers in a compact visual form.
+
+:::
+
+--- 
+
+## Key R Functions  {#summarizing_summaries_key-r-functions}     
+
+:::functions
+
+#### 📊 Visualizing Univariate Data
+
+ 
+- **[`geom_histogram()`](https://ggplot2.tidyverse.org/reference/geom_histogram.html)** *([ggplot2])*: Makes histograms for visualizing distributions.  
+- **[`geom_boxplot()`](https://ggplot2.tidyverse.org/reference/geom_boxplot.html)** *([ggplot2])*: Visualizes the distribution using a box-and-whisker plot.  
+- **[`geom_col()`](https://ggplot2.tidyverse.org/reference/geom_bar.html)** *([ggplot2])*: Creates bar plots from summarized data.  
+- **[`geom_bar()`](https://ggplot2.tidyverse.org/reference/geom_bar.html)** *([ggplot2])*: Bar plot for raw count data.  
+
+---
+
+#### 📈 Summarizing Center
+
+- **[`mean()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mean.html)** *([base R])*: Computes the arithmetic mean.  
+- **[`median()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/median.html)** *([base R])*: Computes the median.  
+- **[`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html)** *([dplyr])*: Adds new variables or transforms existing ones.  
+- **[`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html)** *([dplyr])*: Reduces multiple rows to a summary value per group.
+
+---
+
+#### 📏 Summarizing Variability
+
+- **[`var()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html)** *([base R])*: Computes variance.  
+- **[`sd()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/sd.html)** *([base R])*: Computes standard deviation.  
+- **[`mad()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/mad.html)** *([base R])*: Computes the median absolute deviation — a robust summary of variability.  
+- **[`IQR()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/IQR.html)** *([base R])*: Computes the interquartile range. 
+- **[`quantile()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/quantile.html)** *([base R])*: Returns sample quantiles. Useful for computing percentiles and quartiles.  
+- **[`sum()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/sum.html)** *([base R])*: Used in calculating the sum of squared deviations (`sum((x - mean(x))^2)`).  
+
+---
+
+#### 🔁 Transformations
+
+- **[`log()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html)** *([base R])*: Natural log (base *e*) transformation.  
+- **[`log10()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html)** *([base R])*: Base 10 log transformation.  
+- **[`sqrt()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/MathFun.html)** *([base R])*: Computes square roots.  
+- **[`^`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Arithmetic.html)** *([base R])*: Exponentiation (`x^2`, `x^3`, etc.).  
+- **[`1/x`]:** Reciprocal transformation. Beware of dividing by zero!
+
+
+:::
+
+
+
+## R Packages Introduced  {#summarizing_summaries_r-packages-introduced}      
+
+:::packages
+- **[`ggforce`](https://ggforce.data-imaginist.com/)**: Provides advanced geoms for `ggplot2`. This chapter uses [`geom_sina()`](https://ggforce.data-imaginist.com/reference/geom_sina.html) to reduce overplotting by jittering points while preserving density.
+
+::: 
+
+
+
+
+## Additional resources   #summarizing_summaries_additional-resources}   
+
+
+:::learnmore 
+
+**R Recipes:**    
+
+- [Compute summary statistics for a table](https://posit.cloud/learn/recipes/transform/TransformH):  Learn how to find summary stats within a [`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html) call.   
+- [Compute summary statistics for groups of rows within a table](https://posit.cloud/learn/recipes/transform/TransformI) Discover how to calculate summary stats by group.        
+- [Visualize a Distribution with a Histogram](https://posit.cloud/learn/recipes/visualize/VisualizeA5):  Learn to plot histograms to visualize the distribution of a continuous variable.    
+- [Visualize a Boxplot](https://posit.cloud/learn/recipes/visualize/VisualizeA7):  Find out how to create boxplots to summarize the distribution of a continuous variable and identify potential outliers.  
+
+
+
+
+**Videos:**  
+
+- [Data summaries](https://www.youtube.com/watch?v=mc-6-v2c4WM) from Calling Bullshit [@bergstrom2020]. Fun video to help with thinking about various summaries of center, and when to use which.    
+
+- [The shape of data](https://www.youtube.com/watch?v=bPFNxD3Yg6U) from crash course in statistics.   
+
+
+
+
+::: 
+
+

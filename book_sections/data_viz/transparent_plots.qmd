@@ -1,0 +1,129 @@
+## • 9. Transparent plots {.unnumbered #transparent_plots}
+
+
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(palmerpenguins)
+library(tweetrmd)
+library(knitr)
+library(tidyr)
+library(ggplot2)
+library(ggthemes)
+library(forcats)
+library(DT)
+library(cowplot)
+library(broom)
+library(patchwork)
+library(emo)
+library(webexercises)
+knitr::opts_chunk$set(echo = TRUE)
+# ad a plot for residual and one for sums of square
+```
+
+Here’s a motivating scenario and learning goals section that fits your tone and structure:
+
+---
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating Scenario:**
+You are in the middle of making your plot and have conflicting impulses -- should I show all of my data or is a summary sufficient?
+
+**Learning Goals: By the end of this subchapter, you should be able to:**.  
+
+1. **Explain why visualizing raw data can be more transparent than summaries alone.**     
+2. **Recognize overplotting** and how it "showing all the data" can at times hide the message.    
+3. **Choose plotting strategies** (e.g., jitter, alpha, sina plots) that balance transparency and clarity.  
+4. **Describe why transparently showing your data is generally a good idea.**    
+
+:::
+
+
+
+```{r}
+#| echo: false
+#| column: margin
+#| label: fig-datasaurus
+#| fig-cap: "A cartoon cycling through the datasaurus dataset. Taken from Thomas Lin Pedersen's [gganimate wiki](https://github.com/thomasp85/gganimate/wiki/The-Datasaurus-Dozen)."
+#| fig-alt: "Animated scatterplot cycling through multiple datasets with identical summary statistics (e.g., mean, variance, correlation). Each frame shows a different shape or pattern—such as a dinosaur, star, circle, or X—revealing striking visual differences despite having the same statistical summaries. Axes remain constant to emphasize how misleading summary statistics can be without visualization."
+library(knitr)
+include_graphics("../../figs/summarizing_data/data_viz/datasaurus_cartoon.gif")
+```
+
+
+---
+
+## Good plots are transparent  
+
+Transparency is a great  way to communicate honestly and encourage active engagement. Transparently presenting our data  empowers our readers to evaluate our claims, critique them, test them for themselves, and even uncover new insights in our data. As such, showing the data is a critical step toward building trust with a skeptical audience and invites them to engage with the data themselves.
+
+
+
+### Showing Your Data
+
+
+As we saw in the `datasauRus` example (revisited in @fig-datasaurus), relying on summary statistics can obscure important patterns. Similarly, plots that only show summaries (e.g., barplots of means) fail to provide the full picture. Whenever possible,  show all of your data.
+
+
+
+```{r} 
+#| echo: false
+#| label: fig-drake
+#| fig-cap: "**Always show your data!** *(A)*: A cartoon by [allison_horst](https://allisonhorst.com/allison-horst) illustrating how summary statistics (e.g. means +/- error bars) can obscure interesting structure in the data. The raw data on the right reveal a bimodal distribution hidden by the simple summary. This figure is reformatted this for space [here is the original](https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/ce97a439-ede5-4e6d-83d8-31106cd21cf4_rw_3840.png?h=f46a007805309e91cc0e2816012816f0). *(B)* The  Meme-style reaction images of Nicholas Cage and Pedro Pascal from \"The Unbearable Weight of Massive Talent\" shows that a raw data accompanied by data summaries is generally preferred to a simple summary because the prior shows the data."
+#| fig-alt: "Panel A (left): A colorful cartoon asks, \"Are your summary statistics hiding something interesting?\" Below are two boxplot-like bars with error bars: the first has hidden colorful cartoon faces behind the bar, while the second stacks the same faces visibly inside the box, revealing a bimodal distribution. Panel B (right): Two meme images—top shows Nicholas Cage with a concerned expression, bottom shows Pedro Pascal smiling. Next to them, two bar charts: the top chart shows summary bars with error bars for student ratios across regions; the bottom chart shows the same means but overlaid with all individual data points, revealing hidden variation and outliers."
+include_graphics("../../figs/summarizing_data/data_viz/new_drake2.png")
+```
+
+:::aside
+**Barplots aren’t inherently bad.** While barplots should not be used to report means, they are effective for presenting proportions or count data.
+:::
+
+:::warning
+When I say:   "*Show your data*",   
+
+
+
+I mean:  "*Show your F*\*\*\**NG data! All of it. Not a mean, not a trendline. SHOW ALL OF YOUR DATA!*"
+:::
+
+
+:::fyi
+**Is it ever OK to not show all the data?**  
+
+Despite my emphatic cursing above, there are rare cases where showing all your data is actually less honest than showing a summary. This usually happens when overplotting becomes a problem - when there's so much data, or so many points stacked at a single value, that showing every data point hides the overall pattern instead of revealing it. Below, we'll walk through examples where showing the full data might be misleading and what to do instead.
+:::
+
+
+
+### Transparency Avoids Overplotting {#nooverplotting}
+
+Sometimes, showing all your data can actually obscure patterns—a problem known as overplotting. Overplotting occurs when data points in a plot overlap or cluster so densely that it's difficult or impossible to discern individual values or patterns in the data. This typically happens when you have a large number of data points, or when the range of data values is narrow, causing points to pile on top of each other. Overplotting can obscure the underlying distribution, relationships, or trends, making it hard to interpret the data accurately. 
+
+@fig-overplotting shows several techniques (like jittering, using transparency, etc.), and alternative plots (e.g., density plots, box plots, or sina plots) that we can use to reveal patterns that would otherwise be hidden.
+
+
+
+
+
+```{r}
+#| label: fig-overplotting
+#| column: page-right
+#| fig-cap: 'Sometimes showing all the data hides patterns. **(a)** shows overplotting, where data points overlap and obscure the distribution of values. **(b--i)** demonstrate solutions for overplotting. The *sina plot* **(f)** is one of my favorites because it shows both the shape of the data and individual data points. After installing and loading the [ggforce package](https://ggforce.data-imaginist.com/index.html), you can use [`geom_sina()`](https://ggforce.data-imaginist.com/reference/geom_sina.html) to create a sina plot. Data from @beall2006. Download the data [here](https://whitlockschluter3e.zoology.ubc.ca/Data/chapter02/chap02e3bHumanHemoglobinElevation.csv).'
+#| fig-alt: "This figure compares different ways to visualize hemoglobin levels across four populations—Andes, Ethiopia, Tibet, and the USA—and highlights the problem of overplotting. Panel **a** shows raw data as dots, but overlapping points obscure the distribution. Panels **b** through **i** offer alternatives: boxplots (**b**), violin plots (**c**), transparent points (**d**), combinations of points and summaries (**e**), and a sina plot (**f**) that effectively shows both individual data and distribution shape. Additional panels show cumulative distributions (**g**), overlaid density plots (**h**), and ridge plots (**i**) for side-by-side comparison. These methods illustrate different trade-offs between clarity, precision, and completeness when visualizing dense datasets."
+#| echo: FALSE
+include_graphics("../../figs/summarizing_data/data_viz/overplot-1.png")
+```
+
+
+
+
+### Transparency Links Data, Code, and Results
+
+The most transparent data are fully reproducible. Readers should be able to download your code and data, replicate your analysis, and understand the dataset well enough to perform their own analysis. As discussed in our previous sections on [reproducible science](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/reproducible_science.html), this level of transparency is becoming the standard in scientific research.
+
+
+
+
+
+

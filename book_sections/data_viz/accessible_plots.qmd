@@ -1,0 +1,145 @@
+## • 9. Accessible Plots {.unnumbered #accessible_plots}
+
+
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(palmerpenguins)
+library(tweetrmd)
+library(knitr)
+library(tidyr)
+library(ggplot2)
+library(ggthemes)
+library(forcats)
+library(DT)
+library(cowplot)
+library(broom)
+library(patchwork)
+library(emo)
+library(tufte)
+library(webexercises)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating Scenario:**     
+You’re making a plot for your paper or presentation and you want to make sure that the entire audience can make sense of it. 
+
+
+**Learning Goals: By the end of this subchapter, you should be able to:**    
+
+
+1. Explain why accessibility matters    
+
+2.  Spot common accessibility issues, like:   
+  * Tiny or unreadable text. 
+  * Poor color contrast or bad palette choices.   
+  * Over-reliance on legends.    
+   
+3. Improve your figures by:    
+  * Using direct labeling and redundant encodings (like shape + color).   
+  * Choosing accessible color palettes.   
+  * Resizing plot elements for readability.   
+  
+4. Use tools (like color vision emulators or grayscale printing) to check accessibility.     
+5.  Write effective alt text that communicates what your figure shows without needing to see it.
+
+
+:::
+
+---
+
+## Good Figures Are Accessible   
+ 
+```{r}
+#| label: fig-accessibility 
+#| column: margin
+#| fig-cap: "See [Section 508 of Amendment to the Rehabilitation Act](https://en.wikipedia.org/wiki/Section_508_Amendment_to_the_Rehabilitation_Act_of_1973)."
+#| echo: FALSE 
+#| fig-alt: "A faux-vintage sign reading 'ACCESSIBILITY: It’s not just a good idea. It’s the law."
+include_graphics("../../figs/summarizing_data/data_viz/accessibility.png")
+```
+
+
+Making figures accessible for all tends to make them better for everyone. Consider the diversity of people who may view your figure—this could include readers with color blindness, low vision, those who rely on screen readers, or even those who print your figure in black and white. A good figure should be interpretable by all of these individuals.
+
+We have already highlighted several good practices. For example, describing the results of a figure in words can make it accessible to blind or visually impaired readers, while direct labeling can make the content clearer to readers with color vision deficiencies. These examples illustrate the benefits of [universal design](https://en.wikipedia.org/wiki/Universal_design) - they make figures better for all audiences, regardless of specific needs. **ACCESIBILITY HELPS EVERYONE!**  
+
+### Color  
+
+```{r}
+#| label: fig-ishihara 
+#| echo: false
+#| column: margin
+#| fig-cap: "[Ishihara colorblindness test plate](https://en.wikipedia.org/wiki/Ishihara_test): people with red-green colorblindness may not see the number 74."
+#| fig-alt: "A circular field of many small colored dots. People with typical color vision can see the number 74; colorblind individuals may not."
+include_graphics("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Ishihara_9.svg/460px-Ishihara_9.svg.png")
+```
+
+Choosing effective colors is a challenge. Ensure that your color choices are easy to distinguish, particularly if printed in grayscale or viewed by colorblind individuals. Many R tools can help with this, including the [colorspace package](http://colorspace.r-forge.r-project.org/index.html).  Toensure that your plots are accessible, I recommend:   
+
+- Testing your figures through a color vision deficiency emulator (like the one embedded below) to see how your plots appear to readers with color vision deficiencies.    
+- Printing your plots in black and white, to see how it looks in that format.   
+- And,  using redundant coding and direct labeling to increase accessibility.  
+
+
+---
+
+**Try this color vision deficiency emulator** either below or at  [http://hclwizard.org/cvdemulator/](http://hclwizard.org/cvdemulator/) to see how other people might see your plot. 
+
+```{r}
+#| echo: false
+include_app("http://hclwizard.org:3000/cvdemulator/", height="520px")
+```
+
+---
+
+:::protip 
+**Redundant coding** - such as mapping shape, line type, or pattern in addition to color for the same variable provides  readers with multiple ways to differentiate categories. This helps because - although color is a great way to differentiate variables, many readers have color vision deficiencies or may print your work in black and white. 
+:::
+
+### Size  
+
+
+
+Ensure that all elements in your figure, including text, axis labels, and legends, are large enough to be easily read by people with poor eyesight. Always err on the side of larger text. Small text not only diminishes accessibility but can also make figures look cluttered and unclear.
+
+```{r}
+#| label: fig-biggertext 
+#| fig-cap: 'Bigger text is easier to read.  [Image from Advanced Data Science](http://jtleek.com/ads2020/)'
+#| echo: FALSE 
+#| fig-alt: "Comparison between small and large text for readability. The left panel shows small text with a sad face emoji, labeled *This is not very easy to read.* The right panel shows large text with a happy face emoji, labeled *This is much easier to read*, emphasizing the importance of using larger text for clarity."  
+include_graphics("../../figs/summarizing_data/data_viz/communication_presentations.png")
+```
+
+:::protip 
+**Test the size of elements in your figures** by viewing them at reduced sizes or printing them. If the labels and details are still readable, they’re likely large enough.
+:::
+
+
+### Alt Text for Figures 
+
+When creating figures for digital use (e.g., websites, PDFs, or presentations), it's important to include descriptive alt text for individuals who rely on screen readers. Alt text provides a textual description of the figure, ensuring that people who cannot see the image can still understand its content.
+
+Good alt text should describe the key information the figure conveys without unnecessary detail. It’s not enough to simply say "Figure showing data"; you need to explain what the reader should take away from the visual representation.
+
+
+---
+
+### Accessibility Checklist
+
+Use this to quickly review your figures before sharing them with the world:
+
+* [ ] **Readable text:** Can all text (titles, axis labels, legends) be read at a glance—even when printed or viewed small?
+* [ ] **Alt text (if digital):** Does your figure include a short but clear description for readers using screen readers?
+* [ ] **Color works for everyone:**
+
+  * Have you tested your plot in grayscale or using a color vision deficiency simulator?
+  * If color alone might not be distinguishable, have you used **direct labeling** (e.g., labels placed on the data) and/or **redundant coding** (e.g., shape, line type, pattern)?
+* [ ] **Direct labeling:** When appropriate, are group labels placed directly on the plot (rather than in a separate legend)?
+* [ ] **Redundant coding:** If color is doing work, are you also using shape, line type, or other cues to reinforce group differences?
+
+

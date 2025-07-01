@@ -1,0 +1,275 @@
+## • 7. Categorical predictor {.unnumbered}
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr' ,'ggplot2', 'broom']
+  autoload-packages: true
+---
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(kableExtra)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+```
+
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for selecting data from a few columns from RILs planted at GC"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm,visited )|>
+  mutate(log10_petal_area_mm = log10(petal_area_mm))
+```
+
+--- 
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:**  
+You understand the concepts of a linear model (in general) and a conditional mean, we now turn to modeling a numeric response variable as a function of a categorical variable with two or more levels.
+
+**Learning Goals: By the end of this subchapter, you should be able to:**
+
+1. **Understand a conditional  mean as a linear model.**   
+   - Recognize that modeling a numeric response variable as a function of a categorical explanatory variable  is fitting a simple linear model.   
+
+2. **Build a linear model** with a numeric response as a function of a categorical explanatory variable in `R`.  
+
+3. **Interpret coefficients in a linear model** with a numeric response as a function of a categorical explanatory variable.   
+   - Given an equation you should be able to find $\hat{y}_i$ for an individual with any value of the categorical explanatory variable.  
+   - Given `R`output you should be able to find $\hat{y}_i$ for an individual with any value of the categorical explanatory variable.  
+   -You should be able to show that the predicted value from a linear model equals its conditional mean (as found by e.g. `group_by(explanatory) |> summarize(mean(response))`.
+
+4. **Interpret residuals in a (somewhat) more complex model.**     
+   - Define and calculate residuals: the difference between the observed and predicted values.
+
+
+
+
+::: 
+
+---
+
+The previous section showed that we can think about a simple mean as an intercept in a linear model with no explanatory variables. But in the introduction to linear models, I introduced $\hat{y}_i$ as a conditional mean. This section builds on our understanding of the intercept as a mean, moving toward our goal of understanding $\hat{y}_i$ as a conditional mean. To do so, we will start with a binary explanatory variable, and then move on to a categorical variable with multiple levels. Because I find this hard to introduce abstractly, we'll jump right back into the *Clarkia* hybridization example.
+
+
+## Example: Proportion Hybrid Seeds = f(Petal Color)
+
+After exploring the mean proportion of hybrid seed as a summary, we are ready to explore variables that could explain variation in the proportion of hybrid seeds. To start, let's focus on petal color as perhaps white petals do not attract pollinators and consequently make fewer hybrids. In this case the conditional means are: 
+
+```{r}
+gc_rils                                             |>
+  filter(!is.na(petal_color) , !is.na(prop_hybrid)) |>
+  group_by(petal_color)                             |>
+  summarise(mean_prop_hybrid = mean(prop_hybrid))
+```
+
+
+
+We can represent these conditional means in an equation by modeling the mean proportion of hybrid seeds for individual $i$, conditional on its petal color: 
+
+$$\text{PROP HYBRID SEED}_i = b_0 + b_1 \times \text{WHITE}_i + e_i$$
+
+
+- $b_0$, the intercept, is the mean proportion hybrid seed set for the "reference level." In this case the reference level is pink. We know this because PINK is not in the equation. 
+- $b_1$ is the difference in the mean proportion hybrids set on white and pink-petaled plants. 
+- WHITE is an indicator variable.   
+    - WHITE equals 1 for white-petaled plants.   
+    - WHITE equals 0 for pink-petaled plants.  
+    
+We can think of the equation above as representing two separate cases: 
+
+$$\text{PROP HYBRID SEED}_{i|\text{Pink petal}} = b_0 + e_i$$   $$\text{PROP HYBRID SEED}_{i|\text{White petal}}  = b_0 + b_1 + e_i$$
+
+We know (from above) that 
+
+- $b_0$ -- the mean proportion of seeds from pink flowers that were hybrids equals  0.260.       
+- $\text{PROP HYBRID SEED}_{i|\text{White petal}}$ equals 0.0322. 
+- So we can solve for $b_1$  -- the difference  between the mean proportion of hybrids on white and pink-petaled plants -- as $\text{PROP HYBRID SEED}_{i|\text{White petal}} - b_0$  (0.0322 - 0.260 = `r 0.0322 - 0.260`). 
+
+
+Below we see that the `lm()` function in R can do this for us!
+
+## Building a model with lm()
+
+We can build linear models in `R` with the `lm()` function:  `lm(response ~ explanatory, data = data_set)`. So, the following code  models the proportion of hybrid seeds as a function of petal color. 
+
+```{r}
+lm(prop_hybrid ~ petal_color, data = gc_rils)
+```
+
+The resulting coefficients match the values we calculated by hand, aside from minor rounding differences.
+
+## Residuals
+
+
+As in the case for the mean, we calculate residuals as the difference between each observed value, $y_i$, and its predicted value, $\hat{y}_i$. However, in this case, $\hat{y}_i$, differs for plants with different petal colors. Again hovering over a point in @fig-plotly_color reveals its residual. Also, as before we can use the `augment()` function to see predictions and residuals.   
+
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| label: fig-plotly_color
+#| fig-cap: "**An interactive plot showing the proportion of hybrid seeds for each** ***Clarkia xantiana subspecies parviflora*** **recombinant inbred line (RIL) planted at GC split by petal color**. Each point represents a line’s observed proportion hybrid seed, and the dashed line shows the group mean across all lines with pink (left) and white (right) petals. Hovering over a point reveals its residual — the difference between the observed value  and the group mean. The green point provides an example datapoint to focus on for understanding."
+#| fig-alt: "Interactive scatterplot of observed proportion hybrid values for pink and white Clarkia RILs. Points are plotted by line ID along the x-axis, with proportion hybrid on the y-axis, and the two facets representing pink and white petaled plants. Horizontal dashed  line marks the  mean proportion hybrid for white and pink seeds. When hovering over a point, the residual (difference between the observed value and the group mean) is displayed."
+#| cap-location: margin
+library(plotly)
+prop_hybrid_plot_color <-  gc_rils                    |>
+  filter(!is.na(prop_hybrid),!is.na(petal_color))     |>
+  mutate(i = 1:n())                                   |>
+  group_by(petal_color)                               |> 
+  mutate(y_hat_i = mean(prop_hybrid))                 |>
+  ungroup()                                           |>
+  mutate(y_i     = round(prop_hybrid, digits = 3),
+         y_hat_i = round(y_hat_i, digits = 3),
+         e_i     = round(y_i - y_hat_i, digits = 3))  |>
+  mutate(color2 = ifelse(i == 3, "3" , petal_color))|>
+  ggplot(aes(x = i, y = y_i, y_hat_i = y_hat_i, e_i = e_i, color = color2))+
+  geom_point(size = 4, alpha = .6)+
+  geom_hline(data = gc_rils    |> 
+               filter(!is.na(prop_hybrid),!is.na(petal_color)) |> 
+               group_by(petal_color)|> 
+               summarise(prop_hybrid = mean(prop_hybrid)),
+             aes(yintercept = prop_hybrid), linetype = "dashed", size = 2)+
+  facet_wrap(~petal_color)+
+  labs(y = "Proportion hybrid", title ="This plot is interactive!! Hover over a point to see its residual")+
+  theme_dark()+
+  scale_color_manual(values= c("darkgreen","pink","white"))+
+  theme(legend.position = "none")
+
+ggplotly(prop_hybrid_plot_color)
+```
+
+
+
+:::example
+**Worked example**.   
+
+Take, for example, individual 3 ($i = 3$, green point in the plot above), where 1/4 of its seeds are hybrids:  
+
+- **Its observed value, $y_i$,** is the proportion of its seeds that are hybrids, which is 0.25.   
+- **Its predicted value, $\hat{y}_i$,** is the proportion of seeds from pink-flowered plants that are hybrids (dashed line), which is 0.260.  
+- **Its residual value, $e_i = y_i - \hat{y}_i$,** is the difference between the proportion of its seeds that are hybrids and proportion of seeds  from pink-flowered plants that are hybrids, which is $0.250 - 0.260 =  - 0.010$. Scroll over the third data point in @fig-plotly to verify this. 
+
+Note that this data point had a large residual when we modeled proportion of hybrid seeds as a simple mean, but now has a residual value near zero when we model proportion of hybrid seeds as a function of petal color. 
+:::
+
+
+## Categorical Predictors with More Than Two Levels
+
+Above we considered a binary predictor, but the same modeling approach works for nominal predictors with more than two categories. For example, modeling, proportion of seeds that are hybrid as a function of location would look something like this:
+
+
+
+$$\text{PROP HYBRID SEED}_i = f(\text{location})$$ 
+$$\text{PROP HYBRID SEED}_i = b_0 + b_1 \times \text{LB}_i + b_2 \times \text{SR}_i  + b_3 \times \text{US}_i+ e_i$$
+
+
+
+In this case, 
+
+- $b_0$, the intercept, is the mean proportion of hybrid seeds for the "reference level." In this case the reference level is GC. We know this because GC is not in the equation.  
+- $b_1$ is the difference in the mean proportion hybrids set at LB and at the reference location (GC).  
+
+
+
+- LB is an indicator variable.   
+    - LB equals 1 for plants planted at LB.     
+    - LB equals 0 for plants not planted at LB.    
+- $b_2$ is the difference in the mean proportion hybrids set at SR and at the reference location (GC).  
+
+... and so on, as summarized in the table below.
+
+| Term in Model        | Interpretation                                      |
+|----------------------|-----------------------------------------------------|
+| Intercept ($b_0$)     | Mean proportion of hybrid seeds at GC (reference group) |
+| $b_1$ (locationLB)    | Difference between LB and GC: mean at LB − mean at GC |
+| $b_2$ (locationSR)    | Difference between SR and GC: mean at SR − mean at GC |
+| $b_3$ (locationUS)    | Difference between US and GC: mean at US − mean at GC |
+ 
+
+:::aside
+**Predicted proportion hybrid seeds by location:** <br> <br>
+- $\hat{y}_{i|\text{GC}} = b_0$<br> 
+- $\hat{y}_{i|\text{LB}} = b_0 + b_1$<br> 
+- $\hat{y}_{i|\text{SR}} = b_0 + b_2$<br> 
+- $\hat{y}_{i|\text{US}} = b_0 + b_3$
+**
+:::   
+
+## Building a model with multiple levels with lm()  
+
+The syntax for building a model for a categorical variable with multiple levels  is the same as that for a binary categorical variable: `lm(response ~ explanatory, data = data_set)`. The following code models the proportion of hybrid seeds as a function of planting location:  
+
+
+
+```{webr-r}
+#| context: setup
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+    dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                  growth_rate = as.numeric(growth_rate),
+                  visited = mean_visits > 0)|>
+    select(location, petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, visits = mean_visits , asd_mm,visited , lwc)|>
+    mutate(log10_petal_area_mm = log10(petal_area_mm))|>
+  filter(!is.na(location))
+```
+
+```{webr-r}
+#| autorun: true
+# The linear model
+lm(prop_hybrid ~ location, data = ril_data)
+```
+
+```{webr-r}
+#| autorun: true
+# The group means
+ril_data                      |> 
+  filter(!is.na(prop_hybrid)) |>
+  group_by(location)          |>
+  summarise(prop_hybrid = mean(prop_hybrid))
+
+# mess around here to make sure the model coefficients match your expectation 
+
+
+```
+
+
+:::fyi
+**Optional / advanced:** "How does R pick the reference level? and  how can you change it?"  
+
+By default, R uses the alphabetically first level of a categorical variable as the reference group. This isn't always the best way to think about our data. Later we will work on changing the order of our levels, but if you can't wait, check out the `[forcats](https://forcats.tidyverse.org/)` package. 
+:::

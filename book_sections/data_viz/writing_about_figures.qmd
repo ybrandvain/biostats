@@ -1,0 +1,108 @@
+## • 9. Writing about plots {.unnumbered #writing_about_figures}
+
+
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(palmerpenguins)
+library(tweetrmd)
+library(knitr)
+library(tidyr)
+library(ggplot2)
+library(ggthemes)
+library(forcats)
+library(DT)
+library(cowplot)
+library(broom)
+library(patchwork)
+library(emo)
+library(tufte)
+library(webexercises)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating Scenario:**     
+You (think you've) just made a get figure. Now it's time to write about it. What do we do now? 
+
+**Learning Goals: By the end of this subchapter, you should be able to:**    
+
+1. Distinguish between helpful and unhelpful figure captions
+
+  * Identify when captions add value versus when they merely restate what's already visual
+  * Write concise, informative figure captions that add useful context.
+
+2. Write meaningful alt text that conveys the core message of a figure to non-visual readers.  
+
+3. Describe figures effectively in text by:
+
+  * Referencing specific visual features that support your claims
+  * Framing visual evidence as part of a broader biological or statistical interpretation
+
+
+
+:::
+
+---
+
+## Writing About  Figures   
+
+Good figures should be clear enough to allow readers to interpret them on their own. Ideally, a reader should be able to examine your figure and draw a reasonable conclusion. But figures do not exist on their own, they exist in the in some broader context --  a paper, a poster, a book, a presentation, etc... So, although good figures should stand alone, we can enhance the reader's understanding by guiding their interpretation and emphasizing key takeaways. 
+
+:::note
+**People read papers differently**.  
+
+Some readers barely glance at figures. Others skim the figures first, then dip into the text. Some go back and forth. Because we can’t control how people engage with our work, we need to make sure that both our figures and our writing about them are clear, complementary, and accessible to all readers.
+:::
+
+### Writing Figure Captions
+
+Although well-designed figures should be interpretable without a figure captions,  a good caption adds value by surfacing key takeaways and helpful context. A good caption does not merely restate the figure but rather presents additional context, support and background for the point clearly conveyed visually.  
+
+@fig-legend shows an example of a bad (a) and good (b) figure and legend combination.   
+
+- **@fig-legend A fails because it treats the legend as a crutch.** The reader has to consult it just to figure out what the axes, groups, and colors mean - basic information that a figure should make obvious. This shortcoming forces readers to hold too much in memory, shifting their focus from interpreting the results to decoding the design.
+
+
+- **@fig-legend B succeeds because it adds helpful detail to a figure that is interpretable without a caption.** Once you've taken in the visual message, the caption deepens your understanding by adding nuance and context.
+
+```{r}
+#| echo: false
+#| label: fig-legend
+#| fig-cap: "An example of bad (*A*), and good (*B*) figure / caption combinations. Readers should be able to understand a well-designed plot without reading the caption, this is not possible in *A*, but pretty obvious in *B*. A good caption adds context—not basic decoding."
+#| fig-alt: "Two bar plots comparing COVID cases across two groups. Panel A labels the groups as Group 1 and Group 2 with ambiguous axis and color coding. Panel B uses meaningful labels (placebo and mRNA-1273) and includes a severity legend (mild vs. severe), improving clarity and interpretation."
+include_graphics("../../figs/summarizing_data/data_viz/legends2.png")
+```
+
+### Writing "Alt text"  
+
+Alt text should help readers who can't see your figure still grasp its message. Think of alt text like narrating your figure to someone over the phone: what would you say so they could understand it? Below is an example of bad and good alt text for @fig-legend B: 
+
+
+| 😞Bad alt text for @fig-legend B😞 |☺️Good alt text for @fig-legend B☺️ |
+| -------- | ------- |
+| "Stacked bar plot showing the the COVID vaccine works." | "Stacked bar plot showing COVID cases by severity for placebo and mRNA-1273 groups. The placebo group has many more cases, including severe ones (dark blue), while the vaccinated group has only a few mild cases (light blue)." |
+
+
+
+
+
+### Writing About Figures in Text
+
+Writing up results is one of the most important parts of doing science - if your work is not clearly communicated, it's unlikely to make a lasting impact. When describing results,  be explicit about what in a figure supports your conclusion. Rather than writing "*Figure X shows that Group A grows faster*," aim for something more specific, like:
+"*The steeper increase of Y in Group A than in Group B (Figure X) suggests that...*" This style helps the reader connect your interpretation directly to visual evidence.
+
+When reading (or writing) text that discusses a figure, first look at the figure and think about its message. Then, consider:
+
+- What features of the figure support the claims in the paper?  
+- Are there parts of the figure that challenge or complicate the interpretation in the paper?
+
+Below is a comparison of weak vs. effective writing about the same figure. The second version goes beyond describing the visual and emphasizes the figure's statistical and biological meaning.
+
+
+| 😞 A bad write-up @fig-legend B 😞 | ☺️  A better write-up for @fig-legend B ☺️  |
+| -------- | ------- |
+| "@fig-legend B compares COVID cases and severity of these cases for treatments and controls." | "@fig-legend B shows a significant difference in COVID case incidence between the placebo group and those vaccinated with Moderna's mRNA-1273 vaccine. Of the 15,000 individuals in the placebo group, 185 contracted COVID, while only 11 of the 15,000 vaccinated individuals did. Additionally, none of the vaccinated participants who became infected developed severe COVID, whereas 30 of the 185 infected placebo recipients had severe cases (compare the dark blue bar above the control group and its absence above the mRNA-1273 group)."

@@ -1,0 +1,116 @@
+Knowledge Base: Associations Between Variables (Chapter 6)
+
+Chapter-Wide Learning Goals
+
+By the end of this chapter, students should be able to:
+
+1. Recognize that associations describe relationships between variables but do **not imply causation**.
+2. Summarize associations between:
+   - Two categorical variables (e.g., conditional proportions, covariance).
+   - One categorical and one numeric variable (e.g., difference in conditional means, Cohen’s D).
+   - Two numeric variables (e.g., covariance, correlation).
+3. Identify and explain the limits of association: **coincidence, confounding, reverse causation**.
+4. Choose appropriate **visualizations** (e.g., scatterplots, sina plots, conditional bar plots).
+5. Interpret the meaning and limitations of associations in real **biological data**.
+
+📚 Pedagogical Context
+
+This chapter builds on prior chapters:
+
+1. Introduction to R and the RStudio environment
+2. Data wrangling: `mutate()`, `filter()`, `summarize()`
+3. Plotting with `ggplot2`
+4. Reproducible science (Chapter 4)
+5. Summarizing univariate distributions: shape, center, variability
+
+Students are now ready to transition from summarizing single variables to examining **relationships between two variables**. This sets the stage for later topics in linear modeling and inference.
+
+👩‍🎓 Student Assumptions
+
+Students should already:
+
+- Understand variable types (categorical vs numeric)
+- Be familiar with `ggplot`, `group_by()`, `summarize()`, and univariate summaries
+- Know what a mean, standard deviation, and proportion are
+- Have *not yet* been introduced to p-values, confidence intervals, or inference
+
+Students may wrongly:
+
+- Interpret any correlation as causal
+- Misread visualizations (e.g., misinterpret bar plots or overfit patterns)
+
+🎯 Section-Specific Learning Goals
+
+🟣 Categorical + Numeric
+1. Calculate and interpret **conditional means**
+2. Compute and interpret **Cohen’s D** as a standardized difference
+3. Use R to **visualize group differences** via plots
+
+🔵 Two Categorical Variables
+1. Compute **conditional proportions**
+2. Apply the **multiplication rule** for independent events
+3. Calculate **deviations from independence** and **covariance**
+
+🔴 Two Numeric Variables
+1. Calculate **covariance** using both formulations:
+   - mean of cross-products
+   - mean of products minus product of means
+2. Calculate and interpret **correlation coefficients**
+3. Visualize and describe the **direction and strength of associations**
+
+🧠 Key Concepts to Reinforce
+
+- “**Correlation ≠ causation**”
+- Association ≠ prediction ≠ generalization
+- Differences between **conditional vs overall summaries**
+- Role of **visual framing** (e.g., x vs y axis) in interpretation
+- Why **covariance** is scale-dependent, but **correlation** is not
+- **Causal ambiguity**: coincidence, confounding, reverse causation
+
+🧰 R Functions Introduced
+
+- `group_by()`, `summarize()`, `mean()`
+- `cov()`, `cor()`
+- Custom formulas for covariance and correlation
+- `ggplot2` with:
+  - `geom_point()`
+  - `geom_smooth()`
+  - `geom_bar(position = "fill")`
+  - `geom_sina()` from `ggforce`
+  - `facet_wrap()`
+
+📦 R Packages Introduced
+
+- `GGally`: for `ggpairs()` correlation plots
+- `ggforce`: for jittering over categorical axes with `geom_sina()`
+- Builds on: `ggplot2`, `dplyr`, `readr`
+
+📊 Visuals Referenced
+
+| Figure ID        | Description                                       |
+|------------------|---------------------------------------------------|
+| `fig-allcor`     | Matrix of pairwise associations                   |
+| `fig-confound`   | Confounding illustrated with Clarkia traits       |
+| `fig-switchx`    | Visual framing of bar plots and causal direction  |
+| `fig-pinkvisit`  | Conditional proportions and independence           |
+| `fig-cov`        | Area of rectangles for cross-products (covariance)|
+| `crossprods.gif` | Animation of building cumulative covariance       |
+
+❓ Embedded Quiz Awareness
+
+The GPT tutor should **not** give direct answers. Instead:
+
+- Encourage **interpretation and reasoning**
+- Use figures or formulas as references
+- Prompt students to **articulate logic**
+- Recognize when students are asking about **quiz or homework**
+
+Topics addressed in questions include:
+
+- Interpreting conditional means, proportions, correlation, covariance
+- Identifying causality errors
+- Recognizing when associations may not generalize
+
+✅ End of Chapter Summary
+
+This chapter introduces the logic, visualizations, and calculations used to describe associations between two variables. These summaries are essential tools for interpreting biological data, but students are cautioned not to overinterpret associations as causal or predictive. Coming chapters will introduce tools for **inference, modeling, and causal reasoning**.

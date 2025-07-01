@@ -1,0 +1,143 @@
+**Chapter 7: Linear Models — Knowledge Base for AI Tutor**
+
+---
+
+### 📘 Chapter Context
+
+This chapter builds on prior chapters that covered variable types, plotting, and summarizing associations (e.g., center, spread, correlation). Students should already be familiar with basic R syntax, the `ggplot2` and `broom` packages, concepts like conditional means, residuals, and basic modeling using `lm()`.
+
+This chapter introduces **linear models** as tools to describe the conditional mean of a numeric response variable given one or more explanatory variables. It focuses on modeling (not inference): students estimate, interpret, and visualize model components without calculating uncertainty (e.g., no p-values or confidence intervals). R² and sums of squares are optional and tagged accordingly.
+
+### 🎯 Overall Learning Goals
+
+By the end of this chapter, students should be able to:
+
+1. Describe what a linear model does (conditional mean estimation).
+2. Interpret intercepts, slopes, residuals, and model predictions.
+3. Build linear models with one or more predictors in R using `lm()`.
+4. Visualize linear models and residuals with `ggplot2` and `augment()`.
+5. Know when and how to interpret slopes and intercepts meaningfully.
+6. Recognize linear models as statistical models distinct from scientific ones.
+
+---
+
+### 📂 Section-Specific Learning Goals
+
+#### 7.1 Mean as a Model
+
+* Understand the mean as a linear model (no predictors).
+* Use `lm(y ~ 1)` and interpret the intercept as the mean.
+* Define and interpret residuals.
+* Use `augment()` to extract `.fitted` and `.resid`.
+* Understand that the mean minimizes the sum of squared residuals.
+
+#### 7.2 Categorical Predictor
+
+* Model a numeric response with a categorical predictor (e.g. petal color).
+* Interpret intercept and slope as conditional means and group differences.
+* Visualize residuals grouped by categorical values.
+* Connect output of `lm(y ~ group)` to group means.
+
+#### 7.3 Numeric Predictor (Linear Regression)
+
+* Model a numeric response as a function of a numeric predictor (e.g. petal area).
+* Understand slope as change in response per unit of predictor.
+* Derive slope from covariance and variance.
+* Use and interpret `lm(y ~ x)` and `augment()` output.
+* Visualize the regression line, interpret the intercept, and be cautious with extrapolation.
+
+#### 7.4 Two Predictors (General Linear Model)
+
+* Build a linear model with one categorical and one numeric predictor.
+* Interpret additive effects.
+* Manually compute predicted values and residuals.
+* Discuss multicollinearity and its impact on interpretation.
+* (Optional) Understand interaction terms with `:` syntax.
+
+---
+
+### 🧠 Key Concepts and Terms
+
+* **Statistical Model**: A mathematical description of observed data patterns.
+* **Scientific Model**: A conceptual biological explanation of a process.
+* **Linear Model**: Estimates the conditional mean as a linear combination of explanatory variables.
+* **Conditional Mean (\$\hat{y}\_i\$)**: Expected value of a response given specific explanatory values.
+* **Intercept (\$b\_0\$)**: Model estimate when all predictors are zero.
+* **Slope (\$b\_1\$)**: Expected change in response per unit change in predictor.
+* **Residual (\$e\_i\$)**: Difference between observed and predicted value (\$y\_i - \hat{y}\_i\$).
+* **Sum of Squared Residuals (SSR)**: \$\sum e\_i^2\$ — used to assess model fit.
+* **Residual Standard Deviation**: Square root of SSR normalized by degrees of freedom.
+* **Multicollinearity**: Strong association between predictors that complicates coefficient interpretation.
+* **Extrapolation**: Making predictions outside observed range — discouraged.
+
+---
+
+### 🔧 Key R Functions and Packages
+
+* `lm()`: Builds a linear model.
+* `augment()` from `broom`: Adds `.fitted` and `.resid` values to data.
+* `summarise()`, `mutate()`, `group_by()` from `dplyr` for summaries.
+* `geom_smooth(method = "lm")` from `ggplot2`: Adds a regression line.
+* `geom_point()`, `facet_wrap()`, `geom_hline()`: Plotting tools.
+* `slice()`, `pull()`, `select()` from `dplyr`.
+
+Packages introduced:
+
+* `broom`
+* `ggplot2`
+* `dplyr`
+* `plotly` (used for interactive residual plots)
+
+---
+
+### 🖼️ Figure and Animation References
+
+**Fig: Dragon Residual (Allison Horst)**
+
+* Cartoon showing residual as the vertical gap between a data point and the model prediction.
+* Used to help students internalize residuals as deviations from model predictions.
+
+**Fig: Interactive Plot of Residuals vs. Mean (Plotly)**
+
+* Shows each RIL’s observed value of `prop_hybrid` as a point.
+* Red dashed line shows the sample mean (from `lm(y ~ 1)`).
+* Hovering reveals the residual value (`e_i` = `y_i - mean`).
+* Green point (`i = 3`) is emphasized to demonstrate a worked example.
+
+**Fig: Interactive Residual Plot by Group (Plotly)**
+
+* Like the above, but grouped by `petal_color` (pink vs white).
+* Horizontal lines show group means.
+* Shows how residuals differ between models with and without categorical predictors.
+* Emphasizes that residuals shrink when more explanatory variables are added.
+
+**Fig: Regression Line and Residual (Static)**
+
+* Scatterplot of `prop_hybrid` vs `petal_area_mm`.
+* Fitted line from `lm()` overlayed.
+* Shows slope visually and demonstrates that the model minimizes SSR.
+
+**Fig: Slope Minimization Animation**
+
+* Three-panel animation:
+
+  * Left: Observed points and proposed regression line.
+  * Center: Square representing residual sum of squares.
+  * Right: Plot of SSR vs proposed slopes.
+* Used to show that the estimated slope minimizes SSR.
+
+**Fig: Two Predictor Plot with Parallel Slopes**
+
+* Scatterplot of `prop_hybrid` vs `petal_area_mm`, colored by `petal_color`.
+* Lines show predicted values for both groups using a shared slope.
+* Black and red Xs highlight individuals 1 and 3 (used in calculation examples).
+* Tutor should be ready to help students read and interpret these figures — especially in relation to model terms and residuals.
+
+**Fig: T-Rex Extrapolation Cartoon (xkcd)**
+
+* Satirical figure warning against extrapolation.
+* Tutor should use this to remind students to avoid trusting predictions beyond the data.
+
+---
+
+This knowledge base equips the tutor to guide students through Chapter 7 on linear models — helping them interpret model terms, read figures, understand residuals, and construct meaningful models in R without introducing inference or hypothesis testing yet.

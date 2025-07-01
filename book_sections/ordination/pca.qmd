@@ -1,0 +1,423 @@
+## • 8. PCA quick start {.unnumbered #pca}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(kableExtra)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                made_hybrid = prop_hybrid > 0)
+```
+
+
+--- 
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating Scenario:**  
+You have measurements for many traits or environmental variables and want to summarize how individuals vary across all traits, not just one at a time. You’ve heard PCA can reduce complexity and reveal structure in multivariate data, but you're not quite sure how it works, what the output means, or how to interpret the results biologically.
+
+**Learning Goals: By the end of this subchapter, you should be able to:**
+
+1. **Understand the goals of PCA.**
+   * Describe how PCA summarizes multivariate variation into fewer dimensions.
+   * Explain why PCA is useful for exploring structure in biological data.
+   
+
+2. **[Conduct a PCA in R.](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/ordination/pca.html#pca-in-r-with-prcomp)**
+   * Appropriately [format the data.](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/ordination/pca.html#formating-the-data) 
+   * [Use `prcomp()` to perform PCA.](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/ordination/pca.html#run-pca-with-the-prcomp-function.)
+   
+3. **[Extract and interpret PCA output.](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/ordination/pca.html#interpreting-pca-output)** Including:    
+   - [Proportion variance explained](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/ordination/pca.html#looking-into-proportion-variance-explained),   
+   - [Trait loading](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/ordination/pca.html#looking-into-trait-loading), and
+   - [PC values (aka scores)](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/ordination/pca.html#looking-into-pc-values).  
+
+   
+4. **[Visualize PCA in R.](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/ordination/pca.html#visualizing-pcs)**  
+   * Create biplots and other PCA visualizations.
+   * Make the aspect ratio proportional to percent variance explained.  
+      
+5. **[Interpret PCs biologically](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/ordination/pca.html#biological-interpretation-of-pca-plots)** by looking into patterns and connecting trait loadings to underlying processes of interest. 
+      
+
+
+::: 
+
+---  
+
+One reason biologists are so interested in associations between variables is that very little in this world is independent. Take our parviflora RILs, for example. If you recall, these recombinant inbred lines  were made to disentangle correlations between traits by mixing up genomes from two populations and allowing for multiple generations of recombination. Although this effort was largely successful -- trait correlations persist in our RILs because traits are tightly linked on a chromosome or are physiologically connected. As such, for example, petal area is strongly positively related to anther stigma distance, and negatively correlated with leaf water content. 
+
+PCA  summarizes variability into major axes of variation in a sample  by finding combinations of traits that explain the most variability in the data, and are independent of each other. PCA first find principal component 1 (PC1) as the linear combination of all traits that explain the most variability in our sample. It goes on to do the same for PC2, and so on. We are left with as many principal components as original traits — but all are independent and  the first few principal components explain more of the variance than the last few. 
+
+
+
+
+## PCA in R with [`prcomp()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/prcomp.html)
+ 
+Now let’s run a quick PCA and then unpack what it’s doing.  We run a PCA in R following these steps:     
+
+:::aside
+**PCA requires complete data.** If you have missing observations for individuals, you can either <br>**1.** Drop these individuals. <br>**2.** Impute (a fancy word for informed guessing) missing values with tools like [missMDA](http://factominer.free.fr/missMDA/index.html). <br>**3.** Use more advanced PCA methods that can handle missing data directly, such as [probabilistic PCA](https://github.com/hredestig/pcaMethods). 
+::: 
+
+1.  [Format the data](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/ordination/pca.html#formating-the-data).   
+    - Only keep numeric (and continuous-ish) variables.  
+    - Deal with missing data (see aside on right).     
+    - Make sure variables are roughly symmetric (otherwise transform).    
+    - Remove redundant variables.     
+    - Decide should data be centered and scaled? (The answer is usually yes).
+  
+ 
+2. [Run PCA with the `prcomp()` function](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/ordination/pca.html#run-pca-with-the-prcomp-function.).  
+ 
+3. [Interpret PCA results including:](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/ordination/pca.html#interpreting-pca-output).  
+   - [Proportion variance explained](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/ordination/pca.html#looking-into-proportion-variance-explained), 
+   - [Trait loadings](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/ordination/pca.html#looking-into-trait-loading), and  
+   - [PC values (aka scores)](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/ordination/pca.html#looking-into-pc-values)  
+
+4. [Visualize the results.](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/ordination/pca.html#visualizing-pcs)     
+
+5. [Connect visualization to the underlying biology.](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/ordination/pca.html#biological-interpretation-of-pca-plots)     
+
+
+### Formatting the data
+
+**Before we format the data let's have a look at it**
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for selecting data for PCA from RILs planted at GC"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                made_hybrid = prop_hybrid > 0)
+
+gc_rils_4pca  <- ril_data |>
+  na.omit()|>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(made_hybrid, petal_area_mm, asd_mm, growth_rate,  stem_dia_mm, lwc )
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(DT)
+gc_rils_4pca |>
+  mutate_at(-1, round, digits = 3)|> 
+  datatable(options = list(pageLength = 3))
+```
+
+---
+
+We usually want to "center" and "scale" the data (i.e. subtract off the mean and divide by the standard deviation). We discuss why we do (or do not) choose to do this later. For now, know that you can center and scale within [`prcomp(center = TRUE, scale = TRUE)`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/prcomp.html), or before running the PCA with the [`scale()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/scale.html) function.
+
+```{r}
+scaled_gc_rils_4pca <- gc_rils_4pca |>
+  select(-made_hybrid)|>                # Remove categorical variables
+  mutate_all(scale)                     # Subtract mean and divide by SD
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(DT)
+mutate_all(scaled_gc_rils_4pca, round, digits = 3)|> 
+  datatable(options = list(pageLength = 3))
+```
+
+### Run PCA with the [`prcomp()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/prcomp.html) function.   
+
+This is the easy part -- if your data are  centered and scaled, and there are no NA's just give your data as an argument to the [`prcomp()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/prcomp.html) function:  
+
+```{r}
+gc_ril_pca <- prcomp(scaled_gc_rils_4pca)         # Run the pca
+```
+
+### Interpreting PCA output  
+
+Because a PCA returns numerous things we want to know about (percent variance explained by each PC, trait loadings onto PCs, individual values on each PC),  [`prcomp()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/prcomp.html) returns something with an awkward structure (known as an S3 object in R). To make this easier to deal with, we will use the [`tidy()`](https://broom.tidymodels.org/reference/tidy.prcomp) and [`augment()`](https://broom.tidymodels.org/reference/augment.prcomp) functions from the [`broom`](https://broom.tidymodels.org/) package introduced earlier. 
+
+#### Looking into proportion variance explained 
+
+It is too easy to fool ourselves into looking at something very interesting that explains relatively little of the variation in our dataset. Remember that principal components sequentially explain less and less of the overall variability in our dataset. So it is always worth reporting the proportion variance captured by focal principal components. Here we see that PC1 captures roughly 30% of the variability in our data, while PC5 captures about 11% of the overall variability. 
+
+```{r}
+#| eval: false
+library(broom)                    # Load the broom library
+tidy(gc_ril_pca, matrix = "pcs")  # Extract percent variance explained from pc object
+```
+
+```{r}
+#| echo: false
+library(broom)
+tidy(gc_ril_pca, matrix = "pcs")|> 
+  mutate_all(round,digits = 3)|> kable()
+```
+
+There are a few common visualizations of the  proportion of variance explained by each PC.   
+
+- A *scree plot* (@fig-pve A) shows the amount of variation soaked up by the principal component on the y-axis.  Scree plots usually have points for the standard deviation attributable to each PC, and those points are connected by lines.  
+
+- A *proportion variance explained plot* (@fig-pve B) is very similar, but the y-axis is the proportion variance explained by each PC (that is the variance (i.e. std.dev$^2$) explained by each PC divided by the sum of standard variances), and is shown as a bar plot. 
+
+- A *cumulative proportion variance explained plot* (@fig-pve C) shows the cumulative sum of a proportion variance explained plot and is shown with points and lines. In this case, the value for PC2 equals the sum of the proportions of variance explained by PC1 and PC2. 
+
+```{r}
+#| fig-height: 2.5
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for making scree plots and PVE plots."
+#| label: fig-pve
+#| fig-cap: "**Visualizing percent variance explained by PCs.** Principal component analysis (PCA) reduces dimensionality by *compressing* variance into the first principal components. The plots above show how much variability is explained by each PC. **A** is a *scree plot* showing the standard deviation of each principal component, reflecting how much variation each one captures from the original data. **B** displays a bar plot of the proportion of total variance explained by each component. **C** shows the cumulative proportion of variance explained, beginning at zero and increasing with each additional PC, reaching 100% by the fifth component."
+#| fig-alt: "This figure contains three plots summarizing a PCA of Clarkia parviflora recombinant inbred lines. The first panel (A) is a scree plot with principal components 1 to 5 on the x-axis and their corresponding standard deviations on the y-axis; the points decrease steadily, indicating that later components explain less variation. The second panel (B) is a bar plot showing the proportion of total variance explained by each component, with PC1 explaining the most and each subsequent component explaining progressively less. The third panel (C) is a cumulative variance plot, starting at zero on the y-axis and increasing with each additional PC, reaching 1.0 by the fifth component, indicating that all variance is accounted for. These plots visually convey how PCA reduces dimensionality by concentrating variance into fewer components."
+#| cap-location: margin
+library(patchwork)
+
+pc_summary <- tidy(gc_ril_pca, matrix = "pcs")
+
+scree_plot <- ggplot(pc_summary, aes(x = PC, y = std.dev))+
+  geom_point(size = 3)+
+  geom_line(lty= 2)+
+  ggtitle("A) Scree plot")
+
+pve_plot <-  ggplot(pc_summary, aes(x = PC, y = percent))+
+  geom_col()+
+  ggtitle("B) PVE plot")
+
+cumulative_pve_plot <- bind_rows( 
+  tibble(PC = 0 , std.dev = 0, percent = 0, cumulative = 0),
+  pc_summary)|>
+  ggplot( aes(x = PC, y = cumulative))+
+  geom_point(size = 3)+
+  geom_line(lty= 2)+
+  ggtitle("C) Cumulative PVE")
+
+scree_plot + pve_plot  + cumulative_pve_plot 
+```
+
+
+#### Looking into trait loading 
+
+
+```{r}
+#| echo: false
+#| column: margin
+#| fig-cap: "Loading of each trait onto each PC"
+library(broom)                                   # load broom
+tidy(gc_ril_pca, matrix = "loadings")|>          #
+  mutate(value = round(value, digits = 3))|>
+  arrange(PC)|>datatable(rownames = FALSE)
+```
+
+
+**So about 30% of the variability is captured by PC1, but what even is PC1?** I'm glad you asked this question! PC1 (like all principal components) is a combination of variables each weighted by a certain amount. For PC1, this combination point in the direction of the most variability in the (scaled and centered) data set. In this case, the value of PC1 in individual, $i$, equals:   
+
+
+`r tidy(gc_ril_pca, matrix = "loadings")|>mutate(value = round(value, digits = 2), column = str_remove(pattern = "_mm", column))|>filter(PC==1)|>mutate(summ = paste(column,"x", value))|>pull(summ)|> paste(collapse = " + ")`. 
+
+Here each trait refers to the scaled and centered value in individual $i$. Similarly, "loadings" of traits on each PCA are presented in the table to the right and in @fig-loadings.
+
+```{r}
+#| eval: false
+library(broom)                            # load broom package
+tidy(gc_ril_pca, matrix = "loadings") |>  # Get trait loadings
+  arrange(PC)                             # Sort the data so we see PC1 first
+```
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for visualizing trait loadings onto PCs"
+#| fig-cap: "Trait loadings on each PC axis."
+#| label: fig-loadings
+library(forcats)
+gc_ril_pca |>
+    tidy(matrix = "loadings") |>
+    mutate(variable = fct_reorder(column, -1*value * as.numeric(PC==1),.fun = max))|>
+    ggplot(aes(x = PC, y = variable, fill= value))+
+    geom_tile(color = "black")+
+    scale_fill_gradient2(low = "firebrick", mid = "white", high = "steelblue", midpoint = 0) +
+    geom_text(aes(label = round(value, digits = 3)))+
+  labs(fill = "Loading")+
+  scale_x_discrete(expand = c(0,0))+
+  scale_y_discrete(expand = c(0,0))+
+  theme(axis.title.y = element_blank(),
+        plot.background = element_rect(fill =  "white",color ="white"),
+        panel.background  = element_rect(fill =  "white",color ="white"),
+        legend.position = "bottom",
+        legend.key.width = unit(2, "cm"))
+```
+
+#### Looking into PC values 
+
+We can now find each individual's value on each PC1. To do so, we 
+
+- Take the scaled and centered values of each trait,   
+- Multiply this by the trait loading on a given PC,  
+- Take the sum.   
+- Rinse and repeat for all individuals on all PCs
+
+So individual 1's value for PC1 is:   
+`r paste("(",tidy(gc_ril_pca, matrix = "loadings")|>mutate(value = round(value, digits = 2))|> filter(PC==1)|> pull(value) , " x ", (scaled_gc_rils_4pca|> slice(1) |> round(digits = 2) |> unlist()),")", sep = "")|> paste(collapse = " + ")`.   
+This equals `r ((tidy(gc_ril_pca, matrix = "loadings")|> filter(PC==1)|> pull(value))*  ((scaled_gc_rils_4pca|> slice(1)|>unlist())))|>sum()|>round(digits =2)`. Rather than repeating this for all individuals and all PCs, we can find these values with the [`augment()`](https://broom.tidymodels.org/reference/augment.prcomp.html) function in the [`broom`](https://broom.tidymodels.org) package:  
+
+```{r}
+#| eval: false
+augment(gc_ril_pca)
+```
+
+```{r}
+#| echo: false
+augment(gc_ril_pca) |>
+  select(-.rownames)|>
+  mutate_all(round, digits = 3)|>
+  datatable(options = list(pageLength = 5))
+```
+
+
+### Visualizing PCs 
+
+Now that we know what our PCA means, let's have a look at our results. Below, I show how to use the [`autoplot()`](https://cran.r-project.org/web/packages/ggfortify/vignettes/plot_pca.html) function in the [`ggfortify`](https://github.com/sinhrks/ggfortify?tab=readme-ov-file#ggfortify) package.    I present four plots:  
+
+- All give the [`prcomp()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/prcomp.html) output to the [`autoplot()`](https://cran.r-project.org/web/packages/ggfortify/vignettes/plot_pca.html)  function to make a plot.  
+- All find the proportion variance explained by PCs on the x and y axes, and set the "aspect ratio" as $\text{pve}_\text{y}/\text{pve}_\text{x}$.  
+    - **Why mess with aspect ratio?** In PCA, each axis (e.g., PC1 and PC2) explains a different amount of variance, so an honest plot presents axes proportional to their importance. Otherwise, distances and angles in the plot can be misleading. Setting the aspect ratio as the ratio of proportion of variance explained, to prevent such misinterpretation.     
+- The plot in tab two (*Trait loadings*) generates a classic "pca biplot" by adding trait loadings.     
+- The plot in tab three (*+ categories*) uses color to add a categorical variable to the plot. This allows us to see if some categorical variable e.g., species (or in this case, if a flower made at least one hybrid) is associated with some part of PC space.   
+- The plot in tab four (*PC1 v PC5*) shows that we can use *x* and *y* arguments in [`autoplot()`](https://cran.r-project.org/web/packages/ggfortify/vignettes/plot_pca.html) to show other PCs.
+
+
+
+
+:::::: panel-tabset
+
+## PC1 v PC2  
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+
+```{r}
+library(ggfortify) 
+pc_var_explained <- tidy(gc_ril_pca, matrix = "pcs") 
+percent_pc1 <- pc_var_explained |> filter(PC == 1) |>  pull(percent)
+percent_pc2 <- pc_var_explained |> filter(PC == 2) |>  pull(percent)
+
+autoplot(gc_ril_pca, size=4, alpha = .7)+
+  theme(aspect.ratio = percent_pc2 / percent_pc1)
+```
+
+:::
+
+
+## Trait loadings
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+```{r}
+library(ggfortify) 
+pve <- tidy(gc_ril_pca, matrix = "pcs") 
+pve_pc1 <- pve |> filter(PC == 1) |>  pull(percent)
+pve_pc2 <- pve |> filter(PC == 2) |>  pull(percent)
+
+autoplot(gc_ril_pca,  size=4, alpha =.7,
+         loadings = TRUE, loadings.colour = 'blue',
+         loadings.label = TRUE, loadings.label.size = 7)+
+  theme(aspect.ratio = pve_pc2 / pve_pc1)
+```
+
+:::
+
+## + categories
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+```{r}
+library(ggfortify) 
+pve <- tidy(gc_ril_pca, matrix = "pcs") 
+pve_pc1 <- pve |> filter(PC == 1) |>  pull(percent)
+pve_pc2 <- pve |> filter(PC == 2) |>  pull(percent)
+
+autoplot(gc_ril_pca,data = gc_rils_4pca, color = 'made_hybrid', 
+         size = 5, alpha = .8,
+         loadings = TRUE, loadings.colour = 'black',
+         loadings.label = TRUE, loadings.label.size = 5)+
+  scale_color_manual(values = c("brown","forestgreen"))+
+  theme(aspect.ratio = pve_pc2 / pve_pc1, 
+        legend.position = "bottom",
+        legend.key.width = unit(2, "cm"))
+```
+
+:::
+
+
+## PC1 v PC5
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+```{r}
+library(ggfortify) 
+pve <- tidy(gc_ril_pca, matrix = "pcs") 
+pve_pc1 <- pve |> filter(PC == 1) |>  pull(percent)
+pve_pc5 <- pve |> filter(PC == 5) |>  pull(percent)
+
+autoplot(gc_ril_pca, x = 1, y = 5, size=4, alpha =.7,
+         loadings = TRUE, loadings.colour = 'blue',
+         loadings.label = TRUE, loadings.label.size = 5)+
+  theme(aspect.ratio = pve_pc5 / pve_pc1)
+```
+
+:::
+
+::::::
+
+
+### Biological Interpretation of PCA plots
+
+Now that we can create and interpret PCA plots, let's return to the underlying biological questions they can address. Some common questions to ask are:  
+
+- **Are individuals clustered or spread out?**   
+   - In our case individuals are quite spread out. This lets us know that recombination during the creation of our  RILs did a reasonable job of dissecting the underlying traits.   
+   - Clustering would suggest that there is some underlying structure in the data. If clustering was noticeable, we would want to know  which traits are driving that structure.  
+
+- **Which traits influence the main axes?**    In the biplot, look at the arrows:    
+   - Which traits are most aligned with PC1 or PC2?   
+   - Are any traits opposing each other?
+
+- **Do categories separate in PCA space?**  In our case we see that nearly all observations in the bottom left of our plot set no hybrid seeds, while the top right (aligned with large petal area) seemed to have a lot of hybrids.<br><br>  
+
+- **Is anything interesting happening beyond PC1 and PC2?**  Check out other PCs (like PC5) to see if subtle patterns or groupings emerge that aren't visible on the first two axes. But beware, do not overinterpret patterns in PCs that explain very little variability.  <br><br> 
+
+- **Do you notice a "horseshoe" shape?** Sometimes  points a PCA plot form a curved or arched pattern. This is a known artifact that often shows up when PCA tries to fit a curved pattern using straight-line axes. This can be misleading -- samples at the two ends of the gradient may appear close together even though they’re quite different. When you see a horseshoe, consider transforming key variables or using an alternative ordination approach less sensitive to this issue. 
+
+---
+
+**Now that we can make and interpret PCA plots, let's look under the hood and see how they work.**

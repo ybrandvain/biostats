@@ -1,0 +1,298 @@
+## • 9. Audience & Format  {.unnumbered #audience&delivery}
+
+
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(palmerpenguins)
+library(tweetrmd)
+library(knitr)
+library(tidyr)
+library(ggplot2)
+library(ggthemes)
+library(forcats)
+library(DT)
+library(cowplot)
+library(broom)
+library(patchwork)
+library(emo)
+library(tufte)
+library(webexercises)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating Scenario:**  
+You have figured out the story you plan to tell with your data.But before you dive too deep, pause for a moment: Who’s going to see this plot? And how are they going to see it? And how can we use this information to make our plot most impact. 
+
+**Learning Goals: By the end of this subchapter, you should be able to:**   
+
+
+1. Identify key types of audiences for scientific figures, and recognize what each needs from a plot.   
+2. Describe how figures function differently in talks, posters, papers, and online formats.  
+3. Make thoughtful tradeoffs between detail, clarity, and interpretability depending on audience and format.  
+4 **Build a workflow** that separates early exploratory plotting from later communication-focused refinement.  
+   - Know that "*premature optimization is the root of all evil.*"
+
+:::
+
+---
+
+## The Audience and the Format
+
+Labeling something as a "good plot" or a "bad plot" is overly simplistic. Sure, there are features that make a plot "better"  or "worse", but plots do not have an independent existence. Plots are presented to specific audiences in specific contexts. Considering your audience and the presentation format is key to making a truly effective visualization. 
+
+
+### The Audience
+
+```{r}
+#| echo: false
+#| label: fig-audience
+#| column: margin
+#| fig-cap: "An audience at a sceintific meeting (The 20204 EU Drones Conference to be precise). [Photo posted to wikimedia commons](https://commons.wikimedia.org/wiki/File:-_EU_DRONES_CONFERENCE-20240410-LR-485_(53649174575).jpg) and shared under Creative Commons Attribution 2.0 Generic License by the Belgian Presidency of the Council of the EU 2024."
+#| fig-alt: "An audience of people attentively tuned to the front of the room."
+include_graphics("https://upload.wikimedia.org/wikipedia/commons/b/be/-_EU_DRONES_CONFERENCE-20240410-LR-485_%2853649174575%29.jpg")
+```
+
+We tell stories to an audience, not a wall. Just as you would communicate differently with a friend versus a colleague, your plot should be tailored to its intended audience. When designing a figure, ask yourself:  (1) *Who is this for?* (2) *What background knowledge or context do they bring* (3) *What do they need from this?*   (4) *What do you want from them -- Feedback? Funding? Action? Respect etc...?* 
+
+"Archetypes" of a potential audience for your plot include:  
+
+-  🫵 *You and Your Team:* You are the first person to look at your plot. You want to know that you are not fooling yourself. You are deeply familiar with the data, methods and many peculiarities of the study. 
+    - *For this audience:* You may want to color points by technical covariates (e.g. when the reading was taken, who took it? which machine was used? etc) and use tools like [plotly](https://plotly.com/ggplot2/) to understand outliers so that you don't waste weeks digging into the wrong story.   
+    
+
+-  🧠 *The Expert Critical Reader:* This is the scientific audience for academic articles. Often a peer, a reviewer, or even a competitor. The expert wants precision, detail, honesty and clarity. The expert wants to quickly know what you did and what it means, but may be quite critical of your results so would like to be able to evaluate the evidence for themselves.    
+
+    - *For this audience:*  You will likely want to guide their interpretation but while showing all the data and empowering them to verify your conclusions. 
+
+- 🤷 *The Curious Novice:* Not everyone encountering your work will be an expert. You might communicate your work to students just beginning to master the subject, or biologists from a related subdiscipline. This audience too, would like to be critical, but often needs additional context, background, and structure to make the most of a plot.    
+
+    - *For this audience:*  Your main job here is as a teacher. You should explain your plots very clearly, and their points should be obvious.  
+    
+- 📣 *The Public or Non-Expert:* You might present your work  to a broad audience (e.g. TEDx style), to a lawyer, a jury, a politician etc. These people are likely interested in your work (they're here aren't they?), and do want to be able to evaluate its legitimacy, but may not have statistical or biological expertise.   
+
+    - *For this audience:*  Your main job here is as a convincer. As the expert, you aim  to help this audience see things your way. Make your plots clear and easily digestible. You should largely refer to published studies  for legitimacy, but be prepared to handle questions from engaged participants.   
+    
+
+
+
+### Tailoring Presentations to Their Format
+
+
+:::aside
+
+```{r}
+#| label: fig-mandm
+#| column: margin 
+#| fig-cap: "A snippet from Van Halen's 1982 tour rider detailing the 'Munchies' requirements, accessed from [snopes.com](https://www.snopes.com/fact-check/brown-out/)."
+#| fig-alt: "A scanned image of a typed list under the heading 'Munchies'. The list includes potato chips, nuts, and pretzels. A red arrow points to the line that reads: 'M & M's (WARNING: ABSOLUTELY NO BROWN ONES)'."
+#| echo: false
+library(knitr)
+include_graphics("https://www.snopes.com/uploads/2014/12/vanhalenrider.jpg")
+```
+
+> In one notable incident, officials at what is now Colorado State University Pueblo refused to honor the request, leading the band to go on a rampage that involved throwing food all over a dining area as well as "unmentionable" acts in a nearby restroom. However, even more damage was caused to the basketball floor in the gymnasium due to the weight of the stage brought in.
+> 
+> `r tufte::quote_footer('--- [Wikipedia](https://en.wikipedia.org/wiki/Van_Halen#Contract_riders)')` 
+:::
+
+
+Science is communicated in many formats. Here’s how to tailor your plots to different mediums:
+
+---
+
+
+* **📘 Books / Papers:** These plots are static and need to be self-contained. Readers should be able to understand the plot and its main point without relying on the accompanying text. You don't know how people will read your paper.     
+
+
+
+
+
+:::protip
+**Plots as "Brown M&Ms"**     
+The American hard rock band Van Halen had a strange issue in their "rider" - they insisted on having a bowl of M&Ms but no brown M&Ms @fig-mandm. While they did have a very rock bad diva response to this being broke (see the quote o the right), this request was more than a rock-diva thing. As [explained by vocalist David Lee Roth](https://www.youtube.com/watch?v=_IxqdAgNJck) this request was a way to ensure that the  venue had closely read the requirements for the show to ensure safety (as aluded to at the end of the Wikipedia quote).
+
+
+In the same way, scientists use visual cues to make rapid judgments about the quality and trustworthiness of research. A sloppy, unpolished plot acts like a brown M&M in the candy bowl; it's a red flag that signals a potential lack of care that could extend to the data analysis itself (evenif the analysis is fine). A polished, professional plot does the opposite: it signals that the author is careful and trustworthy. It tells the reader they are in good hands.
+:::
+
+---
+
+* **🎤 Public Talks:** In presentations, you control the flow of information. A successful plot in a scientific talk:  
+
+  * Builds up figures slide by slide, to encourage audience understanding and engagement.
+  * Uses large text, big points, and wide lines so that it is legible from the back of the room.
+  * Favors results and interpretation over details.
+
+```{r}
+#| echo: false
+#| label: fig-slide
+#| fig-cap: "This flipbook demonstrates how a plot might be built and explained during a scientific talk. Elements are added sequentially to highlight axes, suggest patterns, and distinguish groups."
+#| fig-alt: "A slide deck that builds a scatterplot of Sepal Length vs. Petal Length for three iris species. It introduces axes, hypothetical patterns (positive/negative/no relationship), then adds trend lines and species color-coding, ending with interpretation."
+#| out-width: "100%"
+#| fig-height: 9
+include_url("https://ybrandvain.github.io/flipbooks/talk_plot_flipbook.html")  
+```
+
+
+---
+
+
+* **🖼️ Posters:**. Because your poster will be presented alongside tens or  hundreds of others in a big room (@fig-postersesh A), your poster and its figures should be designed to draw viewers in and encourage them to engage. Posters are arguably the most difficult format in science communication, so here are some tips:
+
+
+  * *Make it stand out:* You’re often in a room with tens to hundreds of posters, and people are circulating casually, often with a coffee or drink in hand. Catch their eye. **There is a time and place for charjunk and that time and place is a poster session.**   
+  * *Use as little text as possible:* Once you've removed unnecessary text, go back and remove even more.
+  * *Make all graphical elements big:* Text, points, labels—all of it.
+
+```{r}
+#| echo: false
+#| label: fig-postersesh
+#| fig-cap: "(A) A typical scientific poster session—crowded, fast-moving, and visually competitive. (B) A redesigned scatterplot of Iris data intended for a poster, using large points, direct species labels, and photographs of the flowers to make the plot visually engaging and immediately interpretable."
+#| fig-alt: "Side-by-side panels. Panel A shows a crowded scientific conference poster session with many people browsing posters in a packed hall. Panel B is a scatterplot of Iris flower data with Sepal Length on the x-axis and Petal Length on the y-axis. Three species are plotted with large colored points and distinct shapes: red circles for I. setosa, blue triangles for I. versicolor, and green squares for I. virginica. Each species is directly labeled in matching color and accompanied by a small photograph of the corresponding flower."
+include_graphics("../../figs/summarizing_data/data_viz/poster_image.png")
+```
+
+---
+
+* **💻 Digital Formats:** Online formats allow for interactive elements, GIFs, and animations. These can help readers explore your data themselves, making the story more intuitive and engaging, but don't overdo it. You should focus on helping readers engage with the plot to absorb the key results, not distract them from those results. As you can tell from my efforts in this book, this is my favorite context.
+
+
+
+
+```{r}
+#| echo: false
+#| label: fig-highcharter
+#| fig-cap: "**Interactive iris plot with trendlines and direct labels.** This interactive scatterplot shows Sepal Length versus Petal Length for three *Iris* species. Each species is plotted in a distinct color and shape, with accompanying trendlines and direct labels. Designed for digital formats, this figure allows for hover-based exploration, emphasizing user engagement and interpretability."
+#| fig-alt: "Interactive scatterplot showing Sepal Length on the x-axis and Petal Length on the y-axis for three species of *Iris*. *I. setosa* is plotted in blue circles, *I. versicolor* in orange triangles, and *I. virginica* in green squares. Each species has a fitted trendline in matching color and a bold direct label at the end of the trendline. Axes use large font for clarity in digital viewing. A legend is also included, though species are directly labeled on the plot itself."
+#| message: false
+#| warning: false
+library(highcharter)
+library(purrr)
+# Alternative: Define custom colors that you want to use
+custom_colors <- c("setosa" = "#1f77b4", 
+                   "versicolor" = "#ff7f0e", 
+                   "virginica" = "#2ca02c")
+
+# Method to use custom colors with big axes and direct labeling
+hc6 <- hchart(iris, "scatter", hcaes(x = Sepal.Length, 
+                                     y = Petal.Length, 
+                                     group = Species)) %>%
+  hc_colors(c("#1f77b4", "#ff7f0e", "#2ca02c")) %>%  # Set the colors explicitly
+  hc_xAxis(
+    title = list(text = "Sepal Length", style = list(fontSize = "18px", fontWeight = "bold")),
+    labels = list(style = list(fontSize = "14px"))
+  ) %>%
+  hc_yAxis(
+    title = list(text = "Petal Length", style = list(fontSize = "18px", fontWeight = "bold")),
+    labels = list(style = list(fontSize = "14px"))
+  ) %>%
+  hc_legend(enabled = TRUE)
+
+# Add trendlines with the same custom colors
+species_names <- unique(iris$Species)
+colors <- c("#1f77b4", "#ff7f0e", "#2ca02c")
+
+for(i in seq_along(species_names)) {
+  species <- species_names[i]
+  species_data <- iris[iris$Species == species, ]
+  
+  model <- lm(Petal.Length ~ Sepal.Length, data = species_data)
+  
+  x_vals <- seq(min(species_data$Sepal.Length), 
+                max(species_data$Sepal.Length), 
+                length.out = 50)
+  y_vals <- predict(model, newdata = data.frame(Sepal.Length = x_vals))
+  
+  line_data <- map2(x_vals, y_vals, ~list(.x, .y))
+  
+  hc6 <- hc6 %>%
+    hc_add_series(
+      data = line_data,
+      type = "line",
+      name = paste0(species, " trend"),
+      color = colors[i],  # Match the custom colors
+      marker = list(enabled = FALSE),
+      enableMouseTracking = FALSE,
+      showInLegend = FALSE
+    )
+}
+
+# Add direct labels for each species
+# Calculate label positions (end of each trendline)
+label_data <- list()
+for(i in seq_along(species_names)) {
+  species <- species_names[i]
+  species_data <- iris[iris$Species == species, ]
+  
+  model <- lm(Petal.Length ~ Sepal.Length, data = species_data)
+  
+  # Get the rightmost point for label placement
+  max_x <- max(species_data$Sepal.Length)
+  label_y <- predict(model, newdata = data.frame(Sepal.Length = max_x))
+  
+  label_data[[i]] <- list(
+    x = max_x + 0.1,  # Offset slightly to the right
+    y = label_y,
+    text = as.character(species),
+    color = colors[i]
+  )
+}
+
+# Add the labels as annotations
+hc6 <- hc6 %>%
+  hc_annotations(
+    list(
+      labelOptions = list(
+        style = list(fontSize = "14px", fontWeight = "bold"),
+        backgroundColor = "rgba(255,255,255,0.8)",
+        borderColor = "rgba(0,0,0,0.2)",
+        borderRadius = 3,
+        borderWidth = 1
+      ),
+      labels = label_data
+    )
+  )
+
+hc6
+```
+
+---
+
+**Summary of the impact of medium on plot development.** 
+
+  | Format  | Key Feature                   | Prioritize                         |
+   | ------- | ----------------------------- | ---------------------------------- |
+   | Paper   | Static, standalone            | Clarity, context in figure         |
+   | Talk    | Controlled pacing             | Simplicity, build-up, big elements |
+   | Poster  | Competitive and noisy setting | Visual impact, minimal text        |
+   | Digital | Dynamic & user-driven         | Interactivity, clarity             |
+
+---
+
+:::aside
+> We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil. Yet we should not pass up our opportunities in that critical 3%
+> 
+> `r tufte::quote_footer('--- [Donald Knuth](https://en.wikipedia.org/wiki/Donald_Knuth)')` 
+:::
+
+:::protip
+### Premature optimization is the root of all evil
+
+Although Donald Knuth was talking about optimizing computer programs, the same logic applies to figures. In research or publication contexts, refining the plot can be worth the time - but only after the scientific story is sound. Perfecting a plot before it is ready to be presented can be a massive time sink. I therefore recommend the following workflow to make great plots without wasting too much time:  
+
+- Make quick, rough plots to start exploring the stories in your data.
+
+- Make additional plots and summaries to see if you fooled yourself and/or if an artifact can better explain your data than your hypothesis.   
+
+- Make a good "base plot" that clearly and honestly shows the point and circulate this to friends collaborators etc.    
+
+- Save the code for this plot and don't lose it.    
+
+- 🛑STOP🛑 working on the plot for a while. Do everything else to make your science good. Resist the urge to keep tweaking at this stage - your time is better spent elsewhere for now.     
+
+- **Once you are ready to present the work** take steps towards further refining the plot following the concepts outlined in the rest of this chapter. *Now is the time to make this figure shine!!!* Do most of this in R - but feel free to spruce a quick thing up some other way (e.g. powerpoint / illustrator etc...) if it's fast one-off.   
+:::
+

@@ -1,0 +1,370 @@
+## • 7. Two predictors {.unnumbered}
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr' ,'ggplot2', 'broom']
+  autoload-packages: true
+---
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating Scenario:**  
+You noticed that two variables (e.g. petal color and petal area) are associated with the response variable (e.g. the proportion of hybrid seeds). You want to know how to build one model to put these together. 
+
+**Learning Goals: By the end of this section, you should be able to:**. 
+
+1. **Fit a general linear model with two predictors**   
+   - Build a model with both continuous and categorical explanatory variables with `R`.
+
+2. **Interpret coefficients in a two-predictor model**    
+   - Understand the meaning of intercepts, slopes, and group differences.
+
+3. **Manually calculate predicted values and residuals**  
+   - Predict responses for individuals and compute residuals from model output.
+
+
+
+:::
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(kableExtra)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+```
+
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for selecting data from a few columns from RILs planted at GC"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm,visited )|>
+  mutate(log10_petal_area_mm = log10(petal_area_mm))
+```
+
+--- 
+
+
+
+
+
+We found that both petal area and petal color predict the proportion of hybrid seeds in parviflora RILs. We’ve seen how to model each relationship individually, but what if you want to consider both traits at once? -- Does petal size still matter when accounting for petal color? Or do visits 'explain away' the apparent association of proportion hybrid seeds with petal size?  
+
+
+
+
+```{r}
+#| column: margin
+#| eval: false
+
+# Code for a minimal 
+# version of the figure below
+gc_rils |> 
+  filter(!is.na(petal_color))|>
+  ggplot(aes(
+          x = petal_area_mm, 
+          y = prop_hybrid,
+      color = petal_color))+
+  geom_point()+
+  geom_smooth(method = "lm", 
+              se = F)
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-height: 7
+#| column: margin
+#| label: fig-ancova
+#| fig-cap: "**Proportion hybrid seed as a function of petal area and petal color in parviflora RILs.** Pink petals are shown in pink, white petals are shown in white. Note that this plot shows different slopes for pink and white-petaled plants, but our statistical model assumes the same slope across groups."
+#| fig-alt: "Scatterplot of proportion of hybrid seed (y-axis) versus petal area in mm² (x-axis), with points colored by petal color (pink or white) and corresponding colored regression lines. The pink-petaled group has a higher intercept, but both lines share a similar slope visually. Note: the model used does not include an interaction term, so any difference in slope is visual and not statistically estimated in our model below."  
+
+
+ggplot(gc_rils |> filter(!is.na(petal_color)),
+       aes(x = petal_area_mm, y = prop_hybrid,
+           color = petal_color))+
+  geom_point(size = 6, alpha= .6)+
+  geom_smooth(method = "lm", linewidth = 2, se = FALSE)+
+  annotate(geom = "text", x = c(125,115), y = c(.7,.1), 
+           label = c("pink\npetals", "white\npetals"),size = 12,
+           color = c("pink","white"))+
+  scale_color_manual(values= c("pink","white"))+
+  scale_x_continuous(limits =c(30, 140))+
+  theme_dark()+
+  theme(legend.position = "none",
+        axis.text = element_text(size = 28),
+        axis.title = element_text(size= 28),
+        plot.title = element_text(face = "bold", size=30))+
+  labs(x = "Petal area (mm^2)", y = "Proportion of hybrid seed")
+```
+
+
+The "general linear model" allows us to tackle such questions by modeling  multiple explanatory variables at once (@fig-ancova). To do so, we extend our familiar simple linear model to include both kinds of predictors at once.  
+
+
+In this case, each predictor gets its own coefficient:      
+
+- A **slope** for the continuous predictor (petal area), showing how the response changes as area increases, as in the [inear regression section](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/linear_models/regression.html).  
+- A **difference from the reference group** for the categorical predictor (petal color), showing how average hybridization differs between pink- and white-petaled plants, a in the [categorical predictor section](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/linear_models/lm_cat_pred.html)
+ 
+Mathematically, the prediction for an individual becomes:
+
+$$\hat{y}_i = b_0 + b_1 x_{1i} + b_2 x_{2i}$$
+To make this more concrete, let's define:     
+
+- $x_1$ as petal area, and where:    
+- $x_2$ as the indicator variable for petal color, which equals 0 for pink petaled-flowers and 1 for white-petaled flowers (i.e. pink is the "reference level").   
+- $y$ as proportion of hybrid seed.  
+
+With this biological grounding we can re-cast our equation as 
+
+$$\widehat{\text{PROPORTION OF HYBRID SEED}}_i = b_0 + b_1   \times  \text{PETAL AREA MM}^2 +  b_2 \times \text{WHITE}_i$$
+
+:::aside  
+**$b_0$ is biological nonsense, of course.** A flower with a petal area of zero wouldn't have a color, let alone attract pollinators. The intercept here is a statistical and mathematical construct — not a biological claim. That's ok! Just make sure to never use a linear model to make predictions beyond the range of your data.  
+:::   
+
+- $b_0$ is the intercept  —  proportion of hybrid seeds for a pink-petaled plant with petal area equal to zero.   
+- $x_{1i}$ is petal area for plant $i$.  
+
+
+- $b_1$ is the slope  — the expected change in the proportion of hybrid seeds, for every unit increase petal area (as in the previous chapter). Note that this assumes that pink and white flowers have the same slope. We revisit this later.  
+
+- $b_2$ is the difference in the intercepts for white- and pink- petaled flowers i.e. the difference in the expected  proportion of hybrid seeds for pink and white petaled-flowers with the same petal area.  
+
+
+
+
+:::protip
+**Don't confuse the general linear model with a generalized linear model (GLM).** The general linear model (introduced above) allows for multiple predictors combined additively, while a GLM models a nonlinear response by first adding up linear contributions from predictors and then applying a transformation to match the nonlinear shape of the data.
+
+We introduce GLMs at the end of the book. Although technically the number of hybrid seeds out of n seeds observed would have a binomial variance structure — and so a GLM might better match the data — fitting proportion with a linear model is often good enough to reveal clear biological patterns. This is very common practice, and we’ll revisit better-matching models later. I initially model this relationship as a linear model both because it is close enough, and because I want you to feel comfortable doing something good enough — even if imperfect. We're not landing a rocket ship on the moon — we're doing statistics. Our goal is to be "not wrong," rather than "perfect." 🫶 
+:::
+
+## General Linear models in R   
+
+
+:::aside
+**Beware of associated predictors (multicollinearity):**<br> 
+If pink-petaled parviflora RILs tended to have bigger petals than white ones, it becomes  trickier  to cleanly separate their effects. The overall model predictions ($\hat{y}_i$) can be reliable, but the estimated coefficients ($b_1$, $b_2$) can become unstable or hard to interpret.  For now know that it’s fine if predictors are somewhat related, but when they are strongly correlated, we have to be cautious when interpreting individual coefficients. 
+:::
+
+
+The mathematical trick for estimating parameters (e.g. $b_0$, $b_1$, and $b_2$) in a general linear model exceeds what I care that you learn. So let's  find these in R with the [`lm()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html) function.  
+
+To conduct a general linear model in `R` just add terms to your linear model:  
+`lm(response ~ explan_1 + explan_2, data = data)`.  For our case:    
+
+```{r}
+lm(prop_hybrid ~ petal_area_mm + petal_color, data = gc_rils)
+```
+
+
+## Conditional means from General Linear Models   
+
+With the estimates above, we can  return to our general linear model equation to find conditional means:  $$\widehat{\text{PROPORTION OF HYBRID SEED}}_i = b_0 + b_1   \times  \text{PETAL AREA MM}^2 +  b_2 \times \text{WHITE}_i$$ $$\widehat{\text{PROPORTION OF HYBRID SEED}}_i =  -0.0894 + 0.00576  \times  \text{PETAL AREA MM}^2 - 0.244192   \times \text{WHITE}_i$$
+
+
+```{r}
+#| echo: false
+gc_rils |> mutate(i=1:n()) |> slice(1:4)|>mutate(prop_hybrid = round(prop_hybrid, digits =4), petal_area_mm= round(petal_area_mm, digits = 4))|> select(i, petal_area_mm, petal_color, prop_hybrid)|>kable()
+```
+
+### A worked example and challenge questions
+
+The table below shows values of the explanatory and response variables for the first four samples in the `gc_rils` dataset. Individuals $i=1$ and $i=3$ are show in black and red x's in @fig-plotly_ancova, and I provide R code for calculating the prediction for individual $i=1$ below. In the webR session below: 
+
+- Find the residual for individual $i=1$.   
+- Find the predicted proportion hybrid seed and the residual for individual $i=3$.  
+
+```{webr-r}
+#| context: setup
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+gc_rils <- readr::read_csv(ril_link) |>
+  filter(location == "GC")|>
+  dplyr::select(prop_hybrid, petal_area_mm, petal_color,mean_visits, asd_mm)|>
+  mutate(log10_petal_area_mm = log10(petal_area_mm))
+```
+
+
+
+```{webr-r}
+ # prediction for i = 1
+ # b0   + b1 * petal area + b2 * white
+y_1 <- -0.0894 + 5.76e-3 * 44 - 0.244 * 1       
+print(paste("Prediction for individual i=1:",y_1))
+
+# prediction for i = 3
+# b0   + b1 * petal area + b2 * white
+                # your turn     
+```
+
+`r hide("How to solve this.")`
+```{r}
+ # prediction for i = 1
+ # b0   + b1 * petal area + b2 * white
+y_1 <- -0.0894 + 5.76e-3 * 44 - 0.244 * 1       
+print(paste("Prediction for individual i=1:",y_1))
+
+# Residual for ind i=1
+e_1 <- 0.00 - y_1 # Residual = observed - predicted
+print(paste("Residual for individual i=1:",e_1))
+
+# prediction for i = 3
+# b0   + b1 * petal area + b2 * white
+y_3 <- -0.0894 + 5.76e-3 * 51.7 #   no b2 because its pink  
+print(paste("Prediction for individual i=3:",y_3))
+
+# Residual for ind i=1
+e_3 <- 0.25 - y_3 # Residual = observed - predicted
+print(paste("Residual for individual i=3:",e_3))
+```
+`r unhide()`
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+#| label: fig-plotly_ancova
+#| fig-cap: "**Proportion of hybrid seeds as a function of petal area and petal color in parviflora RILs.** This plot essentially replicates @fig-ancova, with the following caveats: it shows the same slope for each petal color, matching our model assumptions. The plot is interactive. Individuals $i=1$ and $i=3$ are highlighted with black and red Xs, respectively." 
+#| fig-alt: "Interactive scatterplot showing proportion of hybrid seeds as a function of petal area for Clarkia parviflora RILs. Points are colored by petal color. A fitted linear trendline with the same slope for each petal color is shown, matching the general linear model. Individual plants $i=1$ and $i=3$ are emphasized with black and red Xs, respectively. The plot allows hovering for more information."  
+library(plotly)
+library(broom)
+augmented_data <- lm(prop_hybrid ~ petal_color + petal_area_mm, data = gc_rils)|>
+  augment()|>
+  rename(i = .rownames) 
+
+ancova <- augmented_data |>
+    ggplot(aes(x = petal_area_mm, y = prop_hybrid, color = petal_color))+
+    geom_point(size = 3, alpha = .7)+
+    geom_smooth(data = augmented_data, aes(y = .fitted),method = "lm")+
+  geom_text(data = slice(gc_rils,3), label = "x", color = "red",size = 12)+
+  geom_text(data = slice(gc_rils,1), label = "x", color = "black",size = 12)+
+  theme_dark()+
+  scale_color_manual(values = c("pink","white"))+
+  annotate(geom = "text", x = c(115,105), y = c(.5,.2), 
+           label = c("pink\npetals", "white\npetals"),size = 6,
+           color = c("pink","white"))+
+#  annotate(x= c(30,30), y = c(0,.25), label = c("X: i = 1", "X: i = 3"), 
+#           color = c("black","red"), geom = "text",size = 6)+  
+  coord_cartesian(xlim  =c(25, 125))+
+  labs(x = "Petal area (mm^2)", y = "Proportion of hybrid seed")  +
+  theme(legend.position = "none")
+ggplotly(ancova)
+```
+
+```{r}
+#| eval: false
+#| column: margin
+
+library(broom)
+
+# Minimal code for a figure
+# like that on the left
+
+my_lm <- lm(prop_hybrid ~ 
+              petal_color + 
+              petal_area_mm, 
+            data = gc_rils)
+
+augmented_data <-my_lm |>
+   augment()
+
+augmented_data |>
+    ggplot(aes(
+      x = petal_area_mm,
+      y = prop_hybrid,
+      color = petal_color)
+      )+
+    geom_point()+
+    geom_smooth(aes(
+        y = .fitted),
+      method = "lm",
+      se = FALSE)
+```
+
+
+## Wrapping Up: Two Predictors, One Model
+Above, we extended a simple linear model to include two predictors — one continuous and one categorical. We could, of course, have had two categorical predictors, two numeric predictors, or more than two predictors as well. By adding multiple predictors, we can better account for biological complexity — modeling how several traits simultaneously influence a response. We can even include interactions between variables, as I show in the optional content below.
+
+
+
+## OPTIONAL EXTRA LEARNING.   
+
+:::fyi
+**Including interactions**.  
+Earlier, we assumed that the increase in  proportion of hybrid seeds with increased petal area was the same for pink and white-flowered plants, but as shown in @fig-ancova, this might not be true. It looks like petal area is strongly associated with proportion hybrid seed in pink, but not white-flowered plants. 
+
+We can further extend linear models to include such interactions (i.e. differences in slopes). 
+
+$$\hat{y}_i = \text{INTERCEPT} + \text{SLOPE} \times \text{PETAL AREA} +$$ $$ b_2 \times \text{WHITE}+ b_3 \times   \text{WHITE} \times \text{PETAL AREA}$$
+
+We can do this in R by adding this interaction explicitly:     
+`lm(response ~ explan1 + explan2 + explan1:explan2)`, where `:` notes the interaction.
+
+
+
+```{r}
+#| eval: false
+lm(prop_hybrid ~ petal_area_mm + 
+                 petal_color   + 
+                 petal_area_mm:petal_color, 
+    data = gc_rils) 
+```
+
+```{r}
+#| echo: false
+lm(prop_hybrid ~ petal_area_mm + 
+                 petal_color   + 
+                 petal_area_mm:petal_color, 
+                 data = gc_rils) |> 
+  coef()|> 
+  kable()
+```
+
+From these estimates, we can model proportion of hybrid seeds for pink and white-petaled flowers as follows:  
+
+$$\hat{y}_{i|\text{PINK}} = -0.330 + 0.00960 \times \text{PETAL AREA}$$
+--- 
+
+and 
+
+---
+
+$$\hat{y}_{i|\text{WHITE}} = -0.330 + 0.00960 \times \text{PETAL AREA}$$ $$+0.237 -0.00766 \times \text{PETAL AREA}$$
+
+$$\hat{y}_{i|\text{WHITE}} = -0.330 +0.237 +\text{PETAL AREA} \times (0.00960 -0.00766)$$
+
+$$\hat{y}_{i|\text{WHITE}} = -0.093 +\text{PETAL AREA} \times (0.001946)$$
+```{webr-r}
+# feel free to use the space below as a playground to work things out!
+
+```
+:::

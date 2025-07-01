@@ -1,0 +1,491 @@
+## • 6. Two numeric vars {.unnumbered #cont_cont}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(kableExtra)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+```
+
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for selecting data from a few columns from RILs planted at GC"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm,visited )|>
+  mutate(log10_petal_area_mm = log10(petal_area_mm))
+```
+
+--- 
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:**   
+You are continuing your exploration of a new dataset. After checking its shape and making transformations you thought were appropriate, you're now ready to explore how two numeric variables are associated.
+
+**Learning Goals: By the end of this subchapter, you should be able to:**  
+
+1. **Calculate and explain a covariance:**  Both as the "mean of the product minus the product of the mean" and the  "mean of cross products". 
+
+2. **Calculate and explain a correlation coefficient** and why this standardized measure can be more useful than covariance when comparing associations.  
+
+:::     
+
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-height: 7
+#| column: margin
+
+ggplot(gc_rils, aes(x = log10_petal_area_mm,
+                    y = prop_hybrid))+
+  geom_point(size = 6, alpha= .6)+
+  geom_smooth(method = "lm", linewidth = 2, se = FALSE)+
+  theme(legend.position = "none",
+        axis.text = element_text(size = 28),
+        axis.title = element_text(size= 28),
+        plot.title = element_text(face = "bold", size=30))
+```
+
+## The covariance  {#cont_cont_the-covariance}   
+
+The covariance can also be used to describe the association between two numeric variables. For example, in our *Clarkia* RIL data, we could describe the association between $\text{log}_{10}$ petal area and the proportion of hybrid seeds using a covariance. As with two categorical variables, the covariance between two numeric variables reflects how much the observed association differs from what we’d expect if the variables were independent. There are two ways to calculate covariance — I introduce both here because each provides a different lens for understanding the concept, and each connects deeply to core ideas in statistics.
+
+
+### The covariance as a deviation from expectations  
+
+
+In the previous section, I introduced the covariance as the difference between the proportion of observations with a specific pair of values for two variables (e.g., pink flowers and being visited by a pollinator) and how frequently we would expect to see this pairing if the variables were independent: $\text{Covariance}_{A,B} = (P_{AB}-P_{A} \times P_{B})$. Because we can think of proportions as a mean, we can use this same math to describe the covariance of two numeric variables, *X* and *Y*, as  the difference between the mean of the products and the product of the means: 
+
+$$\text{Covariance}_{X,Y} = (\overline{XY}-\overline{X} \times \overline{Y})$$
+
+
+:::aside
+As in the previous section this formula is slightly wrong because it implicitly has a denominator of $n$, not $n-1$. We apply [Bessel's correction](https://en.wikipedia.org/wiki/Bessel%27s_correction) to get the precise covariance  (multiplying our answer by $\frac{n}{n-1}$). But when $n$ is big, this is close enough.
+:::
+
+So, we can find the covariance between ($\text{log}_{10}$) petal area and the proportion of hybrid seeds as the mean of a plant's  ($\text{log}_{10}$) petal area times its proportion of hybrid seeds minus the mean ($\text{log}_{10}$) petal area times the mean proportion of hybrid seeds, which equals 0.00756 (after applying Bessel's correction).
+
+```{r}
+#| column: page-right
+#| eval: false
+gc_rils |>
+  filter(!is.na(log10_petal_area_mm), !is.na(prop_hybrid))|>
+  summarise(mean_product        = mean(log10_petal_area_mm * prop_hybrid),
+            product_of_mean     =  mean(log10_petal_area_mm) * mean(prop_hybrid),
+            approx_covariance   = mean_product - product_of_mean,
+            actual_covariance   = approx_covariance * n() /(n() - 1))
+```
+
+
+---
+
+### The covariance as the mean of cross products  
+
+```{r}
+#| echo: false  
+#| eval: false
+# Load necessary libraries
+library(ggplot2)
+library(gganimate)
+library(dplyr)
+library(palmerpenguins)
+library(forcats)
+library(patchwork)
+y <- gc_rils %>%
+  filter(!is.na(log10_petal_area_mm), !is.na(prop_hybrid))|>
+  mutate(group = factor(1:n()),
+         sign = sign((log10_petal_area_mm - mean(log10_petal_area_mm)) * 
+                       ( prop_hybrid- mean(prop_hybrid))),
+         sign = case_when(sign == -1 ~"negative", sign == 1 ~ "positive" ))
+
+
+y_poly <- bind_rows(
+  # bottom left
+  mutate(y, log10_petal_area_mm  =  case_when(log10_petal_area_mm  < mean(log10_petal_area_mm) ~ log10_petal_area_mm,
+                                              log10_petal_area_mm  > mean(log10_petal_area_mm) ~ mean(log10_petal_area_mm)),
+         prop_hybrid  =             case_when(prop_hybrid          < mean(prop_hybrid)         ~ prop_hybrid,
+                                              prop_hybrid          > mean(prop_hybrid)         ~ mean(prop_hybrid))),
+  #top right
+  mutate(y,  log10_petal_area_mm =  case_when( log10_petal_area_mm > mean( log10_petal_area_mm) ~  log10_petal_area_mm,
+                                          log10_petal_area_mm  < mean( log10_petal_area_mm) ~ mean( log10_petal_area_mm)),
+         prop_hybrid   =         case_when(prop_hybrid         < mean(prop_hybrid)       ~ prop_hybrid,
+                                        prop_hybrid        > mean(prop_hybrid)       ~ mean(prop_hybrid))),
+  # top left
+  mutate(y,  log10_petal_area_mm =  case_when( log10_petal_area_mm > mean( log10_petal_area_mm) ~  log10_petal_area_mm,
+                                          log10_petal_area_mm  < mean( log10_petal_area_mm) ~ mean( log10_petal_area_mm)),
+         prop_hybrid   =  case_when(prop_hybrid                > mean(prop_hybrid) ~ prop_hybrid,
+                                 prop_hybrid                < mean(prop_hybrid) ~ mean(prop_hybrid))),
+  #
+  mutate(y,  log10_petal_area_mm  =  case_when( log10_petal_area_mm  < mean( log10_petal_area_mm) ~  log10_petal_area_mm,
+                                          log10_petal_area_mm  > mean( log10_petal_area_mm) ~ mean( log10_petal_area_mm)),
+         prop_hybrid   =  case_when(prop_hybrid                > mean(prop_hybrid)       ~ prop_hybrid,
+                                 prop_hybrid           < mean(prop_hybrid)       ~ mean(prop_hybrid)))
+) %>%
+  arrange(group)
+
+
+tot_area <- y %>%
+  mutate(l =  ( log10_petal_area_mm - mean( log10_petal_area_mm))*(prop_hybrid-mean(prop_hybrid))  ) %>%
+  group_by(sign) %>%
+  summarise(k=sum(abs(l)) )
+
+
+gg_color_hue <- function(n) {
+  hues = seq(15, 375, length = n + 1)
+  hcl(h = hues, l = 65, c = 100)[1:n]
+}
+
+cov_plot_a <- ggplot(y, aes(x =  log10_petal_area_mm, y = prop_hybrid))+
+  geom_polygon(data = y_poly, alpha = .125, aes(fill= sign, group = group))+
+  geom_vline(data = . %>% summarise(mean_body_mass = mean( log10_petal_area_mm)), aes(xintercept = mean_body_mass))+
+  geom_hline(data = . %>% summarise(mean_prop_hybrid = mean(prop_hybrid)), aes(yintercept = mean_prop_hybrid))+
+  geom_point()+
+  labs(title = "Visualizing covariance",
+       subtitle = "Area of rectangles are cross products")+
+  theme(legend.position = "top")
+
+cov_plot_b <- tibble(x = sqrt(c(   0, pull(tot_area[1,2]), pull(tot_area[1,2]), 0,
+                                   0, pull(tot_area[2,2]), pull(tot_area[2,2]), 0)),
+                     y = sqrt(c(0,0,pull(tot_area[1,2]), pull(tot_area[1,2]),
+                                0,0,pull(tot_area[2,2]), pull(tot_area[2,2]))),
+                     sign = rep(c("-","+"), each = 4)) %>%
+  mutate(sign = as.factor(sign),
+         sign = fct_rev(sign))%>%
+  ggplot(aes(x = x, y = y , fill = sign, group = sign))+
+  geom_polygon( alpha = 1) +
+  scale_fill_manual(values = rev(gg_color_hue(2)))+
+  annotate(x = 300, y =  1000, label = "+ Area = 3403285",   color = "blue", geom = "label", hjust = 0, vjust = 0, size = 5)+
+  annotate(x = 300, y =  50, label = "- Area = 53159", color = "red", geom = "label", hjust = 0, vjust = 0, size = 5)+
+  scale_y_continuous(expand = c(0,0))+
+  scale_x_continuous(expand = c(0,0))+
+  #theme(axis.title.x = element_blank(), axis.title.y = element_blank())+
+  labs(title = "Covariance as difference in area", x ="", y="",subtitle = "= (3403285 - 53159) / (n - 1)\n= 3350126 / 341\n= 9824")
+
+plot_grid(cov_plot_a , cov_plot_b+theme(legend.position = "none") ,rel_widths = c(7,6), labels = c("A","B"))
+
+
+# yb change to rank and have the slope move up
+
+# Calculate deviations and cross products for each individual
+y_poly <- y_poly %>%
+  arrange(group) %>%
+  mutate(frame = group)  # Use group as the frame for animation
+
+y <- y %>%
+  mutate(deviation_hybrid = prop_hybrid - mean(prop_hybrid),
+         deviation_petal_area =  log10_petal_area_mm - mean( log10_petal_area_mm),
+         cross_product = deviation_hybrid * deviation_petal_area,
+         frame = group)
+
+# Create the animated plot with dynamic text
+cov_plot_a <- ggplot(y, aes(x =  log10_petal_area_mm, y = prop_hybrid)) +
+  geom_polygon(data = y_poly, aes(fill = sign, group = group), alpha = 1) +
+  geom_vline(data = . %>% summarise(mean_body_mass = mean( log10_petal_area_mm)), aes(xintercept = mean_body_mass)) +
+  geom_hline(data = . %>% summarise(mean_prop_hybrid = mean(prop_hybrid)), aes(yintercept = mean_prop_hybrid)) +
+  geom_point(size = 4) +
+  geom_label(aes(x = min( log10_petal_area_mm), y = max(prop_hybrid), 
+                label = paste0("y deviation: ", 
+                               round(prop_hybrid, digits = 3), " - ", 
+                               round(mean(prop_hybrid),digits = 3), " = ", 
+                               round(deviation_hybrid, digits = 3), "\n",
+                               "x deviation: ", 
+                               round( log10_petal_area_mm, digits = 3), " - ", 
+                               round(mean( log10_petal_area_mm), digits = 3), " = ", 
+                               round(deviation_petal_area, digits = 3), "\n",
+                               "Cross product = ", 
+                               round(deviation_hybrid, digits = 3), " * ", 
+                               round(deviation_petal_area, digits = 3), " = ", 
+                               round(cross_product, digits = 3))),
+            hjust = 0, vjust = 1, size = 6, color = "black") +  # Dynamic text placement
+  scale_fill_manual(values = c("positive" = gg_color_hue(2)[2], "negative" =  gg_color_hue(2)[1])) +  # Custom fill colors
+  annotate(y = c(.5,.05), x = c(1.65, 1.85), label = "-", color = gg_color_hue(2)[1], geom = "text", size = 15)+
+  annotate(y = c(.05,.5), x = c(1.65, 1.85), label = "+", color = gg_color_hue(2)[2], geom = "text", size = 15)+
+  labs(title = "Visualizing covariance",
+       subtitle = "Area of rectangles are cross products",
+       x = "log10 petal area",
+       y = "proportion hybrid") +  # Dynamic frame label
+  theme(legend.position = "none",axis.text = element_text(size = 20),
+        axis.title = element_text(size = 20),plot.title =  element_text(size = 30),plot.subtitle =  element_text(size = 20)
+          ) +
+  transition_manual(as.numeric(frame))  # Transition over the frame variable (group)
+
+
+
+animate(cov_plot_a,fps = .5,width = 415,height = 415)
+anim_save("figs/summarizing_data/associations/cov.gif", 
+          animate(cov_plot_a,fps = .5,width = 415,height = 415, renderer = gifski_renderer()))
+
+
+
+
+y_poly <- y_poly %>%
+  mutate(group = as.numeric(group))
+
+# Build cumulative trail of polygons for each display frame
+y_poly_trail <- purrr::map_dfr(unique(y_poly$group), function(current_group) {
+  y_poly %>%
+    filter(group <= current_group) %>%
+    mutate(display_frame = current_group)
+})
+
+
+
+y_cumsum_area <- y %>%
+  arrange(as.numeric(group)) %>%
+  mutate(
+    frame = as.numeric(group),
+    cross_product = deviation_hybrid * deviation_petal_area,
+    cumulative_sum = cumsum(cross_product),
+    cumulative_cov = cumulative_sum / (frame - 1)
+  )
+
+square_annotations <- y_cumsum_area %>%
+  select(frame, cumulative_sum, cumulative_cov) %>%
+  rename(display_frame = frame) %>%
+  mutate(label = paste0(
+    "Sum of cross products (so far) ", round(cumulative_sum, 3), "\n",
+    "Covariance (as of right now) ", round(cumulative_cov, 4)
+  ))
+
+cov_plot_a_cumulative <- ggplot(y, aes(x =  log10_petal_area_mm, y = prop_hybrid)) +
+  geom_polygon(data = y_poly_trail, aes(fill = sign, group = group, alpha = group == display_frame)) +
+  geom_point(data = y_poly_trail, aes(alpha = group == display_frame)) +
+  geom_vline(data = . %>% summarise(mean_body_mass = mean( log10_petal_area_mm)),
+             aes(xintercept = mean_body_mass)) +
+  geom_hline(data = . %>% 
+               summarise(mean_prop_hybrid = mean(prop_hybrid)), 
+             aes(yintercept = mean_prop_hybrid)) +
+  scale_fill_manual(values = c("positive" = gg_color_hue(2)[2], 
+                               "negative" = gg_color_hue(2)[1])) +
+  scale_alpha_manual(values = c("TRUE" = 1, "FALSE" = 0.1), guide = "none") +
+  labs(title = "Cumulative cross products",
+       x = "log10 petal area",
+       y = "proportion hybrid",
+       subtitle = "Previous values are transparent."
+       ) +
+    geom_label(data = square_annotations, 
+             aes(min(y$log10_petal_area_mm), y = .75, label = label), 
+             inherit.aes = FALSE,
+             hjust = 0, vjust = 0, size = 6, fill = "white") +  
+  theme(legend.position = "none",
+        axis.text = element_text(size = 20),
+        axis.title = element_text(size = 20),
+        plot.title =  element_text(size = 30),
+        plot.subtitle =  element_text(size = 20)) +
+  transition_manual(display_frame)
+
+
+animate(cov_plot_a_cumulative,fps = .5,width = 415,height = 415)
+anim_save("figs/summarizing_data/associations/cov_cumulative.gif", 
+          animate(cov_plot_a_cumulative,fps = .5,width = 415,height = 415, renderer = gifski_renderer()))
+
+
+panel_c_cov_line <- ggplot(square_annotations|>
+           mutate(square_annotations, cumulative_cov = ifelse(is.finite(cumulative_cov) ,
+                                             cumulative_cov,
+                                             .0249)), 
+                                    aes(x = display_frame, y = cumulative_cov)) +
+  geom_area(stat = "identity",fill =  gg_color_hue(2)[2], alpha = 0.6) +
+  geom_line(color = "darkgreen", size = 1.2) +
+   geom_point(size = 2, color = "black") +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(
+    title = "Running estimate of covariance",
+    subtitle = "",
+    x = "Plant # (index)",
+    y = "Estimated covariance"
+  ) +
+  theme_minimal(base_size = 16) +
+  coord_cartesian(ylim = c(0,.025))+  
+  theme(legend.position = "none",
+        axis.text = element_text(size = 20),
+        axis.title = element_text(size = 20),
+        plot.title =  element_text(size = 30),
+        plot.subtitle =  element_text(size = 20)) +
+  transition_reveal(along = display_frame)
+
+anim_save("figs/summarizing_data/associations/cov_cumulative_line.gif", 
+          animate(panel_c_cov_line,fps = .5,width = 315,height = 415, renderer = gifski_renderer()))
+
+panel_data_long <- square_annotations %>%
+    select(display_frame, cumulative_sum, cumulative_cov) %>%
+    pivot_longer(cols = c(cumulative_sum, cumulative_cov),
+                 names_to = "measure",
+                 values_to = "value") %>%
+    mutate(
+        measure = recode(measure,
+                         cumulative_sum = "Sum of cross-products",
+                         cumulative_cov = "Covariance estimate")
+    )%>%
+    mutate(measure = factor(
+        measure,
+        levels = rev(c("Covariance estimate", "Sum of cross-products"))
+    ))
+
+
+panel_faceted <- ggplot(panel_data_long, aes(x = display_frame, y = value)) +
+    geom_area(stat = "identity", fill = "skyblue", alpha = 0.6) +
+    geom_line(color = "darkblue", size = 1.2) +
+    geom_point(color = "black", size = 2) +
+    geom_hline(yintercept = 0, linetype = "dashed") +
+    facet_wrap(~ measure, ncol = 1, scales = "free_y") +
+    labs(
+        title = "Updating values",
+        subtitle = "Xproduct (top), cov (bottom)",
+        x = "Plant # (index)",
+        y = NULL
+    ) +
+    theme(
+        strip.text =  element_text(size = 20),
+        legend.position = "none",
+      axis.text = element_text(size = 20),
+      axis.title = element_text(size = 20),
+      plot.title =  element_text(size = 30),
+      plot.subtitle =  element_text(size = 20)
+    ) +
+    transition_reveal(along = display_frame)
+
+
+anim_save("figs/summarizing_data/associations/panel_faceted.gif", 
+          animate(panel_faceted ,fps = .5,width = 315,height = 415, renderer = gifski_renderer()))
+
+library(magick)
+gif1 <- image_read("figs/summarizing_data/associations/cov.gif")
+gif2 <- image_read("figs/summarizing_data/associations/cov_cumulative.gif")
+gif3 <- image_read("figs/summarizing_data/associations/panel_faceted.gif")
+
+combined <- image_append(c(gif1[1], gif2[1],gif3[1]))  # init
+for (i in 2:length(gif1)) {
+    frame <- image_append(c(gif1[i], gif2[i], gif3[i]))
+    combined <- c(combined, frame)
+}
+image_write(combined, "figs/summarizing_data/associations/crossprods.gif")
+```
+
+
+Alternatively, we can think of the covariance as how far an individual's value of X and Y jointly differ from their means. In this formulation, 
+
+1. Find the deviation of X and Y from their means for each individual--  $(X_i-\overline{X})$, and $(Y_i-\overline{Y})$, respectively (@fig-cov, left).   
+2. Take the product of these values to find the cross product (the area of a given rectangle in @fig-cov, left).   
+3. Sum them to find the sum of cross products (@fig-cov, right, top).  
+4. Divide by the sample size minus one (@fig-cov, right, bottom).   
+
+:::aside
+The equation for the covariance $\text{Cov}_{X,Y} = \frac{\Sigma{(X_i-\overline{X})(Y_i-\overline{Y})}}{(n-1)}$ should remind you of the equation for the variance $\text{Var}_{X} = \frac{\Sigma{(X_i-\overline{X})(X_i-\overline{X})}}{(n-1)}$ (compare @fig-cov to [Figure 2 from 5. Summarizing variability](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/univariate_summaries/summarizing_variability.html#fig-ss)). In fact the variance is simply the covariance of a variable  with itself. See our section on summarizing variability for a refresher [link](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/univariate_summaries/summarizing_variability.html#parametric-summaries-of-variability). In fact you, can calcualte the variance as the mean of the square minus the sqaure of the mean. 
+:::
+
+This essentially finds the mean cross products, with Bessel's correction: 
+
+$$\text{Covariance }_{X,Y} = \frac{\Sigma{(X_i-\overline{X})(Y_i-\overline{Y})}}{(n-1)}$$
+
+```{r}
+#| column: page-right
+#| label: fig-cov
+#| echo: false
+#| fig-cap: "An animation to help understand the covariance. *Left:* We plot each point as the difference between x and y and their means. The area of that rectangle is the cross product. *Middle:* Shows how these cross products accumulate. *Right:* The cummulative sum of cross products and the running covariance estimate. The lower plot (covariance) is simply the top plot divided by (x-1)."
+#| fig-alt: "Animated figure illustrating the computation of covariance between log-transformed petal area and proportion hybrid. The left panel highlights how each observation contributes a cross product represented as a rectangle, based on deviation from the mean. The center panel accumulates cross products, and the right panel tracks the cumulative sum and the evolving covariance estimate across all observations."
+include_graphics("../../figs/summarizing_data/associations/crossprods.gif")
+```
+
+
+
+
+The flipbook below works you through how to conduct these calculations: 
+
+```{r}
+#| echo: false
+#| out-width: "100%"
+#| fig-height: 9
+include_url("https://ybrandvain.github.io/flipbooks/cov_flipbook.html")  
+```
+
+### The [`cov()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html) function
+
+Both ways of computing the covariance — as the mean of cross-products and as the difference between the product of means and mean of products — are helpful for understanding association. But students are practical and often ask: "Which of these formulae should we use to calculate the covariance?" There are a few answers to this question — the first is "it depends," the second is "whichever you like," and the third is "neither, just use the  [`cov()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html) function in R." Here's how:
+
+:::aside
+The `use = "pairwise.complete.obs"` argument tells R to ignore NA values when calculating the covariance — just like `na.rm = TRUE` does when calculating the mean. You can use this argument or filter out NA values first. 
+:::
+
+
+```{r}
+#| column: page-right
+gc_rils |>
+  summarise(covariance = cov(log10_petal_area_mm, prop_hybrid, use = "pairwise.complete.obs"))
+```
+
+
+
+## The correlation   {#cont_cont_the-correlation}  
+
+Much like the variance and the difference in means, the covariance is  a very useful mathematical description, but its biological meaning can be difficult to interpret and communicate.  We therefore usually present the correlation coefficient (represented by the letter, *r*) -- a summary of the strength and direction of a linear association between two variables.  This also corresponds to how closely the points fall along a straight line in a scatterplot: the stronger the correlation, the more the points cluster along a line (positive or negative). 
+
+- **Large absolute values of** ***r*** indicate that we can quite accurately predict one variable from the other (i.e. points are near a line on a scatterplot).    
+
+- ***r*** **values near zero** mean that we cannot  accurately predict values of one variable from another (i.e. points are not near a line on a scatterplot).       
+- **The sign of** ***r*** describes if the values increase with each other ($r > 0$, a positive slope), or if one variable decreases as the other increases ($ r < 0$, a negative slope).  
+
+Mathematically *r* is simply the covariance divided by the product of standard deviations ($s_X$ and $s_Y$), and we can find it in `R` with the  [`cor()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html) function: 
+
+$$r_{X,Y} = \frac{\text{Covariance}_{X,Y}}{s_X \times s_Y}$$
+```{r}
+#| column: page-right
+gc_rils |>
+  filter(!is.na(log10_petal_area_mm), !is.na(prop_hybrid))|>
+  summarise(covariance   = cov(log10_petal_area_mm, prop_hybrid),
+            cor_from_cov = covariance / (sd(log10_petal_area_mm) * sd(prop_hybrid)),
+            cor_from_function = cor(log10_petal_area_mm, prop_hybrid))
+```
+
+
+::: aside
+| Size              | Range of $|r|$    |
+|------------------|------------------------|
+| Not worth reporting | < 0.005               |
+| Tiny              | 0.005 – 0.10           |
+| Small             | 0.01 – 0.20         |
+| **Medium**            | **0.2 – 0.35**           |
+| Large             | 0.35 – 0.50           |
+| Very large        | 0.50 – 0.75          |
+| Huge              | $> 0.75$                |
+::: 
+
+As in Cohen's D, what is a "large" or "small" correlation coefficient depends on the study, the question and the  field of study, but there are rough guides (see table on right). So our observed correlation between $log_{10}$ petal area and  proportion hybrid is worth paying attention to, but not massive. 
+
+
+
+## Coming up next
+
+These summaries — covariance and correlation — give us tools to describe how two numeric variables relate. Later, we'll return to these ideas in the context of linear models, where we formalize the idea of one variable predicting another.

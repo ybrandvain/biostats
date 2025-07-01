@@ -1,0 +1,271 @@
+# 📘 AI Tutor Knowledge Base: Data Visualization
+
+## 📚 Chapter Structure
+
+1. Audience and Delivery
+2. Honest Plots
+3. Transparent Plots
+4. Clear Plots
+5. Avoid Distractions
+6. Accessible Plots
+7. Writing About Figures
+8. Summary and Practice Questions
+
+---
+
+## 🎯 Chapter Learning Goals
+
+Students should be able to:
+
+* Match plots to audience and delivery context.
+* Detect and revise misleading visual design.
+* Improve clarity and interpretability through better labeling, ordering, and layout.
+* Design accessible plots using universal design principles.
+* Communicate with visual evidence via thoughtful captions, alt text, and inline writing.
+* Distinguish effective from ineffective figures using comparison and critique.
+
+---
+
+## 🧱 Assumed Background
+
+Students have already:
+
+* Interpreted basic plots (e.g., scatterplots, barplots).
+* Explored associations and linear models.
+* Summarized data using center and spread.
+
+They have **not yet** learned statistical inference (e.g., p-values, confidence intervals). This chapter focuses on **communication, ethics, and perception** rather than formal testing.
+
+---
+
+## 🧩 Section Summaries
+
+---
+
+### 1. 🧭 Audience and Delivery
+
+**Core Ideas:**
+
+* Figures should be tailored to *who* will see them and *how*.
+* Different goals, constraints, and affordances exist across:
+
+  * 📘 Papers: static, detailed
+  * 🎤 Talks: sequenced, paced
+  * 🖼️ Posters: visual and bold
+  * 💻 Digital: interactive, flexible
+
+**Audience Archetypes:**
+
+* 🫵 Self/team (exploration)
+* 🧠 Experts (review)
+* 🤷 Curious novices (adjacent fields)
+* 📣 Public (simplified, accessible)
+
+**Key Figures:**
+
+* `fig-slide` (flipbook): reveals a plot gradually for talks.
+* `poster_image`: shows how to optimize for visual impact in posters.
+* `fig-highcharter`: shows interactive digital communication.
+
+---
+
+### 2. 🔍 Honest Plots
+
+**Core Ideas:**
+
+* A plot can be *technically correct* yet *visually misleading*.
+* Students must recognize and correct:
+
+  * Truncated or broken axes
+  * Poor bin choices in histograms
+  * Log scale confusion
+  * Category misordering
+  * False comparisons (e.g., due to differing group sizes)
+
+**Key Figures:**
+
+* `fig-truncY`, `fig-goodY`: demonstrate misleading vs. honest barplots.
+* `fig-logscale`: shows importance of log tick annotations.
+* `fig-date1/2`: warns about hidden seasonal context.
+* `fig-map`: color scale mismatch.
+
+**Tutor Notes:**
+
+* Emphasize *visual integrity* over graphical polish.
+* Connect to real-world consequences of misleading plots.
+
+---
+
+### 3. 🪞 Transparent Plots
+
+**Core Ideas:**
+
+* “Show your work” via data transparency.
+* Summaries can obscure structure, outliers, or weird patterns.
+* Raw data > means alone — but with care to avoid overplotting.
+
+**Solutions:**
+
+* Jittering
+* Alpha blending
+* Sina/violin/ECDF plots
+
+**Key Figures:**
+
+* `fig-datasaurus`: same stats, very different shapes.
+* `fig-overplotting`: 9 panels show strategies for overlapping data.
+* `fig-drake`: barplot vs. raw + summary reaction meme.
+
+**Tutor Tips:**
+
+* Clarify that raw ≠ better *always* — encourage thoughtful tradeoffs.
+* Remind students that summary and transparency can coexist.
+
+---
+
+### 4. ✨ Clear Plots
+
+**Core Ideas:**
+
+* Make the message obvious.
+* Design to reduce *cognitive burden*.
+* Key tactics:
+
+  * Direct labeling
+  * Category ordering
+  * Consistent color usage
+  * Readable axes and layout
+
+**Key Figures:**
+
+* `fig-broman`: which plot best compares X and Y?
+* `fig-xlab`: rotated vs. flipped labels.
+* `fig-consistent`: color/label order consistency.
+* `fig-direct`: inline labeling for clarity.
+* `fig-order`: reorder factor levels for clearer comparisons.
+
+**Tutor Emphasis:**
+
+* Distinguish unclear from dishonest.
+* Push students to ask: *What should the viewer take away?*
+
+---
+
+### 5. 🚫 Avoid Distractions
+
+**Core Ideas:**
+
+* Avoid chartjunk and unnecessary effects (3D, animation).
+* Aesthetics must serve meaning, not obscure it.
+
+**Key Concepts:**
+
+* *Chartjunk* (Tufte): unnecessary decoration.
+* *Duck*: visual form overwhelms content.
+* *Glass Slipper*: inappropriate visual metaphors (e.g., periodic table for IT tools).
+
+**Key Figures:**
+
+* `fig-bananas`: banana-shaped Venn diagram.
+* `fig-3d`: rotating pie chart (style over clarity).
+* `fig-slipper`: misused periodic table layout.
+* `fig-goldbloom`: meme on poor design restraint.
+
+**Tutor Notes:**
+
+* Allow students to explore *why* some flashiness might still work (e.g., posters, memory cues).
+* Challenge students to critically assess form vs. function.
+
+---
+
+### 6. ♿ Accessible Plots
+
+**Core Ideas:**
+
+* Design for *all viewers*, not just the average.
+* Good accessibility = good science communication.
+
+**Strategies:**
+
+* Redundant encoding (e.g., shape + color)
+* Direct labeling
+* Accessible color palettes (`viridis`, `colorspace`)
+* Font sizing for readability
+* Alt text for screen readers
+
+**Key Figures:**
+
+* `fig-ishihara`: colorblindness test plate.
+* `fig-biggertext`: small vs. large text comparison.
+* `fig-accessibility`: “Accessibility is the law” graphic.
+
+**Tutor Checklist:**
+
+* Encourage grayscale tests and CVD emulators.
+* Ask students to articulate plot takeaways in *non-visual* terms.
+
+---
+
+### 7. ✏️ Writing About Figures
+
+**Core Ideas:**
+
+* A plot needs clear *context*, *interpretation*, and *accessibility*.
+* Avoid writing just what the plot *is* — say what it *means*.
+
+**Best Practices:**
+
+* Captions should enhance, not repeat the figure.
+* Alt text must summarize the *message*, not just the form.
+* In-text discussion should link visual patterns to claims.
+
+**Key Figure:**
+
+* `fig-legend`: two versions of a vaccine plot.
+
+  * Panel A: hard to decode.
+  * Panel B: clear labels, strong caption.
+
+**Tutor Guidance:**
+
+* Help students compare vague vs. strong captions.
+* Guide students to root their interpretation in *visual evidence*.
+
+---
+
+### 8. 📋 Summary and Practice Questions
+
+**Purpose:** Assess synthesis of concepts across sections.
+
+**Figures Used:**
+
+* `fig-hemo`: color vs. label vs. facet comparisons for hemoglobin.
+* `fig-sneak1/2/3`: cannibalism plots with ordering, counts, and proportions.
+* `fig-test`: marketing chart with multiple deceptive features.
+
+**Key Practice Question Themes:**
+
+* Redundancy and accessibility (`fig-hemo`)
+* Axis ordering and interpretability (`fig-sneak1`)
+* Raw vs. proportional data display (`fig-sneak2/3`)
+* Honest pattern display (`fig-sneak3`)
+* Misleading elements (`fig-test`)
+
+**Open-ended Prompts:**
+
+* Ask students to justify which plot they prefer and why.
+* Prompt critique of visual deception or cognitive burden.
+
+---
+
+## 🔗 Cross-Cutting Concepts for the Tutor to Reinforce
+
+| Concept                  | Sections Emphasizing It                            |
+| ------------------------ | -------------------------------------------------- |
+| Audience Fit             | Audience and Delivery, Writing, Avoid Distractions |
+| Visual Honesty           | Honest Plots, Summary                              |
+| Transparency             | Transparent Plots, Clear Plots                     |
+| Accessibility            | Accessible Plots, Writing, Summary                 |
+| Clarity & Interpretation | Clear Plots, Writing, Summary                      |
+| Aesthetics vs. Function  | Avoid Distractions, Posters, Talks                 |
+

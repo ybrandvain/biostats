@@ -1,0 +1,233 @@
+## • 5. Summarizing shape {.unnumbered #summarizing_shape}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+```
+
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for selecting data from a few columns from RILs planted at GC"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm )
+```
+
+
+---  
+
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:**   
+You have a fresh new dataset and want to check it out. Before providing numeric summaries you want to poke around the data so you are prepared to responsibly present appropriate summaries.  
+
+**Learning Goals: By the end of this subchapter, you should be able to:**  
+
+1. **Identify the "skew" of data:** You should be able to distinguish between:     
+   - Right skewed data -- Most values small, some are very large. 
+   - Left skewed data -- Most values large, some are very small.
+   - Symmetric data -- There are  roughly as many small as large values.   
+
+2. **Identify the number of modes in a data set**. Differentiate between one, two and more modes.  
+
+3. **Explain why we must consider the shape of data** when summarizing it.  
+
+
+:::     
+
+
+
+---  
+
+
+
+
+>We start this chapter with bar plots and histograms instead of numerical summaries like the mean or variance because we must understand the shape of our data to properly present and interpret classic numeric summaries.    
+
+
+```{r}
+#| echo: false
+#| label: fig-clarkia_flowers
+#| fig-cap: "Measuring *Clarkia xantiana* flowers. Image from [CalPhotos](https://calphotos.berkeley.edu/cgi/img_query?enlarge=0000+0000+0620+1969) shared by [Chris Winchell](mailto:cjwinchell_NO_SPAM@gmail.com) with a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 ([CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/)) license."
+#| fig-alt: "A photograph of two *Clarkia xantiana* flowers placed on a ruler for scale. The flower on the left is significantly larger, with broader petals and a more robust structure, while the flower on the right is much smaller, with narrower petals. Both flowers have a similar pinkish-purple coloration with dark markings near the center. The ruler beneath them provides a size reference, with the larger flower spanning approximately 20 to 23 cm and the smaller flower measuring around 23 to 25 cm. The image illustrates the variation in floral size within *Clarkia xantiana*."
+include_graphics("../../figs/summarizing_data/univariate_summaries/1969.png")
+```
+
+---
+
+### Skew     {#summarizing_shape_skew}  
+
+One key aspect of a dataset’s shape is skewness—whether the data is symmetrical or leans heavily toward smaller or larger values.  
+
+
+- The proportion of hybrid seeds per RIL mom (@fig-prop_hyb_hist, and shown again in @fig-shape A) is strongly **right-skewed**—most values are small, but some are very large. Right-skewed data is common in biology and everyday life. For example, income is right-skewed: most people earn relatively little money, but some make loads of ca$h. <br> <br>       
+
+
+- The number of offspring we genotyped (@fig-shape B) is strongly **left-skewed**—most values are large, but some are very small. Left-skewed data is also common in real-world settings. For example, age at death follows a left-skewed distribution: most people live long lives (often between 70 and 90), but some individuals die at much younger ages due to childhood mortality, diseases, accidents, or suicide. <br> <br>     
+
+
+- The distributions in @fig-shape A and B represent extreme cases of skewness, where most values are either very small or very large. In contrast, @fig-shape C shows that on a $\text{log}_{10}$ scale, petal area is nearly symmetric, with an even distribution of large and small values and most observations concentrated in the middle.  <br>
+
+```{r, fig.height=2.75}
+#| label: fig-shape
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "A bar plot showing the number of genotyped seeds of each mom shown to be hybrid."
+library(patchwork)
+
+a <- gc_rils |> 
+  ggplot(aes(x = prop_hybrid))+
+  geom_histogram(binwidth = 1/8, color = "white")+
+  scale_x_continuous(breaks= seq(0,1,1/8),
+                     labels = c("0","1/8","1/4","3/8","1/2","5/8","3/4","7/8","1")) +
+  theme(axis.title = element_text(size = 12),
+        axis.text.y = element_text(size = 10),
+        axis.text.x = element_text(size = 10,angle = 90))+
+  labs(title = "A) Right skew")
+
+b <- gc_rils |> 
+  ggplot(aes(x = offspring_genotyped))+
+  geom_bar() +
+  scale_x_continuous(breaks  =   3:8)+
+  theme(axis.title = element_text(size = 12),
+        axis.text.y = element_text(size = 10),
+        axis.text.x = element_text(size = 10,angle = 90))+
+  labs(title = "B) Left skew")
+
+
+
+c <- gc_rils|>
+    mutate(log10_petal_area_mm = log10(petal_area_mm))|>
+    ggplot(aes(x = log10_petal_area_mm ))+
+    geom_histogram(bins = 7, color = "white")+
+    scale_x_continuous(labels = round(seq(1.54,2.02, length.out=7),digits = 3), breaks = seq(1.54,2.02, length.out=7)) +
+  theme(axis.title = element_text(size = 12),
+        axis.text.y = element_text(size = 10),
+        axis.text.x = element_text(size = 10,angle = 90))+
+  labs(title = "C) Symmetric")
+
+a+b +c
+```
+
+:::fyi
+**Data transformations and skew:**  @fig-shape showed that $\text{log}_{10}$ petal area was roughly symmetric. The careful might be suspicious and wonder why I transformed the data. The answer is that area is usually right skewed and log transforming often removes such skew. 
+
+We discuss changing the shape of distributions by transformation in the [next section](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/univariate_summaries/changing_shape.html). Later we will see that symmetric data are often easier for statistical models than skewed data so such transformations are common.
+
+```{r, fig.height=3}
+#| echo: false
+#| message: false
+#| warning: false
+gc_rils|>
+    ggplot(aes(x = petal_area_mm ))+
+    geom_histogram(bins = 7, color = "white")
+```
+
+:::
+
+### Number of modes  {#summarizing_shape_number-of-modes}   
+
+
+
+One of the first things to notice when visualizing a dataset is whether the values cluster around a single peak or multiple peaks—this **number of modes** can reveal important patterns, such as distinct subgroups or natural variation in biological traits.    
+
+
+```{r,fig.height=15}
+#| echo: false
+#| column: margin
+#| message: false
+#| warning: false
+#| label: fig-hzsite
+#| fig-cap: "The distribution of petal area across four *xantiana* / *parviflora* hybrid zones. Data are available [here](https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/cz_cluster_assignments_2024july17.csv)."
+#| fig-alt: "The image presents a faceted histogram showing the distribution of log10-transformed average petal area (sq. cm) across five populations of Clarkia xantiana (GC, S22, S6, SAW, SM), with each population represented in a separate panel labeled at the top. The y-axis indicates count (frequency of observations), while the x-axis represents log10-transformed petal area. The distribution varies across populations, with GC, S22, SAW and SM exhibiting a bimodal pattern, featuring peaks around -0.5 and 0.25. By contrast S6 is right-skewed, with most values concentrated near 0 and a tail extending toward smaller values. This visualization highlights population-level variation in petal size distributions, suggesting potential genetic or environmental influences on floral trait differentiation."
+hz_data <- read_csv("https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/cz_cluster_assignments_2024july17.csv")|>
+  mutate(log10_avg_petal_area_sq_cm = log10(mean_petal_area_sq_cm))
+ggplot(hz_data, aes(x = log10_avg_petal_area_sq_cm))+
+    geom_histogram(bins = 14, color = "white")+
+    facet_wrap(~site, ncol = 1,scales = "free_y")+
+  theme(axis.title = element_text(size = 30),
+        axis.text = element_text(size = 30),
+        strip.text = element_text(size = 30))
+```
+   
+
+- In **unimodal distributions**, there is a single, clear peak, with the number of observations in other bins decreasing as we move away from this central point. All distributions in @fig-shape are unimodal.  
+
+- In **bimodal distributions**, there are two distinct peaks separated by a trough. Bimodal distributions are particularly interesting because they suggest that the dataset is composed of two distinct groups or categories.
+
+- Of course, distributions can have more than two modes. **Trimodal distributions** have three peaks, and so on. However, be careful not to over-interpret small fluctuations—small dips can create false peaks from random variation. It's worth experimenting with bin sze to avoid overinterpreting such small blips.
+
+The number of modes is particularly important in the study of speciation, especially in populations that may be hybridizing.  
+
+- A unimodal hybrid zone suggests that two species merge when they come back into contact, implying they may not be distinct, stable species.  
+- Bimodal or trimodal hybrid zones suggest that the two species largely maintain their distinctiveness when they have the opportunity to hybridize.  
+   - In a bimodal hybrid zone, the "trough" between peaks may include  some hybrids.
+   - In a trimodal hybrid zone, the middle peak might represent F1 hybrids.
+
+
+
+We were particularly interested in examining the distribution of phenotypes in seeds collected from *parviflora* / *xantiana* hybrid zones. @fig-hz shows that—unlike petal area in our RILs-most phenotypes from natural hybrid zones are largely bimodal. However, @fig-hzsite suggests that these distributions may themselves be a blend of different underlying distributions. While petal area appears bimodal in most populations, it may be unimodal at site S6. @fig-hz and @fig-hzsite highlight the benefit of digging into the data visually. We must visualize the distribution o values of a variable before we can provide a meaningful and interpretable summary statistic. . 
+
+
+
+```{r, fig.height=2.75}
+#| echo: false
+#| label: fig-hz
+#| message: false
+#| warning: false
+#| fig-cap: "Distributions of three floral traits in *Clarkia xantiana* hybrid zones: log10-transformed average petal area (sq. cm) (left), average protandry (middle), and average herkogamy (right). The petal area distribution is bimodal, with two distinct peaks. In contrast, both protandry and herkogamy are bimodal and strongly right-skewed, with most values clustered near zero and a secondary peak at higher values. These distributions suggest potential underlying biological structure, such as genetic variation or environmental influences shaping floral trait expression. Data are available [here](https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/cz_cluster_assignments_2024july17.csv)."
+#| fig-alt: "The image presents three side-by-side histograms, each depicting the distribution of a different floral trait in Clarkia xantiana. The first histogram, on the left, shows the distribution of log10-transformed average petal area (sq. cm) and is bimodal, with two distinct peaks centered around -0.5 and 0.2. The middle histogram represents average protandry (the difference in timing between male and female function) and is bimodal, with a strong right skew—most values are concentrated near zero, and a second peak around seven. Similarly, the rightmost histogram displays the distribution of average herkogamy (the spatial separation between male and female floral organs), which is also bimodal and right-skewed, with most values clustered near zero and a second peak around five. All histograms have \"count\" on the y-axis, representing the frequency of observations in each bin."
+
+
+a<-ggplot(hz_data, aes(x = log10_avg_petal_area_sq_cm))+
+    geom_histogram(bins = 16, color = "white")+
+    theme(axis.title = element_text(size = 12),
+        axis.text = element_text(size = 10))
+
+b<-ggplot(hz_data, aes(x = avg_protandry))+
+    geom_histogram(bins = 14, color = "white")+
+    theme(axis.title = element_text(size = 12),
+        axis.text = element_text(size = 10))
+
+c<-ggplot(hz_data, aes(x = avg_herkogamy))+
+    geom_histogram(bins = 14, color = "white")+
+    theme(axis.title = element_text(size = 12),
+        axis.text = element_text(size = 10))
+a+b+c
+```
+
+
+
+

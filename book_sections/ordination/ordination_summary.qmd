@@ -1,0 +1,449 @@
+## • 8. Ordination summary {.unnumbered #ordination_summary}
+
+
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr', 'broom' ,'ggplot2','ggfortify']
+  autoload-packages: true
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(webexercises)
+library(dplyr)
+library(palmerpenguins)
+library(knitr)
+```
+
+
+Links to: [Summary](#ordination_summarySummary). [Chatbot tutor](#ordination_summaryChatbot). [Questions](#ordination_summaryPractice_questions). [Glossary](#ordination_summaryGlossary_of_terms). [R functions](#ordination_summaryNew_r_functions). [R packages](#ordination_summaryR_packages_introduced). [More resources](#ordination_summaryAdditional_resources).
+
+
+
+---
+
+```{r}
+#| echo: false
+library(knitr)
+include_url("https://www.youtube.com/embed/aGX1mlMZt2g?si=KZE6tNZsATe6b-sc")
+```
+
+---
+
+
+## Chapter summary {#ordination_summarySummary}  
+
+
+
+
+Modern biological datasets often have more traits than we can look at or make sense of directly. Ordination approaches help us see structure in these large and complex datasets. These techniques reduce dimensionality: they summarize patterns across many variables into just a few new ones that soak up as much variation in the data as possible. When data are numeric and well-behaved, we typically use PCA. But when variables are categorical, mixed, or messy (as is common in ecological or genomic data), PCA can mislead. In these cases, alternatives like MCA, FAMD, PCoA, NMDS, t-SNE, and UMAP (among others) may be more appropriate. Some work with distances, others with probabilities. Some produce axes you can interpret; others are just for visualizing structure. Whatever method you use, make sure you understand its assumptions, limitations, and how to interpret its output   -  such approaches are no better than the scientist using them.
+
+### Chatbot tutor  {#ordination_summaryChatbot}   
+
+
+
+Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/g-683686df4a4081918ebba392aed7419c-ordination-tutor)) I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+
+
+
+## Practice Questions   {#ordination_summaryPractice_questions}    
+
+
+Try these questions! By using the R environment you can work without leaving this "book". To help you jump right into thinking and analysis, I have loaded the necessary data, cleaned it some, and have started some of the code!  
+
+:::exercises
+
+### Warm up 
+
+**Q1)** For which of these cases is a PCA **most** appropriate?  `r longmcq(c( "You want to measure how strongly two continuous variables are correlated.", answer = "You want to reduce a dataset with many continuous variables to a few variables that capture most of the variation.", "You have messy data with missing values and a mix of continuous and categorical variables.", "You’re hoping to discover natural clusters in your data."))`
+
+`r hide("Click here for explanation")`
+
+- If you chose **option 1**, you’re not totally off base — PCA *does* involve correlations between variables. But if all you want is to measure the strength or direction of association between two continuous variables, a correlation coefficient (like Pearson’s *r*) is simpler, more interpretable, and more appropriate.  
+
+- If you chose **option 2**, congrats 🥳,  This is the core purpose of PCA — reducing dimensionality by summarizing structure in multivariate continuous data.
+
+- If you chose **option 3**, you’re describing a tricky (but common) dataset. Unfortunately, PCA isn’t great at handling messy or mixed data. It requires complete, numeric data — missing values break it, and categorical variables need special handling. 
+
+- If you chose **option 4**, that’s a common motivation and frequent misinterpretation. Sure, PCA might reveal clusters in the data, but that's not what PCA is for.  If clustering is your goal, use clustering methods (e.g. k-means, hierarchical clustering, which we will get to later -- i hope) instead.
+
+`r unhide()`
+
+:::
+
+### Example Plot 1
+
+Consider the plot below - a PCA of the *iris* data set, as you answer questiosn two through six. 
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-height: 9
+library(patchwork)
+library(ggfortify)
+
+a<- prcomp(iris|>select(-Species), scale = T, center = T)|>
+    autoplot(data = iris, color = "Species", loadings = TRUE,  loadings.label = TRUE,
+              loadings.colour = 'darkgrey',labels.color = "darkgrey")+
+    theme_light()+
+    theme(aspect.ratio = 73/23, legend.position = "none")
+
+b<- prcomp(iris|>select(-Species), scale = T, center = T)|>
+    autoplot(data = iris, color = "Species", loadings = TRUE,  loadings.label = TRUE,
+              loadings.colour = 'darkgrey',labels.color = "darkgrey")+
+    theme_light()+
+    theme(aspect.ratio = 1/1,legend.position = "none")
+
+c<- prcomp(iris|>select(-Species), scale = T, center = T)|>
+    autoplot(data = iris, color = "Species", loadings = TRUE,  loadings.label = TRUE,
+              loadings.colour = 'darkgrey',labels.color = "darkgrey")+
+  theme_light()+
+    theme(aspect.ratio = 23/73,legend.position = "bottom")
+(a+b)/c + 
+  plot_annotation(tag_levels = "A")
+```
+
+:::exercises
+
+**Q2)** Which of the plots above is most appropriate?  `r longmcq(c( "A: It stretches PC2, making subtle vertical differences easier to see.", "B: It keeps the axes roughly square, which feels visually balanced and avoids exaggeration.", answer = "C: It sets the axes proportional to the percent variance explained, making distances and angles in the plot geometrically meaningful.", "There is no 'best' because plot choice depends on audience and goals."))`
+
+**Q3)** Based on the plot(s) above which species appears to have the largest petals (i.e., petal length and width)? `r longmcq(c( "*setosa*", "*versicolor*", answer = "*virginica*", "🤷 PCA doesn’t tell us anything about trait values." ))`
+
+
+**Q4)** Based on the plot(s) above, how would you interpret PC2? `r longmcq(c( "PC2 reflects petal area: higher values mean larger petals",   "PC2 reflects petal area: higher values mean smaller petals","PC2 reflects sepal area: higher values mean larger sepals",   answer = "PC2 reflects sepal area: higher values mean smaller sepals",   "There is no clear biological interpretation of PC2 from this plot",   "We should never attempt to interpret PCs biologically",   "PC2 should be ignored because it explains so little of the variance."))`
+
+
+**Q5** The correlation between petal width and petal area is 0.96. It is not unclear what to do in such cases, but one of these options iis not justifiable.  Which one? `r longmcq(c( "Don't change anything. These are different traits!",   answer = "Drop one of the petal traits (it doesn't really matter which one).", answer = "If you drop one petal trait, be sure to drop a sepal trait" , "Drop both petal length and width, and replace them with petal area."))`.
+
+*BONUS*: What would you do?  <html><textarea rows="4" cols="50" placeholder="Which options would you choose and why?"></textarea><br><br></html>   
+
+
+
+**Q6** Write a brief paragraph summarizing this plot.<html><textarea rows="4" cols="50" placeholder="Your answer here..."></textarea></html>
+
+
+
+:::
+
+### Example Plot 2
+
+I made a  PC from wild *Clarkia* (not RILs) collected at the Sawmill road hybrid zone. Note the data are centered and scaled. Use this webR workspace to answer question  seven (below).
+
+```{webr-r}
+#| context: setup
+saw_pca <- read_csv("https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_hz_phenotypes.csv")|>
+    na.omit()|>
+    filter(site == "SAW")|> 
+    dplyr::select(id, 
+                  protandry  = avg_protandry, 
+                  herkogamy  = avg_herkogamy,
+                  petal_area = avg_petal_area)|>
+    prcomp(scale = TRUE, center= TRUE)
+```
+
+
+```{webr-r}
+#| autorun: true
+library(ggplot2);   library(dplyr)
+library(ggfortify); library(broom)
+
+pve_pc1 <- tidy(saw_pca, matrix = "pcs")|> 
+  filter(PC==1)|> pull(percent)
+
+pve_pc2 <- tidy(saw_pca, matrix = "pcs")|> 
+  filter(PC==2)|> pull(percent)
+
+autoplot(saw_pca)+
+  theme(pve_pc2 / pve_pc1)
+```
+
+:::exercises
+
+**Q7)** The plot  above appears to show three clusters, but there is a problem (or two). What is th biggest problem? `r longmcq(c("PCA is not meant for finding clusters", "PC2 only explains 19% of the variance so we should not pay much attention to it", "The middle cluster is largely made up of missing data", "Some variables are categorical so we should have run and FAMD analysis", answer = "Something went into our PC that shouldn't have"))`
+
+`r hide("Hint")`
+
+Look into trait loading, either by typing `tidy(saw_pca, matrix = "loadings")` or by adding `loadings = TRUE,  loadings.label = TRUE` to `autoplot()`. 
+
+`r unhide()`
+
+`r hide("Explanation")`
+
+You can see that PC2  is basically `id` -- a variable it is not anything we ever should not consider as biologically interesting. 
+
+`r unhide()`
+
+:::
+
+### Example Plot 3
+
+Use the data below to answer questions eight and nine.
+
+```{webr-r}
+#| context: setup
+gc_hybrid_zone <- read_csv("https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_hz_phenotypes.csv")|>
+    na.omit()|>
+    filter(replicate == "A",site == "GC")|> 
+  dplyr::select(site, id, 
+                protandry  = avg_protandry, 
+                herkogamy  = avg_herkogamy,
+                petal_area = avg_petal_area)
+  
+```
+
+```{webr-r}
+library(ggplot2);   library(dplyr)
+library(ggfortify); library(broom)
+
+data_4_gc_PCA <- gc_hybrid_zone |>
+  dplyr::select(protandry, herkogamy, petal_area)
+
+data_4_gc_PCA |>
+  prcomp()    |>
+  autoplot()
+#remove and then ask where would parv plants be?
+```
+
+
+:::exercises
+
+**Q8)** What went wrong in this plot (Note, choose the worst mistake for this dataset) `r longmcq(c("Nothing - it's great! PC1 splits the data into two groups!", "Axes are not proportional to PVE.",    answer = "Something went wrong. with PC1 - I should figure it out.", "The data are not centered and scaled."))`
+
+
+**Q9)** Fix all the mistakes above (not just the biggest one) and remake this plot. What percent of variability in the data is attributable to PC2 `r fitb(6.15, tol = 0.16)`
+
+`r hide("Hint 1")`
+
+Look into trait loading, either by typing piping PCA output  to `tidy( matrix = "loadings")` or by adding `loadings = TRUE,  loadings.label = TRUE` to `autoplot()`. 
+
+`r unhide()`
+
+
+`r hide("Hint 2")`
+
+Look into at the variable associated with PC1. Remove the most filter() for all data except the mostextreme value.
+
+`r unhide()`
+
+`r hide("Hint 3")`
+
+Make a pca, be sure to center and scale your axes!
+
+`r unhide()`
+
+:::
+
+### PCAlternatives    
+
+:::exercises
+
+**Q10)** In which of the following ordination methods is it most appropriate to interpret the distance between points in the plot as representing similarity between samples?
+
+`r longmcq(c(  "NMDS, because it’s designed for messy ecological data.","t-SNE, because it preserves local structure.",  answer = "PCA and PCoA — but only if axes are scaled proportional to variance explained.",  "All of them — that’s what ordination plots are for!"))`
+
+`r hide("Explanation")`
+
+PCA (Principal Component Analysis) and PCoA (Principal Coordinate Analysis) use Euclidean geometry, so distances between points are interpretable (although PCoA distanses are in units of distance given by the distance matrix) — if you scale the axes to reflect the variance explained. If you don’t, you can distort distance and angle relationships.
+
+NMDS doesn’t preserve absolute distances — only the rank order of pairwise distances (who’s closest to whom). The same goes for t-SNE and UMAP, which emphasize local neighborhood structure but distort global distances. So while clusters might look compelling, distances between them often lie.
+
+`r unhide()`
+
+
+You’ve got a huge dataset from museum specimens:
+4 continuous variables (e.g., bill length, wing chord, body mass, tarsus length)
+
+2 ordered categorical variables (e.g., molt stage from 1–5, plumage brightness from dull to vibrant)
+
+Several missing values in most rows
+
+You want to visualize broad patterns and see if anything jumps out. Which approach is the least bad?
+
+`r longmcq(c(  "PCA - just ignore missing values and let prcomp() do its thing.", answer = "FAMD - if you impute missing data first, it can handle mixed types and give interpretable dimensions.", "UMAP -  it will figure out the structure automatically.","NMDS - it ignores variable types and missing values, so it must be fine." ))`
+
+`r hide("Explanation")`
+
+None of these is perfect, but FAMD is probably your best bet if you carefully impute missing values (e.g., using missMDA::imputeFAMD()). PCA drops all incomplete rows; NMDS can’t handle mixed variable types or NA; UMAP will happily embed noise and call it structure.
+
+`r unhide()`
+
+:::
+
+## 📊 Glossary of Terms  {#ordination_summaryGlossary_of_terms}   
+
+:::glossary
+
+
+
+#### 📚 **1. Concepts of Ordination**
+
+- **Ordination** A general term for methods that reduce complex, high-dimensional data into fewer dimensions to help us find patterns or structure. Useful for summarizing variation, visualizing groups, or detecting gradients in data.   
+  
+- **Dimensionality Reduction** The process of collapsing many variables into a smaller number of "components" or "axes" that still explain most of the relevant variation.  
+
+- **Distance Matrix**  A table showing how different each pair of observations is, based on some measure (e.g., Euclidean, Bray-Curtis). The starting point for many non-linear ordination methods.
+
+- **Scores** The new coordinates of each sample on the reduced axes (like PC1, PC2, or NMDS1, NMDS2). These are what we usually plot.    
+
+- **Loadings**  The contribution of each original variable to a principal component. They tell us what the new axes "mean" in terms of the original traits.  
+
+- **Proportion of Variance Explained (PVE)**  How much of the total variation in the data is captured by each axis (e.g., PC1, PC2). Higher values suggest the axis captures an important pattern.   
+
+#### 🔢 **2. PCA and Matrix-Based Methods**. 
+
+- **Principal Component Analysis (PCA)** A technique that finds new axes (principal components) that capture as much variation as possible in your numeric data. Based on eigenanalysis of the covariance or correlation matrix.  
+
+- **Eigenvalues** Numbers that describe how much variance is associated with each principal component.    
+
+- **Eigenvectors**  The directions (in trait space) along which the data vary the most — the basis of your new axes (PC1, PC2...).    
+
+- **Centering and Scaling** Centering subtracts the mean of each variable; scaling divides by the standard deviation. This standardizes variables to make them comparable before running PCA.  
+
+- **Singular Value Decomposition** A matrix factorization technique that expresses a matrix as the product of three matrices: U, D, and Vᵗ. PCA is often computed using SVD of the centered (and sometimes scaled) data matrix.  
+
+#### 🎲 **3. Categorical and Mixed Data**  
+
+- **Multiple Correspondence Analysis (MCA)** A PCA-like method for datasets made up of categorical variables (e.g., presence/absence, categories). Often used for survey or genetic marker data.  
+
+- **Factor Analysis of Mixed Data (FAMD)**  Combines ideas from PCA and MCA to handle datasets with both continuous and categorical variables.
+
+- **Multiple Factor Analysis (MFA)**  Used when your data come in blocks (e.g., gene expression + morphology + climate). It balances across blocks to find shared structure.
+
+#### 🧭 **4. Distance-Based Ordination**. 
+
+**Principal Coordinates Analysis (PCoA)**  finds axes that best preserve distances between samples, based on any distance matrix (e.g., Bray-Curtis, UniFrac, Jaccard). Results resemble PCA but from a different starting point. 
+
+**Non-metric Multidimensional Scaling (NMDS)** A distance-based method that tries to preserve the rank order of distances. Great for ecology or microbiome data. Axes have no fixed meaning — they just help you visualize structure.
+
+#### 🌐 **5. Nonlinear Embedding Methods**. 
+
+- **t-SNE (t-distributed Stochastic Neighbor Embedding)**  A nonlinear method that preserves local structure (similarity between nearby points) but often distorts global structure. Good for finding clusters but not for understanding axes.  
+
+- **UMAP (Uniform Manifold Approximation and Projection)* A newer nonlinear method like t-SNE, but faster and often better at preserving both local and global structure. Often used for visualizing high-dimensional data like RNA-seq or image features.
+
+:::
+
+
+---
+
+
+
+## 🛠️ Key R Functions {#ordination_summaryNew_r_functions}  
+
+ 
+:::functions
+
+### 🔢 Principal Component Analysis (PCA)
+
+- **[`prcomp()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/prcomp.html)**: Performs PCA for you. Rememmber to always type `center = TRUE`, and to usually type `scale = TRUE`, (unless you think scaling is inappropriate. 
+- **[`eigen()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/eigen.html):** Find eigenvectors and eigenvalues of a matrix. Pair this with [`cov()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html) or [`cor()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html) if you want to run a PCA without [`prcomp()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/prcomp.html).   
+- **[`augment()`](https://broom.tidymodels.org/reference/augment.prcomp.html)** *In the [`broom`](https://broom.tidymodels.org/) package*:  Adds PCA scores to the original data for plotting or further analysis. 
+- **[`tidy()`](https://broom.tidymodels.org/reference/tidy.prcomp.html)** *In the [`broom`](https://broom.tidymodels.org/) package*: Makes a tidy tibble for key outputs the prcomp output (The specific outpput depends on the `matrix = ` option).    
+   - **[`tidy(, matrix = "pcs")`](https://broom.tidymodels.org/reference/tidy.prcomp.html):** Makes a tibble showing the variance attributable to each PC.  
+   - **[`tidy(, matrix = "loadings")`](https://broom.tidymodels.org/reference/tidy.prcomp.html):** Makes a tibble describing the loading of each trait onto each PC.  
+   - **[`tidy(, matrix = "scores")`](https://broom.tidymodels.org/reference/tidy.prcomp.html):** Makes a tibble showing the value of each sample on each PC. This is simple a long format version of the output of [`augment()`](https://broom.tidymodels.org/reference/augment.prcomp.html).  
+
+- **[`autoplot()`](https://cran.r-project.org/web/packages/ggfortify/vignettes/plot_pca.html):** *In the [`ggfortify`](hhttps://github.com/sinhrks/ggfortify) package.*    Plots PCA results with groupings,  or loadings arrows.  
+
+- **`theme(aspect.ratio = PVE_PC2/PVE_PC1)`:** This is a specific  use of [ggplot2](https://ggplot2.tidyverse.org/)'s [`theme()`](https://ggplot2.tidyverse.org/reference/theme.html) function, which we will discuss more later. Be sure to add this to all of your PC (or PC-like) plots to help make sure readers do not misinterpret your results.   Find PVE_PC1 and PVE_PC2 from your eigenvalues in you [`prcomp()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/prcomp.html) output (or more easily [`tidy(, matrix = "pcs")`](https://broom.tidymodels.org/reference/tidy.prcomp.html):).
+
+---
+
+### 🔎 Categorical & Mixed Data Ordination
+
+- **[`MCA()`](http://factominer.free.fr/factomethods/multiple-correspondence-analysis.html):** *In the [`FactoMineR`](http://factominer.free.fr/) package* performs Multiple Correspondence Analysis for categorical variables.  
+
+- **[`FAMD()`](https://www.franklinsantosm.com/posts/mda/):** *In the [`FactoMineR`](http://factominer.free.fr/) package*  performs a Factor Analysis of Mixed Data (categorical + continuous variables).  
+
+- **[`fviz_...`](https://rpkgs.datanovia.com/factoextra/index.html)**  *In the [`factoextra`](https://rpkgs.datanovia.com/factoextra/index.html) package* are helper functions to make plots from MCA and FAMD output.
+
+
+ 
+---
+
+### 🧭 Distance-based methods. 
+
+- **[`vegdist()`](https://search.r-project.org/CRAN/refmans/vegan/html/vegdist.html):** *In the [`vegan`](https://vegandevs.github.io/vegan/) package* makes a distance matrix for many common distance measures.   
+
+- **[`cmdscale()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cmdscale.html)** Allows for classical multidimensional scaling on a distance matrix (as in PCoA).     
+
+- **[`metaMDS()`](https://vegandevs.github.io/vegan/reference/metaMDS.html)**  *In the [`vegan`](https://vegandevs.github.io/vegan/) package* performs NMDS on a distance matrix.  
+
+---
+
+### 🌐 UMAP & Visualization
+
+- **[`umap2()`](https://jlmelville.github.io/uwot/articles/umap2.html)** *In the  [`uwot`](https://github.com/jlmelville/uwot)   package*erforms Uniform Manifold Approximation and Projection (UMAP).  
+
+:::
+
+
+---
+
+
+
+
+
+## R Packages Introduced  {#ordination_summaryR_packages_introduced}   
+
+:::packages
+
+
+- **[`broom`](https://broom.tidymodels.org/):** Tidies output from PCA (tidy(), augment()) into easy-to-use data frames.
+
+- **[`ggfortify`](https://github.com/sinhrks/ggfortify):** Simplifies plotting of PCA and other multivariate objects using [`autoplot()`](https://cran.r-project.org/web/packages/ggfortify/vignettes/plot_pca.html).
+
+- **[`FactoMineR`](http://factominer.free.fr/):** Provides functions for multivariate analyses like MCA, FAMD, and MFA.
+
+- **[`factoextra`](https://rpkgs.datanovia.com/factoextra/):** Makes it easy to visualize outputs from FactoMineR analyses (fviz_mca_ind(), fviz_famd_var(), etc.).
+
+- **[`vegan`](https://github.com/vegandevs/vegan):** Used to compute distance matrices (vegdist()), run PCoA (cmdscale()) and NMDS (metaMDS()).
+
+- **[`uwot`](https://github.com/jlmelville/uwot):** Performs UMAP for dimensionality reduction of high-dimensional data.
+
+:::
+
+
+
+
+### Additional resources  {#ordination_summaryAdditional_resources}      
+
+
+:::learnmore 
+
+
+
+**Web resources:**       
+
+- [Introduction to ordination](https://ourcodingclub.github.io/tutorials/ordination/) -- By our coding club. 
+- [Principal component analysis](https://www.nature.com/articles/nmeth.4346) -- @lever2017.   
+- [Be careful with your principal components](https://onlinelibrary.wiley.com/doi/10.1111/evo.13835)  -- @Bjorklund2019.   
+- [A gentle introduction to principal component analysis using tea-pots, dinosaurs, and pizza](https://onlinelibrary.wiley.com/doi/full/10.1111/test.12363) -- @saccenti2024.    
+- [Uniform manifold approximation and projection](https://nature.com/articles/s43586-024-00363-x) -- @healy2024. 
+- [Seeing data as t-SNE and UMAP do](https://www.nature.com/articles/s41592-024-02301-x) -- @marx2024.    
+- [Understanding UMAP](https://pair-code.github.io/understanding-umap/).
+- [How to Use t-SNE Effectively](https://distill.pub/2016/misread-tsne/) by @wattenberg2016.
+
+
+
+**Videos:**  
+
+- [StatQuest: Principal Component Analysis (PCA), Step-by-Step](https://www.youtube.com/watch?v=FgakZw6K1QQ) from [StatQuest](https://www.youtube.com/@statquest).     
+
+- [How to create a biplot using vegan and ggplot2](https://www.youtube.com/watch?v=_EjNR6YdnGM) (From [Riffomonas project](https://www.youtube.com/@Riffomonas)).    
+
+- [Using the vegan R package to generate ecological distances](https://www.youtube.com/watch?v=xyufizOpc5I) (From [Riffomonas project](https://www.youtube.com/@Riffomonas)).    
+
+- [Running non-metric multidimensional scaling (NMDS) in R with vegan and ggplot2](https://www.youtube.com/watch?v=h7OrVmT7Ja8) (From [Riffomonas project](https://www.youtube.com/@Riffomonas)).    
+
+- [Performing principal coordinate analysis (PCoA) in R and visualizing with ggplot2](https://www.youtube.com/watch?v=G5Qckqq5Erw) (From [Riffomonas project](https://www.youtube.com/@Riffomonas)).    
+
+
+::: 
+
+

@@ -1,0 +1,410 @@
+## • 5. Summarizing variability {.unnumbered #summarizing_variability}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(kableExtra)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+```
+
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for selecting data from a few columns from RILs planted at GC"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm )
+library(ggthemes)
+```
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:**  You are continuing your exploration of a fresh dataset. You have examined its shape and applied any necessary transformations. Now, you want to obtain numerical summaries that describe the variability in your data.   
+
+**Learning Goals: By the end of this subchapter, you should be able to:**   
+
+1. **Explain why variability in a dataset is biologically important.**  
+
+2. **Differentiate between parametric and nonparametric summaries** and understand which data shapes make one more appropriate than the other.  
+
+3. **Visualize variability and connect numerical summaries to plots.** You should be able to read the interquartile range off of a boxplot.  
+
+
+4. **Distinguish between biased and unbiased estimators.**  
+
+5. **Calculate and interpret standard summaries of variability in R, including:**  
+
+    - **Interquartile range (IQR):** The difference between the 25th and 75th percentiles, summarizing the middle 50% of the data.  
+    - **Standard deviation and variance:** The standard deviation quantifies how far, on average, data points are from the mean. Variance is the square of the standard deviation.  
+    - **Coefficient of variation (CV):** A standardized measure of variability that allows for fair comparisons across datasets with different means.  
+
+
+:::     
+
+---  
+
+```{r}
+#| echo: false
+#| eval: false
+#| label: fig-xkcd 
+#| fig-cap: "From [xkcd](https://xkcd.com/1798/), where the rollover text said *You have to be careful doing this. Sometimes, when you push the whisker down, dynamite explodes.*"
+include_graphics("https://imgs.xkcd.com/comics/box_plot_2x.png")
+```
+
+
+```{r}
+#| echo: false
+include_url("https://www.youtube.com/embed/GncQtURdcE4?si=x2CF5uIynqaokSo5")
+```
+
+In a world where everything was the same every day (See video above), describing the center would be enough — luckily our world is more exciting than that. In the real world, the extent to which a measure of center is sufficient to understand a population depends on the extent and nature of variability. Not only is understanding variability essential to interpreting measures of central tendency, but in many cases, describing variability is as or even more important than describing the center. For example, the amount of genetic variance in a population determines how effectively it can respond to natural selection. Similarly, in ecological studies, two populations of the same species may have similar average survival rates, but greater variability in survival in one population might indicate environmental instability, predation pressure, or developmental noise. 
+
+
+### Nonparametric measures of variability {#summarizing_variability_nonparametric-measures-of-variability}.   
+
+
+Perhaps the most intuitive summary of variation in a dataset is the **range**—the difference between the largest and smallest values. While the range is often worth reporting, it is a pretty poor summary of variability because it is highly sensitive to outliers (a single unexpectedly extreme observation can strongly influence the range) and is biased with respect to sample size (the more samples you collect, the greater the expected difference between the smallest and largest values).
+
+
+As such, the **interquartile range (IQR)**—the difference between the 75th and 25th percentiles (i.e., the third and first quartiles)—is a more robust, traditional nonparametric summary of variability. We can read off the interquartile range from a boxplot. A boxplot shows a box around the first and third quartiles, a line at the median, and "whiskers" that extend to the minimum and maximum values (excluding outliers, which are shown as black dots). 
+
+
+```{r}
+#| column: margin
+#| eval: false
+gc_rils |>
+  ggplot(aes(x = 1,
+      y = petal_area_mm))+
+  geom_boxplot()
+```
+
+```{r}
+#| column: margin
+#| echo: false
+#| message: false
+#| warning: false
+#| label: fig-boxplot
+#| fig-height: 8
+#| fig-cap: "***Anatomy of a boxplot***. This boxplot displays the distribution of petal area in the *Clarkia* RIL dataset. The box spans from the first quartile (25th percentile) to the third quartile (75th percentile), highlighting the interquartile range (IQR). The line inside the box marks the median (50th percentile). The \"whiskers\" extend to the smallest and largest non-outlier values, and individual outliers are shown as separate points."
+#| fig-alt: "A vertical boxplot showing petal area in millimeters. The plot includes a labeled box stretching from the first quartile (~50 mm) to the third quartile (~70 mm), with a bold horizontal line at the median (~60 mm). Lines (\"whiskers\") extend from the top and bottom of the box to the maximum and minimum non-outlier values. A dot above the top whisker marks an outlier. Labels identify each component of the plot: minimum, first quartile, median, third quartile, maximum, and outlier."
+gc_rils |> 
+  ggplot(aes(x = 1, y = petal_area_mm))+
+  geom_boxplot(outlier.size = 4,size = 1.5)+
+  geom_text(data = gc_rils |>
+               reframe(petal_area_mm = quantile(petal_area_mm,
+                                                probs = c(0, 0.25, 0.5, 0.75, 0.99, 1),
+                                                na.rm = TRUE)) |>
+               mutate(summary = c("Minimum (not outlier)", "First quartile", "Median", "Third quartile", "Maximum (not outlier)", "Outlier")), 
+            aes(x = 1.75, label = summary), hjust = 0, size = 9) +
+  coord_cartesian(xlim = c(0.41, 3.6)) +
+  theme_tufte() +
+  theme(axis.title.x = element_blank(), 
+        axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank(),
+        axis.title.y = element_text(size = 30),
+        axis.text.y = element_text(size = 30))
+```
+
+@fig-boxplot shows that the third quartile for petal area is a bit above seventy, and the first quartile is a bit above fifty, so the interquartile range is approximately twenty. Or with the [`IQR()`](https://www.math.ucla.edu/~anderson/rw1001/library/base/html/IQR.html) function: 
+
+```{r}
+gc_rils |>
+  summarise(Q3 = quantile(petal_area_mm,.75, na.rm = TRUE),
+            Q1 = quantile(petal_area_mm,.25, na.rm = TRUE),
+            iqr_petal_area = IQR(petal_area_mm, na.rm = TRUE))
+```
+
+### Parametric summaries of variability  {#summarizing_variability_parametric-summaries-of-variability}      
+
+Mathematical summaries of variability aim to describe how far we expect an observation to deviate from the mean. Such summaries start by finding the sum of squared deviations, $SS_X$ (i.e. the sum of squared differences between each observation and the mean). We square deviations rather than taking their absolute value because squared deviations (1) are mathematically tractable, (2) emphasize large deviations, and (3) allow the mean to be the value that minimizes them — which ties directly into least squares methods we’ll use later in regression. We find $SS_X$, know as "the sum of squares" as:  
+$$\text{Sum of Squares} = SS_X = \Sigma{(X_i-\overline{X})^2}$$
+
+From the sum of squares we can easily find three common summaries of variability:  
+
+:::aside
+**Why divide by $n-1$?** When we calculate how far values are from the mean, we might think to average the squared deviations by dividing by the number of values, $n$. But,  by  calculating the mean, we’ve used up a little bit of information. Because  the mean pulls the values toward itself, numbers aren’t totally free to vary anymore. Because of that, we divide the sum of squares  by  $(n-1)$ rather than $n$. This gives us a more accurate sense of how spread out the values really are, based on how much they can still vary around the mean.
+:::
+
+- **The variance, $s^2$** is roughly the average squared deviation, but we divide the sum of squares by our sample size minus 1. That is the $\text{variance} = s^2 = \frac{SS_x}{n-1} = \frac{\Sigma{(X_i-\overline{X})^2}}{n-1}$. The variance is mathematically quite handy, and is in squared units relative to the initial observations.  
+
+- **The standard deviation, $s$** is simply the square root of the variance. The standard deviation is often easier to think about because it lies on the same (linear) scale as the initial data (as opposed to the squared scale of the variance).  
+
+- **The coefficient of variation, CV** allows us to compare variance between variables with different means. In general variability increases with the mean, so you cannot meaningful compare the variance in petal area  (which equals `r var(gc_rils$petal_area_mm,na.rm=TRUE)|>round(digits = 3)`) with the variance in anther stigma distance (which equals `r var(gc_rils$asd_mm,na.rm=TRUE)|>round(digits = 3)`). But it's still biologically meaningful to ask: "*Which trait is more variable, relative to its mean?*" We answer this question by finding the *coefficient of variation* which equals the standard deviations divided by the mean: CV = $\frac{s_x}{\overline{X}}$. Doing so, we find that anther–stigma distance is nearly twice as variable as petal area. 
+
+
+:::fyi
+<br><br>**It's ok to be MAD.** The mean absolute difference (aka MAD, which equals $\frac{\Sigma{|x_i-\bar{x}|}}{n}$) is a valid, and robust, but non-standard summary of variation. The *MAD* is most relevant when presenting the median as the  median minimizes the sum of absolute deviations, while the mean minimizes the sum of squared deviations. 
+:::
+
+### Parametric summaries of variability: Example  {#summarizing_variability_parametric-summaries-of-variability-example}    
+
+
+
+```{r}
+#| echo: false
+#| eval: false
+library(gganimate)
+library(gifski)
+library(transformr)
+
+
+y <- gc_rils |>
+  select(petal_area_mm)|>
+  filter(!is.na(petal_area_mm)) |>
+  mutate(grand_mean = mean(petal_area_mm),
+         diff_from_mean = petal_area_mm - grand_mean,
+         squared_diff = diff_from_mean^2,
+         group = factor(1:n()))|>
+  mutate(bigger = ifelse(diff_from_mean >=0 , petal_area_mm, grand_mean),
+         smaller = ifelse(diff_from_mean <=0 , petal_area_mm, grand_mean),
+         tmp1 =  round(petal_area_mm,digits=1),
+         tmp2 =  round(grand_mean,digits=1),
+         tmp3 =  round(diff_from_mean,digits=1),
+         tmp4 =  round(diff_from_mean^2,digits=1),
+         to_print = paste( "Deviation² \n-----------------\n(",tmp1,"-",tmp2,")² \n = (",tmp3,")² \n = ",tmp4,sep = ""))
+
+  
+grand_mean_petal_area <- pull(y,grand_mean)|>unique()
+min_petal_area <- pull(y,petal_area_mm)|>min()
+max_petal_area <- pull(y,petal_area_mm)|>max()
+
+anim_squared_dev <- ggplot(y, aes(x = petal_area_mm, y = petal_area_mm)) +
+  geom_hline(yintercept = c(20.9 ,103.2 ), alpha = 0)+
+  geom_point(size=3)+
+  geom_vline(xintercept = grand_mean_petal_area)+
+  geom_hline(yintercept = grand_mean_petal_area)+
+  geom_rect( aes(xmax = bigger,xmin = smaller, ymax = bigger, ymin = smaller),
+             alpha = .8, fill = "pink") +
+  geom_segment( aes(x = bigger,xend = smaller,  y = smaller, yend = smaller))+
+  geom_segment( aes(y = bigger,yend = smaller,  x = smaller, xend = smaller))+
+  geom_segment( aes(x = smaller,xend = bigger,  y = bigger, yend = bigger))+
+  geom_segment( aes(y = smaller,yend = bigger,  x = bigger, xend = bigger))+
+  geom_label(aes(label = to_print), size = 6.8,
+            x = 21, y = max_petal_area, hjust = 0, vjust = 1)+
+  scale_y_continuous(breaks = grand_mean_petal_area+c(-25,0,25), 
+                     labels = round(grand_mean_petal_area+c(-25,0,25)))+
+  theme_light()+
+  theme(axis.text = element_text(size= 20),
+        axis.title = element_text(size= 20))+
+  coord_cartesian(xlim = c(20.9,103.2))+
+  transition_manual(group)  # Transition over the frame variable (group)
+
+# Render the animation as a gif
+animate(anim_squared_dev,fps = .5,width = 375,height = 375)
+anim_save("figs/summarizing_data/univariate_summaries/petal_area_sqrd_dev", 
+          animate(anim_squared_dev,fps = .5,width = 375,height = 375, renderer = gifski_renderer()))
+
+
+
+grand_mean_petal_area <- pull(y,grand_mean)|>unique()
+min_petal_area <- pull(y,petal_area_mm)|>min()
+max_petal_area <- pull(y,petal_area_mm)|>max()
+
+
+y  <- y |> mutate(x = group) |>
+  mutate(to_print_a = paste( "Deviation\n-----------------\n(",tmp1," - ",tmp2,") \n  = ",tmp3,sep = ""))
+y2 <- y |> select(- group)
+
+y  <- y |> mutate()|> mutate(z = petal_area_mm - grand_mean_petal_area)
+y2 <- y |> select(- group)|> mutate(z = petal_area_mm - grand_mean_petal_area)
+
+anim_squared_dev_a <- ggplot(y,aes(x = x , y = z))+
+  geom_hline(yintercept = c(20.9 - grand_mean_petal_area,103.2 - grand_mean_petal_area), alpha = 0)+
+  geom_segment(data = y2, 
+               aes(xend = x, y =0,yend = petal_area_mm - grand_mean_petal_area), alpha = .3)+
+  geom_label(aes(label = to_print_a), size = 6.8,
+             x = 0, y = max_petal_area - grand_mean_petal_area, 
+             hjust = 0, vjust = 1)+
+  geom_segment(data = y, color = "pink", linewidth = 2,
+               aes(xend = x, yend = 0, y=petal_area_mm- grand_mean_petal_area))+
+  geom_point(data = y, size = 4, color = "pink")+
+  theme_light()+
+  geom_label(y = grand_mean_petal_area -max_petal_area+5, 
+             aes(label = paste("i =",x)), size = 6.8)+
+  scale_y_continuous(
+    breaks = c(-25,0,25), 
+    name = "Deviation\n(Petal area - mean petal area)",
+    sec.axis = sec_axis(
+      transform = ~ . + grand_mean_petal_area,
+      breaks = round(grand_mean_petal_area+c(-25,0,25)),
+      name = "") ) +
+  geom_hline(yintercept = 0)+
+  theme_light()+
+  theme(axis.text = element_text(size= 20),
+        axis.title = element_text(size= 20),
+        panel.grid.major.x = element_line(color = "snow"))+
+  coord_cartesian(ylim = c(20.9 - grand_mean_petal_area,103.2 - grand_mean_petal_area), xlim = c(-5,104))+
+  scale_x_discrete(name = "i", 
+                   labels = function(x) ifelse(x %in% as.character(c(seq(5,100,30))), x, ""))+
+  transition_manual(group) 
+
+# Render the animation as a gif
+animate(anim_squared_dev_a,fps = .5,width = 375,height = 375)
+anim_save("figs/summarizing_data/univariate_summaries/petal_area_sqrd_dev_a", 
+          animate(anim_squared_dev_a,fps = .5,width = 375,height = 375, renderer = gifski_renderer()))
+
+
+
+
+anim_squared_dev_c <- ggplot(y,aes(x = x , y = (z^2)))+
+  geom_label(aes(label = to_print), size = 6.8,
+             x = 0, y = 1700, hjust = 0, vjust = 1)+
+  geom_hline(yintercept = 0, alpha = 0)+
+  geom_segment(aes(xend = x, yend = 0 ), linewidth = 2, color = "pink")+
+  geom_point(size= 4)+
+  geom_segment(data = y2, 
+               aes(xend = x, y =0,yend = z), alpha = .3)+
+  theme_light()+
+  geom_label(y = -80, 
+             aes(label = paste("i =",x)), size = 6.8)+
+  scale_y_continuous(
+    name = "Squared Deviation",
+    sec.axis = sec_axis(
+      transform = ~ . + 0,
+      name = "Deviation") ) +
+  geom_hline(yintercept = 0)+
+  theme_light()+
+  theme(axis.text = element_text(size= 20),
+        axis.title = element_text(size= 20),
+        panel.grid.major.x = element_line(color = "snow"),
+        axis.title.y.right = element_text(color = "grey90"),
+        axis.text.y.right = element_blank(),
+        axis.title.y.left = element_text(color = "pink"))+
+  coord_cartesian(x = c(-5,104),y = c(-100,1750))+
+  scale_x_discrete(name = "i", 
+                   labels = function(x) ifelse(x %in% as.character(c(seq(5,100,30))), x, ""))+
+  transition_manual(group) 
+
+  
+
+# Render the animation as a gif
+animate(anim_squared_dev_c,fps = .5,width = 375,height = 375)
+anim_save("figs/summarizing_data/univariate_summaries/petal_area_sqrd_dev_c", 
+          animate(anim_squared_dev_c,fps = .5,width = 375,height = 375, renderer = gifski_renderer()))
+
+
+
+library(magick)
+gif1 <- image_read("../../figs/summarizing_data/univariate_summaries/petal_area_sqrd_dev_a")
+gif2 <- image_read("../../figs/summarizing_data/univariate_summaries/petal_area_sqrd_dev")
+gif3 <- image_read("../../figs/summarizing_data/univariate_summaries/petal_area_sqrd_dev_c")
+combined <- image_append(c(gif1[1], gif2[1],gif3[1]))  # init
+for (i in 2:length(gif1)) {
+  frame <- image_append(c(gif1[i], gif2[i],gif3[i]))
+  combined <- c(combined, frame)
+}
+
+
+
+image_write(combined, "../../figs/summarizing_data/univariate_summaries/3-column-animation_ss.gif")
+```
+
+
+
+```{r}
+#| echo: false
+#| label: fig-ss
+#| fig-cap: "**Understanding the squared deviation.** The \"Sum of Squared Deviations\" is critical to understanding standard summaries of variability. The animation above aims to explain a \"squared deviation.\" *Left panel:* Each individual's deviation from the mean petal area is visualized as a vertical line, with the iᵗʰ value highlighted in pink. *Middle panel:* The same individual is plotted in a 2D space -- the squared deviation is shown as the area of a pink rectangle. *Right panel:* The squared deviation is shown for all individuals, with the same focal individual highlighted."
+#| fig-alt: "Animated figure with three panels demonstrating deviation and squared deviation in petal area measurements for Clarkia xantiana. *Left:* A bar plot shows each individual's deviation from the mean, with one pink-highlighted bar labeled with its value. *Middle:* A pink rectangle visualizes the squared deviation as area, connecting a data point to the mean. *Right:* A bar plot shows squared deviations for all individuals, again highlighting the same individual in pink."
+include_graphics("../../figs/summarizing_data/univariate_summaries/3-column-animation_ss.gif")
+```
+
+To make these ideas clear, let's revisit the distribution of petal area  in *parviflora* RILs planted in GC. @fig-ss shows how we calculate the Squared Deviation for each data point.   
+
+- *The left panel* shows the difference between each observed value and its mean.   
+- *The middle panel* shows this as a box (or square) away from the overall, "grand" mean.   
+- *The right panel* shows the squared deviation.  
+
+We find the sum of squares by summing these values, and then use this to find the variance, standard deviation and coefficient of variation, following the formulae above: 
+
+```{r}
+#| eval: false
+gc_rils |>
+  filter(!is.na(petal_area_mm))|>
+  summarise(mean_petal_area = mean(petal_area_mm),
+            ss_petal_area = sum((petal_area_mm - mean_petal_area)^2),
+            var_petal_area = ss_petal_area / (n()-1),
+            sd_petal_area = sqrt(ss_petal_area ),
+            CV_petal_area = sd_petal_area / mean_petal_area )
+```
+
+
+
+```{r}
+#| echo: false
+gc_rils |>
+  filter(!is.na(petal_area_mm))|>
+  summarise(mean_petal_area = mean(petal_area_mm),
+            ss_petal_area = sum((petal_area_mm - mean_petal_area)^2),
+            var_petal_area = ss_petal_area / (n()-1),
+            sd_petal_area = sqrt(var_petal_area ),
+            CV_petal_area = sd_petal_area / mean_petal_area )|>
+  mutate(mean_petal_area = round(mean_petal_area, digits = 2),
+            ss_petal_area = round(ss_petal_area),
+            var_petal_area = round( var_petal_area, digits = 2),
+            sd_petal_area =  round( sd_petal_area, digits = 2),
+            CV_petal_area =   round(CV_petal_area , digits = 2) )|>
+ kable()
+```
+
+
+Or we can skip the formulae and just use standard R functions, [`var()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html) and [`sd()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/sd.html). We can even find the mean absolute difference with the [`mad()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/mad.html) function: 
+
+
+
+```{r}
+#| eval: false
+gc_rils |>
+  filter(!is.na(petal_area_mm))|>
+  summarise(mean_petal_area = mean(petal_area_mm),
+            var_petal_area = var(petal_area_mm),
+            sd_petal_area  = sd(petal_area_mm),
+            CV_petal_area = sd_petal_area / mean_petal_area,
+            mad_petal_area = mad(petal_area_mm ))
+```
+
+
+
+```{r}
+#| echo: false
+gc_rils |>
+  filter(!is.na(petal_area_mm))|>
+  summarise(mean_petal_area = mean(petal_area_mm),
+            mad_petal_area = mad(petal_area_mm ),
+            var_petal_area = var(petal_area_mm),
+            sd_petal_area  = sd(petal_area_mm),
+            CV_petal_area = sd_petal_area / mean_petal_area)|>
+  mutate(mean_petal_area = round(mean_petal_area, digits = 2), 
+            mad_petal_area = round(mad_petal_area, digits = 2),
+            var_petal_area = round( var_petal_area, digits = 2),
+            sd_petal_area =  round( sd_petal_area, digits = 2),
+            CV_petal_area =   round(CV_petal_area , digits = 2))|>
+ kable()
+```

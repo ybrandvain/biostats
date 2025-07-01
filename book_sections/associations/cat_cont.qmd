@@ -1,0 +1,281 @@
+## • 6. Categorical + numeric  {.unnumbered #cat_cont}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(kableExtra)
+library(ggplot2)
+library(tidyr)
+library(ggforce)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+```
+
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for selecting data from a few columns from RILs planted at GC"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm,visited )
+```
+
+--- 
+
+```{r}
+#| echo: false
+#| column: margin  
+#| label: fig-visit-vid
+#| fig-cap: "Generalist bees visiting another *Clarkia* species. From The [sunmonsters](https://www.instagram.com/thesunmonsters/) Instaggam. See their post [here](https://www.instagram.com/thesunmonsters/reel/CtI6IJxLORC/)."
+#| fig-alt: "A video of a bee visiting *Clarkia* flowers."
+include_graphics("../../figs/summarizing_data/associations/Carpenter bee makeouts with some Elegant Clarkia (Clarkia unguiculata).mp4")
+```
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:**   
+You are continuing your exploration of a fresh new dataset. You have figured out the shape, made the transformations you thought appropriate, and now want to summarize associations between a categorical and a numeric variable.
+
+
+
+**Learning Goals: By the end of this subchapter, you should be able to:**  
+
+
+
+1. **Calculate and explain conditional means:**   You should be able to do this with basic math and with R code. 
+
+2. **Calculate and explain Cohen's D as a measure of effect size.** In addition to being able to calculate Cohen's D, you should be able to distinguish between "large" and small "effect sizes".  
+
+3. **Visualize differences between means:**  
+
+
+::: 
+
+---  
+
+
+
+We might expect that *parviflora* plants known to have attracted a pollinator would produce more hybrid seeds than those that were not. After all, pollen must be transferred for hybridization to occur, and visits from pollinators are the main way this happens. That seems biologically reasonable — but in statistics, such expectations must be tested with actual data.
+
+In this section, we explore how to visualize and quantify associations between a categorical explanatory variable (e.g., whether a plant was visited by a pollinator) and a numeric response variable (e.g., the proportion of that plant’s seeds that are hybrids). We'll see how group means and other summaries can reveal patterns in the data — and how to interpret what those patterns might mean biologically.  
+
+## Summarizing associations: Difference in conditional means   {#cat_cont_summarizing-associations-difference-in-conditional-means} 
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-height: 8
+#| column: margin
+library(patchwork)
+
+a <- ggplot(gc_rils, 
+       aes(x = 1,
+         y = prop_hybrid))+
+  geom_jitter(size = 4, alpha = .6,color = "pink2",height = 0) +
+  scale_x_continuous(limits = c(.25,1.75))+
+  stat_summary(color = "black",size = 2,
+            fun = "mean",
+            size = 1)  +
+  labs(title = "Grand mean", y = "prop hybrid")+
+  theme(axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.text.y = element_text(size=28),
+        axis.title.y = element_text(size=28,angle = 90),
+        plot.title = element_text(face = "bold", size=30))
+
+b <- ggplot(gc_rils, 
+       aes(x = visited,
+           y = prop_hybrid,
+           color = visited))+
+  geom_jitter(size = 4, alpha = .7, height = 0) +
+  stat_summary(color = "black",
+            fun = "mean",
+            size = 2)  +
+   stat_summary(color = "black",aes(group = 1),
+            fun = "mean",geom = "line", lty = 2,
+            size = 1)  +
+  labs(title = "Conditional Mean", y = "prop hybrid")+
+  theme(legend.position = "none",
+        axis.text = element_text(size = 28),
+        axis.title = element_text(size= 28),
+        plot.title = element_text(face = "bold", size=30))
+
+a/b
+```
+
+In statistics, we often differentiate between a
+
+- **Grand mean:** The overall mean of a variable.  and the 
+- **Conditional mean:** The mean of one variable given the value of one (or more) other variables. With a single categorical variable, this is simply the group means.   
+
+For example, for our RIL data planted at site GC, the "grand mean" proportion of hybrids formed across all RILs is around 0.15. . 
+
+
+The mean proportion of hybrids formed across all RILs is around 0.15. 
+
+```{r}
+#| eval: false
+gc_rils |>
+  summarise(grand_mean_prop_hybrid = mean(prop_hybrid, na.rm =TRUE))
+```
+
+```{r}
+#| echo: false
+gc_rils |>
+  summarise(grand_mean_prop_hybrid = mean(prop_hybrid, na.rm =TRUE))|> 
+  kable()
+```
+
+Similarly, the means of `prop_hybrid` conditional on visitation status are around 0.07 for flowers that "weren't visited" and 0.36 for those that were visited.
+
+
+
+```{r}
+#| eval: false
+gc_rils |>
+  group_by(visited)|>
+  summarise(grand_mean_prop_hybrid = mean(prop_hybrid, na.rm =TRUE))
+```
+
+```{r}
+#| echo: false
+gc_rils |>
+  group_by(visited)|>
+  summarise(grand_mean_prop_hybrid = mean(prop_hybrid, na.rm =TRUE))|>
+  kable()
+```
+
+A common summary of the association between a categorical explanatory variable and a numerical response is the difference in conditional means across groups. In this case, the difference in conditional means is approximately 0.29.
+
+```{r}
+mean_visited <- gc_rils |>
+  filter(visited)|>
+  summarise(grand_mean_prop_hybrid = mean(prop_hybrid, na.rm =TRUE))
+
+mean_notvisited <- gc_rils |>
+  filter(!visited)|>
+  summarise(grand_mean_prop_hybrid = mean(prop_hybrid, na.rm =TRUE))
+
+(mean_visited   - mean_notvisited) |> pull() |> round(digits = 3)
+```  
+
+
+## Summarizing associations: Cohen's D  {#cat_cont_summarizing-associations-cohens-d}  
+
+Above, we found that on average, visited plants produced 0.287 more hybrids than unvisited ones. That might seem like a big difference — but raw differences can be hard to interpret on their own. Is 0.287 a lot? A little? To better understand how meaningful that difference is, we can compare it to the variability in hybrid seed production. Cohen’s D helps us do just that — it standardizes the difference in means by the vraiabiliuty within groups (the pooled standard deviation), allowing for more intuitive comparisons across studies and systems.  For this dataset, that gives us a D of 1.4 (see calculation below) — a very large effect size (see guide in margin). This suggests that being visited (during our observation window) is strongly associated with producing more hybrid seeds.
+
+:::aside
+
+
+There aren't hard and fast rules for interpreting Cohen's D — this varies by field —  but the rough guidelines are presented below. Our observed Cohen's D of 1.4 is very large. 
+
+| Size              | Range of Cohen's D     |
+|------------------|------------------------|
+| Not worth reporting | < 0.01               |
+| Tiny              | 0.01 – 0.20           |
+| Small             | 0.20 – 0.50           |
+| Medium            | 0.50 – 0.80           |
+| Large             | 0.80 – 1.20           |
+| **Very large**        | **1.20 – 2.00**           |
+| Huge              | > 2.00                |
+
+:::
+
+- **Cohen's D** - the difference in group means divided by the "pooled standard deviation" allows us to better interpret such difference.    
+- The **pooled standard deviation** is simply the standard deviation of observations from their group mean. We can find it in R as follows:
+
+```{r}
+# finding the pooled standard deviation
+pooled_sd <- gc_rils |>
+  group_by(visited)|>
+  mutate(diff_from_mean = prop_hybrid - mean(prop_hybrid) )|>
+  ungroup()|>
+  summarise(sd_group = sd(diff_from_mean)) |>
+  pull()
+
+# Print this out
+sprintf("The pooled sd is %s",round(pooled_sd, digits = 3))
+
+cohensD <- (mean_visited   - mean_notvisited) /  pooled_sd 
+
+# Print this out
+sprintf("Cohen's D is (%s - %s)/(%s) = %s",
+        round(pooled_sd, digits = 3),
+        round(pull(mean_visited)   , digits = 3),
+        round(pull(mean_notvisited), digits = 3),
+        round(pull(cohensD) , digits = 3)
+        )
+
+
+```
+
+## Visualizing a categorical x and numeric y  {#cat_cont_visualizing-a-categorical-x-and-numeric-y}   
+
+Visualizing the difference between means is surprisingly difficult.Visualizing the difference between means is surprisingly difficult. One particular concern is overplotting — because categorical variables have only a few possible values on the x-axis, data points can stack or overlap, which can obscure patterns in the data. 
+
+Below I work through a brief slide show revealing some challenges and some solutions.
+
+```{r}
+#| eval: true
+#| echo: false
+#| message: false
+#| warning: false
+#| column: margin
+#| 
+library(ggforce)
+ggplot(gc_rils, 
+       aes(x = visited,
+         y = prop_hybrid,
+         color = visited))+
+  geom_sina(size = 7,  
+        alpha = .4,
+        show.legend = FALSE) +
+  stat_summary(color = "black",
+            fun = "mean",
+            size = 1.5)         + 
+  stat_summary(aes(group = 1),
+            color = "black",
+            geom = "line", 
+            lty=2)+
+  labs(title = "Conditional means")+
+      theme(axis.text = element_text(size= 28),
+            title = element_text(size = 32),
+        axis.title.y = element_text(size= 32,angle = 90),
+        axis.title.x = element_text(size= 32))
+```
+
+```{r}
+#| echo: false
+#| out-width: "100%"
+#| fig-height: 9
+include_url("https://ybrandvain.github.io/flipbooks/cat_cont_flipbook.html")  
+```
+
+
+

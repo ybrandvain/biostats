@@ -1,0 +1,304 @@
+## • 6. Two categorical vars {.unnumbered #two_categorical_vars}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(kableExtra)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+```
+
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for selecting data from a few columns from RILs planted at GC"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm,visited )
+```
+
+--- 
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:**   
+You are continuing your exploration of a fresh new dataset. You have figured out the shape, made the transformations you thought appropriate, and now want to summarize associations between two categorical variables.
+
+**Learning Goals: By the end of this subchapter, you should be able to:**  
+
+1. **Calculate and explain conditional proportion:**   You should be able to do this with basic math and with R code. 
+
+2. **Explain the intuition of the multiplication rule for independent events**   
+
+3. **Calculate and explain the deviation from expectations under independence.** Again  you should be able to do this with basic math and with R code. 
+
+:::     
+
+---  
+
+## Unconditional proportions  
+
+
+```{r}
+#| column: margin
+#| echo: false
+#| message: false
+#| label: fig-visit
+#| warning: false
+#| fig-cap: "**The proportion** of plats that did (light grey) or did not (black) receive a visit from a pollinator."
+#| fig-alt: "A bar plot showing the proportion of plats that did (about one quarter) or did not (about three quarters) receive a visit from a pollinator."
+#| fig-height: 6
+tmp <- gc_rils|> 
+  dplyr::filter(!is.na(petal_color))|>
+  mutate(visited = ifelse(visited,"some\nvisits","no\nvisits")) 
+ggplot(tmp,aes(x = 1, fill = visited))+
+  geom_bar(position = "fill", 
+           color = "white")+
+  scale_fill_manual(values = c("black","lightgrey") ) +
+  scale_y_continuous(expand = c(0,0), 
+                     limits =c(-.003,1.003),
+                     breaks = c(0,1/4,1/2,3/4,1),
+                     labels =c("0","1/4","1/2","3/4","1") ) + 
+  theme_light()+
+  labs(y = "Proportion", title = "Unconditional proportions")+
+  theme(axis.text.y = element_text(size= 28),
+        axis.text.x = element_blank(),
+        axis.title.y = element_text(size= 28),
+        axis.title.x = element_blank(),
+        legend.text = element_text(size= 28),
+        legend.title = element_text(size= 28),
+        plot.title = element_text(size=34),
+        legend.position ="none")+
+  annotate(x = c(1), y =c(.6), geom = "text",
+           label= c("no visits") , 
+           size = 12, color ="white")+
+  annotate(x = 1, y =.15, geom = "text",color = "black",
+           label= "some visits", size = 12)
+```
+
+
+Before describing associations between categorical variables, let us revisit our univariate summaries.  The proportion of pink flowers (or plants receiving visits) is simply the number of pink flowers  (or plants receiving visits) divided by the total number of plants whose petal color is known (or  the number of plants with pollinator observation data). 
+
+A proportion is essentially a mean where one outcome (e.g., pink flowers or being visited) is set to 1 and the other (e.g., white flowers or not being visited) is set to 0. Because visited is logical and R converts TRUE to 1 and FALSE to 0 when making a logical numeric, we can find this with the [`mean()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mean.html)  function in R:
+
+```{r}
+gc_rils |>
+  filter(!is.na(petal_color) & !is.na(mean_visits))|>     # remove NAs
+  summarise(n_pink       = sum(as.numeric(petal_color == "pink")),
+            n_visited    = sum(as.numeric(mean_visits > 0)),
+            n            = n(),
+            prop_pink    = mean(as.numeric(petal_color == "pink")),
+            prop_visited = mean(as.numeric(visited))) |> 
+  kable(digits = 4)                # for pretty formatting (ignore)
+```
+
+So our **unconditional proportions** -- that is, our proportions without considering the other variable are:      
+
+- **Proportion pink-flowered,**  $P_\text{pink} = \frac{49}{91} = 0.5385$.   
+- **Proportion visited,** $P_\text{visited} = \frac{24}{91} = 0.2637$.   
+
+--- 
+
+## Associations between categorical variables    
+   
+
+
+```{r}
+#| column: margin
+#| echo: false
+#| message: false
+#| label: fig-pinkvisit
+#| warning: false
+#| fig-cap: "**The association between petal color and pollinator visitation.** Petal color is on the x-axis and visit status is shown within bars. We see that pink-flowered plants are more likely to receive a visit from a pollinator."
+#| fig-alt: "A bar plot showing the relationship between petal color (pink or white) and pollinator visitation (visited or not visited). Petal color is on the x-axis and proportion of flowers that were visited or not on the y-axis. This plot shows that pink flowers are more likely to be visited."
+#| fig-height: 6
+library(patchwork)
+tmp <- gc_rils|> 
+  dplyr::filter(!is.na(petal_color))|>
+  mutate(visited = ifelse(visited,"some visits","no visits")) 
+ggplot(tmp,aes(x = visited, fill = petal_color))+
+  geom_bar(position = "fill", 
+           color = "black")+
+  scale_fill_manual(values = c("pink","white") ) +
+  scale_y_continuous(expand = c(0,0), 
+                     limits =c(-.003,1.003),
+                     breaks = c(0,1/4,1/2,3/4,1),
+                     labels =c("0","1/4","1/2","3/4","1") ) + 
+  theme_light()+
+  labs(y = "Proportion", title = "Conditional proportions")+
+  theme(axis.text = element_text(size= 28), 
+        axis.title.y = element_text(size= 28),
+        axis.title.x = element_blank(),
+        legend.text = element_text(size= 28),
+        legend.title = element_text(size= 28),
+        legend.position = "none",
+        plot.title = element_text(size= 34))+
+  annotate(x = c(1,2), y =c(.8,.5), geom = "text",
+           label= "pink\npetal" , 
+           size = 12)+
+  annotate(x = 1, y =.29, geom = "text",
+           label= "white\npetal", size = 12)
+
+```
+
+
+
+
+@fig-pinkvisit clearly shows that  pink-flowered *parviflora* RILs planted at GC are more likely to be visited by a pollinator  than are white-flowered RILs. At least, this is clear to me! Examine the plot yourself and   
+
+1. Articulate what feature of this plot shows the point above,   
+2. Describe what the plot would look like if there was no association  between petal color and pollinator visitation.   
+
+<br><br>  <html><textarea rows="6" cols="50" placeholder="Your answer here..."></textarea></html>
+
+
+---
+
+```{r}
+#| echo: false
+#| eval: false
+#`r hide("This connects to GPT-4o-mini. Click here for my prompt")`
+
+#*My prompt:* "You are a helpful and friendly tutor guiding a student through interpreting a bar plot of conditional proportions. While you are helpfull -- you are brief responding in one to mfour sentances. You are also somewhat socratic,  you are willing to help, but make sure the students do most of the thinking, while do the  guiding. Finally, you kep them on track, so if they ask a question about the biology, or about something tangentially related, do your best to get them to focus on the topic at hand.  The plot shows the association between petal color (pink or white) and pollinator visitation (no visits vs. some visits) for Clarkia parviflora RILs planted at site GC. On the x-axis are the two categories of visitation status: “no visits” and “some visits.” Each bar is divided by petal color: pink petals are shaded pink and white petals are white. The y-axis shows the proportion within each visitation category, from 0 to 1. In the observed pattern, nearly all of the flowers that received visits are pink-flowered, while among those that were not visited, pink- and white-flowered plants are more evenly represented, with white-flowered plants making up the majority. This suggests that pink-flowered plants are more likely to be visited by pollinators than white-flowered ones. For reference, about half of all plants are pink-flowered, and roughly a quarter of all plants received at least one visit. The joint frequency—i.e., the proportion of plants that are both pink-flowered and visited—is a little less than a quarter. Your task is to help the student articulate what aspect of the plot supports the conclusion that pink-flowered plants are more likely to be visited, and to help them reason through what the plot would look like if there were no association between petal color and pollinator visitation. If the two variables were independent, you would expect the distribution of petal colors within each visitation category to be roughly the same—both the “no visits” and “some visits” bars would show similar proportions of pink and white. Guide the student to connect the visual patterns to the underlying idea of conditional proportions and independence, and support their learning with helpful questions or clarifications as needed."
+
+#`r unhide()` 
+
+
+#<iframe src="../../chatbot_twocat_association.html" width="100%" height="600px" style="border:0px solid #ccc;"></iframe>
+
+```
+
+A basic expectation from probability theory is that if two binary variables are **independent** (i.e. there is no statistical association between them), then the proportion of observations with both A and B equals the product of their proportions:  
+
+
+$$P_{AB|\text{independence}} = P_{A} \times P_{B}$$ 
+
+:::aside    
+This is called the **multiplication rule**.   
+:::    
+
+
+To evaluate how far our data deviate from independence, we can compare the actual joint proportion to what we’d expect if the two variables were independent. Assuming independence,  $\frac{49}{91}\times \frac{24}{91} =  0.142$ of plants would be pink-flowered and receive a visit from a pollinator, but in reality nearly a quarter of our plants are pink-flowered and visited!
+
+
+Two standard summaries of associations between categorical variables -- **conditional proportions** and **covariance** -- can be used to quantify this deviation from expectations under independence.
+
+--- 
+
+### Deviation from Independence: Conditional proportions  {#two_categorical_vars_deviation-from-independence-conditional-proportions}    
+
+Perhaps the most straightforward summary of an association between categorical variables is the conditional proportion. This is the proportion of a given outcome, calculated separately for each value of the explanatory variable. Because a proportion is essentially a mean, a conditional proportion is essentially a conditional mean -- so this calculation and logic follows that in the [previous section](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/associations/cat_cont.html).
+
+As we see in our example, this calculation uses the same approach as above, but grouped by petal color.  
+
+
+```{r}
+gc_rils |>
+  filter(!is.na(petal_color) & !is.na(visited))|>     # remove NAs
+  group_by(petal_color)                            |>
+  summarise(n_visited    = sum(as.numeric(visited)),
+            n            = n(),
+            prop_visited = mean(as.numeric(visited))) |> 
+  kable(digits = 4)                # for pretty formatting (ignore)
+```
+
+By conventional notation, we write conditional proportions as $P_\text{A|B}$, meaning ‘*the proportion of A given B*’ — where A is the outcome, B is the explanatory variable, and $|$ means "given". So:  
+
+:::aside
+In probability theory $|$ means "given". In `R` $|$ means "or". This is unfortunate and I am sorry. I wish I could change this.
+:::
+
+- The proportion of pink flowers receiving a visit from a pollinator is: $P_\text{visited|pink} = \frac{22}{49} = 0.449$.   
+- The proportion of white flowers receiving a visit from a pollinator is: $P_\text{visited|white} = \frac{2}{42} = 0.0476$.
+
+**In summary, pink-flowered plants at site GC are roughly 10 times more likely to attract a pollinator than are white-flowered plants!** 
+
+With these conditional proportions we can generalize the multiplication rule to non-independent variables: 
+
+$$P_{AB} = P_{B} \times P{A|B}$$  
+
+Applying this to our case recovers our actual observations! 
+
+$$P_\text{pink and visited} = P_\text{pink} \times P_\text{visited|pink} = \frac{49}{91}\times \frac{22}{49} =\frac{22}{91} = 0.24$$
+
+:::aside
+Dividing the conditional proportions for two groups is technically called the "relative risk".
+:::
+
+---
+
+###  Deviations from Independence - The Covariance  {#two_categorical_vars_deviations-from-independence-the-covariance}   
+
+Our final summary of the association between categorical variables is the covariance. There are two ways to calculate  the covariance. For now, we focus on the simplest way, and revisit this in the next section.  
+
+
+:::aside
+This formula is slightly wrong because it implicitly has a denominator of $n$, not $n-1$. To get the precise covariance, multiply this by $\frac{n}{n-1}$ (this is known as [Bessel's correction](https://en.wikipedia.org/wiki/Bessel%27s_correction)). But when $n$ is big, this is close enough.
+:::
+
+- The first estimate of the covariance is the difference between observations and expectations under independence -- i.e. $\text{Covariance}_{A,B} = P_{AB}-P_{A} \times P_{B}$. 
+
+
+```{r}
+gc_rils |>
+  filter(!is.na(petal_color) & !is.na(visited))|>     # remove NAs
+  mutate(pink_and_visited = petal_color == "pink" & visited,
+         pink_and_visited01 = as.numeric(pink_and_visited ))|>    # observed joint proportion
+  summarise(n            = n(),
+            prop_pink_and_visited = mean(pink_and_visited01),
+            prop_visited = mean(as.numeric(visited)),
+            prop_pink    = mean(as.numeric(petal_color == "pink")),
+            indep_expect = prop_visited* prop_pink,
+            approx_cov   = prop_pink_and_visited - indep_expect,
+            exact_cov    = approx_cov * n / (n-1),
+            cov_function = cov(as.numeric(petal_color == "pink"), 
+                               as.numeric(visited)))|>
+  kable(digits = 4)
+```
+
+:::aside   
+Note that the code above introduced R's [`cov()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html) function to find the covariance. 
+:::  
+
+Covariance gives us a numerical measure of how far our data deviate from what we’d expect under independence. In this case, the value is 0.10 — but is that meaningful? We’ll build up more intuition for interpreting covariances as we shift to continuous variables in the next section. 
+
+--- 
+ 
+:::learnmore 
+**Additional summaries of associations between categorical variables.** 
+
+At this point many textbooks would introduce two other standard summaries -- **[odds ratios](https://en.wikipedia.org/wiki/Odds_ratio)** and **[relative risk](https://en.wikipedia.org/wiki/Relative_risk)** (calculated above).  I am not spending much time on them here. That is not because they are not useful (they are) -- but because  
+
+- They can get complicated.   
+- They don't lead naturally to the next steps in our learning journey.  
+
+Feel free to read more about each on Wikipedia (links above) or in conversation with your favorite large language model.
+:::
+
+--- 

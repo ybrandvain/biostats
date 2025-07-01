@@ -1,0 +1,397 @@
+## • 5. Summarizing the center {.unnumbered #summarizing_center}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(kableExtra)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+
+hz_data <- read_csv("https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/cz_cluster_assignments_2024july17.csv")|>
+  mutate(log10_avg_petal_area_sq_cm = log10(mean_petal_area_sq_cm))
+
+```
+
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for selecting data from a few columns from RILs planted at GC"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm )
+```
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:**   
+You are continuing your exploration of a fresh new dataset. You have figured out the shape and made the transformations you thought appropriate. You now want to get some numerical summaries of the center of the data.
+
+**Learning Goals: By the end of this subchapter, you should be able to:**  
+
+1. **Differentiate between parametric and nonparametric summaries:** and know what shapes of data make one more appropriate than the other.    
+
+
+2. **Calculate and interpret standard summaries of center in R**. These include:  
+
+    - **Median:** The middle. 
+    - **Mean:** The center of gravity.     
+    - **Mode(s):** The common observation(s). 
+
+3. **Look up / use less common summaries of the center.**  These include:    
+
+    -  **The trimmed mean:** The average after removing a fixed percentage of the smallest and largest values (i.e., trimming the "tails").  
+    - **The harmonic mean:** The reciprocal of the arithmetic mean of reciprocals, useful for averaging rates.  
+    - **The geometric mean:** The $n^{th}$ root of the product of all values, often used for multiplicative data.  
+
+
+:::     
+
+---  
+
+
+
+> We hear and say the word, "Average", often. What do we mean when we say it? "Average" is an imprecise term for a middle or typical value. 
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| eval: false
+library(ggplot2)
+library(gganimate)
+library(gifski)
+library(dplyr)
+library(tidyr)
+library(transformr)
+# Load dataset
+# Assuming gc_rils is already loaded into the R environment
+plot_data <- gc_rils$petal_area_mm[!is.na(gc_rils$petal_area_mm)]  # Remove NAs
+
+# Convert to a dataframe
+df <- data.frame(id = 1:length(plot_data), value = plot_data)
+
+# Compute the median
+median_value <- median(df$value)
+
+# Step 1: Create an "unordered" stage where x-values are fully shuffled
+df_unordered <- df %>%
+    mutate(
+        x = sample(1:n(), n(), replace = FALSE),  # Ensure x-values are completely shuffled
+        stage = "Unordered",
+        highlight = "Other",  # No points highlighted yet
+        value_numeric = value  # Keep numeric version for calculations
+    )
+
+# Step 2: Create a "sorting" stage where x-values are transitioning
+df_sorting <- df_unordered %>%
+    mutate(stage = "Sorting")
+
+# Step 3: Create a "sorted" stage where x-values follow their proper order
+df_sorted <- df_unordered %>%
+    arrange(value_numeric) %>%
+    mutate(
+        x = 1:n(),  # Assign proper sorted positions
+        stage = "Sorted",
+        highlight = ifelse(value_numeric == median_value, "Median", "Other")  # Highlight median only after sorting
+    )
+
+# Find x-position of the median for vertical line placement
+median_x <- df_sorted %>% filter(value_numeric == median_value) %>% pull(x)
+
+# Combine all stages into one dataset, ensuring correct order
+df_anim <- bind_rows(df_unordered, df_sorting, df_sorted) %>%
+    mutate(stage = factor(stage, levels = c("Unordered", "Sorting", "Sorted")))  # Ensure correct order
+
+# Create a text label dataset to control when "Sorting..." and "Sorted!" appear
+df_text <- data.frame(
+    stage = c("Sorting", "Sorted"),
+    label = c("Sorting...", "Sorted!"),
+    x = min(df_anim$x),  # Place text on the left
+    y = max(df_anim$value_numeric)  # Place text at the top
+)
+
+# Create the animation
+p <- ggplot(df_anim, aes(x = x, y = value_numeric, group = id)) +
+    # Plot all points first (so median can be on top)
+    geom_point(size = 4, aes(color = highlight), alpha = 0.7) +  
+    
+    # Ensure the median is plotted **on top**
+    geom_point(data = df_anim %>% filter(highlight == "Median"),
+               aes(x = x, y = value_numeric), size = 6, color = "red") +  
+    
+    transition_states(stage, transition_length = 2, state_length = 1, wrap = FALSE) +
+    
+    labs(
+        title = "Finding the Median: {closest_state}",
+        x = "{ifelse(closest_state == 'Unordered', 'Order in dataset (arbitrary)', 'Sorted order')}",
+        y = "Petal Area (mm)"
+    ) +
+    
+    scale_color_manual(values = c("Median" = "red", "Other" = "black")) +
+    theme_minimal() +
+    theme(legend.position = "none") +
+    
+    # Add dynamic sorting text at the right time
+    geom_text(
+        data = df_text, 
+        mapping = aes(x = x, y = y, label = label, group = stage), 
+        color = "blue", size = 12, hjust = 0, vjust = 1, fontface = "bold"
+    ) +
+    
+    # Add vertical dashed red line at the median *only after sorting*
+    geom_vline(
+        data = df_sorted %>% filter(stage == "Sorted"),
+        aes(xintercept = median_x),
+        color = "red", linetype = "dashed", size = 1
+    ) +
+    
+    # Add horizontal dashed red line at the median *only after sorting*
+    geom_hline(
+        data = df_sorted %>% filter(stage == "Sorted"),
+        aes(yintercept = median_value),
+        color = "red", linetype = "dashed", size = 1
+    ) +
+  theme(axis.text = element_text(size = 20),
+        axis.title = element_text(size = 30),
+        title  = element_text(size = 20))+
+    
+    # Display median value only after sorting
+    geom_text(
+        data = df_sorted %>% filter(highlight == "Median"),
+        aes(x = median_x + 1, y = median_value + 5, label = sprintf("Median = %.2f", median_value)),  
+        color = "red", size = 12, vjust = 0, hjust = 1.5
+    ) +
+    
+    # Ensure smooth diagonal movement
+    ease_aes("cubic-in-out")
+anim_save("../../figs/summarizing_data/univariate_summaries/petal_area_median.gif", animate(p, renderer = gifski_renderer()))
+```
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| label: fig-median_cartoon
+#| warning: false
+#| fig-cap: "Step-by-step process of finding the median petal area in *parviflora* RILs. The animation begins with unordered petal area measurements plotted against their dataset order. The values are then sorted in increasing order, and a vertical dashed line appears at the middle value, marking the median. The median is highlighted, illustrating how it divides the dataset into two equal halves."
+#| fig-alt: "An animated scatter plot illustrating the process of finding the median petal area (mm) in Clarkia. The animation starts with randomly ordered points, labeled along the x-axis as 'Order in dataset (arbitrary)' and petal area values on the y-axis. The points are then sorted from smallest to largest along the x-axis, with a vertical dashed line appearing at the median. A text label appears, highlighting the median value, which remains fixed as the final dataset is fully sorted."
+#| column: margin
+include_graphics("../../figs/summarizing_data/univariate_summaries/petal_area_median.gif")
+```
+ 
+
+
+There are many ways to describe the center of a dataset, but we can broadly divide them into two categories – “nonparametric” or “parametric”. We will first show these summaries for petal area in our parviflora RILS, then compare them for numerous traits in these RILs. 
+
+### Nonparametric summaries  {#summarizing_center_nonparametric-summaries}  
+
+Nonparametric summaries describe the data as it is, without assuming an underlying probability model that generated it.  The most common non-parametric summaries of center are:   
+
+
+- *Median:* The middle observation, which is found by sorting data from smallest to biggest (Shown visually in @fig-median_cartoon).      
+
+   - Selecting the value of the $\frac{n+1}{2}^{th}$ value  if there are an odd number of observations,
+   - Selecting the average of the $\frac{n}{2}^{th}$ and $\frac{(n+2)}{2}^{th}$ observations if there are an even number of observations.   
+   - Or just use the [`median()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/median.html) function in R -- usually inside [`summarize()`]() (revisit the chapter on [summarizing columns in dplyr](https://ybrandvain.quarto.pub/applied-biostatistics/book_sections/intro_to_R/data_in_R/summarize_vars.html) for a refresher). Remember to specify `na.rm = TRUE`.
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| column: margin
+#| label: fig-mode
+#| fig-cap: "Illustration of the mode in petal areas of *parviflora* RILs. The histogram displays the distribution of petal area (mm), with the mode marked by a blue vertical line and labeled in blue text. The mode represents the most frequently occurring value in the dataset, corresponding to the tallest bar in the histogram."
+#| fig-alt: "A histogram showing the distribution of petal area (mm) in Clarkia. The x-axis represents petal area values, while the y-axis shows the count of observations. A blue vertical line and an arrow highlight the mode, the most frequently occurring value, with the word 'mode' in bold blue text above the peak."
+ggplot(gc_rils, aes(x=petal_area_mm))+
+    geom_histogram(bins = 14,color = "white", alpha = .7)+
+    geom_segment(x = 64, y = 19, xend = 64, yend = 0, 
+                 arrow = arrow(), 
+                 linewidth = 1, color = "blue") +
+    annotate(geom = "text",x = 64, y = 21.5, label = "mode",
+             color = "blue", size = 15)+
+    labs(y= "count")+
+    theme(axis.title = element_text(size = 30),
+        axis.text = element_text(size = 30))+
+  scale_y_continuous(limits = c(0,23))
+``` 
+
+
+- *Mode(s):* The most common observation(s) or observation bin (@fig-mode).    
+
+   - When reporting the mode, make sure your bin size is appropriate so as to make this a meaningful summary.  
+   - Communicating the modes is particularly important bimodal and multimodal data.   
+
+
+
+
+###  Parametric summaries   {#summarizing_center_parametric-summaries}   
+
+Parametric summaries describe the data in a way that aligns with a probability model (often the normal distribution), allowing us to generalize beyond the observed data.  
+
+- *Mean:* The mean is the most common description of central tendency, and is known as *the expected value* or *the weight of the data*. 
+
+   - We find this by adding up all values and dividing by the sample size. In math notation the mean, $\overline{X} = \frac{\Sigma x_i}{n}$, where  $\Sigma$ means that we sum over the first $i = 1$, second $i = 2$ ... up until the $n^{th}$ observation of  $x$, $x_n$. and divide by  $n$, where  $n$ is the size of our sample. Remember this size does not count missing values.
+   - Or just use the [`mean()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/median.html) function in R -- usually inside [`summarize()`]() (revisit the chapter on [summarizing columns in dplyr](https://ybrandvain.quarto.pub/applied-biostatistics/book_sections/intro_to_R/data_in_R/summarize_vars.html) for a refresher). Remember to specify `na.rm = TRUE`.
+
+
+Revisiting our examples above, we get the following simple summaries of mean and median. To do so, I type something like the code below (with elaborations for prettier formatting etc).
+
+:::aside
+**But remember** mean and/or median may not be the best ways to summarize the center of either data set. 
+:::
+
+```{r}
+#| eval: false
+#| column: page-right
+gc_rils|>
+  mutate(log10_petal_area_mm = log10(petal_area_mm))|>
+  summarise(mean_log10_petal_area_mm = mean(log10_petal_area_mm, na.rm=TRUE),
+            median_log10_petal_area_mm = median(log10_petal_area_mm, na.rm = TRUE))
+
+# and
+
+gc_rils|>
+  mutate(mean_mean_visits = mean(mean_visits, na.rm=TRUE),
+         median_mean_visits = median(mean_visits, na.rm = TRUE))
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+
+
+tmp <- bind_cols(tibble(summary = c("mean","median")),
+          bind_rows(hz_data |>
+    select(mean_petal_area_sq_cm)|>
+    mutate(mean_petal_area_sq_cm = log10(mean_petal_area_sq_cm))|>
+    summarise_all(mean, na.rm=TRUE),
+hz_data |>
+    select(mean_petal_area_sq_cm)|>
+    mutate(mean_petal_area_sq_cm = log10(mean_petal_area_sq_cm))|>
+    summarise_all(median, na.rm=TRUE)),
+bind_rows(gc_rils|>
+              select(petal_area_mm, mean_visits)|>
+              mutate(petal_area_mm = log10(petal_area_mm))|>
+              summarise_all(mean, na.rm=TRUE),
+          gc_rils|>
+             select(petal_area_mm, mean_visits)|>
+              mutate(petal_area_mm = log10(petal_area_mm))|>
+              summarise_all(median, na.rm=TRUE)))|>
+    rename("log10 petal area in hybrid zones (cm^2)" = mean_petal_area_sq_cm,
+           "log10 petal area in RILs (mm^2)" = petal_area_mm ,
+           "Pollinator visitation in GC" = mean_visits)
+
+ 
+kable(tmp, digits = 3) |>
+      kable_styling(font_size = 20)
+```
+
+
+### **Which Summaries to Use When?**  {#summarizing_center_which-summaries-to-use-when}    
+
+- **Means**  are best when data are roughly symmetric and plausibly generated by a well-understood distribution. Parametric summaries like the mean integrate easily with most statistical methods, and in many cases, the mean, median, and mode are roughly equivalent.  
+
+- **Medians** are most appropriate when data are skewed. A classic example is income data—if Bill Gates walks into a room, the mean wealth increases dramatically, but the typical person in the room does not become wealthier. The median, which is less affected by extreme values, provides a more representative summary in such cases.  
+
+- **Modal peaks** are most appropriate when data have multiple peaks (modes) or a large, dominant peak, the mode is often the most relevant measure of central tendency. For example, in our investigation of petal area in a Clarkia hybrid zone, the mean and median of log₁₀ petal area (cm²) were both close to zero (which corresponds to 1 cm²). However, this value falls in the trough between two peaks in the histogram—one corresponding to *Clarkia xantiana xantiana* and another to *Clarkia xantiana  parviflora*. This means that neither the mean nor the median represents an actual plant particularly well, and the modal peaks give a clearer picture of what values are most typical.  
+
+
+
+---
+
+### Cool down
+
+
+
+```{r}
+#| fig-height: 3
+#| echo: false
+#| message: false
+#| warning: false
+#| label: fig-dist
+#| fig-cap: "*Distributions of select traits in Clarkia datasets*. This figure shows histograms of three different variables from two datasets: Recombinant Inbred Line (RIL) populations and a hybrid zone dataset. The left panel displays the distribution of petal area (log10 mm^2)  in the RIL dataset, showing a unimodal distribution. The middle panel presents the log10-transformed petal area (log10 cm^2) in the hybrid zone dataset, which appears bimodal. The right panel illustrates the number of pollinator visits at GC in the RIL dataset, showing a highly right-skewed distribution with many zero observations."
+#| fig-alt: "A set of three histograms comparing trait distributions in Clarkia datasets. The left panel, labeled 'RIL dataset,' shows a histogram of petal area (log10 mm^2), with a unimodal distribution centered around 1.8 log10 mm^2. The middle panel, labeled 'Hybrid zone dataset,' displays a histogram of log10-transformed petal area (in log10 cm^2), appearing bimodal with peaks near -0.5 and 0.5. The right panel, also from the RIL dataset, shows pollinator visits at GC, with a strongly right-skewed distribution where most values are close to zero."
+library(patchwork)
+
+a <- gc_rils |>
+  ggplot(aes(x = log10(petal_area_mm)))+
+  geom_histogram(bins = 10,color = "white")+
+  labs(x = "Petal area (mm^2)", title ="RIL dataset")+
+  theme(axis.title.x = element_text(size = 13))
+
+b <-  ggplot(hz_data, aes(x = log10_avg_petal_area_sq_cm)) +
+  geom_histogram(bins = 12,color = "white")+
+  labs(x = "log10 petal area (cm^2)", title = "Hybrid zone dataset")+
+  theme(axis.title.x = element_text(size = 13))
+
+c <- gc_rils |>
+  ggplot(aes(x = mean_visits))+
+  geom_histogram(bins = 8,color = "white")+
+  labs(x = "Pollinator visits at GC", title ="RIL dataset")+
+  theme(axis.title.x = element_text(size = 13))
+
+a+b+c
+```
+
+
+:::exercises
+
+**Now let's refresh our understanding of standard summaries of central tendency, by reflecting on what we are trying to capture / describe.**  For each of the plots in @fig-dist, above, consider the appropriate  summary. Most importantly explain what the summary is getting at, why it is more appropriate than other options, and what (if anything) it fails to capture. Then provide guesstimates of these summaries. <br><br>  <html><textarea rows="6" cols="50" placeholder="Your answer here..."></textarea></html>
+
+:::
+
+
+
+
+
+---
+
+
+
+### Use-full but used-less summaries  {#summarizing_center_use-full-but-used-less-summaries}  
+
+Below are a few additional, useful but less commonly used, summaries of central tendency.  It is good to know these exist. If this material is too slow / easy. for you, I recommend using your study time to familiarize yourself with these useful summaries, but otherwise don't worry about them.
+
+These assume that you are modelling these non-linear processes on a linear scale. You can decide if transformation or a more relevant summary statistics on a linear scale is more effective for your specific goal. 
+
+:::fyi  
+- **Harmonic mean** – Is the reciprocal of the mean of reciprocals. Useful when averaging rates, ratios, or speeds. Unlike the arithmetic mean, which sums values, the harmonic mean gives more weight to smaller values and is particularly useful when values are reciprocals of meaningful quantities. For example in my field population genetics, the harmonic mean is used to calculate effective population size ($N_e$), as small population sizes have a disproportionate effect on genetic drift. 
+   - *Mathematical calculation of the harmonic mean:* The harmonic mean of a vector x is = $\frac{1}{\text{mean}(\frac{1}{x})}$ = $\frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}$. 
+   - *Harmonic mean in `R`:* You can find the harmonic mean as: `1/(mean(1/x))`, or use the [`Hmean()`](https://search.r-project.org/CRAN/refmans/DescTools/html/Hmean.html) function in the [`DescTools`](https://andrisignorell.github.io/DescTools/) package.  *Watch out for zeros!!*
+- **Geometric mean** - Is the $n^{th}$ root of the product of $n$ observations. The geometric mean is a useful summary of  multiplicative or exponential processes For example: (1) *Bacterial growth*: If a bacterial population doubles in size daily, the geometric mean correctly summarizes growth trends, and (2) *pH values in chemistry*: Since pH is logarithmic, the geometric mean is a better measure than the arithmetic mean.   
+   - *Mathematical calculation of the geometric mean:* The geometric mean of a vector x is $\left( \prod_{i=1}^{n} x_i \right)^{\frac{1}{n}}$, where $\prod$ is the the "cumulative "product operator" i.e. the cumulative product of all observations. 
+   - *Geometric mean in `R`:* You can find the geometric mean as: `prod(x)^(1/sum(!is.na(x)))`, or use the [`Gmean()`](https://search.r-project.org/CRAN/refmans/DescTools/html/Gmean.html) function in the [`DescTools`](https://andrisignorell.github.io/DescTools/) package.  *Watch out for negative values as they make this kind of meaningless.*
+- **Trimmed mean** – A **robust version of the mean** that reduces the influence of extreme values by removing a fixed percentage of the smallest and largest observations before calculating the average. A 10% trimmed mean, for example, removes the lowest 10% and highest 10% of values before computing the mean. This is useful when extreme values may distort the mean but full exclusion of outliers isn’t justified (e.g., summarizing body weights where a few exceptionally large or small individuals exist).  
+   - *Trimmed mean in `R`:* You can find the trimmed mean yourself or by using the [`trimmed_mean()`](https://search.r-project.org/CRAN/refmans/r2spss/html/trimmed_mean.html) function in the  in the [`r2spss`](https://github.com/aalfons/r2spss) package. 
+:::  

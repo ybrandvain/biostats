@@ -1,0 +1,186 @@
+## • 5. Changing shape {.unnumbered #changing_shape}
+
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for selecting data from a few columns from RILs planted at GC"
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm )
+```
+
+
+---  
+
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:**   
+Your data are not symmetric, you are wondering about potentially changing the shape of your data to make it easier to deal with. Here I introduce some thoughts and guidance about common data transformations and when to use them. 
+
+**Learning Goals: By the end of this subchapter, you should be able to:**  
+
+1. **Understand what a transformation is** and know when they are (or are not) a good idea, and how they connect to the process that generated your data.   
+
+2. **Know the rules for a legit transformation** and be aware of common "gotchas" which accidentally break these rules.  
+
+3. **Recognize which transformations are appropriate for different skews of data.** 
+   - *Right skewed data* -- Try log, square root, or reciprocal transformations. 
+   - *Left skewed data* -- Try exponential or square transformation.  
+
+
+:::     
+
+
+--- 
+
+### Statistical approaches should follow biology   
+ 
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| label: fig-diamVarea
+#| fig-height: 10
+#| column: margin
+#| fig-cap: "Different biological traits follow different natural distributions. Panel A shows the distribution of stem diameter (mm) in a recombinant inbred line (Clarkia RIL) dataset, which is approximately symmetric and normally distributed. In contrast, panel B displays the distribution of petal area (mm²), which exhibits a right-skewed, exponential-like distribution."
+library(patchwork)
+
+
+a <- ggplot(ril_data|> filter(location == "GC"), aes(x = stem_dia_mm))+
+  geom_histogram(bins = 10, color = "white")+
+  labs(title = "A) Stem diameter")+
+  theme(axis.title = element_text(size = 30),
+        axis.text = element_text(size = 30),
+        title = element_text(size = 30))
+
+b <- ggplot(ril_data|> filter(location == "GC"), aes(x = petal_area_mm))+
+  geom_histogram(bins = 10, color = "white")+
+  labs(title = "B) Petal area")+
+  theme(axis.title = element_text(size = 30),
+        axis.text = element_text(size = 30),
+        title = element_text(size = 30))
+
+a/b
+    
+```
+
+
+
+There is nothing inherently “natural” about the linear scale — in fact, [some research (review by @asmuth2018)](https://onlinelibrary.wiley.com/doi/10.1111/cogs.12615) suggests that humans naturally think in log scale, and only begin thinking in linear scale with more formal schooling. That is, kids tend to think that the difference between seventy-five and eighty is smaller than the difference between five and ten. In a sense, they’re right — ten is double five, while eighty is only $\frac{16}{15}$ of seventy-five. Of course, in another sense, they’re wrong — the difference is five in both cases.
+
+It turns out that different variables naturally vary on different scales. For example, growth rate, area, volume, and other such processes often generate right-skewed data (growth is exponential — at least initially — area scales with the square of length, volume scales with the cube, etc.). It’s therefore not surprising that *Clarkia* stem diameter in the RILs has a fairly symmetric distribution, while petal area is right-skewed (@fig-diamVarea).  
+
+By contrast, variables that exhibit diminishing returns or are constrained by hard limits often result in left-skewed distributions (as we saw in our genotyping efforts, where we aimed to genotype eight seeds per mom — and no more — but sometimes ended up with fewer).
+
+---
+
+### To transform or not to transform? That is the question {#changing_shape_to-transform-or-not-to-transform-that-is-the-question}    
+
+When the underlying biological process results in nonlinear data with asymmetric distributions, transforming the data is often appropriate — even if you don’t know the specific biological mechanism. So: transforming your data is often OK, but is it a good idea?
+
+- **Why transform?** Because linear and symmetric data are often easier to interpret and typically better suited for statistical modeling.  
+- **Why not transform?** Truth and clear understanding of data is more important than having symmetric distributions. So while transforming is perfectly legitimate, it can make your results harder to communicate (I, for one, find thinking on the log scale difficult — even if four-year-olds do not), since most people are accustomed to a linear world. You may also worry that knee-jerk transformation might hide the very biological processes that we are aiming to understand. Finally, some data can’t be made symmetric or unimodal no matter what transformation you apply. For example, it’s rare for transformations to make multimodal data unimodal. So take this all into consideration before jumping to transform your data to make it have an appealing shape. 
+
+---
+
+### Rules for Transforming Data   {#changing_shape_rules-for-transforming-data}   
+
+In addition to letting biology guide your decisions, there are some actual rules that determine when a transformation is legitimate:
+
+- **Transformed values must have a one-to-one correspondence with the original values.** For example, don’t square values if some are negative and others positive — you’ll lose information.  
+- **Transformed values must maintain a monotonic relationship with the original values.** This means that the order of values should be preserved — larger values in the original data should remain larger after transformation.  
+- **Transformations must not bias results by inadvertently dropping data.** For example, this can happen when a log transformation fails on zero or negative values, or if extreme values are removed during transformation.
+
+
+
+### Transformation in R   {#changing_shape_transformation-in-r}   
+
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+#| fig-height: 10
+#| label: fig-log10
+#| column: margin
+#| fig-cap: "Applying a log10 transformation can change the shape of a dataset. Panel A shows the distribution of Clarkia petal area (mm²) on a linear scale, where the data are right-skewed. Panel B shows the same data after a log10 transformation, which reduces skewness and results in a more symmetric distribution."
+#| fig-alt: "A two-panel histogram comparing the distribution of Clarkia petal area before and after a log10 transformation. Panel A, labeled \"Linear scale,\" shows a right-skewed histogram of petal area (mm²), with most values concentrated on the lower end and a long tail extending toward larger values. Panel B, labeled \"Log10 scale,\" shows the same data transformed using the log10 function, resulting in a more symmetric, bell-shaped distribution."
+library(patchwork)
+gc_rils  <- gc_rils |>
+  mutate(log10_petal_area = log10(petal_area_mm))
+
+a <- ggplot(gc_rils , aes(x = petal_area_mm))+
+  geom_histogram(bins = 7, color = "white")+
+  labs(title = "A) Linear scale")+
+  theme(axis.title = element_text(size = 30),
+        axis.text = element_text(size = 30),
+        title = element_text(size = 30))
+b <- ggplot(gc_rils , aes(x = log10_petal_area))+
+  geom_histogram(bins = 7, color = "white")+
+  labs(title = "B) Log10 scale")+
+  theme(axis.title = element_text(size = 30),
+        axis.text = element_text(size = 30),
+        title = element_text(size = 30))
+a/b
+```
+
+Transformation in R is remarkably straightforward. Simply use [`dplyr's`](https://dplyr.tidyverse.org/) [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html) function to add a transformed variable. Below, I show a log base 10 transformation — one of the most common and useful approaches for right-skewed data (see the next section for a more thorough description of this and other common transformations). As discussed in the previous chapter, @fig-log10 shows that this transformation changes the shape of the petal area distribution from right-skewed to roughly symmetric.
+
+
+
+```{r}
+#| message: false
+#| warning: false
+#| fig-height: 4
+gc_rils  <- gc_rils |>
+  mutate(log10_petal_area = log10(petal_area_mm))
+```
+
+```{r}
+#| echo: false
+dplyr::select(gc_rils ,   petal_color, prop_hybrid ,petal_area_mm, log10_petal_area) |> 
+  mutate(petal_area_mm =  round(petal_area_mm, 3), 
+         log10_petal_area = round(log10_petal_area, 3))|>
+datatable(options = list( pageLength = 5, lengthMenu = c(5, 10, 15, 20) ))
+```
+
+### Common Transformations  {#changing_shape_common-transformations}    
+
+Applying the right transformation can improve interpretability, meet statistical assumptions, and connect patterns to process. The table below introduces some of the more common transformations you will run into. 
+
+
+| Transform             | Formula        | What it does                                         | Data it's good for                        | Example datasets                               | R function (use with `mutate()`)                                                                                                 | Limitations                         |
+|--------|-------------------------------|------------------------------------------------------|-------------------------------------------|------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|--------------------------------------|
+| Log                   | log(x)         | Compresses large values, spreads small values        | Right-skewed data                         | Body mass, gene expression, reaction times     | [`log()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html)                                                   | Values ≤ 0 cause errors             |
+| Log + 1               | log(x + 1)     | Similar to log but works for zero values             | Right-skewed data with zeros              | Population counts, RNA-seq read counts         | [`log1p()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html)                                                 | Values ≤ -1 cause errors            |
+| Log Base 10      | log10(x)       | Similar to log but base 10, this can be more interpretable.                           | Right-skewed data                         | pH, sound intensity, scientific measurements   | [`log10()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html)                                                 | Values ≤ 0 cause errors             |
+| Square Root           | sqrt(x)        | Reduces range while preserving order                 | Right-skewed data                         | Enzyme activity | [`sqrt()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/MathFun.html)                                                 | Values < 0 cause errors             |
+| Square            | $x^2$             | Increases spread, emphasizes large values            | Left-skewed data                          |                  | `x^2`                                                   | Makes values more extreme           |
+| Cube              | $^3$             | Further increases spread                             | Left-skewed data                          | Tree volume, growth rates                      | `x^3`                                                     | Strongly affects scale              |
+| Inverse               | $1/x$            | Emphasizes small values, compresses large ones       | Right-skewed data                         | Reaction times, waiting times                  | `1/x`                                                 | Values = 0 cause errors             |
+| Arcsin Square Root| $arcsin(\sqrt{x})$    | Normalizes proportions                               | Proportions (e.g., survival, germination rates)| Allele frequencies, % cover | [`asin(sqrt())`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Trig.html)                                            | Works poorly near 0 and 1           |
+

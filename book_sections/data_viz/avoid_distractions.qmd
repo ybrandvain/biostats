@@ -1,0 +1,167 @@
+## • 9. Avoid Distractions {.unnumbered #avoid_distractions}  
+
+
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(palmerpenguins)
+library(tweetrmd)
+library(knitr)
+library(tidyr)
+library(ggplot2)
+library(ggthemes)
+library(forcats)
+library(DT)
+library(cowplot)
+library(broom)
+library(patchwork)
+library(emo)
+library(tufte)
+library(webexercises)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating Scenario:**  
+
+You're making a figure and remember a cool visualization you saw somewhere — it looked slick, maybe even a little flashy, and you want to try it for your project. Before you dive in, take a step back and ask: *Does this visualization actually serve your goals, or are you just doing it because it looks cool?*
+
+
+
+**Learning Goals: By the end of this subchapter, you should be able to:**
+
+1. **Recognize common visual distractions** by identifying when:   
+
+   * A figure uses unnecessary 3D effects, animation, or ornamentation.     
+   * A visual format designed for one specific purpose (e.g., a phylogeny or geographic map) is misapplied to unrelated data.     
+
+2. **Spot and avoid flashy but ineffective visuals** by:    
+
+   * Noticing when a figure is overly stylized or prioritizes cleverness over clarity.   
+   * Understanding that unusual or complex formats are rarely the best choice for clear communication.     
+
+3. **Make intentional design choices** by:   
+
+   * Asking whether each visual element helps communicate your message.   
+   * Choosing simplicity, readability, and function over novelty or aesthetics.   
+
+4. **Think critically about data visualization "rules"** by making intentional choices - even when they break the rules - based on your goals and audience.  
+:::
+
+
+
+---
+
+
+## Good Figures Avoid Distractions
+
+
+
+```{r}
+#| label: fig-goldbloom
+#| column: margin
+#| fig-cap: 'Just because you can make a fancy plot doesn’t mean you should. A reminder from Jeff Goldblum as Dr. Ian Malcolm in Jurassic Park.'
+#| fig-alt: "Jeff Goldblum in Jurassic Park saying, \"Your scientists were so preoccupied with whether or not they could, they never stopped to think if they should.\""
+#| echo: FALSE
+include_graphics("https://media.giphy.com/media/mCClSS6xbi8us/giphy.gif")
+```
+
+
+[Buckminster Fuller](https://en.wikipedia.org/wiki/Buckminster_Fuller) aimed to be "invisible," letting his ideas, not his appearance, speak. This principle, which underlies the name of my favorite podcast on design, [99% Invisible](https://99percentinvisible.org/). The same principle applies to figures **A good figure calls attention to patterns in the data, not to itself.**  
+
+Just because you found an R package to make a [Sankey diagram](https://github.com/davidsjoberg/ggsankey) or a [3D bar chart](https://github.com/tylermorganwall/rayshader) doesn’t mean you should use it.  Good data viz starts with a question and ends with a design that answers it, not the other way around.  Before (or more realistically, halfway through) making an overly complex plot think, WWIMS ("*What Would Ian Malcolm Say?*" @fig-goldbloom), and ask yourself:  
+
+- What is the viewer supposed to learn?
+- Is this visual emphasizing the right relationships?  
+- Is there a simpler or more direct alternative?  
+
+
+Below I illustrate this principle for common issues in data visualization.  
+
+
+### **What the duck?** {-}
+
+
+
+```{r}
+#| label: fig-duck
+#| column: margin
+#| fig-cap: 'The [Big Duck](https://en.wikipedia.org/wiki/Big_Duck) was built in 1931 by duck farmer Martin Maurer and used as a shop to sell ducks, dairy, and duck eggs. This building inspired the architectural term later borrowed by Edward Tufte to critique overly stylized, decorative elements in data visualizations. In this metaphor, a "duck" prioritizes form over function.  Image posted to [Wikimedia commons](https://en.wikipedia.org/wiki/File:Big_Duck_2018_05.jpg) by [Mike Peel](https://www.mikepeel.net/) and shared under a CC-BY-SA-4.0 license.'
+#| fig-alt: "A photo of The Big Duck — a large white building shaped like a duck, with round eyes, a yellow beak, and a door in its side. The structure sits among trees and grass, appearing both whimsical and out of place."
+#| echo: FALSE
+include_graphics("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Big_Duck_2018_05.jpg/1599px-Big_Duck_2018_05.jpg")
+```
+
+> When a graphic is taken over by decorative forms or computer debris, when the data measures and structures become Design Elements, when the overall design purveys Graphical Style rather than quantitative information, then the graphic may be called a duck in honor of the duck-form store, "Big Duck." For this building the whole structure is itself decoration, just as in the duck data graphic.
+> 
+> `r tufte::quote_footer('--- Edward Tufte')` 
+ 
+
+
+@tufte1983  coined the term 'duck' to describe figures that showcase cleverness rather than data. An extreme example is the banana genome paper, where a banana drawing obscures the Venn diagram’s meaning (@fig-bananas). The image attempts to show gene families shared across three plant genomes, but fails because superimposing this over a cartoon banana is too distracting.   
+
+- **Resist** the temptation to create flashy but ineffective visuals.  
+- **Remember**: visuals should prioritize clarity over aesthetics.   
+
+```{r}
+#| label: fig-bananas
+#| fig-cap: 'Perhaps the ultimate data viz duck in comparative genomics. [This plot is bananas](https://youtu.be/gZHjRQjbHrE?t=152).  [Figure 4](https://www.nature.com/articles/nature11241/figures/4) of the [banana genome paper](https://www.nature.com/articles/nature11241) [@dhont].' 
+#| fig-alt: "A Venn diagram comparing shared gene families (sequence clusters) among banana, palm, and rice genomes, overlaid on an illustration of a banana fruit. The drawing obscures parts of the diagram and makes the overlap areas hard to read." 
+#| echo: FALSE
+include_graphics("https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fnature11241/MediaObjects/41586_2012_Article_BFnature11241_Fig4_HTML.jpg")
+``` 
+ 
+ 
+### Don’t use 3D or animation unnecessarily
+
+
+```{r} 
+#| label: fig-3d
+#| column: margin
+#| fig-cap: 'This rotating 3D pie chart demonstrates that an overcomplicated chart that looks flashy can be a problem.'
+#| fig-alt: "A rotating 3D pie chart with four slices labeled \"Cool,\" \"But,\" \"Use,\" and \"Less.\" The chart spins continuously without revealing new information."
+#| echo: FALSE
+include_graphics("../../figs/summarizing_data/data_viz/3D.gif")
+```
+
+3D and animation are only helpful for specific purposes, like showing protein structures or time-lapse data. Unless the data our the audience calls for it, resist the urge to use them otherwise. More often than not, these flashy formats distract from your message and confuse your reader. They make your plot harder to read, harder to interpret, and much easier to ignore(as demonstrated in @fig-3d). 
+
+
+
+
+### Avoid "glass slippers"
+
+A "glass slipper" (@fig-slipper) is when a visualization designed for one purpose is misapplied elsewhere, leading to confusion. Keep your visual tools fit for purpose. See [this fun video](https://www.youtube.com/watch?v=59teS0SUHtI) from Calling Bullshit if you like.
+
+
+```{r}
+#| echo: false
+#| label: fig-slipper
+#| fig-cap: "A tweet from the *Calling Bullshit* highlights a 'glass slipper'. This  'Periodic Table of IT Ops Tools' mimics the structure of the chemical periodic table but does not reflect any real periodicity or organizational logic in the data it presents."
+#| fig-alt: "A visual titled 'Periodic Table of IT Ops Tools' that uses the familiar layout of the chemical periodic table to categorize dozens of IT tools. Each 'element' is color-coded by function, but the grid offers no meaningful spatial logic, illustrating a misleading reuse of visual form."
+include_tweet("https://twitter.com/callin_bull/status/1106259105377705985")
+```
+
+
+:::fyi
+The examples above are cases of what Tufte called [*chartjunk*](https://en.wikipedia.org/wiki/Chartjunk) -- visual elaborations that  are not needed to understand the information in the plot. Such additions can distract the viewer, increase interpretation time, or even mislead.
+:::
+
+### In defense of (occasional) chartjunk 
+
+We will soon consider the importance of considering audience when making plots. Such consideration can reveal that there are circumstances in which rules of data visualization are to be broken. Although much derided, chartjunk has numerous benefits:   
+
+- Chartjunk can increase long-term memorability of the chart.
+- Chartjunk, in the form of semantically meaningful icons, can increase accessibility of charts for people with Intellectual and Developmental Disabilities.  
+
+So if you're working on a serious plot for a scientific publication, avoid chartjunk. But if you're aiming to get someone to come to your poster or remember your talk in a day full of seminars, you may find that limited and tasteful "chartjunk" is useful. 
+
+
+ 
+:::fyi
+**Who is Tufte?**
+I usually try to avoid centering famous individuals in science or statistics, because these fields are — in reality — massive collaborative efforts. But it's worth knowing about Edward Tufte, not because he's a singular genius, but because many widely cited "rules" of data visualization trace back to his book *The Visual Display of Quantitative Information* (@tufte1983). 
+
+This work shaped how people think about clutter, ink, and visual integrity and is the Bible of data visualization. But Tufte is a smart person with strong opinions, not a god. So we are allowed to disagree with him. I, for example, think there are times when a little chartjunk can actually help (see above). 
+:::

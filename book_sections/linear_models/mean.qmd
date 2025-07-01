@@ -1,0 +1,412 @@
+## • 7. Mean {.unnumbered}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(kableExtra)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+```
+
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for selecting data from a few columns from RILs planted at GC"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm,visited )|>
+  mutate(log10_petal_area_mm = log10(petal_area_mm))
+```
+
+--- 
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:**  
+You are beginning to think about statistical models, and want to use something you understand well to ramp you up to more complex models.
+
+**Learning Goals: By the end of this subchapter, you should be able to:**
+
+1. **Understand the mean as a linear model.**  
+   - Recognize that modeling a variable with just its mean is fitting a simple linear model with no predictors.
+
+2. **Interpret residuals in a simple model.**  
+   - Define and calculate residuals: the difference between observed values and model predictions.
+
+3. **Understand that the mean minimizes the sum of squared residuals.**  
+   - And more importantly, what the sentence above means.  
+
+4. **Use R to explore and visualize residuals.**  
+   - Fit a mean-only model using `lm()`.
+   - Use `augment()` to extract fitted values and residuals.
+
+
+
+
+::: 
+
+---  
+
+## The mean again?
+
+> "But we already had a section on the mean, and besides I've known what a mean was for years. Why another section on this?" 
+> 
+> - You, probably.  
+
+
+
+We are beginning our tour of interpreting linear models with the mean. We start with the mean, not because I doubt that you understand what a mean and variance are — I know that you know how to calculate the mean ($\overline{y} = \frac{\sum y_i}{n}$) and the variance ($s^2 = \frac{\sum (y_i - \overline{y})^2}{n-1}$).  Instead, we are starting here because your solid understanding of these concepts will help you better understand linear models.
+
+In a simple linear model with no predictors, the intercept is the mean and the only other term is the residual variation. So we predict the $i^{th}$ individual's value of the response variable to be: 
+
+$$\hat{y}_i = b_0$$
+
+Where $b_0$ is the intercept (i.e. the sample mean). In reality, of course, observations rarely match prediction perfectly. So an individual $i$'s actual value, $y_i$ is its predicted value plus the difference between its observed and predicted value $e_i$ (aka the residual).
+
+$${y}_i = b_0 + e_i$$
+
+## The [`lm()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html) function in `R`
+
+In `R` you build linear models with the [`lm()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html) syntax:   
+`lm(response ~ explanatory1 + explanatory2 + ..., data = data_set)`. 
+In a simple model with no predictors you type:
+`lm(response ~ 1, data = data_set)`.  
+So to model the proportion of hybrid seed in GC with no explanatory variables, type:
+
+
+```{r}
+#| echo: false
+#| column: margin  
+#| label: fig-clarkia_seeds
+#| fig-cap: "A bunch of Clarkia seeds. How many do you think are hybrids?"
+#| fig-alt: "Photograph of Clarkia seeds and dried fruits on a white background. A pile of small, dark seeds is in the foreground, while several light brown, dried fruit pods are scattered behind them. The focus is on the seeds, with the fruits slightly blurred in the background."
+include_graphics("../../figs/summarizing_data/linear_models/seeds_and_fruits.png")
+```
+
+
+```{r}
+lm(prop_hybrid ~ 1, data = gc_rils)
+```
+
+The output gives us the estimated intercept — which, in this case with no predictors, is simply the mean (see above). The code below verifies this (except that R provides a different number of digits).
+
+```{r}
+summarise(gc_rils, mean_p_hyb = mean(prop_hybrid, na.rm=TRUE))
+```
+
+
+**Interpretation** This means that we model the $i^{th}$ individual's proportion of hybrid seed as the sample mean, 0.1506, 
+
+$$\hat{Y}_i = 0.1506$$
+
+and understand that its value will deviate from the sample mean by some amount, $e_i$. 
+
+$$Y_i = 0.1506 + e_i$$
+
+## Residuals
+
+
+
+```{r} 
+#| echo: false
+#| fig-cap: "Recall that the residual $e_i$ is the difference between a data point and its value predicted from a model."
+#| column: margin
+include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/other-stats-artwork/dragon_residual.png")
+```
+
+
+What is $e_i$ in the math above? It is the **residual** the distance between the predicted value of the $i^{th}$ observation in a linear model, $\hat{y}_i$, and its actual value $y_i$. Hovering over a point in @fig-plotly reveals its residual value. 
+
+
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| label: fig-plotly
+#| fig-cap: "**An interactive plot showing the proportion of hybrid seeds for each** ***Clarkia xantiana subspecies parviflora*** **recombinant inbred line (RIL) planted at GC**. Each point represents a line’s observed proportion hybrid seed, and the dashed red line shows the sample mean across all lines. Hovering over a point reveals its residual — the difference between the observed value and the mean. Individual 3 is shown in green as an example to focus on."
+#| fig-alt: "Interactive scatterplot of observed proportion hybrid values for Clarkia RILs. Points are plotted by line ID along the x-axis, with proportion hybrid on the y-axis. A horizontal dashed red line marks the sample mean. When hovering over a point, the residual (difference between the point’s value and the mean) is displayed."
+#| cap-location: margin
+library(plotly)
+prop_hybrid_plot <-  gc_rils                          |>
+  filter(!is.na(prop_hybrid))                         |>
+  mutate(i = 1:n(),
+         e_i = prop_hybrid - mean(prop_hybrid),
+         e_i = round(e_i, digits = 3),
+         y_hat_i = round(mean(prop_hybrid),digits = 3),
+         y_i = round(prop_hybrid, digits = 3))     |>
+  ggplot(aes(x = i, y = y_i, y_hat_i = y_hat_i, e_i = e_i, color = i==3))+
+  geom_point(size = 4, alpha = .6)+
+  scale_color_manual(values = c("black","darkgreen"))+
+  geom_hline(yintercept = summarise(gc_rils,mean(prop_hybrid)) |> pull(),
+             linetype = "dashed", color = "red", size = 2)+
+  labs(y = "Proportion hybrid", title ="This plot is interactive!! Hover over a point to see its residual")+
+  theme(legend.position = "none")
+
+ggplotly(prop_hybrid_plot)
+```
+
+
+
+
+:::example
+**Worked example**.   
+
+Take, for example, individual 3 ($i = 3$, green point in the plot above), where 1/4 of its seeds are hybrids:  
+
+- **Its observed value, $y_i$,** is the proportion of its seeds that are hybrids, which is 0.25.   
+- **Its predicted value, $\hat{y}_i$,** is the proportion of all seeds that are hybrids (dashed red line), which is `r mean(gc_rils$prop_hybrid , na.rm = TRUE)|> round(digits = 3)`.  
+- **Its residual value, $e_i = y_i - \hat{y}_i$,** is the difference between the proportion of its seeds that are hybrids and proportion of all seeds that are hybrids, which is $0.250 -`r mean(gc_rils$prop_hybrid , na.rm = TRUE)|> round(digits = 3)` = `r 0.250 - mean(gc_rils$prop_hybrid , na.rm = TRUE)|> round(digits = 3)`$. Scroll over the third data point in @fig-plotly to verify this. 
+:::
+
+## Use `augment()` to see residuals (and more!)
+
+
+
+You can use the [`augment()`](https://broom.tidymodels.org/reference/augment.lm.html) function in the [`broom`](https://broom.tidymodels.org/) package to see predictions and residuals. The code to the right uses this capability to calculate the sum of squared residuals, while the code below shows (some of) the output from [`augment()`](https://broom.tidymodels.org/reference/augment.lm.html). 
+
+
+```{r}
+#| eval: false
+library(broom)
+lm(prop_hybrid ~ 1, data = gc_rils)     |>
+  augment()                             |>
+  select(prop_hybrid, .fitted, .resid)
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(DT)
+library(broom)
+lm(prop_hybrid ~ 1, data = gc_rils)     |>
+  augment()                             |>
+  select(prop_hybrid, .fitted, .resid)  |>
+  mutate_all(round, digits = 3)         |>
+  datatable(options = list(pageLength = 5))
+```
+
+
+
+### Calculating $\text{SS}_\text{residual}$ from `augment()` output
+
+You can use the output of `augment()` to calculate the sum of squared residuals by taking residuals (from `.resid`),  squaring them, and then summing them, as shown below:
+
+
+```{r}
+library(broom)
+lm(prop_hybrid ~ 1, data = gc_rils)        |>
+ augment()                |>
+ mutate(sq_resid=.resid^2)|>
+ summarise(SS=sum(sq_resid))
+```
+
+## The mean minimizes $\text{SS}_\text{residual}$
+
+
+You already know the formula for the mean. But let's imagine you didn’t. What properties would you want a good summary of the center of the data to have? What criteria would you use to say one summary was the best? We have already [discussed this at length](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/univariate_summaries/summarizing_center.html), and concluded it depends on the shape of the data etc... 
+
+While you should consider the shape of our data when summarizing it, a common criterion of the "best" estimate is the one that minimizes the sum of squared residuals. @fig-minimize_ss shows that of all proposed means for the proportion of hybrid seeds set at GC, the arithmetic mean minimizes the sum of squared residuals. This is always the case!
+
+
+**By looping over many proposed means ($0$ to $0.3$), the plot below illustrates that the arithmetic mean minimizes the sum of squared residuals:** The sum of squared residuals for a given proposed mean is shown:  *In color* on all three plots (yellow is a large sum of squared residuals, red is intermediate, and purple is low);  *Geometrically* as the size of the square  in the center plot; *On the y-axis* of the right plot.  
+
+```{r}
+#| eval: false
+#| echo: false
+library(purrr)
+library(gganimate)
+library(magick)
+# --- Set up data ---
+data <- gc_rils |> 
+  filter(!is.na(prop_hybrid))|>
+  select(prop_hybrid)|>
+  mutate(id = row_number())
+
+# Create grid of proposed means
+proposed_means <- seq(0.001, 0.301, length.out = 51)   # safe range based on mean 0.15
+
+# For each proposed mean, calculate residuals, SS_resid, etc.
+all_frames <- map_dfr(proposed_means, function(mu) {
+  data |> 
+    mutate(
+      proposed_mean = mu,
+      residual = prop_hybrid - mu,
+      sq_residual = residual^2
+    ) |> 
+    group_by(proposed_mean) |> 
+    mutate(SS_resid = sum(sq_residual) ) |> 
+    ungroup()
+})|>
+  mutate(SS_resid_rank = rank(SS_resid))|>
+  mutate(text = case_when(SS_resid_rank == min(SS_resid_rank) ~  "Minimized SS error!",
+    SS_resid_rank < quantile(all_frames$SS_resid_rank, .2)~ "Close to\nminimizing SS error",
+    SS_resid_rank < quantile(all_frames$SS_resid_rank, .4)~ "Not far from\nminimizing SS error",
+    SS_resid_rank < quantile(all_frames$SS_resid_rank, .75)~ "Far from\nminimizing SS error",
+                          .default = "Very far from\nminimizing SS error"))
+
+# Summarized version just for SS vs proposed_mean plot
+ss_summary <- all_frames |> 
+  distinct(proposed_mean, SS_resid, SS_resid_rank, text)|>
+  mutate(id = 55)
+
+# --- Make the animation ---
+
+# Panel 1: Data points and proposed mean line
+p1 <- ggplot(all_frames, aes(x = id, y = prop_hybrid)) +
+  geom_point(size = 3, alpha = .75) +
+  geom_segment(aes(xend = id, yend = proposed_mean, color = SS_resid), 
+               linetype = "dotted", linewidth = 3) +
+  geom_hline(aes(yintercept = proposed_mean, 
+                 color = SS_resid_rank), linewidth =2  ) +
+  scale_color_viridis_c(option = "plasma") +
+  labs(y = "Proportion hybrid", x = "i", title = "Proposed mean: {closest_state}") +
+  transition_states(proposed_mean,state_length = 0,transition_length = 1) +
+  geom_label(data = ss_summary, aes(y=-.28,#y = proposed_mean, 
+                                    label = text, 
+                                    color = SS_resid_rank),
+             size= 11)+
+  geom_hline(yintercept = 0)+
+  ease_aes('linear')+ 
+  scale_y_continuous(limits = c(-.5,1), breaks = seq(0,1,.25))+
+  theme(legend.position = "none",
+        axis.text = element_text(size= 22),
+        axis.title = element_text(size= 22),
+        title =element_text(size= 22) )
+
+anim_save("figs/summarizing_data/linear_models/mean1", 
+          animate(p1,fps = 3,width = 400,height = 375, renderer = gifski_renderer()))
+
+# Panel 2: Square area for total SS_resid
+p2 <- ggplot(ss_summary, aes(xmin =0,ymin = 0, 
+                             xmax = sqrt(SS_resid), ymax = sqrt(SS_resid))) +
+  geom_rect(color = "black", aes(fill = SS_resid_rank)) +
+  transition_states(proposed_mean, transition_length = 1, state_length = 0) +
+  ease_aes('linear')+
+  coord_cartesian(ylim = c(0, max(sqrt(ss_summary$SS_resid) )* 1.1),
+                  xlim = c(0, max(sqrt(ss_summary$SS_resid) )* 1.1)) +
+  labs(y = bquote(sqrt("SS Residual")), 
+       x = bquote(sqrt("SS Residual")), 
+       title = "SS Residual") +
+  geom_label(data = ss_summary |>
+               mutate(new_text = paste("SS Residual\n Equals",
+                            round(SS_resid, digits =3))) ,
+             aes(y = 1.2, x = 1.2, label = new_text) ,color = "black",size= 11)+
+  scale_fill_viridis_c(option = "plasma") +
+  scale_color_viridis_c(option = "plasma")  + 
+  theme(legend.position = "none",
+        axis.text = element_text(size= 22),
+        axis.title = element_text(size= 22),
+        title =element_text(size= 22) )
+  
+anim_save("figs/summarizing_data/linear_models/mean2", 
+          animate(p2,fps = 3,width = 375,height = 375, renderer = gifski_renderer()))
+
+# Panel 3: SS vs Proposed Mean plot
+
+# Create grid of proposed means
+proposed_means2 <- seq(0.001, 0.301, length.out = 501)   # safe range based on mean 0.15
+
+# For each proposed mean, calculate residuals, SS_resid, etc.
+all_frames2 <- map_dfr(proposed_means2, function(mu) {
+  data |> 
+    mutate(
+      proposed_mean = mu,
+      residual = prop_hybrid - mu,
+      sq_residual = residual^2
+    ) |> 
+    group_by(proposed_mean) |> 
+    mutate(SS_resid = sum(sq_residual) ) |> 
+    ungroup()
+})|>
+  mutate(SS_resid_rank = rank(SS_resid))|>
+  mutate(text = case_when(SS_resid_rank == min(SS_resid_rank) ~  "Minimized SS error!",
+    SS_resid_rank < quantile(all_frames$SS_resid_rank, .2)~ "Close to minimizing SS error",
+    SS_resid_rank < quantile(all_frames$SS_resid_rank, .4)~ "Not far from minimizing SS error",
+    SS_resid_rank < quantile(all_frames$SS_resid_rank, .75)~ "Far from minimizing SS error",
+                          .default = "Very far from minimizing SS error"))
+
+# Summarized version just for SS vs proposed_mean plot
+ss_summary2 <- all_frames2 |> 
+  distinct(proposed_mean, SS_resid, SS_resid_rank, text)|>
+  mutate(id = 50)|> rename(proposed_mean2 = proposed_mean)
+
+p3 <- ggplot(ss_summary, aes(x = proposed_mean, y = SS_resid)) +
+  geom_line(data=ss_summary2, aes(x = proposed_mean2, y = SS_resid)) +
+  geom_point(aes( color = SS_resid_rank), size = 8) +
+  transition_states(proposed_mean, transition_length = 1, state_length = 0) +
+  geom_vline(xintercept = mean(gc_rils$prop_hybrid, na.rm = TRUE), lty = 2, color = "red")+
+  ease_aes('linear')+
+  scale_color_viridis_c(option = "plasma")+
+  labs(x = "Proposed mean", y = "SS resid", 
+       title = "Finding the Center")  + 
+  annotate(geom = "text", x= .23,y= 8, label = "Arithmetic\nmean", size = 11, color ="red")+
+  theme(legend.position = "none",
+        axis.text = element_text(size= 22),
+        axis.title = element_text(size= 22),
+        title =element_text(size= 22) )
+  
+
+
+# Render the animation as a gif
+
+anim_save("figs/summarizing_data/linear_models/mean3", 
+          animate(p3,fps = 3,width = 375,height = 375, renderer = gifski_renderer()))
+
+
+gif1 <- image_read("figs/summarizing_data/linear_models/mean1")
+gif2 <- image_read("figs/summarizing_data/linear_models/mean2")
+gif3 <- image_read("figs/summarizing_data/linear_models/mean3")
+combined <- image_append(c(gif1[1], gif2[1],gif3[1]))  # init
+for (i in 2:length(gif1)) {
+  frame <- image_append(c(gif1[i], gif2[i],gif3[i]))
+  combined <- c(combined, frame)
+}
+
+image_write(combined, "figs/summarizing_data/linear_models/mean_combined.gif")
+```
+
+
+
+
+```{r}
+#| echo: false
+#| label: fig-minimize_ss
+#| fig-cap: "**The mean minimizes the sum of squared residuals:** The *left panel* shows the observed data points connected to proposed means (shown as a horizontal line), with colors indicating how much the sum of squared residuals differ from the minimum  sum of squared residuals. The *center panel* visualizes the total squared error geometrically. The *right panel* shows the sum of squared residuals as a function of proposed mean values, with the current proposed mean highlighted with a point. The proposed value that minimizes the sum of squared residuals equals the arithmetic mean."
+#| fig-alt: "The animation shows three panels. In the left panel, observed data points are connected to a horizontal line representing the proposed mean, colored by the difference in the  sum of squared residuals from the minimum. The center panel shows a square whose area reflects the total sum of squared residuals. The right panel plots the sum of squared residuals against proposed mean values, with a moving point indicating the current proposed mean. The animation illustrates that the mean is the value that minimizes the sums of squared residuals."
+include_graphics("../../figs/summarizing_data/linear_models/mean_combined.gif")
+```
+
+## OPTIONAL EXTRA LEARNING      
+
+:::fyi
+**Optional / advanced reading:**  
+Above, I showed that for our case study, the arithmetic mean minimizes the sum of squared residuals, and then I asserted that this is always the case. For those of you who enjoy calculus and want a formal proof—rather than a professor saying "trust me"—I've provided a [link that shows this more generally](https://data-se.netlify.app/2020/11/18/the-mean-minimizes-the-sum-of-squares/).
+:::

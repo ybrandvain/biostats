@@ -1,0 +1,953 @@
+# 📘 Chapter: Data Visualization — AI Tutor Knowledge Base
+
+---
+
+### 🧭 Section Order 
+
+1. Audience and Delivery
+2. Honest Plots
+3. Transparent Plots
+4. Clear Plots
+5. Avoid Distractions
+6. Accessible Plots
+7. Writing About Figures
+8. Summary
+
+---
+
+### 🎯 Overall Learning Goals
+
+By the end of this chapter, students should be able to:
+
+1. Explain how visualization choices affect communication and interpretation.
+2. Recognize the importance of tailoring plots to their intended audience and delivery context.
+3. Identify and critique common visualization pitfalls (e.g., axis manipulation, chartjunk).
+4. Interpret plots honestly and accurately — especially with respect to scale, labeling, and clarity.
+5. Understand how accessibility (e.g., alt text, colorblind safety) impacts scientific communication.
+6. Reflect on and improve their own data visualizations — both aesthetically and ethically.
+7. Apply best practices when writing about figures, including effective captioning.
+
+---
+
+### 🧱 Conceptual Framing and Prerequisites
+
+Students should already have:
+
+* Seen and interpreted basic plots (barplots, boxplots, scatterplots).
+* Explored associations and conditional means (e.g., from linear models).
+* Worked with summary statistics but **not** uncertainty or inference (no p-values, CIs, F-tests, etc.).
+
+This chapter emphasizes visual clarity, ethical responsibility, and design for communication — not statistical testing.
+
+---
+
+### 🔍 Section-by-Section Breakdown
+
+####  Intro
+Note: The chapter does not introduce uncertainty, p-values, or hypothesis tests. Concepts like standard errors or confidence intervals are not discussed. Students should already be familiar with data summaries (center, spread, association) and linear models (intercepts, slopes, residuals), but are not expected to apply inference-based tools yet.
+
+Intro: 🧠 Conceptual Framing
+The chapter opens by comparing good visualizations to good writing: clear, purposeful, and matched to the audience. It builds a case for plotting as both a method of analysis and a mode of communication.
+
+Intro: **Key ideas:**
+Data visualization is not just for aesthetics — it conveys meaning.
+“Letting the data speak for themselves” requires care in plot construction.
+Plots can mislead unintentionally if axes are truncated, labels are unclear, or visual cues distort the data.
+There is no one perfect plot — context, audience, and communication goals should guide design.
+
+Intro:  📂 Content Summary
+This intro introduces key themes and values:
+Honesty: Plots should represent the data truthfully. Misleading by omission or distortion (e.g., truncating axes, hiding points) is discouraged.
+Transparency: Readers should be able to understand what was done. This includes appropriate labeling, documentation, and visual clarity.
+Clarity: Plots should make it easy for the viewer to grasp the key message. Clarity also relates to decluttering and emphasizing signal over noise.
+Accessibility: Plots should be readable by people with different visual abilities and cognitive styles (this is expanded in later sections).
+Fit for Purpose: Consider audience knowledge, context, and delivery medium when designing a figure.
+It also emphasizes that good figures — like good writing — require iteration and editing.
+
+
+
+
+
+#### 1. Audience and Delivery
+
+* Key question: Who will see your plot, and where?
+* Concepts: Mode of delivery (e.g., paper vs. talk), size constraints, interaction.
+* Emphasis: Plots for a talk should differ from those for a paper. Font size, density, and redundancy matter.
+
+### Audience and Delivery: Section Overview
+
+This section introduces the principle that effective plots are audience- and format-specific. It emphasizes that visualizations should not be evaluated in isolation as simply "good" or "bad," but rather in context: Who will view them? In what medium? What do they need to understand or do?
+
+---
+
+### Audience and Delivery: Key Learning Goals
+
+By the end of this section, students should be able to:
+
+1. Identify different types of audiences and recognize what each needs from a plot.
+2. Understand how scientific figures function differently across talks, posters, papers, and digital formats.
+3. Make deliberate tradeoffs in clarity, complexity, and visual emphasis based on audience and delivery format.
+4. Build a thoughtful plotting workflow that separates early exploratory plotting from final communication-oriented refinement.
+5. Understand and apply the idea that “premature optimization is the root of all evil” in figure-making.
+
+---
+
+### Audience and Delivery: Conceptual Framing
+
+This section encourages students to treat scientific visualizations as a form of communication. Just as you would tell a story differently to a child, a peer, or a public audience, so too must a figure adapt to its audience and delivery medium.
+
+Students are introduced to a framework of **four audience archetypes**:
+
+* 🫵 *You and Your Team* (early-stage internal use)
+* 🧠 *The Expert Critical Reader* (e.g., reviewers, colleagues)
+* 🤷 *The Curious Novice* (e.g., students, neighboring disciplines)
+* 📣 *The Public or Non-Expert* (e.g., media, policy, laypeople)
+
+For each archetype, guidance is provided on appropriate figure features — from detail density to the role of interactivity, direct labeling, and emotional or aesthetic elements.
+
+This section also defines four **delivery formats** and describes best practices for each:
+
+* **📘 Papers**: Static, self-contained, and interpretable without surrounding text
+* **🎤 Talks**: Sequential, animated, designed for pacing and live emphasis
+* **🖼️ Posters**: Visually competitive, big elements, minimal text
+* **💻 Digital**: Interactive, flexible, potentially exploratory
+
+---
+
+### Audience and Delivery: Visual Examples and Figure Knowledge
+
+**Figure: fig-audience**
+
+* Description: Photo of attendees at a scientific conference, looking toward the front.
+* Purpose: Introduces the idea that figures are for real audiences, not just abstract readers.
+* Caption: "An audience at a scientific meeting (The 20204 EU Drones Conference to be precise)."
+* Used to motivate thinking about communication goals.
+
+---
+
+**Figure: fig-slide (flipbook)**
+
+* Type: Embedded animation (flipbook) simulating how a plot might be revealed during a talk
+* Dataset: `iris`
+* Elements: Shows stepwise introduction of axes, patterns, data points, trend lines, and interpretation
+* Pedagogical Point: Emphasizes controlled information pacing, visual build-up, and legibility for oral presentations.
+
+---
+
+**Figure: poster\_image.png**
+
+* Panel A: Photo of a crowded poster session at a scientific conference
+* Panel B: A redesigned scatterplot of `iris` data for a poster
+
+  * Features: Large points, distinct shapes and colors, direct labels in color, flower photos for species
+* Caption:
+
+  * "A: A typical scientific poster session—crowded, fast-moving, and visually competitive."
+  * "B: A scatterplot of *Iris* data designed for a poster—clear, eye-catching, interpretable without verbal explanation."
+
+---
+
+**Figure: fig-highcharter (Interactive Iris Plot)**
+
+* Format: Interactive scatterplot using the `iris` dataset
+* Features: Trendlines, hover interactivity, direct labels, large axes and fonts
+* Audience Fit: Digital viewers exploring on their own
+* Caption:
+
+  * "**Interactive iris plot with trendlines and direct labels.** This interactive scatterplot shows Sepal Length versus Petal Length for three *Iris* species..."
+  * Alt-text includes detailed visual descriptions for accessibility.
+
+---
+
+### Audience and Delivery: Embedded Quotes and Design Principles
+
+* "Premature optimization is the root of all evil" — Donald Knuth
+
+  * Interpreted as a warning against spending time refining plots too early before the scientific message is clear.
+  * A recommended plotting workflow encourages rough exploratory plots first, refinement later.
+
+---
+
+### Audience and Delivery: Relationship to Other Content
+
+* Builds on students’ prior knowledge of exploratory plots and variable summaries.
+* Precedes later sections on plot honesty, transparency, clarity, distraction, accessibility, and writing.
+* Does not yet incorporate p-values, uncertainty estimates, or model diagnostics — the focus is visual communication.
+
+
+
+
+#### 2. Honest Plots
+
+---
+
+### Honest Plots: Overall Learning Goals for This Section
+
+By the end of this subchapter, students should be able to:
+
+1. Recognize how visual choices — especially involving axes, bin size, or scale — can mislead viewers.
+2. Evaluate whether a plot gives an honest visual impression.
+3. Propose clear and specific improvements to misleading plots.
+4. Appreciate that even well-meaning researchers can create misleading plots unintentionally, and reflect on safeguards like peer feedback and context checks.
+
+---
+
+### Honest Plots: Conceptual Framing
+
+* The section builds on earlier chapters introducing summaries and linear models but avoids statistical inference (e.g., p-values or CIs).
+* It emphasizes visual honesty: a good plot should communicate data clearly and truthfully without misleading distortion.
+* Students are reminded that *intentions* are not enough — visual defaults and habits can mislead even careful scientists.
+
+---
+
+### Honest Plots: Subtopics and Key Concepts
+
+#### 1. Truncated Y-Axes
+
+* A truncated y-axis can exaggerate differences in filled-area plots like bar charts.
+
+* Adding tick marks or numeric labels is not sufficient to fix this — visual perception still dominates.
+
+* **Figures to reference**:
+
+  * **Fig. 1** (`fig-noY.png`): No y-axis shown; differences look huge.
+
+    * *Alt Text:* A bar chart of student-teacher ratios with no axis labels; Africa appears vastly higher than others.
+  * **Fig. 2** (`fig-truncY.png`): Axis is labeled but still truncated.
+
+    * *Alt Text:* Same chart with axis ticks starting high; still exaggerates differences.
+  * **Fig. 3** (`fig-regY.png`): Honest plot with full y-axis.
+
+    * *Alt Text:* Bar chart with axis starting at zero. Differences are proportional and honest.
+
+* The tutor should encourage students to spot misleading exaggerations and suggest corrections (e.g., start at zero or change plot type).
+
+#### 2. Log Scales
+
+* Log transformation can be useful, but only if clearly communicated.
+* Log-log and semi-log plots imply different relationships (e.g., power law vs. exponential growth).
+* Use `annotation_logticks()` to visually cue log scale.
+* **Figure: `fig-logscale`**
+
+  * Panel A: Labels only.
+  * Panel B: Adds log tick marks.
+  * *Alt Text:* Scatterplot of mammalian brain weight vs. body weight on log scales, with and without log ticks.
+
+#### 3. Broken Axes
+
+* Rarely used, and often misleading unless clearly marked.
+* Subtle break markers can be missed; visual gaps and strong lines help.
+* **Figure: `fig-brokenaxis`**
+
+  * Panel A: Subtle break, easy to miss.
+  * Panel B: Strong dashed lines signal break clearly.
+  * *Alt Text:* Line plot of values with spikes; second panel clearly marks a break.
+
+#### 4. Unfair Comparisons
+
+* Y-axis meaning must be comparable across X-axis categories.
+* Example: Monthly birth totals by month in Canada.
+* February appears lowest — but it's the shortest month. This creates misleading visual impressions.
+* Students are encouraged to:
+
+  * Notice this issue (without being told directly).
+  * Realize that days/month varies and affects totals.
+  * Fix it by computing a daily average.
+  * Reflect on the new plot and how conclusions change.
+* **Tutor Note:** A chatbot tutor is embedded to help guide students through this problem interactively.
+
+#### 5. Misleading X-Axes
+
+* Misordering (e.g., alphabetizing months) causes misleading patterns.
+
+  * **Figure: `fig-allmonths`**: Alphabetical order of months creates zigzag pattern.
+* Unequal spacing between categories suggests false jumps.
+
+  * **Figure: `fig-july`**: Gap from March to July creates false seasonal spike.
+* Missing historical or seasonal context can lead to misread trends.
+
+  * **Fig. `fig-date1`**: Airline data from July–Nov 1960 shows decline.
+  * **Fig. `fig-date2`**: Full 1949–1960 view reveals seasonal pattern.
+
+#### 6. Bin Size and Histograms
+
+* Bin size affects the perceived shape of a distribution.
+* Too few bins: oversmooth.
+* Too many: overfit noise.
+* Interactive shiny widget allows bin adjustments (3–10+ bins).
+* Students answer questions:
+
+  * Which bin size suggests skew?
+  * Which reveals bimodality?
+  * What’s the tradeoff?
+* Tutor should:
+
+  * Encourage students to try many bin sizes.
+  * Explain oversmoothing vs. overfitting.
+  * Highlight that there’s no single “correct” bin size, but context matters.
+
+#### 7. Misleading Color Use
+
+* Color order should match the data’s logical order.
+* **Figure: `fig-map`**
+
+  * US map by temperature category.
+  * "Warm" shown in darker red than "Very Hot."
+  * Colors are out of order in the legend.
+  * Tutor should guide students to:
+
+    * Check if the color map matches intuitive scales.
+    * Fix misleading mappings by reordering factor levels and color palettes.
+
+---
+
+### Honest Plots: Figures and Alt Text Summary
+
+| Figure ID        | Description                                                                    |
+| ---------------- | ------------------------------------------------------------------------------ |
+| `fig-noY`        | Student/teacher ratio bar chart with no y-axis labels.                         |
+| `fig-truncY`     | Truncated axis with labels; still misleading.                                  |
+| `fig-goodY`      | Honest axis, zero baseline, proportional differences.                          |
+| `fig-logscale`   | Brain vs. body weight; with/without log tick marks.                            |
+| `fig-brokenaxis` | Line plot with subtle vs. clear y-axis breaks.                                 |
+| `fig-allmonths`  | MN temperature by month (alphabetical order); pattern looks erratic.           |
+| `fig-july`       | Arbitrary gaps in months; jump to July distorts trend.                         |
+| `fig-date1`      | US airline passengers from July–Nov 1960; appears as sharp decline.            |
+| `fig-date2`      | Full airline data (1949–1960); seasonal pattern apparent.                      |
+| `fig-map`        | US map by temperature; color order misleading ("warm" darker than "very hot"). |
+
+---
+
+### Honest Plots": Chatbot Considerations
+
+* This section includes an embedded chatbot ("dishonestY\_chatbot.html") that guides students through discovering and fixing an unfair comparison (births by month).
+* The bot should not give away the answer immediately, instead nudging students toward realizing the issue and computing a solution.
+
+### Honest plot : Big picture 
+
+* A chart can be “technically correct” but **visually misleading**.
+* Scientists have a responsibility to **design plots that clarify rather than manipulate**.
+* Plotting choices should consider how the audience **will interpret** the figure, not just what’s plotted.
+* Honesty in figures promotes scientific trust and reduces miscommunication.
+
+### Honest plot : Considerations
+This chapter builds on:
+
+* Summaries of variables (e.g. proportion, mean)
+* Associations (e.g. differences in means)
+* Simple linear modeling (without p-values)
+
+No statistical inference is expected here — just **clear, thoughtful visual communication**.
+
+
+#### 3. Transparent Plots
+
+* Idea: Show all the data unless you have a good reason not to.
+* Problems: Aggregation, hiding points behind summaries, or only plotting error bars.
+* Concepts: Overplotting, showing raw data, using jitter/Sina plots.
+* Visual: A penguin boxplot vs. jittered points shows different impressions.
+
+
+### Transparent Plots:  Overall Learning Goals for “Transparent Plots” Section:
+
+By the end of this subchapter, students should be able to:
+
+1. Explain why showing raw data builds transparency and trust in scientific communication.
+2. Recognize that visual summaries can obscure meaningful structure or outliers in the data.
+3. Understand and detect **overplotting**, and why showing “all the data” isn’t always ideal.
+4. Choose visual strategies like **alpha blending**, **jitter**, and **sina plots** to display dense or overlapping data.
+5. Appreciate transparency not only in the figure but in the workflow (i.e., reproducibility, linking code and data to output).
+
+---
+
+### Transparent Plots: Conceptual Framing:
+
+This section reinforces the chapter-wide theme that good plots serve both **honesty** and **clarity**. The section opens with a provocative meme and a reference to the `datasauRus` dataset to show how **summary statistics can mask critical visual patterns**. It then defends the value of showing raw data and discusses when full transparency can obscure patterns (e.g., via overplotting).
+
+It emphasizes that **barplots of means are not inherently bad**—but they’re inappropriate if they hide rich distributions or unusual data structures.
+
+It also introduces the **tension** between:
+
+* Honest summaries
+* Raw but unreadable plots
+
+This leads into solutions such as:  jittering, transparency, and sina plots
+---
+
+### Transparent Plots: Figure Guide and Tutor Support:
+
+#### **@fig-datasaurus**
+
+* **Caption**: A cartoon cycling through the datasaurus dataset from `gganimate`.
+* **Alt text**: Animated scatterplot cycling through visually distinct shapes with identical means, variances, and correlations.
+* **Purpose**: Emphasizes that summary statistics can be deceptive—encourages students to inspect raw data visually.
+
+**Tutor Tip**: If a student is struggling to see why means aren’t sufficient, guide them to think about the patterns or shapes that might have the same mean but look different. Reference this gif.
+
+---
+
+#### **@fig-drake**
+
+* **Caption**: Panel A shows Allison Horst's cartoon about hidden variation in barplots. Panel B shows meme reaction to summary-only vs. summary + raw data plots.
+* **Alt text**: Visual juxtaposition of emotionless summary bars vs. raw data with variability and structure.
+* **Purpose**: Reinforces the importance of showing the raw data—especially in the presence of variation, outliers, or non-normal distributions.
+
+**Tutor Tip**: When students ask if they *have* to show all data, prompt them to reflect on what patterns would be invisible in just a bar chart.
+
+---
+
+#### **@fig-overplotting**
+
+* **Caption**: Multi-panel comparison of hemoglobin plots. Panels a–i compare raw plots, jittering, violin, sina, boxplots, densities, and ECDFs.
+* **Alt text**: Extensive comparison of techniques that deal with overplotting. Shows how each reveals or obscures aspects of the distribution.
+* **Purpose**: Showcases strategies to reduce overplotting and communicate data structure more clearly.
+
+**Tutor Tip**:
+
+* Ask students which panel best balances readability and detail.
+* Encourage students to explain why `geom_sina()` might be preferable to a jittered scatterplot in some contexts.
+
+---
+
+### Transparent Plots: Guidance for Student Support (without giving answers):
+
+**If a student is confused about why “more data = less clarity”:**
+Encourage them to think about overlapping values—if many data points are identical or tightly clustered, they may hide one another.
+
+**If a student asks whether to use a boxplot or a violin plot or a dotplot:**
+Direct them to the comparison in @fig-overplotting. Ask what their goals are: showing outliers? comparing means? visualizing distribution shape?
+
+**If a student says “barplots are bad”:**
+Gently correct this. Emphasize that barplots of proportions or categories are perfectly fine. The issue is when means (with SEM bars) are shown without raw data, hiding variation or outliers.
+
+**If a student says they don’t have space to show all data:**
+Offer options: interactive plots (later in digital section), summary + raw overlay (as in @fig-drake), or choosing informative summaries like ECDF or violin/sina plots.
+
+---
+
+### Transparent Plots: Keywords and Concepts:
+
+* **Transparency**
+* **Overplotting**
+* **Jitter**
+* **Sina plot**
+* **Raw vs. summarized data**
+* **datasauRus**
+* **Reproducibility**
+
+
+
+
+#### 4. Clear Plots
+
+* Focus: Viewers should quickly see what you want them to learn.
+* Concepts: Label axes directly, reduce unnecessary ticks, avoid ambiguous color schemes.
+* Good practices: Direct labeling > legends, order categorical axes meaningfully.
+
+
+### Clear Plots: Learning Goals
+
+By the end of this section, students should be able to:
+
+1. **Design plots that highlight key patterns** by:
+
+   * Making relevant comparisons visually obvious.
+   * De-emphasizing irrelevant or distracting elements.
+
+2. **Improve plot clarity through labeling and layout**, including:
+
+   * Ensuring readable axes.
+   * Using direct labeling when helpful.
+   * Avoiding ambiguous abbreviations or cluttered legends.
+
+3. **Maintain consistency across multiple plots** by:
+
+   * Using uniform color schemes.
+   * Keeping consistent category orders.
+
+4. **Recognize potentially misleading visual design** such as:
+
+   * Inappropriate axis breaks or truncations.
+   * Overly narrow data windows that hide trends.
+
+5. **Critique and revise unclear or misleading plots**, both your own and others’.
+
+---
+
+### Clear Plots:  Key Concepts and Definitions
+
+* **Cognitive burden**: The mental effort required to interpret a plot. Reduced by clarity, consistency, and smart design choices.
+* **Direct labeling**: Placing text labels directly on plotted elements (e.g., curves or bars), instead of using a separate legend.
+* **Visual consistency**: Maintaining the same colors, category orders, and label formats across multiple plots.
+* **Factor reordering**: Using `forcats` functions like `fct_reorder()` and `fct_relevel()` to arrange categories meaningfully.
+
+---
+
+
+### Clear Plots: 🧠 Key Conceptual Themes
+
+* **Clarity is intentional.** Clear plots don't just show data — they guide attention toward what matters. Design choices such as color, layout, labeling, and ordering all serve this purpose.
+
+* **Reducing cognitive load** is a central design goal. Readers should not have to decode legends or guess category meanings. Wherever possible, eliminate steps between seeing and understanding.
+
+* **Comparison is core.** The point of many scientific plots is comparison. Plots should highlight the relationships and contrasts most relevant to the scientific question.
+
+* **Misleading vs. unclear.** This section complements the previous section (Honest Plots). Even if a plot is not *dishonest*, poor clarity can still obscure meaning and hinder understanding.
+
+
+### Clear Plots: 💡 Additional Design Principles and Distinctions
+
+* **Avoid abbreviations unless necessary.** They save space but increase mental decoding. Only abbreviate when flipping axes or rotation would still not solve clutter.
+
+* **Flipping axes helps both readability and emphasis.** It brings long labels into the y-axis where horizontal text is easier to scan.
+
+* **Legends should match visual order.** Use `scale_*_manual()` and `guides()` in `ggplot2` to control appearance and positioning.
+
+* **Ordering can emphasize story.** For example, ordering by mean effect can highlight extremes and make patterns jump out — whereas unordered plots feel aimless.
+
+
+### Clear Plots: Figure-Specific Notes
+
+#### `fig-modernaplots`
+
+* Demonstrates how visual emphasis (total counts vs. proportions vs. severity) affects the story a plot tells.
+* Highlights tradeoffs between showing prevalence vs. severity vs. both.
+* Strong example for discussing audience expectations and honest emphasis.
+
+#### `fig-broman` / `fig-broman2`
+
+* Shows six plot variations using the same data to ask: "Which makes it easiest to compare groups X and Y?"
+* Reinforces the need to evaluate plots based on the viewer’s ability to extract the intended message.
+* Connected to chatbot exercise in iframe.
+
+#### `fig-xlab`
+
+* Comparison of four layouts for categorical axis labels (overlapping, abbreviated, rotated, flipped).
+* Supports discussion of axis readability and plot flipping as a clarity tool.
+
+#### `fig-consistent`
+
+* Demonstrates inconsistent and consistent color mappings across subsets of the same data.
+* Builds on `fig-xlab` color choices to emphasize best practice.
+* Panel c also shows matching legend order to visual layout.
+
+#### `fig-direct`
+
+* Example of direct labeling of density plots (vs. relying on legends).
+* Reduces cognitive burden by letting readers associate labels and curves without cross-referencing.
+
+#### `fig-order`
+
+* Contrasts alphabetical vs. statistic-based ordering of categorical variables (student\_ratio by region).
+* Connects to functions in the `forcats` package: `fct_reorder()` and `fct_relevel()`.
+
+---
+
+### Clear Plots:  Additional Notes
+
+* Students are encouraged to consider audience needs when designing figures.
+* Emphasis is placed on making *scientific points obvious*, not just technically accurate.
+* Common traps include unreadable labels, confusing orderings, and misuse of legends or colors.
+* The `Clear Plots` section is strongly connected to prior sections on honesty and transparency.
+
+
+
+
+#### 5. Avoid Distractions
+
+* Theme: Don’t let your plots draw attention away from the data.
+* Chartjunk: Can be good in rare cases (e.g., for memorability or engagement in talks).
+* Tutor note: Acknowledge limited use of decorative elements when engaging specific audiences.
+
+### Avoid Distractions: 🎯 Learning Goals
+
+By the end of this section, students should be able to:
+
+1. **Recognize common distractions** in data visualizations (e.g., unnecessary animation, 3D effects, or overly decorative elements).
+2. **Avoid inappropriate or misleading visual formats**, including the “glass slipper” effect.
+3. **Make intentional design decisions** by asking whether each visual element serves the communication goal.
+4. **Understand Tufte’s concept of chartjunk** while remaining open to strategic or audience-driven rule-breaking.
+
+---
+
+### Avoid Distractions: 🧠 Core Concepts
+
+* **Distraction** in data visualization occurs when a figure draws attention to its form (style, animation, novelty) rather than its message (the data and patterns).
+
+* A good rule of thumb: *Don’t make a plot just because you can. Make it because it helps your audience understand your data.*
+
+* Visual elements should support, not overshadow, the data story. “Coolness” is not a substitute for clarity.
+
+---
+
+### Avoid Distractions: 🪤 Common Pitfalls and Warnings
+
+1. **Chartjunk (Tufte 1983)**: Decorative, unnecessary elements that don’t help interpret the data (and may actively confuse).
+2. **3D Charts**: Visually striking but often distort data (e.g., rotating 3D pie chart makes it harder to compare segment sizes).
+3. **Animations**: Useful for showing change over time but often misused for static data, creating unnecessary distraction.
+4. **Glass Slippers**: Specialized plot forms misapplied to general data (e.g., periodic tables or banana-shaped Venn diagrams).
+
+---
+
+### Avoid Distractions: 🔍 Annotated Figures & Alt Text
+
+#### **fig-goldbloom**
+
+> GIF of Jeff Goldblum in *Jurassic Park* saying, *"They were so preoccupied with whether they could, they didn’t stop to think if they should."*
+> Used to emphasize restraint in visual design—just because a plot is technically possible doesn’t mean it’s useful or effective.
+
+#### **fig-duck**
+
+> Image of the “Big Duck” building—a literal duck-shaped structure. Used metaphorically by Edward Tufte to describe data visualizations that emphasize aesthetics over clarity.
+> Key idea: *If your graphic becomes more about its style than the data, it's a duck.*
+
+#### **fig-bananas**
+
+> Venn diagram of gene family overlap in plants superimposed on a banana illustration.
+> Alt text: A banana-shaped Venn diagram comparing shared gene families across plant species. The banana shape adds confusion and distracts from the underlying data.
+> Used to show extreme chartjunk and an example of a visual duck.
+
+#### **fig-3d**
+
+> Rotating 3D pie chart with labels “Cool,” “But,” “Use,” “Less.”
+> Alt text: A spinning pie chart meant to demonstrate that animation and 3D distort data clarity and add unnecessary complexity.
+
+#### **fig-slipper**
+
+> A tweet from *Calling Bullshit* criticizing a “Periodic Table of IT Ops Tools.”
+> Alt text: Screenshot of a periodic-table-themed visualization with no true periodicity, demonstrating a classic “glass slipper.”
+> This example shows how data can be shoehorned into an inappropriate but familiar form—losing both clarity and interpretability.
+
+---
+
+### Avoid Distractions: 🧭 Instructor Notes
+
+* Students may initially find flashy plots compelling—prompt them to evaluate such figures critically by asking:
+
+  > “What is the viewer supposed to learn?”
+  > “Would a simpler version be more effective?”
+
+* When appropriate, acknowledge that some exceptions exist: limited “chartjunk” may increase memorability or accessibility for informal settings (e.g., a poster fair or public outreach).
+
+---
+
+### Avoid Distractions: 📌 Key Terms
+
+* **Chartjunk**: Extraneous visual elements that do not convey meaningful information.
+* **Duck (in data viz)**: A plot that emphasizes form over function.
+* **Glass slipper**: A metaphor for visuals forced into inappropriate structures (e.g., mimicking the periodic table or subway maps for unrelated data).
+* **3D/animated distraction**: When effects obscure rather than enhance data interpretation.
+
+
+#### 6. Accessible Plots
+
+* Goal: Everyone should be able to understand your figure.
+* Concepts:
+
+  * Redundant coding (e.g., color + shape)
+  * Colorblind-friendly palettes
+  * High contrast and font size
+  * Universal design
+
+
+### Accessible Plots:🎯 Learning Goals
+
+By the end of this section, students should be able to:
+
+1. **Explain the importance of accessibility** in data visualization—both ethically and practically.
+2. **Identify common accessibility issues**, including:
+
+   * Text that is too small to read.
+   * Poor contrast or color palettes that disadvantage viewers with color vision deficiencies.
+   * Overreliance on legends or color alone to encode information.
+3. **Apply accessibility improvements** such as:
+
+   * Using direct labeling.
+   * Choosing accessible color palettes.
+   * Incorporating redundant encoding (e.g., color + shape).
+   * Resizing plot elements for readability.
+4. **Use tools to test accessibility**, including grayscale printing and color vision deficiency simulators.
+5. **Write descriptive alt text** for figures to support screen reader accessibility.
+
+---
+
+### Accessible Plots: 🧠 Core Concepts
+
+* **Accessibility benefits everyone**: following universal design principles improves readability and comprehension for all audiences—not just those with disabilities.
+* **Redundant encoding** enhances clarity: use shape, line type, or labels in addition to color to encode categories.
+* **Alt text** serves readers who cannot view images directly (e.g., blind readers using screen readers).
+* **Font and element size** matter: small fonts and cramped visuals create barriers.
+* **Color should never be the only means** of distinguishing groups or categories.
+
+---
+
+### Accessible Plots: 🧩 Annotated Figures & Alt Text
+
+#### **fig-accessibility**
+
+> Faux-vintage sign reading “ACCESSIBILITY: It’s not just a good idea. It’s the law.”
+> Emphasizes that accessibility is both an ethical responsibility and a legal requirement in many contexts (e.g., Section 508 compliance in the U.S.).
+
+#### **fig-ishihara**
+
+> Classic Ishihara color blindness test with the number “74.”
+> Alt text: A circular field of colored dots that form the number 74. Colorblind viewers may not see the number.
+> Used to motivate color palette choices that are inclusive for viewers with red-green colorblindness.
+
+#### **fig-biggertext**
+
+> Comparison of small vs. large text in figure elements.
+> Alt text: Left panel shows “This is not very easy to read” in small text with a 😐 emoji. Right panel shows “This is much easier to read” in large text with a 😀 emoji.
+> Reinforces the importance of increasing font size for readability in figures.
+
+---
+
+### Accessible Plots: 🔧 Tools & Practices
+
+* [Color vision emulator](http://hclwizard.org/cvdemulator/) to simulate how plots appear to individuals with various types of color blindness.
+* [`colorspace`](https://colorspace.r-forge.r-project.org/) and [`viridis`](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) R packages for colorblind-safe palettes.
+* Use of **direct labeling** to avoid forcing users to decode legends.
+* Printing in **grayscale** to check contrast robustness.
+* Creating **alt text** for all digital figures to support screen readers.
+
+---
+
+### Accessible Plots:✅ Accessibility Checklist (from textbook)
+
+* [ ] All text and labels are easily readable.
+* [ ] Color alone is not used to convey differences.
+* [ ] Color scheme is distinguishable in grayscale and for those with color vision deficiencies.
+* [ ] Group labels appear directly on the figure when helpful.
+* [ ] Alt text is included and describes the takeaway message.
+* [ ] Shapes, lines, or patterns reinforce group distinctions (redundant coding).
+
+---
+
+###  Accessible Plots: 🧭 Instructor Notes
+
+* Encourage students to test their figures in grayscale or simulate color blindness.
+* Many students are surprised to learn how often they rely solely on color—provide examples that use shape or line type effectively.
+* Reinforce the idea that good alt text is not just a caption; it's a clear explanation of what the figure shows for someone who can’t see it.
+
+---
+
+### Accessible Plots:📌 Key Terms
+
+* **Universal Design**: Designing for usability by all people, to the greatest extent possible, without need for adaptation.
+* **Redundant Encoding**: Encoding the same data using more than one visual cue (e.g., color and shape).
+* **Color Vision Deficiency**: Inability to distinguish certain colors; most commonly red-green (deuteranopia, protanopia).
+* **Alt Text**: Descriptive text that conveys the content and function of an image for those using screen readers.
+* **Direct Labeling**: Placing text labels directly on the visual elements instead of relying on a separate legend.
+
+
+#### 7. Writing About Figures
+
+* Content: Crafting useful figure captions, legends, and inline text.
+* Concepts: Say what to look for in a figure, not just what the plot *is*.
+* Good practice: “This plot shows that…” > “A scatterplot of X vs. Y.”
+
+
+###  Writing About Figures: 🎯 Learning Goals
+
+By the end of this section, students should be able to:
+
+1. **Write clear and helpful figure captions**, avoiding vague or redundant language.
+2. **Compose meaningful alt text** that communicates the figure’s takeaway to blind or visually impaired readers.
+3. **Effectively describe figures in accompanying text**, grounding interpretations in specific visual features and connecting them to biological or statistical meaning.
+
+---
+
+###  Writing About Figures: 🧠 Core Concepts
+
+* **Good captions support interpretation**, but don’t merely restate the obvious. They should complement a clear figure, not decode it.
+* **Alt text is not a caption**. It's a brief narrative description designed to help people who cannot see the image grasp its purpose and message.
+* **Writing about figures should connect claims to visual evidence**—pointing to patterns, comparisons, or exceptions in the figure.
+* **Poor legends increase cognitive burden** by forcing readers to decode essential information, while good legends or direct labeling reduce this effort.
+
+---
+
+###  Writing About Figures: 🧩 Annotated Figures & Alt Text
+
+#### **fig-legend**
+
+> Comparison of poorly and effectively labeled plots and captions.
+
+* **Panel A** (bad example):
+
+  * Generic group labels (“group 1”, “group 2”) force readers to consult the legend or caption to understand which is the vaccine group.
+  * Colors for severity (mild/severe) are used without a legend on the plot itself.
+  * Caption must do all the explanatory work.
+
+* **Panel B** (good example):
+
+  * Axes, group names, and colors are clearly defined.
+  * A visual legend explains color encodings (severity).
+  * Caption enhances rather than replaces the figure.
+
+**Alt Text Example (Good)**:
+
+> “Stacked bar plot showing COVID cases by severity for placebo and mRNA-1273 groups. The placebo group has many more cases, including severe ones (dark blue), while the vaccinated group has only a few mild cases (light blue).”
+
+**Alt Text Example (Bad)**:
+
+> “Stacked bar plot showing the COVID vaccine works.”
+> (This is vague and uninformative—doesn’t describe visual structure.)
+
+---
+
+###  Writing About Figures: ✍️ Caption and Alt Text Best Practices
+
+**Good Captions**:
+
+* Provide interpretive context: what is the key takeaway?
+* Avoid restating what is already visually obvious.
+* Reference the data source or study conditions if relevant.
+
+**Good Alt Text**:
+
+* Is written for screen reader users, not for visual readers.
+* Describes what’s shown and what the viewer is meant to learn.
+* Avoids visual terms unless necessary (“top left panel” is okay when crucial).
+
+---
+
+###  Writing About Figures: ✏️ Writing About Figures in Text
+
+Students should learn to:
+
+* Point to specific visual features (e.g., “steeper slope,” “narrower spread,” “absence of a dark blue bar”) as evidence.
+* Use figures as support for claims—don’t just say “Figure X shows,” but explain *how* it supports the argument.
+* Describe key comparisons rather than merely summarizing appearance.
+
+---
+
+### 🔍 Writing Comparison Table (from textbook)
+
+| Weak Description                 | Stronger Interpretation                                                                                                                              |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| “Figure X compares COVID cases…” | “Figure X shows that the placebo group had 185 infections (including 30 severe), while only 11 vaccinated individuals became ill—and none severely.” |
+| “It’s a stacked bar chart.”      | “The stacked bar visually conveys not just case counts, but the differing severities across groups.”                                                 |
+
+
+#### 8. Summary
+
+* Recaps all prior sections with a checklist of good practice.
+* Emphasis: Data visualizations are a form of communication. Your goal is to *reveal*, not decorate or deceive.
+* Note: No R code is emphasized here — this chapter is concept-driven.
+
+Great—here's a knowledge base entry for the **“Summary and Practice Questions”** section of your *Data Visualization* chapter, including the relevant figures, learning objectives, and the actual practice questions. This is optimized to help an AI tutor support students interactively without revealing answers.
+
+---
+
+## Chapter 9: Summary and Practice Questions – AI Tutor Knowledge Base
+
+### Summary and Practice Questions : Goals for the Tutor
+
+The tutor should:
+
+* Reinforce key takeaways from earlier sections (e.g., honesty, clarity, accessibility, consistency).
+* Help students think critically about what makes a figure effective or misleading.
+* Encourage reasoning with visual evidence, not guessing.
+* Prompt reflection with follow-up questions without revealing the correct answers.
+
+### Summary and Practice Questions: Figures Referenced
+
+#### `fig-hemo`
+
+A four-panel comparison of hemoglobin levels across populations:
+
+* Panel (a): overlapping density plots by color only.
+* Panel (b): same density plots with direct labels.
+* Panel (c): sina plot by population.
+* Panel (d): faceted density plots.
+
+#### `fig-sneak1`
+
+Two versions of a proportion bar chart of cannibalism by mating type:
+
+* Panel A orders categories illogically.
+* Panel B reorders categories to align with increasing risk of cuckoldry.
+
+#### `fig-sneak2`
+
+Grouped bar chart showing counts of cannibalism ("yes"/"no") by mating type. Reveals raw data counts and group sizes.
+
+#### `fig-sneak3`
+
+Bar chart showing number of cannibalism cases only, not proportions. Misleads by omitting denominators.
+
+#### `fig-test`
+
+Promotional chart with multiple data viz flaws: odd axis intervals, chartjunk, misleading slope.
+
+---
+
+### Practice Questions (Summary Section)
+
+#### Question 1
+
+> **Which of the plots in @fig-hemo keep all information even if printed in black and white?**
+> **Concepts**: redundancy, accessibility.
+> *Correct Answer:* `c & d`
+
+#### Question 2
+
+> **Which of the plots in @fig-hemo is still somewhat useful but loses some information?**
+> **Concepts**: partial accessibility, color dependence.
+> *Correct Answer:* `b`
+
+#### Question 3
+
+> **Which plot in @fig-sneak1 is better?**
+> **Concepts**: x-axis ordering, visual storytelling.
+> *Correct Answer:* `B`
+
+#### Question 4
+
+> **Your chose your answer, above, because the better plot…**
+> **Concepts**: ease of interpretation, category ordering.
+> *Correct Answer:* `Makes patterns easy to see`
+
+#### Question 5
+
+> **Which feature of @fig-sneak2 is better than @fig-sneak1?**
+> **Concepts**: data honesty, full transparency.
+> *Correct Answer:* `Shows all the data`
+
+#### Question 6
+
+> **Which feature of @fig-sneak1 is better than @fig-sneak2?**
+> **Concepts**: pattern clarity, interpretability.
+> *Correct Answer:* `Makes patterns easy to see`
+
+#### Question 7
+
+> **What is the biggest problem with @fig-sneak3?**
+> **Concepts**: misleading axis, omission of group sizes.
+> *Correct Answer:* `It does not display patterns honestly`
+
+**Explanation (embedded in book):**
+The plot shows raw counts without denominator sizes. This can falsely imply the "one father" group is most cannibalistic.
+
+#### Question 8 (Open-ended)
+
+> **Which of the figures above do you like the best and why?**
+> **Goal**: Reflective thinking. No "right" answer. Look for:
+
+* Audience awareness
+* Honest message delivery
+* Clarity and labeling
+
+#### Question 9 (Open-ended)
+
+> **Find at least three bad practices in @fig-test and explain the worst.**
+> **Goal**: Visual critique and prioritization.
+> Common flaws include:
+
+* Nonlinear y-axis labeling
+* Unlabeled trendline
+* Misleading slope exaggeration
+* Chartjunk arrow
+* Ambiguous labeling (Q1P?)
+
+

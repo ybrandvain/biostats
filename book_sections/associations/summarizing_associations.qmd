@@ -1,0 +1,373 @@
+## • 6. Association Summary {.unnumbered}
+
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr' ,'ggplot2', 'palmerpenguins']
+  autoload-packages: true
+---
+
+
+Links to: [Summary](#summarizing_associations_chapter-summary). [Chatbot tutor](#summarizing_associations_chatbot_tutor).  [Questions](#summarizing_associations_practice-questions). [Glossary](#summarizing_associations_glossary-of-terms). [R functions](#summarizing_associations_key-r-functions). [R packages](#summarizing_associations_r-packages-introduced). [More resources](#summarizing_associations_additional-resources).
+
+
+
+
+## Chapter Summary  {#summarizing_associations_chapter-summary}    
+
+
+
+```{r}
+#| echo: false
+#| column: margin
+#| fig-alt: "Correlation doesn't imply causation, but it does waggle its eyebrows suggestively and gesture furtively while mouthing *look over there*."
+#| fig-cap: "[A cartoon on correlation from xkcd](https://xkcd.com/552/). The original rollover text says: \"Correlation doesn't imply causation, but it does waggle its eyebrows suggestively and gesture furtively while mouthing *look over there*\". See [this link](https://www.explainxkcd.com/wiki/index.php/552:_Correlation) for a more detailed explanation." 
+library(knitr)
+library(webexercises)
+include_graphics("../../figs/summarizing_data/associations/xkcd_correlation.png")
+```
+
+Associations reveal how variables relate to one another — whether one tends to increase with another, differ across groups, or cluster. Differences in conditional means (or proportions) describe how a numeric (or categorical) response variable varies across levels of a categorical explanatory variable. For two numeric variables, covariance captures how deviations from their means align, and correlation standardizes this to a unitless scale between –1 and 1. While these summaries can highlight patterns, interpretation requires care: strong associations don’t necessarily imply causation, and predictions may not hold across contexts or datasets.
+
+### Chatbot tutor  {#summarizing_associations_chatbot_tutor}
+
+
+
+Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/g-6831c80a4d688191880b376a1123cec6-summarizing-associations-tutor)) I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+
+
+## Practice Questions   {#summarizing_associations_practice-questions}  
+
+
+Try these questions! By using the R environment you can work without leaving this "book". To help you jump right into thinking and analysis, I have loaded the ril data, cleaned it some, an have started some of the code!  
+
+
+
+```{webr-r}
+#| context: setup
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+    dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                  growth_rate = as.numeric(growth_rate),
+                  visited = mean_visits > 0)|>
+    select(location, petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, visits = mean_visits , asd_mm,visited , lwc)|>
+    mutate(log10_petal_area_mm = log10(petal_area_mm))|>
+  filter(!is.na(location))
+```
+
+```{webr-r}
+# glimpse(ril_data) # un-comment to see all the variables 
+ril_data |> 
+  summarise(cov_area_hyb = cov(log10_petal_area_mm,
+                  prop_hybrid,
+                  use = "pairwise.complete.obs"),
+            cor_area_hyb = cor(log10_petal_area_mm,
+                  prop_hybrid,
+                  use = "pairwise.complete.obs"))
+```
+
+
+:::exercises
+
+**Q1)** Extend the analysis above to examine the association between leaf water content (*lwc*) and the proportion of hybrid seeds (*prop_hybrid*). The correlation between lwc and prop_hybrid is: `r mcq(c(answer = "-0.202","-0.203", "-0.000914", "-0.000403" ))`  
+
+**Q2)** Based on the analysis above, which variable  -- leaf water content (*lwc*), or petal area (*log10_petal_area_mm*)  is more plausibly interpreted as influencing proportion hybrid seed set (*prop_hybrid*)? `r longmcq(c( "**Equally likely** — because the absolute values of their correlation coefficients are similar", "**Petal area** — because it has the stronger correlation coefficient", "**Neither** — the covariances are both near zero", answer = "**Petal area**  There is a substantial association, and because these are experimental RILs, it's plausible that pollinators are attracted to larger petals — not low leaf water content.", "**There is no relevant information here** — correlation does not imply causation" ))`  
+
+
+**Q3)** Based on the observed negative association between leaf water content and proportion hybrid seed set, which explanation best accounts for this pattern? `r longmcq(c( "**Chance** — strange associations sometimes appear randomly.", "**Reverse causation** — pollinator visits might reduce leaf water content.", "**A direct causal link** — pollinators are attracted to plants with dry leaves.", answer = "**Confounding** — low leaf water content might be genetically or physiologically linked with a trait that influences pollinator attraction (e.g., it might be negatively associated with petal area) and ultimately hybrid seed set." ))` 
+
+
+
+
+:::  
+
+```{webr-r}
+#| autorun: true
+# glimpse(ril_data) # uncomment to see all col 
+# pooled sd?
+rils_w_color <-ril_data |> 
+  filter(!is.na(petal_color))
+
+# mean difference
+rils_w_color |>
+  group_by(petal_color)|>
+  summarize(phyb = mean(prop_hybrid, na.rm=T))
+
+pooled_sd_A <- rils_w_color |>
+  summarize(sd_A = sd(prop_hybrid, na.rm=T))
+sprintf("A) Pooled sd = %s",pull(pooled_sd_A))
+
+pooled_sd_B <- rils_w_color |>
+  group_by(petal_color)|>
+  summarize(sd_s = sd(prop_hybrid, na.rm=T))|>
+  summarize(sd_B = mean(sd_s))
+sprintf("B) Pooled sd = %s",pull(pooled_sd_B))
+
+pooled_sd_C <- rils_w_color |>
+  group_by(petal_color)|>
+  mutate(mean_hyb = mean(prop_hybrid,na.rm=T))|>
+  ungroup() |> 
+  mutate(hyb_dev = prop_hybrid -mean_hyb)|>
+  summarise(sd_C = sd(hyb_dev , na.rm = T))
+sprintf("C) Pooled sd = %s",pull(pooled_sd_C))
+```
+
+:::exercises
+**The set of questions below**  focuses on comparing the association between petal color and pollinator visitation to the association between petal color and proportion hybrid seed. Use the webR console above to work through these!
+
+**Q4)** The difference in conditional mean hybrid proportion between pink and white flowers is: `r fitb(0.1787  , tol = 0.01)`
+
+**Q5)** The pooled standard deviation of hybrid proportion between pink and white flowers is: `r mcq(c("0.232","0.193", answer = "0.214"))`
+
+**Q6)** Which trait is more strongly associated with petal color — the proportion of hybrid seeds or visits from a pollinator (*visits*)? `r longmcq( c("**Pollinator visits** — Pink flowers had about 0.6 more visits than white flowers, but only about 0.18 greater proportion of hybrid seeds.", "**Hybrid seeds** — Pink flowers had about 4.7 times as many hybrid seeds as white flowers, but only about 2.6 times as many visits.", answer = "**Hybrid seeds** — Cohen’s *D* for the relationship between petal color and proportion hybrid seeds was large, while Cohen’s *D* for the relationship between petal color and visits was medium.", "You cannot compare strength of associations when the response variables are measured on different scales." ))`
+
+---
+
+
+:::
+
+
+```{webr-r}
+#| autorun: true
+n_plants                 <- 131 
+n_parv                   <-  74
+n_xan                    <-  57
+n_parvANDparvChloro <- 74
+n_parvANDxanChloro  <-  0
+n_xanANDparvChloro  <-  8
+n_xanANDxanChloro   <- 49
+n_xanChloro  <- n_parvANDxanChloro + n_xanANDxanChloro
+
+prop_xanANDxanChloro <- n_xanANDxanChloro / n_plants
+prop_xan            <-  n_xan  / n_plants    
+prop_xanChloro <- (n_xanChloro) / n_plants
+
+prop_xanANDxanChloro
+```
+
+:::exercises
+**Q7 SETUP** We collected 131 plants (74 *parviflora*, 57 *xantiana*) from a natural hybrid zone between *xantiana* and *parviflora* at Sawmill Road. We then genotyped these plants at a chloroplast marker that distinguishes between chloroplasts originating from *parviflora* and *xantiana*. All 74 *parviflora* plants had a *parviflora* chloroplast, while 49 of the 57 *xantiana* plants had a *xantiana* chloroplast (the remaining 8 had a *parviflora* chloroplast). 
+
+**Q7A)**
+ If having a *xantiana* chloroplast and being a *xantiana* plant were independent, what proportion of plants would you *expect* to be xantiana and have a *xantiana* chloroplast? `r fitb(0.16275, tol = 0.00076)`  
+
+`r hide("Refresher on the multiplication rule for independent events")`
+
+If two binary variables are independent, the expected joint proportion (i.e. the probability of A and B) is the product of their proportions:
+  
+$$ P(A \text{ and } B) = P(A) \times P(B) $$
+
+`r unhide()`
+
+**Q7B)** Quantify the difference between the proportion of plants that are *xantiana* and have *xantiana* chloroplasts vs. what we expect if these two binary variables were independent. `r fitb( 0.2112958, tol = 0.0005)`  
+
+**Q7C)**
+What is the covariance between being a *xantiana* plant and having a *xantiana* chloroplast?  **Hint:** remember [Bessel's correction](https://en.wikipedia.org/wiki/Bessel%27s_correction). `r fitb(0.2129184, tol = 0.001)`
+:::
+
+```{webr-r}
+#| autorun: true
+# attempt to find correlation and covariance
+step_1_to_find_cor<- ril_data |> 
+  select(lwc, prop_hybrid)|>
+  mutate(lwc_dev = lwc - mean(lwc, na.rm=T),
+         phyb_dev = prop_hybrid - 
+                      mean(prop_hybrid, na.rm=T),
+         cross_prod = lwc_dev* phyb_dev )
+
+step_1_to_find_cor|>
+  summarise(mean_lwc  = mean(lwc,na.rm=T),
+            mean_phyb = mean(prop_hybrid,na.rm=T),
+            sd_lwc    = sd(lwc, na.rm=T),
+            sd_phyb   = sd(prop_hybrid,na.rm=T),
+            n         = sum(!is.na(cross_prod )),
+            sumXprods = sum(cross_prod ,na.rm = T),
+            my_cov    = sumXprods / (n -1),
+            my_cor = my_cov / (sd_lwc*sd_phyb)
+            )|>
+  select(n, sumXprods, my_cov, my_cor)
+
+# actual answers
+ril_data |> 
+  summarise(covar = cov(lwc, prop_hybrid,
+                      use = "pairwise.complete.obs"),
+            r = cor(lwc, prop_hybrid,
+                      use = "pairwise.complete.obs"))
+```                  
+               
+:::exercises
+
+
+**Q8)** In the code above, I calculated the correlation and covariance between lwc and prop_hybrid using their mathematical formulas. However, my calculated values don't match those returned by cor(). Why not?  `r longmcq(c(  answer = "The manual method failed to remove all rows with missing values — while *cov()* and *cor()* used *pairwise.complete.obs*, the custom code did not.",  "There is a mistake in the correlation formula — the covariance should be divided by the product of the *means*, not the standard deviations.",  "R sometimes has the wrong formulae -- that's why I always type the formula's in myself.",  "The standard deviations used were incorrect because *sd()* doesn't apply Bessel's correction.",  "The discrepancy is due to numerical precision — it's expected and not worth worrying about."))`
+:::
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(ggforce)
+source("../../_common.R") 
+bind_rows(
+  tibble(x = rnorm(50, mean = 12, sd = 4))|>
+    mutate( y = rnorm(50, x^4,sd = 120)/1e4,
+        dataset = "a"),
+tibble(x = rnorm(30, mean = 12, sd = 4))|>
+  mutate(y = rnorm(30, x,sd = 4),
+        dataset = "b"),
+tibble(x = rnorm(30, mean = 12, sd = 4))|>
+  mutate( y = rnorm(30, -x,sd = 2),
+        dataset = "c"),
+tibble(x = rnorm(30, mean = 12, sd = 4))|>
+  mutate( y = rnorm(30, 12 +x/10,sd = 2),
+        dataset = "d"))|>
+  ggplot(aes(x=x,y=y))+
+  geom_point(size= 3, alpha = .6)+
+  geom_smooth(method = "lm")+
+  facet_wrap(~dataset, scales = "free")
+```
+
+             
+:::exercises
+**Q9 SETUP** Consider the plots above
+
+**Q9A)** In which plot are x and y most tightly associated?  `r mcq(c(answer = "a","b","c","d"))`
+
+**Q9B)** In which plot are x and y most tightly linearly associated?  `r mcq(c( "a","b",answer = "c","d"))`
+
+**Q9C)** In which plot do x and y have the largest correlation coefficient?  `r mcq(c( "a",answer =  "b","c",  "d"))`
+
+**Q9C)** In which plot are does x do the worst job of predicting y? `r mcq(c( "a","b","c", answer =  "d"))`
+:::
+
+## 📊 Glossary of Terms   {#summarizing_associations_glossary-of-terms}  
+
+:::glossary
+
+#### 🔗 **1. Types of Association**
+
+- **Association**: A relationship or pattern between two variables, without assuming causation.
+- **Correlation**: A numerical summary of how two variables move together.  
+  - *Positive*: As one increases, the other tends to increase.  
+  - *Negative*: As one increases, the other tends to decrease.  
+- **Causation**: A relationship in which changes in one variable directly produce changes in another.
+
+---
+
+#### ⚖️ **2. Categorical Associations**
+
+- **Conditional Proportion**: The proportion of a category (e.g., visited flowers) within levels of another variable (e.g., pink or white petals).  
+  - Written as $P(A|B)$, the probability of A given B.
+- **Multiplication Rule**: If two variables are independent, then $P(A \text{ and } B) = P(A) \times P(B)$.
+- **Relative Risk**: The ratio of conditional proportions between two groups.
+- **Confounding Variable**: A third variable that creates a false appearance of association between two others.
+
+---
+
+#### 🔢 **3. Numeric Associations**
+
+- **Covariance (`cov()`)**: Measures how two numeric variables co-vary.  
+  - Positive: variables increase together.  
+  - Negative: one increases as the other decreases.  
+  - Sensitive to scale.
+
+- **Cross Product**: For two variables, the product of their deviations from their means:  
+  $(X_i - \bar{X})(Y_i - \bar{Y})$
+
+- **Correlation Coefficient (`cor()`)**: A unitless summary of linear association, ranging from -1 to 1.  
+  $r = \frac{\text{Cov}_{X,Y}}{s_X s_Y}$
+  - *r ≈ 0*: No linear relationship  
+  - *r > 0*: Positive linear relationship  
+  - *r < 0*: Negative linear relationship  
+
+---
+
+#### 📏 **4. Comparing Group Means**
+
+- **Conditional Mean**: The average of a numeric variable within each group of a categorical variable.
+- **Difference in Means**: A common summary of how a numeric variable differs across groups.
+- **Cohen’s D**: Standardized difference between two group means.  
+  $D = \frac{\bar{X}_1 - \bar{X}_2}{s_{pooled}}$
+
+- **Pooled Standard Deviation**: A weighted average of within-group standard deviations, used in Cohen’s D.
+
+---
+
+#### 📈 **5. Visual Summaries of Associations**
+
+- **Scatterplot**: Plots individual observations for two numeric variables. Good for spotting trends and calculating correlation.
+- **Boxplot**: Shows distributions (medians, IQRs) across groups.
+- **Barplot of Conditional Proportions**: Visualizes proportions of one categorical variable within levels of another.
+- **Sina Plot**: A jittered density-style plot used to show distributions of numeric values within categories, especially useful when overplotting is an issue.
+
+:::  
+
+
+## Key R Functions {#summarizing_associations_key-r-functions}  
+
+:::functions
+
+
+#### 📊 **Visualizing Associations**
+
+- **[`stat_summary()`](https://ggplot2.tidyverse.org/reference/stat_summary.html)**: Adds summary statistics like means and error bars to plots.
+- **[`geom_smooth()`](https://ggplot2.tidyverse.org/reference/geom_smooth.html)**: Adds a trend line to scatterplots.
+
+---
+
+#### 📈 **Summarizing Associations Between Variables**
+
+
+
+- **[`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html)** *([dplyr])*: Groups data for grouped summaries like conditional proportions or means. 
+- **[`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html)** *([dplyr])*: Summarizes multiple rows into a single value, e.g., a mean, covariance, or correlation.   
+- **[`mean()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mean.html)** *([base R])*: Computes means (or proportions). In this chapter we combine this with `group_by()` to find conditional means (or conditional proportions).
+- **[`cov()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html)**: Calculates covariance between two numeric variables.
+- **[`cor()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html)**: Calculates the correlation coefficient.
+
+We often combine these below with the following chain of operations.   
+- *For conditional means:* `data|>group_by()|>summarize(mean())`.    
+- *For associations:* `data |>group_by()|>summarize(cor())`.    
+
+:::
+
+
+## R Packages Introduced     {#summarizing_associations_r-packages-introduced}    
+
+:::packages
+- **[`GGally`](https://ggobi.github.io/ggally/)**: Extends `ggplot2` with convenient functions for exploring relationships among multiple variables. The [`ggpairs()`](https://ggobi.github.io/ggally/reference/ggpairs.html) function produces a matrix of plots showing pairwise associations, including histograms, scatterplots, and correlation coefficients.
+
+- **[`ggforce`](https://ggforce.data-imaginist.com/)**: Provides advanced geoms for `ggplot2`. This chapter uses [`geom_sina()`](https://ggforce.data-imaginist.com/reference/geom_sina.html) to reduce overplotting by jittering points while preserving density. 
+:::
+
+
+
+## Additional resources   {#summarizing_associations_additional-resources}              
+
+
+:::learnmore 
+
+**Other web resources:**  
+
+- [Regression, Fire, and Dangerous Things (1/3)](https://elevanth.org/blog/2021/06/15/regression-fire-and-dangerous-things-1-3/): A fantastic essay about challenges in going from correlation to causation.   
+- [Spurious correlations](https://www.tylervigen.com/spurious-correlations): A humorous collection of weird correlations from the world.  
+- [Guess the correlation](https://www.guessthecorrelation.com/): A fun video game in which you see a plot and must guess the correlation. This is great for building an intuition about the strength of a correlation.  
+
+
+**Videos:**  
+
+- [Correlation Doesn't Equal Causation: Crash Course Statistics #8](https://www.youtube.com/watch?v=GtV-VYdNt_g&pp=0gcJCfcAhR29_xXO).  
+
+- [Calling Bullshit](https://callingbullshit.org/index.html) has a fantastic set of videos on correlation and causation.   
+
+   - [Correlation and Causation](https://www.youtube.com/watch?v=YAAHJm1pi1E): "Correlations are often used to make claims about causation. Be careful about the direction in which causality goes. For example: do food stamps cause poverty?"    
+   - [What are Correlations?](https://www.youtube.com/watch?v=BKQqKKjAwqM) :"Jevin providers an informal introduction to linear correlations."  
+   - [Spurious Correlations?](https://www.youtube.com/watch?v=WNsLcg2GQMY): "We look at [Tyler Vigen’s silly examples of quantities appear to be correlated over time](https://www.tylervigen.com/spurious-correlations)), and note that scientific studies may accidentally pick up on similarly meaningless relationships."  
+   - [Correlation Exercise](https://www.youtube.com/watch?v=SijyVCYWzjQ)" "When is correlation all you need, and causation is beside the point? Can you figure out which way causality goes for each of several correlations?"
+   - [Common Causes](https://callingbullshit.org/videos.html): "We explain how common causes can generate correlations between otherwise unrelated variables, and look at the correlational evidence that storks bring babies. We look at the need to think about multiple contributing causes. The fallacy of post hoc propter ergo hoc: the mistaken belief that if two events happen sequentially, the first must have caused the second."  
+   - [Manipulative Experiments](https://www.youtube.com/watch?v=-p7_HFJLA_k): "We look at how manipulative experiments can be used to work out the direction of causation in correlated variables, and sum up the questions one should ask when presented with a correlation.
+:::

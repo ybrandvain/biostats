@@ -1,0 +1,242 @@
+## • 9. Dataviz Summary {.unnumbered #dataviz_summary}
+
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr' ,'ggplot2', 'palmerpenguins']
+  autoload-packages: true
+---
+
+
+Links to: [Summary](#datviz_summary_chapter-summary). [Chatbot tutor](#datviz_summary_chatbot_tutor). [Questions](#datviz_summary_practice-questions). [Glossary](#datviz_summary_glossary-of-terms). [R functions](#datviz_summary_key-r-functions). [R packages](#datviz_summary_r-packages-introduced). [More resources](#datviz_summary_additional-resources).
+
+## Chapter Summary  {#datviz_summary_chapter-summary}   
+
+
+
+```{r}
+#| echo: false
+#| column: margin
+#| fig-alt: "\"By the year 2019, all information will be communicated in this format.\" The comic is filled with exaggerated visual cues including: a graph predicting \"all information\" converging to a point in 2019, a pie chart labeled \"WILL BE\" with a large arrow pointing to \"6 years from now (72 months),\" stick figures excitedly saying \"Yes!\" beneath the word \"COMMUNICATED.\" Below, the phrase \"IN THIS\" appears in giant letters, followed by a Venn diagram of \"CLEAR\" and “CONCISE,” and a bar chart labeled \"FORMAT,\" where the tallest bar is marked \"THIS.\" The comic parodies overly designed and stylized infographics."
+#| fig-cap: "[\"Tall Infographics\"](https://xkcd.com/1273/) cartoon from xkcd. Rollover text says: \"Big data\" does not just mean increasing font size. [Explanation here](https://xkcd.com/1273/)." 
+library(knitr)
+library(webexercises)
+include_graphics("https://imgs.xkcd.com/comics/tall_infographics_2x.png")
+```
+
+An effective visualization allows you to rapidly communicate your key findings to your audience. The best visualizations are honest, transparent, clear, and accessible. They highlight important patterns while minimizing confusion or distraction, and they are thoughtfully tailored to both the audience and the format. Great figures avoid misleading elements and use design choices (e.g. captions, color, and labels) to guide interpretation.
+
+ 
+
+### Chatbot tutor  {#datviz_summary_chatbot_tutor}   
+
+
+
+Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/g-684745db4bb88191ab4e5e2e98226ce2-data-viz-tutro)) I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+
+
+## Practice Questions  {#datviz_summary_practice-questions}   
+
+Try these questions!  
+
+
+
+```{r}
+#| echo: false
+#| label: fig-hemo
+#| fig-cap: "Hemoglobin levels of people native to different countries."
+#| fig-alt: "A four-panel figure comparing hemoglobin levels across four populations: Andes (red), Ethiopia (green), Tibet (cyan), and USA (purple). *Panel a:* shows overlapping density plots for all four populations using only color to distinguish groups. *Panel b:* is similar to panel a but includes population names (\"USA\" in purple, \"Andes\" in red) directly labeled on the plot. *Panel c:* is a sina plot with population  (Andes, Ethiopia, Tibet, USA) on the x-axis and labelled in color. *Panel d:* uses \"small multiples\" via Rs `facet_wrap()` function to create  four vertically stacked individual density plots, each labeled with the population name (Andes, Ethiopia, Tibet, USA), with each density plot filled by the appropriate color."
+#| out-width: "80%"
+library(knitr)
+include_graphics("../../figs/summarizing_data/data_viz/hemo.png")
+```
+
+:::exercises
+
+
+**Q1)**  Which of the plots in @fig-hemo keep all information even if printed in black and white?  `r mcq(c("a & b","a & c","a & d", "b & c", "b & d", answer = "c & d" ))`  
+
+
+**Q2)**  Which of the plots  in @fig-hemo is still somewhat useful but loses some information?  `r mcq(c("a",answer="b","c", "d" ))`  
+
+:::
+
+```{r}
+#| echo: false
+#| label: fig-sneak1
+#| fig-cap: "Canabalistic dads."
+#| fig-alt: "Two bar plots compare the proportion of offspring cannibalized by dominant male fish across three mating scenarios: \"one father,\" \"one sneaker,\" and \"multiple sneakers.\" *Panel A* displays the bars in the order: multiple sneakers, one father, one sneaker. *Panel B* displays the same data but reorders the x-axis categories to: one father, one sneaker, multiple sneakers — aligning the categories with increasing risk of cuckoldry and making the pattern easier to interpret. In both panels, the proportion cannibalized increases with more sneaker males."
+#| column: page-right
+#| out-width: "80%"
+library(knitr)
+include_graphics("../../figs/summarizing_data/data_viz/sneak1.png")
+```
+
+:::exercises
+
+
+**Q3)**  Which plot in @fig-sneak1 is better?  `r mcq(c("A",answer = "B","It depends...", "Don\'t judge plots" ))`  
+
+
+**Q4)**  Your chose your answer, above, because the better plot `r mcq(c("Shows all the data",answer="Makes patterns easy to see","Presents data honestly", "Draws graphics clearly","Is accesssible" ,"I told you we dont judge plots, jeez"))`  
+
+:::
+
+
+```{r}
+#| echo: false
+#| label: fig-sneak2
+#| fig-cap: "Canabalistic dads, revisited."
+#| fig-alt: "A grouped bar chart titled \"C) Dominant male fish are more likely to cannibalize their brood as risk of cuckoldry increases.\" The x-axis shows three mating conditions: \"one father,\" \"one sneaker,\" and \"multiple sneakers.\" The y-axis represents count (frequency). For each mating type, two bars are shown: red for \"no cannibalism\" and teal for \"yes cannibalism.\" The \"one father\" group shows a high number of \"no\" cases and moderate number of \"yes\" cases. The \"one sneaker\" and \"multiple sneakers\" groups have far fewer total cases, but a greater proportion of them result in cannibalism."
+#| out-width: "65%"
+library(knitr)
+include_graphics("../../figs/summarizing_data/data_viz/sneak2.png")
+```
+
+
+:::exercises
+
+**Q5)** Which feature of  @fig-sneak2 is better than @fig-sneak1?  `r mcq(c(answer="Shows all the data","Makes patterns easy to see","Presents data honestly", "Draws graphics clearly","Is accesssible"))`  
+
+**Q6)** Which feature of  @fig-sneak1 is better than @fig-sneak2?  `r mcq(c("Shows all the data", answer = "Makes patterns easy to see","Presents data honestly", "Draws graphics clearly","Is accesssible"))` 
+
+:::
+
+```{r}
+#| echo: false
+#| label: fig-sneak3
+#| fig-cap: "Canabalistic dads, revisited (again)."
+#| fig-alt: "A bar plot titled \"D) More males acting as the only father cannibalize their brood than do males with sneakers.\" The x-axis shows three mating conditions: \"one father,\" \"one sneaker,\" and \"multiple sneakers.\" The y-axis shows the count of males who cannibalized their brood. The tallest bar corresponds to \"one father\" (~60 males), while the other two bars (\"one sneaker\" and \"multiple sneakers\") are much shorter (~18 males each). However, this plot shows only the absolute number of cannibalism cases and does not account for differing total group sizes or proportions."
+#| out-width: "60%"
+library(knitr)
+include_graphics("../../figs/summarizing_data/data_viz/sneak3.png")
+```
+
+:::exercises
+**Q7)** What is the biggest problem with  @fig-sneak3?   `r mcq(c("It does not show all the data",  "It does not make patterns easy to see", answer = "It does not display patterns honestly", "It does not draw graphics clearly"))` 
+
+
+`r hide("Explanation")`
+
+The y-axis is labeled \"count,\" so unlike @fig-sneak1 and @fig-sneak2, this plot shows only the number of cannibalism cases—not the proportion. As a result, a reader might misinterpret @fig-sneak3 and incorrectly conclude that broods with only one father are the most susceptible to cannibalism.
+
+
+`r unhide()`
+
+
+**Q8)**
+Which of the figure above do you like the best and why? <html><textarea rows="6" cols="50" placeholder="Your answer here..."></textarea></html>
+
+:::
+
+
+```{r}
+#| echo: false
+#| label: fig-test
+#| fig-cap: "Data viz test from an online advertisement."
+#| fig-alt: "A promotional graphic challenges viewers with the question: “Can you spot what’s wrong with this chart?” followed by the reassurance, \"Its OK, most people miss it too...\" The chart below shows quarterly bar heights labeled Q1 to Q1P, increasing progressively. A curved green arrow is superimposed over the bars. The vertical axis ranges from $10M to $275M with evenly spaced labels at $10M, $50M, $200M, $250M, and $275M. At the bottom, the graphic reads: \"Time to level-up your data skills – TAKE THE FREE ASSESSMENT.\""
+#| out-width: "100%"
+library(knitr)
+include_graphics("../../figs/summarizing_data/data_viz/dataviz_test.png")
+```
+
+:::exercises
+**Q9)** I stole @fig-test from a company selling a data vizclass. Examine their plot and find at least three bad data viz practices. Then say which one you think its the worst and why. <html><textarea rows="4" cols="50" placeholder="Your answer here..."></textarea></html>
+
+:::
+
+
+## 📊 Glossary of Terms   {#datviz_summary_glossary-of-terms}     
+ 
+
+:::glossary
+
+#### 🏷 **1. ️ Figure Elements & Interpretation**
+
+- **Legend:** A guide that explains the meaning of colors, symbols, or line types in a plot. Helpful when symbols are ambiguous, but often unnecessary when direct labeling is used.      
+
+- **Caption:** Text beneath a figure that highlights the main point and guides the reader’s interpretation. A good caption doesn’t just restate what’s shown—it helps make sense of it.
+
+- **Direct Labeling:** Placing labels directly on or near data elements (e.g., lines, points, bars), so viewers don’t have to cross-reference with a legend. Especially useful in talks and posters.    
+  
+- **Redundant Coding:** Encoding the same variable multiple ways (e.g., using both color and shape for species). Can increase accessibility but should be used carefully to avoid clutter.
+
+#### ♿ **2. Accessibility & Universal Design**   
+
+- **Alt Text:** A textual description of a figure, written for people who cannot see it. Good alt text conveys the message of the figure, not just its parts.    
+
+- **Accessibility:** Designing figures so they can be understood by people with diverse abilities (e.g., colorblindness, low vision, screen reader users). Often overlaps with universal design.    
+
+- **Colorblindness:**  A common visual condition that affects how people perceive color. Plots should use color palettes and redundancy (e.g., line types) to remain interpretable without relying on color alone.   
+
+- **Universal Design:** The principle of creating products and experiences—like data visualizations—that work well for as many people as possible, regardless of ability.   
+
+### 💥 **3. Visual Clarity & Distraction**   
+
+- **Overplotting:** When data points are so densely packed they obscure patterns or hide important features. Common with large datasets; solutions include transparency, jittering, or summarizing.   
+
+- **Chartjunk:** Any visual element in a plot that doesn’t help convey the data—like heavy gridlines, excessive shading, or unnecessary 3D effects. Coined by Edward Tufte.   
+
+- **Data Viz "Duck":** A graphic with unnecessary visual decoration (named after a duck-shaped building in Long Island). A plot that prioritizes aesthetics or novelty over clarity.   
+
+- **Cognitive Burden:** The mental effort required to interpret a figure. Good visualizations reduce cognitive burden by being clear, consistent, and well-structured.
+
+:::  
+
+
+## Key R Functions  {#datviz_summary_key-r-functions}   
+
+
+
+:::functions
+
+**This section did not focus on R, but rather concepts for data visualization.** 
+
+:::
+
+
+## R Packages Introduced
+
+:::packages
+
+**This section did not focus on R, but rather concepts for data visualization.**
+
+:::
+
+
+
+## Additional resources   {#datviz_summary_r-packages-introduced}  
+
+
+:::learnmore 
+
+**Other web resources:**  
+
+- [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) (@wilke2019): A free online book about best practices in data viz. Also available in [physical form](https://www.amazon.com/Fundamentals-Data-Visualization-Informative-Compelling/dp/1492031089).     
+- [Storytelling with Data](https://www.storytellingwithdata.com/): The work of Cole Nussbaumer Knaflic. This website links to her [books](https://www.storytellingwithdata.com/books), a usefull [chart guide](https://www.storytellingwithdata.com/chart-guide) and more (see links to her most relevant podcast episodes below).    
+- Thoughts on poster presentations: [NPR article on a brief trend in minimal poster design](https://www.forbes.com/sites/evaamsen/2019/06/18/a-graphic-design-revolution-for-scientific-conference-posters/). [A critique of this ide in Forbes](https://www.forbes.com/sites/evaamsen/2019/06/18/a-graphic-design-revolution-for-scientific-conference-posters/).
+- [Axes of evil: How to lie with graphs](https://medium.com/@hypsypops/axes-of-evil-how-to-lie-with-graphs-389c1656d538): This short blogpost goes over some classic dishonest graphs.    
+
+
+**Videos:**  
+
+- [The Art of Data Visualization | Off Book | PBS Digital Studios](https://www.youtube.com/watch?v=AdSZJzb-aX8).  
+
+- Calling Bullshit: [Misleading axes](https://www.youtube.com/watch?v=9pNWVMxaFuM), [Manipulating bin size](https://www.youtube.com/watch?v=zAg1wsYfwsM) [Data viz ducks](https://www.youtube.com/watch?v=rmii1hfP6d4) and [Duck hunting](https://www.youtube.com/watch?v=wTNZCHLCzYA&list=PLPnZfvKID1Sje5jWxt-4CSZD7bUI4gSPS&index=36), [Glass slippers](https://www.youtube.com/watch?v=59teS0SUHtI), [The Principle of Proportional Ink](https://www.youtube.com/watch?v=oNhusd3xFC4).   
+
+   - [Correlation and Causation](https://www.youtube.com/watch?v=YAAHJm1pi1E): "Correlations are often used to make claims about causation. Be careful about the direction in which causality goes. For example: do food stamps cause poverty?"    
+   - [What are Correlations?](https://www.youtube.com/watch?v=BKQqKKjAwqM) :"Jevin providers an informal introduction to linear correlations."  
+   - [Spurious Correlations?](https://www.youtube.com/watch?v=WNsLcg2GQMY): "We look at [Tyler Vigen’s silly examples of quantities appear to be correlated over time](https://www.tylervigen.com/spurious-correlations)), and note that scientific studies may accidentally pick up on similarly meaningless relationships."  
+   - [Correlation Exercise](https://www.youtube.com/watch?v=SijyVCYWzjQ)" "When is correlation all you need, and causation is beside the point? Can you figure out which way causality goes for each of several correlations?"
+   - [Common Causes](https://callingbullshit.org/videos.html): "We explain how common causes can generate correlations between otherwise unrelated variables, and look at the correlational evidence that storks bring babies. We look at the need to think about multiple contributing causes. The fallacy of post hoc propter ergo hoc: the mistaken belief that if two events happen sequentially, the first must have caused the second."  
+   - [Manipulative Experiments](https://www.youtube.com/watch?v=-p7_HFJLA_k): "We look at how manipulative experiments can be used to work out the direction of causation in correlated variables, and sum up the questions one should ask when presented with a correlation.
+   
+**Podcasts:**
+
+- **[Storytelling with data:](https://www.storytellingwithdata.com/podcast)** Here are some episodes that I think best complement this chapter [#4 it depends....](https://open.spotify.com/episode/6rmRxXTkAwSZbGEZjPIGqp?si=CkpbTry9T8mt8h1gp2K6qw&nd=1&dlsi=4e9bd8567e034a57),  [#4 it depends....](https://open.spotify.com/episode/6rmRxXTkAwSZbGEZjPIGqp?si=CkpbTry9T8mt8h1gp2K6qw&nd=1&dlsi=4e9bd8567e034a57), [#8 the many myths of data visualization](https://open.spotify.com/episode/4OcvSE3MKh7Ekz1XCf3II3?si=PNEvmA5-S_aHOCvp-u0aBw&nd=1&dlsi=5ea7016ad9334c9c), [#10 right place, right graph](https://open.spotify.com/episode/39LVP1ZcvC4KCtR16Mvwwk?si=IoAwhZoVQyaUWBv7nAQ_Yw&nd=1&dlsi=d4d38ef5bdc3406d), [#17 which graph should I use?](https://www.storytellingwithdata.com/podcast/which-graph), [#43 misleading graphs]( https://open.spotify.com/episode/2gTaxRiNtpH0yfiOyzeHqx?si=lU32lKU-QUeNr0W7WJiSTA&nd=1&dlsi=28ef2bf5fde6455b), [#64 Beginner mistakes in data viz](https://open.spotify.com/episode/0SlsooO8CVj15TeR6UDFtW?si=L2RHegT7TjiOeFOU_3x7Qw&nd=1&dlsi=efe8b4640ede46fd). 
+
+**Social:**
+
+- [Graph Crimes](https://x.com/GraphCrimes).  
+:::

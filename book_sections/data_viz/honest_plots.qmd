@@ -1,0 +1,552 @@
+## • 9. Honest plots {.unnumbered #honest_plots}
+
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'forcats','ggplot2']
+  autoload-packages: true
+shinylive:
+  packages: ['dplyr', 'forcats','ggplot2']
+  autoload-packages: true
+---
+
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(shinylive)
+library(palmerpenguins)
+library(tweetrmd)
+library(knitr)
+library(tidyr)
+library(ggplot2)
+library(ggthemes)
+library(forcats)
+library(DT)
+library(cowplot)
+library(broom)
+library(patchwork)
+library(emo)
+library(webexercises)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+--- 
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:**     
+You're making a plot to share with the world (or you are reading someone else's plot) and you want to make sure that you are not misleading (or being misled) with this visual.
+
+**Learning Goals: By the end of this subchapter, you should be able to:**  
+
+1. **Recognize how visual choices can mislead viewers**  by asking the following questions: 
+   - Is the  y-axis truncated, and when and y does this matter?
+   - Is there enough context to appropriately interpret the y-correctly?  
+   - Is the order of the x-axis or the color palette appropriate? 
+   - Does bin size (or other smoothing decisions) allow for an accurate interpretation of the data?  
+
+
+2. **Improve misleading plots** by making suggestions about how  make choices that promote clarity.
+
+3. **Evaluate plots for potential misinterpretation** by 
+   - Going over the ways figures can accidentally mislead, and making sure you avoided those common pitfalls. 
+   - Showing your plot to a friend and asking them for their superficial first reaction. **This is the best thing you can do.**
+
+
+:::     
+
+---  
+
+## Good Plots Are Honest 
+
+Plots should clearly convey points without misleading or distorting the truth. A misleading exploratory plot can lead to confusion and wasted time, while a misleading explanatory plot can erode the reader's trust. Honesty in plots builds credibility and helps ensure that both you and your audience stay on track.
+
+Importantly, honest people with good intentions can still create misleading plots - often due to default settings in R or other visualization tools. So, simply not intending to deceive isn’t enough. After we make a plot, we should take a step back and examine it - better yet, show it to naive peers to see what conclusions they draw from it. This practice can ensure that our plots are not  unintentionally misleading.
+
+### (Dis-)Honest Axes
+
+```{r, fig.cap = 'Misleading axes from [calling bullshit](https://www.youtube.com/watch?v=9pNWVMxaFuM&feature=emb_logo).',  echo=FALSE}
+include_url("https://www.youtube.com/embed/9pNWVMxaFuM")
+```
+
+#### (Dis-)Honest Y-Axes 
+
+**DishonestY: truncating the axis.** When people see a filled area in a plot, they naturally interpret it in terms of proportions. This can be a problem when the baseline of a filled bar is hidden or cropped, making modest differences look dramatic. Compare  @fig-noY,  @fig-truncY and  @fig-goodY in the three tabs below to see how a truncated y-axis can mislead a reader. 
+
+
+
+
+
+::: {.panel-tabset group="language"}
+
+### Fig. 1
+
+```{r}
+#| label: fig-noY
+#| fig-cap: '**Misleading plot:** Truncated y-axis with no visible axis labels. The differences in student–teacher ratios appear exaggerated.'
+#| fig-alt: "Bar chart showing student–teacher ratios by world region with a y-axis that starts well above zero and has no tick marks or labels. The bars appear dramatically different in height, suggesting misleadingly large differences."
+#| echo: false
+include_graphics("../../figs/summarizing_data/data_viz/no_y.png")
+```
+
+### Fig. 2  
+
+```{r}
+#| label: fig-truncY
+#| fig-cap: '**Still misleading:** Adding axis labels to a truncated y-axis does not prevent our plot from misleading readers. The visual perception continues to overpower the text.'
+#| fig-alt: "Same bar chart as before, but now includes y-axis tick marks. However, the axis still starts well above zero, exaggerating the differences among regions."
+#| echo: false
+include_graphics("../../figs/summarizing_data/data_viz/trunc_y.png")
+```
+
+### Fig. 3 
+
+```{r}
+#| label: fig-goodY
+#| fig-cap: '**Honest plot:** The y-axis starts at zero, providing an accurate visual impression of the true differences in student–teacher ratios.'
+#| fig-alt: "A bar chart showing student–teacher ratios by region with a full y-axis starting at zero and labeled tick marks. The differences among bars appear more proportional and accurate."
+#| echo: false
+include_graphics("../../figs/summarizing_data/data_viz/reg_y.png")
+```
+
+:::  
+
+:::aside
+**If you don't see any plots here, click on any of the tabs.** Then browse through all of them by changing between tabs. 
+:::
+
+From these plots we can see that:   
+
+- @fig-noY leads a reader to believe that student-to-teacher ratios in Africa are four times higher than in Asia, even though the actual difference is closer to two-fold. 
+- @fig-truncY illustrates that adding y-labels  does little to fix this, as our eyes are still driven to the magnitude of difference in bars, not the few letters that try to override this visual message. 
+- @fig-goodY solves this by honestly displaying  the full y-axis.  <br><br>
+
+
+
+:::fyi
+**Not all y-axes need to start at zero:**   
+
+Truncating the y-axis is most misleading for filled plots, but it’s not always necessary to start at zero. 
+
+- **Scatterplots**: These don’t typically trick the eye the way bar plots do, so it’s less important to start the y-axis at zero. If you want to emphasize absolute differences, show the data as points and worry less about truncating the y-axis.  
+- **Non-zero baselines**: For variables like temperature, starting the y-axis at zero may be arbitrary. 
+:::
+
+---
+
+**DishonestY: sneaky scales**  
+
+We have previously discussed how common data transformations that can aid in modeling and visualizing our data. For example, log-transformation can be helpful for variables that grow exponentially. When such transformations are necessary be sure to clearly communicate the transformed scale.  For example, if you use a log scale, but your readers don't notice it,  they will misinterpret the plot -- a straight line on a log-log plot suggests a power-law relationship, while a straight line on a semi-log plot suggests exponential growth. A straight line on a log scale means exponential growth, not a steady increase.
+
+**If you’re displaying your data on a log scale, be loud about it:** label the axes clearly. I particularly like the [`annotation_logticks()`](https://ggplot2.tidyverse.org/reference/annotation_logticks.html) function to in the ggplot2 package to communicate the scale (as in @fig-logscale B)
+
+
+```{r}
+#| column: page-right
+#| label: fig-logscale
+#| fig-width: 12
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for making a logscale two-panel figure and adding logticks."
+#| fig-cap: "Mammalian brain vs. body weight on a log scale. **A** the data on log-transformed axes with labeled axes. **B** adds log tick marks with [`annotation_logticks()`](https://ggplot2.tidyverse.org/reference/annotation_logticks.html), making the scale more visually explicit."
+#| fig-alt: "Two-panel scatterplot comparing brain weight to body weight for mammals, using log10 scales on both axes. Panel A uses labeled log10 breaks without tick marks. Panel B shows the same plot with small tick marks along the axes to reinforce the log scale visually."
+library(patchwork)
+
+a<- ggplot(msleep, aes(bodywt, brainwt, label = name)) +
+    geom_point(na.rm = TRUE) +
+    scale_x_log10(
+        breaks = scales::trans_breaks("log10", function(x) 10^x),
+        labels = scales::trans_format("log10", scales::math_format(10^.x))
+    ) +
+    scale_y_log10(
+        breaks = scales::trans_breaks("log10", function(x) 10^x),
+        labels = scales::trans_format("log10", scales::math_format(10^.x))
+    )  
+
+
+b <- a + 
+  annotation_logticks() + 
+  labs(title = "Mammalian brain weight as a function of body weight", 
+       subtitle = "Both axes are plotted on a log10 scale.")
+
+a <- a + labs(title = "Mammalian brain weight as a function of body weight",
+              subtitle = " ")
+
+a+b
+```
+---
+
+**DishonestY: broken axes**  
+
+Sometimes extreme values on the y-axis make it hard to see meaningful variability for lower values. In some cases this situation is so extreme that the data cannot be plotted on a continuous without the bulk of the data being squished flat. One solution is a broken axis -- a literal break to show the two different ranges of the data. I hesitate to recommend such an approach because it so often misleads the reader by distorting the relative distances. If you must use a "broken axis" be very explicit that you are doing so. 
+
+A simple break as shown in @fig-brokenaxis A is insufficient. Rather something more extreme, like a large break marked by bright lines (e.g. @fig-brokenaxis B) is needed to ensure that the reader does not process the data without considering the axis break.
+
+
+
+```{r}
+#| label: fig-brokenaxis
+#| echo: false
+#| fig-cap: "Broken y-axes can be misleading if not clearly marked. Panel A includes a subtle y-axis break but risks misleading viewers. Panel B makes the break impossible to miss by using dashed lines and extra spacing. Always be loud and clear if you use a broken axis. Read more [here](https://www.fm-magazine.com/news/2022/nov/excel-broken-y-axis-charting/)."
+#| fig-alt: "Two-panel line chart illustrating the use of broken y-axes. Panel A shows a break between 0.2 and 0.8 marked with a subtle zigzag, making it easy to miss. Panel B shows the same data but includes red dashed lines and extra spacing, clearly signaling a discontinuity in the y-axis. Both panels display values near 0 with occasional extreme spikes near 1."
+include_graphics("../../figs/summarizing_data/data_viz/broken_y.png")
+```
+
+---
+
+**DishonestY: Unfair comparisons** 
+
+Fewer babies are born in the U.S. on Sundays than any other day — with Saturdays close behind. When I first heard this I was amazed, but then I realized it makes sense -- many births are scheduled C-sections, or induced in some other way, and doctors would prefer to take weekends off. But there is also a seasonality to births which cannot be explained by doctor's schedules. Let's look at this plot of the number of babies born each month of 2023 in Canada. While doing so,  pay careful attention to the axes -- as you will find that truncation isn’t the only way a y-axis can mislead
+
+
+
+```{webr-r}
+#| context: setup
+babies <- tibble(month = c("January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"),
+    births = c(28015, 25714, 29004, 28138, 29890, 29847,31138, 30892,30549, 30759, 29159, 28773))|>
+  mutate(month = fct_relevel(month, "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"))
+```
+
+
+```{webr-r}
+#| autorun: true
+babies |>
+  ggplot(aes(x=month, y=births, group=1))+
+  geom_point(size = 3)+
+  geom_line(lty = 2)+
+  theme(axis.text.x = element_text(angle = 90, size=12))
+```
+
+**Rather than me telling you what's wrong here** I want you to figure out what's wrong and fix it. But you won't be on your own, this chatbot tutor is here to help!
+
+
+<iframe src="../../dishonestY_chatbot.html" width="100%" height="520px" style="border:0px solid #ccc;"></iframe>
+
+```{r}
+#| echo: false
+#| eval: false
+# I decided not to include Tufte's noble thing. but here it is
+tibble(country = rep(c("USA","USSR","Germany","UK","France"),each = 8),
+       nobels = c(c(1,2,3,10,15,29,27,12),c(2,0,0,0,0,6,5,0),c(12,7,8,8,5,4,6,0),c(5,4,7,7,7,10,13,6),c(6,4,3,2,0,0,6,0)),
+       years  = rep(c("1901-\n1910 ", "1911-\n1920 ","1921-\n1930 ","1931-\n1940 ","1941-\n1950 ","1951-\n1960 ", "1961-\n 1970 ","1971-\n1974 "),
+                    times = 5))|>
+    ggplot(aes(x = years, y = nobels, color = country, group = country))+
+    geom_line(size= 1)+
+    scale_color_viridis_d(option= "C")+
+    geom_point(size=3)+
+    theme(plot.background = element)
+```
+
+---
+
+**DishonestY: Y's meaning depends on X:** Sometimes values on the y-axis have different meanings for different values on the x-axis. For example, inflation tends to push prices up over time, and more people are born—or die—in larger populations. In these cases, showing raw values can mislead. It's better to standardize the y-axis so it has a consistent meaning across x (like deaths per 1,000 people or inflation-adjusted cost), or to give viewers some point of reference so they can make fair comparisons.
+
+
+#### **(Dis-)Honest X-Axes** {-}
+
+It's not just the y-axis that can mislead, there is plenty of opportunity for the x-axis to mislead as well. Common ways that the x-axis can mislead include:
+
+- **Order that runs counter to expectations:** Say we were plotting survival of *Clarkia* in four different temperatures -- "Freezing", "Cold", "Warm", and "Hot". We would expect the x-axis to be in that order, but unless you tell it otherwise, R puts categorical variables in alphabetical order (i.e. "Cold", "Freezing", "Hot", "Warm"). This will likely lead to patterns that surprise and confuse readers, as we explore in @fig-allmonths.   
+
+- **Arbitrary spacing:** Sometimes our categories suggest an order but not equal intervals — like "Control", "Low", "Medium", and "Super High". Plotting them on a linear x-axis makes the steps look evenly spaced, even if the treatment jump from "Medium" to "Super High" is much larger than from "Low" to "Medium". This can trick readers into seeing a much sharper trend than is really there (e.g.  @fig-july).
+
+- **Insufficient context:** Seasonal ups and downs can be misused to make claims about long-term trends. For example, employment often drops in January as seasonal jobs disappear. But that doesn’t mean we should be reading headlines every year like "The year is off to a bad start." That’s why it's standard to present seasonally adjusted unemployment rates. Similar issues show up all over the biological world too - if you don’t consider seasonal or cyclical patterns, it's easy to mislead or be misled. 
+
+With these ideas in mind, lets look at two plots (@fig-allmonths and @fig-july) showing trends in the temperature in Minnesota across the year: 
+
+::: {.panel-tabset group="language"}
+
+### Fig. 4
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| label: fig-allmonths
+#| fig-cap: "**(Dis-) Honest x-axis ordering:** Average monthly high temperatures in Minnesota."
+#| fig-alt: "A line plot with large points showing average high temperatures in Minnesota by month. The months on the x-axis are ordered alphabetically — April, August, December, February, etc."
+weather_tibble <- tibble(
+  Month = c(
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ),
+  Avg_High_F = c(
+   -4, -2, 6, 13, 21, 26, 29, 27, 23, 14, 6, -2
+  )
+)
+
+ggplot(weather_tibble, aes(x = Month, y =  Avg_High_F))+
+  #geom_col()+
+  geom_point(size =5)+
+  stat_summary(geom = "line",group = 1)+
+  theme(axis.text.x = element_text(angle = 45,size =12,vjust = .5))+
+  labs(y = "Average high (Degrees Celsius)",
+       title = "Minnesota average monthly temperature over the year.")
+```
+
+### Fig. 5
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| label: fig-july
+#| fig-cap: "**(Dis-) Honest x-axis spacing:** This plot uses only a subset of months (November, December, January, February, March, July) with a gap between March and July."
+#| fig-alt: "Line plot showing average monthly high temperatures (in degrees Celsius) for Minnesota across selected months. Temperatures decrease from November (approx 6C) to January (-4C), then gradually rise through March (6C) and peak in July (29C). The x-axis lists months (November, December, January, February, March, July), with a line connecting black dots for each value. The y-axis ranges from -5C to 30C. The months are not in calendar order, making the seasonal trend appear visually distorted."
+weather_tibble|>
+  filter(Month %in% c("December", "January","February","March","July","November"))|>
+  mutate(Month = fct_relevel(Month,"November", "December", "January","February","March","July"))|>
+  ggplot(aes(x = Month, y =  Avg_High_F))+
+  geom_point(size =5)+
+  stat_summary(geom = "line",group = 1)+
+  geom_line()+
+  theme(axis.text.x = element_text(angle = 45,size =12,vjust = .5))+
+  labs(y = "Average high (Degrees Celsius)",
+       title = "Minnesota average monthly temperature over the year.")
+```
+::: 
+
+
+:::aside
+**If you don't see any plots here, click on any of the tabs.** Then browse through all of them by changing between tabs. 
+:::
+
+From these plots we can see that:   
+
+- **By having an order that runs counter to expectations, @fig-allmonths** leads a reader to believe that temperature swings up and down many times dramatically across the year. This is because months are in alphabetical instead of sequential order.   
+
+    - **Fix this** by changing the order of categories (but this is harder than it sounds, we will work on that in the next chapter).   
+    
+- **Because of the arbitrary spacing in @fig-july's x-axis** it looks like a sudden jump in July, but the jump is artificial - we’re just missing spring months.    
+
+   - **Fix this** by leaving a space on the x-axis where those categories should be (but make sure the missingness is not mistaken for zero).  
+     
+---     
+     
+```{r} 
+#| label: fig-date1 
+#| column: margin
+#| fig-cap: "Airline passengers over time: This plot shows monthly passenger counts in the US from 1949 to 1960, revealing strong seasonal trends and long-term growth. The final months of 1960 (highlighted in red) appear as a decline only when removed from this full context."
+#| fig-alt: "A line plot showing the number of US airline passengers from July to November 1960. The data appears to decline steadily, potentially suggesting a major drop in airline usage."
+#| echo: FALSE
+include_graphics("../../figs/summarizing_data/data_viz/date1-1.png")
+```   
+
+- **Because it does not provide sufficient context @fig-date1** misleads readers into thinking  that the airline industry was crashing in late 1960.   
+   - **Fix this** by providing sufficient context -- i.e. the  year-over-year data in @fig-date2 shows that @fig-date1 is a predictable seasonal decline, not a not a sustained decline.
+
+
+```{r} 
+#| label: fig-date2 
+#| fig-cap: 'Seasonal fluctuations in US air travel (1949-1960).'
+#| fig-alt: "A line plot of monthly US airline passenger counts from 1949 to 1960. The pattern shows regular seasonal peaks and troughs with an overall upward trend. The final months of 1960 are highlighted in red and reveal a seasonal dip, not a crash."
+#| echo: FALSE
+include_graphics("../../figs/summarizing_data/data_viz/date2-1.png")
+```
+
+
+
+### Honest Bin Sizes
+
+```{r}
+#| echo: false 
+#| fig-cap: 'Different bin sizes might tell different stories (5 min and 15 sec from [Calling Bullshit](https://www.youtube.com/watch?v=zAg1wsYfwsM)).' 
+include_url("https://www.youtube.com/embed/zAg1wsYfwsM")
+```
+
+
+The video above explains how bin sizes can mislead. This issue comes up when using histograms to explore the shape of a distribution. The problem is that bin size is a smoothing decision, and smoothing decisions always involve trade-offs:
+
+:::aside
+**Smoothing decisions**  aren't unique to histograms - similar issues arise when choosing a kernel bandwidth in a density plot, set a bin width for a bar chart, or even a zoom in on a map.  
+:::
+
+* **Too few bins** oversmooths the data—you might miss real structure like bimodality or skew.  
+* **Too many bins** adds visual noise—random variation starts to look like meaningful bumps and wiggles.  
+
+
+
+
+
+To get a better sense for this, play with the bin number in the interactive salmon body size example above. Watch how the story changes as you try all values from 3 to 10, then try a few larger values.  As you explore, ask yourself: *Which bin size gives a clear picture without hiding or exaggerating the structure in the data?* while recognizing there not always a single "right" answer.
+
+
+```{shinylive-r}
+#| column: page-right
+#| standalone: true
+#| viewerHeight: 600
+library(shiny)
+library(munsell)
+library(bslib)
+library(readr)
+
+# Define UI for app that draws a histogram ----
+
+ui <- fluidPage(
+  titlePanel("Bin size can mislead!"),
+  
+  fluidRow(
+    column(4),  # Empty column for spacing
+    column(4,
+           numericInput("bins", "Number of bins", value = 3,
+                        min = 2, max = 200, step = 1,width = "22%")
+    ),
+    column(4)   # Empty column for spacing
+  ),
+  
+  fluidRow(
+    column(12,
+      plotOutput("plot", width = "100%", height = "430px")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+      salmon <- read.csv('https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/salmon_body_size.csv')
+  output$plot <- renderPlot({
+    library(ggplot2)
+
+    # Create ggplot histogram
+    ggplot(salmon, aes(x = mass_kg)) +
+      geom_histogram(bins = as.numeric(input$bins)+2, 
+                     fill = "salmon", 
+                     color = "black", 
+                     alpha = 0.7) +
+      labs(title = "Distribution of Body Mass in Salmon",
+           x = "Body Mass (kg)",
+           y = "Count") +
+      scale_x_continuous(limits = c(0.9,3.6))
+  }, res = 150)
+}
+# Create Shiny app ----
+shinyApp(ui = ui, server = server)
+```
+
+After exploring this for a while try these short questions:
+
+
+
+**Q1)** Which bin number makes the reader think this distribution is unimodal and right-skewed? `r fitb("4")`.
+
+
+:::aside 
+`r hide("Q1 Explanation")`
+With 3 bins, the histogram oversmooths the data and there is no dip between peaks, but it's not clear if the data are symmetric or skewed. 
+
+The histogram still oversmooths the data with 4 bins. But in this case the data appears more obviously right-skewed.
+
+`r unhide()` 
+:::
+
+**Q2)** Which is the smallest bin number that allows the reader to see that the data are clearly bimodal? `r fitb(c("six","seven", "6","7"), ignore_case = TRUE)`.
+
+:::aside
+`r hide("Q2 Explanation")`
+I accepted either six or seven. At six it seems like something is likely going on (counts seem to increase as x increases), and once you get to seven two obvious modes emerge.
+`r unhide()` 
+:::  
+
+**Q3)** Which statement best describes the tradeoff in choosing the number of bins in a histogram?    `r mcq(c("More bins always give more accurate results.", "Fewer bins always prevent overfitting.", answer = "Fewer bins emphasize general patterns; more bins reveal detail.", "The number of bins doesn't matter if the color is consistent." ))`
+    
+:::fyi 
+
+**What about density plots?**   
+
+Concerns about bin size apply to smoothing in density plots. In ggplot, you can control the smoothing of a density plot using the adjust argument in the [`geom_density()`](https://ggplot2.tidyverse.org/reference/geom_density.html) function.
+:::
+
+
+:::protip 
+**Another plotting option.**  
+
+If no bin size seems to work well, you can display the cumulative frequency distribution using [`stat_ecdf()`](https://ggplot2.tidyverse.org/reference/stat_ecdf.html). This method avoids the binning issue altogether. The y-axis shows the proportion of data with values less than x, and bimodality is revealed by the two steep slopes in the plot. However, these plots can be harder for inexperienced readers to interpret.
+:::
+
+### (Dis-)Honest color choice
+
+
+
+
+Even color can mislead. If colors imply an order (e.g., light to dark) but the categories don’t follow a logical sequence, viewers may misinterpret the pattern. @fig-map shows temperature across America, but "warm" has a darker red than "Very hot". This could mislead readers into thinking  North Carolina is hotter than Texas.  This is made even worse because "Warm" comes after "Very hot" in the legend. Fix this by making sure the order of colors (and color keys) make some sense and follow the reader's expectations.
+
+```{r}
+#| echo: false
+#| label: fig-map
+#| message: false
+#| warning: false
+#| fig-cap: "U.S. states grouped by temperature category—Freezing, Cold, Mild, Warm, and Very Hot. Unfortunately, the colors do not follow a logical temperature progression - \"Warm\" is shown in a dark maroon and \"Very Hot\" is bright red, while \"Freezing\" and \"Cold\" are flipped on the blue scale. This non-intuitive color order (darker doesn't always mean more extreme) makes the map unnecessarily confusing. What makes this even worse is that the color key also goes in this confusing order."
+#| fig-alt: "Map of the U.S. showing states colored by temperature category. States are shaded in five different hues: dark blue for Freezing, light blue for Cold, orange for Mild, red for Very Hot, and dark maroon for Warm. The color order is visually inconsistent with the temperature categories, making the map’s message harder to interpret. The color scheme does not follow a typical cold-to-hot progression."
+library(maps)
+
+
+# Get US state map data
+states_map <- map_data("state")
+
+# Create temperature data for US states (realistic winter temperatures)
+temp_data <- data.frame(
+  region = c("alabama", "alaska", "arizona", "arkansas", "california", "colorado", 
+             "connecticut", "delaware", "florida", "georgia", "hawaii", "idaho", 
+             "illinois", "indiana", "iowa", "kansas", "kentucky", "louisiana", 
+             "maine", "maryland", "massachusetts", "michigan", "minnesota", 
+             "mississippi", "missouri", "montana", "nebraska", "nevada", 
+             "new hampshire", "new jersey", "new mexico", "new york", 
+             "north carolina", "north dakota", "ohio", "oklahoma", "oregon", 
+             "pennsylvania", "rhode island", "south carolina", "south dakota", 
+             "tennessee", "texas", "utah", "vermont", "virginia", "washington", 
+             "west virginia", "wisconsin", "wyoming"),
+  
+  temperature = c("Warm", "Freezing", "Warm", "Mild", "Mild", "Cold",
+                  "Cold", "Mild", "Very Hot", "Warm", "Very Hot", "Freezing",
+                  "Cold", "Cold", "Cold", "Mild", "Mild", "Warm",
+                  "Freezing", "Mild", "Cold", "Freezing", "Freezing",
+                  "Warm", "Mild", "Freezing", "Cold", "Mild",
+                  "Freezing", "Mild", "Warm", "Cold",
+                  "Warm", "Freezing", "Cold", "Mild", "Mild",
+                  "Cold", "Cold", "Warm", "Freezing",
+                  "Mild", "Very Hot", "Cold", "Freezing", "Mild", "Mild",
+                  "Cold", "Freezing", "Freezing")
+)
+
+# Convert temperature to ordered factor
+temp_data$temperature <- factor(temp_data$temperature, 
+                               levels = c("Freezing", "Cold", "Mild",  "Very Hot", "Warm"),
+                               ordered = TRUE)
+
+# Merge map data with temperature data
+map_temp <- left_join(states_map, temp_data, by = "region")
+
+# Define colors for temperature categories
+temp_colors <- c("Freezing" = "#2166ac",     # Dark blue
+                 "Cold" =  "#92c5de",   # Light blue
+                 "Mild" = "#fdbf6f",         # Light gray
+                 "Warm" =   "#800000",       # Light orange
+                 "Very Hot" = "#d73027")     # Dark red
+
+# Create the map
+ggplot(map_temp, aes(x = long, y = lat, group = group, fill = temperature)) +
+  geom_polygon(color = "white", size = 0.2) +
+  scale_fill_manual(values = temp_colors, name = "Temperature") +
+  coord_map("albers", lat0 = 39, lat1 = 45) +
+  theme_void() +
+  theme(
+    legend.position = "bottom",
+    legend.title = element_text(size = 12, face = "bold"),
+    legend.text = element_text(size = 10),
+    plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+    plot.margin = margin(20, 20, 20, 20)
+  ) +
+  labs(
+    title = "US Temperature Map by State") +
+  guides(fill = guide_legend(nrow = 1, keywidth = 2, keyheight = 1))
+```
+
+## Section summary
+
+Even honest people can make dishonest plots. Truncated y-axes, weird or uneven x-axes, misleading bin sizes, and unstandardized values can all distort what your audience sees—especially when viewed quickly or from a distance. A good plot doesn’t just show the data; it helps readers reach the right conclusion without extra mental gymnastics. After you make a plot, show it to someone—fast, far away, or with minimal labels—and ask what they think it says. If they walk away with a different takeaway than you intended, your plot needs work.

@@ -1,0 +1,472 @@
+## • 7. Linear regression {.unnumbered}
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr' ,'ggplot2', 'broom']
+  autoload-packages: true
+---
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(kableExtra)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+```
+
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for selecting data from a few columns from RILs planted at GC"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm,visited )|>
+  mutate(log10_petal_area_mm = log10(petal_area_mm))
+```
+
+
+
+```{webr-r}
+#| context: setup
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+gc_rils <- readr::read_csv(ril_link) |>
+  filter(location == "GC")|>
+  dplyr::select(prop_hybrid, petal_area_mm, petal_color,mean_visits, asd_mm)|>
+  mutate(log10_petal_area_mm = log10(petal_area_mm))
+```
+
+
+--- 
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario**   
+You understand the idea of a correlation and covariance, as well as what linear models are doing. You now want to build and understand a linear model predicting a numeric response from a numeric explanatory variable. 
+
+
+**Learning Goals:** By the end of this subchapter, you should be able to:
+
+1. **Describe linear regression as a modeling tool**  
+   - Recognize that a regression line models the conditional mean of the response variable as a function of a predictor.   
+
+2. **Explain the meaning of slope and intercept**    
+   - Interpret slope as expected change in the response per unit change in the predictor.   
+   - Interpret the intercept and understand when it is or isn’t meaningful.   
+   - Use the equation from a linear regression to find the conditional mean for a given x value.    
+
+3. **Calculate slope and intercept from formulas**    
+   - Use covariance and variance to compute the slope.  
+   - Derive the intercept from sample means and the slope.  
+
+4. **Understand residuals**    
+   - Define and calculate residuals as observed minus predicted values.  
+   - Visualize residuals and understand their role in assessing model fit.  
+
+5. **Use R to fit and explore a linear model**   
+   - Build models with `lm()`. 
+   - Inspect residuals and predictions with `augment()` from the `broom` package.  
+
+6. **Know that predictions are only valid within the range of the data**   
+
+::: 
+
+---  
+
+## A review of covariance and correlation
+
+
+We have previously quantified the association between two numeric variables as:  
+
+- **A covariance:** How much observations of $x$ and $y$ jointly deviate from their means in an individual, quantified as: $\text{cov}_{x,y}= \frac{n}{n-1}(\overline{xy}-\bar{x} \times\bar{y}) = \frac{\sum (x_i-\bar{x})\times(y_i-\bar{y})}{n-1}$.  
+- **A correlation, $r$:** How reliably $x$ and $y$ covary -- a standardized measure of the covariance. The correlation is quantified as $r_{xy}= \frac{\text{cov}_{x,y}}{s_x\times s_y}$, where $s_x$ and $s_y$ are the standard deviations of $x$ and $y$, respectively. 
+
+While these measures, and particularly $r$, are essential  summaries of association, neither allows us to model a numeric response variable as a function of numeric explanatory variable.  
+
+## Linear regression set up   
+
+So, how do we find $\hat{y}_i$? The answer comes from our standard equation for a line — $y = mx + b$.  But statisticians have their own notation:  
+
+$$\hat{y}_i = b_0 + b_1 \times x_i$$
+The variables in this  model are interpreted as follows:
+
+- **$\hat{y}_i$ is the conditional mean of the response variable** for an individual with a value of $x_i$.  Note this is a guess at what the mean would be if we had many such observations - but we usually have one or fewer observations of y at a specific value of x.   
+- **$b_0$ is the intercept** -- the value of the response variable if we follow it to $x = 0$.   
+- **$b_1$ is the slope** -- the expected change in $y$, for every unit increase  in $x$.   
+- $x_i$ is the value of the explanatory variable, $x$ in individual $i$.
+
+## Math for linear regression
+
+Before delving into the R of it all, let's start with some math. To make things concrete, we'll consider  the proportion of hybrid seed as a function of petal area. 
+
+### Math for slope 
+
+We find the slope, $b_1$, as the covariance divided by the variance in $x$: 
+
+$$b_1 = \frac{cov_{x,y}}{s^2_x}  =  \frac{\frac{1}{(n-1)}\sum(x_i-\bar{x})(y_i-\bar{y})}{\frac{1}{(n-1)}\sum(x_i-\bar{x})^2}=\frac{\sum(x_i-\bar{x})(y_i-\bar{y})}{\sum(x_i-\bar{x})^2}$$ 
+
+
+### Math for intercept
+
+We find the intercept, $b_0$ (sometimes called $a$), as 
+
+$$b_0 = \bar{y}-b_1\bar{x}$$
+```{webr-r}
+#| autorun: true
+### Finding slope and intercept
+gc_rils |>
+  filter(!is.na(petal_area_mm) , !is.na(prop_hybrid)) |>
+  summarise(cov_xy = cov(petal_area_mm, prop_hybrid),
+         var_x  = var(petal_area_mm), 
+         mean_y = mean(prop_hybrid),
+         mean_x = mean(petal_area_mm),
+         b1     = cov_xy /  var_x ,     # Slope
+         b0     = mean_y - b1 * mean_x) # Intercept
+```
+
+--- 
+
+```{r}
+#| column: margin
+#| eval: false
+#| message: false
+#| warning: false
+ggplot(gc_rils, 
+       aes(x = petal_area_mm, 
+           y = prop_hybrid))+
+  geom_smooth(method = "lm", 
+              se = FALSE)+
+  geom_point(size = 6)
+```
+
+### Interpretation   
+
+
+```{r}
+#| column: margin
+#| echo: false
+#| message: false
+#| warning: false
+#| label: fig-regression
+#| fig-cap: "A scatterplot showing the relationship between petal area (in mm²) and the proportion of hybrid seeds in parviflora RILs, with a fitted linear regression line."
+#| fig-alt: "Scatterplot of proportion of hybrid seed (y-axis) against petal area in mm² (x-axis) for parviflora RILs. Black dots represent individual plants, and a blue line indicates the fitted linear regression. Most values cluster below 0.5, with many zeroes and a slight positive slope."
+ggplot(gc_rils, 
+       aes(x = petal_area_mm, 
+           y = prop_hybrid))+
+  geom_smooth(method = "lm", 
+              se = FALSE)+
+  geom_point(size = 6)+
+  theme(legend.position = "none",
+        axis.text = element_text(size = 28),
+        axis.title = element_text(size= 28),
+        plot.title = element_text(face = "bold", size=30))
+```
+
+
+The calculations above (displayed in @fig-regression) correspond to the following linear model:
+
+$$\text{PROPORTION HYBRID}_i =  -0.208 + 0.00574  \times \text{PETAL AREA}_i$$   
+
+- **The intercept of -0.208** means that if we followed the line down to a petal area of zero, the math would predict that such a plant would produce a nonsensical negative 20% hybrid seed. This is a mathematically useful construct but is biologically and statistically unjustified (see below). Of course, we can still use this equation (and implausible intercept), to make predictions in the range of our data.   
+
+
+- **The slope of 0.00574** means that every additional $mm^2$ increase in area, we expect about a half percent more hybrid seeds. 
+
+
+:::warning
+**Do not predict beyond the range of the data**.  
+
+Predictions from a linear model are only valid within the range of our observed data. For example, while our model estimates an intercept of –0.208, we certainly don’t expect a microscopic flower to receive fewer than zero pollinator visits. Similarly, we shouldn’t expect a plant with a petal area of $300 \text{ mm}^2$ to produce more than 150% hybrid seeds.
+
+These exaggerated examples highlight an important point: we should not make predictions far outside the range of our data. Even a less extreme prediction — say, estimating that a plant with 200 mm² of petal area will produce 95% hybrid seeds — may not be reliable. Although this number may seem biologically plausible, we have no reason to trust that our model's predictions hold beyond the range of data we collected.
+:::
+
+## Residuals  
+
+As seen previously, predictions of a linear model do not perfectly match the data. Again, the difference between observed, $y_i$, and expected, $\hat{y}_i$, values is the residual $e_i$. Try to estimate the residual of data point three (green point) in @fig-regression_1. 
+
+```{r}
+#| label: fig-regression_1
+#| message: false
+#| warning: false
+#| code-fold: true
+#| fig-cap: "The same scatterplot showing the relationship between petal area as in @fig-regression. The highlighted point in turquoise marks plant 3, used as an example in the residual calculation. This point’s vertical distance from the regression line represents its residual"
+#| fig-alt: "Scatterplot of proportion of hybrid seed (y-axis) against petal area in mm² (x-axis) for Clarkia plants. Black dots represent individual plants, and a blue line indicates the fitted linear regression. The green dot represents individual three, that you will investigate in more detail below."
+ggplot(gc_rils|> mutate(i = 1:n()), 
+       aes(x = petal_area_mm, y = prop_hybrid))+
+    geom_smooth(method = "lm", se = FALSE)+
+        geom_point(aes(color = (i==3), size = (i == 3)))+
+        scale_size_manual(values = c(3,6))
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(webexercises)
+```
+
+
+:::exercises
+**CONCEPT CHECK** Looking at @fig-regression_1, visually estimate $e_3$ (the residual of point three in green) `r fitb(answer = 0.161,tol = .04)`  
+
+`r hide("How to solve this.")`
+
+**Solution:** The green point ($i = 3$) is at y = 0.25, and x is just a bit more than 50. At that x value, the regression line (showing $\hat{y}$) is somewhat below 0.125 (I visually estimate \hat{y}_{\text{petal area} \approx 50 mm}=  0.090$). So 0.250 - 0.090 = 0.160.
+`r unhide()`
+
+`r hide("Math to get us closer")`
+**Math Approach:** As above, let's visually approximate the petal area of observation 3 as 51 mm. Plugging this visual estimate into our equation (with coefficients from our linear model):
+
+$$\hat{y}_{\text{petal area} \approx 50 mm}-0.207834 + 0.005738 * 51 = 0.084$$
+$$e_3 = y_ -  \hat{y} = 0.250 - 0.084 = 0.166$$
+
+`r unhide()`
+
+:::
+
+### The slope minimizes $\text{SS}_\text{residuals}$
+
+**As seen for the mean, by looping over many proposed slope($-0.01$ to $0.02$) the plot below illustrates that the slope from the formula above minimizes the sum of squared residuals:** The sum of squared residuals for a given proposed slope (with intercept plugged in from math) is shown:  *In color* on all three plots (yellow is a large sum of squared residuals, red is intermediate, and purple is low);  *Geometrically* as the size of the square, in the center plot; *On the y-axis* of the right plot.  
+
+
+```{r}
+#| echo: false
+#| eval: false
+data <- gc_rils |>
+  filter(!is.na(prop_hybrid), !is.na(petal_area_mm)) |>
+  select(petal_area_mm, prop_hybrid) |>
+  mutate(id = row_number())
+
+# Create grid of proposed slopes
+proposed_slopes <- seq(-0.01, 0.02, length.out = 51)  # adjust range as needed
+
+# For each proposed slope, calculate predictions, residuals, SS_resid
+all_frames <- map_dfr(proposed_slopes, function(slope) {
+  mean_x <- mean(data$petal_area_mm)
+  mean_y <- mean(data$prop_hybrid)
+  intercept <- mean_y - slope * mean_x
+  
+  data |>
+    mutate(
+      proposed_slope = slope,
+      predicted = intercept + slope * petal_area_mm,
+      residual = prop_hybrid - predicted,
+      sq_residual = residual^2
+    ) |>
+    group_by(proposed_slope) |>
+    mutate(SS_resid = sum(sq_residual)) |>
+    ungroup()
+}) |>
+  mutate(SS_resid_rank = rank(SS_resid)) |>
+  mutate(text = case_when(
+    SS_resid_rank == min(SS_resid_rank) ~ "Minimized SS error!",
+    SS_resid_rank < quantile(SS_resid_rank, 0.2) ~ "Close to\nminimizing SS error",
+    SS_resid_rank < quantile(SS_resid_rank, 0.4) ~ "Not far from\nminimizing SS error",
+    SS_resid_rank < quantile(SS_resid_rank, 0.75) ~ "Far from\nminimizing SS error",
+    .default = "Very far from\nminimizing SS error"
+  ))|>
+  mutate(proposed_slope1 = format(proposed_slope, scientific = TRUE),
+         proposed_slope1 = fct_reorder(proposed_slope1, proposed_slope))
+
+ss_summary <- all_frames |>
+  distinct(proposed_slope, SS_resid, SS_resid_rank, text,proposed_slope1 ) |>
+  mutate(id = 50)
+
+# Panel 1: Data + regression line + residuals
+p1 <- ggplot(all_frames, aes(x = petal_area_mm, y = prop_hybrid)) +
+  geom_point(alpha = 0.6) +
+  geom_segment(aes(xend = petal_area_mm, yend = predicted, color = SS_resid), linewidth = 0.3) +
+  geom_abline(aes(intercept = mean(prop_hybrid) - proposed_slope * mean(petal_area_mm), slope = proposed_slope, color = SS_resid_rank)) +
+  geom_label(data = ss_summary, aes(x = 72, y = -0.25, 
+                                    label = text,
+                                    color = SS_resid_rank), size = 10) +
+  scale_color_viridis_c(option = "plasma") +
+  labs(y = "Proportion hybrid", x = "Petal area (mm²)", title = "Proposed slope: {closest_state}") +
+  transition_states(proposed_slope1, transition_length = 1, state_length = 1) +
+  ease_aes("linear") + 
+  theme(legend.position = "none",
+        axis.text = element_text(size= 22),
+        axis.title = element_text(size= 22),
+        title =element_text(size= 22) )
+
+
+
+# Panel 2: Square showing SS_resid
+p2 <- ggplot(ss_summary, aes(xmin = 0, ymin = 0,
+                             xmax = sqrt(SS_resid), ymax = sqrt(SS_resid))) +
+  geom_rect(aes(fill = SS_resid_rank), color = "black") +
+  transition_states(proposed_slope, transition_length = 1, state_length = 1) +
+  coord_cartesian(ylim = c(0, max(sqrt(ss_summary$SS_resid)) * 1.1),
+                  xlim = c(0, max(sqrt(ss_summary$SS_resid)) * 1.1)) +
+  labs(x = bquote(sqrt("SS Residual")), y = bquote(sqrt("SS Residual")), title = "SS Residual") +
+  geom_label(data = ss_summary |>
+               mutate(label = paste("SS Residual\nEquals", round(SS_resid, 2))),
+             aes(x = 1.2, y = 1.2, label = label), color = "black", size = 11) +
+  scale_fill_viridis_c(option = "plasma") + 
+  theme(legend.position = "none",
+        axis.text = element_text(size= 22),
+        axis.title = element_text(size= 22),
+        title =element_text(size= 22) )
+
+
+
+
+
+# Panel 3: Slope vs SS Residual
+ss_summary2 <- ss_summary |>
+  arrange(proposed_slope)
+
+p3 <- ggplot(ss_summary, aes(x = proposed_slope, y = SS_resid)) +
+  geom_line(data = ss_summary2|>rename(SS_resid2=SS_resid,proposed_slope2 = proposed_slope), 
+            aes(x = proposed_slope2, y = SS_resid2)) +
+  geom_point(aes(color = SS_resid_rank), size = 6) +
+  transition_states(proposed_slope, transition_length = 1, state_length = 1) +
+  ease_aes("linear") +
+  labs(x = "Proposed slope", y = "SS Residual", title = "Finding the Best Slope") +
+    geom_vline(xintercept = 0.00574, lty = 2, color = "red")+
+  annotate(geom = "text", x= 0.01,y= 7.5, label = "Slope\nfrom\nmath", size = 11, color ="red")+
+  scale_color_viridis_c(option = "plasma") +
+  theme(legend.position = "none",
+        axis.text = element_text(size= 22),
+        axis.title = element_text(size= 22),
+        title =element_text(size= 22) )
+
+
+
+# Save each panel
+anim_save("figs/summarizing_data/linear_models/slope_panel1.gif", animate(p1, fps = 3, width = 400, height = 375, renderer = gifski_renderer()))
+anim_save("figs/summarizing_data/linear_models/slope_panel2.gif", animate(p2, fps = 3, width = 375, height = 375, renderer = gifski_renderer()))
+anim_save("figs/summarizing_data/linear_models/slope_panel3.gif", animate(p3, fps = 3, width = 375, height = 375, renderer = gifski_renderer()))
+
+# Combine gifs
+gif1 <- image_read("figs/summarizing_data/linear_models/slope_panel1.gif")
+gif2 <- image_read("figs/summarizing_data/linear_models/slope_panel2.gif")
+gif3 <- image_read("figs/summarizing_data/linear_models/slope_panel3.gif")
+
+combined <- image_append(c(gif1[1], gif2[1], gif3[1]))
+for (i in 2:length(gif1)) {
+  frame <- image_append(c(gif1[i], gif2[i], gif3[i]))
+  combined <- c(combined, frame)
+}
+
+image_write(combined, "figs/summarizing_data/linear_models/slope_combined.gif")
+```
+
+```{r}
+#| echo: false
+#| label: fig-minimize_ss
+#| fig-cap: "**The slope minimizes the sum of squared residuals:** The *left panel* shows observed data points along with a proposed regression line. Vertical lines connect each point to its predicted value, illustrating residuals. The color of the line corresponds to the total residual sum of squares. The *center panel* visualizes the total squared error as a square whose area reflects the sum of squared residuals. The *right panel* plots the sum of squared residuals as a function of the proposed slope, with a moving point highlighting the current slope value. The slope that minimizes the sum of squared residuals defines the best-fitting line."
+#| fig-alt: "Three-panel animation showing how slope affects residual error. In the left panel, data points are plotted with a regression line of varying slope. Vertical lines indicate residuals, colored by total squared error. The center panel displays a square whose area represents the sum of squared residuals for the current slope. The right panel plots slope versus sum of squared residuals, with a moving point showing the current slope. The animation reveals that one particular slope minimizes the sum of squared residuals."
+include_graphics("../../figs/summarizing_data/linear_models/slope_combined.gif")
+```
+
+
+## Using the `lm()` function
+
+As before, we build a linear model in `R` as `lm(response ~ explanatory)`. So to predict the proportion of hybrid seed as a function of petal area (in mm) type: 
+
+
+
+```{webr-r}
+#| autorun: true
+library(broom)     # we'll need this later
+# The linear model
+lm(prop_hybrid ~ petal_area_mm, data = gc_rils)
+```
+--- 
+
+
+Again, we can view residuals and other useful things with the [`augment()`](https://broom.tidymodels.org/reference/augment.lm.html) function. Let's go back to the webr section above and pipe the output of `lm()` to [`augment()`](https://broom.tidymodels.org/reference/augment.lm.html)
+
+
+:::exercises
+**CONCEPT CHECK:**  Use the augment function to find the exact residual of data point 3 to three decimal places `r fitb(answer = 0.161,tol = 0)`
+
+
+`r hide("Solution")`
+Paste the code below into the webR window above to find the answer.
+
+```{r}
+#| eval: false
+library(broom)
+lm(prop_hybrid ~ petal_area_mm, data = gc_rils) |>
+  augment() |>
+  slice(3)       # You can just go down to the third, but I wanted to show you this trick
+```
+
+
+
+`r unhide()`
+
+:::
+
+## Looking forward. 
+
+You've now seen how we can model a linear relationship between two numeric variables, how to calculate the slope and intercept, and how the best-fitting line is the one that minimizes the sum of squared residuals. You've also interpreted these model components in a biological context, visualized residuals, and learned how to fit and explore a linear model in R.  
+
+- In the next section, we extend linear models to include two explanatory variables.    
+- Later in this book, we’ll introduce concepts of uncertainty and hypothesis testing and model evaluation to deepen our understanding of what these models can (and cannot) tell us, and when to be appropriately skeptical about their predictions.  
+
+
+## OPTIONAL EXTRA LEARNING.   
+
+:::fyi
+**$r^2$ and the proportion variance explained**  
+
+So far, we’ve focused on just one type of sum of squares — the residual sum of squares, $\text{SS}_\text{residual}$ (also called $\text{SS}_\text{error}$). As you well know by now:   
+
+- $\text{SS}_\text{residual}$ describes the distance between predictions and observations, and is quantified as  the sum of squared differences between observed values, $y_i$, and the conditional means, $\hat{y}_i$. $\text{SS}_\text{residual} = \sum{(e_i)^2} = \sum{(y_i-\hat{y}_i)^2}$.  
+
+We will explore two other types of sums of squares later, but in case you can't wait:  
+
+- $\text{SS}_\text{model}$ describes the distance between predictions and the grand mean, and is quantified as is the sum of squared differences between conditional means, $\hat{y}_i$, and the grand mean, $\bar{y}$. $\text{SS}_\text{model} = \sum{(\hat{y}_i-\bar{y})^2}$.    
+
+- $\text{SS}_\text{total}$ describes the overall variability in the response variable, and is quantified as the sum of squared differences between observed values $y_i$, and the grand mean, $\bar{y}$. $\text{SS}_\text{total} = \sum{(y_i-\bar{y})^2}$.  
+
+Dividing $\text{SS}_\text{model}$ by $\text{SS}_\text{total}$ describes "the proportion of variance explained" by our model, $r^2$:
+
+$$r^2 = \frac{\text{SS}_\text{model}}{\text{SS}_\text{total}}$$
+
+**Reassuringly, the square root of $r^2$ equals the absolute value of $r$**
+
+```{r}
+library(broom)
+lm(prop_hybrid ~ petal_area_mm, data = gc_rils) |>
+  augment()|>
+  summarise(mean_y   = mean(prop_hybrid),
+            SS_error = sum(.resid^2),
+            SS_total = sum( (prop_hybrid - mean_y)^2 ),
+            SS_model = sum( (.fitted - mean_y)^2 ),
+            r2       = SS_model /  SS_total,
+            r        = cor(prop_hybrid, petal_area_mm),
+            sqrt_r2  = sqrt(r2))
+```
+:::
+
