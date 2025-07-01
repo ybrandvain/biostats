@@ -1,0 +1,54 @@
+# Section II: Summarizing data      {.unnumbered}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(knitr)
+```
+
+
+
+<article class="drop-cap">The major goals of statistics are to: (1) Summarize data, (2) Estimate uncertainty, (3) Test hypotheses, (4) Infer cause, and (5) Build models. Now that we can do things in R, we are ready to begin our journey through these goals. In this section, we focus on the first goal—**Summarizing data**.</article><br>  
+
+It is somewhat weird to start with summarizing data without also describing uncertainty because, in the real world, data summaries should always be accompanied by some estimate of uncertainty. However, biting off both of these challenges at once is too much, so for now, as we move forward in summarizing data, remember that this is just the beginning and is inadequate on its own.  
+
+Even though we aren’t tackling uncertainty yet, summarizing data on its own is already incredibly useful. Understanding and interpreting summaries helps us find patterns, spot errors, and build towards deeper statistical analysis.  
+
+
+
+**Why summarize data?**  
+
+Summarizing data serves several purposes:  
+
+- **Condensing large datasets:** Raw data often contains thousands of observations—summaries make the patterns manageable.  
+- **Identifying trends and variability:** Are the values clustered? Is there a lot of spread?  
+- **Detecting errors:** Unexpected values often signal data entry issues or outliers.  
+- **Comparing groups:** Does one group tend to have larger values than another?  
+- **Laying the foundation for modeling:** Before building models, we need a clear picture of the data’s structure.  
+
+
+
+```{r}
+#| echo: false
+#| out-width: "100%"
+#| label: "fig-wereoff"
+#| fig-alt: "A nice picture of Clarkia's home."
+#| fig-cap: "A pretty scene of Clarkia's home showing the world we get to summarize."
+include_graphics("../figs/summarizing_data/many_xan_1.png")
+```
+
+In this section, we’ll not only learn how to compute summaries but also how to think about them in a meaningful way. That means:  
+
+- **Get everyone up to speed with standard data summaries:**   
+
+   - **[Chapter Five](#univariate_summaries)** introduces univariate summaries of [Shape](#summarizing_shape),  and how to [change the shape](#changing_shape) of our data!  [Central tendency](#summarizing_center) (e.g. *mean, median, mode*), and  [Variability](#summarizing_variability) (e.g. *sum of squares, standard deviation, and variance*), and more!  
+
+   - [**Chapter 6**](#associations) summarizes associations between variables. This includes:  *[conditional means](#cat_cont)*,  *[conditional proportions](#two_categorical_vars)*,  *[covariance and correlation](#cont_cont)*. Students will also get a sense of the difference between parametric and non-parametric summaries. For each summary, we aim to (1) build intuition, (2) provide the mathematical nuts and bolts, and (3) show you how to find it in R.      
+   
+    - In [**Chapter 7**](#linear_models), we build from these simple summaries to linear models that allow us to predict the value of a response variable from a (combination) of explanatory variable(s). Later in the book we will dig much more deeply into linear models.    
+
+- **Introduce multivariate summaries and dimension reduction techniques:** Summarizing data in one or two dimensions is relatively straightforward. However, nowadays, it is pretty standard to collect high-dimensional data, and we want to be able to work with such complex data. [**Chapter 8**](#ordination) introduces a few techniques to tackle this real-world challenge.  
+
+- **Further your data visualization and interpretation skills:** Visual summaries of data are perhaps the most valuable summaries because, when done well, they tell a clear and honest story of the data. We introduced [ggplot previously](#intro_to_ggplot), but that was the minimum to get up and running. [**Chapter 9**](#dataviz) shows what goes into making a good plot, and [**Chapter 10**](#betteR_plots)  shows how to make good plots with ggplot!  
+

@@ -1,0 +1,277 @@
+# 9. Better Figures  {.unnumbered #dataviz}
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(palmerpenguins)
+library(tweetrmd)
+library(knitr)
+library(tidyr)
+library(ggplot2)
+library(ggthemes)
+library(forcats)
+library(DT)
+library(cowplot)
+library(broom)
+library(patchwork)
+library(emo)
+library(webexercises)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr' ,'ggplot2', 'datasauRus']
+  autoload-packages: true
+---
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating Scenario:**   You’re thinking about how to communicate your results effectively through figures, or you’re concerned that someone may be misleading you with their figures.
+
+**Learning Goals: By the end of this chapter, you should be able to:**
+
+1.  **Explain the principles behind creating an effective figure** and identify the specific elements that contribute to it.   
+2.  **Critique figures** to recognize when and how they may be manipulated.
+
+:::
+
+---
+
+> "**Letting the data speak for themselves** ... is, of course, absurd: inanimate data can never speak for themselves, and we always bring to bear some conceptual framework, either intuitive and ill-formed, or tightly and formally structured, to the task of investigation, analysis, and interpretation." Peter @gould1981.
+
+:::aside 
+
+<div class="sketchfab-embed-wrapper"> <iframe title="Interactive 3D model of a Thenardite rock specimen." frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/7bd8b1b3c4874e07b66399dbfe534efe/embed"> </iframe> <p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4A4A4A;"> <a href="https://sketchfab.com/3d-models/thenardite-7bd8b1b3c4874e07b66399dbfe534efe?utm_medium=embed&utm_campaign=share-popup&utm_content=7bd8b1b3c4874e07b66399dbfe534efe" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;"> Thenardite </a> by <a href="https://sketchfab.com/HarvardLibrary?utm_medium=embed&utm_campaign=share-popup&utm_content=7bd8b1b3c4874e07b66399dbfe534efe" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;"> Harvard Library </a> on <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=7bd8b1b3c4874e07b66399dbfe534efe" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a> </p> <p> Like this rock, data cannot simply be presented; we must choose how to frame and display it.  As you interact with this 3D model, notice that while some angles are more informative than others, no single view is "true", or "false." Our job is to present the view that most clearly and honestly communicates our findings.</p> </div>
+:::
+
+
+ 
+
+
+<article class="drop-cap">Data is the currency of science. But data cannot speak -- they have no voice. Scientists imbue data with meaning by contextualizing it and building a compelling narrative. This view of empirical science is much like our experience of the  everyday world --- we observe things that are real and true, but only get meaning from these observations as we put them together in a story.</article><br>  
+
+To make these abstract ideas concrete, lets return to our *parviflora* RILs. A quick glance suggests that the probability of setting hybrid seed goes up as leaf water content goes down. While this observation is true, it is not the real story -- the real story is that *parviflora* RILs  with smaller petals make fewer hybrids. The initial observation is a red herring that arises because of the negative assocaition between leaf water content and petal area.
+
+
+
+
+## Why Make a Plot?
+
+It’s nearly impossible to look at raw numbers in a dataset and come away with a holistic understanding. Communicating results by listing numbers is inefficient and overwhelming. While summaries of [single variables](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/univariate_summaries.html), [associations between variables](https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/associations.html) can efficiently convey certain aspects of your data, they often hide important details. On their own, summary statistics can mislead, overlook critical patterns, and fail to provide readers with an intuitive way to evaluate your claims.
+
+A good plot is more than a condensed and efficient presentation of the data. Rather, making a plot is literally our opportunity to shape how the reader sees the data, and is therefore a critical medium by which we tell our scientific story. Because a plot is  a crafted story with a purpose, we must think about this as we build our plots. Ask yourself:
+
+
+Graphs exist to communicate clear points. Together, a set of plots should form a cohesive narrative. When creating an explanatory plot, ask yourself:
+
+1. What’s the key story that the data are telling?  
+2. What point am I trying to make?
+3. How does this plot support that story?    
+4. Can someone skeptical follow and verify it?     
+5. How can a plot be improved to clearly communicate this message?  
+6. How does this point fit into the larger story I want to tell?
+
+
+
+
+As we work through this checklist, consider that at the extremes there are two types of plots.   
+
+- **Exploratory plots** are plots we make to make sense of the story in the data. 
+- **Explanatory plots** tell this story to a broader audience. 
+
+
+
+### Why Make Exploratory Plots?
+
+> The first principle is that you must not fool yourself – and you are the easiest person to fool. 
+> 
+> `r tufte::quote_footer('--- Attributed to physicist Richard Feynman')`   
+
+Before telling a story, we must know the story we aim to tell. This includes understanding the overall message we aim to convey, recognizing the extent to which the data support this message, and not missing key elements of the data. As an example of the importance of looking at our data, lets look into ` datasaurus`  a more elaborate version of [Anscombe's quartet](https://ybrandvain.quarto.pub/applied-biostatistics-intro2r/book_sections/intro_to_ggplot.html#always-visualize-your-data.).  
+
+```{r}
+library(datasauRus); library(ggplot2); library(dplyr)
+summary_stats <- datasaurus_dozen                      |> 
+  group_by(dataset)                                    |> 
+  summarize(mean_x =  mean(x),   mean_y = mean(y), 
+            stdev_x = sd(x),     stdev_y = sd(y), 
+            cor_xy = cor(x, y)) 
+```
+
+```{r}
+#| echo: false
+library(DT)
+
+summary_stats |> 
+  filter(dataset != "x_shape")|>
+  mutate(dataset = as.numeric(as.factor(dataset)))|>
+  mutate_at(-1,round, digits = 2) |>
+  datatable(options = list(pageLength = 3, autoWidth = TRUE))
+```
+
+---
+
+**The plots below** highlight the importance of looking at your data.
+
+```{webr-r}
+#| context: setup
+datasaurus_dozen   <- datasaurus_dozen   |>
+    filter(dataset != "x_shape")|>
+    mutate(dataset = as.numeric(as.factor(dataset)))
+```
+
+::: {.panel-tabset group="language"}
+
+### Hist of x  
+
+```{webr-r}
+datasaurus_dozen |>
+  ggplot(aes(x = x))+
+  geom_histogram(fill = "purple",bins = 20)  +
+  facet_wrap(~dataset)
+```  
+
+### Hist of y   
+
+```{webr-r}
+# Make a hist of y
+
+  
+
+```  
+
+### Slopes 
+
+```{webr-r}
+datasaurus_dozen |>
+  ggplot(aes(x = x, y = y))                 +
+  geom_smooth(method = "lm", se = FALSE)    +
+  facet_wrap(~dataset)
+```  
+
+
+### Scatterplot
+
+
+```{webr-r}
+datasaurus_dozen |>
+  ggplot(aes(x = x, y = y))    +
+  geom_point()                 
+# add on to this so we see each dataset by itself
+```  
+
+:::  
+
+**After  exploring these data,** answer the following questions: 
+
+- Which dataset has no y values between 45 and 55? `r fitb(answer = c("7","Seven"), ignore_case = TRUE)`  
+
+- Which shape is made by one of the datasets in datasaurus? `r mcq(c("A turtle", answer =  "A star", "A heart"))`  
+
+
+As see looking at histograms of `x` and `y` reveals some differences between the datasets, but examining a scatterplot is truly revealing! 
+
+
+
+
+### Why make explanatory plots?  
+
+An explanatory plot effectively communicates results while giving skeptical readers the chance to evaluate our claims. Plots are such a critical tool in scientific communication that, in many lab meetings, papers are often discussed by focusing on the figures. Crafting  a good explanatory plot is much like craft a good story. As you watch the video below, consider how the components of telling a good story can be mapped onto the idea of making a good plot.
+
+
+
+```{r}
+#| label: fig-story
+#| fig-cap: "A good story [video](https://www.youtube.com/watch?v=geG8E_ocYDY&)."
+#| echo: false
+include_url("https://www.youtube.com/embed/geG8E_ocYDY")
+```
+
+**Watch this [video](https://www.youtube.com/watch?v=geG8E_ocYDY&)** on what makes a good story, and consider how this applies to storytelling with data visualization. 
+---
+
+
+
+
+### Example of Telling a Story With Plots:
+
+In basketball, most shots are worth two points, while distant shots beyond the three-point line are worth three points. Around 2008, the NBA began embracing analytics, and analysts discovered that three-point shots provide more value than most two-point shots. As a result, teams shifted their strategy to prioritize three-pointers or high-percentage two-point shots close to the basket ([podcast for the curious](https://www.npr.org/2020/09/11/911898347/the-science-of-hoops)).
+
+@fig-nbathrees A compares shot selection before and after the rise of analytics in the NBA. It demonstrates that before this shift, teams had no obvious trends in shot selection, while afterward, most teams focused on three-pointers and close-range shots. @fig-nbathrees B shows the dramatic rise in three-point attempts from 2006 to the present, providing historical context. Together, they tell the story of the NBA’s analytics revolution.
+
+```{r}
+#| label: fig-nbathrees
+#| fig-cap: 'Figure **A** is modified from images on Instagram [&commat;llewellyn_jean](https://www.instagram.com/llewellyn_jean/?hl=en). Figure **B** is modified from an [article on espn.com](https://www.espn.com/nba/story/_/id/26633540/the-nba-obsessed-3s-let-fix-thing).'
+#| echo: FALSE
+#| column: page-right
+#| fig-width: 12
+include_graphics("../figs/summarizing_data/data_viz/threes.jpeg")
+```
+
+
+
+@fig-nbathrees) is not perfect. For example, the team names are too small to read. But fixing this would be unnecessary—the team names don’t significantly contribute to the story we’re telling. 
+
+After you create your plot, take a moment to reflect. How well does your figure make its intended point? How could it detract from your message? Then brainstorm ways to improve your plot to more clearly and honestly convey your point.
+
+
+### The Process
+
+Computational tools like `ggplot2` are great for making good plots, but remember they are tools to help you, not constrain you. Many experts (and the internet) suggest that before jumping into `ggplot`, you should first:
+
+```{r}
+#| column: margin
+#| echo: false
+
+include_tweet("https://twitter.com/webbshasta/status/1263894431268106241")
+```
+
+1. **Sketch your desired plot** to conceptualize it.
+2. **Be cautious of defaults** and common plots, as they might not always serve your needs.
+
+Creating a good plot is an iterative process. You will likely go back and forth between pencil-and-paper sketches and `ggplot` until you reach a design you’re happy with.
+
+## Let’s jump into key concepts in data viz!  
+
+While bad plots can be bad in various ways, all good plots share certain characteristics.  Specifically, all good plots are: [Honest](#honest_plots), [Transparent](#transparent_plots), [Clear](#clear_plots), [Accessible](#accessible_plots), and [avoid distractions](#avoid_distractions). This chapter provide  specific practices you can use to make such good plots, and then introduces the idea of [understanding your audience and mode of presentation](#audience&delivery), and [how to write about plots](#avoid_distractions).  As always, I conclude with a [chapter summary](#dataviz_summary). 
+
+But before moving along, let's take a break from *Clarkia* and focus on the distribution of student-to-teacher ratios across continents. We will use @fig-verybad to exemplify how we can make good plots. 
+
+```{r} 
+#| label: fig-verybad
+#| fig-cap: 'It is hard to make a plot this bad.'
+#| echo: FALSE 
+include_graphics("../figs/summarizing_data/data_viz/verybad-1.png")
+```
+
+Note that improving a figure is an iterative process, so we slowly get better, and may take some wrong turns along the way. @fig-evo shows one path throght this process.
+
+
+```{r}
+#| label: fig-evo
+#| fig-cap:  "Making a plot is an iterative process. gif taken from Cedric Scherer's [blogpost on The evolution of a ggplot](https://cedricscherer.netlify.app/2019/05/17/the-evolution-of-a-ggplot/)."
+#| echo: false
+include_graphics("https://cedricscherer.netlify.app/img/evol-ggplot/evol-ggplot-1.gif")
+```
+
+
+
+## Looking ahead
+
+There are two distinct challenges to making a good plot goal:    
+
+1. Understanding the ideas behind making a good plot ([this chapter](#dataviz)).  
+2. The technical process of creating the plot in R ([next chapter](#betteR_plots)).  
+
+These are separate tasks. If you focus too early on the mechanics of R, you risk creating poorly designed visuals. Once you have a clear vision of the plot, implementing it in R becomes more straightforward (especially with the help of generative AI tools like ChatGPT, Claude, Gemini etc..)
+
+
+
+
+
+
+
+
+

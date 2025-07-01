@@ -1,0 +1,66 @@
+# Summarizing data     
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(knitr)
+```
+
+
+
+<article class="drop-cap">The major goals of statistics are to: (1) Summarize data, (2) Estimate uncertainty, (3) Test hypotheses, (4) Infer cause, and (5) Build models. Now that we can do things in R, we are ready to begin our journey through these goals. In this section, we focus on the first goal—**Summarizing data**.</article><br>  
+
+It is somewhat weird to start with summarizing data without also describing uncertainty because, in the real world, data summaries should always be accompanied by some estimate of uncertainty. However, biting off both of these challenges at once is too much, so for now, as we move forward in summarizing data, remember that this is just the beginning and is inadequate on its own.  
+
+Even though we aren’t tackling uncertainty yet, summarizing data on its own is already incredibly useful. Understanding and interpreting summaries helps us find patterns, spot errors, and build towards deeper statistical analysis.  
+
+
+
+**Why summarize data?**  
+
+Summarizing data serves several purposes:  
+
+- **Condensing large datasets:** Raw data often contains thousands of observations—summaries make the patterns manageable.  
+- **Identifying trends and variability:** Are the values clustered? Is there a lot of spread?  
+- **Detecting errors:** Unexpected values often signal data entry issues or outliers.  
+- **Comparing groups:** Does one group tend to have larger values than another?  
+- **Laying the foundation for modeling:** Before building models, we need a clear picture of the data’s structure.  
+
+
+
+```{r}
+#| echo: false
+#| out-width: "100%"
+#| label: "fig-wereoff"
+#| fig-alt: "A nice picture of Clarkia's home."
+#| fig-cap: "A pretty scene of Clarkia's home showing the world we get to summarize."
+include_graphics("../../figs/summarizing_data/many_xan_1.png")
+```
+
+In this section, we’ll not only learn how to compute summaries but also how to think about them in a meaningful way. That means:  
+
+- **Get everyone up to speed with standard data summaries:** Students will understand summaries of central tendency (*mean, median, mode*), variability (*sum of squares, standard deviation, and variance*), and associations (*covariance, correlation, slope*). Students will also get a sense of the difference between parametric and non-parametric summaries. For each summary, we aim to (1) build intuition, (2) provide the mathematical nuts and bolts, and (3) show you how to find it in R.  
+
+- **Introduce multivariate summaries and dimension reduction techniques:** Summarizing data in one or two dimensions is relatively straightforward. However, nowadays, it is pretty standard to collect high-dimensional data, and we want to be able to work with such complex data. We introduce a few techniques to tackle this real-world challenge.  
+
+- **Further your data visualization and interpretation skills:** Visual summaries of data are perhaps the most valuable summaries because, when done well, they tell a clear and honest story of the data. We introduced ggplot previously, but that was the minimum to get up and running. In this section, we work harder on interpreting the most common data visualizations and on building more sophisticated and polished visual presentations of data.  
+
+## What's Ahead?  
+
+
+Now we dive into descriptive statistics with R. While we will keep practicing and elaborating on what we have learned all term, the next six chapters, listed below, will get you started:  
+
+- **[Data summaries](#univariate_summaries)** – This section introduces univariate descriptions of data, including central tendency, variability, and shape. We also spend more time getting familiar with making and interpreting standard plots of univariate data.  
+
+- **[Associations](#associations)** – We are often interested not just in one-dimensional summaries but also in how variables  relate to one another. In this chapter, we introduce standard summaries for two-dimensional data.  
+
+- **[Linear models](#linear_models)** – While we save intensive modeling for later, a model is, of course, a description of data. Here, we introduce the idea of a simple linear model. We spend much of the later part of this book revisiting this idea in more detail.  
+
+- **[Ordination](#ordination)** – We will not be making you holy. But we will help you deal with multivariate data, understand common approaches to reduce such complex data to a reasonable size, and recognize what to watch out for during this practice.  
+
+- **[Better plots](#betteR_plots)** – As emphasized above, data visualization is the most powerful data summary. In this chapter, we carefully consider what makes a visualization effective—and what makes one misleading.  
+
+- **[Better plots in R](#betteR_plots)** – After considering what makes a good plot, we will strengthen our ability to use ggplot to make great plots in R.
+
+

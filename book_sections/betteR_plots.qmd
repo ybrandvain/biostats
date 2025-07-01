@@ -1,0 +1,132 @@
+# 10. Better Figures in R  {.unnumbered #betteR_plots}
+
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(palmerpenguins)
+library(tweetrmd)
+library(knitr)
+library(tidyr)
+library(ggplot2)
+library(ggthemes)
+library(forcats)
+library(DT)
+library(cowplot)
+library(broom)
+library(patchwork)
+library(emo)
+library(stringr)
+library(readr)
+knitr::opts_chunk$set(echo = TRUE)
+
+df_students <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-05-07/student_teacher_ratio.csv")
+
+df_world_tile <- readr::read_csv("https://gist.githubusercontent.com/maartenzam/787498bbc07ae06b637447dbd430ea0a/raw/9a9dafafb44d8990f85243a9c7ca349acd3a0d07/worldtilegrid.csv") %>% 
+  mutate(
+    ## Namibias two-digit country code is handled as `NA` - let us fix that
+    alpha.2 = if_else(name == "Namibia", "NA", alpha.2),
+    ## We are going to split "Americas" into "North America" and "Sout America"
+    region = if_else(region == "Americas", sub.region, region),
+    region = if_else(region %in% c("Northern America", "Central America", "Caribbean"), 
+                     "North America", region),
+    region = if_else(region == "Southern America", "South America", region),
+    ## to join both data sets, we need a id column
+    country_code = alpha.3
+  )
+
+df_ratios <- df_students %>% 
+  ## Let's keep only the most recent data per country
+  group_by(country, indicator) %>% 
+  filter(year == max(year)) %>% 
+  ungroup() %>% 
+  # Create `NA`s for countries which do not have any data 2012-2018
+  complete(indicator, nesting(country, country_code)) %>% 
+  ## Let's focus on primary education and keep only countries (coded by letters)
+  filter(
+    indicator == "Primary Education",
+    str_detect(country_code, "[A-Z]")
+  ) %>% 
+  ## merge with world tile map data
+  full_join(df_world_tile) %>%
+  filter(
+    !is.na(region),
+    !is.na(indicator)
+  ) %>% 
+  group_by(region) %>% 
+  mutate(student_ratio_region = median(student_ratio, na.rm = T)) %>% 
+  ungroup()
+# ad a plot for residual and one for sums of square
+```
+
+```{r}
+#| echo: false
+#| column: margin
+#| fig-cap: "You can use ggplot to build really nice figures. [Artwork](https://allisonhorst.com/r-packages-functions) by [`@allison_horst`](https://bsky.app/profile/allisonhorst.bsky.social)  [CC-BY](https://creativecommons.org/licenses/by/4.0/)."
+#| fig-alt: "A fuzzy monster in a beret and scarf, critiquing their own column graph on a canvas in front of them while other assistant monsters (also in berets) carry over boxes full of elements that can be used to customize a graph (like themes and geometric shapes). In the background is a wall with framed data visualizations. Stylized text reads “ggplot2: build a data masterpiece."
+include_graphics("../figs/summarizing_data/betteR_plots/masterpiece.png") 
+```
+
+## Creating Engaging, Attractive Plots in R
+
+You've already been introduced to the basics of [ggplot](https://bookdown.org/ybrandvain/Applied_Biostats_2024/05-intro2ggplot.html) and explored the key elements that make for [effective figures](https://bookdown.org/ybrandvain/Applied_Biostats_2024/10-betteRfigs.html). But at this point, you might be feeling a bit frustrated. You know how to generate plots in R, and you understand what makes a plot good, yet creating polished, impactful visuals in R still seems challenging. My advice is threefold: 
+
+1. **Start with the right plot for your data.** For most exploratory plots—which will make up about 95% of what you create—this is key. Often, a well-chosen plot paired with a couple of quick R tricks can make your visuals clear and informative.    
+
+
+
+
+2. **This chapter is here to guide you through the rest.** For more advanced plotting and customization, take a look at these excellent resources: [The R Graphics Cookbook](https://r-graphics.org/) [@chang2020], [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/) [@wickham2016], [Data Visualization: A Practical Introduction](https://socviz.co/) [@healy2018], and [Modern Data Visualization with R](https://rkabacoff.github.io/datavis/) [@kabacoff2024].    
+
+
+
+::: {.callout-tip collapse="true"}
+## The right (gg)plot for your data (click to expand)
+
+| **Data Type**                          | **Suggested Plot(s)**                  | **Likely geom**                   | **What It Shows**                          |
+| -------------------------------------- | ---------------------------------------| --------------------------------------- | ------------------------------------------ |
+| One numeric variable                   | Histogram, Density plot             |    [`geom_histogram`](https://ggplot2.tidyverse.org/reference/geom_histogram.html), [`geom_density`](https://ggplot2.tidyverse.org/reference/geom_density.html)| Distribution shape, spread, skew, outliers |
+| One categorical + one numeric variable | Boxplot, Violin plot,  Sina plot |     [`geom_boxplot`](https://ggplot2.tidyverse.org/reference/geom_boxplot.html), [`geom_violin`](https://ggplot2.tidyverse.org/reference/geom_violin.html), [`geom_sina`](https://ggforce.data-imaginist.com/reference/geom_sina.html) | Group comparisons, spread, outliers        |
+| Two numeric variables                  | Scatterplot                         |    [`geom_point`](https://ggplot2.tidyverse.org/reference/geom_point.html) + [`geom_smooth`](https://ggplot2.tidyverse.org/reference/geom_smooth.html)| Trends, clusters, correlation, outliers    |
+| Categorical counts or proportions      | Bar plot, Stacked bar plot, Mosaic plot| [`geom_bar`](https://ggplot2.tidyverse.org/reference/geom_bar.html), [`geom_col`](https://ggplot2.tidyverse.org/reference/geom_bar.html), [`geom_mosaic`](https://haleyjeppson.github.io/ggmosaic/reference/geom_mosaic.html)| Frequencies, relative proportions          |
+| Time series (numeric over time)        | Line plot                              |[`geom_line`](https://ggplot2.tidyverse.org/reference/geom_line.html) | Trends over time                           |
+:::
+
+
+
+## Review: What Makes a Good Plot
+
+- **Good plots tell the story of the data.**  
+- **Good plots are tailored to the audience and the method of presentation.**  
+- **Good plots are Honest, Transparent, Clear, and Accessible.**
+
+We'll explore these concepts in this chapter, with a particular focus on creating honest, transparent, and clear plots, as this is where R offers the most opportunities for customization.
+
+
+## Review: Avoiding data viz time sinks
+
+:::warning
+Making and critiquing plots is one of my favorite parts of science — I absolutely love it! **However, I know it can be a major time sink**, and we want to avoid that. We already discussed this once.
+:::
+
+Here are my tips for preventing yourself from getting bogged down by every figure:
+
+- **Know your goal:** Determine whether you’re creating an exploratory or explanatory figure. Don’t waste time perfecting an exploratory plot — it is meant for quick insights, not for publication.
+- **Standardize your process:** Develop a few go-to themes and color schemes that you use frequently. Save and reuse these templates so you can produce attractive plots without customizing each one from scratch.
+- **Master the basics:** Get comfortable with the most common tasks you’ll perform in `ggplot2`. Keep the [ggplot cheat sheet](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf) handy, and bookmark additional resources that suit your workflow. 
+- [**Premature optimization is the root of all evil:**](https://stackify.com/premature-optimization-evil/) Save detailed customizations (e.g., annotations, special formatting) for last. This way, you can focus on the essential elements of the plot first without getting bogged down in complex code prematurely.  
+- **Get help**: Reach out to friends, use Google, consult books, or turn to Generative AI and other resources to solve problems quickly. Remember, the more specific your question, the better the help you’ll receive! 
+
+## What's ahead and how to thrive
+
+
+
+
+In this chapter, we'll tackle the challenge of creating great plots by breaking it down into three key parts.  
+
+- First, in [Tools for BetteR Plots](#plotting_tools), we'll build a problem-solving toolkit. You'll learn how to find answers, use help files, and leverage modern resources to help  you make the plots you want to make.  
+
+- Next, in [Making cleaR Plots](#cleaR_plots), we'll put that toolkit to use in a detailed, step-by-step 'makeover' of a messy plot, transforming it into a clear, publication-ready figure.    
+
+- Finally, in [Plots for the Medium](#plots_foR_medium), we'll learn how to adapt our visualizations for specific contexts like scientific papers, talks, and posters, because a great plot is always tailored to its audience. 
+
+Ass usual, we conclude with a [chapter summary](#better_plots_summary).

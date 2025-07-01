@@ -1,0 +1,96 @@
+# 8. Ordination  {.unnumbered #ordination}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(kableExtra)
+library(ggplot2)
+library(tidyr)
+source("../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+```
+
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for selecting data from a few columns from RILs planted at GC"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm,visited )|>
+  mutate(log10_petal_area_mm = log10(petal_area_mm))
+```
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating Scenario:**   You have a dataset with many variables (e.g. Numerous phenotypes, climatic variables, RNA-Seq, large scale genomic or phenomic data, OTU counts etc...) and want to broadly summarize variability in this dataset and the associations between these many variables. However, there are too many variables to interpret with simple plots or pairwise comparisons. You need a way to summarize the patterns of variation across all traits simultaneously.
+
+**Learning Goals: By the end of this chapter, you should be able to:**
+
+1. **Understand what ordination methods like PCA and NMDS do**  
+   - Explain the goals of PCA and NMDS in summarizing multivariate patterns.  
+
+2. **Interpret PCA results in biological terms**  
+   - Describe how traits combine to form principal components  
+   - Quantify how much variance is explained by each component
+
+3. **Understand and compare PCA and NMDS**  
+   - Know when PCA is appropriate and when NMDS might be better
+
+4. **Anticipate and avoid common pitfalls**  
+   - Handle missing data, decide whether to scale variables, and recognize when you’re double-counting information  
+
+:::
+
+---
+
+<article class="drop-cap">Nowadays biologists are drowning in data. A single study, can include measurements of dozens of traits. Grinding up samples and running them through various machines provides us with genotypes at  millions of loci, measures of gene expression across tissues, characterization of the thousands of microbes in a sample etc. Trying to interpret each variable on its own quickly becomes overwhelming — and looking at pairs of traits one at a time misses the bigger picture. So, we use multidimensional techniques to summarize how individuals differ across all traits simultaneously.</article>    
+
+```{r}
+#| echo: false
+#| column: margin
+#| label: fing-europe
+#| fig-cap: "**Principal Components Analysis (PCA) of genetic variation in Europe**. This plot shows individuals sampled from across Europe, positioned along the first two principal components derived from genome-wide genetic data. Each point represents an individual, color-coded by country, with country codes overlaid. Strikingly, the resulting PCA plot recapitulates the geography of Europe, with spatial proximity on the map corresponding to genetic similarity. The inset shows actual country locations for reference. The work is from @novembre2008, and the image is from [John's website](http://jnpopgen.org/)."
+#| fig-alt: "A scatterplot of European individuals' genetic data projected onto PC1 and PC2 axes from a PCA. Points are labeled with country codes and colored by country. The distribution of points in PCA space mirrors the geographical layout of Europe. For instance, Iberian populations (ES, PT) cluster together on the left; central Europeans (DE, FR, CH) cluster centrally; eastern populations (RO, UA, TR) appear on the right. An inset map of Europe shows countries color-coded to match their PCA cluster, highlighting the strong correspondence between genetic and geographic structure."
+include_graphics("../figs/summarizing_data/ordination/novembre2008a.jpg")
+```
+
+
+A common set of tools, known as *ordination methods*, summarize high-dimensional datasets into a few major axes of variation. These summaries can be incredibly informative, revealing key patterns in the data. For example, [John Novembre](https://genes.uchicago.edu/faculty/john-novembre-phd) showed that summarizing whole-genome data by its major axes of variation revealed a structure in European genetic variation that closely mirrors the geographic map of Europe. This example highlights the best of ordination methods because it: 
+
+- Reduced high-dimensional data to a few informative axes.   
+- Visualized relationships among individuals or species in a lower-dimensional space.  
+- Highlighted the biological structure in multivariate datasets.
+
+
+## Let's get started with ordination!    
+
+We will work through the intuition and mechanics of how to conduct a few standard ordination techniques. Our focus will be on building a conceptual understanding and a pragmatic "know-how", rather than a rigorous mathematical foundation.  Along the way, we’ll also wrestle with practical questions. For example "*What do we do about missing data?*", "*Should we scale our variables?*", and "*When are two variables redundant? (and why should I care?)*"  
+
+- We’ll begin with **Principal Component Analysis (PCA)** — a linear method that looks for the directions of greatest variance in your data. We will start with a familiar dataset: *Clarkia* individuals from the GC site, for which we’ve measured anther-stigma distance, petal area, and leaf water content. These traits may relate to different aspects of plant performance or pollination biology — but PCA won’t “know” that. It will simply tell us how plants vary. We split this  exploration into three sections: (1) [We get started with pca](#pca), (2) [We look under the hood of PCA](#pcaII) to understand a bit o how it works, and (3)  [We look out for common issues with PCA gone wrong](#pcaIII). 
+
+- Next we take a quick tour of [alternatives to pca](#pcalternatives), including [Multiple Correspondence Analysis for  nominal datasets](#pcalternatives_mca), [Factor Analysis of Mixed Data for when a dataset has both continuous and categorical variables](#pcalternatives_famd), [Principal cordinates analysis and non-metric dimensional scaling for nonlinear data](#pcalternatives_pcoaANDnmds), and [t-SNE and UMAP for high dimnesional data](#pcalternatives_tsneANDumap).      
+
+As usual, we conclude by [summarizing the chapter](#ordination_summarySummary), presenting  a [chatbot tutor](#ordination_summaryChatbot), [practice questions](#ordination_summaryPractice_questions), a [glossary](#ordination_summaryGlossary_of_terms),  a review of [R functions](#ordination_summaryNew_r_functions) and [R packages](#ordination_summaryR_packages_introduced) introduced, and [provide links to additional resources](#ordination_summaryAdditional_resources).  

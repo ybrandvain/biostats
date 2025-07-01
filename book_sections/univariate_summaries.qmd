@@ -1,0 +1,219 @@
+# 5. Simple Summaries {#univariate_summaries}
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../_common.R") 
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+```
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:**   
+You have a fresh new dataset and want to check it out. How do you go about understanding numeric variables of interest?  
+
+**Learning Goals: By the end of this chapter, you should be able to:**  
+
+1. **Interpret a histogram and connect it to key descriptions of data, and to:**  
+   - Responsibly interpret a given numerical summary.  
+   - Evaluate which summary is most informative for a given variable.  
+   - Use histograms to visually assess measures of central tendency and spread.  
+
+2. **Explain and interpret summaries of the location of a numeric variable.**  
+   - Understand the mathematics behind these summaries and calculate them manually.  
+   - Use R to calculate and visualize them.  
+
+3. **Explain and interpret summaries of the spread of a numeric variable.**  
+   - Understand the mathematics behind these summaries and calculate them manually.  
+   - Use R to calculate and visualize them.  
+
+4. **Recognize the difference between parametric and non-parametric summaries.**  
+   - Identify situations where parametric vs. non-parametric summaries are appropriate.  
+   - Read off standard non-parametric summaries from a boxplot.  
+
+
+:::     
+
+
+---  
+
+
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for selecting data from a few columns from RILs planted at GC"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm )
+```
+
+
+---  
+
+```{r}
+#| column: margin
+#| fig-column: margin
+#| eval: false
+library(ggplot2)
+gc_rils |> 
+  filter(!is.na(petal_color))|>
+  ggplot(aes(x = petal_color))+
+  geom_bar()
+```
+
+```{r}
+#| column: margin
+#| fig-column: margin
+#| echo: false
+#| label: fig-pinkwhite
+#| fig-cap: "A bar plot showing the number of pink and white flowered plants, experimentally planted at location GC."
+library(ggplot2)
+gc_rils |> 
+  filter(!is.na(petal_color))|>
+  ggplot(aes(x = petal_color))+
+  geom_bar()+
+  scale_y_continuous(limits = c(0,55), breaks = c(0,25,50))+
+  labs(x = "Pink = 0; White = 1")+
+  theme(axis.text = element_text(size = 30),
+        axis.title = element_text(size = 40))
+```
+
+
+
+<article class="drop-cap">We begin our summary of variation in continuous variables in a somewhat unlikely place -- a bar plot of a binary variable. Standard bar plots have a y-axis which  starts at zero and shows the number of observations in each category, displayed on the x-axis.  So, for example, @fig-pinkwhite shows that there are nearly fifty pink flowered RILs and closer to forty white flowered RILs planted at location GC. Bar plots can have any number of categories on the x-axis -- but binary variables have a special characteristic -- if we think of one option (say pink) as zero, and the other option (say white) as one, the mean tells us that `r gc_rils |> summarise(100*mean(petal_color == "white", na.rm = TRUE)) |> pull()|> round(digits = 2) |> paste("%", sep = "")` of the RILs planted had white flowers. Of course, this is a strange mean, as these plants were either pink or white, and none were `r gc_rils |> summarise(100*mean(petal_color == "white", na.rm = TRUE)) |> pull()|> round(digits = 2) |> paste("%", sep = "")` white, but it is a mean, nonetheless.      </article>   
+
+```{r}
+gc_rils |>
+  summarise(mean(petal_color == "white", na.rm = TRUE)) |>
+  pull()
+```
+
+--- 
+
+## Histograms
+
+We can similarly display discrete numerical variables as a bar plot. So, for example, the x-axis of @fig-num_hyb  (in the *Num hybrid bar plot* tab) shows the number of a mother's seeds that we found to be  hybrids, and the y-axis shows the number of mothers with x seeds shown to be hybrid. 
+
+Unfortunately, @fig-num_hyb is somewhat misleading -- we aimed to genotype eight seeds per plant, but we sometimes missed this goal. @fig-prop_hyb (in the *Prop hybrid bar plot* tab) is more honest, as it shows the proportion, but it is a bit distracting and confusing -- there are occasional weird dips which represent -- not a biological fact of *parviflora* hybridization, but experimental weirdness of a non-standard sample size across mothers.    
+
+@fig-prop_hyb_hist (in the *Prop hybrid hist* tab) is a histogram that displays the distribution of the proportion of hybrid seeds per RIL. A histogram is much like a bar plot, but rather than referring to a single value of the x-variable, in a histogram, values of x are binned. 
+
+:::::: panel-tabset
+
+## Num hybrid bar plot 
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+```{r}
+#| label: fig-num_hyb
+#| fig-cap: "A bar plot showing the number of genotyped seeds of each mom shown to be hybrid."
+gc_rils |> 
+  ggplot(aes(x = num_hybrid))+
+  geom_bar()+
+  scale_x_continuous(breaks = 0:8)
+```
+
+:::
+
+## Prop hybrid bar plot 
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+```{r}
+#| label: fig-prop_hyb
+#| fig-cap: "A bar plot showing the proportion of genotyped plants shown to be hybrid. Most of the time, we genotyped eight seeds per mom."
+gc_rils |> 
+  ggplot(aes(x = prop_hybrid))+
+  geom_bar()
+```
+
+:::
+
+
+## Prop hybrid hist 
+
+::: {style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+```{r}
+#| label: fig-prop_hyb_hist
+#| fig-cap: "A histogram showing the proportion of genotyped plants shown to be hybrid. Most of the time, we genotyped eight seeds per mom."
+gc_rils |> 
+  ggplot(aes(x = prop_hybrid))+
+  geom_histogram(binwidth = 1/8, color = "white")+
+  scale_x_continuous(breaks= seq(0,1,1/8))
+```
+
+:::
+
+::::::
+
+
+It helps to remember that in contrast to a bar plot, where the value on the x axis is the value of all the observations in that bar, in a histogram this value is the center of the range of values in the bin. So in @fig-prop_hyb_hist the first bin corresponds to values between -0.0625 and 0.0625, and the second bin (centered on 1/8th) corresponds to proportions between 0.0625 and 0.1875, etc... .  The x-axis of @fig-prop_hyb_hist2 shows this more explicitly, but it is too busy, and complex for standard presentation. 
+
+```{r}
+#| echo: false
+#| label: fig-prop_hyb_hist2
+#| fig-cap: "A histogram showing the proportion of genotyped plants shown to be hybrid. Most of the time, we genotyped eight seeds per mom. This is identical to Figure @fig-prop_hyb_hist, except, the x-label shows the range of x values rather than the center of thebins."
+gc_rils |> 
+    ggplot(aes(x = prop_hybrid))+
+    geom_histogram(binwidth = 1/8, color = "white")+
+    scale_x_continuous(breaks= seq(0,1,1/8), labels = paste("(",seq(0-1/16,1,1/ 8), " , ",seq(1/16,1+1/16,1/8), "]", sep =""))+
+    theme(axis.text.x = element_text(angle = 45,hjust = .7, vjust =0.7))  
+```
+
+:::protip
+When making a histogram, you are in charge of the bin size. In `ggplot2` you can specify this with one of two arguments:     
+
+- `binwidth`: Which tells R how big to make the the bins.   
+- `bins`: Which tells R how many equally sized bins to split the data into. 
+
+There is not a universally correct answer for the appropriate bin size -- it will vary by data set. It takes thought and expertise. It is best to experiment some until you find the binning that honestly reflects the variability in your data. This reflects a trade-off between capturing the variability, without distracting the reader with every bump or dip. I usually start with about thirty bins and then dial that number up or down until I feel like the variability in the data is well-communicated by the plot. 
+:::
+
+
+
+## Let's get started with univariate summaries!    
+
+
+The following sections introduce how to summarize a single variable by:  
+
+- [Describing its shape](#summarizing_shape) including its [skew](#summarizing_shape_skew), and [number of modes](#summarizing_shape_number-of-modes).     
+- [Changing its shape (if necessary)](#changing_shape), including [when to transform](#changing_shape_to-transform-or-not-to-transform-that-is-the-question), [rules of transformation](#changing_shape_rules-for-transforming-data), [how to transform variables in R](#changing_shape_transformation-in-r), and a [table of common transformations](#changing_shape_common-transformations).     
+- [Describing its center](#summarizing_center), including standard [non-parametric](#summarizing_center_nonparametric-summaries) and [parametric summaries](#summarizing_center_parametric-summaries), [when to use which](#summarizing_center_which-summaries-to-use-when), and some [useful but used-less summaries](#summarizing_center_use-full-but-used-less-summaries).      
+- [Describing its width](#summarizing_variability) including [nonparametric](#summarizing_variability_nonparametric-measures-of-variability) and [parametric summaries](#summarizing_variability_parametric-summaries-of-variability), with a [worked example](#summarizing_variability_parametric-summaries-of-variability-example) with mathematical calculations, R functions, and an illustrative plot or visualization.  
+
+Then we [summarize the chapter](#summarizing_summaries_chapter-summary), present [practice questions](#summarizing_summaries_practice-questions), a [glossary](#summarizing_summaries_glossary-of-terms), a review of [R functions](#summarizing_summaries_key-r-functions) and [R packages](#summarizing_summaries_r-packages-introduced) introduced, and [present additional resources](#summarizing_summaries_additional-resources).    
+
+
+
+
+
+
