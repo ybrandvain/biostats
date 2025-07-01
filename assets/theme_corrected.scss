@@ -1,0 +1,268 @@
+/*-- scss:defaults --*/
+
+// Fonts
+$font-weight-base: 400 !default;
+
+
+// Links
+$link-decoration: underline !default;
+$toc-color: #3A5F0B;  /*-- Set active link color for TOC sidebar (RIGHT) --*/
+
+
+
+// Headings
+h1, h2, h3, h4, h5, h6 {
+  color: #5F634F;
+  //color: #9f86c0;
+}
+
+.header-section-number {
+  color: #5F634F;
+  //color: #9f86c0;
+}
+
+
+// Main text
+p {
+  font-family: 'Crimson Text', serif;
+  line-height: 1.5em;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+// List elements
+li {
+  font-family: 'Crimson Text', serif;
+  line-height: 1.5em;
+}
+
+li > p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+// Mouse over link
+a:hover {
+  color: #f666fb;
+  //color: darken(#31AFD4, 15%);
+}
+
+// Figure caption
+.figure-caption {
+  font-size: 11pt;
+  font-style: italic;
+  color: #595959;
+  line-height: 1.3em;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#callout {
+  font-size: 12pt;
+}
+
+
+// Sidebar navigation - LEFT SIDE
+.sidebar-title {
+  color: #ffe6f7;
+}
+
+
+.sidebar-navigation a{
+  color:  #ffe6f7 !important;
+}
+
+.sidebar-navigation a:hover {
+  color: #ed62ac !important;
+  text-decoration: underline;
+}
+
+.sidebar-item .chapter-number {
+  color:  #ffe6f7 !important;
+}
+
+div.sidebar-item-container .active {
+  color: #ed62ac !important;
+}
+
+div.sidebar-item-container .active .chapter-number {
+  color: #ed62ac !important;
+}
+
+//Sidebar navigation - RIGHT SIDE
+#quarto-margin-sidebar {
+  background-color: #fff;
+}
+
+// Title color
+#TOC, #toc-title {
+  color:  #ffe6f7;
+  font-size: 14pt;
+}
+
+// Nonactive sidebar items
+.sidebar nav[role="doc-toc"] ul > li > a {
+  color:  #ffe6f7;
+}
+
+.sidebar.header-section-number{
+  color: #3A5F0B;
+}
+
+// Active sidebar item
+.sidebar nav[role="doc-toc"] ul > li > a.active {
+    color: #3A5F0B;
+    border-left: 1px solid #b3d3f5;
+    text-decoration: underline;
+}
+
+
+.sidebar nav[role="doc-toc"] ul > li > a:hover {
+    color: #3A5F0B;
+    text-decoration: underline;
+}
+
+.sidebar nav[role="doc-toc"] ul > li > a:hover .header-section-number {
+    color: #3A5F0B;
+    text-decoration: underline;
+}
+
+
+// Bottom of the page navigation
+.nav-page .bi, span.nav-page-text {
+  color: #443850;
+}
+
+
+// Style cover art 
+.cover {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 70px;
+  margin-bottom: 50px;
+  width: 40%;
+}
+
+
+/** Style source code
+div.sourceCode {
+ border-radius: 0; 
+} 
+
+body .sourceCode { 
+  background-color: #fff2fb//!important;
+} **/
+
+
+
+
+/** Make the caption italic and black 
+.table caption{
+  font-style: italic;
+  color: black;
+  font-family: 'Crimson Text', serif;
+  font-size: 11px;
+}
+
+.table caption span{
+  font-style: normal;
+  font-weight: bold;
+  margin-bottom: 30px;
+}**/
+
+
+
+/** Change border color to black **/
+.table thead tr th {
+  border-color: black;
+  border-width: 1px;
+  font-family: 'Crimson Text', serif;
+  font-size: 11px;
+  font-weight: normal;
+}
+
+
+
+
+/** Add a top border to the table header row **/
+.table thead th { 
+  border-top: 1px solid black;
+  border-left: 0;
+  border-right: 0;
+}
+
+
+/** Format and remove borders within the table body **/
+.table tbody tr td {
+  border: none;
+  font-family: 'Crimson Text', serif;
+  font-size: 11px;
+}
+
+
+/** Add a bottom border to the table body **/
+.table tbody tr:last-child {
+  border-bottom: 1px solid black;
+}
+
+
+/** Format and remove borders within the table footer **/
+.table tfoot {
+  border: none;
+  font-family: 'Crimson Text', serif;
+  font-size: 11px;
+}
+
+
+#references {
+  margin-bottom: 5em;
+}
+
+.drop-cap::first-letter {
+  -webkit-initial-letter: 4;
+  initial-letter: 4;
+  color: #FF7CFF;
+  font-family: 'Luminari', serif;
+  font-size: 3rem; /* Adjusts size */
+  line-height: 1;  /* Prevents cramping */
+  margin-right: 0.75em;
+}
+
+.drop-cap {
+  font-size: 1rem; /* Makes the paragraph text larger */
+  line-height: 1.2;  /* Increases spacing for readability */
+  text-align: justify; /* Improves text alignment */
+}
+
+// Terminal theme customization
+div.sourceCode {
+  border-radius: 0;
+}
+
+body .sourceCode {
+  background-color: #3A5F0B !important;  // Soft green background
+  color: #ffe6f7 !important;  // Pastel pink text
+}
+
+body .sourceCode .sourceCode-prompt {
+  color: #B91C5E !important;  // Darker pink for prompts
+}
+
+body .sourceCode .sourceCode-output {
+  color: #D63384 !important;  // Pastel pink output
+}
+
+body .sourceCode .sourceCode-error {
+  color: #9A0036 !important;  // Deep pink for errors
+}
+
+
+
+
+
+body .blockquote {
+  color: #B91C5E !important;  // Darker pink for prompts
+  font-size:  1.3em !important;
+  font-family: 'Garamond', 'Georgia', serif !important;
+}
