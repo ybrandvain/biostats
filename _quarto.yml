@@ -4,6 +4,10 @@ project:
   preview:
     browser: true
 
+# bootstraping  https://acclab.github.io/dabestr/articles/tutorial_basics.html
+# causal inference https://ngreifer.github.io/software/ causal
+# fix honest_plots chatbot
+# fix clear_plots chatbot
 
 book:
   title: "Applied Biostatistics"
@@ -47,6 +51,51 @@ book:
         - book_sections/reproducible_science/collecting_data.qmd
         - book_sections/reproducible_science/reproducible_analyses.qmd
         - book_sections/reproducible_science/reproducible_summary.qmd  
+    - book_sections/filler.qmd
+    - book_sections/summarizing_data_index.qmd
+    - part: book_sections/univariate_summaries.qmd
+      chapters: 
+        - book_sections/univariate_summaries/summarizing_shape.qmd
+        - book_sections/univariate_summaries/changing_shape.qmd
+        - book_sections/univariate_summaries/summarizing_center.qmd
+        - book_sections/univariate_summaries/summarizing_variability.qmd
+        - book_sections/univariate_summaries/summarizing_summaries.qmd
+    - part: book_sections/associations.qmd
+      chapters: 
+        - book_sections/associations/cat_cont.qmd
+        - book_sections/associations/two_categorical_vars.qmd
+        - book_sections/associations/cont_cont.qmd
+        - book_sections/associations/summarizing_associations.qmd
+    - part: book_sections/linear_models.qmd 
+      chapters: 
+        - book_sections/linear_models/mean.qmd 
+        - book_sections/linear_models/lm_cat_pred.qmd
+        - book_sections/linear_models/regression.qmd
+        - book_sections/linear_models/two_predictors.qmd
+        - book_sections/linear_models/lm_summary.qmd
+    - part: book_sections/ordination.qmd
+      chapters:         
+        - book_sections/ordination/pca.qmd
+        - book_sections/ordination/pcaII.qmd
+        - book_sections/ordination/pcaIII.qmd
+        - book_sections/ordination/pcalternatives.qmd
+        - book_sections/ordination/ordination_summary.qmd
+    - part: book_sections/data_viz.qmd
+      chapters:         
+        - book_sections/data_viz/audience&delivery.qmd
+        - book_sections/data_viz/honest_plots.qmd
+        - book_sections/data_viz/transparent_plots.qmd
+        - book_sections/data_viz/clear_plots.qmd
+        - book_sections/data_viz/avoid_distractions.qmd
+        - book_sections/data_viz/accessible_plots.qmd
+        - book_sections/data_viz/writing_about_figures.qmd
+        - book_sections/data_viz/dataviz_summary.qmd
+    - part: book_sections/betteR_plots.qmd
+      chapters:         
+        - book_sections/betteR_plots/plotting_tools.qmd
+        - book_sections/betteR_plots/cleaR_plots.qmd
+        - book_sections/betteR_plots/plots_foR_medium.qmd
+        - book_sections/betteR_plots/betteR_plots_summary.qmd    
     - toc.qmd
     - references.qmd
 
@@ -75,3 +124,4 @@ format:
 editor: source
 filters:
  - webr
+ - shinylive
