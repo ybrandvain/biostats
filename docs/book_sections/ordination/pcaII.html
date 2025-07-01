@@ -704,7 +704,7 @@ window.Quarto = {
 </li>
 <li>Finding Principal Components.</li>
 </ul>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code for selecting data for PCA from RILs planted at GC</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
@@ -728,7 +728,7 @@ window.Quarto = {
 
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
 <p>Making a covariance matrix from a centered and scaled data set, provides the exact same result as making a correlation matrix from the original data with the <code>cor()</code> function. So sometimes people talk about PCs from the correlation matrix (i.e.&nbsp;centered and scaled data), or the covariance matrix (i.e.&nbsp;centered but not scaled data).</p>
-</div></div><div class="cell">
+</div></div><div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scaling the data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>scaled_gc_rils_4pca <span class="ot">&lt;-</span> gc_rils_4pca <span class="sc">|&gt;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>made_hybrid)<span class="sc">|&gt;</span>                <span class="co"># Remove categorical variables</span></span>
@@ -745,7 +745,7 @@ window.Quarto = {
 <li>Some traits are positively correlated with each other – e.g.&nbsp;there is a large correlation between anther stigma distance and petal area – perhaps because they both describe flower size.</li>
 <li>Some traits are negatively correlated with each other– e.g.&nbsp;nearly all other traits are negatively correlated with leaf water content.</li>
 </ul>
-<div class="cell page-columns page-full" data-cap-location="margin">
+<div class="cell page-columns page-full" data-layout-align="center" data-cap-location="margin">
 <details class="code-fold">
 <summary>Code for visualizing trait correlations</summary>
 <div class="sourceCode cell-code" id="cb3" data-cap-location="margin"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
@@ -773,10 +773,10 @@ window.Quarto = {
 <span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display page-columns page-full">
-<div id="fig-cov" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="A heatmap showing pairwise correlations between five traits in parviflora RILs. Blue cells represent positive correlations, orange cells represent negative correlations, and white indicates near-zero correlations. Strongest correlations include a perfect correlation of 1.0 between each trait and itself, a positive correlation of 0.294 between petal area and asd, and a negative correlation of -0.257 between stem diameter and lwc." data-cap-location="margin">
+<div id="fig-cov" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="A heatmap showing pairwise correlations between five traits in parviflora RILs. Blue cells represent positive correlations, orange cells represent negative correlations, and white indicates near-zero correlations. Strongest correlations include a perfect correlation of 1.0 between each trait and itself, a positive correlation of 0.294 between petal area and asd, and a negative correlation of -0.257 between stem diameter and lwc." data-cap-location="margin" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-cov-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pcaII_files/figure-html/fig-cov-1.png" class="img-fluid figure-img" alt="A heatmap showing pairwise correlations between five traits in parviflora RILs. Blue cells represent positive correlations, orange cells represent negative correlations, and white indicates near-zero correlations. Strongest correlations include a perfect correlation of 1.0 between each trait and itself, a positive correlation of 0.294 between petal area and asd, and a negative correlation of -0.257 between stem diameter and lwc." width="672">
+<img src="pcaII_files/figure-html/fig-cov-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="A heatmap showing pairwise correlations between five traits in parviflora RILs. Blue cells represent positive correlations, orange cells represent negative correlations, and white indicates near-zero correlations. Strongest correlations include a perfect correlation of 1.0 between each trait and itself, a positive correlation of 0.294 between petal area and asd, and a negative correlation of -0.257 between stem diameter and lwc.">
 </div>
 <figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-cov-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Pairwise correlations among traits in parviflora recombinant inbred lines. Each cell shows the covariance of scaled and centered data (i.e.&nbsp;correlation) between two traits, with color indicating strength and direction of association (blue = positive, orange = negative). Traits include stem diameter, petal area, anther–stigma distance (asd), growth rate, and leaf water content (lwc). The matrix is symmetric, and all diagonal values are 1 by definition.
@@ -804,7 +804,7 @@ Figure&nbsp;1: Pairwise correlations among traits in parviflora recombinant inbr
 <section id="eigenvalues-are-the-variance-explained" class="level4">
 <h4 class="anchored" data-anchor-id="eigenvalues-are-the-variance-explained">Eigenvalues are the variance explained</h4>
 <p>Here the <a href="https://en.wikipedia.org/wiki/Eigenvalues_and_eigenvectors">eigen values</a> are the variance attributable to each principal component, and the square root of these values match the standard deviation provided by <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/prcomp.html"><code>prcomp()</code></a> (see below and the <a href="http://localhost:6037/book_sections/ordination/pca.html#looking-into-proportion-variance-explained">previous section</a>):</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>eigen_analysis <span class="ot">&lt;-</span> <span class="fu">eigen</span>(<span class="fu">cov</span>(scaled_gc_rils_4pca))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>pca_analysis   <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(scaled_gc_rils_4pca)</span>
@@ -815,7 +815,7 @@ Figure&nbsp;1: Pairwise correlations among traits in parviflora recombinant inbr
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>percent, <span class="sc">-</span> cumulative)<span class="sc">|&gt;</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(std.dev, <span class="at">.after =</span> eigen_sd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -864,13 +864,13 @@ Figure&nbsp;1: Pairwise correlations among traits in parviflora recombinant inbr
 </section>
 <section id="eigenvectors-are-nearly-the-trait-loadings" class="level4 page-columns page-full">
 <h4 class="anchored" data-anchor-id="eigenvectors-are-nearly-the-trait-loadings">Eigenvectors are (nearly) the trait loadings</h4>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-eigenVpca" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Five scatter plots (one for each principal component) compare PCA trait loadings from prcomp() with eigenvector values from eigen(). Each colored point represents a trait. Points lie closely along diagonal lines in each panel, indicating strong agreement between the two methods, except for potential sign flips.">
+<div id="fig-eigenVpca" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Five scatter plots (one for each principal component) compare PCA trait loadings from prcomp() with eigenvector values from eigen(). Each colored point represents a trait. Points lie closely along diagonal lines in each panel, indicating strong agreement between the two methods, except for potential sign flips." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-eigenVpca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pcaII_files/figure-html/fig-eigenVpca-1.png" class="img-fluid figure-img" alt="Five scatter plots (one for each principal component) compare PCA trait loadings from prcomp() with eigenvector values from eigen(). Each colored point represents a trait. Points lie closely along diagonal lines in each panel, indicating strong agreement between the two methods, except for potential sign flips." width="672">
+<img src="pcaII_files/figure-html/fig-eigenVpca-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="Five scatter plots (one for each principal component) compare PCA trait loadings from prcomp() with eigenvector values from eigen(). Each colored point represents a trait. Points lie closely along diagonal lines in each panel, indicating strong agreement between the two methods, except for potential sign flips.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eigenVpca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: <strong>Comparing PCA loadings from <code>prcomp()</code> and eigenvectors from <code>eigen()</code></strong>. Each panel shows one principal component (PC1–PC5). For each trait, the x-axis shows its loading from <code>prcomp()</code>, and the y-axis shows the corresponding value in the eigenvector from <code>eigen()</code>. The dashed lines indicate the near-perfect agreement between the two methods, differing only in sign. This demonstrates that (when everything is working right) <code>prcomp()</code> and <code>eigen()</code> produce equivalent results (up to sign) when the data are properly centered and scaled.
@@ -910,7 +910,7 @@ Figure&nbsp;2: <strong>Comparing PCA loadings from <code>prcomp()</code> and eig
 <h2 class="anchored" data-anchor-id="why-we-usually-scale-our-variables">Why we usually scale our variables</h2>
 <p>We usually center and scale our variables so that our PC gives equal value to all variables. Sometimes we may not want to do this – perhaps we want to take traits with more variability more seriously. While this might be ok if variables are on very similar scales, it can be quite disastrous. Now that we’ve seen how PCA works using scaled data, let’s explore what happens when we skip the scaling step.</p>
 <p>In our GC RIL data for example, petal area (measured in <span class="math inline">\(mm^2\)</span>) has a much greater variance than any other trait (because the covariance of a variance with itself is the variance). You can see this on the main diagonal of <a href="#fig-covmat" class="quarto-xref">Figure&nbsp;<span>3</span></a> where the variance in petal area is 216, while the second largest value in this matrix is less than two.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>centered_gc_rils_4pca <span class="ot">&lt;-</span> gc_rils_4pca <span class="sc">|&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>made_hybrid)<span class="sc">|&gt;</span>                <span class="co"># Remove categorical variables</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_all</span>(scale, <span class="at">scale =</span> <span class="cn">FALSE</span>)      <span class="co"># Subtract mean and divide by SD</span></span>
@@ -918,7 +918,7 @@ Figure&nbsp;2: <strong>Comparing PCA loadings from <code>prcomp()</code> and eig
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Finding all pairwise covariances on centered (but not scaled) data</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>cov_matrix <span class="ot">&lt;-</span> <span class="fu">cov</span>(centered_gc_rils_4pca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code for visualizing trait covariances</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
@@ -946,10 +946,10 @@ Figure&nbsp;2: <strong>Comparing PCA loadings from <code>prcomp()</code> and eig
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-covmat" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A heatmap of trait covariances among five Clarkia xantiana traits. The diagonal values represent trait variances, with petal area showing a much larger value (215.766) than the others. Color scale ranges from 0 to 200, highlighting petal area’s dominance in the matrix. Off-diagonal covariances are relatively small.">
+<div id="fig-covmat" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A heatmap of trait covariances among five Clarkia xantiana traits. The diagonal values represent trait variances, with petal area showing a much larger value (215.766) than the others. Color scale ranges from 0 to 200, highlighting petal area’s dominance in the matrix. Off-diagonal covariances are relatively small." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-covmat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pcaII_files/figure-html/fig-covmat-1.png" class="img-fluid figure-img" alt="A heatmap of trait covariances among five Clarkia xantiana traits. The diagonal values represent trait variances, with petal area showing a much larger value (215.766) than the others. Color scale ranges from 0 to 200, highlighting petal area’s dominance in the matrix. Off-diagonal covariances are relatively small." width="672">
+<img src="pcaII_files/figure-html/fig-covmat-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="A heatmap of trait covariances among five Clarkia xantiana traits. The diagonal values represent trait variances, with petal area showing a much larger value (215.766) than the others. Color scale ranges from 0 to 200, highlighting petal area’s dominance in the matrix. Off-diagonal covariances are relatively small.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-covmat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Covariance matrix of traits in parviflora RILS before scaling. Each cell shows the covariance between a pair of traits, with color indicating magnitude (darker blue = larger covariance). The diagonal shows trait variances. Petal area dominates the matrix with a variance over 215, while all other trait variances are below 2. This disparity illustrates how unscaled PCA can be overwhelmed by traits with larger absolute variation.
@@ -959,20 +959,20 @@ Figure&nbsp;3: Covariance matrix of traits in parviflora RILS before scaling. Ea
 </div>
 </div>
 <p><strong>Now we can see the consequences of not scaling or centering on our PCs:</strong></p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>gc_ril_centered_pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(centered_gc_rils_4pca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Becase the variance in petal area dominates the covariance matrix,</strong> PC1 explains 99.85% of the variability in the data (<a href="#tbl-A" class="quarto-xref">Table&nbsp;<span>1</span></a>) and maps perfectly on to petal area (<a href="#tbl-B" class="quarto-xref">Table&nbsp;<span>2</span></a>).</p>
 <div class="columns">
 <div class="column" style="padding-right: 1em;">
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finding proportion </span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># variance explained by PC</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>gc_ril_centered_pca   <span class="sc">|&gt;</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>(<span class="at">matrix =</span> <span class="st">"pcs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-<div id="tbl-A" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<div class="cell" data-layout-align="center">
+<div id="tbl-A" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-A-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;1: PVE for unscaled data.
@@ -1027,14 +1027,14 @@ Table&nbsp;1: PVE for unscaled data.
 </div>
 </div>
 </div><div class="column" style="padding-left: 1em;">
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finding trait loadings</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>gc_ril_centered_pca         <span class="sc">|&gt;</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>(<span class="at">matrix =</span> <span class="st">"loadings"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PC<span class="sc">==</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-<div id="tbl-B" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<div class="cell" data-layout-align="center">
+<div id="tbl-B" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-B-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;2: Trait loadings for unscaled data.

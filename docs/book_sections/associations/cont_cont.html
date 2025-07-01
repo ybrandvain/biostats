@@ -674,7 +674,7 @@ window.Quarto = {
 </header>
 
 
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code for selecting data from a few columns from RILs planted at GC</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
@@ -700,12 +700,12 @@ You are continuing your exploration of a new dataset. After checking its shape a
 </ol>
 </div>
 <hr>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="cont_cont_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="cont_cont_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
 </figure>
 </div>
 </div></div></div>
@@ -720,7 +720,7 @@ You are continuing your exploration of a new dataset. After checking its shape a
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
 <p>As in the previous section this formula is slightly wrong because it implicitly has a denominator of <span class="math inline">\(n\)</span>, not <span class="math inline">\(n-1\)</span>. We apply <a href="https://en.wikipedia.org/wiki/Bessel%27s_correction">Bessel’s correction</a> to get the precise covariance (multiplying our answer by <span class="math inline">\(\frac{n}{n-1}\)</span>). But when <span class="math inline">\(n\)</span> is big, this is close enough.</p>
 </div></div><p>So, we can find the covariance between (<span class="math inline">\(\text{log}_{10}\)</span>) petal area and the proportion of hybrid seeds as the mean of a plant’s (<span class="math inline">\(\text{log}_{10}\)</span>) petal area times its proportion of hybrid seeds minus the mean (<span class="math inline">\(\text{log}_{10}\)</span>) petal area times the mean proportion of hybrid seeds, which equals 0.00756 (after applying Bessel’s correction).</p>
-<div class="cell column-page-right">
+<div class="cell column-page-right" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(log10_petal_area_mm), <span class="sc">!</span><span class="fu">is.na</span>(prop_hybrid))<span class="sc">|&gt;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_product        =</span> <span class="fu">mean</span>(log10_petal_area_mm <span class="sc">*</span> prop_hybrid),</span>
@@ -747,12 +747,12 @@ You are continuing your exploration of a new dataset. After checking its shape a
 <p>The equation for the covariance <span class="math inline">\(\text{Cov}_{X,Y} = \frac{\Sigma{(X_i-\overline{X})(Y_i-\overline{Y})}}{(n-1)}\)</span> should remind you of the equation for the variance <span class="math inline">\(\text{Var}_{X} = \frac{\Sigma{(X_i-\overline{X})(X_i-\overline{X})}}{(n-1)}\)</span> (compare <a href="../ordination/pcaII.html#fig-cov" class="quarto-xref">Figure&nbsp;<span>1</span></a> to <a href="https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/univariate_summaries/summarizing_variability.html#fig-ss">Figure 2 from 5. Summarizing variability</a>). In fact the variance is simply the covariance of a variable with itself. See our section on summarizing variability for a refresher <a href="https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/univariate_summaries/summarizing_variability.html#parametric-summaries-of-variability">link</a>. In fact you, can calcualte the variance as the mean of the square minus the sqaure of the mean.</p>
 </div></div><p>This essentially finds the mean cross products, with Bessel’s correction:</p>
 <p><span class="math display">\[\text{Covariance }_{X,Y} = \frac{\Sigma{(X_i-\overline{X})(Y_i-\overline{Y})}}{(n-1)}\]</span></p>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 <div class="cell-output-display page-columns page-full">
-<div id="fig-cov" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Animated figure illustrating the computation of covariance between log-transformed petal area and proportion hybrid. The left panel highlights how each observation contributes a cross product represented as a rectangle, based on deviation from the mean. The center panel accumulates cross products, and the right panel tracks the cumulative sum and the evolving covariance estimate across all observations.">
+<div id="fig-cov" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Animated figure illustrating the computation of covariance between log-transformed petal area and proportion hybrid. The left panel highlights how each observation contributes a cross product represented as a rectangle, based on deviation from the mean. The center panel accumulates cross products, and the right panel tracks the cumulative sum and the evolving covariance estimate across all observations." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-cov-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
-<img src="../../figs/summarizing_data/associations/crossprods.gif" class="img-fluid figure-img column-page-right" alt="Animated figure illustrating the computation of covariance between log-transformed petal area and proportion hybrid. The left panel highlights how each observation contributes a cross product represented as a rectangle, based on deviation from the mean. The center panel accumulates cross products, and the right panel tracks the cumulative sum and the evolving covariance estimate across all observations.">
+<img src="../../figs/summarizing_data/associations/crossprods.gif" class="img-fluid quarto-figure quarto-figure-center figure-img column-page-right" style="width:70.0%" alt="Animated figure illustrating the computation of covariance between log-transformed petal area and proportion hybrid. The left panel highlights how each observation contributes a cross product represented as a rectangle, based on deviation from the mean. The center panel accumulates cross products, and the right panel tracks the cumulative sum and the evolving covariance estimate across all observations.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cov-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: An animation to help understand the covariance. <em>Left:</em> We plot each point as the difference between x and y and their means. The area of that rectangle is the cross product. <em>Middle:</em> Shows how these cross products accumulate. <em>Right:</em> The cummulative sum of cross products and the running covariance estimate. The lower plot (covariance) is simply the top plot divided by (x-1).
@@ -762,7 +762,7 @@ Figure&nbsp;1: An animation to help understand the covariance. <em>Left:</em> We
 </div>
 </div>
 <p>The flipbook below works you through how to conduct these calculations:</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <iframe src="https://ybrandvain.github.io/flipbooks/cov_flipbook.html" width="100%" height="400px" data-external="1">
 </iframe>
 </div>
@@ -773,7 +773,7 @@ Figure&nbsp;1: An animation to help understand the covariance. <em>Left:</em> We
 
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
 <p>The <code>use = "pairwise.complete.obs"</code> argument tells R to ignore NA values when calculating the covariance — just like <code>na.rm = TRUE</code> does when calculating the mean. You can use this argument or filter out NA values first.</p>
-</div></div><div class="cell column-page-right">
+</div></div><div class="cell column-page-right" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">covariance =</span> <span class="fu">cov</span>(log10_petal_area_mm, prop_hybrid, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -796,7 +796,7 @@ Figure&nbsp;1: An animation to help understand the covariance. <em>Left:</em> We
 </ul>
 <p>Mathematically <em>r</em> is simply the covariance divided by the product of standard deviations (<span class="math inline">\(s_X\)</span> and <span class="math inline">\(s_Y\)</span>), and we can find it in <code>R</code> with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html"><code>cor()</code></a> function:</p>
 <p><span class="math display">\[r_{X,Y} = \frac{\text{Covariance}_{X,Y}}{s_X \times s_Y}\]</span></p>
-<div class="cell column-page-right">
+<div class="cell column-page-right" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(log10_petal_area_mm), <span class="sc">!</span><span class="fu">is.na</span>(prop_hybrid))<span class="sc">|&gt;</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">covariance   =</span> <span class="fu">cov</span>(log10_petal_area_mm, prop_hybrid),</span>

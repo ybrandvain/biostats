@@ -728,7 +728,7 @@ window.Quarto = {
 <p>MCA is appropriate when all your variables are categorical, especially nominal variables with multiple categories. MCA applies a method similar to PCA to uncover patterns of association among the categorical variables and reduce dimensionality.</p>
 <p>You can run an MCA using the <a href="https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/mca.html"><code>mca()</code></a> function from the <strong>MASS</strong> package in R, or for more in-depth analyses and nicer figures you may want to use the <a href="http://factominer.free.fr/factomethods/multiple-correspondence-analysis.html">MCA</a> function in the <a href="http://factominer.free.fr/">factoMineR</a> package. You interpret the output much like a PCA. That is, each axis summarizes shared patterns across the variables, and the biplot shows which samples and categories tend to cluster together. Nice and clear start! Here are a few suggested edits to tighten grammar, clarify the meaning, and better match the tone and structure from earlier in your book:</p>
 <p>The code below and the resulting figure (<a href="#fig-mca" class="quarto-xref">Figure&nbsp;<span>1</span></a>) show a worked example using the <em>parviflora</em> RIL dataset. The MCA analysis includes three categorical traits: <code>visited</code> (whether the plant received any visits), <code>petal_color</code>, and <code>petal_area</code> (binned as small / medium / large). Points are colored by whether each plant made at least one hybrid. Dim 1 (which is like PC1) separates plants with pink petals and visits from those with white petals and no visits — and aligns closely with whether or not the plant made a hybrid.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code for selecting data for MCA from RILs planted at GC</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
@@ -752,7 +752,7 @@ window.Quarto = {
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(made_hybrid,  visited , petal_color, petal_area_qual)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell column-page-right">
+<div class="cell column-page-right" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FactoMineR)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
@@ -768,12 +768,12 @@ window.Quarto = {
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>mca_loadings<span class="ot">&lt;-</span> <span class="fu">fviz_mca_var</span>(mca_result, <span class="at">repel =</span> <span class="cn">TRUE</span>,<span class="at">col.quali.sup =</span> <span class="st">"black"</span>)</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>mca_plot <span class="sc">+</span> mca_loadings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 <div class="cell-output-display page-columns page-full">
-<div id="fig-mca" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Plots from an MCA of categorical parviflora traits. Left: A scatterplot of individual lines colored by whether they made hybrid seed. Points cluster by category and are connected to the centroid of their group. Right: The same MCA space showing only trait categories (e.g., `white`, `pink`, `visited`, `not visited`). Red triangles mark variable levels, positioned based on their contribution to Dim 1 and Dim 2. Categories associated with hybrid formation are shifted to the right.">
+<div id="fig-mca" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-align="center" alt="Plots from an MCA of categorical parviflora traits. Left: A scatterplot of individual lines colored by whether they made hybrid seed. Points cluster by category and are connected to the centroid of their group. Right: The same MCA space showing only trait categories (e.g., `white`, `pink`, `visited`, `not visited`). Red triangles mark variable levels, positioned based on their contribution to Dim 1 and Dim 2. Categories associated with hybrid formation are shifted to the right.">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-mca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
-<img src="pcalternatives_files/figure-html/fig-mca-1.png" class="img-fluid figure-img column-page-right" alt="Plots from an MCA of categorical parviflora traits. Left: A scatterplot of individual lines colored by whether they made hybrid seed. Points cluster by category and are connected to the centroid of their group. Right: The same MCA space showing only trait categories (e.g., `white`, `pink`, `visited`, `not visited`). Red triangles mark variable levels, positioned based on their contribution to Dim 1 and Dim 2. Categories associated with hybrid formation are shifted to the right." width="1152">
+<img src="pcalternatives_files/figure-html/fig-mca-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img column-page-right" style="width:70.0%" alt="Plots from an MCA of categorical parviflora traits. Left: A scatterplot of individual lines colored by whether they made hybrid seed. Points cluster by category and are connected to the centroid of their group. Right: The same MCA space showing only trait categories (e.g., `white`, `pink`, `visited`, `not visited`). Red triangles mark variable levels, positioned based on their contribution to Dim 1 and Dim 2. Categories associated with hybrid formation are shifted to the right.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: <strong>Multiple Correspondence Analysis (MCA) of categorical traits in parviflora RILS.</strong> <em>Left panel:</em> Individuals are plotted in MCA space based on Dim 1 (37% variance explained) and Dim 2 (25%). Each point represents a RIL, colored by whether it made hybrid seed (<code>made_hybrid</code>) or not. Lines connect individual labels to the data point they are assocaited with. <em>Right panel:</em> Positions of each variable category in the same MCA space. Categories closer together (e.g., <code>pink</code> and <code>visited</code>) tend to co-occur. Dim 1 separates lines with small petals, no visits, and no hybrids (left) from those with larger petals and more visits (right).
@@ -787,7 +787,7 @@ Figure&nbsp;1: <strong>Multiple Correspondence Analysis (MCA) of categorical tra
 <h3 class="anchored" data-anchor-id="pcalternatives_famd">Factor Analysis of Mixed Data (FAMD)</h3>
 <p>So, PCA works for continuous variables and MCA works for categorical variables, but what if your dataset has both? Don’t despair, Factorial Analysis of Mixed Data (FAMD) allows us to analyze datasets that include both quantitative and categorical variables. FAMD is a blend of PCA and MDA giving appropriate weights to each. Running this on our parviflora RILs at GC with categorical variables <code>visited</code> and <code>petal_color</code>, and continuous variables <code>petal_area_mm</code>, <code>asd_mm</code>, <code>growth_rate</code>, <code>stem_dia_mm</code>, and <code>lwc</code>, we see that large values in Dim 1 are associated with making hybrid seed ( <a href="#fig-famd" class="quarto-xref">Figure&nbsp;<span>2</span></a> ).</p>
 <p>FAMD scales and balances the contributions of each variable type so that no one type dominates. You interpret the output like PCA: samples that cluster together in the reduced space tend to share trait combinations — whether continuous, categorical, or both. You can run FAMD with the FAMD() function in the <a href="http://factominer.free.fr/"><code>FactoMineR</code></a> package and make plots with functions in <a href="https://rpkgs.datanovia.com/factoextra/"><code>factoextra</code></a> package.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code for selecting data for FAMD from RILs planted at GC</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gc_rils_4_famd  <span class="ot">&lt;-</span> ril_data <span class="sc">|&gt;</span></span>
@@ -798,7 +798,7 @@ Figure&nbsp;1: <strong>Multiple Correspondence Analysis (MCA) of categorical tra
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(made_hybrid, visited, petal_color, petal_area_mm, asd_mm, growth_rate,  stem_dia_mm, lwc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell column-page-right">
+<div class="cell column-page-right" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FactoMineR);  <span class="fu">library</span>(factoextra);  <span class="fu">library</span>(forcats); <span class="fu">library</span>(patchwork)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>famd_result <span class="ot">&lt;-</span> <span class="fu">FAMD</span>(gc_rils_4_famd, <span class="at">sup.var =</span> <span class="st">"made_hybrid"</span> ,<span class="at">graph =</span> <span class="cn">FALSE</span>) <span class="co"># Make FAMD</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -814,12 +814,12 @@ Figure&nbsp;1: <strong>Multiple Correspondence Analysis (MCA) of categorical tra
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>(famd_plot <span class="sc">+</span> famd_quant_loadings) <span class="sc">/</span> (famd_scree_plot<span class="sc">+</span> famd_qual_loadings) <span class="sc">+</span> </span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 <div class="cell-output-display page-columns page-full">
-<div id="fig-famd" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" width="960">
+<div id="fig-famd" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-align="center" width="70%">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-famd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
-<img src="pcalternatives_files/figure-html/fig-famd-1.png" id="fig-famd" class="img-fluid figure-img column-page-right" width="960">
+<img src="pcalternatives_files/figure-html/fig-famd-1.png" id="fig-famd" class="img-fluid quarto-figure quarto-figure-center anchored figure-img column-page-right" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-famd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2
@@ -852,13 +852,13 @@ Figure&nbsp;2
 </section>
 <section id="non-metric-multidimensional-scaling-nmds" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="non-metric-multidimensional-scaling-nmds">Non-metric Multidimensional Scaling (NMDS)</h3>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-nmds" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A scatterplot showing the results of non-metric multidimensional scaling (NMDS) based on Bray–Curtis dissimilarity of microbial communities in biofilms. Samples are grouped by shape and color according to treatment type and site (D1, D3, D6, ambient control). Each cluster is distinct, suggesting differences in microbial composition across sites and treatments. Axis labels are MDS1 and MDS2.">
+<div id="fig-nmds" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A scatterplot showing the results of non-metric multidimensional scaling (NMDS) based on Bray–Curtis dissimilarity of microbial communities in biofilms. Samples are grouped by shape and color according to treatment type and site (D1, D3, D6, ambient control). Each cluster is distinct, suggesting differences in microbial composition across sites and treatments. Axis labels are MDS1 and MDS2.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-nmds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/summarizing_data/ordination/ndms.png" class="img-fluid figure-img" alt="A scatterplot showing the results of non-metric multidimensional scaling (NMDS) based on Bray–Curtis dissimilarity of microbial communities in biofilms. Samples are grouped by shape and color according to treatment type and site (D1, D3, D6, ambient control). Each cluster is distinct, suggesting differences in microbial composition across sites and treatments. Axis labels are MDS1 and MDS2." width="396">
+<img src="../../figs/summarizing_data/ordination/ndms.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="A scatterplot showing the results of non-metric multidimensional scaling (NMDS) based on Bray–Curtis dissimilarity of microbial communities in biofilms. Samples are grouped by shape and color according to treatment type and site (D1, D3, D6, ambient control). Each cluster is distinct, suggesting differences in microbial composition across sites and treatments. Axis labels are MDS1 and MDS2.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nmds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: <strong>NMDS plot of microbial community composition from environmental biofilm samples.</strong> Points represent biofilm samples collected across three sites (D1, D3, D6) and treatment types (fluid, inert control, mineral), plus an ambient control. The plot is based on Bray–Curtis dissimilarity of OTU (operational taxonomic unit) counts from environmental sequencing. Groupings indicate that microbial community composition differs across both location and treatment. Adapted from a <a href="https://www.caitlincasar.com/post/making_figs_2/">blogpost by Caitlan Casar</a>.
@@ -887,11 +887,11 @@ Figure&nbsp;3: <strong>NMDS plot of microbial community composition from environ
 </ul></li>
 </ul></li>
 </ul>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 <div class="cell-output-display page-columns page-full">
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="https://raw.githubusercontent.com/mbernste/mbernste.github.io/master/images/dim_reduc_PBMC_3k_example.png" class="img-fluid figure-img column-body-outset-right"></p>
+<p class="page-columns page-full"><img src="https://raw.githubusercontent.com/mbernste/mbernste.github.io/master/images/dim_reduc_PBMC_3k_example.png" class="img-fluid figure-img column-body-outset-right" style="width:70.0%"></p>
 <figcaption>An example of single-cell RNA-seq data from peripheral blood mononuclear cells visualized by PCA, t-SNE, and UMAP are shown below, taken from a <a href="https://mbernste.github.io/posts/dim_reduc/">blogpost</a> by <a href="https://mbernste.github.io/">Matthew N. Bernstein</a>.</figcaption>
 </figure>
 </div>

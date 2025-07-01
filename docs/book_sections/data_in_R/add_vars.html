@@ -657,13 +657,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
 </ol>
 </div>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-mutate" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A visual representation of a data transformation using `mutate()` in `dplyr`. The top table contains two columns: `prop_hyb` (proportion of hybrids) and `n_assayed` (number of individuals assayed), with values showing different proportions and a constant sample size of 8. Below, an R code snippet applies `mutate(n_hyb = prop_hyb * n_assayed)`, generating a new column, `n_hyb`, which contains the computed number of hybrids (0, 1, and 2, respectively). The updated dataset is displayed in a bottom table with the new `n_hyb` column highlighted in a darker shade.">
+<div id="fig-mutate" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A visual representation of a data transformation using `mutate()` in `dplyr`. The top table contains two columns: `prop_hyb` (proportion of hybrids) and `n_assayed` (number of individuals assayed), with values showing different proportions and a constant sample size of 8. Below, an R code snippet applies `mutate(n_hyb = prop_hyb * n_assayed)`, generating a new column, `n_hyb`, which contains the computed number of hybrids (0, 1, and 2, respectively). The updated dataset is displayed in a bottom table with the new `n_hyb` column highlighted in a darker shade." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-mutate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/intro_to_R/data_in_R/mutate.png" class="img-fluid figure-img" alt="A visual representation of a data transformation using `mutate()` in `dplyr`. The top table contains two columns: `prop_hyb` (proportion of hybrids) and `n_assayed` (number of individuals assayed), with values showing different proportions and a constant sample size of 8. Below, an R code snippet applies `mutate(n_hyb = prop_hyb * n_assayed)`, generating a new column, `n_hyb`, which contains the computed number of hybrids (0, 1, and 2, respectively). The updated dataset is displayed in a bottom table with the new `n_hyb` column highlighted in a darker shade." width="372">
+<img src="../../figs/intro_to_R/data_in_R/mutate.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="A visual representation of a data transformation using `mutate()` in `dplyr`. The top table contains two columns: `prop_hyb` (proportion of hybrids) and `n_assayed` (number of individuals assayed), with values showing different proportions and a constant sample size of 8. Below, an R code snippet applies `mutate(n_hyb = prop_hyb * n_assayed)`, generating a new column, `n_hyb`, which contains the computed number of hybrids (0, 1, and 2, respectively). The updated dataset is displayed in a bottom table with the new `n_hyb` column highlighted in a darker shade.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mutate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: An illustration of the <code>mutate()</code> function. The top table represents the original dataset, containing columns for the proportion of hybrids (<code>prop_hyb</code>) and the number of individuals assayed (<code>n_assayed</code>). The <code>mutate()</code> function is then applied to compute <code>n_hyb</code>, the total number of hybrid individuals, by multiplying <code>prop_hyb</code> by <code>n_assayed</code>. The resulting dataset, shown in the bottom table, includes this newly created <code>n_hyb</code> column.
@@ -680,16 +680,10 @@ Figure&nbsp;1: An illustration of the <code>mutate()</code> function. The top ta
 <li>Add the logical variable, <code>visited</code>, which is TRUE if a plant had more than zero pollinators visit them, and is FALSE otherwise.</li>
 </ul>
 <p>The <a href="https://dplyr.tidyverse.org/reference/mutate.html"><code>mutate()</code></a> function in the <a href="https://dplyr.tidyverse.org/index.html"><code>dplyr</code></a> package can solve this. You can overwrite data in an existing column or make a new column as follows:</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ril_data      <span class="sc">|&gt;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">growth_rate =</span> <span class="fu">as.numeric</span>(growth_rate),   <span class="co"># make numeric</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">visited =</span> mean_visits <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: There was 1 warning in `dplyr::mutate()`.
-ℹ In argument: `growth_rate = as.numeric(growth_rate)`.
-Caused by warning:
-! NAs introduced by coercion</code></pre>
-</div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 593 × 18
    ril   location prop_hybrid mean_visits growth_rate petal_color petal_area_mm
@@ -716,14 +710,14 @@ Caused by warning:
 <p>You can see that R gave us a warning. Warnings do not mean that something necessarily went wrong, but they do mean we should look and see what happened. In this case, we see that when trying to change the character string, <code>1.8O</code>, into a number R did not know what to do and converted it to NA. In the next bit of code I convert it into "1.80" with the <a href="https://dplyr.tidyverse.org/reference/case_when.html"><code>case_when()</code></a> function.</p>
 </div>
 <p>After confirming this worked, we can assign it to R’s memory: In doing so, I even converted <code>1.8O</code> into <code>1.80</code> so we have an observation in that cell rather than missing data.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ril_data       <span class="ot">&lt;-</span> ril_data      <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">growth_rate =</span> <span class="fu">case_when</span>(growth_rate <span class="sc">==</span><span class="st">"1.8O"</span> <span class="sc">~</span> <span class="st">"1.80"</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">.default =</span> growth_rate),  </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">growth_rate =</span> <span class="fu">as.numeric</span>(growth_rate),</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">visited =</span> mean_visits <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ril_data       <span class="ot">&lt;-</span> ril_data      <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">growth_rate =</span> <span class="fu">case_when</span>(growth_rate <span class="sc">==</span><span class="st">"1.8O"</span> <span class="sc">~</span> <span class="st">"1.80"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">.default =</span> growth_rate),  </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">growth_rate =</span> <span class="fu">as.numeric</span>(growth_rate),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">visited =</span> mean_visits <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 593 × 18
    ril   location prop_hybrid mean_visits growth_rate petal_color petal_area_mm

@@ -674,7 +674,7 @@ window.Quarto = {
 </header>
 
 
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code for selecting data from a few columns from RILs planted at GC</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
@@ -708,8 +708,8 @@ window.Quarto = {
 </ol>
 </div>
 <hr>
-<div class="cell">
-<iframe src="https://www.youtube.com/embed/GncQtURdcE4?si=x2CF5uIynqaokSo5" width="672" height="400px" data-external="1">
+<div class="cell" data-layout-align="center">
+<iframe src="https://www.youtube.com/embed/GncQtURdcE4?si=x2CF5uIynqaokSo5" width="70%" height="400px" data-external="1">
 </iframe>
 </div>
 <p>In a world where everything was the same every day (See video above), describing the center would be enough — luckily our world is more exciting than that. In the real world, the extent to which a measure of center is sufficient to understand a population depends on the extent and nature of variability. Not only is understanding variability essential to interpreting measures of central tendency, but in many cases, describing variability is as or even more important than describing the center. For example, the amount of genetic variance in a population determines how effectively it can respond to natural selection. Similarly, in ecological studies, two populations of the same species may have similar average survival rates, but greater variability in survival in one population might indicate environmental instability, predation pressure, or developmental noise.</p>
@@ -718,18 +718,18 @@ window.Quarto = {
 <p>Perhaps the most intuitive summary of variation in a dataset is the <strong>range</strong>—the difference between the largest and smallest values. While the range is often worth reporting, it is a pretty poor summary of variability because it is highly sensitive to outliers (a single unexpectedly extreme observation can strongly influence the range) and is biased with respect to sample size (the more samples you collect, the greater the expected difference between the smallest and largest values).</p>
 <p>As such, the <strong>interquartile range (IQR)</strong>—the difference between the 75th and 25th percentiles (i.e., the third and first quartiles)—is a more robust, traditional nonparametric summary of variability. We can read off the interquartile range from a boxplot. A boxplot shows a box around the first and third quartiles, a line at the median, and “whiskers” that extend to the minimum and maximum values (excluding outliers, which are shown as black dots).</p>
 
-<div class="no-row-height column-margin column-container"><div class="cell">
+<div class="no-row-height column-margin column-container"><div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> petal_area_mm))<span class="sc">+</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></div><div class="cell page-columns page-full">
+</div></div><div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-boxplot" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A vertical boxplot showing petal area in millimeters. The plot includes a labeled box stretching from the first quartile (~50 mm) to the third quartile (~70 mm), with a bold horizontal line at the median (~60 mm). Lines (&quot;whiskers&quot;) extend from the top and bottom of the box to the maximum and minimum non-outlier values. A dot above the top whisker marks an outlier. Labels identify each component of the plot: minimum, first quartile, median, third quartile, maximum, and outlier.">
+<div id="fig-boxplot" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A vertical boxplot showing petal area in millimeters. The plot includes a labeled box stretching from the first quartile (~50 mm) to the third quartile (~70 mm), with a bold horizontal line at the median (~60 mm). Lines (&quot;whiskers&quot;) extend from the top and bottom of the box to the maximum and minimum non-outlier values. A dot above the top whisker marks an outlier. Labels identify each component of the plot: minimum, first quartile, median, third quartile, maximum, and outlier.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="summarizing_variability_files/figure-html/fig-boxplot-1.png" class="img-fluid figure-img" alt="A vertical boxplot showing petal area in millimeters. The plot includes a labeled box stretching from the first quartile (~50 mm) to the third quartile (~70 mm), with a bold horizontal line at the median (~60 mm). Lines (&quot;whiskers&quot;) extend from the top and bottom of the box to the maximum and minimum non-outlier values. A dot above the top whisker marks an outlier. Labels identify each component of the plot: minimum, first quartile, median, third quartile, maximum, and outlier." width="672">
+<img src="summarizing_variability_files/figure-html/fig-boxplot-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="A vertical boxplot showing petal area in millimeters. The plot includes a labeled box stretching from the first quartile (~50 mm) to the third quartile (~70 mm), with a bold horizontal line at the median (~60 mm). Lines (&quot;whiskers&quot;) extend from the top and bottom of the box to the maximum and minimum non-outlier values. A dot above the top whisker marks an outlier. Labels identify each component of the plot: minimum, first quartile, median, third quartile, maximum, and outlier.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: <strong><em>Anatomy of a boxplot</em></strong>. This boxplot displays the distribution of petal area in the <em>Clarkia</em> RIL dataset. The box spans from the first quartile (25th percentile) to the third quartile (75th percentile), highlighting the interquartile range (IQR). The line inside the box marks the median (50th percentile). The “whiskers” extend to the smallest and largest non-outlier values, and individual outliers are shown as separate points.
@@ -738,7 +738,7 @@ Figure&nbsp;1: <strong><em>Anatomy of a boxplot</em></strong>. This boxplot disp
 </div>
 </div></div></div>
 <p><a href="#fig-boxplot" class="quarto-xref">Figure&nbsp;<span>1</span></a> shows that the third quartile for petal area is a bit above seventy, and the first quartile is a bit above fifty, so the interquartile range is approximately twenty. Or with the <a href="https://www.math.ucla.edu/~anderson/rw1001/library/base/html/IQR.html"><code>IQR()</code></a> function:</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Q3 =</span> <span class="fu">quantile</span>(petal_area_mm,.<span class="dv">75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">Q1 =</span> <span class="fu">quantile</span>(petal_area_mm,.<span class="dv">25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
@@ -770,12 +770,12 @@ Figure&nbsp;1: <strong><em>Anatomy of a boxplot</em></strong>. This boxplot disp
 </section>
 <section id="summarizing_variability_parametric-summaries-of-variability-example" class="level3">
 <h3 class="anchored" data-anchor-id="summarizing_variability_parametric-summaries-of-variability-example">Parametric summaries of variability: Example</h3>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-ss" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Animated figure with three panels demonstrating deviation and squared deviation in petal area measurements for Clarkia xantiana. *Left:* A bar plot shows each individual's deviation from the mean, with one pink-highlighted bar labeled with its value. *Middle:* A pink rectangle visualizes the squared deviation as area, connecting a data point to the mean. *Right:* A bar plot shows squared deviations for all individuals, again highlighting the same individual in pink.">
+<div id="fig-ss" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Animated figure with three panels demonstrating deviation and squared deviation in petal area measurements for Clarkia xantiana. *Left:* A bar plot shows each individual's deviation from the mean, with one pink-highlighted bar labeled with its value. *Middle:* A pink rectangle visualizes the squared deviation as area, connecting a data point to the mean. *Right:* A bar plot shows squared deviations for all individuals, again highlighting the same individual in pink.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/summarizing_data/univariate_summaries/3-column-animation_ss.gif" class="img-fluid figure-img" alt="Animated figure with three panels demonstrating deviation and squared deviation in petal area measurements for Clarkia xantiana. *Left:* A bar plot shows each individual's deviation from the mean, with one pink-highlighted bar labeled with its value. *Middle:* A pink rectangle visualizes the squared deviation as area, connecting a data point to the mean. *Right:* A bar plot shows squared deviations for all individuals, again highlighting the same individual in pink.">
+<img src="../../figs/summarizing_data/univariate_summaries/3-column-animation_ss.gif" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="Animated figure with three panels demonstrating deviation and squared deviation in petal area measurements for Clarkia xantiana. *Left:* A bar plot shows each individual's deviation from the mean, with one pink-highlighted bar labeled with its value. *Middle:* A pink rectangle visualizes the squared deviation as area, connecting a data point to the mean. *Right:* A bar plot shows squared deviations for all individuals, again highlighting the same individual in pink.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: <strong>Understanding the squared deviation.</strong> The “Sum of Squared Deviations” is critical to understanding standard summaries of variability. The animation above aims to explain a “squared deviation.” <em>Left panel:</em> Each individual’s deviation from the mean petal area is visualized as a vertical line, with the iᵗʰ value highlighted in pink. <em>Middle panel:</em> The same individual is plotted in a 2D space – the squared deviation is shown as the area of a pink rectangle. <em>Right panel:</em> The squared deviation is shown for all individuals, with the same focal individual highlighted.
@@ -793,7 +793,7 @@ Figure&nbsp;2: <strong>Understanding the squared deviation.</strong> The “Sum 
 <li><em>The right panel</em> shows the squared deviation.</li>
 </ul>
 <p>We find the sum of squares by summing these values, and then use this to find the variance, standard deviation and coefficient of variation, following the formulae above:</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(petal_area_mm))<span class="sc">|&gt;</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_petal_area =</span> <span class="fu">mean</span>(petal_area_mm),</span>
@@ -802,7 +802,7 @@ Figure&nbsp;2: <strong>Understanding the squared deviation.</strong> The “Sum 
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd_petal_area =</span> <span class="fu">sqrt</span>(ss_petal_area ),</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">CV_petal_area =</span> sd_petal_area <span class="sc">/</span> mean_petal_area )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -834,7 +834,7 @@ Figure&nbsp;2: <strong>Understanding the squared deviation.</strong> The “Sum 
 </div>
 </div>
 <p>Or we can skip the formulae and just use standard R functions, <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html"><code>var()</code></a> and <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/sd.html"><code>sd()</code></a>. We can even find the mean absolute difference with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/mad.html"><code>mad()</code></a> function:</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(petal_area_mm))<span class="sc">|&gt;</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_petal_area =</span> <span class="fu">mean</span>(petal_area_mm),</span>
@@ -843,7 +843,7 @@ Figure&nbsp;2: <strong>Understanding the squared deviation.</strong> The “Sum 
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">CV_petal_area =</span> sd_petal_area <span class="sc">/</span> mean_petal_area,</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">mad_petal_area =</span> <span class="fu">mad</span>(petal_area_mm ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>

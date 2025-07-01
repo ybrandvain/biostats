@@ -665,7 +665,7 @@ div.csl-indent {
 </header>
 
 
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code for selecting data from a few columns from RILs planted at GC</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
@@ -708,12 +708,12 @@ div.csl-indent {
 <article class="drop-cap">
 Nowadays biologists are drowning in data. A single study, can include measurements of dozens of traits. Grinding up samples and running them through various machines provides us with genotypes at millions of loci, measures of gene expression across tissues, characterization of the thousands of microbes in a sample etc. Trying to interpret each variable on its own quickly becomes overwhelming — and looking at pairs of traits one at a time misses the bigger picture. So, we use multidimensional techniques to summarize how individuals differ across all traits simultaneously.
 </article>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../figs/summarizing_data/ordination/novembre2008a.jpg" class="img-fluid figure-img" alt="A scatterplot of European individuals' genetic data projected onto PC1 and PC2 axes from a PCA. Points are labeled with country codes and colored by country. The distribution of points in PCA space mirrors the geographical layout of Europe. For instance, Iberian populations (ES, PT) cluster together on the left; central Europeans (DE, FR, CH) cluster centrally; eastern populations (RO, UA, TR) appear on the right. An inset map of Europe shows countries color-coded to match their PCA cluster, highlighting the strong correspondence between genetic and geographic structure." width="376"></p>
+<p><img src="../figs/summarizing_data/ordination/novembre2008a.jpg" class="img-fluid figure-img" style="width:70.0%" alt="A scatterplot of European individuals' genetic data projected onto PC1 and PC2 axes from a PCA. Points are labeled with country codes and colored by country. The distribution of points in PCA space mirrors the geographical layout of Europe. For instance, Iberian populations (ES, PT) cluster together on the left; central Europeans (DE, FR, CH) cluster centrally; eastern populations (RO, UA, TR) appear on the right. An inset map of Europe shows countries color-coded to match their PCA cluster, highlighting the strong correspondence between genetic and geographic structure."></p>
 <figcaption><strong>Principal Components Analysis (PCA) of genetic variation in Europe</strong>. This plot shows individuals sampled from across Europe, positioned along the first two principal components derived from genome-wide genetic data. Each point represents an individual, color-coded by country, with country codes overlaid. Strikingly, the resulting PCA plot recapitulates the geography of Europe, with spatial proximity on the map corresponding to genetic similarity. The inset shows actual country locations for reference. The work is from <span class="citation" data-cites="novembre2008">Novembre et al. (<a href="../references.html#ref-novembre2008" role="doc-biblioref">2008</a>)</span>, and the image is from <a href="http://jnpopgen.org/">John’s website</a>.</figcaption>
 </figure>
 </div>

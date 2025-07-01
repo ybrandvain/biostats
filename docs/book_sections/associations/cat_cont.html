@@ -645,7 +645,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code for selecting data from a few columns from RILs planted at GC</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
@@ -660,13 +660,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <hr>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-visit-vid" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A video of a bee visiting *Clarkia* flowers.">
+<div id="fig-visit-vid" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A video of a bee visiting *Clarkia* flowers.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-visit-vid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<video src="../../figs/summarizing_data/associations/Carpenter%20bee%20makeouts%20with%20some%20Elegant%20Clarkia%20(Clarkia%20unguiculata).mp4" class="img-fluid" alt="A video of a bee visiting *Clarkia* flowers." controls=""><a href="../../figs/summarizing_data/associations/Carpenter bee makeouts with some Elegant Clarkia (Clarkia unguiculata).mp4">Video</a></video>
+<video src="../../figs/summarizing_data/associations/Carpenter%20bee%20makeouts%20with%20some%20Elegant%20Clarkia%20(Clarkia%20unguiculata).mp4" class="img-fluid quarto-figure quarto-figure-center" style="width:70.0%" alt="A video of a bee visiting *Clarkia* flowers." controls=""><a href="../../figs/summarizing_data/associations/Carpenter bee makeouts with some Elegant Clarkia (Clarkia unguiculata).mp4">Video</a></video>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-visit-vid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Generalist bees visiting another <em>Clarkia</em> species. From The <a href="https://www.instagram.com/thesunmonsters/">sunmonsters</a> Instaggam. See their post <a href="https://www.instagram.com/thesunmonsters/reel/CtI6IJxLORC/">here</a>.
@@ -689,12 +689,12 @@ You are continuing your exploration of a fresh new dataset. You have figured out
 <p>In this section, we explore how to visualize and quantify associations between a categorical explanatory variable (e.g., whether a plant was visited by a pollinator) and a numeric response variable (e.g., the proportion of that plant’s seeds that are hybrids). We’ll see how group means and other summaries can reveal patterns in the data — and how to interpret what those patterns might mean biologically.</p>
 <section id="cat_cont_summarizing-associations-difference-in-conditional-means" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="cat_cont_summarizing-associations-difference-in-conditional-means">Summarizing associations: Difference in conditional means</h2>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="cat_cont_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="cat_cont_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
 </figure>
 </div>
 </div></div></div>
@@ -705,11 +705,11 @@ You are continuing your exploration of a fresh new dataset. You have figured out
 </ul>
 <p>For example, for our RIL data planted at site GC, the “grand mean” proportion of hybrids formed across all RILs is around 0.15. .</p>
 <p>The mean proportion of hybrids formed across all RILs is around 0.15.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">grand_mean_prop_hybrid =</span> <span class="fu">mean</span>(prop_hybrid, <span class="at">na.rm =</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -726,12 +726,12 @@ You are continuing your exploration of a fresh new dataset. You have figured out
 </div>
 </div>
 <p>Similarly, the means of <code>prop_hybrid</code> conditional on visitation status are around 0.07 for flowers that “weren’t visited” and 0.36 for those that were visited.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(visited)<span class="sc">|&gt;</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">grand_mean_prop_hybrid =</span> <span class="fu">mean</span>(prop_hybrid, <span class="at">na.rm =</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -754,7 +754,7 @@ You are continuing your exploration of a fresh new dataset. You have figured out
 </div>
 </div>
 <p>A common summary of the association between a categorical explanatory variable and a numerical response is the difference in conditional means across groups. In this case, the difference in conditional means is approximately 0.29.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mean_visited <span class="ot">&lt;-</span> gc_rils <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(visited)<span class="sc">|&gt;</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">grand_mean_prop_hybrid =</span> <span class="fu">mean</span>(prop_hybrid, <span class="at">na.rm =</span><span class="cn">TRUE</span>))</span>
@@ -818,7 +818,7 @@ You are continuing your exploration of a fresh new dataset. You have figured out
 </li>
 <li>The <strong>pooled standard deviation</strong> is simply the standard deviation of observations from their group mean. We can find it in R as follows:</li>
 </ul>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># finding the pooled standard deviation</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>pooled_sd <span class="ot">&lt;-</span> gc_rils <span class="sc">|&gt;</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(visited)<span class="sc">|&gt;</span></span>
@@ -850,16 +850,16 @@ You are continuing your exploration of a fresh new dataset. You have figured out
 <h2 class="anchored" data-anchor-id="cat_cont_visualizing-a-categorical-x-and-numeric-y">Visualizing a categorical x and numeric y</h2>
 <p>Visualizing the difference between means is surprisingly difficult.Visualizing the difference between means is surprisingly difficult. One particular concern is overplotting — because categorical variables have only a few possible values on the x-axis, data points can stack or overlap, which can obscure patterns in the data.</p>
 <p>Below I work through a brief slide show revealing some challenges and some solutions.</p>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="cat_cont_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="cat_cont_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
 </figure>
 </div>
 </div></div></div>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <iframe src="https://ybrandvain.github.io/flipbooks/cat_cont_flipbook.html" width="100%" height="400px" data-external="1">
 </iframe>
 </div>

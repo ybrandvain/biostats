@@ -679,7 +679,7 @@ You have a fresh new dataset and want to check it out. How do you go about under
 </ol>
 </div>
 <hr>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code for selecting data from a few columns from RILs planted at GC</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
@@ -695,19 +695,19 @@ You have a fresh new dataset and want to check it out. How do you go about under
 </div>
 <hr>
 
-<div class="no-row-height column-margin column-container"><div class="cell fig-column-margin">
+<div class="no-row-height column-margin column-container"><div class="cell fig-column-margin" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span> </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(petal_color))<span class="sc">|&gt;</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> petal_color))<span class="sc">+</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></div><div class="cell page-columns page-full">
+</div></div><div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-pinkwhite" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-pinkwhite" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pinkwhite-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="univariate_summaries_files/figure-html/fig-pinkwhite-1.png" class="img-fluid figure-img" width="672">
+<img src="univariate_summaries_files/figure-html/fig-pinkwhite-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pinkwhite-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: A bar plot showing the number of pink and white flowered plants, experimentally planted at location GC.
@@ -718,7 +718,7 @@ Figure&nbsp;1: A bar plot showing the number of pink and white flowered plants, 
 <article class="drop-cap">
 We begin our summary of variation in continuous variables in a somewhat unlikely place – a bar plot of a binary variable. Standard bar plots have a y-axis which starts at zero and shows the number of observations in each category, displayed on the x-axis. So, for example, <a href="#fig-pinkwhite" class="quarto-xref">Figure&nbsp;<span>1</span></a> shows that there are nearly fifty pink flowered RILs and closer to forty white flowered RILs planted at location GC. Bar plots can have any number of categories on the x-axis – but binary variables have a special characteristic – if we think of one option (say pink) as zero, and the other option (say white) as one, the mean tells us that 46.15% of the RILs planted had white flowers. Of course, this is a strange mean, as these plants were either pink or white, and none were 46.15% white, but it is a mean, nonetheless.
 </article>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean</span>(petal_color <span class="sc">==</span> <span class="st">"white"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -737,16 +737,16 @@ We begin our summary of variation in continuous variables in a somewhat unlikely
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> num_hybrid))<span class="sc">+</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()<span class="sc">+</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-num_hyb" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-num_hyb" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-num_hyb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="univariate_summaries_files/figure-html/fig-num_hyb-1.png" class="img-fluid figure-img" width="672">
+<img src="univariate_summaries_files/figure-html/fig-num_hyb-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-num_hyb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: A bar plot showing the number of genotyped seeds of each mom shown to be hybrid.
@@ -759,15 +759,15 @@ Figure&nbsp;2: A bar plot showing the number of genotyped seeds of each mom show
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> prop_hybrid))<span class="sc">+</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-prop_hyb" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-prop_hyb" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-prop_hyb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="univariate_summaries_files/figure-html/fig-prop_hyb-1.png" class="img-fluid figure-img" width="672">
+<img src="univariate_summaries_files/figure-html/fig-prop_hyb-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prop_hyb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: A bar plot showing the proportion of genotyped plants shown to be hybrid. Most of the time, we genotyped eight seeds per mom.
@@ -780,16 +780,16 @@ Figure&nbsp;3: A bar plot showing the proportion of genotyped plants shown to be
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <div style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> prop_hybrid))<span class="sc">+</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">8</span>, <span class="at">color =</span> <span class="st">"white"</span>)<span class="sc">+</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">8</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-prop_hyb_hist" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-prop_hyb_hist" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-prop_hyb_hist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="univariate_summaries_files/figure-html/fig-prop_hyb_hist-1.png" class="img-fluid figure-img" width="672">
+<img src="univariate_summaries_files/figure-html/fig-prop_hyb_hist-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prop_hyb_hist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: A histogram showing the proportion of genotyped plants shown to be hybrid. Most of the time, we genotyped eight seeds per mom.
@@ -803,12 +803,12 @@ Figure&nbsp;4: A histogram showing the proportion of genotyped plants shown to b
 </div>
 </div>
 <p>It helps to remember that in contrast to a bar plot, where the value on the x axis is the value of all the observations in that bar, in a histogram this value is the center of the range of values in the bin. So in <a href="#fig-prop_hyb_hist" class="quarto-xref">Figure&nbsp;<span>4</span></a> the first bin corresponds to values between -0.0625 and 0.0625, and the second bin (centered on 1/8th) corresponds to proportions between 0.0625 and 0.1875, etc… . The x-axis of <a href="#fig-prop_hyb_hist2" class="quarto-xref">Figure&nbsp;<span>5</span></a> shows this more explicitly, but it is too busy, and complex for standard presentation.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-prop_hyb_hist2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-prop_hyb_hist2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-prop_hyb_hist2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="univariate_summaries_files/figure-html/fig-prop_hyb_hist2-1.png" class="img-fluid figure-img" width="672">
+<img src="univariate_summaries_files/figure-html/fig-prop_hyb_hist2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prop_hyb_hist2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5: A histogram showing the proportion of genotyped plants shown to be hybrid. Most of the time, we genotyped eight seeds per mom. This is identical to Figure <a href="#fig-prop_hyb_hist" class="quarto-xref">Figure&nbsp;<span>4</span></a>, except, the x-label shows the range of x values rather than the center of thebins.

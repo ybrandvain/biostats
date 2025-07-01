@@ -694,7 +694,7 @@ Figure&nbsp;1: A screenshot of the files pane of RStudio. This displayes the fol
 
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
 <p>Some people like a different structure of files in their R project – they like the project in the main folder and then a bunch of sub-folders like <code>data</code> and <code>scripts</code> and <code>figures</code>. If you are using this organization, just add the subfolder in the path (e.g.&nbsp;<code>read_csv("data/my_data.csv")</code> ).</p>
-</div></div><div class="cell">
+</div></div><div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"clarkia_rils.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -727,16 +727,16 @@ Figure&nbsp;1: A screenshot of the files pane of RStudio. This displayes the fol
 <h3 class="anchored" data-anchor-id="cleaning-data">Cleaning data</h3>
 <p>We previously said not to make column names too long, yet in our dataset, we have the variable <code>petal_area_mm</code>. We can use the <a href="https://dplyr.tidyverse.org/reference/rename.html"><code>rename()</code></a> function in the <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a> package to give columns better names.</p>
 <p>I do this below in my complete and well-commented R script, which I conclude with a small plot. Notice that anyone could use this script and get exactly what I got.</p>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="reproducible_analyses_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="reproducible_analyses_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
 </figure>
 </div>
 </div></div></div>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Yaniv Brandvain. March 07 2025</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Code to load RIL data, and make a histogram of petal area facetted by petal color</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -759,7 +759,7 @@ Figure&nbsp;1: A screenshot of the files pane of RStudio. This displayes the fol
 <section id="tidying-data" class="level2">
 <h2 class="anchored" data-anchor-id="tidying-data">Tidying data</h2>
 <p>We have <a href="https://ybrandvain.quarto.pub/applied-biostatistics/book_sections/intro_to_R/data_in_R.html#tidy-data">previously seen that there are many ways for data to be untidy</a>. One common untidy data format is the “wide format”, below. Here, the columns <code>SR</code> and <code>GC</code> describe the proportion of hybrid seed on each ril (row) observed in each of these two locations. You can use the <code>pivot_longer()</code> function in the <code>tidyr</code> package, to tidy such data:</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code to create untidy_ril</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
@@ -812,7 +812,7 @@ Figure&nbsp;1: A screenshot of the files pane of RStudio. This displayes the fol
 </table>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pivot_longer</span>(untidy_ril, </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"GC"</span>,<span class="st">"SR"</span>),</span>

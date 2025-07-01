@@ -2530,8 +2530,8 @@ Figure&nbsp;1: Our starting point: a messy plot with overlapping points.
 <div class="exercises">
 <p><strong>Q2)</strong> Let’s fix the overplotting. In the R chunk below, replace <code>geom_point()</code> with the correct function from the previous question. To keep the data honest, make sure all y-values stay the same, and that x values are clearly associated with a category.</p>
 After running the corrected code, what is the best description of the resulting plot?
-<div id="radio_VEIXPSULOW" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_VEIXPSULOW" value=""> <span>The points form a single, undifferentiated cloud.</span></label><label><input type="radio" autocomplete="off" name="radio_VEIXPSULOW" value=""> <span>The plot now shows three horizontal bars instead of points.</span></label><label><input type="radio" autocomplete="off" name="radio_VEIXPSULOW" value="answer"> <span>The points for each species are now spread out horizontally in distinct vertical columns.</span></label><label><input type="radio" autocomplete="off" name="radio_VEIXPSULOW" value=""> <span>The plot is unchanged from the original.</span></label>
+<div id="radio_IPMVCTOSVO" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_IPMVCTOSVO" value=""> <span>The points form a single, undifferentiated cloud.</span></label><label><input type="radio" autocomplete="off" name="radio_IPMVCTOSVO" value=""> <span>The plot now shows three horizontal bars instead of points.</span></label><label><input type="radio" autocomplete="off" name="radio_IPMVCTOSVO" value="answer"> <span>The points for each species are now spread out horizontally in distinct vertical columns.</span></label><label><input type="radio" autocomplete="off" name="radio_IPMVCTOSVO" value=""> <span>The plot is unchanged from the original.</span></label>
 </div>
 <div class="webex-solution">
 <button>
@@ -2594,19 +2594,19 @@ Code
 <p>Inside <code>theme()</code>, the <code>element_text()</code> function has many arguments besides <code>size</code>. Which argument would you use to change the font from normal to <strong>bold</strong>? <select class="webex-select"><option value="blank"></option><option value="">style = ‘bold’</option><option value="">font = ‘bold’</option><option value="answer">face = ‘bold’</option><option value="">bold = TRUE</option></select></p>
 <hr>
 <strong>Q6)</strong> Now you want the species names (e.g.&nbsp;Gentoo, Chinstrap, etc) and flipper lengths (e.g.&nbsp;170, 210, etc.) to be large (size = 16). What would you add to the theme to do this?
-<div id="radio_DKTVZJWAMP" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_DKTVZJWAMP" value=""> <span>axis.text(size = 16)</span></label><label><input type="radio" autocomplete="off" name="radio_DKTVZJWAMP" value="answer"> <span>axis.text = element_text(size = 16)</span></label><label><input type="radio" autocomplete="off" name="radio_DKTVZJWAMP" value=""> <span>axis.names = element_text(size = 16)</span></label><label><input type="radio" autocomplete="off" name="radio_DKTVZJWAMP" value=""> <span>axis.ticks = element_text(size = 16)</span></label>
+<div id="radio_ISPPEECVTB" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ISPPEECVTB" value=""> <span>axis.text(size = 16)</span></label><label><input type="radio" autocomplete="off" name="radio_ISPPEECVTB" value="answer"> <span>axis.text = element_text(size = 16)</span></label><label><input type="radio" autocomplete="off" name="radio_ISPPEECVTB" value=""> <span>axis.names = element_text(size = 16)</span></label><label><input type="radio" autocomplete="off" name="radio_ISPPEECVTB" value=""> <span>axis.ticks = element_text(size = 16)</span></label>
 </div>
 <hr>
 <strong>Q7)</strong> Now you want the species names (e.g.&nbsp;Gentoo, Chinstrap, etc) but not flipper lengths (e.g.&nbsp;170, 210, etc.) to be italicized. What would you add to the theme to do this? (<em>NOTE</em> we did this a different ay in the chapter)
-<div id="radio_BPDEBTKWXO" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_BPDEBTKWXO" value=""> <span>element_text(size = 16, face = 'italic')</span></label><label><input type="radio" autocomplete="off" name="radio_BPDEBTKWXO" value="answer"> <span>axis.text.x = element_text(size = 16, face = 'italis'), axis.text.y = element_text(size = 16)</span></label>
+<div id="radio_YRYTPNEWOF" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_YRYTPNEWOF" value=""> <span>element_text(size = 16, face = 'italic')</span></label><label><input type="radio" autocomplete="off" name="radio_YRYTPNEWOF" value="answer"> <span>axis.text.x = element_text(size = 16, face = 'italis'), axis.text.y = element_text(size = 16)</span></label>
 </div>
 <hr>
 <p><strong>Q8)</strong> The plot above shows the raw data well. Now, let’s add a summary statistic. In the <code>webr</code> chunk below, add a <code>stat_summary()</code> layer to display the mean value for each species as a large, black point (<code>size = 5</code>, <code>color = "black"</code>). <em>Hint: You’ll need to specify <code>fun = "mean"</code> and <code>geom = "point"</code> inside <code>stat_summary()</code>.</em></p>
 After successfully adding the summary layer, what new visual element appears on your plot?
-<div id="radio_YGAUJQKVYN" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_YGAUJQKVYN" value="answer"> <span>A single large black point for each species, located at its mean value.</span></label><label><input type="radio" autocomplete="off" name="radio_YGAUJQKVYN" value=""> <span>A black horizontal line showing the mean for each species.</span></label><label><input type="radio" autocomplete="off" name="radio_YGAUJQKVYN" value=""> <span>All the jittered points for each species turn black.</span></label><label><input type="radio" autocomplete="off" name="radio_YGAUJQKVYN" value=""> <span>A black bar appears behind the points for each species.</span></label>
+<div id="radio_EWCODJNDCW" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_EWCODJNDCW" value="answer"> <span>A single large black point for each species, located at its mean value.</span></label><label><input type="radio" autocomplete="off" name="radio_EWCODJNDCW" value=""> <span>A black horizontal line showing the mean for each species.</span></label><label><input type="radio" autocomplete="off" name="radio_EWCODJNDCW" value=""> <span>All the jittered points for each species turn black.</span></label><label><input type="radio" autocomplete="off" name="radio_EWCODJNDCW" value=""> <span>A black bar appears behind the points for each species.</span></label>
 </div>
 <hr>
 <p><strong>Q9)</strong> Faceting is a powerful way to create “small multiples.” In the chunk above, add a <code>facet_wrap()</code> layer to the scatter plot to create separate panels for each <code>island</code>.</p>

@@ -653,13 +653,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
 </ol>
 </div>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-select" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A visual representation of using `select()` in `dplyr`. The top table contains three columns: `prop_hyb`, `n_assayed`, and `n_hyb`, showing values of hybrid proportions, sample sizes, and computed hybrid counts. Below, an R code snippet applies `select(prop_hyb, n_hyb)`, removing `n_assayed` and keeping only the first and last columns. The resulting table, displayed at the bottom, reflects the updated dataset with only `prop_hyb` and `n_hyb` remaining, shown with consistent formatting.">
+<div id="fig-select" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A visual representation of using `select()` in `dplyr`. The top table contains three columns: `prop_hyb`, `n_assayed`, and `n_hyb`, showing values of hybrid proportions, sample sizes, and computed hybrid counts. Below, an R code snippet applies `select(prop_hyb, n_hyb)`, removing `n_assayed` and keeping only the first and last columns. The resulting table, displayed at the bottom, reflects the updated dataset with only `prop_hyb` and `n_hyb` remaining, shown with consistent formatting." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-select-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/intro_to_R/data_in_R/select.png" class="img-fluid figure-img" alt="A visual representation of using `select()` in `dplyr`. The top table contains three columns: `prop_hyb`, `n_assayed`, and `n_hyb`, showing values of hybrid proportions, sample sizes, and computed hybrid counts. Below, an R code snippet applies `select(prop_hyb, n_hyb)`, removing `n_assayed` and keeping only the first and last columns. The resulting table, displayed at the bottom, reflects the updated dataset with only `prop_hyb` and `n_hyb` remaining, shown with consistent formatting." width="372">
+<img src="../../figs/intro_to_R/data_in_R/select.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="A visual representation of using `select()` in `dplyr`. The top table contains three columns: `prop_hyb`, `n_assayed`, and `n_hyb`, showing values of hybrid proportions, sample sizes, and computed hybrid counts. Below, an R code snippet applies `select(prop_hyb, n_hyb)`, removing `n_assayed` and keeping only the first and last columns. The resulting table, displayed at the bottom, reflects the updated dataset with only `prop_hyb` and `n_hyb` remaining, shown with consistent formatting.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-select-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Using the <code>select()</code> function to retain specific columns from a dataset. The top table contains three columns: <code>prop_hyb</code> (proportion of hybrids), <code>n_assayed</code> (number of individuals assayed), and <code>n_hyb</code> (the computed number of hybrids). The <code>select(prop_hyb, n_hyb)</code> function is applied, keeping only the <code>prop_hyb</code> and <code>n_hyb</code> columns. The bottom table displays the resulting dataset after column selection.
@@ -683,7 +683,7 @@ Figure&nbsp;1: Using the <code>select()</code> function to retain specific colum
 </li>
 <li><code>visited</code>: A logical variable indicating if the plant received any visits at all.</li>
 </ul>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ril_data <span class="sc">|&gt;</span> </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(location,   prop_hybrid,  mean_visits,  </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                petal_color, petal_area_mm,  asd_mm, </span>
@@ -717,7 +717,7 @@ Warning: R does not remember this change until you assign it.
 </div>
 <div class="callout-body-container callout-body">
 <p>So, now that we see that our code worked as expected, enter:</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> ril_data <span class="sc">|&gt;</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(location,  prop_hybrid,  mean_visits,  </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                petal_color, petal_area_mm,  asd_mm,  </span>

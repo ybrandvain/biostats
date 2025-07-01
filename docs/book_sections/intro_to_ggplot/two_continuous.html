@@ -645,11 +645,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../figs/intro_to_R/intro_to_ggplot/clarkia_sketch_twoconts.png" class="img-fluid figure-img" width="948"></p>
+<p><img src="../../figs/intro_to_R/intro_to_ggplot/clarkia_sketch_twoconts.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
 </figure>
 </div>
 </div>
@@ -674,12 +674,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="visualizing-associations-between-continuous-variables." class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="visualizing-associations-between-continuous-variables.">Visualizing associations between continuous variables.</h3>
 <p>When Brooke watched pollinators visit <em>parviflora</em> recombinant inbred lines (RILs), she was hoping that these observations also informed the probability of hybrid seed set. The first step in evaluating this hypothesis is to generate a scatterplot – a visualization that shows the association between continuous variables.</p>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../figs/intro_to_R/intro_to_ggplot/jitter_sketch.png" class="img-fluid figure-img" width="162"></p>
+<p><img src="../../figs/intro_to_R/intro_to_ggplot/jitter_sketch.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
 </figure>
 </div>
 </div></div></div>
@@ -703,13 +703,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>I made the points partially transparent (<code>alpha = 0.4</code>).</li>
 </ul>
 <p>A small jitter could have been ok, but jittering continuous values gives me the ick, because I want my data presented faithfully.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ril_data, <span class="fu">aes</span>(<span class="at">x =</span> mean_visits, <span class="at">y  =</span> prop_hybrid))<span class="sc">+</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> .<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="two_continuous_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="two_continuous_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
 </figure>
 </div>
 </div>
@@ -719,14 +719,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
 <p>Sometimes nonlinear scales better reveal trends. Transforming the scale on which the data are presented (rather than transforming the data itself) is nice because we retain original values.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ril_data, <span class="fu">aes</span>(<span class="at">x =</span> mean_visits, <span class="at">y  =</span> prop_hybrid))<span class="sc">+</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> .<span class="dv">4</span>)<span class="sc">+</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">"log1p"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="two_continuous_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="two_continuous_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
 </figure>
 </div>
 </div>
@@ -740,15 +740,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
 <p>The <code>geom_smooth()</code> allows us to highlight patterns in our data. There are lots of ways to draw trends through data, and we can specify how we want to do so with the <code>method</code> argument.</p>
 <p>Here I present the standard “best-fit” line with <code>method = "lm"</code>. The grey area around that line represents plausible lines that would also have been statistically acceptable (more on that later).</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ril_data, <span class="fu">aes</span>(<span class="at">x =</span> mean_visits, <span class="at">y  =</span> prop_hybrid))<span class="sc">+</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> .<span class="dv">4</span>)<span class="sc">+</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)<span class="sc">+</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">"log1p"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="two_continuous_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="two_continuous_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
 </figure>
 </div>
 </div>
@@ -759,15 +759,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div style="background-color: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
 <p>Sometimes a simple line does not do a great job of highlighting patterns. Specifying <code>method = loess</code> presents a smoothed moving average.</p>
 <p>In addition to showing that moving average, I show you how to suppress that grey area with <code>se = FALSE</code>. I tend to like to include the uncertainty in our estimated trend so I usually don’t do this, but sometimes showing the uncertainty hides other features of the data, so I wanted to empower you.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ril_data, <span class="fu">aes</span>(<span class="at">x =</span> mean_visits, <span class="at">y  =</span> prop_hybrid))<span class="sc">+</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> .<span class="dv">4</span>)<span class="sc">+</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>)<span class="sc">+</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">"log1p"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="two_continuous_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="two_continuous_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
 </figure>
 </div>
 </div>

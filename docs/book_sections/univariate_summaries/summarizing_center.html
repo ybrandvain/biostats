@@ -102,8 +102,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="../../site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="../../site_libs/kePrint/kePrint.js"></script>
+<link href="../../site_libs/lightable/lightable.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -676,7 +676,7 @@ window.Quarto = {
 </header>
 
 
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code for selecting data from a few columns from RILs planted at GC</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
@@ -717,13 +717,13 @@ You are continuing your exploration of a fresh new dataset. You have figured out
 <blockquote class="blockquote">
 <p>We hear and say the word, “Average”, often. What do we mean when we say it? “Average” is an imprecise term for a middle or typical value.</p>
 </blockquote>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-median_cartoon" class="quarto-float quarto-figure quarto-figure-center anchored" alt="An animated scatter plot illustrating the process of finding the median petal area (mm) in Clarkia. The animation starts with randomly ordered points, labeled along the x-axis as 'Order in dataset (arbitrary)' and petal area values on the y-axis. The points are then sorted from smallest to largest along the x-axis, with a vertical dashed line appearing at the median. A text label appears, highlighting the median value, which remains fixed as the final dataset is fully sorted.">
+<div id="fig-median_cartoon" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="An animated scatter plot illustrating the process of finding the median petal area (mm) in Clarkia. The animation starts with randomly ordered points, labeled along the x-axis as 'Order in dataset (arbitrary)' and petal area values on the y-axis. The points are then sorted from smallest to largest along the x-axis, with a vertical dashed line appearing at the median. A text label appears, highlighting the median value, which remains fixed as the final dataset is fully sorted.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-median_cartoon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/summarizing_data/univariate_summaries/petal_area_median.gif" class="img-fluid figure-img" alt="An animated scatter plot illustrating the process of finding the median petal area (mm) in Clarkia. The animation starts with randomly ordered points, labeled along the x-axis as 'Order in dataset (arbitrary)' and petal area values on the y-axis. The points are then sorted from smallest to largest along the x-axis, with a vertical dashed line appearing at the median. A text label appears, highlighting the median value, which remains fixed as the final dataset is fully sorted.">
+<img src="../../figs/summarizing_data/univariate_summaries/petal_area_median.gif" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="An animated scatter plot illustrating the process of finding the median petal area (mm) in Clarkia. The animation starts with randomly ordered points, labeled along the x-axis as 'Order in dataset (arbitrary)' and petal area values on the y-axis. The points are then sorted from smallest to largest along the x-axis, with a vertical dashed line appearing at the median. A text label appears, highlighting the median value, which remains fixed as the final dataset is fully sorted.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-median_cartoon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Step-by-step process of finding the median petal area in <em>parviflora</em> RILs. The animation begins with unordered petal area measurements plotted against their dataset order. The values are then sorted in increasing order, and a vertical dashed line appears at the middle value, marking the median. The median is highlighted, illustrating how it divides the dataset into two equal halves.
@@ -744,13 +744,13 @@ Figure&nbsp;1: Step-by-step process of finding the median petal area in <em>parv
 <li>Or just use the <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/median.html"><code>median()</code></a> function in R – usually inside <a href=""><code>summarize()</code></a> (revisit the chapter on <a href="https://ybrandvain.quarto.pub/applied-biostatistics/book_sections/intro_to_R/data_in_R/summarize_vars.html">summarizing columns in dplyr</a> for a refresher). Remember to specify <code>na.rm = TRUE</code>.</li>
 </ul></li>
 </ul>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-mode" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A histogram showing the distribution of petal area (mm) in Clarkia. The x-axis represents petal area values, while the y-axis shows the count of observations. A blue vertical line and an arrow highlight the mode, the most frequently occurring value, with the word 'mode' in bold blue text above the peak.">
+<div id="fig-mode" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A histogram showing the distribution of petal area (mm) in Clarkia. The x-axis represents petal area values, while the y-axis shows the count of observations. A blue vertical line and an arrow highlight the mode, the most frequently occurring value, with the word 'mode' in bold blue text above the peak.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-mode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="summarizing_center_files/figure-html/fig-mode-1.png" class="img-fluid figure-img" alt="A histogram showing the distribution of petal area (mm) in Clarkia. The x-axis represents petal area values, while the y-axis shows the count of observations. A blue vertical line and an arrow highlight the mode, the most frequently occurring value, with the word 'mode' in bold blue text above the peak." width="672">
+<img src="summarizing_center_files/figure-html/fig-mode-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="A histogram showing the distribution of petal area (mm) in Clarkia. The x-axis represents petal area values, while the y-axis shows the count of observations. A blue vertical line and an arrow highlight the mode, the most frequently occurring value, with the word 'mode' in bold blue text above the peak.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Illustration of the mode in petal areas of <em>parviflora</em> RILs. The histogram displays the distribution of petal area (mm), with the mode marked by a blue vertical line and labeled in blue text. The mode represents the most frequently occurring value in the dataset, corresponding to the tallest bar in the histogram.
@@ -781,7 +781,7 @@ Figure&nbsp;2: Illustration of the mode in petal areas of <em>parviflora</em> RI
 
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
 <p><strong>But remember</strong> mean and/or median may not be the best ways to summarize the center of either data set.</p>
-</div></div><div class="cell column-page-right">
+</div></div><div class="cell column-page-right" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gc_rils<span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log10_petal_area_mm =</span> <span class="fu">log10</span>(petal_area_mm))<span class="sc">|&gt;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_log10_petal_area_mm =</span> <span class="fu">mean</span>(log10_petal_area_mm, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
@@ -793,7 +793,7 @@ Figure&nbsp;2: Illustration of the mode in petal areas of <em>parviflora</em> RI
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mean_mean_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">median_mean_visits =</span> <span class="fu">median</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -835,12 +835,12 @@ Figure&nbsp;2: Illustration of the mode in petal areas of <em>parviflora</em> RI
 </section>
 <section id="cool-down" class="level3">
 <h3 class="anchored" data-anchor-id="cool-down">Cool down</h3>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-dist" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A set of three histograms comparing trait distributions in Clarkia datasets. The left panel, labeled 'RIL dataset,' shows a histogram of petal area (log10 mm^2), with a unimodal distribution centered around 1.8 log10 mm^2. The middle panel, labeled 'Hybrid zone dataset,' displays a histogram of log10-transformed petal area (in log10 cm^2), appearing bimodal with peaks near -0.5 and 0.5. The right panel, also from the RIL dataset, shows pollinator visits at GC, with a strongly right-skewed distribution where most values are close to zero.">
+<div id="fig-dist" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A set of three histograms comparing trait distributions in Clarkia datasets. The left panel, labeled 'RIL dataset,' shows a histogram of petal area (log10 mm^2), with a unimodal distribution centered around 1.8 log10 mm^2. The middle panel, labeled 'Hybrid zone dataset,' displays a histogram of log10-transformed petal area (in log10 cm^2), appearing bimodal with peaks near -0.5 and 0.5. The right panel, also from the RIL dataset, shows pollinator visits at GC, with a strongly right-skewed distribution where most values are close to zero.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="summarizing_center_files/figure-html/fig-dist-1.png" class="img-fluid figure-img" alt="A set of three histograms comparing trait distributions in Clarkia datasets. The left panel, labeled 'RIL dataset,' shows a histogram of petal area (log10 mm^2), with a unimodal distribution centered around 1.8 log10 mm^2. The middle panel, labeled 'Hybrid zone dataset,' displays a histogram of log10-transformed petal area (in log10 cm^2), appearing bimodal with peaks near -0.5 and 0.5. The right panel, also from the RIL dataset, shows pollinator visits at GC, with a strongly right-skewed distribution where most values are close to zero." width="672">
+<img src="summarizing_center_files/figure-html/fig-dist-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="A set of three histograms comparing trait distributions in Clarkia datasets. The left panel, labeled 'RIL dataset,' shows a histogram of petal area (log10 mm^2), with a unimodal distribution centered around 1.8 log10 mm^2. The middle panel, labeled 'Hybrid zone dataset,' displays a histogram of log10-transformed petal area (in log10 cm^2), appearing bimodal with peaks near -0.5 and 0.5. The right panel, also from the RIL dataset, shows pollinator visits at GC, with a strongly right-skewed distribution where most values are close to zero.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: <em>Distributions of select traits in Clarkia datasets</em>. This figure shows histograms of three different variables from two datasets: Recombinant Inbred Line (RIL) populations and a hybrid zone dataset. The left panel displays the distribution of petal area (log10 mm^2) in the RIL dataset, showing a unimodal distribution. The middle panel presents the log10-transformed petal area (log10 cm^2) in the hybrid zone dataset, which appears bimodal. The right panel illustrates the number of pollinator visits at GC in the RIL dataset, showing a highly right-skewed distribution with many zero observations.

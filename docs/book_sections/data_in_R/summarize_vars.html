@@ -660,17 +660,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="summarizeing-data"><a href="https://dplyr.tidyverse.org/reference/summarise.html"><code>summarize()</code></a>ing data</h2>
 <p>We rarely want to look at entire datasets, we want to <a href="https://dplyr.tidyverse.org/reference/summarise.html"><code>summarize()</code></a> them (e.g.&nbsp;finding the mean, variance, etc..).</p>
 <p>We <a href="../getting_started/functions_and_vectors.html#vectors">previously used the mean function</a> to find the mean of a vector. When we want to summarize a variable in a tibble we use the function inside of <a href="https://dplyr.tidyverse.org/reference/summarise.html"><code>summarize()</code></a>.</p>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../figs/intro_to_R/data_in_R/summarize.png" class="img-fluid figure-img" alt="A visual representation of summarizing data using `summarize()` in `dplyr`. The top table contains two columns: `prop_hyb` and `n_hyb`, displaying hybrid proportions and counts. Below, an R code snippet applies `summarize(mean_hyb = mean(n_hyb))`, computing the average value of `n_hyb`. The bottom table shows the resulting dataset, reduced to a single row with a new column `mean_hyb`, which holds the computed mean value of 1." width="372"></p>
+<p><img src="../../figs/intro_to_R/data_in_R/summarize.png" class="img-fluid figure-img" style="width:70.0%" alt="A visual representation of summarizing data using `summarize()` in `dplyr`. The top table contains two columns: `prop_hyb` and `n_hyb`, displaying hybrid proportions and counts. Below, an R code snippet applies `summarize(mean_hyb = mean(n_hyb))`, computing the average value of `n_hyb`. The bottom table shows the resulting dataset, reduced to a single row with a new column `mean_hyb`, which holds the computed mean value of 1."></p>
 <figcaption>Computing summary statistics with <code>summarize()</code>. The top table contains two columns: <code>prop_hyb</code> (proportion of hybrids) and <code>n_hyb</code> (the number of hybrids). The <code>summarize(mean_hyb = mean(n_hyb))</code> function is applied to calculate the mean of <code>n_hyb</code>, producing a single-row output where <code>mean_hyb</code> represents the average number of hybrids across the dataset. The final result, shown in the bottom table, contains a single value of 1.</figcaption>
 </figure>
 </div>
 </div></div></div>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ril_data      <span class="sc">|&gt;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -687,7 +687,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <div class="protip">
 <p><strong>Summarize data in the face of NAs with the na.rm = TRUE argument.</strong></p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ril_data      <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -699,7 +699,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong><a href="https://dplyr.tidyverse.org/reference/pull.html">pull()</a> columns from tibbles to extract vectors.</strong></p>
 <p>Many R functions require vectors rather than tibbles. You can <a href="https://dplyr.tidyverse.org/reference/pull.html">pull()</a> them out as follows:</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ril_data      <span class="sc">|&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">|&gt;</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -720,11 +720,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://rfortherestofus.com/images/summarize.gif" class="img-fluid figure-img"></p>
+<p><img src="https://rfortherestofus.com/images/summarize.gif" class="img-fluid figure-img" style="width:70.0%"></p>
 <figcaption>A visual explanation of the summarize() function from <a href="https://rfortherestofus.com/2024/07/dplyr-functions-animated">R for the rest of us</a>.</figcaption>
 </figure>
 </div>
@@ -737,7 +737,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="combine-group_by-andsummarize-to-describe-groups" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="combine-group_by-andsummarize-to-describe-groups">Combine <a href="https://dplyr.tidyverse.org/reference/group_by.html"><code>group_by()</code></a> and<a href="https://dplyr.tidyverse.org/reference/summarise.html"><code>summarize()</code></a> to describe groups</h2>
 <p>Say we were curious about differences in pollinator visitation by location. The code below combines <a href="https://dplyr.tidyverse.org/reference/group_by.html"><code>group_by()</code></a> and <a href="https://dplyr.tidyverse.org/reference/summarise.html"><code>summarize()</code></a> to show that site <code>SR</code> had nearly 10 times the mean pollinator visitation per 15 minute observation than did site <code>GC</code>. We also see a much stronger correlation between petal area and visitation in <code>SR</code> than in <code>GC</code>, but a stronger correlation between proportion hybrid and visitation in <code>GC</code> than in <code>SR</code>. Note that the <code>NA</code> values for <code>LB</code> and <code>US</code> arise because we did not conduct pollinator observations at those locations.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ril_data      <span class="sc">|&gt;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location) <span class="sc">|&gt;</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">grand_mean =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
@@ -757,16 +757,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We can group by more than one variable. Grouping by location and color reveals not only that white flowers are visited less than pink flowers, but also that petal area has a similar correlation with pollinator visitation for pink and white flowers.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ril_data      <span class="sc">|&gt;</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location, petal_color) <span class="sc">|&gt;</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">cor_visits_petal_area =</span>  <span class="fu">cor</span>(mean_visits ,petal_area_mm, </span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>)) <span class="co"># Like na.rm = TRUE, but for correlations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'location'. You can override using the
-`.groups` argument.</code></pre>
-</div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 13 × 4
 # Groups:   location [5]
@@ -799,11 +795,11 @@ A visual explanation of group_by() + summarize() from <a href="https://rforthere
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://rfortherestofus.com/images/group_by_summarize.gif" class="img-fluid figure-img"></p>
+<p><img src="https://rfortherestofus.com/images/group_by_summarize.gif" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
 </figure>
 </div>
 </div>
@@ -817,19 +813,15 @@ A visual explanation of group_by() + summarize() from <a href="https://rforthere
 
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
 <p><strong>Peeling of groups:</strong> Above we grouped by location and petal_color in that order. When summarize data, by default, R peels off one group, following a “last one in is the first one out” rule. This is what is meant when R says: “<code>summarise()</code> has grouped output by ‘location’…”.</p>
-</div></div><div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># re-running code above and then ungrouping it.</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># note that the output no longer says `# Groups:   location [2]`</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>ril_data      <span class="sc">|&gt;</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location, petal_color) <span class="sc">|&gt;</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">cor_visits_petal_area =</span>  <span class="fu">cor</span>(mean_visits ,petal_area_mm, </span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>))<span class="sc">|&gt;</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'location'. You can override using the
-`.groups` argument.</code></pre>
-</div>
+</div></div><div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># re-running code above and then ungrouping it.</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># note that the output no longer says `# Groups:   location [2]`</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>ril_data      <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location, petal_color) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">cor_visits_petal_area =</span>  <span class="fu">cor</span>(mean_visits ,petal_area_mm, </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>))<span class="sc">|&gt;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 13 × 4
    location petal_color avg_visits cor_visits_petal_area

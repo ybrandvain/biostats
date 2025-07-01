@@ -658,13 +658,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="remove-rows-with-filter" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="remove-rows-with-filter">Remove rows with filter()</h2>
 <p>There are reasons to remove rows by their values. For example, we could remove plants from <code>US</code> and <code>LB</code> locations. We can achieve this with the <a href="https://dplyr.tidyverse.org/reference/filter.html"><code>filter()</code></a> function as follows:</p>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-filter" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A visual representation of filtering data using `filter()` in `dplyr`. The top table contains two columns: `prop_hyb` and `petal_color`, listing hybrid proportions alongside flower color (&quot;white&quot; and &quot;pink&quot;). Below, an R code snippet applies `filter(petal_color == &quot;pink&quot;)`, removing rows where `petal_color` is not &quot;pink.&quot; The bottom table displays the filtered dataset, which includes only rows with pink flowers, while the white flower row has been excluded.">
+<div id="fig-filter" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A visual representation of filtering data using `filter()` in `dplyr`. The top table contains two columns: `prop_hyb` and `petal_color`, listing hybrid proportions alongside flower color (&quot;white&quot; and &quot;pink&quot;). Below, an R code snippet applies `filter(petal_color == &quot;pink&quot;)`, removing rows where `petal_color` is not &quot;pink.&quot; The bottom table displays the filtered dataset, which includes only rows with pink flowers, while the white flower row has been excluded.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-filter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/intro_to_R/data_in_R/filter.png" class="img-fluid figure-img" alt="A visual representation of filtering data using `filter()` in `dplyr`. The top table contains two columns: `prop_hyb` and `petal_color`, listing hybrid proportions alongside flower color (&quot;white&quot; and &quot;pink&quot;). Below, an R code snippet applies `filter(petal_color == &quot;pink&quot;)`, removing rows where `petal_color` is not &quot;pink.&quot; The bottom table displays the filtered dataset, which includes only rows with pink flowers, while the white flower row has been excluded." width="365">
+<img src="../../figs/intro_to_R/data_in_R/filter.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="A visual representation of filtering data using `filter()` in `dplyr`. The top table contains two columns: `prop_hyb` and `petal_color`, listing hybrid proportions alongside flower color (&quot;white&quot; and &quot;pink&quot;). Below, an R code snippet applies `filter(petal_color == &quot;pink&quot;)`, removing rows where `petal_color` is not &quot;pink.&quot; The bottom table displays the filtered dataset, which includes only rows with pink flowers, while the white flower row has been excluded.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-filter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Using <code>filter()</code> to subset data based on a condition. The top table contains two columns: <code>prop_hyb</code> (proportion of hybrids) and <code>petal_color</code> (flower color), with values including both “white” and “pink” flowers. The function <code>filter(petal_color == "pink")</code> is applied to retain only rows where <code>petal_color</code> is “pink.” The resulting dataset, shown in the bottom table, excludes the “white” flower row and keeps only the observations where petal color is “pink.”
@@ -679,7 +679,7 @@ Figure&nbsp;1: Using <code>filter()</code> to subset data based on a condition. 
 <ul>
 <li><code>ril_data |&gt; filter(location != "US" &amp; location != "LB")</code>: To remove samples from <code>US</code> and (noted by <code>&amp;</code>) <code>LB</code>. Recall that <code>!=</code> asks the logical question, “Does the location not equal <code>US</code>?” Combined the code reads “Retain only samples with location not equal to <code>US</code> and with location not equal to <code>LB</code>.”</li>
 </ul>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rerunning the code summarizing visitation by </span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># location and petal color and then ungrouping it</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># but filtering out plants from locations US and LB</span></span>
@@ -691,10 +691,6 @@ Figure&nbsp;1: Using <code>filter()</code> to subset data based on a condition. 
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">cor_visits_petal_area =</span>  <span class="fu">cor</span>(mean_visits ,petal_area_mm, </span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>))<span class="sc">|&gt;</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'location'. You can override using the
-`.groups` argument.</code></pre>
-</div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
   location petal_color avg_visits cor_visits_petal_area
@@ -710,10 +706,10 @@ Figure&nbsp;1: Using <code>filter()</code> to subset data based on a condition. 
 <div class="warning">
 <p><strong>Warning! Remove one thing can change another:</strong></p>
 <p>Think hard about removing things (e.g.&nbsp;missing data), and if you decide to remove things, consider where in the pipeline you are doing so. Removing one thing can change another. For example, compare:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ril_data <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(petal_color))<span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ril_data <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(petal_color))<span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   avg_visits
@@ -722,9 +718,9 @@ Figure&nbsp;1: Using <code>filter()</code> to subset data based on a condition. 
 </div>
 </div>
 <p>and</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ril_data <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ril_data <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   avg_visits

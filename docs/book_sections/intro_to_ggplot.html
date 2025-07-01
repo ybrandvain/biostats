@@ -663,14 +663,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 </div>
 
-<div class="no-row-height column-margin column-container"><div class="cell">
+<div class="no-row-height column-margin column-container"><div class="cell" data-layout-align="center">
 
 </div></div><hr>
 <section id="always-visualize-your-data." class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="always-visualize-your-data.">Always visualize your data.</h2>
 <p><a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe’s quartet</a> famously displays four data sets with identical summary statistics but very different interpretations (<a href="#fig-anscombe" class="quarto-xref">Figure&nbsp;<span>1</span></a>, <a href="#tbl-anscombe" class="quarto-xref">Table&nbsp;<span>1</span></a>). The key lesson from Anscombe’s quartet is that statistical summaries can miss the story in our data, and therefore must be accompanied by clear visualization of patterns in the data.</p>
-<div class="cell page-columns page-full" data-tbl-cap-location="bottom">
-<div id="tbl-anscombe" class="cell quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-cap-location="bottom">
+<div class="cell page-columns page-full" data-layout-align="center" data-tbl-cap-location="bottom">
+<div id="tbl-anscombe" class="cell quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-layout-align="center" data-tbl-cap-location="bottom">
 <figure class="quarto-float quarto-float-tbl figure page-columns page-full">
 <div aria-describedby="tbl-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
 <div class="cell-output-display column-body">
@@ -728,12 +728,12 @@ Table&nbsp;1: Summary statistics for Anscombe’s quartet.
 </figure>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-anscombe" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A set of four scatterplots, each displaying a different dataset known as Anscombe’s Quartet. Despite having nearly identical statistical summaries, the plots show distinct patterns: one appears as a typical linear relationship, another is curved, a third has a vertical outlier, and the fourth consists of nearly identical points with one extreme value. This highlights the importance of data visualization in statistical analysis.">
+<div id="fig-anscombe" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A set of four scatterplots, each displaying a different dataset known as Anscombe’s Quartet. Despite having nearly identical statistical summaries, the plots show distinct patterns: one appears as a typical linear relationship, another is curved, a third has a vertical outlier, and the fourth consists of nearly identical points with one extreme value. This highlights the importance of data visualization in statistical analysis.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="intro_to_ggplot_files/figure-html/fig-anscombe-1.png" class="img-fluid figure-img" alt="A set of four scatterplots, each displaying a different dataset known as Anscombe’s Quartet. Despite having nearly identical statistical summaries, the plots show distinct patterns: one appears as a typical linear relationship, another is curved, a third has a vertical outlier, and the fourth consists of nearly identical points with one extreme value. This highlights the importance of data visualization in statistical analysis." width="672">
+<img src="intro_to_ggplot_files/figure-html/fig-anscombe-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="A set of four scatterplots, each displaying a different dataset known as Anscombe’s Quartet. Despite having nearly identical statistical summaries, the plots show distinct patterns: one appears as a typical linear relationship, another is curved, a third has a vertical outlier, and the fourth consists of nearly identical points with one extreme value. This highlights the importance of data visualization in statistical analysis.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-anscombe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Four datasets with identical summary statistics but distinct visual patterns. Each panel represents a dataset with nearly identical means (shown in red), variances, correlations, and regression lines (shown in blue), yet their scatterplots reveal strikingly different structures.
@@ -773,13 +773,13 @@ Figure&nbsp;1: Four datasets with identical summary statistics but distinct visu
 </li>
 <li>In this case there is not a natural order to our categorical variables, so we do not need to think too hard about that.</li>
 </ul>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-sketch" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-sketch" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<video src="../figs/intro_to_R/intro_to_ggplot/webbshasta%20-%201263894431268106241.mp4" class="img-fluid" controls=""><a href="../figs/intro_to_R/intro_to_ggplot/webbshasta - 1263894431268106241.mp4">Video</a></video>
+<video src="../figs/intro_to_R/intro_to_ggplot/webbshasta%20-%201263894431268106241.mp4" class="img-fluid quarto-figure quarto-figure-center" style="width:70.0%" controls=""><a href="../figs/intro_to_R/intro_to_ggplot/webbshasta - 1263894431268106241.mp4">Video</a></video>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: <a href="https://x.com/webbshasta/status/1263894431268106241">Tweet</a> from <a href="https://www.shastawebb.com/">Shasta E. Webb</a> (@webbshasta) about how she makes a plot. “My approach to figure-making in #ggplot ALWAYS begins with sketching out what I want the final product to look like. It feels a bit analog but helps me determine which #geom or #theme I need, what arrangement will look best, &amp; what illustrations/images will spice it up. #rstats”
@@ -800,12 +800,12 @@ Figure&nbsp;2: <a href="https://x.com/webbshasta/status/1263894431268106241">Twe
 <li>Does pollinator visitation predict hybridization rate?</li>
 </ul>
 <p>See <a href="#fig-clarkia_sketch" class="quarto-xref">Figure&nbsp;<span>3</span></a> for examples of how these may look.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-clarkia_sketch" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-clarkia_sketch" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-clarkia_sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../figs/intro_to_R/intro_to_ggplot/clarkia_sketch.png" class="img-fluid figure-img" width="753">
+<img src="../figs/intro_to_R/intro_to_ggplot/clarkia_sketch.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-clarkia_sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Brainstorming potential figures.
@@ -817,8 +817,8 @@ Figure&nbsp;3: Brainstorming potential figures.
 </section>
 <section id="the-idea-of-ggplot" class="level2">
 <h2 class="anchored" data-anchor-id="the-idea-of-ggplot">The idea of <code>ggplot</code></h2>
-<div class="cell">
-<iframe src="https://www.youtube.com/embed/cqcQT44mJTM?end=64" width="672" height="400px" data-external="1">
+<div class="cell" data-layout-align="center">
+<iframe src="https://www.youtube.com/embed/cqcQT44mJTM?end=64" width="70%" height="400px" data-external="1">
 </iframe>
 </div>
 <p>As described in the <a href="https://www.youtube.com/watch?v=cqcQT44mJTM">video above</a> <code>ggplot</code> is based on the grammar of graphics, a framework for constructing plots by mapping data to visual aesthetics.. A major idea here is that plots are made up of data that we map onto aesthetic attributes, and that we build up plots layer by layer.</p>
@@ -826,15 +826,15 @@ Figure&nbsp;3: Brainstorming potential figures.
 <div class="note">
 <p><strong>We are using the <code>ggplot2</code> package to make plots.</strong></p>
 <p>If you do not have ggplot2 installed, type:</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>) <span class="co"># Do this the 1st time!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If you have <code>ggplot2</code> installed or you just installed it, every time you start a new R session you still need to enter</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show code to load and format the data set, so we are where we left off.</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>

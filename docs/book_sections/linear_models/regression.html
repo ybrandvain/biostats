@@ -2511,7 +2511,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </header>
 
 
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code for selecting data from a few columns from RILs planted at GC</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
@@ -2607,7 +2607,7 @@ You understand the idea of a correlation and covariance, as well as what linear 
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <hr>
 
-<div class="no-row-height column-margin column-container"><div class="cell">
+<div class="no-row-height column-margin column-container"><div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gc_rils, </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> petal_area_mm, </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> prop_hybrid))<span class="sc">+</span></span>
@@ -2617,13 +2617,13 @@ You understand the idea of a correlation and covariance, as well as what linear 
 </div></div></section>
 <section id="interpretation" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-regression" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatterplot of proportion of hybrid seed (y-axis) against petal area in mm² (x-axis) for parviflora RILs. Black dots represent individual plants, and a blue line indicates the fitted linear regression. Most values cluster below 0.5, with many zeroes and a slight positive slope.">
+<div id="fig-regression" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatterplot of proportion of hybrid seed (y-axis) against petal area in mm² (x-axis) for parviflora RILs. Black dots represent individual plants, and a blue line indicates the fitted linear regression. Most values cluster below 0.5, with many zeroes and a slight positive slope." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="regression_files/figure-html/fig-regression-1.png" class="img-fluid figure-img" alt="Scatterplot of proportion of hybrid seed (y-axis) against petal area in mm² (x-axis) for parviflora RILs. Black dots represent individual plants, and a blue line indicates the fitted linear regression. Most values cluster below 0.5, with many zeroes and a slight positive slope." width="672">
+<img src="regression_files/figure-html/fig-regression-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="Scatterplot of proportion of hybrid seed (y-axis) against petal area in mm² (x-axis) for parviflora RILs. Black dots represent individual plants, and a blue line indicates the fitted linear regression. Most values cluster below 0.5, with many zeroes and a slight positive slope.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: A scatterplot showing the relationship between petal area (in mm²) and the proportion of hybrid seeds in parviflora RILs, with a fitted linear regression line.
@@ -2647,7 +2647,7 @@ Figure&nbsp;1: A scatterplot showing the relationship between petal area (in mm�
 <section id="residuals" class="level2">
 <h2 class="anchored" data-anchor-id="residuals">Residuals</h2>
 <p>As seen previously, predictions of a linear model do not perfectly match the data. Again, the difference between observed, <span class="math inline">\(y_i\)</span>, and expected, <span class="math inline">\(\hat{y}_i\)</span>, values is the residual <span class="math inline">\(e_i\)</span>. Try to estimate the residual of data point three (green point) in <a href="#fig-regression_1" class="quarto-xref">Figure&nbsp;<span>2</span></a>.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gc_rils<span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()), </span>
@@ -2657,10 +2657,10 @@ Figure&nbsp;1: A scatterplot showing the relationship between petal area (in mm�
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_size_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-regression_1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatterplot of proportion of hybrid seed (y-axis) against petal area in mm² (x-axis) for Clarkia plants. Black dots represent individual plants, and a blue line indicates the fitted linear regression. The green dot represents individual three, that you will investigate in more detail below.">
+<div id="fig-regression_1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatterplot of proportion of hybrid seed (y-axis) against petal area in mm² (x-axis) for Clarkia plants. Black dots represent individual plants, and a blue line indicates the fitted linear regression. The green dot represents individual three, that you will investigate in more detail below." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-regression_1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="regression_files/figure-html/fig-regression_1-1.png" class="img-fluid figure-img" alt="Scatterplot of proportion of hybrid seed (y-axis) against petal area in mm² (x-axis) for Clarkia plants. Black dots represent individual plants, and a blue line indicates the fitted linear regression. The green dot represents individual three, that you will investigate in more detail below." width="672">
+<img src="regression_files/figure-html/fig-regression_1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="Scatterplot of proportion of hybrid seed (y-axis) against petal area in mm² (x-axis) for Clarkia plants. Black dots represent individual plants, and a blue line indicates the fitted linear regression. The green dot represents individual three, that you will investigate in more detail below.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-regression_1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: The same scatterplot showing the relationship between petal area as in <a href="#fig-regression" class="quarto-xref">Figure&nbsp;<span>1</span></a>. The highlighted point in turquoise marks plant 3, used as an example in the residual calculation. This point’s vertical distance from the regression line represents its residual
@@ -2688,12 +2688,12 @@ Math to get us closer
 <section id="the-slope-minimizes-textss_textresiduals" class="level3">
 <h3 class="anchored" data-anchor-id="the-slope-minimizes-textss_textresiduals">The slope minimizes <span class="math inline">\(\text{SS}_\text{residuals}\)</span></h3>
 <p><strong>As seen for the mean, by looping over many proposed slope(<span class="math inline">\(-0.01\)</span> to <span class="math inline">\(0.02\)</span>) the plot below illustrates that the slope from the formula above minimizes the sum of squared residuals:</strong> The sum of squared residuals for a given proposed slope (with intercept plugged in from math) is shown: <em>In color</em> on all three plots (yellow is a large sum of squared residuals, red is intermediate, and purple is low); <em>Geometrically</em> as the size of the square, in the center plot; <em>On the y-axis</em> of the right plot.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-minimize_ss" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three-panel animation showing how slope affects residual error. In the left panel, data points are plotted with a regression line of varying slope. Vertical lines indicate residuals, colored by total squared error. The center panel displays a square whose area represents the sum of squared residuals for the current slope. The right panel plots slope versus sum of squared residuals, with a moving point showing the current slope. The animation reveals that one particular slope minimizes the sum of squared residuals.">
+<div id="fig-minimize_ss" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three-panel animation showing how slope affects residual error. In the left panel, data points are plotted with a regression line of varying slope. Vertical lines indicate residuals, colored by total squared error. The center panel displays a square whose area represents the sum of squared residuals for the current slope. The right panel plots slope versus sum of squared residuals, with a moving point showing the current slope. The animation reveals that one particular slope minimizes the sum of squared residuals." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-minimize_ss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/summarizing_data/linear_models/slope_combined.gif" class="img-fluid figure-img" alt="Three-panel animation showing how slope affects residual error. In the left panel, data points are plotted with a regression line of varying slope. Vertical lines indicate residuals, colored by total squared error. The center panel displays a square whose area represents the sum of squared residuals for the current slope. The right panel plots slope versus sum of squared residuals, with a moving point showing the current slope. The animation reveals that one particular slope minimizes the sum of squared residuals.">
+<img src="../../figs/summarizing_data/linear_models/slope_combined.gif" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="Three-panel animation showing how slope affects residual error. In the left panel, data points are plotted with a regression line of varying slope. Vertical lines indicate residuals, colored by total squared error. The center panel displays a square whose area represents the sum of squared residuals for the current slope. The right panel plots slope versus sum of squared residuals, with a moving point showing the current slope. The animation reveals that one particular slope minimizes the sum of squared residuals.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-minimize_ss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: <strong>The slope minimizes the sum of squared residuals:</strong> The <em>left panel</em> shows observed data points along with a proposed regression line. Vertical lines connect each point to its predicted value, illustrating residuals. The color of the line corresponds to the total residual sum of squares. The <em>center panel</em> visualizes the total squared error as a square whose area reflects the sum of squared residuals. The <em>right panel</em> plots the sum of squared residuals as a function of the proposed slope, with a moving point highlighting the current slope value. The slope that minimizes the sum of squared residuals defines the best-fitting line.
@@ -2718,7 +2718,7 @@ Figure&nbsp;3: <strong>The slope minimizes the sum of squared residuals:</strong
 Solution
 </button>
 <p>Paste the code below into the webR window above to find the answer.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(prop_hybrid <span class="sc">~</span> petal_area_mm, <span class="at">data =</span> gc_rils) <span class="sc">|&gt;</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">|&gt;</span></span>
@@ -2752,7 +2752,7 @@ Solution
 <p>Dividing <span class="math inline">\(\text{SS}_\text{model}\)</span> by <span class="math inline">\(\text{SS}_\text{total}\)</span> describes “the proportion of variance explained” by our model, <span class="math inline">\(r^2\)</span>:</p>
 <p><span class="math display">\[r^2 = \frac{\text{SS}_\text{model}}{\text{SS}_\text{total}}\]</span></p>
 <p><strong>Reassuringly, the square root of <span class="math inline">\(r^2\)</span> equals the absolute value of <span class="math inline">\(r\)</span></strong></p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(prop_hybrid <span class="sc">~</span> petal_area_mm, <span class="at">data =</span> gc_rils) <span class="sc">|&gt;</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>()<span class="sc">|&gt;</span></span>

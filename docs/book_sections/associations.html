@@ -669,16 +669,16 @@ You’re curious to know the extent to which two variables are associated and ne
 </ol>
 </div>
 <hr>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(gc_rils)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell page-columns page-full" data-cap-location="margin">
+<div class="cell page-columns page-full" data-layout-align="center" data-cap-location="margin">
 <div class="cell-output-display page-columns page-full">
-<div id="fig-allcor" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="A matrix of plots showing pairwise relationships among variables in the Clarkia xantiana dataset. The matrix includes bar plots for categorical variables, histograms and density plots for distributions, scatterplots for continuous variables, and boxplots comparing continuous and categorical variables. Correlation coefficients are displayed in the upper triangle for numeric pairs. The figure visually summarizes a range of associations among traits such as petal color, pollinator visitation, petal area, anther–stigma distance, and hybridization rate." data-cap-location="margin">
+<div id="fig-allcor" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-cap-location="margin" data-fig-align="center" alt="A matrix of plots showing pairwise relationships among variables in the Clarkia xantiana dataset. The matrix includes bar plots for categorical variables, histograms and density plots for distributions, scatterplots for continuous variables, and boxplots comparing continuous and categorical variables. Correlation coefficients are displayed in the upper triangle for numeric pairs. The figure visually summarizes a range of associations among traits such as petal color, pollinator visitation, petal area, anther–stigma distance, and hybridization rate.">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-allcor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="associations_files/figure-html/fig-allcor-1.png" class="img-fluid figure-img" alt="A matrix of plots showing pairwise relationships among variables in the Clarkia xantiana dataset. The matrix includes bar plots for categorical variables, histograms and density plots for distributions, scatterplots for continuous variables, and boxplots comparing continuous and categorical variables. Correlation coefficients are displayed in the upper triangle for numeric pairs. The figure visually summarizes a range of associations among traits such as petal color, pollinator visitation, petal area, anther–stigma distance, and hybridization rate." width="864">
+<img src="associations_files/figure-html/fig-allcor-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="A matrix of plots showing pairwise relationships among variables in the Clarkia xantiana dataset. The matrix includes bar plots for categorical variables, histograms and density plots for distributions, scatterplots for continuous variables, and boxplots comparing continuous and categorical variables. Correlation coefficients are displayed in the upper triangle for numeric pairs. The figure visually summarizes a range of associations among traits such as petal color, pollinator visitation, petal area, anther–stigma distance, and hybridization rate.">
 </div>
 <figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-allcor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: A matrix of plots showing associations among several variables in the RIL dataset. It includes combinations of categorical and continuous variables related to floral traits, pollinator visitation, and hybrid seed formation. The diagonals show distributions of individual variables, while the upper triangle displays correlation coefficients, and the lower triangle shows scatterplots or boxplots depending on the variable type.
@@ -707,11 +707,11 @@ Summarizing a single variable can be illuminating – but we usually want to kno
 </blockquote>
 <section id="correlation-is-not-causation" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="correlation-is-not-causation">Correlation is not causation</h2>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../figs/summarizing_data/associations/corneqcaus.png" class="img-fluid figure-img" width="705"></p>
+<p><img src="../figs/summarizing_data/associations/corneqcaus.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
 </figure>
 </div>
 </div>
@@ -726,13 +726,13 @@ Summarizing a single variable can be illuminating – but we usually want to kno
 </ul></li>
 <li><strong>Causation</strong> means that changing one variable produces a change in the other. (For a deeper dive, see <a href="https://en.wikipedia.org/wiki/Causality">Wikipedia</a>.)</li>
 </ul>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-train" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-train" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-train-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<video src="../figs/summarizing_data/associations/AmeetRKini%20-%201186491285919731713.mp4" class="img-fluid" controls=""><a href="../figs/summarizing_data/associations/AmeetRKini - 1186491285919731713.mp4">Video</a></video>
+<video src="../figs/summarizing_data/associations/AmeetRKini%20-%201186491285919731713.mp4" class="img-fluid quarto-figure quarto-figure-center" style="width:70.0%" controls=""><a href="../figs/summarizing_data/associations/AmeetRKini - 1186491285919731713.mp4">Video</a></video>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-train-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: This man is not starting and stopping the train. (<a href="https://x.com/universoviral/status/1155765554583613441">tweet</a>)
@@ -745,13 +745,13 @@ Figure&nbsp;2: This man is not starting and stopping the train. (<a href="https:
 <ul>
 <li><strong>Coincidence:</strong> Chance is surprisingly powerful. In a world full of many possible combinations between variables, some strong associations will arise purely by luck. Later sections of the book will show how to evaluate the “NULL” hypothesis that an observed association arose by chance.</li>
 </ul>
-<div class="cell page-columns page-full" data-fg-alt="Three scatterplots labeled A, B, and C, showing pairwise relationships among traits in parviflora recombinant inbred lines. Plot A shows a positive relationship between anther–stigma distance and proportion hybrid. Plot B shows a positive association between petal area and anther–stigma distance. Plot C shows a positive association between petal area and proportion hybrid. Each plot includes a fitted regression line. Together, these plots suggest that petal area might confound the relationship between anther–stigma distance and hybridization rate.">
+<div class="cell page-columns page-full" data-layout-align="center" data-fg-alt="Three scatterplots labeled A, B, and C, showing pairwise relationships among traits in parviflora recombinant inbred lines. Plot A shows a positive relationship between anther–stigma distance and proportion hybrid. Plot B shows a positive association between petal area and anther–stigma distance. Plot C shows a positive association between petal area and proportion hybrid. Each plot includes a fitted regression line. Together, these plots suggest that petal area might confound the relationship between anther–stigma distance and hybridization rate.">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-confound" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-confound" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-confound-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="associations_files/figure-html/fig-confound-1.png" class="img-fluid figure-img" width="672">
+<img src="associations_files/figure-html/fig-confound-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-confound-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: <strong>Potential confounding</strong> in parviflora RILs. The observed association between proportion hybrid seed and anther–stigma distance (<strong>A</strong>), might be due to the fact that both anther–stigma distance (<strong>B</strong>), and proportion hybrid seed increases with petal area (<strong>C</strong>), rather than a causal effect of anther–stigma distance itself.<br><br><br>
@@ -765,13 +765,13 @@ Figure&nbsp;3: <strong>Potential confounding</strong> in parviflora RILs. The ob
 <ol start="3" type="1">
 <li><strong>Reverse causation:</strong> <a href="#fig-switchx" class="quarto-xref">Figure&nbsp;<span>4</span></a> shows that pink flowers are more likely to receive a pollinator than are white flowers. We assume this means that pink attracts pollinators– and with the caveat that we must watch out for coincidence and confounds, this conclusion makes sense. However, an association alone cannot tell if pink flowers attracted pollinators or if pollinator visitation turned plants pink. In this case the answer is clear – petal color was measured for RILs in the greenhouse, and there’s no biological mechanism by which a pollinator could change petal color. However, these answers require us to bring in biological knowledge – the data alone can’t tell us which way the effect goes.</li>
 </ol>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-switchx" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two bar plots showing the relationship between petal color (pink or white) and pollinator visitation (visited or not visited). The left plot places visit status on the x-axis and shows the proportion of pink and white flowers within each visit category. The right plot reverses this, placing petal color on the x-axis and showing the proportion of flowers that were visited or not. Both plots show that pink flowers are more likely to be visited, but the choice of x-axis can influence how we interpret the relationship, emphasizing the importance of considering — but not assuming — causal direction.">
+<div id="fig-switchx" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two bar plots showing the relationship between petal color (pink or white) and pollinator visitation (visited or not visited). The left plot places visit status on the x-axis and shows the proportion of pink and white flowers within each visit category. The right plot reverses this, placing petal color on the x-axis and showing the proportion of flowers that were visited or not. Both plots show that pink flowers are more likely to be visited, but the choice of x-axis can influence how we interpret the relationship, emphasizing the importance of considering — but not assuming — causal direction.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-switchx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="associations_files/figure-html/fig-switchx-1.png" class="img-fluid figure-img" alt="Two bar plots showing the relationship between petal color (pink or white) and pollinator visitation (visited or not visited). The left plot places visit status on the x-axis and shows the proportion of pink and white flowers within each visit category. The right plot reverses this, placing petal color on the x-axis and showing the proportion of flowers that were visited or not. Both plots show that pink flowers are more likely to be visited, but the choice of x-axis can influence how we interpret the relationship, emphasizing the importance of considering — but not assuming — causal direction." width="672">
+<img src="associations_files/figure-html/fig-switchx-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="Two bar plots showing the relationship between petal color (pink or white) and pollinator visitation (visited or not visited). The left plot places visit status on the x-axis and shows the proportion of pink and white flowers within each visit category. The right plot reverses this, placing petal color on the x-axis and showing the proportion of flowers that were visited or not. Both plots show that pink flowers are more likely to be visited, but the choice of x-axis can influence how we interpret the relationship, emphasizing the importance of considering — but not assuming — causal direction.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-switchx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: <strong>Visualizing an association between petal color and pollinator visitation.</strong> Both panels show that pink-petaled flowers are more likely to be visited by pollinators than white-petaled flowers. In the left panel, visit status is on the x-axis and petal color is shown within bars; in the right panel, petal color is on the x-axis and visit status is shown within bars. While the association is the same, the visual framing shifts the way we interpret direction — we typically place and think of explanatory variables (causes) on the x-axis and outcomes on the y-axis. However, these alternative visualizations make it clear that the data cannot speak to cause.
@@ -785,7 +785,7 @@ Figure&nbsp;4: <strong>Visualizing an association between petal color and pollin
 <li><p>Alternatively, all <em>xantiana</em> are pink-flowered, white-flowered <em>parviflora</em> can be white or pink. So maybe the pink flowers are actually caused by ancestry inherited from <em>xantiana</em> (more gene flow causes pink flowers).</p></li>
 </ol>
 <p>I do not yet know the answer.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YANIV ADD FIGURE FROM SHELLEY</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -807,13 +807,13 @@ Making things independent
 <section id="causation-without-correlation" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="causation-without-correlation">Causation without correlation</h3>
 <p><strong>Not only does correlation not imply causation, but we can have causation with no association.</strong></p>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-VORP" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatterplot showing NBA players' height (x-axis) versus their Value Over Replacement Player (VORP) (y-axis). Each point represents a player. A faint blue regression line runs slightly upward but remains almost flat, illustrating a very weak positive association between height and VORP. Notable players are labeled: Shai Gilgeous-Alexander (6'4.5&quot;), Giannis Antetokounmpo (6'11&quot;), and Nikola Jokić (6'11.5&quot;). The plot visually emphasizes that despite differences in height, there is little to no clear relationship between a player’s height and their value contribution above replacement level.">
+<div id="fig-VORP" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Scatterplot showing NBA players' height (x-axis) versus their Value Over Replacement Player (VORP) (y-axis). Each point represents a player. A faint blue regression line runs slightly upward but remains almost flat, illustrating a very weak positive association between height and VORP. Notable players are labeled: Shai Gilgeous-Alexander (6'4.5&quot;), Giannis Antetokounmpo (6'11&quot;), and Nikola Jokić (6'11.5&quot;). The plot visually emphasizes that despite differences in height, there is little to no clear relationship between a player’s height and their value contribution above replacement level.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-VORP-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="associations_files/figure-html/fig-VORP-1.png" class="img-fluid figure-img" alt="Scatterplot showing NBA players' height (x-axis) versus their Value Over Replacement Player (VORP) (y-axis). Each point represents a player. A faint blue regression line runs slightly upward but remains almost flat, illustrating a very weak positive association between height and VORP. Notable players are labeled: Shai Gilgeous-Alexander (6'4.5&quot;), Giannis Antetokounmpo (6'11&quot;), and Nikola Jokić (6'11.5&quot;). The plot visually emphasizes that despite differences in height, there is little to no clear relationship between a player’s height and their value contribution above replacement level." width="672">
+<img src="associations_files/figure-html/fig-VORP-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="Scatterplot showing NBA players' height (x-axis) versus their Value Over Replacement Player (VORP) (y-axis). Each point represents a player. A faint blue regression line runs slightly upward but remains almost flat, illustrating a very weak positive association between height and VORP. Notable players are labeled: Shai Gilgeous-Alexander (6'4.5&quot;), Giannis Antetokounmpo (6'11&quot;), and Nikola Jokić (6'11.5&quot;). The plot visually emphasizes that despite differences in height, there is little to no clear relationship between a player’s height and their value contribution above replacement level.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-VORP-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5: No relationship between height and Value over Replacement Player in the 2024-2025 NBA season.
@@ -833,7 +833,7 @@ Figure&nbsp;5: No relationship between height and Value over Replacement Player 
 </blockquote>
 <p>Associations describe data we have – they do not necessarily apply to other data. Of course, understanding such associations might help us make predictions, but we must consider the range and context of our data.</p>
 
-<div class="no-row-height column-margin column-container"><div class="cell">
+<div class="no-row-height column-margin column-container"><div class="cell" data-layout-align="center">
 <iframe src="https://www.youtube.com/embed/2iiw4Z95pgE?si=ic-tbiX10wUajp2e" width="100%" height="400px" data-external="1">
 </iframe>
 </div></div><p>Their are different kinds of predictions we might want to make.</p>
@@ -844,7 +844,7 @@ Figure&nbsp;5: No relationship between height and Value over Replacement Player 
 </ul>
 <p>Misalignment between expectations and the reality is a common trope in comedy and drama. For example, hilarity may ensue when an exotic dancer in a firefighter or police costume is mistaken for a true firefighter or policeman (See the scene from <a href="https://en.wikipedia.org/wiki/Arrested_Development">Arrested Development</a> on the right (<a href="https://www.youtube.com/watch?v=2iiw4Z95pgE">youtube link</a>)). Such jokes show that we have an intuitive understanding that predictions can be wrong, and that the context plays a key role in our ability to make good predictions.</p>
 <p>We again see such a case in our RIL data - leaf water content reliably predicts the proportion of hybrid seed set at three experimental locations, but is completely unrelated to proportion of hybrid seed at Upper Sawmill Road (location: US, <a href="#fig-lwc" class="quarto-xref">Figure&nbsp;<span>6</span></a>).</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code to make the plot, below.</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(ril_data, <span class="sc">!</span><span class="fu">is.na</span>(location)) <span class="sc">|&gt;</span> </span>
@@ -857,10 +857,10 @@ Figure&nbsp;5: No relationship between height and Value over Replacement Player 
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(.<span class="dv">78</span>,.<span class="dv">88</span>,.<span class="dv">04</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-lwc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-lwc" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-lwc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="associations_files/figure-html/fig-lwc-1.png" class="img-fluid figure-img" width="672">
+<img src="associations_files/figure-html/fig-lwc-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lwc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;6: <strong>Predictions might not generalize.</strong> The proportion of hybrid seed set reliably decreases with leaf water content in three locations (GC, LB, SR), but at the upper sawmill road site (US), there is no clear relationship. This cautions against assuming generalizable predictive patterns across environments.

@@ -674,7 +674,7 @@ window.Quarto = {
 </header>
 
 
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code for selecting data from a few columns from RILs planted at GC</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
@@ -702,13 +702,13 @@ You are continuing your exploration of a fresh new dataset. You have figured out
 <hr>
 <section id="unconditional-proportions" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="unconditional-proportions">Unconditional proportions</h2>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-visit" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A bar plot showing the proportion of plats that did (about one quarter) or did not (about three quarters) receive a visit from a pollinator.">
+<div id="fig-visit" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A bar plot showing the proportion of plats that did (about one quarter) or did not (about three quarters) receive a visit from a pollinator." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-visit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="two_categorical_vars_files/figure-html/fig-visit-1.png" class="img-fluid figure-img" alt="A bar plot showing the proportion of plats that did (about one quarter) or did not (about three quarters) receive a visit from a pollinator." width="672">
+<img src="two_categorical_vars_files/figure-html/fig-visit-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="A bar plot showing the proportion of plats that did (about one quarter) or did not (about three quarters) receive a visit from a pollinator.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-visit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: <strong>The proportion</strong> of plats that did (light grey) or did not (black) receive a visit from a pollinator.
@@ -718,7 +718,7 @@ Figure&nbsp;1: <strong>The proportion</strong> of plats that did (light grey) or
 </div></div></div>
 <p>Before describing associations between categorical variables, let us revisit our univariate summaries. The proportion of pink flowers (or plants receiving visits) is simply the number of pink flowers (or plants receiving visits) divided by the total number of plants whose petal color is known (or the number of plants with pollinator observation data).</p>
 <p>A proportion is essentially a mean where one outcome (e.g., pink flowers or being visited) is set to 1 and the other (e.g., white flowers or not being visited) is set to 0. Because visited is logical and R converts TRUE to 1 and FALSE to 0 when making a logical numeric, we can find this with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/mean.html"><code>mean()</code></a> function in R:</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(petal_color) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(mean_visits))<span class="sc">|&gt;</span>     <span class="co"># remove NAs</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_pink       =</span> <span class="fu">sum</span>(<span class="fu">as.numeric</span>(petal_color <span class="sc">==</span> <span class="st">"pink"</span>)),</span>
@@ -760,13 +760,13 @@ Figure&nbsp;1: <strong>The proportion</strong> of plats that did (light grey) or
 </section>
 <section id="associations-between-categorical-variables" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="associations-between-categorical-variables">Associations between categorical variables</h2>
-<div class="cell page-columns page-full">
+<div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-pinkvisit" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A bar plot showing the relationship between petal color (pink or white) and pollinator visitation (visited or not visited). Petal color is on the x-axis and proportion of flowers that were visited or not on the y-axis. This plot shows that pink flowers are more likely to be visited.">
+<div id="fig-pinkvisit" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A bar plot showing the relationship between petal color (pink or white) and pollinator visitation (visited or not visited). Petal color is on the x-axis and proportion of flowers that were visited or not on the y-axis. This plot shows that pink flowers are more likely to be visited." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pinkvisit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="two_categorical_vars_files/figure-html/fig-pinkvisit-1.png" class="img-fluid figure-img" alt="A bar plot showing the relationship between petal color (pink or white) and pollinator visitation (visited or not visited). Petal color is on the x-axis and proportion of flowers that were visited or not on the y-axis. This plot shows that pink flowers are more likely to be visited." width="672">
+<img src="two_categorical_vars_files/figure-html/fig-pinkvisit-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="A bar plot showing the relationship between petal color (pink or white) and pollinator visitation (visited or not visited). Petal color is on the x-axis and proportion of flowers that were visited or not on the y-axis. This plot shows that pink flowers are more likely to be visited.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pinkvisit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: <strong>The association between petal color and pollinator visitation.</strong> Petal color is on the x-axis and visit status is shown within bars. We see that pink-flowered plants are more likely to receive a visit from a pollinator.
@@ -797,7 +797,7 @@ Figure&nbsp;2: <strong>The association between petal color and pollinator visita
 <h3 class="anchored" data-anchor-id="two_categorical_vars_deviation-from-independence-conditional-proportions">Deviation from Independence: Conditional proportions</h3>
 <p>Perhaps the most straightforward summary of an association between categorical variables is the conditional proportion. This is the proportion of a given outcome, calculated separately for each value of the explanatory variable. Because a proportion is essentially a mean, a conditional proportion is essentially a conditional mean – so this calculation and logic follows that in the <a href="https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/associations/cat_cont.html">previous section</a>.</p>
 <p>As we see in our example, this calculation uses the same approach as above, but grouped by petal color.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(petal_color) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(visited))<span class="sc">|&gt;</span>     <span class="co"># remove NAs</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(petal_color)                            <span class="sc">|&gt;</span></span>
@@ -860,7 +860,7 @@ Figure&nbsp;2: <strong>The association between petal color and pollinator visita
 </div></div><ul>
 <li>The first estimate of the covariance is the difference between observations and expectations under independence – i.e.&nbsp;<span class="math inline">\(\text{Covariance}_{A,B} = P_{AB}-P_{A} \times P_{B}\)</span>.</li>
 </ul>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(petal_color) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(visited))<span class="sc">|&gt;</span>     <span class="co"># remove NAs</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pink_and_visited =</span> petal_color <span class="sc">==</span> <span class="st">"pink"</span> <span class="sc">&amp;</span> visited,</span>
