@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>• 4. Collecting data – Applied Biostatistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../book_sections/reproducible_science/reproducible_analyses.html" rel="next">
+<link href="../../book_sections/reproducible_science.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-d4394cde7c380170a4469b96acf338b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-90eb7791a5c5b81885cedfef0a190562.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../assets/sticky-notes.css">
+<link rel="stylesheet" href="../../assets/table-styles.css">
+<link rel="stylesheet" href="../../assets/webex.css">
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science.html">4. Reproducible Science</a></li><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science/collecting_data.html">• 4. Collecting data</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      <img src="../../figs/fun_figs/stamp.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Applied Biostatistics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/clarkia_and_its_data/clarkia_and_its_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motivating biology and datasets</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/example_mini/varType.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Types of Variables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/intro2r_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SECTION I: Intro to R</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/getting_started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Getting started with R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/getting_started/functions_and_vectors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Functions and vectors</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/getting_started/loading_packages_and_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Load packages and data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/getting_started/data_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Data types in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/getting_started/rstudio_orientation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Orientation to RStudio</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/getting_started/getting_started_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Getting started summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/data_in_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Data in R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_in_R/add_vars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Adding columns w mutate</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_in_R/select_vars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Selecting columns</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_in_R/summarize_vars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Summarizing columns</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_in_R/choose_rows.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Choose rows</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_in_R/data_in_R_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Data in R summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Introduction to ggplot</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/intro_to_ggplot/one_continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. A continuous variable</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/intro_to_ggplot/saving_ggplots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Saving a ggplot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/intro_to_ggplot/cont_cat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Continuous y/categorical x</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/intro_to_ggplot/two_categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Two categorical variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/intro_to_ggplot/two_continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Two continuous variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/intro_to_ggplot/many_explanatory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Many explanatory vars</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/intro_to_ggplot/ggplot_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. ggplot summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/reproducible_science.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Reproducible Science</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/reproducible_science/collecting_data.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">• 4. Collecting data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/reproducible_science/reproducible_analyses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 4. Reproducible analyses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/reproducible_science/reproducible_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 4. Reproducibility summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/summarizing_data_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section II: Summarizing data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/univariate_summaries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5. Simple Summaries</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/univariate_summaries/summarizing_shape.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Summarizing shape</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/univariate_summaries/changing_shape.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Changing shape</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/univariate_summaries/summarizing_center.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Summarizing the center</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/univariate_summaries/summarizing_variability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Summarizing variability</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/univariate_summaries/summarizing_summaries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Summarizing summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/associations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6. Associations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/associations/cat_cont.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 6. Categorical + numeric</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/associations/two_categorical_vars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 6. Two categorical vars</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/associations/cont_cont.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 6. Two numeric vars</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/associations/summarizing_associations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 6. Association Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/linear_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7. Linear Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/linear_models/mean.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Mean</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/linear_models/lm_cat_pred.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Categorical predictor</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/linear_models/regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Linear regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/linear_models/two_predictors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Two predictors</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/linear_models/lm_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Linear model summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/ordination.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">8. Ordination</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/ordination/pca.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. PCA quick start</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/ordination/pcaII.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. PCA deeper dive</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/ordination/pcaIII.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. PCA – Gotchas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/ordination/pcalternatives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. PCAlternatives</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/ordination/ordination_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. Ordination summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/data_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">9. Better Figures</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_viz/audience&amp;delivery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Audience &amp; Format</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_viz/honest_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Honest plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_viz/transparent_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Transparent plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_viz/clear_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Clear plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_viz/avoid_distractions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Avoid Distractions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_viz/accessible_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Accessible Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_viz/writing_about_figures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Writing about plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_viz/dataviz_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Dataviz Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/betteR_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">10. Better Figures in R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/betteR_plots/plotting_tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 10. Tools for BetteR plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/betteR_plots/cleaR_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 10. Making cleaR plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/betteR_plots/plots_foR_medium.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 10. Plots for the medium</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/betteR_plots/betteR_plots_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 10. Better ggplots summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../toc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rest of Book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science.html">4. Reproducible Science</a></li><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science/collecting_data.html">• 4. Collecting data</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="collecting_data" class="quarto-section-identifier">• 4. Collecting data</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong>This section includes background on:</strong> <a href="#making-rules-for-data-collection">Making rules for data collection</a>, <a href="#making-a-spreadsheet-for-data-entry">Making a spreadsheet for data entry</a>, <a href="#making-data-field-sheets">Making data (field) sheets</a>, <a href="#data-collection-and-data-entry-checklist">A checklist for data collection</a>, <a href="#making-a-readme-andor-data-dictionary">Making a README and/or data dictionary</a>, and <a href="#long-term-public-data-storage">Long term public data storage</a>.</p>
+<div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+<p><strong>Motivating scenario:</strong> You are getting ready to collect, enter, and store data.</p>
+<p><strong>Learning goals: By the end of this chapter you should be able to</strong></p>
+<ul>
+<li>Make a data sheet.</li>
+<li>Label samples.<br>
+</li>
+<li>Describe best principles for collecting, storing, and maintaining data.</li>
+</ul>
+</div>
+<hr>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-data_collection" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Researchers conducting fieldwork on a steep hillside covered in blooming *Clarkia xantiana* flowers. One researcher in the foreground, wearing a blue beanie and dark clothing, is seated among the flowers, writing on a clipboard. Another researcher in a red jacket is also recording data, while a third person in a hat is partially visible. The background features rolling, dry, shrub-covered hills under an overcast sky.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-data_collection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../figs/intro_to_R/reproducible_science/more_xan.png" class="img-fluid figure-img" alt="Researchers conducting fieldwork on a steep hillside covered in blooming *Clarkia xantiana* flowers. One researcher in the foreground, wearing a blue beanie and dark clothing, is seated among the flowers, writing on a clipboard. Another researcher in a red jacket is also recording data, while a third person in a hat is partially visible. The background features rolling, dry, shrub-covered hills under an overcast sky." width="686">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-data_collection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Researchers collecting data on <em>Clarkia</em> pollinator visitation.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<p>Sometimes, data come from running a sample through a machine, resulting in a computer readout of our data (e.g., genotypes, gene expression, mass spectrometer, spectrophotometer, etc.). Other times, we collect data through counting, observing, and similar methods, and we enter our data by hand. Either way, there is likely some key data or metadata for which we are responsible (e.g., information about our sample). Below,we focus on how we collect and store our data, assuming that our study and sampling scheme have already been designed. Issues in study design and sampling will be discussed in later chapters.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<blockquote class="blockquote">
+<p><em>On two occasions I have been asked, “Pray, Mr.&nbsp;Babbage, if you put into the machine wrong figures, will the right answers come out?” … I am not able rightly to apprehend the kind of confusion of ideas that could provoke such a question.</em><br><br></p>
+<p>Page 64 of “Passages from the Life of a Philosopher” <span class="citation" data-cites="babbage1864">Babbage (<a href="../../references.html#ref-babbage1864" role="doc-biblioref">1864</a>)</span>.</p>
+</blockquote>
+</div></div><section id="making-rules-for-data-collection" class="level2">
+<h2 class="anchored" data-anchor-id="making-rules-for-data-collection">Making rules for data collection</h2>
+<p>Before we collect data, we need to decide what data to collect. Even in a well-designed study where we want to observe flower color at a field site, we must consider, “What are my options?”, for example:</p>
+<ul>
+<li>Should the options be “white” and “pink,” or should we distinguish between darker and lighter shades?<br>
+</li>
+<li>If we’re measuring tree diameter, at what height on the tree should we measure the diameter?<br>
+</li>
+<li>When measuring something quantitative, what units are we reporting?</li>
+</ul>
+<p>Some of these questions have answers that are more correct, while for others, it’s crucial to agree on a consistent approach and ensure each team member uses the same method.</p>
+<p>Similarly, it’s important to have consistent and unique names – for example, my collaborators and I study <em>Clarkia</em> plants at numerous sites – include <strong>S</strong>quirrel <strong>M</strong>ountain and <strong>S</strong>aw<strong>M</strong>ill – which one should we call SM (there is a similar issue in state abbreviation – we live in <strong>M</strong>i<strong>N</strong>nesota (MN), not <strong>MI</strong>nnesota, to differentiate our state from <strong>MI</strong>chigan (MI)). These questions highlight the need for thoughtful data planning, ensuring that every variable is measured consistently.</p>
+<p>Once you have figured out what you want to measure, how you will measure and report it, and other useful info (e.g., date, time, collector), you are ready to make a data sheet for field collection, a database for analysis, and a README or data dictionary.</p>
+</section>
+<section id="making-a-spreadsheet-for-data-entry" class="level2">
+<h2 class="anchored" data-anchor-id="making-a-spreadsheet-for-data-entry">Making a spreadsheet for data entry</h2>
+<p>After deciding on consistent rules for data collection, we need a standardized format to enter the data. This is especially important when numerous people and/or teams are collecting data at different sites or years. Spreadsheets for data entry should be structured similarly to field sheets (described below) so that it is easy to enter data without needing too much thought.</p>
+<p>Some information (e.g., year, person, field site) might be the same for an entire field sheet, so it can either be written once at the top or explicitly added to each observation in the spreadsheet (copy-pasting can help here).</p>
+</section>
+<section id="making-data-field-sheets" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="making-data-field-sheets">Making Data (field) sheets</h2>
+<p><em>When collecting data or samples, you need a well-designed data (field) sheet</em>. The field sheet should closely resemble your spreadsheet but with a few extra considerations for readability and usability. Ask yourself: How easy is this to read? How easy is it to fill out? Each column and row should be clearly defined so it’s obvious what goes where. Consider the physical layout too—does the sheet fit on one piece of paper? Should it be printed in landscape or portrait orientation? Print a draft to see if there’s enough space for writing. A “notes” column can be useful but should remain empty for most entries, used only for unusual or exceptional cases that might need attention during analysis.</p>
+<p>It’s also smart to include metadata at the top—things like the date, location, and who collected the data. Whether this metadata gets its own column or is written at the top depends on practical needs—if one person is responsible for an entire sheet, maybe it belongs at the top, not repeated for every sample (contrary to the example in <a href="#fig-datasheet" class="quarto-xref">Figure&nbsp;<span>2</span></a>).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-datasheet" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A black-and-white field data sheet template with blank spaces for entering site name, date, time, weather conditions (cloud cover, wind, humidity, temperature), plant descriptions, personnel contact information, and other notes. Below these fields is a structured table with column headers: Species, ID#, Sex, Location Description, Time, GPS, Photos?, Collector, and Notes, with multiple empty rows for data entry.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-datasheet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../figs/intro_to_R/reproducible_science/sample_datasheet.png" class="img-fluid figure-img" style="width:200.0%" alt="A black-and-white field data sheet template with blank spaces for entering site name, date, time, weather conditions (cloud cover, wind, humidity, temperature), plant descriptions, personnel contact information, and other notes. Below these fields is a structured table with column headers: Species, ID#, Sex, Location Description, Time, GPS, Photos?, Collector, and Notes, with multiple empty rows for data entry.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-datasheet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Example field data sheet designed for recording ecological and biological observations. The form includes sections for site information, environmental conditions, personnel details, and a structured table for recording species, individual IDs, sex, location descriptions, time, GPS coordinates, photos, collector name, and additional notes.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="data-collection-and-data-entry-checklist" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="data-collection-and-data-entry-checklist">Data collection and data entry checklist:</h3>
+<ul>
+<li><em>Be consistent and deliberate:</em> You should refer to a thing in the same thoughtful way throughout a column. Take, for example, gender as a nominal variable. Data validation approaches, above, can help.</li>
+</ul>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p><span style="color: red;">A bad organization would be:</span> male, female, Male, M, Non-binary, Female.<br>
+<span style="color: blue;">A good organization would be:</span> male, female, male, male, non-binary, female.<br>
+<span style="color: blue;">A just as good organization would be:</span> Male, Female, Male, Male, Non-binary, Female.</p>
+</div></div><ul>
+<li><em>Use good names for things:</em> Names should be concise and descriptive. They need not tell the entire story. For example, units are better kept in a data dictionary (<a href="#fig-datadictionary" class="quarto-xref">Figure&nbsp;<span>4</span></a>) than column name. This makes downstream analyses easier. Avoiding spaces and special characters makes column names easier to work with in R.</li>
+</ul>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-good_names" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A table comparing bad and good variable naming practices. The top section, labeled &quot;Bad&quot; in red, contains three tables with problematic variable names such as &quot;#Bugs,&quot; &quot;X1,&quot; and &quot;Num_bugs_5_to_2_pm.&quot; These names include special characters, unclear abbreviations, or excessive detail. The bottom section, labeled &quot;Good&quot; in blue, presents two tables with improved names like &quot;numBugs&quot; and &quot;n_Bugs,&quot; which follow consistent, clear, and readable naming conventions.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-good_names-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../figs/intro_to_R/reproducible_science/goodNames4Things.png" class="img-fluid figure-img" alt="A table comparing bad and good variable naming practices. The top section, labeled &quot;Bad&quot; in red, contains three tables with problematic variable names such as &quot;#Bugs,&quot; &quot;X1,&quot; and &quot;Num_bugs_5_to_2_pm.&quot; These names include special characters, unclear abbreviations, or excessive detail. The bottom section, labeled &quot;Good&quot; in blue, presents two tables with improved names like &quot;numBugs&quot; and &quot;n_Bugs,&quot; which follow consistent, clear, and readable naming conventions." width="367">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-good_names-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: A comparison of bad and good variable naming conventions in a dataset. The top section (labeled “Bad” in red) displays poor naming choices, including spaces, special characters, unclear abbreviations, and inconsistent formatting. The bottom section (labeled “Good” in blue) demonstrates improved naming conventions with consistent formatting, clear descriptions, and no special characters.
+</figcaption>
+</figure>
+</div>
+</div></div></div>
+<ul>
+<li><p><em>Save in a good place</em>. Make a folder for your project. Keep your data sheet (and data dictionary) there. Try to keep all that you need for the project in this folder, but try not to let it get too complex. Some people like to add more order with additional subfolders for larger projects. <br> <br></p></li>
+<li><p><em>Save early and often:</em> You are welcome. <br> <br></p></li>
+<li><p><em>Backup your data, do not touch the original data file and do not perform calculations on it.</em> In addition to scans of your data (if collected on paper) also save your data on both your computer and a locked, un-editable location on the cloud (e.g.&nbsp;google docs, dropbox, etc.). When you want to do something to your data do it in R, and keep the code that did it. This will ensure that you know every step of data manipulation, QC etc. <br> <br></p></li>
+<li><p><em>Do Not Use Font Color or Highlighting as Data.</em> You may be tempted to encode information with bolded text, highlighting, or text color. Don’t do this! Be sure that all information is in a readable column. These extra markings will either be lost or add an extra degree of difficulty to your analysis. Reserve such markings for the presentation of data.<br> <br></p></li>
+<li><p><em>No values should be implied</em> Never leave an entry blank as “shorthand for same as above”. Similarly, never denote the first replicate (or treatment, or whatever) by its order in a spreadsheet, but rather make this explicit with a value in a column. Data order could get jumbled and besides it would take quite a bit of effort to go from implied order to a statistical analysis. It is ok to skip this while taking data in the field, but make sure no values are implied when entering data into a computer.<br> <br></p></li>
+<li><p><em>Data should be tidy (aka rectangular):</em> Ideally data should be entered as tidy (Each variable must have its own column. Each observation must have its own row. Each value must have its own cell). However, you must balance two practice considerations – “What is the best way to collect and enter data?” vs “What is the easiest way to analyze data?” So consider the future computational pain of tidying untidy data when ultimately deciding on the best way to format your spreadsheet (above). <br> <br></p></li>
+<li><p><em>Use data validation approaches:</em> When making a spreadsheet, think about future-you (or your collaborator) who will analyze the data. Typos and inconsistencies in values (e.g., “Male,” “male,” and “M” for “male”) create unnecessary headaches. Accidentally inputting the wrong measure (e.g., putting height where weight should be, or reporting values in kg rather than lb) sucks. <br> Both Excel and Google Sheets (and likely most spreadsheet programs) have a simple solution: use the “Data validation” feature in the “Data” drop-down menu to limit the potential categorical values or set a range for continuous values that users can enter into your spreadsheet. This helps ensure the data are correct.</p></li>
+</ul>
+</section>
+<section id="making-a-readme-andor-data-dictionary" class="level3">
+<h3 class="anchored" data-anchor-id="making-a-readme-andor-data-dictionary">Making a README and/or “data dictionary”</h3>
+<p>A data dictionary is a separate file (or sheet within a file, if you prefer) that explains all the variables in your dataset. It should include the exact variable names from the data file, a version of the variable name that you might use in visualizations, and a longer explanation of what each variable means. Additionally, it is important to list the measurement units and the expected minimum and maximum values for each variable, so anyone using the data knows what to expect.</p>
+<p>Alongside your data dictionary, you should also create a README file that provides an overview of the project and dataset, explaining the purpose of the study and how the data were collected. The README should include a description of each row and column in the dataset. While there may be some overlap with the data dictionary, this is fine. The data dictionary can serve as a quick reference for plotting and performing quality control, whereas the README provides a higher-level summary, designed for those who may not have been directly involved in the project but are seriously interested in the data.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-datadictionary" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A screenshot of a data dictionary table with four columns labeled &quot;name,&quot; &quot;plot_name,&quot; &quot;group,&quot; and &quot;description.&quot; The table defines variables used in a dataset, such as &quot;mouse&quot; (animal identifier), &quot;sex&quot; (Male or Female), &quot;sac_date&quot; (date of sacrifice), and other clinical or demographic variables like coat color and days on diet. The descriptions provide explanations for each variable's meaning and classification.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-datadictionary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="http://www.tandfonline.com/cms/asset/a0ee9bd4-ec62-4aa0-85cd-ef3514ba63bd/utas_a_1375989_f0009_b.jpg" class="img-fluid figure-img" alt="A screenshot of a data dictionary table with four columns labeled &quot;name,&quot; &quot;plot_name,&quot; &quot;group,&quot; and &quot;description.&quot; The table defines variables used in a dataset, such as &quot;mouse&quot; (animal identifier), &quot;sex&quot; (Male or Female), &quot;sac_date&quot; (date of sacrifice), and other clinical or demographic variables like coat color and days on diet. The descriptions provide explanations for each variable's meaning and classification.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-datadictionary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Example data dictionary from <span class="citation" data-cites="broman2018">(<a href="../../references.html#ref-broman2018" role="doc-biblioref">Broman &amp; Woo, 2018</a>)</span>. This table provides structured metadata for a dataset, including variable names, descriptions, and group classifications. It ensures clarity in data documentation by defining each column’s purpose and expected values. See the <a href="https://ybrandvain.quarto.pub/applied-biostatistics/book_sections/clarkia_and_its_data/clarkia_and_its_data.html">Clarkia RIL data dictionary here</a> for another example.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="long-term-public-data-storage" class="level3">
+<h3 class="anchored" data-anchor-id="long-term-public-data-storage">Long-term public data storage</h3>
+<p>A key to the scientific method is reproducibility. This is why scientific papers have a methods section. Nowadays - the internet allows for even more detailed sharing of methods. Additionally it is the expectation in most fields that data is made available after publication on repositories like <a href="https://datadryad.org/stash">data DRYAD</a> or <a href="https://conservancy.umn.edu/collections/6c548d8b-0f3a-4f6b-b16e-4154c88136c0">DRUM</a>.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-babbage1864" class="csl-entry" role="listitem">
+Babbage, C. (1864). <em>Passages from the life of a philosopher</em>. Longman; Co.
+</div>
+<div id="ref-broman2018" class="csl-entry" role="listitem">
+Broman, K. W., &amp; Woo, K. H. (2018). Data organization in spreadsheets. <em>The American Statistician</em>, <em>72</em>(1), 2–10. <a href="https://doi.org/10.1080/00031305.2017.1375989">https://doi.org/10.1080/00031305.2017.1375989</a>
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  update_total_correct();
+}
+
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../book_sections/reproducible_science.html" class="pagination-link" aria-label="4. Reproducible Science">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">4. Reproducible Science</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../book_sections/reproducible_science/reproducible_analyses.html" class="pagination-link" aria-label="• 4. Reproducible analyses">
+        <span class="nav-page-text">• 4. Reproducible analyses</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
