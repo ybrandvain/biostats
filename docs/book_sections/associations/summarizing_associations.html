@@ -2154,6 +2154,65 @@ window.Quarto = {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/stats_foundation_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section III: Stats Foundations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/sampling_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">11. Intro to Sampling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/sampling_error.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Error</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/sampling_bias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Bias</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/nonindependence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Non-independence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/better_sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Better</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/sampling_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../toc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Rest of Book</span></a>
   </div>
@@ -2490,10 +2549,12 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </figure>
 </div>
 </div></div></div>
-<p>Associations reveal how variables relate to one another — whether one tends to increase with another, differ across groups, or cluster. Differences in conditional means (or proportions) describe how a numeric (or categorical) response variable varies across levels of a categorical explanatory variable. For two numeric variables, covariance captures how deviations from their means align, and correlation standardizes this to a unitless scale between –1 and 1. While these summaries can highlight patterns, interpretation requires care: strong associations don’t necessarily imply causation, and predictions may not hold across contexts or datasets.</p>
+<p>Associations reveal how variables relate to one another - e.g.&nbsp;if they tend to increase together, differ across groups, or cluster. Differences in conditional means (or proportions) describe how a numeric (or categorical) response variable varies across levels of a categorical explanatory variable. For two numeric variables, covariance captures how deviations from their means align, and correlation standardizes this to a unitless scale between -1 and 1. While these summaries can highlight patterns, interpretation requires care: strong associations don’t necessarily imply causation, and predictions may not hold across contexts or datasets.</p>
 <section id="summarizing_associations_chatbot_tutor" class="level3">
 <h3 class="anchored" data-anchor-id="summarizing_associations_chatbot_tutor">Chatbot tutor</h3>
+<div class="tutor">
 <p>Please interact with this custom chatbot (<a href="https://chatgpt.com/g/g-6831c80a4d688191880b376a1123cec6-summarizing-associations-tutor"><strong>link here</strong></a>) I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up and then stopping when you feel like you got what you needed from it.</p>
+</div>
 </section>
 </section>
 <section id="summarizing_associations_practice-questions" class="level2">
@@ -2506,12 +2567,12 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <div class="exercises">
 <p><strong>Q1)</strong> Extend the analysis above to examine the association between leaf water content (<em>lwc</em>) and the proportion of hybrid seeds (<em>prop_hybrid</em>). The correlation between lwc and prop_hybrid is: <select class="webex-select"><option value="blank"></option><option value="answer">-0.202</option><option value="">-0.203</option><option value="">-0.000914</option><option value="">-0.000403</option></select></p>
 <strong>Q2)</strong> Based on the analysis above, which variable – leaf water content (<em>lwc</em>), or petal area (<em>log10_petal_area_mm</em>) is more plausibly interpreted as influencing proportion hybrid seed set (<em>prop_hybrid</em>)?
-<div id="radio_RJZMZNAWSZ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_RJZMZNAWSZ" value=""> <span><strong>Equally likely</strong> — because the absolute values of their correlation coefficients are similar</span></label><label><input type="radio" autocomplete="off" name="radio_RJZMZNAWSZ" value=""> <span><strong>Petal area</strong> — because it has the stronger correlation coefficient</span></label><label><input type="radio" autocomplete="off" name="radio_RJZMZNAWSZ" value=""> <span><strong>Neither</strong> — the covariances are both near zero</span></label><label><input type="radio" autocomplete="off" name="radio_RJZMZNAWSZ" value="answer"> <span><strong>Petal area</strong> There is a substantial association, and because these are experimental RILs, it's plausible that pollinators are attracted to larger petals — not low leaf water content.</span></label><label><input type="radio" autocomplete="off" name="radio_RJZMZNAWSZ" value=""> <span><strong>There is no relevant information here</strong> — correlation does not imply causation</span></label>
+<div id="radio_HEWCMOKUVR" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_HEWCMOKUVR" value=""> <span><strong>Equally likely</strong> — because the absolute values of their correlation coefficients are similar</span></label><label><input type="radio" autocomplete="off" name="radio_HEWCMOKUVR" value=""> <span><strong>Petal area</strong> — because it has the stronger correlation coefficient</span></label><label><input type="radio" autocomplete="off" name="radio_HEWCMOKUVR" value=""> <span><strong>Neither</strong> — the covariances are both near zero</span></label><label><input type="radio" autocomplete="off" name="radio_HEWCMOKUVR" value="answer"> <span><strong>Petal area</strong> There is a substantial association, and because these are experimental RILs, it's plausible that pollinators are attracted to larger petals — not low leaf water content.</span></label><label><input type="radio" autocomplete="off" name="radio_HEWCMOKUVR" value=""> <span><strong>There is no relevant information here</strong> — correlation does not imply causation</span></label>
 </div>
 <strong>Q3)</strong> Based on the observed negative association between leaf water content and proportion hybrid seed set, which explanation best accounts for this pattern?
-<div id="radio_RGFIERWSRC" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_RGFIERWSRC" value=""> <span><strong>Chance</strong> — strange associations sometimes appear randomly.</span></label><label><input type="radio" autocomplete="off" name="radio_RGFIERWSRC" value=""> <span><strong>Reverse causation</strong> — pollinator visits might reduce leaf water content.</span></label><label><input type="radio" autocomplete="off" name="radio_RGFIERWSRC" value=""> <span><strong>A direct causal link</strong> — pollinators are attracted to plants with dry leaves.</span></label><label><input type="radio" autocomplete="off" name="radio_RGFIERWSRC" value="answer"> <span><strong>Confounding</strong> — low leaf water content might be genetically or physiologically linked with a trait that influences pollinator attraction (e.g., it might be negatively associated with petal area) and ultimately hybrid seed set.</span></label>
+<div id="radio_PAPKIWVMNZ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_PAPKIWVMNZ" value=""> <span><strong>Chance</strong> — strange associations sometimes appear randomly.</span></label><label><input type="radio" autocomplete="off" name="radio_PAPKIWVMNZ" value=""> <span><strong>Reverse causation</strong> — pollinator visits might reduce leaf water content.</span></label><label><input type="radio" autocomplete="off" name="radio_PAPKIWVMNZ" value=""> <span><strong>A direct causal link</strong> — pollinators are attracted to plants with dry leaves.</span></label><label><input type="radio" autocomplete="off" name="radio_PAPKIWVMNZ" value="answer"> <span><strong>Confounding</strong> — low leaf water content might be genetically or physiologically linked with a trait that influences pollinator attraction (e.g., it might be negatively associated with petal area) and ultimately hybrid seed set.</span></label>
 </div>
 </div>
 <div id="qwebr-insertion-location-3"></div>
@@ -2521,8 +2582,8 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <p><strong>Q4)</strong> The difference in conditional mean hybrid proportion between pink and white flowers is: <input class="webex-solveme nospaces" data-tol="0.01" size="6" data-answer="[&quot;0.1787&quot;,&quot;.1787&quot;]"></p>
 <p><strong>Q5)</strong> The pooled standard deviation of hybrid proportion between pink and white flowers is: <select class="webex-select"><option value="blank"></option><option value="">0.232</option><option value="">0.193</option><option value="answer">0.214</option></select></p>
 <strong>Q6)</strong> Which trait is more strongly associated with petal color — the proportion of hybrid seeds or visits from a pollinator (<em>visits</em>)?
-<div id="radio_KUCZEZIAHM" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_KUCZEZIAHM" value=""> <span><strong>Pollinator visits</strong> — Pink flowers had about 0.6 more visits than white flowers, but only about 0.18 greater proportion of hybrid seeds.</span></label><label><input type="radio" autocomplete="off" name="radio_KUCZEZIAHM" value=""> <span><strong>Hybrid seeds</strong> — Pink flowers had about 4.7 times as many hybrid seeds as white flowers, but only about 2.6 times as many visits.</span></label><label><input type="radio" autocomplete="off" name="radio_KUCZEZIAHM" value="answer"> <span><strong>Hybrid seeds</strong> — Cohen’s <em>D</em> for the relationship between petal color and proportion hybrid seeds was large, while Cohen’s <em>D</em> for the relationship between petal color and visits was medium.</span></label><label><input type="radio" autocomplete="off" name="radio_KUCZEZIAHM" value=""> <span>You cannot compare strength of associations when the response variables are measured on different scales.</span></label>
+<div id="radio_KDVUXXPXBE" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_KDVUXXPXBE" value=""> <span><strong>Pollinator visits</strong> — Pink flowers had about 0.6 more visits than white flowers, but only about 0.18 greater proportion of hybrid seeds.</span></label><label><input type="radio" autocomplete="off" name="radio_KDVUXXPXBE" value=""> <span><strong>Hybrid seeds</strong> — Pink flowers had about 4.7 times as many hybrid seeds as white flowers, but only about 2.6 times as many visits.</span></label><label><input type="radio" autocomplete="off" name="radio_KDVUXXPXBE" value="answer"> <span><strong>Hybrid seeds</strong> — Cohen’s <em>D</em> for the relationship between petal color and proportion hybrid seeds was large, while Cohen’s <em>D</em> for the relationship between petal color and visits was medium.</span></label><label><input type="radio" autocomplete="off" name="radio_KDVUXXPXBE" value=""> <span>You cannot compare strength of associations when the response variables are measured on different scales.</span></label>
 </div>
 <hr>
 </div>
@@ -2545,8 +2606,8 @@ Refresher on the multiplication rule for independent events
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="exercises">
 <strong>Q8)</strong> In the code above, I calculated the correlation and covariance between lwc and prop_hybrid using their mathematical formulas. However, my calculated values don’t match those returned by cor(). Why not?
-<div id="radio_YRQZLZKDEF" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_YRQZLZKDEF" value="answer"> <span>The manual method failed to remove all rows with missing values — while <em>cov()</em> and <em>cor()</em> used <em>pairwise.complete.obs</em>, the custom code did not.</span></label><label><input type="radio" autocomplete="off" name="radio_YRQZLZKDEF" value=""> <span>There is a mistake in the correlation formula — the covariance should be divided by the product of the <em>means</em>, not the standard deviations.</span></label><label><input type="radio" autocomplete="off" name="radio_YRQZLZKDEF" value=""> <span>R sometimes has the wrong formulae – that's why I always type the formula's in myself.</span></label><label><input type="radio" autocomplete="off" name="radio_YRQZLZKDEF" value=""> <span>The standard deviations used were incorrect because <em>sd()</em> doesn't apply Bessel's correction.</span></label><label><input type="radio" autocomplete="off" name="radio_YRQZLZKDEF" value=""> <span>The discrepancy is due to numerical precision — it's expected and not worth worrying about.</span></label>
+<div id="radio_PRIQYBCHLD" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_PRIQYBCHLD" value="answer"> <span>The manual method failed to remove all rows with missing values — while <em>cov()</em> and <em>cor()</em> used <em>pairwise.complete.obs</em>, the custom code did not.</span></label><label><input type="radio" autocomplete="off" name="radio_PRIQYBCHLD" value=""> <span>There is a mistake in the correlation formula — the covariance should be divided by the product of the <em>means</em>, not the standard deviations.</span></label><label><input type="radio" autocomplete="off" name="radio_PRIQYBCHLD" value=""> <span>R sometimes has the wrong formulae – that's why I always type the formula's in myself.</span></label><label><input type="radio" autocomplete="off" name="radio_PRIQYBCHLD" value=""> <span>The standard deviations used were incorrect because <em>sd()</em> doesn't apply Bessel's correction.</span></label><label><input type="radio" autocomplete="off" name="radio_PRIQYBCHLD" value=""> <span>The discrepancy is due to numerical precision — it's expected and not worth worrying about.</span></label>
 </div>
 </div>
 <div class="cell">

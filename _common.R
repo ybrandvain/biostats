@@ -6,6 +6,19 @@ library(gt)
 library(gtExtras)
 library(patchwork)
 
+library(ggplot2)
+
+# Set a global ggplot2 theme
+theme_set(
+  theme(
+    axis.title = element_text(size=18),
+    axis.text = element_text(size=14),
+    strip.text =  element_text(size=14),
+    legend.title = element_text(size=18),
+    legend.text = element_text(size=14)
+  )
+)
+
 
 # Set knitr print options
 opts_knit$set(
@@ -27,7 +40,7 @@ opts_chunk$set(
   fig.align = 'center',
   fig.height = 6,
   fig.width = 6,  
-  out.width = '70%' 
+  out.width = '95%' 
 )
 
 

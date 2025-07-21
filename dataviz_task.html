@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualization Challenge</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; max-width: 650px; margin: 40px auto; padding: 20px; line-height: 1.6; color: #333; }
+        h1 { color: #111; }
+        #question-container { background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #dee2e6;}
+        #question-text { font-style: italic; color: #495057; }
+        #chart-image { width: 100%; border: 1px solid #ddd; border-radius: 4px; margin-top: 15px; }
+        #student-answer { width: 100%; box-sizing: border-box; height: 180px; margin-bottom: 15px; font-size: 16px; padding: 12px; border-radius: 5px; border: 1px solid #ccc; resize: vertical; }
+        #feedback-container { border: 1px solid #e0e0e0; padding: 20px; margin-top: 20px; background-color: #fdfdfd; border-radius: 8px; display: none; }
+        #feedback-result { white-space: pre-wrap; font-size: 16px; }
+        button { background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; transition: background-color 0.2s; }
+        button:hover { background-color: #0056b3; }
+        .loader { border: 5px solid #f3f3f3; border-top: 5px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; display: none; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <h1>Data Visualization Challenge</h1>
+    
+    <div id="question-container">
+        <strong>Question:</strong>
+        <p id="question-text">Examine their plot and find at least three bad data viz practices. Then say which one you think is the worst and why.</p>
+        
+        <img src="image.png" id="chart-image" alt="Misleading Data Visualization Chart">
+    </div>
+    
+    <form id="answer-form">
+        <textarea id="student-answer" name="student_answer" placeholder="Enter your critique here..." required></textarea><br>
+        <button type="submit">Submit for Feedback</button>
+    </form>
+
+    <div class="loader" id="loader"></div>
+
+    <div id="feedback-container">
+        <h4>AI Teaching Assistant Feedback:</h4>
+        <div id="feedback-result"></div>
+    </div>
+
+    <script>
+    document.getElementById('answer-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const studentAnswer = document.getElementById('student-answer').value;
+        const loader = document.getElementById('loader');
+        const feedbackContainer = document.getElementById('feedback-container');
+        const feedbackResult = document.getElementById('feedback-result');
+
+        // 显示加载动画，隐藏旧的反馈
+        loader.style.display = 'block';
+        feedbackContainer.style.display = 'none';
+
+        // API URL指向我们为此任务创建的新接口
+        const apiUrl = 'http://127.0.0.1:5000/api/evaluate-dataviz';
+
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                answer: studentAnswer 
+            }),
+        })
+        .then(response => {
+            if (!response.ok) { throw new Error('Network response was not ok'); }
+            return response.json();
+        })
+        .then(data => {
+            loader.style.display = 'none';
+            feedbackResult.innerText = data.feedback;
+            feedbackContainer.style.display = 'block';
+        })
+        .catch(error => {
+            loader.style.display = 'none';
+            console.error('Fetch Error:', error);
+            feedbackResult.innerText = 'A connection or processing error occurred. Please check the Flask server terminal for detailed information.';
+            feedbackContainer.style.display = 'block';
+        });
+    });
+    </script>
+
+</body>
+</html>

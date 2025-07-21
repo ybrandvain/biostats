@@ -1,0 +1,296 @@
+## • 11. Sampling summary {.unnumbered #sampling_summary}
+
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr']
+  autoload-packages: true
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| column: margin
+#| fig-alt: "A stick figure holding an arm out towards an unseen crowd, is standing on a podium with five large bags around him, each having a dollar sign on it. Text bubble1: \"Never stop buying lottery tickets, no matter what anyone tells you.\" Text bubble2: \"I failed again and again, but I never gave up. I took extra jobs and poured the money into tickets.\",  Text bubble3: \"And here I am, proof that if you put in the time, it pays off!\" Caption below the panel: \"Every inspirational speech by someone successful should have to start with a disclaimer about survivorship bias.\""
+#| fig-cap: "[This cartoon is adapted from xkcd](https://xkcd.com/1827/). The original rollover text says: \" They say you can't argue with results, but what kind of defeatist attitude is that? If you stick with it, you can argue with ANYTHING.\". See [this link](https://www.explainxkcd.com/wiki/index.php/1827:_Survivorship_Bias) for a more detailed explanation."
+#| label: fig-survivorshipbias
+library(webexercises)
+library(dplyr)
+library(palmerpenguins)
+library(knitr)
+include_graphics("https://imgs.xkcd.com/comics/survivorship_bias_2x.png")
+```
+
+Links to: [Summary](#sampling_summary_chapter-summary). [Chatbot tutor](#sampling_summary_chatbot_tutor).  [Questions](#sampling_summary_practice-questions). [Glossary](#sampling_summary_glossary-of-terms). [R functions](#sampling_summary_key-r-functions). [More resources](#sampling_summary_additional-resources).
+---
+
+## Chapter summary {#sampling_summary_chapter-summary}
+
+We almost never know the truth (the population parameter), but we estimate it from a sample. Random chance (aka sampling error) ensures that our estimate will deviate from the true parameter. If sampling error is our only issue we can envision the "sampling distribution" -- a histogram of what we would see if we repeated our study many times to characterize uncertainty. We quantify uncertainty as the "*standard error*" i.e. the standard deviation of the sampling distribution, and as a "*95% confidence interval*" i.e. the middle 95% of the sampling distribution. We can decrease sampling error by increasing sample size. When samples are non-independent, we tend to underestimate our sampling error. When samples are not chosen at random, "*sampling bias*" can generate a systematic deviation between estimates and true population parameters. Random sampling is our best protection against non-independence and sampling bias.
+
+### Chatbot tutor   {#sampling_summary_chatbot_tutor}
+
+:::tutor
+
+Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/g-687e94ec840c8191ae844f3030e9adb4-sampling)) I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+:::
+
+## Practice Questions {#sampling_summary_practice-questions}
+
+
+Try these questions! By using the R environment you can work without leaving this "book". To help you jump right into thinking and analysis, I have loaded the ril data, cleaned it some, and have started some of the code!  
+
+
+
+
+
+:::exercises
+
+**Q1)** The ___ describes the variability among individual observations in a sample (or population). In other words, the ____ quantifies how far we expect individuals to deviate from the sample estimate. `r mcq(c("Standard error",answer = "Standard deviation", "Error function" ))`.    
+
+**Q2)** The ___ describes the variability among estimates (of a fixed size) from a population. In other words, the ____ quantifies how far we expect sample estimates to deviate from the population parameter. `r mcq(c(answer = "Standard error", "Standard deviation", "Error function" ))`.     
+
+:::
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| label: fig-genes
+#| fig-cap: "A histogram showing the distribution of lengths for all human genes. Most are very small, the median is less than 3kb!" 
+#| fig-alt: "A histogram showing the distribution of lengths for all human genes. The figure shouws that the most human genes are relatively short (median around 3kb), with a few genes being exceptionally long."
+library(ggplot2)
+library(readr)
+gene_lengths <- read_csv("https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/geneLengths.csv")
+ggplot(gene_lengths, aes(x = gene.length/1000))+
+  geom_histogram(bins = 50, color = "white")+
+  labs(x = "gene length (kb)", title = "Length of all human genes")+
+  theme(axis.text = element_text(size = 18),
+        axis.title = element_text(size = 20))
+```
+
+:::exercises
+
+**Q3)** As seen in @fig-genes, the distribution of human gene lengths is ___ (*find all correct*)  `r longmcq(c( answer = "Unimodal", "Bimodal", "Symmetric", answer = "Right Skewed"))`.  
+
+**Q4)** @fig-genes displays ___  `r longmcq(c( "the sampling distribution",answer = "the population distribution"))`
+:::
+
+**Sampling wrong:** I tried to create a sampling distribution for median human gene length by randomly selecting nucleotides from the human exome, finding the gene they were in, noting its length, and removing it from my list until I had the lengths of fifty genes in the human genome. I did this one thousand times to get medians from one thousand samples of size fifty (@fig-genes-2). 
+
+```{r}
+#| echo: false
+#| eval: false
+samp_dist_a <-  replicate(1000,gene_lengths |>
+     slice_sample(n = 50,weight_by = gene.length)|> 
+     summarise_all(mean),simplify = FALSE) |>bind_rows()
+write_csv(samp_dist_a, "data/samp_dist_a.csv")
+
+samp_dist_b <-  replicate(1000,gene_lengths |>
+     slice_sample(n = 5)|> 
+     summarise_all(mean),simplify = FALSE) |>
+  bind_rows()|>
+  mutate(n = 5)
+
+samp_dist_c <-  replicate(1000,gene_lengths |>
+     slice_sample(n = 30)|> 
+     summarise_all(mean),simplify = FALSE) |>
+  bind_rows()|>
+  mutate(n = 30)
+
+
+samp_dist_d <-  replicate(1000,gene_lengths |>
+     slice_sample(n = 500)|> 
+     summarise_all(mean),simplify = FALSE) |>
+  bind_rows()|>
+  mutate(n = 500)
+
+samp_dist_e <- bind_rows(samp_dist_b,samp_dist_c,samp_dist_d)
+write_csv(samp_dist_e, "data/samp_dist_e.csv")
+```
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| label: fig-genes-2
+#| fig-cap: "The distribution of the estimated mean length of human genes. Here is how I sampled to get this distribution: (1) A base pair is randomly selected from the human genome. (2) If it falls within a gene, that gene's length is recorded. If not, another base pair is chosen at random. (3) This process continues until 50 genes have been sampled."
+#| fig-alt: "The distribution of estimated mean human gene length from 1000 replicates of fifty genes. The x-axis is gene length (kb) from 0 to 10. The data is concentrated between 3 and 6 kb, with the tallest peak centered around 4 kb, and a second smaller peak near 5.5 kb. A vertical dashed red line showing the actual population mean is shown at approximately 2.8 kb, to the left of the main cluster of data."
+
+library(readr)
+samp_dist_a <-  read_csv("https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/samp_dist_a.csv")
+ggplot(samp_dist_a , aes(x = gene.length/1000))+
+  geom_histogram(bins = 50, color = "white")+
+  labs(x = "gene length (kb)", title = "Distribution of estimated mean human gene length", subtitle = "From 1000 replicates of fifty genes.")+
+  theme(axis.text = element_text(size = 18),
+        axis.title = element_text(size = 20))+
+  geom_vline(xintercept =  mean(unlist(gene_lengths))/1000 , color= "red",lty= 2)+
+  scale_x_continuous(limits = c(0,10))+
+  annotate(x =1.5, y = 180, geom = "label",color ="red", label= "population\nmean", size = 5,lty= 2)
+```
+
+:::exercises
+
+**Q5)** The difference between the true population mean (red line) and my estimates from samples of size fifty (bars in histogram) are most likely explained by  `r longmcq(c( answer = "Sampling bias", "Non-independence", "Sampling Error", "The unreliability of the law of large numbers"))`.
+
+**Q6)** YANIV INSERT CHATBOT. Explain your reasoning for the answer above. Any guesses on how I could have gotten this so wrong? How could this be fixed? 
+
+  
+
+**Q7)** Why is the range of values so much smaller in @fig-genes-2 than in @fig-genes?   `r longmcq(c( "Sampling bias","Non-independence", "Sampling error", answer = "Parameter estimates are usualy have a tighter distribution than all observed values."))`
+
+
+:::
+
+**For the following questions, refer to @fig-genes-3 (right).**    
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: " The effect of sample size on the sampling distribution of the mean human gene length. Each panel shows a histogram of 1,000 sample means, with each mean calculated from a random sample of n genes."
+#| fig-alt: "A multi-panel plot showing three histograms of estimated mean human gene length, illustrating the effect of sample size. The panels are stacked vertically for sample sizes of n=5, n=30, and n=500. As the sample size increases down the chart, the histogram becomes dramatically narrower, indicating that the estimates of the mean are much less variable and more precise. The top plot (n=5) is wide and red, the middle (n=30) is narrower and green, and the bottom (n=500) is extremely narrow and blue. A vertical dashed red line in each plot marks the mean of the estimates."
+#| fig-height: 7
+#| fig-width: 3
+#| column: margin 
+#| label: fig-genes-3
+samp_dist_e <- read_csv("https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/samp_dist_e.csv")
+samp_dist_e |>
+  ggplot(aes(x =  gene.length / 1000, fill = factor(n)))+
+  facet_wrap(~n, ncol=1,scales = "free_y",labeller = "label_both")+
+  geom_histogram(bins= 100, color = "white",show.legend = FALSE)+
+  theme(strip.text =  element_text(size = 20),
+        axis.text.x = element_text(size = 18),
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank())+
+  scale_x_continuous(breaks = seq(0,10,2), limits = c(0,12))+
+  geom_vline(xintercept =  mean(unlist(gene_lengths))/1000 , color= "red",lty= 2)+
+  labs(x = "gene length (kb)", 
+       title = "Distribution of estimated\nmean human gene length", 
+       subtitle = "From 1000 replicates of n genes")
+```
+
+:::exercises
+**Q8)** What aspect of sampling is responsible for the difference between the plots in @fig-genes-3?
+`r longmcq(c("There is less sampling bias in larger samples", "There is less non-independence in larger samples",answer = "There is less sampling error in larger samples"))`
+
+**Q9)** Which sample size is associated with the smallest standard error?  `r longmcq(c( "5", "30", answer = "500","They all have approximately the same standard error"))`
+
+
+**Q10)** For the sampling distribution for samples of size n in @fig-genes-3, approximately what proportion samples have a mean greater than the population mean? 
+
+- **n = 5:** `r mcq(c( "Way less than 0.01", "about 0.02", "about 0.25", answer = "about 0.50"))`.  
+- **n = 500:** `r mcq(c( "Way less than 0.01", "about 0.02", "about 0.25", answer = "about 0.50"))`.
+
+
+
+**Q11)** For the sampling distribution for samples of size n in @fig-genes-3, approximately what proportion samples have a mean greater than 3.8 kb? 
+
+- **n = 30:** `r mcq(c( "Way less than 0.01",answer =  "about 0.02", "about 0.25", "about 0.50"))`.  
+- **n = 500:** `r mcq(c(answer =  "Way less than 0.01", "about 0.02", "about 0.25",  "about 0.50"))`.
+
+
+
+:::
+
+**REFRESHER** For the questions below summarize the gene lengths data set.  If there is not an answer, type NA.
+
+```{webr-r}
+library(dplyr)
+library(readr)
+link <- "https://raw.githubusercontent.com/ybrandvain/datasets/master/geneLengths.csv"
+gene_lengths <- read_csv(link)
+
+
+```
+
+:::exercises
+**Q12)** The mean gene length is `r fitb(2622, num = TRUE, tol = 25)`. 
+
+
+**Q13)** The standard deviation in gene length  `r fitb(2037, num = TRUE, tol = 37)`.  
+
+**Q14)** The standard error in estimated gene length  `r fitb("NA",ignore_case = TRUE)`.  
+
+:::
+
+## 📊 Glossary of Terms {#sampling_summary_glossary-of-terms} 
+
+:::glossary
+
+---
+
+## 📘 Glossary
+
+**Confidence interval (95%)**
+A range of values that captures the middle 95% of a sampling distribution. If we repeated the sampling process many times, 95% of our intervals would include the true parameter.  
+
+**Convenience sampling (aka haphazard sampling):** Sampling whatever is easiest or closest.
+
+**Independent sample** A sample where knowing something about one observation tells you nothing about the others. 
+
+**Non-independent sample** A sample where some observations are related to each other. This messes with your uncertainty estimates unless accounted for. 
+
+**Parameter:** A number that describes the truth about a population (e.g. the actual mean petal area of all *Clarkia xantiana* plants on Earth). 
+
+**Pseudoreplication:** Using repeated but non-independent measurements as if they were independent. This can lead to overconfidence and misleading results.
+
+**Random sample:** A sample where each individual has an equal  chance of being selected. 
+
+**Sampling:** Selecting a subset of individuals from a population.  
+
+**Sampling Bias:** Any process that causes a sample to be systematically unrepresentative of the population. 
+
+**Sampling Distribution:** A histogram of what you'd get if you repeated your study over and over, taking a new sample each time and recording the resulting estimate.  
+
+**Sampling Error:** The random difference between an estimate from a sample and the true population parameter.   
+
+**Standard Error (SE):** The standard deviation of the sampling distribution. Measures the expected variability in your estimates due to sampling error.
+
+
+**Survivorship bias:** A kind of sampling bias where you only observe individuals that survive some process (e.g., returning warplanes), which can give a misleading picture of the whole population.
+
+:::
+
+
+---
+
+## Key R Functions {#sampling_summary_key-r-functions}
+
+
+:::functions
+
+
+- **[`sample()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/sample.html)**: Samples values from a vector.  
+- **[`slice_sample()`](https://dplyr.tidyverse.org/reference/slice.html)** *([dplyr](https://dplyr.tidyverse.org/))*: Samples rows from a tibble.  
+
+---
+:::
+
+
+
+
+
+
+
+## Additional resources   {#sampling_summary_additional-resources}
+
+:::learnmore 
+
+
+
+**Optional Readings:**         
+
+-  [The Most Dangerous Equation](https://www.americanscientist.org/article/the-most-dangerous-equation) [@wainer2007].
+
+- [Chapter 7 Sampling](https://moderndive.com/v2/sampling.html) from [@ismay2019]. 
+
+- [Pages 104-112 and 126-133](https://bookdown.org/ybrandvain/Applied_Biostats_2024/CallinBS06.html) about sampling bias from @bergstrom2020.   
+
+- [Interleaf 2: Pseudo-replication](https://drive.google.com/uc?export=download&id=1MBTwopPWgNzEHFmJC1aUKuqak8pAni4X) from @whitlock2020.
+:::

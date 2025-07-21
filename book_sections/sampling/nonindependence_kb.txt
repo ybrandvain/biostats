@@ -1,0 +1,59 @@
+**Chapter 11 – Non-independence**
+
+---
+
+### 🗣️ Tutor Guidance
+
+This section emphasizes the problem of **non-independent observations** — when data points are not truly separate, our effective sample size is smaller than it looks. Guide students to:
+
+* Define independence clearly: knowing one value tells you nothing about another.
+* Recognize that **non-independence creates overconfidence** by underestimating uncertainty.
+* Spot sources of non-independence in biological research, especially:
+
+  * Genetic relatedness (siblings, shared parentage)
+  * Shared environmental conditions (clusters, sites, quadrats)
+  * Experimental design issues (e.g. pseudoreplication)
+* Connect examples back to broader concerns about **inference**, **design**, and **how statistical assumptions break down**.
+* Reinforce that tools like mixed-effect models can account for this later — but **independent sampling is better** when feasible.
+
+---
+
+### Learning Goals
+
+* Define statistical independence and non-independence.
+* Explain why non-independence is a problem for inference.
+* Identify sources of non-independence in experimental and observational studies.
+* Distinguish pseudoreplication from sampling bias — and recognize overlap.
+
+---
+
+### Key Concepts
+
+* **Independence**: Observations provide distinct information. Knowing one doesn’t help you predict another.
+* **Non-independence**: Observations are clustered, correlated, or linked in ways that make them less informative.
+* **Effective sample size**: Smaller than actual count if samples are non-independent.
+* **Overconfidence**: Non-independence falsely reduces measured uncertainty (e.g., smaller SE, tighter CI).
+* **Pseudoreplication**: Repeating measures within a shared context (e.g., site, parent) but treating them as independent.
+* **Cluster sampling**: Observing many individuals from a shared location or condition.
+* **Design vs. Fix**: Always better to avoid non-independence than to statistically “patch” it later.
+
+---
+
+### Figure Summaries
+
+* **Figure 1: Confounded site-by-color sampling**  A boxplot comparing hybrid seed proportion by flower color (pink vs. white), with pink measured at one site and white at another. The white category appears to have a much higher hybrid rate. This demonstrates **pseudoreplication** and **confounding** — flower color and site are not disentangled, so apparent differences are misleading. (Note this is only for an example - in the bealdata we halal floral morphs at all sites)
+
+* **Figure 2 (fig-quadrat): Quadrat photo of field sampling**
+  *Alt text:* Two researchers sampling plants in a square quadrat on a hillside.
+  *Caption summary:* Shows **cluster sampling** — even though quadrats are randomly placed, plants within a quadrat are spatially and ecologically correlated, violating independence.
+
+---
+
+### Student Pitfalls to Watch For
+
+* Assuming that “random quadrats” = independence.
+* Forgetting that siblings, spatial clusters, and shared conditions reduce effective sample size.
+* Confusing pseudoreplication (a design flaw) with bias (a sampling flaw) — they’re distinct but often overlap.
+* Believing that more data = more confidence, even when the data aren’t independent.
+* Not recognizing that **confidence intervals and p-values are only valid under independence**.
+

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>• 4. Reproducibility summary – Applied Biostatistics</title>
+<title>• 11. Sampling – Applied Biostatistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -50,8 +64,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../book_sections/summarizing_data_index.html" rel="next">
-<link href="../../book_sections/reproducible_science/reproducible_analyses.html" rel="prev">
+<link href="../../book_sections/sampling/sampling_error.html" rel="next">
+<link href="../../book_sections/sampling_intro.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -88,6 +102,16 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<link href="../../site_libs/htmltools-fill/fill.css" rel="stylesheet">
+<script src="../../site_libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="../../site_libs/datatables-css/datatables-crosstalk.css" rel="stylesheet">
+<script src="../../site_libs/datatables-binding/datatables.js"></script>
+<script src="../../site_libs/jquery/jquery-3.6.0.min.js"></script>
+<link href="../../site_libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="../../site_libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="../../site_libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="../../site_libs/crosstalk/css/crosstalk.min.css" rel="stylesheet">
+<script src="../../site_libs/crosstalk/js/crosstalk.min.js"></script>
 
 
 <link rel="stylesheet" href="../../assets/sticky-notes.css">
@@ -95,7 +119,7 @@ div.csl-indent {
 <link rel="stylesheet" href="../../assets/webex.css">
 </head>
 
-<body class="nav-sidebar floating fullcontent">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -104,7 +128,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science.html">4. Reproducible Science</a></li><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science/reproducible_summary.html">• 4. Reproducibility summary</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/sampling_intro.html">11. Intro to Sampling</a></li><li class="breadcrumb-item"><a href="../../book_sections/sampling/sampling.html">• 11. Sampling</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -320,7 +344,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../book_sections/reproducible_science/reproducible_summary.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../book_sections/reproducible_science/reproducible_summary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">• 4. Reproducibility summary</span></a>
   </div>
 </li>
@@ -592,6 +616,65 @@ div.csl-indent {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/stats_foundation_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section III: Stats Foundations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/sampling_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">11. Intro to Sampling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/sampling.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">• 11. Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/sampling_error.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Error</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/sampling_bias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Bias</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/nonindependence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Non-independence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/better_sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Better</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/sampling_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../toc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Rest of Book</span></a>
   </div>
@@ -607,13 +690,14 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science.html">4. Reproducible Science</a></li><li class="breadcrumb-item"><a href="../../book_sections/reproducible_science/reproducible_summary.html">• 4. Reproducibility summary</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/sampling_intro.html">11. Intro to Sampling</a></li><li class="breadcrumb-item"><a href="../../book_sections/sampling/sampling.html">• 11. Sampling</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">• 4. Reproducibility summary</h1>
+<h1 class="title"><span id="sampling" class="quarto-section-identifier">• 11. Sampling</span></h1>
 </div>
 
 
@@ -630,178 +714,122 @@ div.csl-indent {
 </header>
 
 
-<p><strong>Links to:</strong> <a href="#reproducible_summarySummary">Summary</a>, <a href="#reproducible_summaryChatbot">Chatbot Tutor</a>, <a href="#reproducible_summaryPractice_questions">Practice Questions</a>, <a href="#reproducible_summaryGlossary_of_terms">Glossary</a>, <a href="#reproducible_summaryNew_r_functions">R functions</a> and <a href="#reproducible_summaryR_packages_introduced">R packages</a>, and <a href="#reproducible_summaryAdditional_resources">Additional resources</a>.</p>
-<section id="reproducible_summarySummary" class="level2">
-<h2 class="anchored" data-anchor-id="reproducible_summarySummary">Chapter Summary</h2>
-<p>Reproducibility is a cornerstone of good science, ensuring that research is transparent, reliable, and easy to build upon. This chapter covered best practices for collecting, organizing, and analyzing data in a reproducible manner.</p>
-<p>Before collecting data, establish clear rules for measurement, naming conventions, and data entry to maintain consistency. Field sheets should be well-structured, and tidy. Additionally, creating a data dictionary and README document ensures that variables and project details are well-documented. Finally, storing data and scripts in public repositories supports transparency and open science.</p>
-<p>In analysis, using an R Project helps keep files organized, and loading data with relative paths avoids location issues. Writing well-structured R scripts with clear comments makes workflows understandable and repeatable. By prioritizing reproducibility you not only strengthen the integrity of your work, but also make future analyses smoother for yourself and others.</p>
-<section id="reproducible_summaryChatbot" class="level3">
-<h3 class="anchored" data-anchor-id="reproducible_summaryChatbot">Chatbot tutor</h3>
-<div class="tutor">
-<p>Please interact with this custom chatbot (<a href="https://chatgpt.com/g/g-681d8db6f8688191847ab02451805eeb-reproducible-science-tutor"><strong>link here</strong></a>) I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up and then stopping when you feel like you got what you needed from it.</p>
+<div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+<p><strong>Motivating Scenario:</strong> We need to know about sampling to do statistics!</p>
+<p><strong>Learning Goals: By the end of this subsection, you should be able to:</strong></p>
+<ol type="1">
+<li><p>Explain why sampling is a necessary and fundamental part of statistics.</p></li>
+<li><p>Distinguish between a <strong>population parameter</strong> and a <strong>sample estimate</strong>.</p></li>
+<li><p>Describe and differentiate between <strong>random</strong>, <strong>stratified random</strong>, and <strong>haphazard</strong> sampling methods.</p></li>
+<li><p>Explain what to do when you cannot sample randomly, and how to be cautious about interpreting data from a non-random sample.</p></li>
+</ol>
 </div>
+<section id="estimate-population-parameters-by-sampling" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="estimate-population-parameters-by-sampling">Estimate population parameters by sampling</h3>
+<p>Of course, if we already had a well characterized population, there would be no need to sample – we would just know actual parameters, and there would be no need to do statistics. It’s usually too much work, costs too much money, or takes too much time to characterize an entire population and calculate its parameters. So we take estimates from a sample of the population.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p><strong>“Sampling” does not always mean taking a subsample from a larger population:</strong></p>
+<p>For example, in an experiment we interfere with a system and see how this intervention changes some outcome, or in flipping a coin we generate a new outcome that had not yet happened. Nonetheless, we can use the metaphor of sampling in all of these cases.</p>
+</div></div><p>As such, being able to imagine the process of sampling – how we sample, what can go wrong in sampling is perhaps the most important part of being good at statistics. I recommend walking around and imagining sampling in your free time.</p>
 </section>
-<section id="reproducible_summaryPractice_questions" class="level3">
-<h3 class="anchored" data-anchor-id="reproducible_summaryPractice_questions">Practice Questions</h3>
-<p>Try these questions!</p>
-<div class="exercises">
-<strong>Q1)</strong> What is the biggest mistake in the table below?
-<div id="radio_ZUXZPIZTVM" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_ZUXZPIZTVM" value=""> <span>ID should be lower case</span></label><label><input type="radio" autocomplete="off" name="radio_ZUXZPIZTVM" value=""> <span>Its perfect, change nothing</span></label><label><input type="radio" autocomplete="off" name="radio_ZUXZPIZTVM" value="answer"> <span>the column name, <em>weight</em> is not sufficiently descriptive, it should include the units.</span></label><label><input type="radio" autocomplete="off" name="radio_ZUXZPIZTVM" value=""> <span>date_colleted_empty_means_same_as_above is too wordy, replace with <em>date</em></span></label><label><input type="radio" autocomplete="off" name="radio_ZUXZPIZTVM" value="answer"> <span>Values for date_collected_empty_means_same_as_above are implied.</span></label><label><input type="radio" autocomplete="off" name="radio_ZUXZPIZTVM" value=""> <span>date is in Year-Month-Day format, while Month-Day-Year format is preffered.</span></label>
-</div>
-<div class="cell">
+<section id="how-to-sample" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-sample">How to Sample</h3>
+<ul>
+<li><strong>Random sampling</strong> is the gold-standard sampling design. In a truly random sample, every individual in a population has an equal chance of being selected. This can be achieved by giving each individual a unique number and then picking numbers from a random number generator (e.g., the <code>sample()</code> function in R).</li>
+</ul>
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">ID</th>
-<th style="text-align: right;">weight</th>
-<th style="text-align: left;">date_collected_empty_means_same_as_above</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">1-A1</td>
-<td style="text-align: right;">104</td>
-<td style="text-align: left;">2024-03-01</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">1-1B</td>
-<td style="text-align: right;">210</td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">3-7</td>
-<td style="text-align: right;">150</td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2-B</td>
-<td style="text-align: right;">176</td>
-<td style="text-align: left;">2024-03-15</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">1-A5</td>
-<td style="text-align: right;">110</td>
-<td style="text-align: left;"></td>
-</tr>
-</tbody>
-</table>
+<div id="fig-clarkia_image" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A wide shot of a sunny, grassy hillside sloping upwards. The hill is covered in a dense carpet of small pink wildflowers mixed with patches of tan, dry grass and larger green shrubs. A few tall, sparse trees are visible at the crest of the hill against a clear blue sky." data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-clarkia_image-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../clarkia_pics/many_xan_3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A wide shot of a sunny, grassy hillside sloping upwards. The hill is covered in a dense carpet of small pink wildflowers mixed with patches of tan, dry grass and larger green shrubs. A few tall, sparse trees are visible at the crest of the hill against a clear blue sky.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-clarkia_image-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: A California hillside covered in a dense bloom of pink Clarkia wildflowers, mixed with dry grasses and scattered shrubs under a clear blue sky. This vast, natural population illustrates a scenario where conducting a full census of every plant would be impractical, and truly random sampling would be quite challenging.
+</figcaption>
+</figure>
 </div>
 </div>
-<div class="webex-solution">
-<button>
-Click here for explanation
-</button>
-<p>While some of these (like the long name for date) are clearly shortcomings, spreadsheets should never leave values implied.</p>
 </div>
-<p>.</p>
-<hr>
-<strong>Q2)</strong> What would you expect in a data dictionary accompanying the table above? (select all correct)
-<div id="radio_RWDWOAWELC" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_RWDWOAWELC" value="answer"> <span>The units for weight.</span></label><label><input type="radio" autocomplete="off" name="radio_RWDWOAWELC" value="answer"> <span>A statement that date is in Year-Month-Day format</span></label><label><input type="radio" autocomplete="off" name="radio_RWDWOAWELC" value="answer"> <span>A statement explaining that in the date colleted column, empty means same as above.</span></label>
-</div>
-<hr>
-<strong>Q3)</strong> How do you read data from a Excel sheet, called <em>raw_data</em> in an Excel filed named <em>bird_data.xlsx</em> located inside the R project you are working in?
-<div id="radio_RSGWBBBERA" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_RSGWBBBERA" value=""> <span>You cannot load excel files into R. You must save it as a csv, and read it in with read_csv().</span></label><label><input type="radio" autocomplete="off" name="radio_RSGWBBBERA" value="answer"> <span>Assuming the readxl package is installed and loaded, type read_xlsx(file = “bird_data.xlsx”, sheet = “raw_data”).</span></label><label><input type="radio" autocomplete="off" name="radio_RSGWBBBERA" value=""> <span>While you can read excel into R, you cannot specify the sheet.</span></label>
-</div>
-<hr>
-<strong>Q4)</strong> What should you do to make code reproducible? (pick the best answer)
-<div id="radio_VSYAOEUGBN" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_VSYAOEUGBN" value=""> <span>Specify the working directory with setwd()</span></label><label><input type="radio" autocomplete="off" name="radio_VSYAOEUGBN" value=""> <span>Show the packages installed with install.packages()</span></label><label><input type="radio" autocomplete="off" name="radio_VSYAOEUGBN" value="answer"> <span>Restart R once your done, and rerun your script to see if it works</span></label>
-</div>
+<p>In practice, this can be difficult. It would take ages to number every <em>Clarkia</em> plant on a hillside with thousands of individuals (e.g. <a href="#fig-clarkia_image" class="quarto-xref">Figure&nbsp;<span>1</span></a>). So, we often employ other sampling designs.</p>
+<ul>
+<li><p><strong>Stratified random sampling</strong> is a way to ensure that different subgroups within a population are represented. To do this, you first split the population into groups, or “strata” (e.g., plants on sunny vs.&nbsp;shady slopes), and then perform a random sample within each group.</p></li>
+<li><p><strong>Haphazard sampling</strong> (also called convenience sampling) is a non-random design. While not ideal, a haphazard approach with a clear, pre-defined plan can sometimes be sufficient. For example, you might decide to walk a transect line and sample the plant closest to the line every 10 meters.</p></li>
+</ul>
+<div class="note">
+<p><strong>SAMPLE RANDOMLY WHENEVER POSSIBLE!</strong><br>
+If you cannot sample randomly, be explicit about your method. For example, our transect method is more likely to select plants in sparse areas than dense ones. Is that a problem? It depends on your question. If sampling is haphazard, you must critically consider and report how your method could introduce potential biases into your results.</p>
 </div>
 <hr>
 </section>
-<section id="reproducible_summaryGlossary_of_terms" class="level3">
-<h3 class="anchored" data-anchor-id="reproducible_summaryGlossary_of_terms">Glossary of Terms</h3>
-<div class="glossary">
-<p><strong>Absolute Path</strong> – A file location specified from the root directory (e.g., <code>/Users/username/Documents/data.csv</code>), which can cause issues when sharing code across different computers. Using <strong>relative paths</strong> instead is recommended.</p>
-<p><strong>Data Dictionary</strong> – A structured document that defines each variable in a dataset, including its name, description, units, and expected values. It helps ensure data clarity and consistency.</p>
-<p><strong>Data Validation</strong> – A method for reducing errors in data entry by restricting input values (e.g., dropdown lists for categorical variables, ranges for numerical values).</p>
-<p><strong>Field Sheet</strong> – A structured data collection form used in the field or lab, designed for clarity and ease of data entry.</p>
-<p><strong>Metadata</strong> – Additional information describing a dataset, such as when, where, and how data were collected, the units of measurement, and details about the variables.</p>
-<p><strong>R Project</strong> – A self-contained environment in RStudio that organizes files, code, and data in a structured way, making analysis more reproducible.</p>
-<p><strong>Raw Data</strong> – The original, unmodified data collected from an experiment or survey. It should always be preserved in its original form, with any modifications performed in separate scripts.</p>
-<p><strong>README File</strong> – A text file that provides an overview of a dataset, including project details, data sources, file descriptions, and instructions for use.</p>
-<p><strong>Reproducibility</strong> – The ability to re-run an analysis and obtain the same results using the same data and code. This requires careful documentation, structured data storage, and clear coding practices.</p>
-<p><strong>Relative Path</strong> – A file path that specifies a location relative to the current working directory (e.g., <code>data/my_file.csv</code>), making it easier to share and reproduce analyses.</p>
-<p><strong>Tidy Data</strong> – A dataset format where each variable has its own column, each observation has its own row, and each value is in its own cell.</p>
+<section id="random-sampling-example" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="random-sampling-example">Random sampling example</h2>
+<p>In the real world, taking a random sample from a population can be a challenge (see above). But in R this is very easy. I work through an example to better wrap our heads around sampling.</p>
+<p><strong>For this example, let us pretend that our hybrid zone data from SAW is a population (i.e.&nbsp;that we sampled every individual).</strong> I note this is for demonstration purposes only – if we had information for an entire population we would not sample. But this should help us think about sampling! We use the <a href="https://dplyr.tidyverse.org/reference/slice.html"><code>slice_sample()</code></a> function, with the arguments being the tibble of interest, <code>n</code> the size of our sample. The output are the individuals we sampled!</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Loading and formatting saw hybrid zone data.</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>hz_pheno_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_hz_phenotypes.csv"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>saw_hz_pop <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(hz_pheno_link)<span class="sc">|&gt;</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(site <span class="sc">==</span> <span class="st">"SAW"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id,subspecies, node, <span class="at">protandry =</span> avg_protandry, <span class="at">herkogamy =</span> avg_herkogamy, <span class="at">petal_area =</span> avg_petal_area)<span class="sc">|&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">petal_area =</span> <span class="fu">round</span>(petal_area, <span class="at">digits =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
+
+<div class="no-row-height column-margin column-container"><div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sample_size <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># make a sample </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>saw_hz_sample <span class="ot">&lt;-</span> saw_hz_pop<span class="sc">|&gt;</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">slice_sample</span>(<span class="at">n=</span>sample_size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div><div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-822539ae344b0f99e47f" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-822539ae344b0f99e47f">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10"],[126,1069,124,228,1061,157,115,129,147,107],["X","X","X?","X","X","X","P","X","X","P"],[22.5,24,20,21,21,21,22,24,21,27],[2,4,1.5,4,2,4,0.5,1,1,0],[4.5,4,0.5,5.5,6.5,6,1.5,5,6,0],[1,0.95,null,1.99,1.14,1.39,0.24,1.6,2.15,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>id<\/th>\n      <th>subspecies<\/th>\n      <th>node<\/th>\n      <th>protandry<\/th>\n      <th>herkogamy<\/th>\n      <th>petal_area<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"columnDefs":[{"className":"dt-right","targets":[1,3,4,5,6]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"id","targets":1},{"name":"subspecies","targets":2},{"name":"node","targets":3},{"name":"protandry","targets":4},{"name":"herkogamy","targets":5},{"name":"petal_area","targets":6}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="cell page-columns page-full" data-layout-align="center">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-paramvEst" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-paramvEst-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="sampling_files/figure-html/fig-paramvEst-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-paramvEst-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Comparing parameters from our ‘population’ to estimates from our ‘sample’ for numerous traits.
+</figcaption>
+</figure>
+</div>
+</div></div></div>
 <hr>
-</section>
-<section id="reproducible_summaryNew_r_functions" class="level3">
-<h3 class="anchored" data-anchor-id="reproducible_summaryNew_r_functions">Key R functions</h3>
-<div class="functions">
-<ul>
-<li><p><strong><a href="https://sfirke.github.io/janitor/reference/clean_names.html"><code>clean_names(data)</code></a></strong> – Standardizes column names (from the <a href="https://sfirke.github.io/janitor/index.html"><code>janitor</code></a> package).</p></li>
-<li><p><strong><a href="https://tidyr.tidyverse.org/reference/drop_na.html"><code>drop_na(data)</code></a></strong> – Removes rows with missing values (from the <a href="https://tidyr.tidyverse.org/"><code>tidyr</code></a> package)).</p></li>
-<li><p><strong><a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv("file.csv")</code></a></strong> – Reads a CSV file into R as a tibble (from the <a href="https://readr.tidyverse.org/"><code>readr</code></a> package).</p></li>
-<li><p><strong><a href="https://readxl.tidyverse.org/reference/read_excel.html"><code>read_xlsx("file.xlsx", sheet = "sheetname")</code></a></strong> – Reads an excel sheet into R as a tibble (from the <a href="https://readxl.tidyverse.org/"><code>readxl</code></a> package).</p></li>
-<li><p><strong><a href="https://dplyr.tidyverse.org/reference/rename.html"><code>rename(data, new_name = old_name)</code></a></strong> – Renames columns in a dataset (from the <a href="https://dplyr.tidyverse.org/"><code>dplyr</code></a> package).</p></li>
-<li><p><strong><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html"><code>pivot_longer(data, cols, names_to, values_to)</code></a></strong> – Converts wide-format data to long format (from the <a href="https://tidyr.tidyverse.org/"><code>tidyr</code></a> package).</p></li>
-<li><p><strong><a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/sessionInfo.html"><code>sessionInfo()</code></a></strong> – Displays session details, including loaded packages (useful for reproducibility).</p></li>
-</ul>
-</div>
-<hr>
-</section>
-<section id="reproducible_summaryR_packages_introduced" class="level3">
-<h3 class="anchored" data-anchor-id="reproducible_summaryR_packages_introduced">R Packages Introduced</h3>
-<div class="packages">
-<ul>
-<li><p><strong><a href="https://readr.tidyverse.org/"><code>readr</code></a></strong> – Provides fast and flexible functions for reading tabular data (here we revisited <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a> for CSV files).</p></li>
-<li><p><strong><a href="https://dplyr.tidyverse.org/"><code>dplyr</code></a></strong> – A grammar for data manipulation. Here we introduced the <a href="https://dplyr.tidyverse.org/reference/rename.html"><code>rename(data, new_name = old_name)</code></a> function to give columns better names.</p></li>
-<li><p><strong><a href="https://tidyr.tidyverse.org/"><code>tidyr</code></a></strong> – Helps tidy messy data. Here we introduced <a href="https://tidyr.tidyverse.org/reference/pivot_longer.html"><code>pivot_longer()</code></a> to make wide data long.</p></li>
-<li><p><strong><a href="https://sfirke.github.io/janitor/"><code>janitor</code></a></strong> – Cleans and standardizes data, including <code>clean_names()</code>](https://sfirke.github.io/janitor/reference/clean_names.html) for formatting column names.</p></li>
-</ul>
-</div>
-</section>
-<section id="reproducible_summaryAdditional_resources" class="level3">
-<h3 class="anchored" data-anchor-id="reproducible_summaryAdditional_resources">Additional resources</h3>
-<div class="learnmore">
-<p><strong>R Recipes:</strong></p>
-<ul>
-<li><a href="https://posit.cloud/learn/recipes/basics/ImportA1">Read a .csv</a>: Learn how to read a csv into R as a tibble.<br>
-</li>
-<li><a href="https://posit.cloud/learn/recipes/basics/ImportF">Read an Excel file</a>: Learn how to read an excel file into R as a tibble.<br>
-</li>
-<li><a href="https://posit.cloud/learn/recipes/basics/BasicB3A">Obey R’s naming rules</a>: You want to give a valid name to an object in R.<br>
-</li>
-<li><a href="https://posit.cloud/learn/recipes/transform/TransformC">Rename columns in a table</a>: You want to rename one or more columns in a data frame.</li>
-</ul>
-<p><strong>Other web resources:</strong></p>
-<ul>
-<li><p><em><a href="https://www.tandfonline.com/doi/citedby/10.1080/00031305.2017.1375989?scroll=top&amp;needAccess=true">Data Organization in Spreadsheets</a></em> <span class="citation" data-cites="broman2018">(<a href="../../references.html#ref-broman2018" role="doc-biblioref">Broman &amp; Woo, 2018</a>)</span>.</p></li>
-<li><p><em><a href="https://vita.had.co.nz/papers/tidy-data.pdf">Tidy Data</a>:</em> <span class="citation" data-cites="TidyData">(<a href="../../references.html#ref-TidyData" role="doc-biblioref">Wickham, 2014</a>)</span>.</p></li>
-<li><p><em><a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285">Ten Simple Rules for Reproducible Computational Research</a>:</em> <span class="citation" data-cites="sandve2013">(<a href="../../references.html#ref-sandve2013" role="doc-biblioref">Sandve, 2013</a>)</span>.</p></li>
-<li><p><a href="https://www.nytimes.com/2014/08/18/technology/for-big-data-scientists-hurdle-to-insights-is-janitor-work.html">NYT article: For big data scientists hurdle to insights is janitor work.</a></p></li>
-<li><p><a href="https://datamgmtinedresearch.com/style">Style guide</a>: Chapter 9 of <em>Data management in large-scale education research</em> by <span class="citation" data-cites="lewis2024">Lewis (<a href="../../references.html#ref-lewis2024" role="doc-biblioref">2024</a>)</span>. Includes sections on <a href="https://datamgmtinedresearch.com/style#style-practices">general good practices</a>, <a href="https://datamgmtinedresearch.com/style#style-file">file naming</a>, and <a href="https://datamgmtinedresearch.com/style#style-varname">variable naming</a>.</p></li>
-<li><p><a href="https://datamgmtinedresearch.com/store">Data Storage and security</a>: Chapter 13 of <em>Data management in large-scale education research</em> by <span class="citation" data-cites="lewis2024">Lewis (<a href="../../references.html#ref-lewis2024" role="doc-biblioref">2024</a>)</span>.</p></li>
-</ul>
-<p><strong>Videos:</strong></p>
-<ul>
-<li><p><a href="https://www.youtube.com/embed/G9LDtFMsUmY">Data integrity</a>: (By <a href="https://laskowskilab.faculty.ucdavis.edu/people/kate-laskowski/">Kate Laskowski</a> who was the victim of data fabrication by her collaborator (and my former roommate) Jonathan Pruitt).</p></li>
-<li><p><a href="https://www.youtube.com/embed/qivE6exNsZI?end=340">Tidying data with <code>pivor_longer</code></a> (From Stat454)</p></li>
-</ul>
+<section id="parameters-versus-estimates" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-versus-estimates">Parameters versus estimates</h3>
+<p>We can now compare our estimates from our sample of size ten to our “true” parameter (remember this is not our true parameter we are just pretending that our initial sample is the entire population so we can learn this stuff better).</p>
+<p><a href="#fig-paramvEst" class="quarto-xref">Figure&nbsp;<span>2</span></a> clearly shows that our sample estimates differ from the true population parameters. This chance deviation is sampling error in action. While some estimates are close, others are not, highlighting the fundamental challenge for statisticians: how do we quantify our uncertainty about the true parameter when we only have one sample?</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>long_estimate <span class="ot">&lt;-</span> estimates <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">measure =</span> <span class="st">"estimate"</span>)<span class="sc">|&gt;</span><span class="fu">pivot_longer</span>(<span class="sc">-</span>measure)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>long_param <span class="ot">&lt;-</span> parameters <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">measure =</span> <span class="st">"parameter"</span>)<span class="sc">|&gt;</span><span class="fu">pivot_longer</span>(<span class="sc">-</span>measure)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(long_estimate, long_param) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">trait=</span> name)<span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> measure, <span class="at">x =</span> value, <span class="at">fill =</span> trait, <span class="at">alpha =</span> measure))<span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()<span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>trait, <span class="at">scales =</span> <span class="st">"free_x"</span>,<span class="at">ncol =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_alpha_discrete</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>,.<span class="dv">5</span>))<span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.text =</span>  <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-broman2018" class="csl-entry" role="listitem">
-Broman, K. W., &amp; Woo, K. H. (2018). Data organization in spreadsheets. <em>The American Statistician</em>, <em>72</em>(1), 2–10. <a href="https://doi.org/10.1080/00031305.2017.1375989">https://doi.org/10.1080/00031305.2017.1375989</a>
-</div>
-<div id="ref-lewis2024" class="csl-entry" role="listitem">
-Lewis, C. (2024). <em>Data management in large-scale education research</em>. CRC Press.
-</div>
-<div id="ref-sandve2013" class="csl-entry" role="listitem">
-Sandve, A. A. T., Geir Kjetil AND Nekrutenko. (2013). Ten simple rules for reproducible computational research. <em>PLOS Computational Biology</em>, <em>9</em>(10), 1–4. <a href="https://doi.org/10.1371/journal.pcbi.1003285">https://doi.org/10.1371/journal.pcbi.1003285</a>
-</div>
-<div id="ref-TidyData" class="csl-entry" role="listitem">
-Wickham, H. (2014). Tidy data. <em>Journal of Statistical Software, Articles</em>, <em>59</em>(10), 1–23. <a href="https://doi.org/10.18637/jss.v059.i10">https://doi.org/10.18637/jss.v059.i10</a>
-</div>
-</div>
 </section>
 </section>
 
@@ -1436,13 +1464,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../book_sections/reproducible_science/reproducible_analyses.html" class="pagination-link" aria-label="• 4. Reproducible analyses">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 4. Reproducible analyses</span>
+      <a href="../../book_sections/sampling_intro.html" class="pagination-link" aria-label="11. Intro to Sampling">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">11. Intro to Sampling</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../book_sections/summarizing_data_index.html" class="pagination-link" aria-label="Section II: Summarizing data">
-        <span class="nav-page-text">Section II: Summarizing data</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../book_sections/sampling/sampling_error.html" class="pagination-link" aria-label="• 11. Sampling Error">
+        <span class="nav-page-text">• 11. Sampling Error</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

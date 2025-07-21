@@ -1,0 +1,519 @@
+## • 11. Sampling Error {.unnumbered #sampling_error}
+
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr' ,'ggplot2','tidyr','knitr']
+  autoload-packages: true
+---
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating Scenario:**
+
+You've collected data and have a sample estimate, and avoided sampling bias, but you know it's not the whole story. Because of sampling error, your estimate is almost certainly not the exact true value, and a different sample would give a different estimate. You want to know how to think about and quantify such uncertainty? 
+
+**Learning Goals: By the end of this chapter, you should be able to:**  
+
+1.  **Define sampling error** and explain why it is an unavoidable aspect of working with samples.
+2.  **Describe the sampling distribution** and explain its role as the foundation for quantifying uncertainty.
+3.  **Understand the to most common meaures of uncertainty:**   
+    - The standard error.
+    - The 95% confidence intervals.
+4.  **Explain how sample size affects sampling error** and the precision of estimates.
+5.  **Describe the "file drawer problem"** and explain why small sample sizes can lead to misleading or overestimated results.
+
+
+:::
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(palmerpenguins)
+library(tufte)
+library(tidyr)
+source("../../_common.R") 
+set.seed(5)
+```
+
+
+
+
+
+
+```{r}
+#| column: margin
+#| out-width: "100%"
+#| fig-height: 10
+#| echo: false
+#| label: fig-paramvEst2
+#| message: false
+#| warning: false
+#| fig-cap: "Comparing parameters from our 'population' to estimates from our 'sample' for numerous traits."
+
+hz_pheno_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_hz_phenotypes.csv"
+
+saw_hz_pop <- read_csv(hz_pheno_link)|> 
+  filter(site == "SAW") |>
+  select(id,subspecies, node, protandry = avg_protandry, herkogamy = avg_herkogamy, petal_area = avg_petal_area)|>
+  mutate(petal_area = round(petal_area, digits = 2))
+
+sample_size <- 10
+
+saw_hz_sample <- saw_hz_pop|> 
+ slice_sample(n=sample_size)
+
+estimates <- saw_hz_sample |>
+  mutate(prop_xan = subspecies != "P")|>
+  select(-(1:2))|>
+  summarise_all(mean, na.rm=TRUE)
+
+
+saw_hz_sample2 <- saw_hz_pop|> 
+ slice_sample(n=sample_size)
+
+estimates2 <- saw_hz_sample2 |>
+  mutate(prop_xan = subspecies != "P")|>
+  select(-(1:2))|>
+  summarise_all(mean, na.rm=TRUE)
+
+parameters <- saw_hz_pop |>
+  mutate(prop_xan = subspecies != "P")|>
+  select(-(1:2))|>
+  summarise_all(mean, na.rm=TRUE)
+
+
+
+long_estimate <- estimates |> mutate(measure = "estimate 1")|>pivot_longer(-measure)
+long_estimate2 <- estimates2 |> mutate(measure = "estimate 2")|>pivot_longer(-measure)
+long_param <- parameters |> mutate(measure = "parameter")|>pivot_longer(-measure)
+
+
+bind_rows(long_estimate, long_estimate2, long_param) |>
+  rename(trait= name)|>
+  ggplot(aes(y = measure, x = value, fill = trait, alpha = measure))+
+  geom_col()+
+  labs(y="")+
+  facet_wrap(~trait, scales = "free_x",ncol = 1)+
+  scale_alpha_manual(values = c(1,1,.5))+
+  theme(legend.position = "none",
+        axis.text = element_text(size = 20),
+        axis.title = element_text(size = 20),
+        strip.text =  element_text(size = 20))
+```
+
+
+We concluded the [previous subsection on sampling](#sampling) by taking a sample from what we pretended was an entire population. We then compared the estimates from this sample to the true parameter. Repeating this exercise (@fig-paramvEst2) reveals that sample estimates  differ not just from population parameters, but also from each other.
+
+### Sampling error is unavoidable {#sampling_error_unavoidable}
+
+Estimates from samples (e.g. the opaque bars in @fig-paramvEst2) will differ from population parameters (e.g. the semi-transparent bars in @fig-paramvEst2) due to chance. This chance deviation is called sampling error. **But make no mistake — sampling error cannot be avoided.** 
+
+Larger samples and more precise measurements can reduce sampling error, but it will always exist because we take our samples by chance. In fact, I would call it the rule of sampling rather than sampling error.
+
+Much of the material in this chapter — and about half of the content for the rest of this term — focuses on how to handle the law of sampling error. Sampling error is the focus of many statistical methods.
+
+**The interactive document below works us through the idea of sampling and sampling error. Throughout we are pretending that the "sawmill" hybrid zone data represents a complete census of a population. We then "sample" for illustrative purposes.**
+
+```{webr-r}
+#| context: setup
+#| label: shared-session
+
+hz_pheno_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_hz_phenotypes.csv"
+
+saw_hz_pop <- read_csv(hz_pheno_link)|> 
+  filter(site == "SAW") |>
+  select(id,subspecies, 
+         node, 
+         protandry = avg_protandry, 
+         herkogamy = avg_herkogamy, 
+         petal_area = avg_petal_area)|>
+  mutate(petal_area = round(petal_area, digits = 2))
+
+parameters <- saw_hz_pop |>
+  mutate(prop_xan = subspecies != "P")|>
+  select(-(1:2))|>
+  summarise_all(mean, na.rm=TRUE)
+
+
+
+makePlot1 <- function(saw_hz_sample, saw_hz_pop, parameters){
+  to_plot <-saw_hz_sample |> pivot_longer(-(1:2))
+  range_of_data <- saw_hz_pop |> pivot_longer(-(1:2))
+  ggplot(to_plot, aes(x = value))+
+  geom_histogram(color = "white", bins = 5)+
+  geom_blank(data = range_of_data)+
+  geom_vline(data = to_plot |> 
+               group_by(name)|>
+               summarise(value = mean(value,na.rm=TRUE)),
+             aes(xintercept = value),
+             linewidth = 3,color = "blue" ,
+             alpha = .4)+
+    facet_wrap(~name, scales ="free_x")+
+    scale_y_continuous(limits = c(0,sample_size),breaks = seq(0,10,2))
+}
+
+
+makeTable1 <- function(saw_hz_sample,parameters){
+  estimates <- saw_hz_sample            |> # estimate
+  mutate(prop_xan = subspecies != "P")|>
+  select(-(1:2))|>
+  summarise_all(mean, na.rm=TRUE)
+# -------------------------------------------------
+# Combine & format
+  bind_rows(estimates, parameters)           |>
+    mutate(measure = c("estimate","param"))|>
+    pivot_longer(cols = -measure)                   |>
+    pivot_wider(id_cols = name,names_from = measure)|>
+    kable(digits = 2)
+}
+
+makePlot2 <- function(saw_hz_sample, saw_hz_pop, parameters){
+  to_plot <-saw_hz_sample |> pivot_longer(-(1:2))
+  range_of_data <- saw_hz_pop |> pivot_longer(-(1:2))
+
+  ggplot(to_plot, aes(x = value))+
+  geom_histogram(color = "white", bins = 5)+
+  geom_blank(data = range_of_data)+
+  geom_vline(data = pivot_longer(parameters, 1:4),
+             aes(xintercept = value),
+                 linewidth = 3,color = "red",
+             alpha = .4)+
+  geom_vline(data = to_plot |> 
+               group_by(name)|>
+               summarise(value = mean(value,na.rm=TRUE)),
+             aes(xintercept = value),
+             linewidth = 3,color = "blue" ,
+             alpha = .4)+
+    facet_wrap(~name, scales ="free_x")+
+    scale_y_continuous(limits = c(0,sample_size),breaks = seq(0,10,2))
+}
+
+
+makeTable2 <- function(saw_hz_sample,parameters){
+  estimates <- saw_hz_sample            |> # estimate
+  mutate(prop_xan = subspecies != "P")|>
+  select(-(1:2))|>
+  summarise_all(mean, na.rm=TRUE)
+# -------------------------------------------------
+# Compare estimates to parameters
+# (I calculated parameters for you)
+  diffs <- abs((estimates - parameters)/parameters)|> 
+    round(digits = 3)
+# -------------------------------------------------
+# Combine & format
+  bind_rows(estimates, parameters, diffs)           |>
+    mutate(measure = c("estimate","param", "diffs"))|>
+    pivot_longer(cols = -measure)                   |>
+    pivot_wider(id_cols = name,names_from = measure)|>
+    kable(digits = 2)
+}
+```
+
+---
+
+####  Step 1: Sample from a population
+
+Let's take a sample of from our population.  How big should this sample be? It should be the same size as the sample in your study. Remember we are simulating the process of sampling by taking a sample from our population. This is what we do in statistics! 
+
+**The code below takes a random sample of ten plants from our population.** 
+
+Run the code to see our sample! 
+
+
+```{webr-r}
+#| autorun: false
+#| label: shared-session
+sample_size <- 10 # feel free to change this!
+# -------------------------------------------------
+saw_hz_sample <- saw_hz_pop           |> # sample
+ slice_sample(n=sample_size)
+
+kable(saw_hz_sample)
+```
+---
+
+####  Step 2: Estimate  
+
+From our sample we make an estimate. **The code below shows a histogram of our sample and estimates means (<span style="color:blue">blue lines</span>)**   
+
+Run the code to see our estimates! 
+
+
+```{webr-r}
+#| label: shared-session
+#| warning: false
+makePlot1(saw_hz_sample, saw_hz_pop, parameters)
+makeTable1(saw_hz_sample, parameters)
+```
+
+---
+
+####  Sample estimates differ from population parameters
+
+
+We know we sampled randomly and without bias (because we used a computer to sample for us). But still parameter estimates will differ from population parameters by chance because sampling is random. This random difference between parameters and estimates is called sampling error. 
+
+**Run the code below to visualize sampling error as the difference between <span style="color:blue">estimates  from our sample</span>, and  true <span style="color:red">parameters from a population</span>.**
+
+
+
+
+```{webr-r}
+#| label: shared-session
+#| warning: false
+makePlot2(saw_hz_sample, saw_hz_pop, parameters)
+makeTable2(saw_hz_sample, parameters)
+```
+
+---
+
+### The sampling distribution 
+
+Grasping the concept of the sampling distribution is critical to understanding our goals this term. It requires imagination and creativity because we almost never have or can create an actual sampling distribution (since we don’t have access to the full population). Instead, we have to imagine what it would look like under some model given our single sample. That is, we recognize that we only have one sample and will not take another, but we can imagine what estimates from another round of sampling might look like. Above we took one sample of size ten from a population.  @fig-sampdist builds the distribution of estimates we would get by repeatedly taking many samples of size ten.
+
+
+```{r}
+#| echo: false
+#| out-width: "100%"
+#| label: fig-sampdist
+#| fig-cap: "An animation illustrating the creation of a sampling distribution. **The left panel** shows a histogram of each new random sample of 10 Clarkia flowers sampled from our sawmill population. The sample's mean (the estimate) is shown as a dashed blue line. The true population parameter is in red. **The right panel** builds the sampling distribution by cumulatively building up a histogram, noting a new blue point representing the mean from each new sample. By the end we have 500 samples - a good approximation of the sampling distribution. Note that we did not show every sample, as that would be too slow and boring."
+#| fig-alt: "An animation with two plots that build up over time. The left plot repeatedly shows histograms of new 10-observation samples, each with a blue dashed line for its mean. The right plot accumulates the blue mean from each sample as a single dot. As the animation progresses through 500 samples, the dots on the right form a histogram-like distribution around a fixed, vertical red line, which is present in both plots."
+include_graphics("../../figs/stats_foundations/sampling/petal_area_sampling_dist_cartoon.gif")
+```
+
+:::aside
+
+> "Insanity is doing the same thing over and over and expecting different results." 
+> 
+>`r tufte::quote_footer('— Attributed to Albert Einstein')`
+
+
+
+> "The sampling distribution is doing the same thing over and over and expecting the different results." 
+>
+> `r tufte::quote_footer('— Me')`
+
+:::
+
+---
+
+In case you haven't noticed, I think that understanding the sampling distribution is fundamental to understanding any bit of statistics. Not only is the sampling distribution key to understanding statistics, but we use sampling distributions often. 
+
+- First, when we make an estimate from a sample, we build a sampling distribution around this estimate to describe the uncertainty in our estimate (see the upcoming section on Uncertainty).  
+
+- Second, in null hypothesis significance testing (see the upcoming section on Hypothesis Testing), we compare our statistics to their sampling distribution under the null hypothesis to assess how likely the results were due to sampling error.  
+
+**Thus, the sampling distribution plays a key role in two of the major goals of statistics — estimation and hypothesis testing.** Below, I introduce how we quantify uncertainty in relation to the sampling distribution.  
+
+But before doing so, I insist that you watch the first five minutes of the video below for the best explanation of the sampling distribution I’ve come across. I am reiterating this so many ways because it's important. 
+
+```{r}
+#| fig-cap: 'Watch the first 5 minutes of this description of the sampling distribution. Burn this into your brain. The later bit is good, but depends on concepts we have not covered yet. Also feel free to watch [this additional video for more context](https://www.youtube.com/watch?v=wyx6JDQCslE).'
+#| label: fig-apstatsguy
+#| echo: FALSE
+include_url("https://www.youtube.com/embed/uPX0NBrJfRI?end=307" ) 
+```
+
+
+
+## Quantifying uncertainty due to sampling error
+
+The two most common summaries of uncertainty are the standard error, and the 95% confidence interval. 
+
+- **The standard error** quantifies the expected variability in estimates as the standard deviation of the sampling distribution.  If we had a sampling distribution in hand we could find this in R as `sd(my_sampling_dist)`.   
+- **The 95% confidence interval** describes the middle ninety-five percent of the sampling distribution. i.e. the upper and lower 2.5% quantiles. If we had a a sampling distribution in hand we could find this in R as `quantile(my_sampling_dist, probs = c(0.025, 0.975))`.  
+
+
+
+:::note
+We almost never have a population characterized (after all that's why we are sampling), so we never know the sampling distribution. In the real world, we use mathematical or computational tricks to guess a sampling distribution given the distribution of values in our sample. 
+:::
+
+
+
+
+## Minimizing sampling error 
+
+We cannot eliminate sampling error, but we can do things to decrease it. Here are two ways we can reduce sampling error:   
+
+1. **Decrease the standard deviation in a sample**. We only have so much control over this, because nature is variable, but more precise measurements,  more homogeneous experimental conditions, and the like can decrease the variability in a sample. 
+
+2. **Increase the sample size**. As the sample size increases, our sample estimate gets closer and closer to the true population parameter. This is known as the law of large numbers.  Remember that changing the sample size will not decrease the variability in our sample, it will simply decrease the expected difference between the sample estimate and the population mean.    
+  
+
+
+[Return to our web exercise](#sampling_error_unavoidable) to explore how sample size ($n$)  influences the extent of sampling error. To do so, simply change `sample_size` to a small (e.g. 3) and large (e.g. 30) number and compare the difference between estimates and parameters.You will need to rerun all three R bits, in sequential order, and its probably best to do so a small handful of times.  
+
+
+
+
+## Be Wary of Exceptional Results from Small Samples
+
+Because sampling error is most pronounced in small samples, estimates from small samples can easily mislead us. @fig-smallN compares the sampling distributions for the proportion of Chinstrap penguins in samples of size five, thirty, and one hundred. About one-third of samples of size five have exactly zero Chinstrap penguins. Seeing no Chinstrap penguins in such a sample would be unsurprising but could lead to misinterpretation. Imagine the headlines:
+
+> "Chinstrap penguins have disappeared, and may be extinct!..."
+> `r tufte::quote_footer('--- Some unscrupulous newspaper, probably.')`
+
+The very same sampling procedure from that same population (with a sample size of five) could occasionally result in an extreme case where more than half the penguins are Chinstrap penguins (this happens in about 6% of samples of size five). Such a result would yield a quite different headline:
+
+> "Chinstrap penguins on the rise — could they be replacing other penguin species?"
+> `r tufte::quote_footer('--- Some unscrupulous newspaper, probably.')`
+
+A sample of size thirty is much less likely to mislead—it will only result in a sample with zero or a majority of Chinstrap penguins about once in a thousand times.
+
+The numbers I provided above are correct and somewhat alarming. But it gets worse—since unremarkable numbers are hardly worth reporting (illustrated by the light grey coloring of unremarkable values in @fig-smallN), we’ll rarely see accurate headlines like this:
+
+> "A survey of penguins shows an unremarkable proportion of three well-studied penguin species..."
+> `r tufte::quote_footer('--- A responsible, but quite boring newspaper.')`
+
+```{r} 
+#| label: fig-smallN
+#| fig.cap: 'Comparing the sampling distribution of chinstrap penguins in samples of size five, thirty, and one hundred. The true population proportion is 0.198. Bars are colored by whether they are likely to be reported (less than 5% or more than 39%), with unremarkable observations in dark green.'
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+#| column: page-right
+#| fig.height: 3.5
+library(palmerpenguins)
+library(infer)
+sample_size <- c(5, 30, 100)
+n_samples <- 10000
+penguin_samples_by_n <- lapply(sample_size, function(N) {
+  penguins %>%
+    rep_sample_n(size = N, reps = n_samples) %>%
+    summarise(prop = sum(species == "Chinstrap") / N) %>%
+    mutate(sample_size = N)
+}) %>%
+  bind_rows() %>%
+  mutate(`Worth reporting` = ifelse(prop < .05 | prop > .5, "Yes", "No"))
+
+ggplot(penguin_samples_by_n, aes(x = prop, fill = `Worth reporting`)) +
+  geom_histogram(binwidth = 1/30, color = "white", size = .1) +
+  ggtitle("Sampling Distribution of Proportion Chinstrap Penguins") +
+  facet_wrap(~sample_size, labeller = "label_both") +
+  scale_x_continuous(breaks = seq(0,1,1/4), labels = c("0","1/4","1/2","3/4","1"))+
+  geom_vline(xintercept = 68/344, color = "red", lty = 2) +
+  annotate(x = 68/344, y = 4000, geom = "text", hjust = 0,
+           label = "Parameter", color = "red", alpha = .5) +
+  scale_fill_manual(values = c("forestgreen", "black"))+
+  theme(legend.position = "bottom")
+```
+
+**In summary -- whenever you see an exceptional claim, be sure to look at the sample size and measures of uncertainty**. For a deeper dive into this issue, check out this optional reading: [The Most Dangerous Equation](https://www.americanscientist.org/article/the-most-dangerous-equation) [@wainer2007].
+
+## Small Samples, Overestimation, and the File Drawer Problem
+
+Let’s say you have a new and exciting idea—maybe a pharmaceutical intervention to cure a deadly cancer. Before you commit to a large-scale study, you might do a small pilot project with a limited sample size. This is a necessary step before getting the funding, permits, and time needed for a bigger study.
+
+- **What if you found an amazing result?** The drug worked even better than you expected! You would likely shout it from the rooftops—issue a press release, etc.
+- **What if you found something subtle?** The drug might have helped, but the result is inconclusive. You might keep working on it, but more likely, you’d move on to a more promising target.
+
+After reading this section, you know that both of these outcomes could happen for two drugs with the exact same effect (see @fig-smallN). This combination of sampling and human nature has the unfortunate consequence that reported results are often biased toward extreme outcomes. 
+
+This issue, known as the **file drawer problem** (because underwhelming results are kept in a drawer somewhere, waiting for a mythical day when we have time to publish them), means that reported results are often overestimated, modest effects are under-reported, and follow-up studies tend to show weaker effects than the original studies. Importantly, this happens even when experiments are performed without bias, and insisting on statistical significance doesn’t solve the problem. It is therefore exceptionally important to report all results—even boring, negative ones.
+
+
+
+```{r}
+#| echo: false
+#| eval: false
+
+library(gganimate)
+library(gifski)
+library(transformr)
+
+vals <- c(1:10, 15,seq(25,490,25),491:500)
+
+petal_area_dist<- lapply(500:1,function(i){
+  saw_hz_pop|>
+    filter(!is.na(petal_area))|>
+    select(petal_area)|>
+    slice_sample(n = 10) |>
+    mutate(trial = i)})|>
+  bind_rows()
+
+focal_petal <- petal_area_dist |>
+  filter(trial %in% vals )
+
+petal_means <- petal_area_dist |> group_by(trial)|> summarise(petal_area = mean(petal_area))|>ungroup()
+
+petal_means_for_anim <-lapply(vals,function(X){
+  petal_means  |>
+    filter(trial<=X)|>
+    mutate(new = (trial == X))|>
+    mutate(trial = X)})|>
+  bind_rows()
+
+
+petal_area_sampling_dist <- ggplot(petal_means_for_anim, aes(x = petal_area)) + 
+  geom_histogram( color = "white")+
+  transition_states(trial,transition_length = .2, state_length = .5)+
+  labs(title = 'Sampling distribution', 
+       subtitle = "{closest_state} samples of size 10")+
+  theme(axis.text = element_text(size=25),
+        axis.title = element_text(size=30),
+        title = element_text(size=30),
+        subtitle = element_text(size=25)) + 
+  scale_x_continuous(limits = c(0.09,2.2))+
+  geom_point(aes(alpha = new, y = 0), color = "blue", size = 4,show.legend = FALSE)+
+  geom_vline(xintercept =  0.837, color = "red", lty = 2, size = 1)+
+  scale_alpha_manual(values = c(0,1))
+
+
+anim_save("figs/stats_foundations/sampling/petal_area_sampling_dist", 
+          animate(petal_area_sampling_dist,
+                  nframes = length(vals),
+                  duration = length(vals)/1.5,
+                  width = 500,height = 420, renderer = gifski_renderer()))
+
+petal_area_samples <- ggplot(focal_petal , aes(x = petal_area)) + 
+  geom_histogram( color = "white", bins = 8)+
+  transition_states(trial,transition_length = .2, state_length = .5)+
+  geom_vline(data = petal_means |> filter(trial %in% vals),
+             aes(xintercept = petal_area),
+             color = "blue", lty = 2, size = 1)+
+  labs(title = 'Sample {closest_state} of Petal area', 
+       subtitle = "Samples of size 10")+
+  theme(axis.text = element_text(size=25),
+        axis.title = element_text(size=30),
+        title = element_text(size=30),
+        subtitle = element_text(size=25)) + 
+  scale_x_continuous(limits = c(0.09,2.2))+
+  geom_vline(xintercept =  0.837, color = "red", lty = 2, size = 1)
+
+animate(petal_area_samples,fps = 1.5,width = 500,height = 420)
+anim_save("figs/stats_foundations/sampling/petal_area_samples", 
+          animate(petal_area_samples,width = 500,height = 420, 
+                  nframes = length(vals),
+                  duration = length(vals)/1.5, renderer = gifski_renderer()))
+library(magick)
+
+petal_area_sampling_dist
+# Render the animation as a gif
+
+library(magick)
+gif1 <- image_read("figs/stats_foundations/sampling/petal_area_samples")
+gif2 <- image_read("figs/stats_foundations/sampling/petal_area_sampling_dist")
+combined <- image_append(c(gif1[1], gif2[1]))  # init
+for (i in 2:length(gif1)) {
+  frame <- image_append(c(gif1[i], gif2[i]))
+  combined <- c(combined, frame)
+}
+
+
+image_write(combined, "figs/stats_foundations/sampling/petal_area_sampling_dist_cartoon.gif")
+
+```

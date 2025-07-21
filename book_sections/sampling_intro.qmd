@@ -1,0 +1,125 @@
+# 11. Intro to Sampling {.unnumbered #sampling_intro}
+
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+```
+
+
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:** You've collected data and even generated some nice plots and summaries, but you know that is just the beginning of your quest. You realize that this is just one sample and realize that the same study done again could lead to different estimates and conclusions. You need a framework for understanding and quantifying the uncertainty that comes from this process of sampling.
+
+**Learning Goals: By the end of this section, you should be able to:**
+
+1.  **Explain the fundamental concepts of sampling.**
+    * Differentiate between a population and a sample.
+    * Distinguish between population **parameters** and sample **estimates**.
+
+2.  **Identify and describe the key challenges in sampling.**
+    * Explain the difference between **sampling error** and **sampling bias**.
+    * Define **non-independence** and explain why it is a problem for accurately estimating uncertainty.
+
+3.  **Understand the sampling distribution.**
+    * Describe what a **sampling distribution** represents and why it is the key conceptual tool for quantifying uncertainty.
+
+4.  **Use the sampling distribution to describe uncertainty.**
+    * Define the **standard error** and explain its relationship to the sampling distribution.
+
+5.  **Explain the relationship between sample size and uncertainty.**
+    * Describe how sample size influences sampling error and the precision of an estimate.
+
+:::
+
+---
+
+
+```{r}
+#| echo: false
+#| out-width: "100%"
+#| label: "fig-manyxan2"
+#| fig-alt: "A bunch of *Clarkia xantiana* flowers."
+#| fig-cap: "A pretty scene of *Clarkia xantiana*. How do we sample to make an estimate?"
+include_graphics("../clarkia_pics/many_xan_2.png")
+```
+
+---
+
+
+<article class="drop-cap">To a statistician, the TRUTH is a parameter of a  population -- *a collection of all individuals of a circumscribed type*. However, it is often impractical or impossible to study every individual in a population. Consider a beautiful California hillside covered in *Clarkia xantiana* plants (e.g. @fig-manyxan2). There are easily more than 2000 flowers in that picture. Collecting all of those flowers and measuring them would be a HUGE JOB. And that's only a picture of a portion of a hill. Of course, there are other parts of that hill, and  many more hills full of  *Clarkia xantiana*. So how can we know *Clarkia xantiana*'s average petal area? </article> <br>
+
+
+Rather than collecting and measuring each flower, we take a sample -- *a subset of a population*. We characterize a sample by taking an estimate of population parameters. So far we have been calculating estimates for samples (e.g. average petal area), not parameters from populations. 
+
+
+:::note 
+
+Sometimes we think of a population as a process generating our data. For example, when we compare binomial outcomes to the flip of a fair coin, we do not think about all coins flipped in the world. Rather we think about what we would expect to observe from the process of flipping a fair coin. Similarly, when we think about the parameter of the proportion hybrid seed set for a given plant we think about what would happen if that plant kept making an infinite number of offspring. 
+:::
+
+
+---
+
+### Sampling gone wrong
+
+
+
+So a major goal of a statistical analysis is how to go from conclusions about a sample that we can measure and observe, to the population(s) we care about. In doing so we must worry about: 
+
+
+
+- **[Sampling error:](#sampling_error)** Random differences between a sample and a population, and  
+- **[Sampling bias:](#sampling_bias)** Any systematic issues in our sampling or measuring procedure which will cause estimates to reliably differ from the population.  
+
+---
+
+### Uncertainty  from Sampling Error
+
+Because we usually have an estimate from a sample and not a parameter from a popultion, we can never avoid sampling error. However, the field of statistics is full of approaches to quantify uncertainty in our estimates that arise due to sampling error. All such approaches  "imagine" the process of sampling, and consider the distribution of estimates we would get under our sampling scheme. This imagined process is often translated into a statistical model. 
+
+
+
+:::warning
+Throughout the term we will introduce many approaches to include uncertainty induced by sampling error in our estimates. Dealing with sampling bias is much more difficult, and it is best to design studies with unbiased sampling. 
+:::
+
+---
+
+#### (Non-) Independence 
+**To appropriately model uncertainty**, samples must be independent. If samples are "independent", knowing something  about one observation in your sample does not  provide information about any other observation in the sample. 
+
+:::note
+Of course, most of statistics considered things that are non-independent -- e.g. we want to know if petal size or color or whatever is associated with e.g. hybrid seeds set. This form of non-independence - in which it is explicitly modeled (and often the thing we want to know about) is just fine. 
+ 
+The non-independence we're worried about is, for example, if many of the white flowered plants came from the same mom. In this case those observations would be non-independent because they came from the same family. 
+:::
+
+---
+
+## What's ahead  
+
+I cannot overstate how important the concept of sampling is to Statistics - **understanding this chapter is key to understanding what statistics is all about.**  
+
+In this section, we work through fundamental ideas of sampling.  
+
+- We start with the [idea of sampling](#sampling),  
+- We then consider what goes wrong in sampling -- [sampling error](#sampling_error), [sampling bias]( #sampling_bias), and [non-independent sampling](#nonindependence).   
+- We then consider how to [sample better](#better_sampling)  before concluding  with a [summary](#sampling_summary), a [chatbot tutor](#sampling_summary_chatbot_tutor), [practice questions](#sampling_summary_practice-questions), a [glossary](#sampling_summary_glossary-of-terms), and [additional resources](#sampling_summary_additional-resources).
+

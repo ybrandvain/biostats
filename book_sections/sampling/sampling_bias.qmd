@@ -1,0 +1,159 @@
+## • 11. Sampling Bias {.unnumbered #sampling_bias}
+
+
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating Scenario:**
+You are designing your study or critically evaluating someone else's research. You know that a sample should be a random draw from a population and need a framework to consider how non-random sampling could go wrong.
+
+**Learning Goals: By the end of this chapter, you should be able to:**
+
+1.  **Define sampling bias** and explain how it differs from sampling error.  
+2.  **Identify and describe** several common types of observational bias.  
+3.  **Explain how bias can arise in experimental studies**.
+4.  **Critically evaluate** a study design for potential sources of bias.
+
+:::
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(palmerpenguins)
+library(tufte)
+library(tidyr)
+source("../../_common.R") 
+set.seed(5)
+```
+--- 
+
+We [previously introduced sampling error](#sampling_error) - the unavoidable, random chance that makes our estimates differ from the truth. We noted that sampling error does not mean you did anything wrong, and showed that there are established tools to acknowledge and quantify sampling error.
+
+Now we look into a scarier problem: **sampling bias.** Sampling bias describes "bug" in sample collection that makes the sample unrepresentative of the population (for example volunteer bias in @fig-volunteer). Unlike random sampling error, you can't fix bias by collecting more data - a larger biased sample just provides more certainty in the wrong answer. Thinking hard about a study design, how it could result in bias, and what can be done to prevent such bias is one of the most important skills in applied statistics. 
+
+Below, we look into potential issues in sampling bias, largely building off of an imagined attempt to sample the GC *Clarkia xantiana* hybrid zone. 
+
+
+
+```{r} 
+#| echo: FALSE
+#| column: margin
+#| out-width: "100%"
+#| eval: false
+#| fig-cap: 'Example of sampling bias from [xkcd](https://xkcd.com/1999/). Accompanying text: *fMRI testing showed that subjects who dont agree to participate are much more likely to escape from the machine mid-scan.*'
+#| fig-alt: "A researcher is standing on a stage, pointing to a presentation slide with a graph. The researcher says, *Our research shows that, compared to the overall population, people who agree to participate in scientific studies are significantly less likely to call the police to rescue them from our lab.*"
+include_graphics("https://imgs.xkcd.com/comics/selection_effect.png")
+```
+
+```{r} 
+#| echo: FALSE
+#| label: fig-volunteer
+#| out-width: "100%"
+#| fig-cap: 'A [cartoon]((https://sketchplanations.com/sampling-bias)) by Jono Hey from [sketchplanations](https://sketchplanations.com/) illustrating sampling bias (response bias). The survey results show that people overwhelmingly love responding to surveys, but the sample only includes those who were willing to respond in the first place. Licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.'
+#| fig-alt: "A cartoon titled \"Sampling Bias.\" A presenter points to a bar chart showing survey results: 99.8% responded \"Yes, I love responding to surveys,\" while 0.2% responded \"No, I toss them in the bin.\" The presenter says, \"We received 500 responses and found that people love responding to surveys,\" while the audience looks on, puzzled."
+include_graphics("https://images.prismic.io/sketchplanations/f2fdb7cb-f126-4897-ad78-4fd11c743172_SP+723+-+Sampling+bias.png?auto=compress%2Cformat&fit=max&w=1920")
+```
+
+## (Avoiding) Sampling Bias
+
+Say we we are interested in knowing the proportion of *Clarkia xantiana* plants that are hybrids between the two subspecies, *parviflora* and *xantiana*. To make this problem a bit easier, lets focus our attention on one field site, GC. Here we change our question from "what proportion of *Clarkia xantiana* plants are hybrids between the subspecies?" to the more precise "what proportion of *Clarkia xantiana* plants **at GC** are hybrids between the subspecies?"  
+
+
+Lucky for us, Dave is a very diligent researcher, and this population is not too large. So he censused the population -- finding each plant and inferring its subspecies identity by genomic analyses (@fig-gcmap). But, what if the population was too large to census, or what if we weren't as motivated as Dave?  How could we randomly sample the population to get this estimate and how could things go wrong if we do not sample randomly?  Below I lay out some potential problems that could lead to a biased sample.
+
+---
+
+```{r}
+#| out-width: "100%"
+#| label: fig-gcmap
+#| echo: false
+#| fig-cap: "A map of the GC (Clarkia) hybrid zone. Each triangle represents an individual plant, colored according to its genetic makeup (Genetic PCA 1). The right panel provides a zoomed-in view of the area with the most hybrids."
+#| fig-alt: "A google map of the GC hybrid zone. The left panel is a wide view showing dozens of small triangles (representing individuals) scattered across the landscape. The right panel is a zoomed in view of a dense cluster of these triangles.  While most of the plants are xantiana, the zoomed in region has many parviflora plants and hybrids."
+include_graphics("../../figs/stats_foundations/sampling/gc_hz2.png")
+```
+
+---
+
+### A sample of convenience 
+
+
+
+Imagine we were driving along the main road and stopped when we saw a large patch of *Clarkia* plants, roughly in the "zoomed in" region of @fig-gcmap. If we collected all of those plants, we would mistakenly conclude that the population was roughly 1/4 hybrid, 1/4 *xantiana*, and 1/2 *parviflora*. In fact, the population is roughly 85% *xantiana*, 10% *parviflora*, and 5% hybrid. It's not clear if this bias is due to luck (the hybrids and *parviflora*) just happen to be near the road, or something more predictable (e.g. hybrids and *parviflora*) do better in roadsides, it is clear that limiting our sample to the roadside would skew our view of the population. 
+Of course. Here is an edited version of that section.
+
+
+
+### "Volunteer" Bias
+
+Say that instead of sampling by the roadside, we walked around the entire hillside looking for *Clarkia* plants. Because *xantiana* flowers are larger, brighter, and more conspicuous, we might subconsciously sample them more often, biasing our sample towards *xantiana*.
+
+This is a form of **"volunteer" bias**. As shown in @fig-volunteer, this problem is especially common in surveys where the people who choose to respond are rarely representative of the entire population. The same principle applies in other contexts: it's likely easier to catch a slow, docile mouse than a fast, skittish one, which would lead to a biased sample of animal behavior. et etc etc.
+
+
+### A Bias in Timing
+
+Our *Clarkia* example highlights another potential issue: the timing of your sampling can matter. In general, *parviflora* flowers before *xantiana* does, so sampling early in the season will generate a different sample than sampling late in the season.
+
+I point out this specific challenge of this system to highlight a broader principle: every study system has its own biological quirks that can frustrate efforts to get a truly random sample. It's your job to consider these biological issues before collecting data.
+
+
+### Survivorship bias 
+
+
+Sometimes, bias is introduced because the individuals we sample are only the "survivors" of some process. For example, in our *Clarkia* data it is reasonable to assume that hybrids are less likely to survive to flowering than parents. If this is the case, we would underestimate the proportion of hybrids in our sample. 
+
+
+
+```{r}
+#| out-width: "100%"
+#| column: margin
+#| label: fig-plane
+#| echo: false
+#| fig-cap: "Hypothetical damage pattern on a WW2 bomber. Loosely based on data from an unillustrated report by Abraham Wald (1943), showing that a similar plane survived a single hit to the engine 60% of the time, but a hit to the fuselage or fuel system closer to 95% of the time. Picture is from wikipedia, uploaded by Martin Grandjean and shared under a [Creative Commons Attribution-Share Alike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/deed.en) license."
+#| fig-alt: "A diagram of a WWII airplane showing red dots to mark where returning planes had been hit by bullets. The red dots are clustered heavily on the wings, the main body (fuselage), and the tail stabilizers. There are noticeably no red dots on the engines, the cockpit, or the core of the tail section, illustrating that planes hit in these areas did not survive to be analyzed."
+include_graphics("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Survivorship-bias.svg/1920px-Survivorship-bias.svg.png")
+```
+
+
+The classic example of survivorship bias comes from the location of bullet holes in WWII planes (@fig-plane). Planes often returned with bullet holes in the wings and tails, suggesting to some in the army that these areas need better protection. The statistician [Abraham Wald](https://en.wikipedia.org/wiki/Abraham_Wald) pointed out that it might be that planes shot in the engine and cockpit might be less likely to return than those shot in the tail - so it is the areas without bullet holes which require additional protection. This example has been elevated to a meme -- a rapid shorthand for much survivorship bias.
+
+
+
+
+
+:::note
+Sometimes, you can address sampling bias by carefully reframing your research question to match what you actually sampled. For example, if we said, we were estimating the proportion of flowering *Clarkia* that were hybrids our bias would go away. However, this is not always the best solution -- we want our statistics to answer biological questions of interest. 
+
+Changing the question so it is statistically valid may help us feel better, but leaves the inital question unanswered. For example, we want to know how likely planes are to get hit in th cockpit, making the question about wings does not solve this.
+:::
+
+
+
+### Bias in Experiments
+
+While we've focused on sampling in observational studies, bias can also creep into experiments. Human psychology is powerful, and our expectations can easily influence results. For example, a doctor describing a new drug or a patient taking it might pay more attention to (or even imagine) signs of improvement. Similarly, a researcher might "notice" more pollinators visiting plants they spiked with extra sugar, simply because they are subconsciously looking for that outcome.  
+
+:::aside
+**Randomized study:** Participants are randomly assigned to either the treatment or control group to ensure both groups are as similar as possible from the start. <br><br>
+**Double-Blind study:** This means that neither the participants nor the researchers assessing the outcomes know who is in the treatment group and who is in the control group. This setup prevents the expectations of either group from influencing the results.
+:::
+
+
+
+
+
+
+
+Bias also arises if individuals aren't randomly assigned to treatment groups. For example, if only the sickest patients are given a new medication, while the kinda sick patients are in the control group, we may see more success for the treatment because the sicker people had more room to improve. Whether the bias comes from how groups are assigned or from human expectations, the solution is the same -- the gold standard for many experiments is the **randomized, double-blind study**. 

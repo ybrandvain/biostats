@@ -621,6 +621,65 @@ window.Quarto = {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/stats_foundation_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section III: Stats Foundations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/sampling_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">11. Intro to Sampling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/sampling_error.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Error</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/sampling_bias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Bias</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/nonindependence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Non-independence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/better_sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Better</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/sampling_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../toc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Rest of Book</span></a>
   </div>
@@ -741,7 +800,7 @@ PCA is most useful when variables are correlated, since it finds axes that summa
 <div id="fig-pc_sample" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Four-panel figure showing how the results of PCA change with different sampling balances between two *Clarkia* subspecies. Panels A–C display PC1 vs. PC2 plots for three sampling configurations: equal sampling (45 each), and two imbalanced cases (45:3 and 3:45). As sampling becomes more imbalanced, the variance explained by PC1 decreases (84.62% → 73.01% → 55.99%). Panel D is a heatmap summarizing this effect across all sample combinations from 1 to 45 for each group, with brighter colors indicating higher variance explained by PC1. Locations of Panels A–C are marked within the heatmap." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pc_sample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../figs/summarizing_data/ordination/pc_sample.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="Four-panel figure showing how the results of PCA change with different sampling balances between two *Clarkia* subspecies. Panels A–C display PC1 vs. PC2 plots for three sampling configurations: equal sampling (45 each), and two imbalanced cases (45:3 and 3:45). As sampling becomes more imbalanced, the variance explained by PC1 decreases (84.62% → 73.01% → 55.99%). Panel D is a heatmap summarizing this effect across all sample combinations from 1 to 45 for each group, with brighter colors indicating higher variance explained by PC1. Locations of Panels A–C are marked within the heatmap.">
+<img src="../../figs/summarizing_data/ordination/pc_sample.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="Four-panel figure showing how the results of PCA change with different sampling balances between two *Clarkia* subspecies. Panels A–C display PC1 vs. PC2 plots for three sampling configurations: equal sampling (45 each), and two imbalanced cases (45:3 and 3:45). As sampling becomes more imbalanced, the variance explained by PC1 decreases (84.62% → 73.01% → 55.99%). Panel D is a heatmap summarizing this effect across all sample combinations from 1 to 45 for each group, with brighter colors indicating higher variance explained by PC1. Locations of Panels A–C are marked within the heatmap.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pc_sample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: <strong>Sampling effort alters the results of PCA.</strong> Panels A–C show principal component plots based on three floral traits in <em>Clarkia xantiana</em> (petal area, anther–stigma distance, and timing of pollen release vs.&nbsp;ovule receptivity). Data are from the “Sawmill Road” hybrid zone, with samples from both subspecies: <em>parviflora</em> is represented by red “P”s and <em>xantiana</em> by blue “X”s. Each panel presents a different sampling configuration: Panel A includes 45 individuals of each subspecies, Panel B includes 45 <em>parviflora</em> and 3 <em>xantiana</em>, and Panel C includes 3 <em>parviflora</em> and 45 <em>xantiana</em>. The proportion of total variance explained by PC1 decreases as the sampling becomes more uneven. Panel D summarizes this trend across combinations of sample sizes ranging from 1 to 45 for each subspecies. The color scale represents the average proportion of variance explained by PC1 across ten subsampling efforts for each parameter combination. Red letters A, B, and C correspond to Panels A–C.

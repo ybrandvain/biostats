@@ -1,0 +1,92 @@
+## 📘 Chapter 11, Part 1 — "Sampling" Section (Tutor Knowledge Base)
+
+**Context:**
+This section introduces the idea of sampling and why it’s essential for doing statistics. It explains that we use samples to estimate population characteristics (parameters), defines common sampling methods, and uses a simulated Clarkia dataset to help students visualize how sample estimates can differ from population values. Students also encounter R's `sample()` function in passing.
+
+---
+
+### 🎯 Learning Goals (for the tutor to support)
+
+By the end of this section, students should be able to:
+
+1. Explain why sampling is a necessary and fundamental part of statistics.
+2. Distinguish between a **population parameter** and a **sample estimate**.
+3. Describe and compare **random**, **stratified random**, and **haphazard** sampling methods.
+4. Explain what to do when random sampling isn't possible, and how to interpret data from a non-random sample with appropriate caution.
+
+---
+
+### 🔑 Key Concepts & Definitions
+
+* **Sampling**: Selecting a subset of individuals from a population to estimate something about the whole.
+* **Population parameter**: A true (but often unknowable) number that describes the population, e.g., the actual average petal area.
+* **Sample estimate**: A number calculated from a sample to approximate a population parameter.
+* **Sampling error**: The unavoidable difference between a sample estimate and the population parameter, due to random chance.
+* **Random sampling**: Every individual has an equal and independent chance of being selected.
+* **Stratified random sampling**: Break the population into subgroups (e.g., shady vs sunny slopes), then sample randomly within each.
+* **Haphazard sampling**: Sampling based on convenience or intuition—less ideal, but usable if acknowledged.
+
+---
+
+### 📊 Figure Descriptions
+
+#### **Figure 1**
+
+A photograph of a Clarkia-covered hillside. This visual motivates the logistical difficulty of taking a true random sample from a large natural population. The image helps students understand why sampling designs are necessary in the first place.
+
+#### **Figure 2**
+
+A set of bar plots comparing population parameters (light bars) to sample estimates (darker bars) for several Clarkia traits:
+
+* `herkogamy`
+* `node` (flowering position)
+* `petal_area`
+* `prop_xan` (proportion of non-parviflora individuals)
+* `protandry`
+
+Each pair of bars (one for the parameter, one for the estimate) shows how much the sample-based estimate can deviate from the actual population value—even when sampling is random. For example, in this sample of 10 plants from the full Clarkia SAW hybrid zone, the sample **underestimates herkogamy**, **overestimates petal area**, and so on. This deviation is an illustration of **sampling error**, not a mistake. The figure helps reinforce that estimates vary across samples and that this variation is expected and quantifiable.
+
+---
+
+### 🧠 Conceptual Takeaways
+
+* Sampling lets us estimate population values we can’t measure directly.
+* Even with honest random sampling, estimates will vary — this is **sampling error**, and it’s normal.
+* Some sampling designs (like stratified random) can help ensure certain subgroups are fairly represented.
+* **Clarity about how the sample was collected matters**, especially when interpreting results.
+* Students should not panic if their sample estimate is "off" — instead, they should understand why it's off, and how often it might happen.
+
+---
+
+### 💬 Notes for Tutor Responses
+
+* If students ask about **`sample()` in R**, feel free to explain it at a high level:
+
+  > "`sample()` is an R function that randomly selects values. In this chapter, it's used to simulate taking a random sample from a population."
+
+  But remind students:
+
+  > "You don't need to memorize or use `sample()` right now — it's just there to help you explore sampling concepts."
+
+* Avoid shifting the focus to code unless asked. Keep attention on the **ideas of randomness, representation, and uncertainty**.
+
+---
+
+### ⚠️ Common Student Confusions
+
+* Believing their sample is "bad" if it doesn’t match the population.
+* Assuming haphazard sampling is always invalid — context and transparency matter.
+* Thinking that increasing sample size always fixes everything (it reduces sampling error, but doesn’t fix bias).
+* Confusing the **sampling metaphor** (e.g. in experiments or simulations) with only literal population subsampling.
+* Believing haphazard sampling is always bad—help them see it depends on the research goal and transparency.
+* Confusing “sampling” in statistics with just grabbing things randomly (help them connect it to the idea of inference).
+* Forgetting that **sampling error happens even if you do everything right**.
+
+
+
+### 🗣️ Tutor Guidance
+
+* Use informal, student-facing language—“real-world fieldwork” is a good anchor.
+* If students ask what kind of sampling they should use, help them consider feasibility, bias, and clarity in design.
+* If students ask whether their sample is “good,” ask how it was collected and what the population of interest is.
+* Avoid technical inference discussions unless asked—this section is focused on sampling and estimating, not p-values or CI construction.

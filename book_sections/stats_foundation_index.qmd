@@ -1,0 +1,45 @@
+# Section III: Stats  Foundations   {.unnumbered}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(knitr)
+```
+
+
+
+
+
+
+<article class="drop-cap">The major goals of statistics are to: (1) Summarize data, (2) Estimate uncertainty, (3) Test hypotheses, (4) Infer cause, and (5) Build models. Now that we can do things in R, and we can summarize data (and even build simple models), we are ready to dive into the second and third goals of statistics -- to **Estimate with Uncertainty** and **Test Hypotheses**.</article>
+
+<br>As we summarized data in the previous section we could precisely (and correctly) calculate a mean or a covariance or whatever. However, these calculations only described the data we collected, which is not exactly what we care about. We don't just want to know if the specific small-flowered *Clarkia* plants in our sample set fewer hybrid seeds than the large-flowered plants we observed. Instead, we want to know if, in general, *Clarkia* plants with smaller flowers set fewer hybrid seeds than those with large flowers $^*$.  
+
+
+:::note
+$^*$ We actually often want to know if petal size causes a shift in hybrid seed set, but that issue of causal inference is reserved for a later section.  
+:::
+
+
+
+```{r}
+#| echo: false
+#| out-width: "100%"
+#| label: "fig-wereoff"
+#| fig-alt: "A nice picture of Clarkia's home."
+#| fig-cap: "A pretty scene of Clarkia's home showing the world we get to summarize."
+include_graphics("../figs/summarizing_data/many_xan_1.png")
+```
+
+---
+
+
+### Samples and Populations 
+
+The difference between describing our sample versus describing the population is the major logical gap we aim to fill with statistics. Filling this gap requires a few conceptual tools, and these tools make up the core of this part of the book:
+
+* We must first understand the process of sampling, including how and why a sample may differ from a population, which is the subject of **Chapter 11**.
+* Next, we must internalize key ideas of probability and stochasticity -- i.e. that what we see in this world is one of numerous potential outcomes. This is covered in **Chapter 12**.
+* Putting these ideas together, we can add a measure of humility to our estimates by noting the uncertainty around them. **Chapter 13** introduces this concept, while **Chapter 14** introduces bootstrapping as a technique to think more clearly about and quantify this uncertainty.
+* Finally, we aim to evaluate if two samples plausibly come from the same "population." **Chapter 15** lays out the foundational idea of Null Hypothesis Significance Testing (NHST), while **Chapter 16** introduces permutation as a method to both clarify NHST and perform such a test.

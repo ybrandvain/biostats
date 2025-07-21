@@ -1,0 +1,74 @@
+## • 11. Sampling Better {.unnumbered #better_sampling}
+
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(palmerpenguins)
+library(tufte)
+library(tidyr)
+```
+
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating Scenario:**
+We've seen that at best -- because chance in inherent in sampling we cannot avoid sampling error. We've also seen that in the real world sampling bias  and non-independence, can further complicate our aims of estimation and hypothesis testing. In this section I go over sampling strategies to generate precise and accurate estimates.
+
+**Learning Goals: By the end of this chapter, you should be able to:**
+
+1.  Identify the two key features of an ideal sample (large and random) and explain what problems they solve.  
+2.  Know how to generate a random sample. 
+3.  Have some familiarity with good enough sampling approaches when a random sample cannot be obtains. 
+4.  List the key principles of robust experimental design, including blinding and avoiding pseudoreplication, and what problems they solve.  
+
+:::
+
+---
+
+Later, we will spend time considering experimental design, but given that we just worked through how sampling can go wrong, let's consider how sampling and experimental design can go right. 
+
+**The best sample is a large random sample.**   
+
+- **A large sample minimizes the extent of sampling error.**  Sampling error is unavoidable, but it can be minimized -- the larger the sample the less sampling error and the larger the sample the less sampling error (see (#sampling_error)).  Of course, larger samples come at a cost of time and energy, and each additional sample becomes less useful as our sample size gets large. So later in the term we will consider how to balance these issues in planning for a good sample size. 
+
+::: aside
+According to the **law of large numbers** the average of a large random sample converges to the true population parameter.
+:::
+
+- **A random sample prevents non-independence and bias** If you can, use a random number generator (e.g. the [`sample()`](https://stat.ethz.ch/R-manual//R-patched/library/base/html/sample.html) or [`runif()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/Uniform.html)  functions in R) to select coordinates, individuals from a numbered list, or experimental plots to ensure that every individual has an equal and independent chance of being chosen. 
+
+Of course, while getting a random sample is ideal, it's not always plausible. Your best alternatives include **Systematic Sampling** e.g. stretching a 100-foot transect line across the hillside and sampling the single plant closest to the line (and withing x square feet) every 5 feet. This disciplined approach prevents you from only sampling the convenient spots or the big, showy patches of flowers.
+
+
+
+
+### Best practice for experiments   
+
+```{r}
+#| label: fig-xkcd_sex 
+#| column: margin  
+#| echo: false
+
+#| fig-cap: "In some cases especially behavioral ones, creating a believable placebo is impossible, highlighting a key limitation of this experimental design principle. from [xkcd](https://xkcd.com/1462/)."
+#| fig-alt: "An xkcd comic titled 'The Limitations of Blind Trials.' A presenter on a stage says, 'We've designed a double-blind trial to test the effect of sexual activity on cardiovascular health. Both groups will think they're having lots of sex, but one group will actually be getting sugar pills.'"
+
+include_graphics("https://imgs.xkcd.com/comics/blind_trials_2x.png")
+```
+
+There are also things we can do to minimize bias and non-independence in experiments. As stated previously, when conducting human trials a double blind study is best. Similarly, when working in non-humans (plants, animals, bacteria etc) its best if the observer is "blind" to the treatment.  However, in some cases "blinding" is impossible or impractical -- e.g. how can you watch pollinators and no see petal color? (see also @fig-xkcd_sex).
+
+Finally, it is best to avoid pseudoreplication by spreading treatments across conditions however this is not always possible. For example, because pesticides often  "drift" we usually need to put distance between a pesticide and no pesticide treatment. Later in the term we will learn how to model such non-independence with random effect models. 
