@@ -1,0 +1,222 @@
+## • 12. Gotchas  {.unnumbered #boot_gotchas}
+
+
+
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+library(tufte)
+library(infer)
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm )|>
+  mutate(id = factor(1:n()))
+#set.seed(34);slice_sample(gc_rils, n = 5)
+#set.seed(27);slice_sample(gc_rils, n = 5)
+#set.seed(40);slice_sample(gc_rils, n = 5)
+```
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:** We are amazed by our newfound power of estimating uncertainty by bootstrapping! But before we get carried away, we wonder if there's anything we need to consider"
+
+**Learning Goals: By the end of this subsection, you should be able to:**
+    
+ 
+
+        
+1.  **Know when to be wary of bootstrap-based estimates of uncertainty**  
+   - Consider the stability of bootstrap estimates of uncertainty, and the number of bootstrap replicates.  
+   - Consider the size of the sample.
+   - Consider bias and non-independence of the sample. 
+  
+2. **Know that there are other (common) ways to estimate uncertainty**   
+    
+    
+:::
+
+
+---
+
+## Bootstrap gone wrong  
+
+**Bootstrapping is great!** It allows us to estimate uncertainty without relying on formulas or too many assumptions. But as with all stats tools, there are limits to the use of bootstrapping. So before moving onto the next section it is worth going over   these limits and how to deal with them.
+
+### Bootstrapping itself is a sample  
+
+```{r}
+#| echo: false
+#| label: fig-xkcd_errorbars
+#| column: margin
+#| fig-cap: "An [xkcd comic](https://xkcd.com/2110/) about uncertainty in our uncertainty. Rollover text: \"...an effect size of 1.68 (95% CI: 1.56 (95% CI: 1.52 (95% CI: 1.504 (95% CI: 1.494 (95% CI: 1.488 (95% CI: 1.485 (95% CI: 1.482 (95% CI: 1.481 (95% CI: 1.4799 (95% CI: 1.4791 (95% CI: 1.4784...\". See [explainxkcd](https://www.explainxkcd.com/wiki/index.php/2110:_Error_Bars) for more discussion."
+#| fig-alt: "xkcd comic titled 'Error Bars'. A line graph shows four data points with error bars. In a recursive, fractal-like pattern, the ends of the error bars also have smaller error bars, which in turn have even smaller error bars. The caption reads: 'I DON'T KNOW HOW TO PROPAGATE ERROR CORRECTLY, SO I JUST PUT ERROR BARS ON ALL MY ERROR BARS.'"
+include_graphics("https://imgs.xkcd.com/comics/error_bars_2x.png")
+```
+
+Bootstrapping uses sampling to approximate the sampling distribution. This means that every time we bootstrap we will get a different estimate of uncertainty - even if we have the same data going into the bootstrap. As with other forms of sampling, the more bootstrap replicates you make, the more stable your estimate of uncertainty is. However there is a trade-off between computational effort and  the precision of bootstrap estimates of uncertainty.
+
+**How many bootstrap replicates are enough?** I don't know, and it depends on your data. I usually start with 1000 bootstrap replicates and calculate the bootstrap standard error and confidence intervals. I repeat this a few times and see if my estimates are stable.   
+
+   - If my estimated uncertainty bounces around a lot I increase the number of replicates to five thousand and see if that helps. I keep increasing the number of replicates until my estimates of uncertainty are stable.   
+   
+   - If my estimate is stable I'm happy.   
+   
+   - If the bootstrapping is taking forever, I decrease the number of reps.    
+
+**Why not make millions of bootstrap replicates?** It will take a lot of time, and overtax your computer with very little reward.
+
+::: {.grid}
+
+::: {.g-col-6}
+
+**100 Bootstrap replicates:** For me in this example, 100 bootstrap replicates leads to confidence intervals which are too variable to feel comfortable reporting.  
+
+```{r}
+#| echo: false
+lapply(1:5,function(X){gc_rils|>
+    specify(response = prop_hybrid)    |>     
+    generate(reps = 100, type = "bootstrap") |>
+    calculate(stat = "mean")|>
+    get_ci()|> mutate(boot_num = X,reps=100,lower_ci = round(lower_ci, digits=4),
+                      upper_ci = round(upper_ci, digits=4))}
+    )|>bind_rows()|> select(lower_ci,upper_ci)|>kable()
+```
+
+:::
+  
+::: {.g-col-6}
+
+**5000 Bootstrap replicates**  By contrast estimates from 5000 bootstraps  seem stable enough for me (e.g. I would declare that the lower CI is 0.107 and all that close enough).
+
+
+```{r}
+#| echo: false
+lapply(1:5,function(X){gc_rils|>
+    specify(response = prop_hybrid)    |>     
+    generate(reps = 5000, type = "bootstrap") |>
+    calculate(stat = "mean")|>
+    get_ci()|> mutate(boot_num = X,reps=5000,lower_ci = round(lower_ci, digits=4),
+                      upper_ci = round(upper_ci, digits=4),)}
+    )|>bind_rows()|> select(lower_ci,upper_ci)|>kable()
+```
+
+:::
+  
+:::  
+
+
+### Bootstrapping is unreliable  when n is small 
+
+Bootstraping works by approximating the sampling distribution by resampling your data with replacement. Thus it inherently assumes your sample is a good representation of the population. A very small sample is unlikely to  capture the true shape of the population's distribution. 
+
+To think about this, consider an extremely small sample of two. Here bootstrapping will provide three estimates:    
+
+1. A quarter of the time we will sample individual one twice and their value will be the estimate of the mean.  
+
+2. Half the time we will sample both individuals so the mean of these two will be our estimate of the mean.  
+
+3. A quarter of the time we will sample individual two twice and their value will be the estimate of the mean. None of these are good estimates.  
+
+The bootstrap distribution is similarly limited for somewhat larger sample sizes. For example, @fig-smallboot shows the data and associated bootstrap distributions for three different samples of size five. The first consists of moms making zero or few hybrid seeds, the second has a mix of moms with few and many hybrid seeds, and the third consists of moms with many hybrid seeds. For the first and third samples, the 95% CI (purple dashed line in @fig-smallboot) fails to capture the actual estimated mean from our original sample (red line in @fig-smallboot).
+
+
+
+**As a rule of thumb, a sample of twenty or more is required for a reliable bootstrap estimate of uncertainty.** But there is wiggle room and nuance -  when data are less variable and more bell shaped we can get away  with a smaller sample, while more variable data with strange distributions require a larger sample size for reliable bootstrapping. 
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| label: fig-smallboot
+#| fig-cap: "Three different random samples of size five (top row) and their associated bootstrap distributions of the mean (bottom row). The bootstrap distributions are sparse and irregular due to the small sample size. Purple dashed lines show the 95% confidence interval for each bootstrap, and the red line shows the  actual estimated sample mean of 0.151 from a sample of size 101."
+#| fig-alt: "Three different random samples of size five (top row) and their associated bootstrap distributions of the mean (bottom row). The bootstrap distributions are sparse and irregular due to the small sample size. Purple dashed lines show the 95% confidence interval for each bootstrap, and the red line shows the estimate from the original sample of size 101. For two of the three samples, the 95% confidence interval fails to capture the true population mean, illustrating the unreliability of bootstrapping with very small samples."
+library(patchwork)
+set.seed(34)
+sample1 <- slice_sample(gc_rils, n = 5)
+boot1 <- sample1|>
+  specify(response = prop_hybrid)    |>     
+  generate(reps = 5000, type = "bootstrap") |>
+  calculate(stat = "mean")
+
+set.seed(27)
+sample2 <- slice_sample(gc_rils, n = 5)
+boot2 <- sample2 |>
+  specify(response = prop_hybrid)    |>     
+  generate(reps = 5000, type = "bootstrap") |>
+  calculate(stat = "mean")
+
+set.seed(40)
+sample3 <-  slice_sample(gc_rils, n = 5)
+boot3 <- sample3 |>
+  specify(response = prop_hybrid)    |>     
+  generate(reps = 5000, type = "bootstrap") |>
+  calculate(stat = "mean")
+
+plot1 <- bind_rows(mutate(sample1,sample=1),
+                   mutate(sample2,sample=2),
+                   mutate(sample3,sample=3))|>
+  ggplot(aes(x = prop_hybrid))+
+  geom_histogram()+
+  facet_wrap(~sample)+
+  labs(x = "proportion hybrid (for each mom)",
+       title = "values in sample")+
+  scale_x_continuous(labels = c("0","1/4","1/2","3/4","1"))+
+  theme(axis.text = element_text(size = 14),
+        axis.title = element_text(size = 14))
+plot2 <- bind_rows(mutate(boot1,sample=1),
+          mutate(boot2,sample=2),
+          mutate(boot3,sample=3))|>
+  ggplot(aes(x = stat))+
+  geom_histogram(bins = 40, color= "white",linewidth = .3)+
+  facet_wrap(~sample, labeller = "label_both",nrow=1)+
+  geom_vline(color = "red", xintercept = 0.151)+
+  geom_vline(data = bind_rows(mutate(get_ci(boot1), sample =1),
+                              mutate(get_ci(boot2), sample =2),  
+                              mutate(get_ci(boot3), sample =3))|>
+               pivot_longer(-sample),
+    aes(xintercept = value), color = "purple", lty =2)+
+  labs(x = "estimated proportion hybrid (for each bootstrap)",
+       title = "bootstrap distribution")+
+  scale_x_continuous(labels = c("0","1/4","1/2","3/4","1"))+
+  theme(axis.text = element_text(size = 14),
+        axis.title = element_text(size = 14))
+plot1 / plot2
+```
+
+
+### Bootstrapping cannot fix bad sampling 
+
+More generally, resampling a poor sample will only give you a precise but wrong answer. 
+
+- **If data are non-independent, a simple bootstrap will not properly estimate uncertainty.** Say we happened to sample intensely in a few sections of GC rather than sampling randomly across space. Within each section plants are likely to be more closely related genetically or to experience similar environmental influences etc which will make them more similar to one another. As such, our sample will not represent the variability of this population appropriately and we will be overconfident in our estimates.
+
+- **If a sample is biased, a simple bootstrap will not properly estimate uncertainty.**  For instance, if you tended to sample more pink than white flowers because they were easier to see, the bootstrap would give you a precise estimate of a sample tilted toward more pink flowers than we see in the  population.  This will inflate our estimated probability of hybridization.
+
+
+
+## There are other ways to estimate uncertainty  
+
+Perhaps it's my fault. I just love bootstrapping so much. But students sometimes finish this section thinking bootstrapping is the only way to estimate uncertainty. **This is not true.** While bootstrapping is very handy there are other -- and more common approaches -- to estimate uncertainty. These alternative approaches use common mathematical distributions to generate a sampling distribution and are therefore less computationally intense. We will encounter these later in the book. 
+

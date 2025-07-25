@@ -1,0 +1,317 @@
+## • 12. Bootstrapping w/`infer`  {.unnumbered #boot_infer}
+
+
+
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(webexercises)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+library(tufte)
+```
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for selecting data from a few columns from RILs planted at GC"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm )|>
+  mutate(id = factor(1:n()))
+```
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:** We understand the importance of quantifying uncertainty, and can build a bootstrap distribution. We now want to put a reasonable range on our estimate.  Here, we will learn how a confidence interval solves this problem, and what it does and does not mean."
+
+**Learning Goals: By the end of this subsection, you should be able to:**
+    
+1.  **Explain the meaning of a confidence interval**
+    
+2. **Calculate a bootstrap confidence interval from the bootstrap distribution**   
+    
+3. **Visualize uncertainty by adding confidence intervals to your plots**  
+
+
+**NOTE:** IMO The code introduced in this section is super helpful but need not be memorized. I suggest bookmarking this page so you know where to find these helpful functions, but do not waste time committing them to memory.
+:::
+
+
+---
+
+We previously generated a bootstrap distribution with [`slice_sample()`](https://dplyr.tidyverse.org/reference/slice.html). But this required some work on our part. As with much in R there are specialized packages that bootstrap for us. I like these packages because they make it easier to do, harder to mess up, and are often coded more efficiently than we can code. 
+
+
+Here, I show you how to bootstrap with the [`infer` package](https://infer.netlify.app/) package. While our first example of bootstrapping a single mean will look similar to our manual approach, you will quickly see how infer's consistent grammar makes bootstrapping more complex statistics (e.g.  a difference in means or a regression slope) surprisingly straightforward.
+
+## Bootstrapping the mean with `infer`
+
+To bootstrap with infer, we 
+
+1. [`specify()`](https://infer.netlify.app/reference/specify) the response variable.  
+2. [`generate()`](https://infer.netlify.app/reference/generate) the bootstrap distribution.   
+3. [`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html) results for each bootstrap replicate.  
+4. Calculate estimates of uncertainty  
+   - with [`sd()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/sd.html) to find the bootstrap standard error.    
+   - and [`quantile()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/quantile.html) to find the confidence interval.
+
+The code below shows how to conduct the first two steps -- it makes a **HUGE** tibble -- with `reps` (5000 in this example) replicates. I only show a subset of these replicates here, because the table is too large to be hosted by my server. 
+
+```{r}
+library(infer)
+boot_phyb <-  gc_rils %>%
+  specify(response = prop_hybrid)    |>     # Specify variable of interest
+  generate(reps = 5000, type = "bootstrap") # Generate 5000 bootstrap resamples
+```
+
+
+
+```{r}
+#| echo: false
+(boot_phyb|> ungroup()|>
+   slice(c(1:500,504800:505000)))|>
+  datatable(options = list(pageLength = 5, lengthMenu = c(5, 10, 15, 20)))
+```
+
+Next we summarize each bootstrap replicate and calculate summary statistics as before. Reassuringly, the answer is basically the same as we have found previously.
+
+:::aside
+**Note:** The infer package has handy functions to do these steps too, as I will show you soon. For now I show you how to do it 'manually' to remove the mystery of a magic function. 
+:::
+
+```{r}
+alpha <- 0.05
+
+boot_phyb |>
+  summarise(est_prop_hybrid = mean(prop_hybrid)) |>
+  summarise(standard_error  = sd(est_prop_hybrid ),
+            lower_cl = quantile(est_prop_hybrid, probs = alpha/2),
+            upper_cl = quantile(est_prop_hybrid, probs = 1-alpha/2))
+```
+
+`r hide("Show how the entire pipeling with infer tools")` 
+
+```{r}
+library(infer)
+boot_dist_phyb <-  gc_rils %>%
+  specify(response = prop_hybrid)           |>  # Specify variable of interest
+  generate(reps = 5000, type = "bootstrap") |>  # Generate 5000 bootstrap resamples
+  calculate(stat = "mean")
+```
+
+**Find standard error**
+
+```{r}
+summarise(boot_dist_phyb , se = sd(stat))
+```
+
+**Find 95% confidence interval**
+
+
+```{r}
+get_ci(boot_dist_phyb, level = .95, type = "percentile")
+```
+
+`r unhide()`
+
+:::fyi
+Because bootstrapping involves chance sampling bootstrap estimates of uncertainty will vary slightly each time. We say a bit more about this in the next subsection. 
+:::
+
+## Bootstrapping is not just for means!! 
+
+Recall one of our major questions in *Clarkia* speciation is how floral traits like petal color or petal area impact the propensity to set hybrid seed. We can resample with replacement to estimate uncertainty in all sorts of estimates such as these. Below we'll see how the infer package makes it easy to do so. 
+
+### Difference in means
+
+
+
+```{r}
+#| column: margin
+gc_rils                   |> 
+ group_by(petal_color)    |>
+ summarise(prop_hybrid =
+           mean(prop_hybrid))
+```
+
+Nearly 26% of seeds on pink-petaled *parviflora* RILS at GC are hybrids, while only 3.22% of seeds on white-petaled *parviflora* RILS at GC are hybrids. So, we estimate a 22.78% difference (or 0.2278) in the proportion of hybrid seeds by petal color morph. However, we know that the estimates going into this are associated with uncertainty. We can even quantify uncertainty in the mean of each group as before (see @fig-hybbypetal). But how do we estimate our uncertainty in the *difference* between these means?
+
+To do this, we must:
+
+
+```{r}
+#| column: margin
+#| echo: false
+#| message: false
+#| warning: false
+#| label: fig-hybbypetal
+#| fig-height: 8
+#| fig-cap: "The proportion of hybrid seed set for pink- and white-petaled flowers at GC. Each point represents an individual plant. Overlaid in bright green is the mean and the 95% bootstrap confidence interval for each petal color morph." 
+#| fig-alt: "A plot on a dark background comparing 'proportion hybrid seed' for two groups on the x-axis: 'pink' and 'white'. The pink group's data points are clustered higher on the y-axis than the white group's, which are clustered near zero.The mean and bootstrap 95% confidence interval error bar are shown for pink and white flowers."
+
+gc_rils                           |>
+  filter(!is.na(petal_color))     |>
+  ggplot(aes(x = petal_color,  y = prop_hybrid, 
+             color =  petal_color))                             +
+  geom_jitter(height = 0, width = .2, size = 6, alpha = .6)     +
+  stat_summary(fun.data = "mean_cl_boot", colour = "green",
+               linewidth = 1.8, size = 1.5)                     +
+  scale_color_manual(values = c("pink","white"))                +
+  labs(x = "Petal color", y = "proportion hybrid seed")         +
+  theme_dark()                                                  +
+  theme(legend.position = "none",
+        axis.text = element_text(size  = 34),
+        axis.title = element_text(size = 30))
+```
+
+
+1.  Resample white and pink-petaled flower morphs with replacement.
+2.  Calculate the mean hybrid seed set for each morph in this bootstrap replicate.
+3.  Find the difference in hybrid seed set by petal-color morph in this bootstrap replicate.
+4.  Repeat this a bunch of times to find the bootstrap distribution.
+5.  Quantify uncertainty, for example, as the bootstrap standard error and the bootstrap 95% confidence interval.
+
+I could code this myself, but it's tedious. [`infer`](https://infer.netlify.app/) makes it straightforward. The code below uses the formula syntax `prop_hybrid ~ petal_color` (as we did in our [linear model setion](#linear_models)) inside [`specify()`](https://infer.netlify.app/reference/specify) to indicate our interest in this relationship. We then tell R to [`generate()`]((https://infer.netlify.app/reference/generate) the bootstrap distribution and [`calculate()`](https://infer.netlify.app/reference/calculate) to find the `"diff in means"` for each bootstrap replicate:
+
+```{r}
+library(infer)
+boot_diffs <- gc_rils                   |>
+  filter(!is.na(petal_color))           |>
+  specify(prop_hybrid ~ petal_color)    |>                      # The linear model we're looking into
+  generate(reps = 5000, type = "bootstrap") |>                   # Bootstrapping
+  calculate(stat = "diff in means", order = c("pink", "white"))  # Summarizing the bootstrap replicate
+```
+
+We can now visualize this bootstrap distribution of differences as a histogram to see the range of plausible values. Figure @fig-diffhybbypetal shows this distribution and its 95% confidence interval.
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| label: fig-diffhybbypetal
+#| code-summary: "Code for plotting the bootstrap distribution of hybrid seed set by petal color with 95% CI"
+#| fig-height: 4
+#| fig-cap: "The bootstrap distribution of the difference in mean proportion of hybrid seeds between pink and white morphs. The distribution is centered far from zero, and the 95% confidence interval (bounded by the purple dashed lines) does not overlap with the solid black line at zero."
+#| fig-alt: "A histogram showing the bootstrap distribution for the mean difference in hybrid proportion (pink - white). A solid black vertical line is drawn at zero on the x-axis. The entire distribution is to the right of this line. The central 95% of the histogram bars are light blue, while the bars in the outer 2.5% tails are dark red. Two dashed purple lines mark the confidence interval, which does not cross the zero line."
+boot_diffs_cis <- boot_diffs |>
+  reframe(ci = quantile(stat,probs = c(0.025, 0.975)))
+
+boot_diffs_2 <- boot_diffs |> 
+  mutate(extreme = (stat < (boot_diffs_cis |> unlist())[1]) |
+                   (stat > (boot_diffs_cis |> unlist())[2])) 
+
+boot_diffs_2  |>
+  ggplot(aes(x = stat, alpha = extreme, fill = extreme))+
+  geom_histogram(bins = 50, color= "white")+
+  labs(title = "95% bootstrap confidence interval for difference in\nproportion hybrids of pink and white petal-color morphs at GC",
+       x = "Mean difference in hybrid proportion (pink - white)",
+       fill = "2.5% tail",
+       alpha = "2.5% tail")+
+  theme_light()+
+  guides(alpha  = guide_legend(position = "inside"),
+         fill  = guide_legend(position = "inside"))+
+  theme(axis.title.x = element_text(size = 14),
+        axis.text.x = element_text(size = 14),
+        title =  element_text(size = 14),
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        legend.position = c(.2,.8),
+        legend.box.background = element_rect(colour = "black"))+
+  geom_vline(data =  boot_diffs_2 |>
+               reframe(ci = quantile(stat,
+                       probs = c(0.025, 0.975))),
+             aes(xintercept = ci), 
+             color = "purple", 
+             linewidth = 1, 
+             lty = 2)+
+  scale_fill_manual(values = c("cornflowerblue","firebrick"))+
+  scale_alpha_manual(values = c(.2,1))+
+  geom_vline(xintercept = 0)
+```
+
+
+With our bootstrap distribution of differences in hand, we can now precisely quantify our uncertainty. We can find the bootstrap standard error with the [`sd()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/sd.html) function and use [`infer`](https://infer.netlify.app/)'s convenient [`get_ci()`](https://infer.tidymodels.org/reference/get_confidence_interval.html?q=get_ci#aliases) function to find the 95% confidence interval.
+
+```{r}
+#| column: margin
+boot_diffs |>
+  summarise(se = sd(stat))
+```
+
+```{r}
+boot_diffs |>
+  get_ci(level = 0.95, type = "percentile")
+```
+
+Thus, we conclude that a reasonable estimate of the difference in the proportion of hybrid seed lies between  `r ((boot_diffs |>get_ci(level = 0.95, type = "percentile"))|>unlist() |> round(digits =3)) |> paste(collapse = " and ")`. Importantly, this confidence  interval excludes zero so  we are pretty sure that pink RILs do set more hybrid seed than white ones.
+
+### Slope   
+
+
+We can similarly use infer to find the bootstrap distribution of the slope. For example, we can  quantify the uncertainty in our estimate of a 0.00566 increase in proportion hybrid seed with every additional squared mm in petal area (@fig-slope) as shown in the code below. 
+
+```{r}
+#| column: margin
+# Estimate the slope
+# As covariance / variance
+gc_rils |>
+  filter(!is.na(petal_area_mm)) |>
+  summarise(slope = cov(petal_area_mm, prop_hybrid) / var(petal_area_mm))
+```
+
+```{r}
+boot_slopes <- gc_rils                      |>
+  filter(!is.na(petal_area_mm))             |>
+  specify(prop_hybrid ~ petal_area_mm)      |>        # The linear model we're looking into
+  generate(reps = 5000, type = "bootstrap") |>        # Bootstrapping
+  calculate(stat = "slope")                           # Summarizing the bootstrap replicate
+
+summarise(boot_slopes , se = sd(stat))                # find SE
+get_ci(boot_slopes,level = 0.95, type = "percentile") # 95% CI
+```
+
+
+
+```{r}
+#| code-fold: true
+#| code-summary: "Code for plotting the relationship between petal area and proportion hybrid seed."
+#| message: false
+#| warning: false
+#| label: fig-slope
+#| column: margin
+#| fig-cap: "The relationship between petal area (in mm²) and the proportion of hybrid seed. The blue line is the line of best fit from a linear model, and the gray shaded region represents the 95% confidence interval for this line."
+#| fig-alt: "A scatter plot with petal area (in square mm) on the x-axis and proportion hybrid on the y-axis. The data points show a positive but noisy trend, with many points clustered near a proportion hybrid of zero. A solid blue line of best fit with a positive slope is drawn through the data, enclosed by a light gray, shaded confidence band."
+ggplot( gc_rils, aes(x = petal_area_mm, y = prop_hybrid))+
+  geom_point(size = 6,alpha = .7)+
+  geom_smooth(method = "lm",linewidth = 1.6)+
+  labs( x= "Petal area (in square mm)", y = "proportion hybrid")+
+  theme(legend.position = "none",
+        axis.text = element_text(size  = 34),
+        axis.title = element_text(size = 30))
+```
+
+Here we conclude that a reasonable estimate of the increase in proportion hybrid seed for each unit increase in square mm of petal area  lies between  `r ((boot_slopes |>get_ci(level = 0.95, type = "percentile"))|>unlist() |> round(digits =3)) |> paste(collapse = " and ")`. Importantly, this confidence  interval excludes zero, so  we are pretty sure that the proportion of hybrid see increase with petal area as seen in @fig-slope. For me this is super helpful, because without reflection, we could wrongly conclude that a slope of 0.00566 is unimpressive.
+
+### ... and more! 
+
+The [`infer`](https://infer.netlify.app/) package can [`calculate()`](https://infer.netlify.app/reference/calculate) the many stats including:  "mean", "median", "sum", "sd", "prop", "count", "diff in means", "diff in medians", "diff in props",  "ratio of props", "slope", "odds ratio", "ratio of means", and "correlation"! This means we can quantify uncertainty in a bunch of the estimates we have introduced previously. 

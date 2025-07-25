@@ -20,9 +20,7 @@ You've collected data and have a sample estimate, and avoided sampling bias, but
 
 1.  **Define sampling error** and explain why it is an unavoidable aspect of working with samples.
 2.  **Describe the sampling distribution** and explain its role as the foundation for quantifying uncertainty.
-3.  **Understand the to most common meaures of uncertainty:**   
-    - The standard error.
-    - The 95% confidence intervals.
+3.  **Understand the to most common measure of uncertainty, the standard error.**  
 4.  **Explain how sample size affects sampling error** and the precision of estimates.
 5.  **Describe the "file drawer problem"** and explain why small sample sizes can lead to misleading or overestimated results.
 
@@ -331,10 +329,10 @@ include_url("https://www.youtube.com/embed/uPX0NBrJfRI?end=307" )
 
 ## Quantifying uncertainty due to sampling error
 
-The two most common summaries of uncertainty are the standard error, and the 95% confidence interval. 
+The most common summary of uncertainty is the **standard error**. 
 
 - **The standard error** quantifies the expected variability in estimates as the standard deviation of the sampling distribution.  If we had a sampling distribution in hand we could find this in R as `sd(my_sampling_dist)`.   
-- **The 95% confidence interval** describes the middle ninety-five percent of the sampling distribution. i.e. the upper and lower 2.5% quantiles. If we had a a sampling distribution in hand we could find this in R as `quantile(my_sampling_dist, probs = c(0.025, 0.975))`.  
+
 
 
 

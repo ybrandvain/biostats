@@ -1,0 +1,382 @@
+## • 12. Bootstrap  {.unnumbered #bootstrap}
+
+
+
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+library(tufte)
+```
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:** We want to understand the idea of bootstrapping - how we can just use our sample and a computer to approximate the sampling distribution. Here, we will learn a powerful computational approach called the bootstrap to do exactly that, using only the sample we already have!
+
+**Learning Goals: By the end of this subsection, you should be able to:**
+    
+1.  **Know the difference between sampling with and without replacement.**  
+
+    
+2. **Understand how the bootstrap distribution approximates the sampling distribution**   
+    * Explain this conceptually.     
+    
+    
+3. **Make one bootstrap sample** with [`slice_sample()`](https://dplyr.tidyverse.org/reference/slice.html), and understand how [`lapply()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/lapply.html) can  **generate the bootstrap distribution.**  
+    * It is important to understand this conceptually but don't sweat the coding!    
+    
+
+4. **Visualize the bootstrap distribution** as a histogram.     
+
+
+5. **Use the bootstrap distribution to quantify uncertainty** for example, as the standard error.
+
+:::
+
+---
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "Code for selecting data from a few columns from RILs planted at GC"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm )|>
+  mutate(id = factor(1:n()))
+```
+
+---
+
+
+A major question in evolution is how often to recently diverged species hybridize. If they almost never hybridize we don't need to consider how gene flow impacts the process of speciation. If hybridization is  frequent, we must wrestle with how populations can maintain their divergence despite ongoing hybridization. 
+
+How frequent is hybridization? It differs by species-pair, field site, individual phenotypes etc. For example $\approx 15\%$ of seeds on *Clarkia xantiana ssp parviflora* RILs plants at site GC were actually hybrids. This estimate comes from averaging across all individuals in our sample. We know by now that we could have sampled other individuals from the population, and we must quantify uncertainty in this estimate.
+
+```{r}
+#| column: margin
+gc_rils                          |> 
+    filter(!is.na(prop_hybrid))  |>
+    summarise(mean(prop_hybrid),
+              sample_size = n())
+
+```
+
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| label: fig-hist
+#| fig-cap: "A histogram showing the distribution of the proportion of hybrid offspring for each parviflora mother at site GC. Each individual mom is represented once and is shown by color.  This allows us to track which individuals are selected when we create a bootstrap sample in the next step."
+#| fig-alt: "A histogram of proportion hybrid for each mom in the raw data. The x-axis shows Proportion hybrid from 0.0 to 1.0. The chart is heavily skewed to the right, with a very tall bar at the far left (near 0.0) and subsequent bars that rapidly decrease in height as they move to the right. This shows most observations are clustered at a low proportion. Each individual mom is represented by a color."
+#| code-summary: "Code for making the histogram below"
+ggplot(gc_rils, aes(x = prop_hybrid,fill = id))+
+  geom_histogram(breaks = seq(0,1,length.out=10), 
+                 color = "white",show.legend = FALSE)+
+  labs(title = "Histogram of proportion hybrid for each mom in the raw data",x = "Proportion hybrid")+
+  theme(axis.title.x = element_text(size = 14),
+        axis.text.x = element_text(size = 14),
+        title =  element_text(size = 14),
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank())
+```
+
+
+## Introducing the bootstrap
+
+```{r}
+#| echo: false
+tweet_embed("https://twitter.com/rdhernand/status/1104361442625630212?s=20")
+```
+
+```{r}
+#| echo: false
+#| eval: false
+>While statistics offers no magic pill for quantitative scientific investigations, the bootstrap is the best statistical pain reliever ever produced.
+>
+> `r tufte::quote_footer('--- [Xiao-Li Meng](https://statistics.fas.harvard.edu/people/xiao-li-meng) as quoted in @cochran2019')` 
+```
+
+When we take a statistical  sample from a population, we do so **without replacement.** That, is we do not select the same individual twice -- rather we sample n distinct individuals. This is how we get our sample.  Conceptually we build sampling distributions by repeating this amny times (but of course in the real world we usually only have one sample).
+
+Bootstrapping allows us to approximate the sampling distribution by choosing n individuals from our sample **with replacement** (i.e. we might pick the same sample more than once) as follows: 
+
+1. Pick an observation from your sample at random.  
+2. Note its value.  
+3. Put it back in the pool.  
+4. Go back to (1) until you have as many resampled observations as initial observations.
+5. Calculate an estimate from this collection of observations.
+
+After completing this you have one bootstrap replicate! We simply repeat this a bunch of times to get the bootstrap distribution. 
+
+**Let's get started by generating one bootstrap replicate from our GC data!** As in the sampling chapter, we use dplyr's slice_sample() function, but this time we set prop (it defaults to our sample size) and we do need to specify `replace = TRUE` to sample with replacement:
+
+```{r}
+#| echo: false
+set.seed(10)
+```
+
+```{r}
+boot_rep1 <- slice_sample(gc_rils, prop = 1, replace = TRUE)
+```
+
+We can now estimate the mean proportion hybrid from this first bootstrap replicate: 
+
+```{r}
+boot_rep1 |>
+    summarise(mean(prop_hybrid),
+              sample_size = n())
+```
+
+
+This new mean of 0.136 is different from our original 0.151. @fig-boot1 shows that in this bootstrap replicate we happened to only select one of the three moms with the greatest proportion hybrid seed. This difference is the essence of sampling variability. The bootstrap allows us to recreate this variability computationally to see how much our estimate might have changed by chance.
+
+By repeating this process thousands of times, we can see the full range of estimates we might have gotten, which is the key to measuring our uncertainty.
+
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| column: page-right
+#| fig-width: 12
+#| label: fig-boot1
+#| fig-cap: "A visualization of a single bootstrap replicate derived from the original sample. **(A)** The result of sampling with replacement --  The y-axis represents the number of times each original mother (identified by mom id and a unique color) was selected for the bootstrap sample. Many mothers from the original data were not selected, while others were selected two or more times. **(B)**  A histogram of the proportion hybrid variable for this new bootstrap sample. The colors correspond to the individuals in Panel A, illustrating the composition of the new sample. If a single color is taller, it's because that specific mother was selected multiple times. This visualizes how some mothers (colors) contribute multiple times to the overall bootstrap sample, which is the key feature of sampling with replacement. "
+#| fig-alt: "A two-panel plot, labeled A and B, that visualizes one bootstrap sample. Panel A is a bar chart showing how many times each individual was sampled. The  number of occurrences (y-axis), ranges from 0 to 4, indicating that some individuals were not chosen while others were chosen multiple times. Panel B is a histogram of proportion hybrid in the first bootstrap. Within each histogram bar, the colors show the individual mothers that fall into that bin's range."
+#| code-summary: "Code for making the histogram below"
+library(patchwork)
+plot_count <- ggplot(boot_rep1, aes(x = as.numeric(id), fill = id))+
+  geom_bar(show.legend = FALSE)+
+  labs(title = "Representation of moms in bootstrap",x = "mom id", y = "# of occurrences")+
+  theme(axis.title.x = element_text(size = 14),
+        axis.text.x = element_text(size = 14),
+        title =  element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        axis.text.y = element_text(size = 14))
+
+plot_hist <- ggplot(boot_rep1 , aes(x = prop_hybrid,fill = id))+
+  geom_histogram(breaks = seq(0,1,length.out=10), 
+                 color = "white",show.legend = FALSE)+
+  labs(title = "Histogram of proportion hybrid in the first bootstrap",x = "Proportion hybrid (by mom)")+
+  theme(axis.title.x = element_text(size = 14),
+        axis.text.x = element_text(size = 14),
+        title =  element_text(size = 14),
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank())
+
+plot_count + plot_hist  + plot_annotation(tag_levels = 'A')
+```
+
+## Building a bootstrap distribution
+
+To build a bootstrap distribution, we (not so) simply repeat this process many times. @fig-bootdist provides an animation of how we build up a bootstrap distribution.
+
+```{r}
+#| message: false
+#| warning: false
+#| column: page-right
+#| fig-width: 12
+#| label: fig-bootdist
+#| echo: false
+#| fig-alt: "An animated two-panel plot that demonstrates the bootstrap process. The left panel rapidly cycles through histograms of different bootstrap samples, with a blue dashed line updating in each frame to show that sample's mean. Simultaneously, the right panel shows a histogram being built. In each frame, the mean from the left panel is added as a blue dot to the right panel's histogram. As the animation progresses, the histogram on the right grows from a single point into a full, bell-shaped distribution, illustrating how the bootstrap distribution is formed from many resamples."
+#| fig-cap: "An animation illustrating the bootstrap procedure for estimating uncertainty. **The left panel**  loops through individual bootstrap samples. The histogram shows the data for the current sample, with colors indicating which 'mom' was selected, the height of which shows how many times the mom was sampled. The blue dashed line marks this bootstrap sample's mean. **The right panel** shows the mean from the left panel added as a single blue dot to the distribution on the right. This panel is cumulative, showing the distribution of all bootstrap sample means calculated so far. **In both panels** the red dashed line represents the mean of the original sample, providing a constant point of reference."
+include_graphics("../../figs/stats_foundations/uncertainty/boot_dist_cartoon.gif")
+```
+
+
+The code to do this is a bit tricky -- in fact I will show you an R package to make this easier in the next subsection -- so there is no need to carefully follow this code. But here's one way to build up a bootstrap distribution:
+
+
+
+```{r}
+#| eval: false
+boot_dist <- lapply(1:5000,function(i){
+    gc_rils |>
+        select(prop_hybrid)|>
+        slice_sample(replace = TRUE, prop = 1) |>
+        summarize(est_prop_hybrid = mean(prop_hybrid))})|>
+    bind_rows()
+```
+
+```{r}
+#| echo: false
+#| eval: false
+write_csv(boot_dist, file = "data/gc_hyb_prop_boot.csv")
+```
+
+```{r}
+#| echo: false
+#| eval: true
+#| message: false
+#| warning: false
+boot_dist <- read_csv("https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/gc_hyb_prop_boot.csv")
+```
+
+:::aside
+`lapply()` is one of R's ways of just doing the same thing a lot of times.
+:::
+
+**Now that we have the bootstrap distribution we can visualize it!** @fig-boot_dist shows the bootstrap distribution as a histogram. We can see that estimates are centered around our sample mean of 0.15, but that by chance, some bootstrap replicates are as low as 0.08 or as high as 0.24. This spread is the uncertainty we were looking for, made visible. Now we can move from visualizing it to summarizing it with a single number: the standard error.
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| label: fig-boot_dist
+#| code-summary: "Code for making a histogram of the bootstrap distribution"
+#| fig-cap: "The bootstrap distribution for the mean proportion of hybrids. This histogram was generated by repeatedly resampling from the original data, calculating the mean of each new bootstrap sample, and plotting those means. The resulting distribution is approximately normal and is centered on the mean from the original sample (indicated by the red dashed line at 0.151). The spread of this distribution is a measure of the uncertainty in that original estimate."
+#| fig-alt: "A histogram of the bootstrap distribution of proportion hybrids at GC. The data forms a roughly symmetrical, bell-shaped curve centered at approximately 0.15 on the x-axis. A vertical red dashed line is drawn through the peak of the distribution, marking the point estimate from the original sample."
+boot_dist |>
+  ggplot(aes(x = est_prop_hybrid))+
+  geom_histogram(bins = 50, color= "white")+
+  labs(title = "The bootstrap distribution of proportion hybrids at GC",
+       x = "Mean proportion hybrid (sample estimate)")+
+  theme(axis.title.x = element_text(size = 14),
+        axis.text.x = element_text(size = 14),
+        title =  element_text(size = 14),
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank())+
+  geom_vline(xintercept = 0.151, color = "red", lty = 2)
+```
+
+### Quantifying uncertainty: The bootstrap standard error
+
+We can simply calculate the bootstrap standard error as the standard deviation of the bootstrap distribution. 
+
+```{r}
+boot_dist |>
+  summarise(se = sd(est_prop_hybrid))
+```
+
+The bootstrap standard error of 0.024 means that the average distance between an estimate from the bootstrap distribution and the actual sample estimate is roughly 0.024.
+
+
+
+
+```{r}
+#| echo: false
+#| eval: false
+library(gganimate)
+library(gifski)
+library(transformr)
+library(magick)
+vals <- c(1:10, 15,seq(25,490,25),491:500)
+
+prop_hyb_boot_dist<- lapply(500:1,function(i){
+  gc_rils |>
+    select(prop_hybrid,id)|>
+    slice_sample(replace = TRUE, prop = 1) |>
+    mutate(trial = i)})|>
+  bind_rows()
+
+
+
+focal_boots <- prop_hyb_boot_dist |>
+  filter(trial %in% vals )
+
+boot_means <- prop_hyb_boot_dist |> 
+  group_by(trial)|> 
+  summarise(est_prop_hybrid = mean(prop_hybrid))|>
+  ungroup()
+
+boot_means_for_anim <-lapply(vals,function(X){
+  boot_means  |>
+    filter(trial<=X)|>
+    mutate(new = (trial == X))|>
+    mutate(trial = X)})|>
+  bind_rows()
+
+library(gganimate)
+library(gifski)
+prop_hybrid_boot_dist <- ggplot(boot_means_for_anim, aes(x = est_prop_hybrid)) +
+  geom_histogram( color = "white")+
+  transition_states(trial,transition_length = .2, state_length = .5)+
+  labs(title = 'Bootstrap distribution',
+       subtitle = "Up until bootstrap sample {closest_state}",
+       x = "Mean proportion hybrid (sample estimate)")+
+  theme(axis.text.x = element_text(size=24),
+        axis.title.x = element_text(size=24),
+        axis.text.y = element_blank(),
+        axis.title.y = element_blank(),
+        title = element_text(size=24),
+        subtitle = element_text(size=22)) +
+  geom_point(aes(alpha = new, y = 0), color = "blue", size = 4,show.legend = FALSE)+
+  geom_vline(xintercept = 0.151, color = "red", lty = 2, size = 1)+
+  scale_alpha_manual(values = c(0,1))
+
+
+anim_save("figs/stats_foundations/uncertainty/prop_hybrid_boot_dist",
+          animate(prop_hybrid_boot_dist ,
+                  nframes = length(vals),
+                  duration = length(vals)/1.5,
+                  width = 500,height = 420, renderer = gifski_renderer()))
+
+
+boot_samples <- ggplot(focal_boots , aes(x = prop_hybrid)) +
+  geom_histogram(breaks = seq(0,1,length.out=10), aes(fill = id),
+                 color = "white",show.legend = FALSE)+
+  transition_states(trial,transition_length = .2, state_length = .5)+
+  geom_label(data = boot_means |> 
+                  filter(trial %in% vals) |> 
+                  mutate(est_prop_hybrid = round(est_prop_hybrid,digits = 3),
+                         text = paste("Estimated proportion\nhybrid = ",est_prop_hybrid)),
+                aes(label = text),x = .6, y = 45, size = 10)+
+  geom_vline(xintercept = 0.151, color = "red",lty =2)+
+  geom_vline(data = boot_means |> 
+               filter(trial %in% vals) ,
+             aes( xintercept = est_prop_hybrid), color = "blue",lty =2)+  
+  labs(title = 'Bootstrap sample {closest_state}',
+       subtitle = "Bootstrap sample {closest_state}",
+       x = "Proportion hybrid (individual)")+
+  theme(axis.text.x = element_text(size=24),
+        axis.title.x = element_text(size=24),
+        axis.text.y = element_blank(),
+        axis.title.y = element_blank(),
+        title = element_text(size=24),
+        subtitle = element_text(size=22)) 
+
+
+
+
+
+anim_save("figs/stats_foundations/uncertainty/boot_samples",
+          animate(boot_samples,width = 500,height = 420,
+                  nframes = length(vals),
+                  duration = length(vals)/1.5, renderer = gifski_renderer()))
+
+
+gif1 <- image_read("figs/stats_foundations/uncertainty/boot_samples")
+gif2 <- image_read("figs/stats_foundations/uncertainty/prop_hybrid_boot_dist")
+
+combined <- image_append(c(gif1[1], gif2[1])) # init
+
+for (i in 2:length(gif1)) {
+  frame <- image_append(c(gif1[i], gif2[i]))
+  combined <- c(combined, frame)
+}
+
+
+image_write(combined, "figs/stats_foundations/uncertainty/boot_dist_cartoon.gif")
+```

@@ -1,0 +1,136 @@
+# 12. Uncertainty {.unnumbered #uncertainty}
+
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+```
+
+
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:** You understand the idea of sampling and the sampling distribution. At your best, you even have your head around the standard error and 95% confidence interval. But, you're confused -- how can you generate a sampling distribution or estimate a standard error when you have a sample and not a population? This chapter will show you how.
+
+**Learning Goals: By the end of this section, you should be able to:**
+
+1.  **Recognize how we can approximate sampling distributions from a sample (not a population).**
+    * Using math tricks, or
+    * Using computational tools like "bootstrapping". 
+
+2. **Connect the concepts of confidence intervals and standard errors** to bootstrap distributions.
+    
+3. **Understand how bootstrapping works.** 
+    * Generate a single bootstrap with slice_sample().   
+    * Generate many bootstrap replicates. 
+    * Calculate the 95% bootstrap confidence interval.  
+    * Calculate the  bootstrap standard error.  
+
+4. **Use the infer package to bootstrap** to quantify uncertainty in estimates including: 
+    * The mean.  
+    * The difference in conditional means.  
+    * The slope. 
+
+5. **Recognize why/when we would (or would not) use the bootstrap to quantify uncertainty.** 
+
+
+:::
+
+---
+
+
+
+## Review: We estimate parameters from samples 
+
+<article class="drop-cap">In the [previous chapter](#sampling) we sampled from a population many times to build a sampling distribution.   But, if we had data for an entire population, we would know **population parameters**, so there would be no reason to calculate **estimates from a sample**.</article><br>       
+
+In the real world we have a small number (usually one) of sample(s) and we want to learn about the population. This is a major challenge of statistics.   
+
+### Review: Populations have parameters    
+
+We conceptualize populations as truth with true parameters that are  "out there in the world".
+
+**Sampling involves chance:**     Because (a good) sample is taken from a population at random, a sample estimate is influenced by chance (aka sampling error).
+
+## Review: The sampling distribution  
+
+The **sampling distribution** -- a histogram of sample estimates we would get by repeatedly sampling from a population -- allows us to think about the chance deviation between a sample estimate and population parameter induced by sampling error.    
+
+
+## Estimation with uncertainty   
+
+Because estimates from samples take their values by chance, it is irresponsible and misleading to present an estimate without describing our uncertainty in it, by reporting the standard error or other measures of uncertainty.
+
+:::warning
+After this chapter you will be able to quantify uncertainty. From now on **I WILL NOT LET YOU** report point estimates without a measure of uncertainty. Point estimates without uncertainty are difficult to interpret. 
+:::
+
+
+### Review: The standard error   
+
+The **standard error** quantifies the uncertainty in our estimate due to sampling error as the standard deviation of the sampling distribution.     
+
+:::note
+**Reflect on the sentence above. It's full of stats words and concepts that are the foundation of what we are doing here.**  
+
+- Would this have made sense to you before the term?    
+- Does it make sense now? If not, take a moment, talk to a friend, a chatbot, a professor or TA, whatever you need. This is important stuff and should not be glossed over.    
+:::  
+
+
+## Generating a sampling distribution   
+
+**Question:** We usually have one sample, not a population, so how do we generate a sampling distribution?  
+
+**Answer:** With our imagination!!! (@fig-imagination).     
+
+
+```{r}
+#| label: fig-imagination
+#| fig-cap: "We use our imagination to build a sampling distribution by math, simulation, or bootstrapping."
+#| fig-alt: "A meme featuring Spongebob Squarepants smiling blissfully under a rainbow. The top text reads, 'We don't need a bunch of samples to make a sampling distribution,' and the bottom text reads, 'Not as long as we have our imagination."
+#| echo: FALSE
+include_graphics("https://i.imgflip.com/4qga05.jpg")
+```
+
+**What tools can our imagination access?** 
+
+- We can use math tricks that allow us to connect the variability in our sample to the uncertainty in our estimate.   
+- We can simulate the process that we think generated our data.   
+- We can resample from our sample by bootstrapping (see the rest of the chapter!).  
+
+
+
+
+Don't worry about the first two too much – we revisit them throughout the course. For now, just know that whenever you see this, we are imagining an appropriate sampling distribution. Here we focus on bootstrapping.
+
+:::note
+**Here we focus on estimating uncertainty first by bootstrapping. This is not the only way to estimate uncertainty.**
+
+Later in the book, we use standard sampling distributions (e.g. the t-distribution) to estimate uncertainty. 
+
+This progression differs from many texts, which introduce bootstrapping as a "special topic" later in the book. I switch this order because:  
+
+1. **I think it is better pedagogy.** I, for one, have an easier time conceptualizing the idea of sampling and uncertainty when these ideas are connected to actual sampling, rather than mathematical formulas. 
+
+2. **In many cases, bootstrapped estimates of uncertainty are more robust** to violations of assumptions than approaches using mathematical formulas (but see the final section).  
+
+3. **We can often bootstrap when there is not a mathematical approach.** For example, branches on phylogenetic trees often have "bootstrap support values" corresponding to the proportion of bootstrap replicates (in which variable loci are resampled with replacement) in which that particular branch appears.
+
+These arguments are made very clearly by my colleague [John Fieberg](https://fwcb.cfans.umn.edu/people/john-fieberg) in his fantastic paper:  "[Resampling-based methods for biologists](https://peerj.com/articles/9089/)" (@fieberg2020).
+

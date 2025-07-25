@@ -1,0 +1,75 @@
+## 📘 Chapter 12, "Bootstrapping w/`infer`" Section (Tutor Knowledge Base)
+
+**Context:**
+This section transitions students from the manual, conceptual process of bootstrapping to a practical, powerful, and reproducible workflow using the **`infer`** package. The goal is to show how `infer`'s consistent grammar (`specify` -> `generate` -> `calculate`) simplifies bootstrapping, not just for a single mean, but for more complex statistics like the **difference in means** and a regression **slope**.
+
+---
+
+### 🎯 Learning Goals (for the tutor to support)
+
+By the end of this subsection, students should be able to:
+1.  Use the `infer` pipeline to generate a bootstrap distribution for a single mean.
+2.  Extend the `infer` workflow to calculate bootstrap confidence intervals for a **difference in means** between two groups.
+3.  Extend the `infer` workflow to calculate a bootstrap confidence interval for a regression **slope**.
+4.  Interpret the confidence interval for a difference or a slope, specifically by checking if the interval contains zero.
+
+---
+
+### 🔑 Key Concepts & Definitions
+
+* **`infer` package**: A user-friendly R package designed to perform statistical inference using a consistent grammar of verbs.
+* **`specify()`**: An `infer` verb used to declare the variables and relationship of interest (e.g., `response ~ explanatory`).
+* **`generate()`**: An `infer` verb used to create resamples from the data, such as bootstrap samples (`type = "bootstrap"`).
+* **`calculate()`**: An `infer` verb used to compute a summary statistic (e.g., `stat = "mean"`, `stat = "diff in means"`, `stat = "slope"`) for each resample.
+* **Difference in Means**: A statistic that compares the means of a quantitative variable between two groups. A key question is whether the confidence interval for this difference includes zero.
+* **Slope**: A statistic from a linear model that represents the change in the response variable for a one-unit change in the explanatory variable.
+
+---
+
+### 🧠 Conceptual Takeaways
+
+* Using a package like `infer` makes bootstrapping easier, faster, and less prone to coding errors.
+* The true power of `infer` is that the *same three verbs* (`specify`, `generate`, `calculate`) can be used to find the uncertainty for many different kinds of statistics.
+* When evaluating the uncertainty of a **difference** or a **slope**, the most important question is often: **"Does the confidence interval include zero?"**
+* If the CI for a difference or slope does **not** include zero, it provides strong evidence that the observed difference or relationship is real and not just due to random sampling chance.
+
+---
+
+### 🖼️ Figures in this Section
+
+#### **Figure 1**
+* **Description:** This is a jittered dot plot on a dark background comparing the "proportion hybrid seed" for two groups on the x-axis: "pink" and "white". The pink group's data points are clustered higher on the y-axis than the white group's. Overlaid on each group is a bright green point representing the mean and a thick green vertical error bar representing the 95% bootstrap confidence interval.
+* **Tutor Context:** This figure visually displays the raw data and the uncertainty for the mean of *each group separately*. The tutor should use this to set up the next question: "We see the means and their individual CIs, but how do we quantify our uncertainty in the *difference between* these two means?" This motivates the next step.
+
+#### **Figure 2**
+* **Description:** This is a histogram showing a bell-shaped distribution of the bootstrapped *difference in means* between the pink and white flower groups. A solid black vertical line is drawn at zero on the x-axis. The entire distribution is clearly to the right of this line. The central 95% of the histogram bars are light blue, while the tails are dark red, with dashed purple lines marking the CI.
+* **Tutor Context:** This is a key plot for interpretation. The tutor should guide the student to notice two things: (1) The distribution represents the range of plausible values for the *difference* between the two groups. (2) The entire 95% confidence interval is above zero. This is strong evidence that the difference is "real" and that pink flowers truly have a higher mean hybridization rate.
+
+#### **Figure 3**
+* **Description:** This is a scatter plot showing "proportion hybrid" on the y-axis versus "Petal area (in square mm)" on the x-axis. The data points show a general positive trend. A solid blue line of best fit (the regression line) is drawn through the data with a positive slope. This line is surrounded by a light gray, translucent, shaded region representing the 95% confidence band for the slope.
+* **Tutor Context:** This figure shows the application of bootstrapping to a continuous relationship (a regression). The tutor should explain that the gray shaded region represents the uncertainty in the slope of the line. Because the entire gray band has a positive slope (it never becomes flat or goes down), we can be confident that the relationship is positive and that the true slope is not zero.
+
+---
+
+### 💬 Notes for Tutor Responses
+
+* When students see the formula syntax `prop_hybrid ~ petal_color` in `specify()`:
+    > "That tilde `~` is R's way of defining a relationship or formula. It reads as 'Y as a function of X'. So, `prop_hybrid ~ petal_color` means we're looking at how the proportion of hybrids depends on petal color."
+* If students ask about `order = c("pink", "white")` in `calculate()`:
+    > "That tells `infer` to calculate the difference as `pink - white`. If you swapped them, the distribution would be centered on a negative number, but the conclusion would be the same!"
+
+---
+
+### ⚠️ Common Student Confusions
+
+* Not understanding what the distribution in Figure 2 represents (it's a distribution of *differences*, not of raw data or simple means).
+* Forgetting to check if the confidence interval for a difference or slope contains zero. This is the most important step for drawing a conclusion.
+* Thinking a small slope value (like 0.00566) means the effect is unimportant, without considering the confidence interval to see if the effect is clearly non-zero.
+
+---
+
+### 🗣️ Tutor Guidance
+
+* Emphasize the "story" `infer` tells: you specify a question, generate worlds where the answer could be different, and calculate the result in each of those worlds to measure your uncertainty.
+* Guide the student back to the key interpretive question: **"Does the confidence interval contain zero?"**
+* For the slope, help students translate the CI into a sentence: "We are 95% confident that for every 1 mm² increase in petal area, the proportion of hybrid seeds increases by between [lower bound] and [upper bound]."

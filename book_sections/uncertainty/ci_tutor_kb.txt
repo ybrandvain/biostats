@@ -1,0 +1,77 @@
+## 📘 Chapter 12, "Confidence Intervals" Section (Tutor Knowledge Base)
+
+**Context:**
+This section builds on the concept of the bootstrap distribution to introduce the **confidence interval (CI)**. It explains what a confidence interval represents, how to interpret it correctly (a notoriously tricky concept), how to calculate a bootstrap CI using quantiles, and how to visualize CIs on plots using `ggplot2`. The goal is for students to understand and use CIs as a practical way to report a range of plausible values for an estimate.
+
+---
+
+### 🎯 Learning Goals (for the tutor to support)
+
+By the end of this subsection, students should be able to:
+1.  Explain the meaning of a **confidence interval** and a **confidence level**.
+2.  Correctly interpret a given confidence interval (and avoid common misinterpretations).
+3.  Calculate a bootstrap confidence interval from a bootstrap distribution using quantiles.
+4.  Visualize confidence intervals on plots to represent uncertainty.
+5.  List the factors that influence the width of a confidence interval (sample size, variability, confidence level).
+
+---
+
+### 🔑 Key Concepts & Definitions
+
+* **Confidence Interval (CI)**: A range of plausible values for an unknown population parameter, calculated from sample data. It provides a measure of uncertainty for a point estimate.
+* **Confidence Level**: The long-run success rate (e.g., 90%, 95%) of the method used to construct a confidence interval. It represents our confidence in the *process*, not in any single interval we calculate.
+* **Quantiles**: Cut-points dividing a probability distribution into continuous intervals with equal probabilities. For a 95% CI, we use the 2.5% and 97.5% quantiles of the bootstrap distribution.
+
+---
+
+### 🧠 Conceptual Takeaways
+
+* A confidence interval moves beyond a single-number summary of uncertainty (like the standard error) to provide a plausible **range** for the true parameter.
+* The interpretation of a CI is subtle: we are 95% confident that our *method* of creating intervals will capture the true parameter, not that any *specific* interval has a 95% chance of containing it. The coin-flip analogy is key here.
+* There is a trade-off between certainty and precision: a 99% CI is wider (more certain, less precise) than a 90% CI (narrower, more precise, less certain).
+* Visualizing CIs as error bars on plots is a standard and powerful way to transparently communicate the uncertainty associated with estimates.
+
+---
+
+### 🖼️ Figures & Webapps in this Section
+
+#### **Webapp**
+* **Link:** [https://www.zoology.ubc.ca/~whitlock/Kingfisher/CIMean.htm](https://www.zoology.ubc.ca/~whitlock/Kingfisher/CIMean.htm)
+* **Tutor Context:** This interactive webapp is crucial for building intuition. If a student is confused about the meaning of "95% confidence," the tutor should encourage them to use the app. They can watch as many CIs are generated, observing that some (in red) miss the true mean, while most (in black) capture it. This helps solidify the idea of the confidence level as a long-run success rate of the *process*.
+
+#### **Figure 1**
+* **Description:** This is a histogram showing a bell-shaped distribution of bootstrapped sample means. The x-axis is labeled "Mean proportion hybrid (sample estimate)" and ranges from roughly 0.08 to 0.25. The distribution is centered at about 0.15. Most of the histogram bars are colored a faint, translucent blue, but the bars in the extreme left and right tails are colored a solid dark red. Two vertical dashed purple lines mark the boundaries between the central blue region and the red tails, indicating the 95% confidence interval.
+* **Tutor Context:** This is the most important visual in the section. It directly connects the **bootstrap distribution** (from the previous section) to the **confidence interval**. The tutor should use this to show that a 95% CI is simply the range that contains the middle 95% of the bootstrap estimates.
+
+#### **Figure 2**
+* **Description:** This plot has "location" on the x-axis (with only one category, "GC") and "prop_hybrid" on the y-axis. At the "GC" location, there is a single black dot representing the mean, with a vertical black error bar extending above and below it. Two horizontal solid red lines are drawn across the plot, positioned to perfectly match the upper and lower ends of the black error bar.
+* **Tutor Context:** The purpose of this figure is to show that the manual quantile method and the automated `stat_summary()` function in `ggplot2` produce the same result. It's a "proof of concept" visual that builds student confidence in the automated tool.
+
+#### **Figure 3**
+* **Description:** This is a jittered dot plot comparing the "prop_hybrid" across four locations on the x-axis: GC, LB, SR, and US. Each location has a cloud of semi-transparent colored dots representing the raw data for individual plants. Overlaid on each cloud of points is a solid black dot representing that group's mean and a vertical black error bar representing its 95% confidence interval. The error bar for the "LB" location is noticeably wider than the others.
+* **Tutor Context:** This figure shows the practical application of visualizing CIs. The tutor can use it to prompt discussion about comparing groups by looking at the overlap of their confidence intervals. It also visually demonstrates how factors like sample size and data variability affect CI width.
+
+---
+
+### 💬 Notes for Tutor Responses
+
+* If students ask about `stat_summary(fun.data = "mean_cl_boot")`:
+    > "That's a fantastic shortcut in `ggplot2`. It performs the entire bootstrap procedure for you—resampling thousands of times, calculating the mean, and finding the 95% confidence interval—and then adds it directly to your plot as an error bar. It's very convenient!"
+* If they ask about the `Hmisc` package:
+    > "The `Hmisc` package contains the underlying code that `ggplot2` uses to perform the bootstrap calculation for `mean_cl_boot`. You just need to have it installed and loaded for the function to work."
+
+---
+
+### ⚠️ Common Student Confusions
+
+* **The Probability Misinterpretation**: Thinking a 95% CI means there is a 95% probability that the true population parameter lies *within that specific interval*. The tutor must correct this by emphasizing the "long-run frequency of the method" interpretation.
+* **Bright Lines Fallacy**: Believing that a value just inside the CI is plausible while a value just outside is impossible. The tutor should reinforce the message in the "Say no to bright lines!" aside.
+* **Confusing Standard Error and Confidence Interval**: Students may see them as interchangeable. The tutor should clarify that the SE is a single number representing the *typical error*, while the CI provides a *range of plausible values*.
+
+---
+
+### 🗣️ Tutor Guidance
+
+* Strongly lean on the "net" metaphor: "Think of a confidence interval as a net. Before you cast it, there's a 95% chance it will catch the fish (the true parameter). But once it's cast, the fish is either in the net or it isn't. The 95% refers to how good your net-casting technique is over many attempts."
+* Encourage interaction with the [webapp](https://www.zoology.ubc.ca/~whitlock/Kingfisher/CIMean.htm) to visually demonstrate the frequentist interpretation.
+* When a student presents a CI, prompt them to interpret it in the context of the research question (e.g., "What does this range of values tell you about the hybridization rate?").

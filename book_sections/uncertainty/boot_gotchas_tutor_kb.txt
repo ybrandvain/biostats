@@ -1,0 +1,70 @@
+## 📘 Chapter 12, "Gotchas" Section (Tutor Knowledge Base)
+
+**Context:**
+This section serves as a crucial "user manual" for bootstrapping, outlining its limitations and potential pitfalls. It explains why the number of bootstrap replicates matters for stability, why the method is unreliable with small sample sizes, and why it cannot fix problems inherent in the original sample, such as bias or non-independence. The goal is to ensure students use this powerful tool wisely and critically.
+
+---
+
+### 🎯 Learning Goals (for the tutor to support)
+
+By the end of this subsection, students should be able to:
+1.  Explain why choosing a sufficient number of bootstrap replicates is important for getting a stable estimate of uncertainty.
+2.  Recognize that bootstrapping is unreliable for very small sample sizes and understand the reasoning behind this limitation.
+3.  Understand that bootstrapping cannot correct for a biased or non-independent sample.
+4.  Acknowledge that bootstrapping is just one of several common methods for estimating uncertainty.
+
+---
+
+### 🔑 Key Concepts & Definitions
+
+* **Stability**: The consistency of the bootstrap estimate of uncertainty. A stable estimate is one that doesn't change much if you re-run the entire bootstrap procedure with a different random seed.
+* **Number of Replicates**: The number of bootstrap samples generated to create the bootstrap distribution. A higher number (e.g., 5,000-10,000) leads to more stable estimates of uncertainty.
+* **Small Sample Size Limitation**: The principle that a bootstrap is only reliable if the original sample is large enough (e.g., n > 20) to be a good representation of the population.
+* **Sampling Bias**: A systematic error in sampling that results in a sample that is not representative of the population. Bootstrapping a biased sample will only give a precise estimate of the wrong thing.
+* **Non-Independence**: A condition where data points are not independent of each other (e.g., measurements taken over time on the same subject). A simple bootstrap assumes independence and will give misleading results for non-independent data.
+
+---
+
+### 🧠 Conceptual Takeaways
+
+* The bootstrap is a computational process, and its own results have variability. You need enough replicates to get a stable answer.
+* The bootstrap's core assumption is that the **sample represents the population**. If the sample is too small, this assumption is likely false.
+* **"Precise but wrong"**: Bootstrapping a flawed sample (e.g., one that is biased) will only give you a precise, confident answer about the flawed sample, not about the true population.
+* Bootstrapping is a powerful tool, not a magic wand. It cannot fix fundamental problems with data collection.
+
+---
+
+### 🖼️ Figures in this Section
+
+#### **Figure 1**
+* **Description:** This is the xkcd comic titled "Error Bars". It shows a line graph with four data points. Each point has error bars, but in a recursive, fractal-like pattern, the ends of the error bars also have smaller error bars, which in turn have even smaller ones. The caption reads: "I DON'T KNOW HOW TO PROPAGATE ERROR CORRECTLY, SO I JUST PUT ERROR BARS ON ALL MY ERROR BARS."
+* **Tutor Context:** This comic is a humorous introduction to the idea of "uncertainty in our uncertainty." The tutor should use it to set up the topic of this section: just as the comic character is uncertain about their error bars, we should be aware that our bootstrap estimate of uncertainty has its own variability and limitations.
+
+#### **Figure 2**
+* **Description:** This is a two-row plot. The top row, titled "values in sample," shows three small histograms, each representing a different random sample of size n=5. The bottom row, "bootstrap distribution," shows the corresponding bootstrap distributions of the mean for each of the three samples. These distributions are sparse and irregular. Vertical dashed purple lines show the 95% CI for each, and a solid red line shows the mean from the larger original sample.
+* **Tutor Context:** This figure provides a powerful visual demonstration of why bootstrapping with **small sample sizes is unreliable**. The tutor can point out how different the three original samples look from each other, and how their resulting bootstrap distributions are "lumpy" and not bell-shaped. Most importantly, the tutor should guide the student to see that two of the three confidence intervals (the purple dashed lines) **fail to capture the reference value** (the red line), which illustrates the method's poor performance with small n.
+
+---
+
+### 💬 Notes for Tutor Responses
+
+* When students ask "How many replicates is enough?":
+    > "That's a great practical question! As the text suggests, there's no single magic number, but 1,000 is a good starting point. A good practice is to run your analysis, then run it again to see if the standard error or confidence interval changes much. If it does, you need more replicates. 5,000 to 10,000 is a very common and safe choice for final results."
+* If a student is worried about their code taking too long:
+    > "Yes, bootstrapping can be computationally intensive! It's common practice to use a smaller number of replicates (like 100) while you're developing your code and exploring the data, then increase it to a large number (like 5,000) for your final analysis to get a stable estimate."
+
+---
+
+### ⚠️ Common Student Confusions
+
+* Thinking that running more bootstrap replicates can fix the problems of a small or biased sample. (The tutor must clarify: more replicates only improve the *precision* of the bootstrap estimate for *that specific sample*; they don't add new information or fix a bad sample).
+* Believing bootstrapping is always the best or only method. (The tutor should remind them of the final point in the text: other methods exist and are sometimes more appropriate).
+* Misunderstanding the thought experiment for n=2. They might not see why the probabilities are 1/4, 1/2, 1/4. The tutor can briefly explain the four possible outcomes: (A,A), (A,B), (B,A), (B,B).
+
+---
+
+### 🗣️ Tutor Guidance
+
+* Encourage students to think critically about their data *before* they bootstrap. Prompt them with questions like, "How was this sample collected? Is it likely to be biased? Are the observations independent?"
+* Reinforce the core assumption: the bootstrap works well when your sample is a good mini-version of the population.
+* Use the "Gotchas" as a checklist. When a student proposes using a bootstrap, the tutor could ask: "Great, let's think about the gotchas. Is your sample size large enough? Do you have a plan for the number of replicates?"

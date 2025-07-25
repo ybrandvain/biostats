@@ -28,7 +28,7 @@ Links to: [Summary](#sampling_summary_chapter-summary). [Chatbot tutor](#samplin
 
 ## Chapter summary {#sampling_summary_chapter-summary}
 
-We almost never know the truth (the population parameter), but we estimate it from a sample. Random chance (aka sampling error) ensures that our estimate will deviate from the true parameter. If sampling error is our only issue we can envision the "sampling distribution" -- a histogram of what we would see if we repeated our study many times to characterize uncertainty. We quantify uncertainty as the "*standard error*" i.e. the standard deviation of the sampling distribution, and as a "*95% confidence interval*" i.e. the middle 95% of the sampling distribution. We can decrease sampling error by increasing sample size. When samples are non-independent, we tend to underestimate our sampling error. When samples are not chosen at random, "*sampling bias*" can generate a systematic deviation between estimates and true population parameters. Random sampling is our best protection against non-independence and sampling bias.
+We almost never know the truth (the population parameter), but we estimate it from a sample. Random chance (aka sampling error) ensures that our estimate will deviate from the true parameter. If sampling error is our only issue we can envision the "sampling distribution" -- a histogram of what we would see if we repeated our study many times to characterize uncertainty. We quantify uncertainty as the "*standard error*" i.e. the standard deviation of the sampling distribution. We can decrease sampling error by increasing sample size. When samples are non-independent, we tend to underestimate our sampling error. When samples are not chosen at random, "*sampling bias*" can generate a systematic deviation between estimates and true population parameters. Random sampling is our best protection against non-independence and sampling bias.
 
 ### Chatbot tutor   {#sampling_summary_chatbot_tutor}
 
@@ -40,7 +40,7 @@ Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/
 ## Practice Questions {#sampling_summary_practice-questions}
 
 
-Try these questions! By using the R environment you can work without leaving this "book". To help you jump right into thinking and analysis, I have loaded the ril data, cleaned it some, and have started some of the code!  
+Try these questions! By using the R environment you can work without leaving this "book". To help you jump right into thinking and analysis.
 
 
 
@@ -223,12 +223,8 @@ gene_lengths <- read_csv(link)
 
 :::glossary
 
----
 
-## 📘 Glossary
-
-**Confidence interval (95%)**
-A range of values that captures the middle 95% of a sampling distribution. If we repeated the sampling process many times, 95% of our intervals would include the true parameter.  
+  
 
 **Convenience sampling (aka haphazard sampling):** Sampling whatever is easiest or closest.
 
@@ -284,7 +280,10 @@ A range of values that captures the middle 95% of a sampling distribution. If we
 
 
 
-**Optional Readings:**         
+**Readings:**         
+
+- [Module: Standard Error](https://tinystats.github.io/teacups-giraffes-and-statistics/06_standardError.html) from [Teacups Giraffes and Statistics](https://tinystats.github.io/teacups-giraffes-and-statistics), by [Hasse Walum](https://med.emory.edu/directory/profile/?u=HWALUM) and
+[Desirée De Leon](https://desiree.rbind.io/).  
 
 -  [The Most Dangerous Equation](https://www.americanscientist.org/article/the-most-dangerous-equation) [@wainer2007].
 
