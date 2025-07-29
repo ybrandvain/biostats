@@ -1,0 +1,202 @@
+# 13. Null Hypothesis Significance Testing {.unnumbered #nhst}
+
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+library(tiktokrmd)
+```
+
+
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenarios:** This chapter cuts through so much of what we see in stats - so I could not limit myself to one scenario! 
+
+1. You want to understand the standard by which scientists take results seriously versus chalking them up to sampling error.
+
+2. You are told results are "statistically significant" or they have some given pvalue, and we want to know what that means.
+
+3. You have done a statistical analysis and want to guard against the possibility that our seemingly exceptional results are merely attributable to sampling error.
+
+**There is one MAJOR GOAL here: You should understand a p-value and its limitations. But to break this down.  By the end of this chapter, you should be able to:**   
+
+- Explain why we create null models and what makes a good one.  
+- Explain the motivation for Null Hypothesis Significance Testing (NHST).   
+- Explain the role of a test statistic in hypothesis testing.  
+- Describe a p-value in relation to the sampling distribution under the null.   
+- Explain what a false positive and a false negative are, and how likely we are to observe one or the other as sample size increases.  
+- Explain why a p-value is not “the probability that the null is true.”   
+- Explain the concept of statistical power and how it relates to sample size and effect size.  
+
+
+:::
+
+---
+
+
+
+
+
+## Review and Motivation for NHST
+
+The major goals of statistics are:   
+
+1. Estimation (with uncertainty).    
+2. Hypothesis testing, and   
+3. Inferring causation. 
+
+We have spent some effort in estimation, and now know (one way) to  include uncertainty.  We will put off inferring cause for later in the book.  So, here we will introduce the ideas behind hypothesis testing, why we do it, and what it does and does not mean. 
+
+To get started, let's return to the foundational challenge in estimation. **That is, we want to know. about parameters from populations, but can only access estimates from samples.** We know that even in the best-designed scientific studies, sampling error will pull sample estimates away from population parameters.  
+
+**The goal of null hypothesis significance testing (NHST) is to determine whether our observations can be reasonably explained by sampling error.** 
+
+## NHST Example 
+
+Let's work through an example: We planted pink and white-petaled *parviflora* RILs at the Upper Sawmill (US) location. Of the 114 assayed plants with known petal color: 
+
+- 9 of the 56 pink-petaled RILs (aka 16.1%) set at least one hybrid seed.  
+- 4 of the 58 white-petaled RILs (aka 6.9%) set at least one hybrid seed.    
+
+We may naturally want to compare these values. So, are white-flowered *parviflora* RILs at Upper Sawmill less likely to have at least one hybrid seed than pink-petaled plants? Let's consider some ways we could address this question with our tools so far:
+
+- By simple estimation -- 6.9% is way less than  16.1%. But we know by now that must incorporate uncertainty.   
+- Comparing **@fig-us_boot A** to **@fig-us_boot B**  we see that the 95% confidence intervals of these estimates broadly overlap one another. 
+- But the more appropriate comparison of the 95% confidence interval of the difference in proportions (**@fig-us_boot C**) just barely overlaps zero . 
+- tl/dr it is unclear.  
+
+:::aside 
+**Let's get real.** I hand-picked this somewhat strange case to get us thinking about the problem. A direct way to address the plausibility that these two samples came from the same statistical population is to evaluate if the 95% confidence interval of their difference overlaps zero. This is one valid way to perform a hypothesis test. The rest of this chapter will focus on the traditional NHST framework, which uses **p-values** to answer the same question.
+:::
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| label: fig-us_boot
+#| column: page-right
+#| fig-cap: "**A)** The bootstrap distribution for the proportion of pink-flowered plants setting at least one hybrid seed. **B)** The bootstrap for white-flowered plants. **C)** The distribution of the difference in proportions (pink minus white). The 95% confidence interval, shown with dashed purple lines, slightly overlaps with zero. This sets us up for the chapter's challenge: could the proportion of white and pink moms with one or more hybrid seeds at Upper Sawmill Road plausibly represent samples from the same statistical population?"
+#| fig-alt: "Three histograms showing bootstrap results for plant reproduction. Panel A shows the distribution for the proportion of pink-flowered plants setting a hybrid seed, centered around 0.15. Panel B shows the same for white-flowered plants, centered around 0.08. Panel C is a larger histogram showing the distribution of the difference in proportions (pink minus white). Vertical dashed lines on this third plot show a 95% confidence interval that only slightly overlaps with zero."
+#| fig-width: 12
+library(ggplot2)
+library(infer)
+library(patchwork)
+
+US_pink <-  tibble(a = rep(c(1,0), times= c(9,47)),b = "pink")   # Entering data 
+US_white <-  tibble(a = rep(c(1,0), times= c(4,54)),b = "white") # Entering data
+
+
+US_hyb_boot_pink <- US_pink |> 
+  specify(response = a)|>
+  generate(10000)|>
+  calculate("mean")
+
+
+US_hyb_boot_pink_plot <- ggplot(US_hyb_boot_pink, aes(x = stat))+
+    geom_histogram(fill = "pink", color =  "white",breaks = seq(0,.4,.017))+
+    geom_vline(data = US_hyb_boot_pink |> 
+                   reframe(ci_95 = quantile(stat, probs = c(0.025,0.975))),
+               aes(xintercept = ci_95), color = "purple", lty = 2)+
+  labs(x = "proportion moms with a hybrid", 
+       title = "Pink flowers")+
+  theme(axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        title = element_text(size = 14),
+        axis.text.y = element_blank(),
+        axis.title.y = element_blank()
+        )
+
+
+
+US_hyb_boot_white <- US_white |> 
+  specify(response = a)|>
+  generate(10000)|>
+  calculate("mean")
+
+US_hyb_boot_white_plot <- ggplot(US_hyb_boot_white, aes(x = stat))+
+    geom_histogram(fill = "white", color =  "black",breaks = seq(0,.4,.016))+
+    geom_vline(data = US_hyb_boot_white |> 
+                   reframe(ci_95 = quantile(stat, probs = c(0.025,0.975))),
+               aes(xintercept = ci_95), color = "purple", lty = 2)+
+  labs(x = "proportion moms with a hybrid", 
+       title = "White flowers")+
+  theme(axis.text.x = element_text(size = 14),
+        axis.title.x = element_text(size = 18),
+        title = element_text(size = 14),
+        axis.text.y = element_blank(),
+        axis.title.y = element_blank()
+        )
+  
+# bootstrapping diff in means
+US_hyb_boot_diff <- rbind(US_pink, US_white)|>
+  specify(formula = a~b)|> 
+  generate(10000)|>
+  calculate("diff in means", order = c("pink", "white"))
+
+US_hyb_boot_diff_plot <- ggplot(US_hyb_boot_diff, aes(x = stat))+
+  geom_histogram(color = "white",breaks = seq(-.4,.4,.02))+
+  geom_vline(data = US_hyb_boot_diff |> 
+               reframe(ci_95 = quantile(stat, probs = c(0.025,0.975))),
+             aes(xintercept = ci_95), color = "purple", lty = 2)+  
+  labs(x = "Difference in prop. of moms with one or more hybrid (pink - white)", 
+       title = "Setting a hybrid seed. White vs pink flowers")+
+  theme(axis.text.x = element_text(size = 14),
+        axis.title.x = element_text(size = 18),
+        title = element_text(size = 14),
+        axis.text.y = element_blank(),
+        axis.title.y = element_blank()
+        )
+  
+
+((US_hyb_boot_pink_plot / US_hyb_boot_white_plot) |US_hyb_boot_diff_plot )+
+  plot_layout(ncol = 2, widths = c(1,2))+
+  plot_annotation(tag_levels = 'A',
+                  title = 'Bootstrap distributions for the proportion of moms with one or more hybrid seeds',subtitle = "At Upper Sawmill Road (US)") & 
+  theme(plot.title = element_text(size = 22), 
+        plot.subtitle = element_text(size = 18))
+```
+
+---
+
+
+## Null Hypothesis Significance Testing
+
+In principle, in addition to a real effect, sampling bias, non-independent sampling, and sampling error could all lead to a deviation between estimates and true population parameters. **Our goal in null hypotheses significance testing is to see if results are easily explained by sampling error.** That is, **NHST helps us assess whether the differences between our observations and expectations can be attributed to sampling error.** 
+
+
+
+```{r}
+#| fig-cap: "Dont take it from me. Here's a tictok  from professor [Christina Knudson](https://cknudson.com/) at St. Thomas."
+#| echo: FALSE
+#| column: margin
+#| out-width: "100%"
+tt_url <- "https://www.tiktok.com/@canoodleson/video/6876512852643990789"
+tt <- tiktok_embed(tt_url)
+tiktok_html(tt)
+```
+
+In null hypothesis significance testing, we aim to determine how easily our results can be explained by a "null model." To do this, we follow three key steps:
+
+1. State the null hypothesis and its alternative  (subsection [Statistical Hypotheses](#statistical_hypotheses)).   
+2. Calculate a test statistic to summarize the data, and compare it to its sampling distribution under the null model  (subsection [P Values](#p_values)).     
+3. Interpret the results. If the test statistic falls in an extreme tail of the sampling distribution, we reject the null hypothesis; otherwise, we do not.  (subsection [Statistical Significance](#statistical_signifiance).  
+
+This last step is relatively easy to do. But explaining and understanding this step represents one of the more challenging concepts in statistics. Part of the difficulty lies in the fact that what we traditionally do in the field doesn't entirely make sense.  We will therefore go over [Considerations for NHST](#nhst_gotchas) before moving on to our [chapter summary](#nhst_summary). 
+

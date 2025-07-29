@@ -1,0 +1,121 @@
+## • 13. Statistical Hypotheses {.unnumbered #statistical_hypotheses}
+
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(ggplot2)
+library(tidyr)
+library(tiktokrmd)
+```
+
+
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:** You  are beginning you journey into the world of null hypothesis significance testing. Wait... what even is a null hypothesis? 
+
+**Learning Goals: By the end of this section, you should be able to:**
+
+1. Explain why we create null models and what makes a good one.   
+2. Differentiate between the null and alternative hypothesis.  
+3. Differentiate between biological and statistical hypotheses. 
+:::
+
+
+
+
+
+---
+
+
+```{r} 
+#| fig-cap: 'From [xkcd](https://xkcd.com/892/). *Rollover text:* Heck, my eighth grade science class managed to conclusively reject it just based on a classroom experiment. Its pretty sad to hear about million-dollar research teams who can’t even manage that.'
+#| echo: FALSE
+#| column: margin
+#| label: fig-xkcdsig
+#| fig-alt: "A comic shows two stick figures talking. One says, *I cant believe schools are still teaching kids about the null hypothesis.* The second figure responds, *I remember reading a big study that conclusively disproved it years ago.* In the background, a child sits at a desk, appearing to work on something."
+include_graphics("https://imgs.xkcd.com/comics/null_hypothesis.png")
+```
+
+
+
+
+Scientific hypotheses are exciting. As scientists, we ask interesting questions. For example, throughout this book, we are asking if *parviflora* flowers have evolved in ways to make them less likely to make hybrids with their close relative, *xantiana*. Other scientific questions include: do vaccines cause autism, does a novel drug have its claimed effect, etc etc... . These are our scientific hypotheses. They are meaningful, and grounded in our  understanding of the biological world. They are the reason we do science.  
+
+As scientists, we’re usually trying to evaluate support for a scientific hypothesis. But in the null hypothesis significance testing framework of frequentist statistics (which we follow for most of this book), we do this in a somewhat backwards way. We evaluate the plausibility of a boring statistical hypothesis, known as the null hypothesis. If our observations are inconsistent with the null, we conclude that there is likely something else going on.
+
+## The null hypothesis
+ 
+
+The **Null Hypothesis ($H_0$)** is the ultimate skeptic. It argues that any pattern you see in your data is just an illusion created by random chance or sampling error. It’s the voice that says, "nothing interesting is happening here" (@fig-russ). This is a very specific claim so the null model is very specific.  
+
+```{r}
+#| echo: FALSE
+#| label: fig-russ
+#| fig-cap: "The null hypothesis is unimpressed by your sampling error."
+#| fig-alt: "Russell Westbrook dramatically yawning, with the text 'Cool story, bro.' at the bottom."
+knitr::include_graphics("https://tenor.com/view/ok-csb-cool-story-bro-tired-yawn-gif-5625279.gif")
+```
+
+The **Alternative Hypothesis ($H_A$ or $H_1$)** is the simple opposite. It just claims that the null hypothesis is wrong... i.e. that something other than chance sampling error is likely responsible for the pattern in the data.    This is a vague claim so the alternative hypothesis is not specific.  
+
+
+
+For our flower example, the null and alternative hypotheses are:
+
+  - **$H_0$**: The proportion of moms with at least one hybrid seed **does not differ** between white and pink flowered plants.
+  - **$H_A$**: The proportion of moms with at least one hybrid seed **does differ** between white and pink flowered plants.
+
+
+
+:::warning
+**The null hypothesis doesn’t care about your theories, it does not evaluate effect size, and has no  sense of biological relevance.**
+:::
+
+
+
+
+## Properties of good null hypotheses 
+
+Notice that we chose to compare proportions, not the raw counts of plants with hybrids. This is a crucial feature of a good hypothesis test: it must make a fair comparison. Because our sample sizes for pink (56) and white (58) flowers were unequal, comparing raw counts would be misleading and biologically uninteresting. More generally, because the null hypothesis is a skeptic that doesn't understand biology, it's our job to design studies where its rejection is both interesting and informative. 
+
+
+- **Good nulls are non-trivial:** Testing the null that white flowers have zero hybrids is lame. If we see at least one hybrid then we couldn't have gotten such a result by sampling error from a  population with no hybrids. Similarly, the null hypothesis that mean petal length is zero mm squared should not be tested!  
+
+- **Good nulls represent a fair comparison:** As stated above, we compared the proportion white and pink flowered plants with at least one hybrid seed, not the raw counts to avoid bias.When you design your studies make sure the comparison is fair!.
+
+- **Great nulls isolate  the effect of interest:**  A great null model creates a world where "all else is equal" (*ceteris paribus*). For example, the best test would ensure that other covariates,  that differ (e.g. differences in petal length) between our explanatory variable (e.g. flower  color morph), aren't the real cause of a difference in our response variable.
+
+
+**tl/dr: It is our responsible to design studies with a clean link between our exciting scientific question and the rigid world of statistics.**
+
+
+```{r}
+#| echo: false
+#| fig-cap: "A [PhD Comic on the \"Analysis of Value\"](https://phdcomics.com/comics.php?f=905).  If your null is a trivial model that is uninteresting to reject, the NHST can feel more like a painful analysis of your work's value than a meaningful scientific inquiry."
+#| fig-alt: "A comic from phdcomics.com titled \"ANOVA: ANALYSIS OF VALUE,\" which parodies statistical concepts. The comic defines the \"Dull Hypothesis\" as a comparison between the significance of your research and the significance of a monkey typing in a forest. It presents a formula for the \"F'd ratio\" as the number of people who care about your research divided by the world population. It redefines statistical errors, with Type I error being \"You incorrectly believe your research is not Dull,\" and Type II error being \"No conclusions can be made. Good luck graduating.\""
+#| label: fig-dullhypoth
+include_graphics("http://www.phdcomics.com/comics/archive/phd082707s.gif")
+```
+
+
+### A Technical Note: One-Tailed vs. Two-Tailed Tests
+
+Notice that our $H_A$ above says the proportions "differ" between white and pink morphs. It did not  specify a direction. This is a **two-tailed test**, and it's standard practice. We are open to the effect going in either direction. A **one-tailed test** is when we only care about a specific direction (e.g., $H_A$: pink flowers have a *higher* proportion of hybrids). In practice, one-tailed tests are rare and often inappropriate because we'd almost always want to know about a strong effect in the unexpected direction. Additionally, one-tailed tests often breed distrust in your audience -- they signal that you are trying to pull a fast one.
+
+
+:::note
+Rare cases when a one-tailed test is appropriate occur when both extremes of the outcome are on the same side of the null distribution. For instance, if I were studying the absolute value of something, the null hypothesis would be that it’s zero, and the alternative would be that it’s greater than zero. We’ll see that some test statistics, like the $F$ statistic and (often) the $\chi^2$ statistic, only have one relevant tail.
+:::

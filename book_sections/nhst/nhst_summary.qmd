@@ -1,0 +1,178 @@
+## • 13. NHST summary {.unnumbered #uncertainty_summary}
+
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr' ,'ggplot2','infer']
+  autoload-packages: true
+---
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(webexercises)
+library(dplyr)
+library(knitr)
+library(infer)
+library(ggplot2)
+```
+
+
+
+Links to: [Summary](#nhst_summary_chapter-summary). [Chatbot tutor](#nhst_summary_chatbot_tutor).  [Questions](#nhst_summary_practice-questions). [Glossary](#nhst_summary_glossary-of-terms). [More resources](#nhst_summary_additional-resources).
+---
+
+## Chapter summary {#nhst_summary_chapter-summary}  
+
+Null Hypothesis Significance Testing is a tool to judge if we should interpret a scientific result as sampling error or as a genuine biological process. The first step is coming up with the **null hypothesis** and finding a **"test statistic"** to boil our observations down to a single number. We then find the null distribution of the test statistic under the null model and place our actual observation on this null sampling distribution. We calculate a **p-value** as the proportion of the null distribution that is "as or more extreme" as our observation (remember to look at both tails). We "reject the null" when our p-value is less than $\alpha$ (our **"false positive rate"**), which is set to 0.05 by tradition. We fail to reject the null otherwise. Unfortunately, failing to reject the null does not mean the null is true. This whole business is a bit tricky, so make sure you don't misinterpret your p-value.
+
+```{r}
+#| echo: false
+#| column: page-right
+#| label: fig-CIs
+#| fig-cap: "Understanding confidence intervals is tricky. This cartoon by [Ellie Murray](https://medium.com/@EpiEllie) is the best explanation I have found to date. I copy and paste directly from her [medium post](https://medium.com/@EpiEllie/having-confidence-in-confidence-intervals-8f881712d837) \"*I've often heard students mis-use the target analogy to describe their confidence interval as if it were the fixed target, and the \"true\" value was the arrow that may or may not land on the target 95% of the time.... But, a confidence interval isn’t fixed — the \"true\" value is the part they should view as fixed. To avoid this misunderstanding, I like to explain confidence intervals with ring toss. The \"truth\" is in a fixed place, and it’s the confidence interval ring that may or may not land where you want it to... A side benefit: this analogy can help students see why a 99% confidence interval would be wider than a 95% interval — the bigger the ring, the easier the game of ring toss!*\". While we're at it, Ishould mention that Ellie Murray co-host's a  fantastic podcast called [\"Casual inference\"](https://casualinfer.libsyn.com/)."
+#| fig-alt: "A two-panel comic by @epilielle explaining the correct interpretation of confidence intervals. **Panel 1:** Says \"People think confidence intervals are like archery,\" and  shows a variable \"true value\" (an arrow) being shot at a fixed \"confidence interval\" (a target). **Panel 2** says: \"But really confidence intervals are more like ring toss,\" and shows a variable \"confidence interval\" (a ring) being tossed at a fixed \"true value\" (a post), illustrating that the parameter is fixed while the interval is what varies and might capture it."
+include_graphics("../../figs/stats_foundations/uncertainty/CIs.png")
+```
+
+### Chatbot tutor  {#nhst_summary_chatbot_tutor} 
+
+:::tutor
+
+
+Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/g-688846360e2c81918951a31b10cbebf6-nhst-tutor)). I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+
+:::
+
+
+## Practice Questions {#nhst_summary_practice-questions}
+
+
+Try these questions! 
+
+:::exercises
+
+**Q1)** Null or alternative? Identify whether each of the following statements is more appropriate as a **null hypothesis**: `r longmcq(c("The number of hours that grade school children spend doing homework predicts their future success on standardized tests.", answer = "King cheetahs on average run the same speed as standard spotted cheetahs.", "The mean length of African elephant tusks has changed over the last 100 years."))`.    
+
+		
+
+---
+    
+**Q2)**  Assume the null hypothesis is TRUE. Which one of the following statements is true? `r longmcq(c("A study with a larger sample is more likely than a smaller study to get the result that P < 0.05.","A study with a large sample is less likely than a smaller study to get the result that P < 0.05", answer = "A study with a large sample is equally likely compared to a smaller study to get the result that P < 0.05."))`
+
+
+
+---
+    
+**Q3)** Assume the null hypothesis is FALSE. Which one of the following statements is true? `r longmcq(c(answer ="A study with a larger sample is more likely than a smaller study to get the result that P < 0.05.","A study with a large sample is less likely than a smaller study to get the result that P < 0.05",  "A study with a large sample is equally likely compared to a smaller study to get the result that P < 0.05."))`
+
+:::
+
+- Can parents distinguish their own children by smell alone? To investigate, Porter and Moore (1981) gave new T-shirts to children of nine mothers. Each child wore his or shirt to bed for three consecutive nights. During the day, from waking until bedtime, the shirts were kept in individually sealed plastic bags. No scented soaps or perfumes were used during the study. Each mother was given the shirt of her child and that of another, randomly chosen child and asked to identify her own by smell. Eight of nine mothers identified their children correctly. Use this study to answer the following questions, using a two-sided significance level 𝛼 = 0.05. 
+
+
+:::exercises
+
+**Q4)** $H_0$: What is the appropriate NULL hypothesis? `r longmcq(c( answer = "Mothers correctly guess their children's shirts half of the time", "Mothers correctly guess their children's shirts half of the time or less","Mothers correctly guess their children's shirts more than half of the time","Mothers do not correctly guess their children's shirts half of the time"))`
+
+
+--- 
+
+**Q5)** $H_A$: What is the appropriate ALTERNATIVE hypothesis? `r longmcq(c( "Mothers correctly guess their children's shirts half of the time", "Mothers correctly guess their children's shirts half of the time or less", "Mothers correctly guess their children's shirts more than half of the time", answer = "Mothers do not correctly guess their children's shirts half of the time"))`
+
+
+
+`r hide("Explanation of Q5")`   
+Remember we should do two-tailed tests! 
+`r unhide()` 
+
+:::
+
+For the  questions below refer to the following figure. Numbers over bars show the probability of x moms guessing right assuming the null hypothesis is true.
+
+```{r}
+#| echo: false
+include_graphics("../../figs/stats_foundations/nhst/null_dist.png")
+```
+
+:::exercises
+
+**Q6)** Recall that eight of nine mothers identified their children correctly. Use the numbers on the figure above to estimate a P-value. `r fitb(0.04, num = TRUE, tol = .001)`
+
+---
+
+**Q7)** What do we do to the null hypothesis in this case? `r mcq(c(answer = "Reject it", "Fail to Reject it", "Accept it","Fail to accept it", "Not enough information"))`
+
+---
+
+**Q8)** In this case, the null hypothesis `r mcq(c("Is True", "Is False", "has a 3.6% chance of being true", "has a 4% chance of being true" , answer = "need more info"))`
+
+
+---
+
+**Q9)** The prosecutor's fallacy is the mistaken thought that arises from assuming that  `r longmcq(c("people are innocent until proven guilty", "people are guilty until proven innocent", "data are collected without sampling error", answer = "the probability of the model given the data is the probability of the data given the model", "assuming all evidence in a criminal case are independent and collected without bias"))`
+
+:::
+
+## 📊 Glossary of Terms {#nhst_summary_glossary-of-terms} 
+
+:::glossary
+* **The Null Hypothesis**: A skeptical explanation, made for the sake of argument, which suggests that data come from an uninteresting or "boring" population.
+
+* **The Alternative Hypothesis**: A claim that the data do not come from the "boring" population.
+
+* **The Test Statistic**: A single number that summarizes the data. We compare the observed test statistic to its sampling distribution under the null model.
+
+* **P-value**: The probability that a random sample drawn from the null model would be as extreme or more extreme than what is observed.
+
+* **$\alpha$**: The probability that we reject a true null hypothesis. We can decide what this is, but by convention, $\alpha$ is usually set at 0.05.
+
+* **False Positive**: Rejecting the null when the null is true.
+
+* **False Negative**: Failing to reject the null when it is false.
+
+* **Power**: The probability of rejecting a false null hypothesis. We cannot directly set this — it depends on sample size and the size of the effect, but we can design experiments aiming for a certain level of power.
+
+* **Test Statistic:**	A single number calculated from sample data that summarizes the difference between observations and what is expected under the null hypothesis.
+
+:::
+
+
+
+## Additional resources   {#nhst_summary_additional-resources}
+
+:::learnmore 
+
+**Readings:**         
+
+- Numerous readings from the [Scientist Sees Squirrel blog](https://scientistseessquirrel.wordpress.com) by [Stephen B. Heard](https://sheard.ext.unb.ca/) including:  [In defence of the P-value](https://scientistseessquirrel.wordpress.com/2015/02/09/in-defence-of-the-p-value/), [Is “nearly significant” ridiculous?](https://scientistseessquirrel.wordpress.com/2015/11/16/is-nearly-significant-ridiculous/), and [Two tired misconceptions about null hypotheses](https://scientistseessquirrel.wordpress.com/2017/04/03/two-tired-misconceptions-about-null-hypotheses/).  
+
+- [Some Natural Solutions to the p-Value Communication Problem—and Why They Won’t Work](https://www.tandfonline.com/doi/pdf/10.1080/01621459.2017.1311263?casa_token=60fh_ztCytkAAAAA:Swz3jXQlf9LWUw-HAHXhHh2r5_OgxJS3-L5g1Waq1GugNX_txrsQJTGsVdjHQodQIsUsVF5ot3kmKQ) [@gelman2017].   
+
+-  [Statement on P-values from the American Statistical Association](https://www.tandfonline.com/doi/pdf/10.1080/00031305.2016.1154108?needAccess=true) [@wasserstein2016].  
+
+- [The p-value statement, five years on](https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01505)[@pvalue5years]  
+
+- [Scientists rise up against statistical significance](https://www.nature.com/articles/d41586-019-00857-9?fbclid=IwAR3K6PysQ9FY4togs39BSciW3YsK-Pf6EE0Il9R8zxkW4GvrGBHFuz8yF5c) by @amrhein2019. 
+
+
+**Webapps:**   
+
+- [Errors and Power in Significance Testing webapp](https://istats.shinyapps.io/power/).
+
+**Videos:**  
+
+-  [P-values and The prosecutor's falacy](https://www.youtube.com/watch?v=eesUdFlYMh8) from calling bullshit.  
+
+- [Probability, Part 7: What is Null Hypothesis Significance Testing?](https://www.youtube.com/watch?v=2QsTJclNqVs) from  Simplistics (QuantPsych). An opiniated but entertaining presentation of p-values & NHST. 
+
+:::
+
+```{r}
+#| echo: false
+#| eval: false
+#Doing Bayesian Data Analysis in brms and the tidyverse  https://bookdown.org/content/3686/
+```

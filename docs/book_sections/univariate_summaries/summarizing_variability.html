@@ -733,12 +733,47 @@ window.Quarto = {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/nhst.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">13. Null Hypothesis Significance Testing</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../toc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Rest of Book</span></a>
+  <a href="../../book_sections/nhst/statistical_hypotheses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. Statistical Hypotheses</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/nhst/p_values.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. P Values</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/nhst/statistical_significance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. Statistical Significance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/nhst/nhst_gotchas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. Considerations for NHST</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/nhst/nhst_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. NHST summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
@@ -826,7 +861,7 @@ window.Quarto = {
 </div></div><div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-boxplot" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A vertical boxplot showing petal area in millimeters. The plot includes a labeled box stretching from the first quartile (~50 mm) to the third quartile (~70 mm), with a bold horizontal line at the median (~60 mm). Lines (&quot;whiskers&quot;) extend from the top and bottom of the box to the maximum and minimum non-outlier values. A dot above the top whisker marks an outlier. Labels identify each component of the plot: minimum, first quartile, median, third quartile, maximum, and outlier.">
+<div id="fig-boxplot" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A vertical boxplot showing petal area in millimeters. The plot includes a labeled box stretching from the first quartile (~50 mm) to the third quartile (~70 mm), with a bold horizontal line at the median (~60 mm). Lines (&quot;whiskers&quot;) extend from the top and bottom of the box to the maximum and minimum non-outlier values. A dot above the top whisker marks an outlier. Labels identify each component of the plot: minimum, first quartile, median, third quartile, maximum, and outlier." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="summarizing_variability_files/figure-html/fig-boxplot-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A vertical boxplot showing petal area in millimeters. The plot includes a labeled box stretching from the first quartile (~50 mm) to the third quartile (~70 mm), with a bold horizontal line at the median (~60 mm). Lines (&quot;whiskers&quot;) extend from the top and bottom of the box to the maximum and minimum non-outlier values. A dot above the top whisker marks an outlier. Labels identify each component of the plot: minimum, first quartile, median, third quartile, maximum, and outlier.">
@@ -872,7 +907,7 @@ Figure&nbsp;1: <strong><em>Anatomy of a boxplot</em></strong>. This boxplot disp
 <h3 class="anchored" data-anchor-id="summarizing_variability_parametric-summaries-of-variability-example">Parametric summaries of variability: Example</h3>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-ss" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Animated figure with three panels demonstrating deviation and squared deviation in petal area measurements for Clarkia xantiana. *Left:* A bar plot shows each individual's deviation from the mean, with one pink-highlighted bar labeled with its value. *Middle:* A pink rectangle visualizes the squared deviation as area, connecting a data point to the mean. *Right:* A bar plot shows squared deviations for all individuals, again highlighting the same individual in pink.">
+<div id="fig-ss" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Animated figure with three panels demonstrating deviation and squared deviation in petal area measurements for Clarkia xantiana. *Left:* A bar plot shows each individual's deviation from the mean, with one pink-highlighted bar labeled with its value. *Middle:* A pink rectangle visualizes the squared deviation as area, connecting a data point to the mean. *Right:* A bar plot shows squared deviations for all individuals, again highlighting the same individual in pink." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="../../figs/summarizing_data/univariate_summaries/3-column-animation_ss.gif" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="Animated figure with three panels demonstrating deviation and squared deviation in petal area measurements for Clarkia xantiana. *Left:* A bar plot shows each individual's deviation from the mean, with one pink-highlighted bar labeled with its value. *Middle:* A pink rectangle visualizes the squared deviation as area, connecting a data point to the mean. *Right:* A bar plot shows squared deviations for all individuals, again highlighting the same individual in pink.">

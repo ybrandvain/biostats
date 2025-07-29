@@ -1,0 +1,101 @@
+### ## Chapter Structure & Learning Goals
+*This chapter is broken down into four main conceptual sections. Below is a summary of each section and its specific learning goals for students.*
+
+#### 1. Statistical Hypotheses
+* **Summary:** This section contrasts broad scientific questions with the rigid null ($H_0$) and alternative ($H_A$) hypotheses used in statistics, and explains what makes a null hypothesis a useful tool.
+* **Learning Goals:**
+    * Differentiate between biological and statistical hypotheses.
+    * Differentiate between the null and alternative hypothesis.
+    * Explain why we create null models and what makes a good one.
+
+#### 2. P-Values
+* **Summary:** This section details the mechanical process of using a test statistic, comparing it to a null distribution, and calculating a p-value to quantify how surprising the data are.
+* **Learning Goals:**
+    * Understand the idea of a "test statistic."
+    * Understand that a null sampling distribution is a histogram of test statistics generated under the null hypothesis.
+    * Correctly present, explain, and interpret p-values.
+
+#### 3. Statistical Significance
+* **Summary:** This section covers the conventional decision-making process based on p-values and introduces the concepts of Type I/II errors and statistical power.
+* **Learning Goals:**
+    * Understand the idea of statistical significance.
+    * Explain why we never "accept" the null hypothesis.
+    * Recognize that the result of NHST is not the definitive truth.
+
+#### 4. Considerations for NHST (The "Gotchas")
+* **Summary:** This final section addresses the common misinterpretations and logical fallacies (like the Prosecutor's Fallacy) associated with p-values and NHST.
+* **Learning Goals:**
+    * Distinguish between what a p-value is and what it is not.
+    * Explain common misunderstandings of p-values and how to correct them.
+    * Explain the Prosecutor's Fallacy.
+---
+
+### ## Core Concept of NHST
+* **Purpose**: **Null Hypothesis Significance Testing (NHST)** is a formal statistical framework used to determine if an observed result (e.g., a difference between two groups) is likely a real effect or if it can be reasonably explained by random **sampling error**.
+* **Core Logic**: The process is "backwards." Instead of proving an exciting **scientific hypothesis** directly, we test a boring **statistical null hypothesis** ($H_0$) that assumes "no effect." If the observed data are very surprising under this null assumption, we reject it in favor of the **alternative hypothesis ($H_A$)**.
+
+
+--
+
+### What the Tutor Should Know: Student Context
+Here is a summary of the student's assumed knowledge state for this chapter.
+
+* **What they KNOW:**
+    * The concept of a sampling distribution and that the **standard error** is its standard deviation.
+    * How to use **bootstrapping** to generate a confidence interval and a bootstrap standard error.
+    * The difference between a **one-tailed** and **two-tailed** test and that two-tailed is the standard.
+
+* **What they DO NOT know yet:**
+    * **How to perform a permutation test.** This chapter introduces the *idea* of a null distribution from a permutation test, but the implementation is saved for the next chapter.
+    * **Theoretical distributions.** They have not been taught about the t, F, or Z distributions. The current approach is "simulation-first."
+
+
+---
+### ## Key Terminology
+* **Alternative Hypothesis ($H_A$)**: The statistical hypothesis that there *is* an effect, a difference, or a relationship. It contradicts the null hypothesis.
+* **Bootstrapping**: A computational method of resampling from a sample *with replacement*. It is used to approximate the sampling distribution and estimate the uncertainty of a statistic. The standard deviation of the resulting **bootstrap distribution** is the **bootstrap standard error**, and the central 95% of the distribution forms the **95% bootstrap confidence interval**.
+* **Effect Size**: The magnitude of an observed effect or difference, independent of sample size. It measures the practical importance of a result.
+* **Null Hypothesis ($H_0$)**: The hypothesis of "no effect," "no difference," or "no relationship." It is the default assumption that any observed pattern is due to random chance. It is always a **specific** claim (e.g., the difference is *exactly* zero).
+* **One-Tailed Test**: A hypothesis test where the alternative hypothesis specifies a single direction for the effect (e.g., greater than).
+* **p-value**: The probability of observing a test statistic as extreme as, or more extreme than, the one calculated from the data, **assuming the null hypothesis is true**.
+* **Power (Statistical Power)**: The probability of correctly rejecting a false null hypothesis ($1-\beta$). It is the ability of a test to detect an effect if one truly exists.
+* **Sampling Distribution**: The distribution of a sample statistic if we were to repeatedly draw samples from a population.
+* **Scientific Hypothesis**: A broad, conceptual question or claim about a biological or other scientific process, grounded in theory.
+* **Significance Level ($\alpha$)**: A pre-determined threshold for a p-value, conventionally set to **0.05**. If $p \le \alpha$, the result is declared "statistically significant." It is also the acceptable rate of **Type I errors**.
+* **Standard Error (SE)**: The standard deviation of a sampling distribution. It measures the precision of a sample statistic as an estimate of the population parameter.
+* **Statistical Hypothesis**: A precise, falsifiable statement about a pattern in data, framed as a null and alternative hypothesis.
+* **Test Statistic**: A single number calculated from sample data that summarizes the difference between what is observed and what is expected under the null hypothesis.
+* **Two-Tailed Test**: A hypothesis test where the alternative hypothesis does not specify the direction of the effect, only that a difference exists. This is the standard approach used in most cases.
+* **Type I Error (False Positive)**: The error of rejecting a true null hypothesis. The probability of this error is $\alpha$.
+* **Type II Error (False Negative)**: The error of failing to reject a false null hypothesis. The probability of this error is $\beta$.
+
+---
+### ## The NHST Procedure
+1.  **State Hypotheses**: Clearly define the **null ($H_0$)** and **alternative ($H_A$)** hypotheses.
+2.  **Calculate p-value**:
+    * Determine an appropriate **test statistic**.
+    * Generate a **null distribution** for that statistic.
+    * Compare the observed test statistic to the null distribution to find the **p-value**.
+3.  **Make a Decision**: Compare the p-value to the **significance level ($\alpha$)**.
+    * If $p \le \alpha$, **reject the null hypothesis**.
+    * If $p > \alpha$, **fail to reject the null hypothesis**.
+
+---
+### ## Crafting a Good Null Hypothesis
+* **1. It must be non-trivial**: The null should be a plausible default reality. Testing a foolish null (e.g., `mean height = 0`) is uninformative.
+* **2. It must make a fair comparison**: The test statistic should use the correct metric. For groups with unequal sample sizes, compare **proportions**, not raw counts.
+* **3. It must isolate the effect of interest**: The experimental design should ensure that other factors (confounding variables) are not the true cause of the observed effect. This is the principle of "**ceteris paribus**" (all else being equal).
+
+---
+### ## Critical Gotchas & Misconceptions
+* **A p-value is NOT the probability that the null is true.** It is the probability of the data, given the null hypothesis is true ($P(\text{Data}|H_0)$).
+* **Prosecutor's Fallacy**: Confusing $P(\text{Data}|H_0)$ with $P(H_0|\text{Data})$. NHST only provides the former.
+* **Statistical significance is NOT practical importance.** A tiny, unimportant effect can be statistically significant with a large enough sample size.
+* **Never "accept" the null hypothesis.** We only "fail to reject" it. The absence of evidence is not evidence of absence.
+* **The $\alpha = 0.05$ threshold is a convention, not a sacred truth.**
+
+---
+### ## Generating a Null Distribution
+A **null distribution**—a picture of what the world would look like if there were no real effect—is needed to calculate a p-value. This chapter uses a computational method called a **permutation test** to generate the null distributions shown in the figures.
+
+***Tutor Note (If a student asks for more detail):*** *Explain that a permutation test works by shuffling the labels (e.g., 'pink' and 'white') in the dataset. This deliberately breaks any real association, creating thousands of simulated datasets where the null hypothesis of "no relationship" is true. This process will be taught in detail in the next chapter.*

@@ -1,0 +1,190 @@
+## • 13. Statistical Significance {.unnumbered #statistical_signifiance}
+
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+```
+
+
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:** You now can calculate a p-value and know what it means. But what do you do now? How do you present and report these results especially when you feel the need to make a clear decision about the trend.
+
+**Learning Goals: By the end of this section, you should be able to:**
+
+1.  **Understand the idea of statistical significance.**
+
+2. **Explain why we never accept the null hypothesis.**
+
+3. **Recognize that the result of null hypothesis significance testing is not the truth.**   
+   - We may reject a true null (At best we reject a true null with probability $\alpha$, which by convention is set to 0.05).  
+   - We may fail to reject a false null (we do so with probability $\beta$). Our "power" to reject false nulls is $1-\beta$. The value of $\beta$ depends on the effect size and sample size. 
+
+:::
+
+---
+
+## Drawing a conclusion from a p-value. 
+
+
+
+**So what do scientists do with a p-value?** A p-value itself is an informative summary -- it tells us the probability that a random draw from the null distribution would be as or more extreme than what we observed. 
+
+But here's where things get weird. We use this probability as a measure of our data and the process that generated it. 
+
+
+
+- If our p-value is sufficiently small, we "reject" the null hypothesis and tentatively conclude that it did not generate our data.  
+
+:::aside
+**This is a sneaky bit of logic** that is not fully justified but seems to work anyways (see the next section).
+:::
+
+- If our p-value is not sufficiently small, we "fail to reject" the null hypothesis, and tentatively conclude that there is not enough evidence to reject it. 
+
+
+What is "sufficiently small?" A glib answer is the greek letter, $\alpha$. What should $\alpha$ be? There is no real answer, and the value of $\alpha$ is up to us as a scientific community. $\alpha$ reflects a trade-off between the power to reject a false null and the fear of rejecting a true null. Despite this nuance, **$\alpha$ is traditionally set to 0.05, meaning that we have a 5% chance of rejecting a true null.** This convention comes from a few words from [RA Fisher](https://en.wikipedia.org/wiki/Ronald_Fisher) such as this quote below from @fisher1926 [link here](https://repository.rothamsted.ac.uk/download/b7bedcda96ac77bbee3c9f750318bbe5d6104fec9db012bfe5d99d8d16049432/4213576/Fisher%20Arrangment%20of%20field%20experiments%20J%20Ministry%20%20of%20Agriculture%201926%20p%20503%20to%20513.pdf):
+
+> ". . . it is convenient to draw the line at about the level at which we can say: Either there is something in the treatment, or a coincidence has occurred such as does not occur more than once in twenty trials. . ."
+
+---
+
+
+
+```{r}
+#| label: fig-xkcdsignif
+#| fig-cap: '[xkcd](https://xkcd.com/1478/) poking fun at null hypothesis significance testing. *Rollover text:* If all else fails use significance at the $\alpha$ = 0.5  level and hope no one notices.'
+#| echo: false
+#| column: margin
+#| fig-alt: "The comic titled *p-value Interpretation* humorously depicts various p-value ranges and their subjective interpretations, showing how researchers often adjust their conclusions based on how close the values are to common significance thresholds. For p-values of 0.001, 0.01, 0.02, 0.03, 0.04, and 0.049, the interpretation is *highly significant* or *significant,* but when the p-value is exactly 0.050, there's a sense of uncertainty with a need to *redo calculations.* At 0.051 and 0.06, the result is on the *edge of significance.* When p-values range from 0.07 to 0.099, they are labeled as *highly suggestive* or significant at a more lenient level like p<0.10, while p-values greater than or equal to 0.1 are dismissed with an emphasis on subgroup analysis."
+include_graphics("https://imgs.xkcd.com/comics/p_values.png")
+```
+
+
+
+These customary rituals are taken quite seriously by some scientists. For certain audiences, the difference between a p-value of 0.051 and 0.049 is the difference between a non-significant and significant result—and potentially between publication or rejection. I, and many others (e.g., [this article](https://www.nature.com/articles/d41586-019-00857-9?fbclid=IwAR3K6PysQ9FY4togs39BSciW3YsK-Pf6EE0Il9R8zxkW4GvrGBHFuz8yF5c) by @amrhein2019), think this is a bad custom, and not all scientists adhere to it. Even Fisher himself seemed to waffle on this ([link](http://www.harryganzeboom.nl/Teaching/P05.pdf)). Nonetheless, this is the world you will navigate, so you should be aware of these customs.
+
+## We never "accept" the  null  
+
+**By convention we never accept the null hypothesis -- we simply "fail to reject" it.** The reason for this is that we know that the null still may well be incorrect. In fact, the same effect size in a larger study would have more power to reject the null. 
+
+## False positives and false negatives
+
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>p-value > α <br> Fail to Reject H₀</th>
+      <th>p-value ≤ α <br> Reject H₀</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>True null hypothesis  <br>(H₀ is TRUE)</b></td>
+      <td style="background-color: #d3f8d3;">Fail to reject true null hypothesis <br> Occurs with probability 1 - α  <br>This is the correct decision</td>
+      <td style="background-color: #f8d3d3;">Reject true null hypothesis <br> Occurs with probability α  <br>(Type I Error)</td>
+    </tr>
+    <tr>
+      <td><b>False null hypothesis  <br>(H₀ is FALSE)</b></td>
+      <td style="background-color: #f8d3d3;">Fail to reject false null hypothesis <br> Occurs with probability β  <br>(Type II Error)</td>
+      <td style="background-color: #d3f8d3;">Reject false null hypothesis <br> Occurs with probability 1 - β  <br> (akaPower) This is the correct decision</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+
+The table above should serve as a reminder that the result of the binary decision of a null hypothesis significance test does not cleanly map onto the truth of the null hypothesis. 
+
+- **Rejecting the null does not mean that the null is untrue.** The basic logic of null hypothesis significance testing means that we will reject a true null hypothesis  5% of the time (if $\alpha$ is set to the conventional 0.05). This outcome is called a "false positive result".  When the null hypothesis is true, p-values will be uniformly distributed, and the false positive rate will be $\alpha$ regardless of sample size (@fig-npower).  
+
+
+- **Failure to reject the null does not mean that the null is true.** We will occasionally fail to reject some false nulls. This occurs with probability $\beta$. So, $1-\beta$ is our so called "power" to reject a false null. Unlike our false positive rate, which always equals $\alpha$, our false negative rate depends on both the sample size and the effect size.  When the null hypothesis is false, we will observe more smaller p-values as the sample size increases, and the true positive rate will increase with the sample size (@fig-npower).
+
+We address this in some detail in the next subsection!  
+
+
+
+
+
+
+```{r} 
+#| warning: FALSE
+#| message: FALSE
+#| echo: FALSE
+#| label: fig-npower
+#| fig-cap: "**a)** The cumulative distribution of p-values when the null is true (left facet) and false (right facet), shown for different sample sizes. **b)** The probability of rejecting the null hypothesis as sample size increases. When the null is true (left), this probability remains constant at  α=0.05. When the null is false (right), the probability (power) increases with sample size. In this example, the null hypothesis assumes a value of 0, while the true parameter is 0.3 standard deviations away from zero in the panel on the right. [Code is available here](https://raw.githubusercontent.com/ybrandvain/3272-book-code/refs/heads/main/simple_power.R)"
+#| fig-alt: "This figure contains two panels, labeled *a* and *b.* **Panel *a*** displays the cumulative distribution of p-values across different sample sizes for two scenarios: when the null hypothesis is true and when the null hypothesis is false. Each curve is color-coded by sample size, with smaller p-values more common when the null hypothesis is false. A vertical line is drawn at p = 0.05. **Panel *b*** shows how the probability of rejecting the null hypothesis (y-axis) changes with increasing sample size (x-axis on a log2 scale). When the null hypothesis is true, the rejection probability stays at the alpha level of 0.05, while when the null hypothesis is false, the rejection probability increases as the sample size grows, illustrating increased statistical power." 
+library(cowplot)
+sample.size <- c(2^(1:9))
+sim <- tibble(p_reject = 
+                c(sapply(sample.size , function(X){
+                  mean(replicate(1000, unlist(t.test(rnorm(X), mu = 0.3)["p.value"]) < 0.05))}),
+                  sapply(sample.size , function(X){
+                    mean(replicate(1000, unlist(t.test(rnorm(X), mu = 0)["p.value"]) < 0.05))}))) %>%
+  mutate(H_0 = factor(rep(c("Null is False", "Null is True"), each = length(sample.size)), 
+                      levels = c("Null is True", "Null is False"))) %>%
+  mutate(sample.size = rep(sample.size, 2))
+
+acceptreject <- ggplot(sim, aes(x = sample.size, y = p_reject)) +
+  geom_point(show.legend = FALSE) +
+  geom_smooth(se = FALSE, show.legend = FALSE) +
+  facet_wrap(~H_0) +
+  scale_x_continuous(trans = "log2") +
+  geom_hline(yintercept = 0.05, color = "purple") +
+  scale_y_continuous(limits = c(0, 1), expand = c(0, 0), breaks = c(0.05, 0.25, 0.5, 0.75, 1)) +
+  ylab(expression(P~'('~reject~null~'|'~alpha~""==0.05~')')) +
+  ggtitle("P(reject the null)") +
+  annotation_logticks(sides = "b", base = 10, size = 0.2) +
+  theme(strip.text = element_text(size = 15, color = "blue"))+
+  geom_hline(yintercept = seq(0, 0.75, 1/4), color = "lightgrey")
+
+p.vals <- bind_rows(
+  tibble(n = rep(sample.size, each = 1000), 
+         p = c(sapply(sample.size, function(X) {
+           replicate(1000, unlist(t.test(rnorm(X), mu = 0.3)["p.value"]))})),
+         H0 = "Null is False"),
+  tibble(n = rep(sample.size, each = 1000), 
+         p = c(sapply(sample.size, function(X) {
+           replicate(1000, unlist(t.test(rnorm(X), mu = 0)["p.value"]))})),
+         H0 = "Null is True")) %>%
+  mutate(H0 = factor(H0, levels = c("Null is True", "Null is False")))
+
+pvalsfig <- ggplot(p.vals %>% mutate(`sample size` = factor(n)), aes(x = p, color = `sample size`)) +
+  stat_ecdf(linewidth = 1) +
+  facet_wrap(~H0) + 
+  scale_color_brewer(type = "seq", palette = "RdPu") +
+  xlim(c(0, 1)) + theme_light() +
+  labs(title = "P-value distribution", y = "Cumulative frequency", x = "P-value") +
+  scale_x_continuous(limits = c(0, 1), expand = c(0, 0), breaks = c(0.05, 0.25, 0.5, 0.75, 1), labels = c(".05", "0.25", "0.50", "0.75", "1")) +
+  geom_vline(xintercept = 0.05, color = "purple") +
+  theme(strip.text = element_text(size = 15, color = "blue"))+
+  geom_hline(yintercept = seq(0, 0.75, 1/4), color = "lightgrey")
+
+top <- plot_grid(pvalsfig + theme(legend.position = "none"), get_legend(pvalsfig), rel_widths = c(5, 1), ncol = 2)
+bottom <- plot_grid(acceptreject, NULL, ncol = 2, rel_widths = c(5, 1))
+
+plot_grid(top, bottom, nrow = 2, labels = c("a", "b"))
+```
+
+
+
