@@ -794,23 +794,23 @@ ul.task-list li input[type="checkbox"] {
 <li>4 of the 58 white-petaled RILs (aka 6.9%) set at least one hybrid seed.</li>
 </ul>
 <p>We may naturally want to compare these values. So, are white-flowered <em>parviflora</em> RILs at Upper Sawmill less likely to have at least one hybrid seed than pink-petaled plants? Let’s consider some ways we could address this question with our tools so far:</p>
-<ul>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p><strong>Let’s get real.</strong> I hand-picked this somewhat strange case to get us thinking about the problem. A direct way to address the plausibility that these two samples came from the same statistical population is to evaluate if the 95% confidence interval of their difference overlaps zero. This is one valid way to perform a hypothesis test. The rest of this chapter will focus on the traditional NHST framework, which uses <strong>p-values</strong> to answer the same question.</p>
+</div></div><ul>
 <li>By simple estimation – 6.9% is way less than 16.1%. But we know by now that must incorporate uncertainty.<br>
 </li>
 <li>Comparing <strong><a href="#fig-us_boot" class="quarto-xref">Figure&nbsp;<span>1</span></a> A</strong> to <strong><a href="#fig-us_boot" class="quarto-xref">Figure&nbsp;<span>1</span></a> B</strong> we see that the 95% confidence intervals of these estimates broadly overlap one another.</li>
 <li>But the more appropriate comparison of the 95% confidence interval of the difference in proportions (<strong><a href="#fig-us_boot" class="quarto-xref">Figure&nbsp;<span>1</span></a> C</strong>) just barely overlaps zero .</li>
 <li>tl/dr it is unclear.</li>
 </ul>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p><strong>Let’s get real.</strong> I hand-picked this somewhat strange case to get us thinking about the problem. A direct way to address the plausibility that these two samples came from the same statistical population is to evaluate if the 95% confidence interval of their difference overlaps zero. This is one valid way to perform a hypothesis test. The rest of this chapter will focus on the traditional NHST framework, which uses <strong>p-values</strong> to answer the same question.</p>
-</div></div><hr>
+<hr>
 <div class="cell page-columns page-full">
 <div class="cell-output-display page-columns page-full">
 <div id="fig-us_boot" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Three histograms showing bootstrap results for plant reproduction. Panel A shows the distribution for the proportion of pink-flowered plants setting a hybrid seed, centered around 0.15. Panel B shows the same for white-flowered plants, centered around 0.08. Panel C is a larger histogram showing the distribution of the difference in proportions (pink minus white). Vertical dashed lines on this third plot show a 95% confidence interval that only slightly overlaps with zero.">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-us_boot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
-<img src="nhst_files/figure-html/fig-us_boot-1.png" class="img-fluid figure-img column-page-right" alt="Three histograms showing bootstrap results for plant reproduction. Panel A shows the distribution for the proportion of pink-flowered plants setting a hybrid seed, centered around 0.15. Panel B shows the same for white-flowered plants, centered around 0.08. Panel C is a larger histogram showing the distribution of the difference in proportions (pink minus white). Vertical dashed lines on this third plot show a 95% confidence interval that only slightly overlaps with zero." width="1152">
+<img src="nhst_files/figure-html/fig-us_boot-1.png" class="img-fluid figure-img column-page-right" alt="Three histograms showing bootstrap results for plant reproduction. Panel A shows the distribution for the proportion of pink-flowered plants setting a hybrid seed, centered around 0.15. Panel B shows the same for white-flowered plants, centered around 0.08. Panel C is a larger histogram showing the distribution of the difference in proportions (pink minus white). Vertical dashed lines on this third plot show a 95% confidence interval that only slightly overlaps with zero." width="1056">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-us_boot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: <strong>A)</strong> The bootstrap distribution for the proportion of pink-flowered plants setting at least one hybrid seed. <strong>B)</strong> The bootstrap for white-flowered plants. <strong>C)</strong> The distribution of the difference in proportions (pink minus white). The 95% confidence interval, shown with dashed purple lines, slightly overlaps with zero. This sets us up for the chapter’s challenge: could the proportion of white and pink moms with one or more hybrid seeds at Upper Sawmill Road plausibly represent samples from the same statistical population?
@@ -824,17 +824,10 @@ Figure&nbsp;1: <strong>A)</strong> The bootstrap distribution for the proportion
 <section id="null-hypothesis-significance-testing" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="null-hypothesis-significance-testing">Null Hypothesis Significance Testing</h2>
 <p>In principle, in addition to a real effect, sampling bias, non-independent sampling, and sampling error could all lead to a deviation between estimates and true population parameters. <strong>Our goal in null hypotheses significance testing is to see if results are easily explained by sampling error.</strong> That is, <strong>NHST helps us assess whether the differences between our observations and expectations can be attributed to sampling error.</strong></p>
-<div class="cell page-columns page-full">
 
-<div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<blockquote class="tiktok-embed blockquote" cite="https://www.tiktok.com/@canoodleson/video/6876512852643990789" data-video-id="6876512852643990789" data-embed-from="oembed" style="max-width:605px; min-width:325px;"> <section> <a target="_blank" title="@canoodleson" href="https://www.tiktok.com/@canoodleson?refer=embed">@canoodleson</a> <p>Hypotheses and hypothesis testing in stats</p> <a target="_blank" title="♬ original sound - Christina" href="https://www.tiktok.com/music/original-sound-6876512885892287237?refer=embed">♬ original sound - Christina</a> </section> </blockquote> 
-<!--SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
-<script async="" data-external="1" src="https://www.tiktok.com/embed.js"></script>
-<style>blockquote.tiktok-embed {border:unset;padding:unset;}</style>
-<!--/SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
-<p>Dont take it from me. Here’s a tictok from professor <a href="https://cknudson.com/">Christina Knudson</a> at St.&nbsp;Thomas.</p>
-</div></div></div>
-<p>In null hypothesis significance testing, we aim to determine how easily our results can be explained by a “null model.” To do this, we follow three key steps:</p>
+<div class="no-row-height column-margin column-container"><div class="cell">
+
+</div></div><p>In null hypothesis significance testing, we aim to determine how easily our results can be explained by a “null model.” To do this, we follow three key steps:</p>
 <ol type="1">
 <li>State the null hypothesis and its alternative (subsection <a href="nhst/statistical_hypotheses.html">Statistical Hypotheses</a>).<br>
 </li>
