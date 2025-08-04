@@ -1,0 +1,102 @@
+# 14. Shuffling {.unnumbered #shuffling}
+
+
+
+```{r, echo = FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(DT)
+library(knitr)
+library(blogdown)
+library(emo)
+library(stringr)
+library(tweetrmd)
+library(emo)
+library(tufte)
+library(cowplot)
+library(lubridate)
+library(ggthemes)
+library(ggforce)
+library(datasauRus)
+library(ggridges)
+library(infer)
+library(tiktokrmd)
+library(ggridges)
+library(colorspace)
+library(kableExtra)
+options(crayon.enabled = FALSE)   
+```
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid \#ddd; border-radius: 5px;"}
+**Motivating Scenarios:** You want to make the concepts of a null sampling distribution and a p-value more concrete, while also learning a very robust method for testing null hypotheses.
+
+**Learning Goals: By the end of this chapter, you should be able to:**
+
+1.  Explain what a permutation is.
+2.  Describe why permuting data many times generates a sampling distribution under the null hypothesis.
+3.  Use `R`'s infer package to permute data to determine if two sample means come from different (statistical) populations.
+4.  Recognize that permutation (shuffling) is used to generate null distributions, while bootstrapping (resampling with replacement) is used to estimate uncertainty.
+5.  Generalize the concept of permutation as a method to test most null models.
+
+:::
+
+-----
+
+One of the most common statistical questions we ask is, "Do these two samples differ?" For example:
+
+  * Do people who receive a vaccine experience worse side effects than those who receive a placebo?
+  * Do pink-flowered *parviflora* plants attract more pollinators than white-flowered plants?
+
+Answering questions like these is fundamental to scientific research, and Null Hypothesis Significance Testing (NHST) provides a framework for addressing them. Recall from the [previous chapter](#nhst) that NHST works by comparing the observed test statistic to its sampling distribution under the assumption that the null hypothesis is true. We then reject the null hypothesis  if our data (or something more extreme) is a rare outcome of the null model and fail to reject the null hypothesis  if our data (or something more extreme) is a common outcome of the null model.
+
+## Generating a Null Distribution with Permutation
+
+```{r}
+#| fig-cap: "Listen to the permutation anthem [here](https://www.youtube.com/watch?v=KQ6zr6kCPj8)."
+#| fig-alt: "Animated GIF showing a group of dancers with the text *Everyday Im shuffling* overlaid. This visual can be used as a playful reference to the process of shuffling data during permutation tests in statistics, where the data is repeatedly randomized to simulate a null hypothesis."
+#| column: margin
+#| echo: FALSE
+#| label: fig-lmfao
+include_graphics("https://i.imgur.com/TD6Hc06.gif")
+```
+
+But how do we find the null sampling distribution? One way, known as **permutation**, generates a null distribution directly from the data by randomly shuffling the explanatory variable. By breaking the link between variables and reshuffling many times, permutation simulates the null distribution because any observed differences or associations in the permuted data must be due to random chance. We can then generate a p-value by comparing our test statistic  to this empirically generated null distribution (that is permuted).
+
+Unlike mathematical tricks we will cover later, permutation makes very few assumptions. The most critical assumptions are that samples are random, independent, collected without bias, and that the null hypothesis assumes no association.  What's more, fancier permutation methods can accommodate some assumption violations (as we will see in the [Structured Permutation section](#permute_nonindependent)). Because permutation tests are highly versatile, they can be applied to a wide range of scenarios. This makes them a flexible tool for testing hypotheses, even in more complex designs.
+
+
+
+
+## Steps in a permutation test
+
+There are a few steps to conducting a permutation test, and to conduct NHST, more generally. I work through them here so that we are prepared!
+
+1.  State the null ($H_0$), and alternative ($H_A$) hypotheses.
+2.  Decide on a test statistic.
+3.  Calculate the test statistic for the actual data.
+4.  Permute the data by shuffling values of the explanatory variables across observations.
+5.  Calculate the test statistic on this permuted data set.
+6.  Repeat steps 4 and 5 many times to generate the sampling distribution under the null.
+7.  Calculate a p-value as the proportion of permuted values that are as or more extreme than what was observed in the actual data.
+8.  Interpret the p-value.
+9.  Write up the results.
+
+## What's ahead
+
+To give you a quick break from *Clarkia*, and perhaps more importantly, to set up a groan-inducing pun we will move from plants to amphibians! But we are still concerned with mating and its implications. We will use this system to go through the steps above (and more) as follows: 
+
+  * [The next section](#the_frogs) introduces the biological system, scientific hypotheses and the data set. In doing so, we also go over steps 1-3 above. This section will also review key concepts of bootstrapping and uncertainty! 
+  * [In the section after that](#permute) we generate the null sampling distribution and calculate a p-value with the infer package thereby addressing steps 4-7 and interpret and write up the results (steps 8-9)!
+  * I even show you [how to permute in a way that mirrors the structure of our data](#permute_nonindependent) to generate a null distribution with non-independent data. 
+  * Finally, we address limitations of a standard permutation. We also introduce how we can accommodate non-independence in our statistical test by permuting in a way that matches the structure of our data!
+
+As always, we conclude with a [chapter summary](#shuffling_summary) containing all the goodies!
+
+
+
+:::note
+An exact permutation tests all possible shuffle of the data to get an exact p-value. However this is computationally not feasible for all but the smallest data sets. 
+
+Instead, we take a "[Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method)" (French for random stuff... [jk](https://en.wikipedia.org/wiki/Monte_Carlo_Casino)) approach.  We just take a large random sample of possible shuffles (say, 5,000) to build our null distribution. The p-value is then an approximation. But it's good enough for NHST and is the standard way these tests are done.
+
+:::

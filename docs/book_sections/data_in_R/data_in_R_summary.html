@@ -2318,6 +2318,41 @@ globalThis.qwebrExecuteCode = async function (
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/shuffling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">14. Shuffling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/the_frogs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. The frogs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/permute.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Permute</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/permute_nonindependent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Structured Permutation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/shuffling_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Shuffling summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
@@ -2664,8 +2699,8 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="exercises">
 <strong>Q1)</strong> The code above returns the error: "Error: could not find function "summarise"". How can you solve this?
-<div id="radio_XALPMVNSXQ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_XALPMVNSXQ" value=""> <span>Change “summarise” to “summarize”</span></label><label><input type="radio" autocomplete="off" name="radio_XALPMVNSXQ" value="answer"> <span>load the dplyr library</span></label>
+<div id="radio_IOOEPYVJFP" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_IOOEPYVJFP" value=""> <span>Change “summarise” to “summarize”</span></label><label><input type="radio" autocomplete="off" name="radio_IOOEPYVJFP" value="answer"> <span>load the dplyr library</span></label>
 </div>
 <hr>
 <p><strong>Q2)</strong> Revisit the pollinator visitation dataset we explored. Which location has a greater anther stigma distance (<code>asd_mm</code>)? <select class="webex-select"><option value="blank"></option><option value="answer">They are the same</option><option value="">SM</option><option value="">GC</option><option value="">S6</option></select></p>
@@ -2814,13 +2849,13 @@ Click here for explanation
 </div>
 <hr>
 <strong>Q6</strong> You should always make sure data are tidy when (pick best answer)
-<div id="radio_ATMSBVGJJC" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_ATMSBVGJJC" value=""> <span>collecting data</span></label><label><input type="radio" autocomplete="off" name="radio_ATMSBVGJJC" value=""> <span>presenting data</span></label><label><input type="radio" autocomplete="off" name="radio_ATMSBVGJJC" value="answer"> <span>analyzing data with dplyr</span></label><label><input type="radio" autocomplete="off" name="radio_ATMSBVGJJC" value=""> <span>all of the above</span></label>
+<div id="radio_RMQKTUYWGR" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_RMQKTUYWGR" value=""> <span>collecting data</span></label><label><input type="radio" autocomplete="off" name="radio_RMQKTUYWGR" value=""> <span>presenting data</span></label><label><input type="radio" autocomplete="off" name="radio_RMQKTUYWGR" value="answer"> <span>analyzing data with dplyr</span></label><label><input type="radio" autocomplete="off" name="radio_RMQKTUYWGR" value=""> <span>all of the above</span></label>
 </div>
 <hr>
 <strong>Q7</strong> What is wrong with the code below (pick the most egregious issue).
-<div id="radio_RNTUBQZJVW" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_RNTUBQZJVW" value="answer"> <span>I overwrote iris and lost the raw data</span></label><label><input type="radio" autocomplete="off" name="radio_RNTUBQZJVW" value=""> <span>I did not show the output</span></label><label><input type="radio" autocomplete="off" name="radio_RNTUBQZJVW" value=""> <span>I used summarise() rather than summarize()</span></label><label><input type="radio" autocomplete="off" name="radio_RNTUBQZJVW" value=""> <span>I did not tell R to remove missing data when calculating the mean.</span></label>
+<div id="radio_MNVRJNWARF" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_MNVRJNWARF" value="answer"> <span>I overwrote iris and lost the raw data</span></label><label><input type="radio" autocomplete="off" name="radio_MNVRJNWARF" value=""> <span>I did not show the output</span></label><label><input type="radio" autocomplete="off" name="radio_MNVRJNWARF" value=""> <span>I used summarise() rather than summarize()</span></label><label><input type="radio" autocomplete="off" name="radio_MNVRJNWARF" value=""> <span>I did not tell R to remove missing data when calculating the mean.</span></label>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> iris <span class="sc">|&gt;</span> </span>

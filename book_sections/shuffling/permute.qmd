@@ -1,0 +1,223 @@
+## • 14. Permute {.unnumbered #permute}
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:** You want to run a permutation test in R. 
+
+**Learning Goals: By the end of this section, you should be able to:**. 
+
+1.  **Explain** the logic of a permutation test and why shuffling data simulates a null hypothesis.  
+2.  **Implement** a permutation testfor the difference in means using the `infer` package.
+3.  **Calculate and interpret** a p-value in the context of the data and the null hypothesis.
+4.  **Write** a concise, formal summary of the results of a permutation test.
+:::
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(infer)
+library(tidyr)
+frogs <- read_csv("https://raw.githubusercontent.com/ybrandvain/biostat/master/data/Swierk_Langkilde_BEHECO_1.csv")|>
+  dplyr::select(year, pond, treatment,hatched.eggs, total.eggs, num.metamorphosed,field.survival.num)%>%
+  mutate_at(.vars = c("hatched.eggs", "total.eggs", "num.metamorphosed" , "field.survival.num"), as.numeric)
+```
+
+---
+
+Recall the steps in a permutation test:  
+
+1. State the null ($H_0$) and alternative ($H_A$) hypotheses.  
+   - $H_0$: The number of hatched eggs does not differ between preferred and non-preferred matings. .  
+   - $H_A$: The number of hatched eggs differs between preferred and non-preferred matings.    
+2. Decide on a test statistic.  
+   - The test statistic for a permutation test can be whatever best captures our biological hypothesis. In this case, we'll use the difference in the mean number of eggs hatched between non-preferred and preferred matings.    
+
+3. Calculate the test statistic for the actual data.   
+   - We found 345.11 eggs hatching  for preferred matings and 413.93 for non-preferred matings. So our test statistic is 345.11 - 413.93 = -68.82 between the means.  
+
+---  
+
+
+```{r} 
+#| echo: false 
+#| label: fig-kermit
+#| column: margin
+#| fig-alt: "An image of Kermit the Frog wearing sunglasses and a pink suit with a wig, walking confidently. The humorous style adds a playful and lighthearted vibe to the scene."
+#| fig-cap: "I hope this was worth missing *Clarkia* for a chapter. *Note:* I literally rewrote this chapter in the first edition of my book at like 2am because a friend suggested this."
+#| fig-align: left
+include_graphics("https://media.giphy.com/media/pRHkn0CC08Wn6/giphy.gif")
+```      
+
+4. Permute the data by shuffling values of the explanatory variables across observations.    
+
+
+**We are at step four. This means**
+
+<span style="color: Black; font-size:46px;">**IT'S TIME TO...**</span>
+
+<span style="color: Black; font-size:46px;">**PERMUTE THE FROG**</span>
+
+
+
+## Permuting once
+
+*Step 4: Permute the data by shuffling values of the explanatory variables across observations.*   
+
+Now we permute the data by randomly shuffling the `treatment` onto our observed response variable, `hatched.eggs`. We can again use the [`infer` package](https://infer.netlify.app/r) to do this! But now when we [`generate()`](https://infer.netlify.app/reference/generate.html) we set `type = "permute"` instead of `type = "bootstrap"` We also `specify()` the model! 
+
+```{r}
+one_perm <- frogs |>
+  specify(hatched.eggs ~ treatment)   |>
+  hypothesize(null = "independence")  |>
+  generate(reps = 1, type = "permute")
+```
+
+@fig-oneperm illustrates a single permutation. The colors show the frogs' actual treatment group, while the x-axis shows their new, randomly permuted "treatment" group. As a result of the shuffle, each permuted group is now a mix of frogs from both original treatments. 
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-height: 3.5
+#| label: fig-oneperm
+#| fig-cap: "A single permutation of the frog mating data. The colors indicate the actual experimental treatment each frog received ('preferred' or 'nonpreferred'). The x-axis shows the new, randomly assigned labels after one shuffle. This process of breaking the link between the treatment and the outcome (hatched eggs) is repeated many times to create a null distribution."
+#| fig-alt: "A violin plot showing the result of one data permutation. The x-axis shows two 'Permuted Treatment' groups, 'nonpreferred' and 'preferred'. The y-axis shows the number of hatched eggs. Within each permuted group, jittered data points are colored to show their original treatment: red for 'nonpreferred' and blue for 'preferred'. Both permuted groups on the x-axis contain a mix of red and blue points, demonstrating the shuffle."
+
+one_perm|>ungroup()|>rename(perm_treatment= treatment)|> select(-replicate)|>
+    full_join(frogs|>select(hatched.eggs ,  treatment))|>
+  ggplot(aes(x = perm_treatment, y= hatched.eggs))+
+  geom_violin(show.legend = FALSE)+
+  geom_jitter(aes(color = treatment), size = 3, alpha = .6,  width= .2) +  
+  stat_summary(fun.data = mean_cl_boot, geom = "pointrange", color = "black", show.legend = FALSE,linewidth = 1.2)+
+  labs(color = "Actual\ntreatment", x = "Permuted \"Treatment\"" , "# Eggs hatched")+
+  theme(axis.text = element_text(size = 16),
+        axis.title = element_text(size = 16),
+        legend.text = element_text(size = 16),
+        legend.title = element_text(size = 16))
+
+```
+
+
+*Step 5: Calculate the test statistic on this permuted data set.*      
+
+In this permuted dataset we see an observed test statistic of 
+
+```{r}
+one_perm |> 
+  calculate(stat = "diff in means", order = c("preferred","nonpreferred"))
+```
+
+This represents one draw from the permuted (null) distribution. Now we do this a bunch to find the sampling distribution and calculate a p-value!
+
+:::warning
+I permuted once (showing steps 4 and 5) for illustrative purposes. When we actually permute we just do them all at once. I only say this because I sometimes see students repeat this step in their analyses, and that is fully unnecessary!
+:::
+
+## The permuted (null) distribution   
+
+*Step 6: Repeat steps 4 and 5 many times to generate the sampling distribution under the null.*   
+
+We generate the permuted distribution (to approximate the null sampling distribution) by increasing the number of permuted reps from 1 to a large number. In the example below, we generate 5000 permuted data sets. 
+
+
+:::aside
+**How many permutations?** There's no strict rule for the number of permutations. It's a trade-off between computational time and the precision of your p-value. As with bootstrapping, this is a trade-off between computational time and the precision of your p-value: more replicates are more precise but take longer to run. A good starting point is 5,000 permutations, but 1,000 is generally sufficient if the process is slow.
+:::
+
+```{r}
+many_perms <- frogs |>
+  specify(hatched.eggs ~ treatment)   |>
+  hypothesize(null = "independence")  |>
+  generate(reps = 5000, type = "permute")|>
+  calculate(stat = "diff in means", order = c("preferred","nonpreferred"))
+```
+
+
+## The p-value
+
+*Step 7: Calculate a p-value as the proportion of permuted values that are as or more extreme than what was observed in the actual data.*   
+
+Now we can find the p-value with infer's [`get_p_value()`](https://infer.tidymodels.org/reference/get_p_value.html) function. This function requires three arguments: 
+
+- `x`: The permuted distribution.  
+- `obs_stat`: The observed test statistic. Note that I just pasted in our value of -68.82. This isn't the best practice. I usually assign the observed value directly to a variable in R (to avoid rounding issues induced by copy and pasting).   
+- `direction`: Use `"two-sided"` for a two tailed test. 
+
+
+
+
+
+```{r}
+#| code-fold: true
+#| column: margin
+#| message: false
+#| warning: false
+#| label: fig-permdist
+#| fig-alt: "A histogram titled \"Permuted distribution\" shows a bell-shaped distribution for the \"Difference in means,\" centered at zero. Two dashed red vertical lines mark the observed test statistic (-68.8) and it's positive counterpart (+68.8). The bars in the tails beyond these lines are colored dark red, while the bars between the lines are gray, visually representing the p-value."
+#| fig-cap: "The null distribution generated from 5,000 permutations of the frog data. This histogram shows the difference in means we would expect to see if there were no true effect of mate preference. Our observed difference of -68.8 (marked by the dashed line) falls well within the typical range of results expected under the null hypothesis. The p-value is the proportion of permuted results (the red tails) that are as or more extreme than our observed statistic."
+#| code-summary: "Code to visualize the permuted distribution and our test stat."
+many_perms |>
+  mutate(as_or_more_extreme = abs(stat) >= 68.8)|>
+  ggplot(aes(x = stat, fill = as_or_more_extreme))+
+  geom_histogram()+
+  scale_fill_manual(values = c("darkgrey","firebrick"))+
+  geom_vline(xintercept = c(68.8,-68.8), color = "red",lty = 2, linewidth = 1)+
+  labs(x = "Difference in means", fill = "As or more extreme", title = "Permuted distribution")+
+  theme(axis.text.x = element_text(size = 30),
+        axis.title.x = element_text(size = 30),
+        axis.text.y = element_blank(),
+        axis.title.y = element_blank(), 
+        legend.title =  element_text(size = 30),
+        legend.text =  element_text(size = 30), 
+        title = element_text(size = 30),
+        legend.position = "bottom")
+```
+
+
+
+
+```{r}
+get_p_value(x = many_perms, obs_stat = -68.82, direction = "two-sided")
+```    
+
+
+
+:::fyi
+The get_p_value() gets the two-tailed p-value by multiplying the tail we're looking at by two, rather than summing each side on its own. For symmetric distributions this is fine. For asymmetric sampling distributions, this requires more thought, and its probably righter to add up both sides. But this is probably close enough... we're not trying to land a rocket ship here. 
+:::
+
+## Interpret the p-value
+
+
+*Step 8: Interpret the p-value*.    
+
+**Our p-value  is roughly 0.33** (@fig-permdist). This means that roughly one out of every three permuted data sets in which the association between mating treatment and egg number was randomly associated, generate a difference in means as or more extreme than the one we observed. 
+
+
+Therefore, we **fail to reject the null hypothesis**, as we do not have enough evidence to support the alternative hypothesis that the number of eggs hatched differs between preferred and non-preferred matings.  
+
+## A write up
+
+```{r}
+#| echo: false
+pval <-get_p_value(x = many_perms, obs_stat = -68.82, direction = "two-sided")
+```    
+
+*Step 9: Write up the results.*   The final step is to write-up our results: 
+
+*In this study, we tested whether the number of hatched eggs differed between wood frogs that mated with preferred versus non-preferred females. Using a permutation test, we evaluated the null hypothesis that the number of eggs hatched does not differ between these two groups.*     
+
+*On average, frogs that mated with their preferred partner hatched 345.11 eggs, while those that mated with their non-preferred partner hatched 413.93 eggs. The observed difference in the number of eggs hatched between the two groups was -68.82 eggs.*   
+
+*To assess the significance of this observed difference, we generated a null distribution of the differences in egg counts by permuting the treatment labels (preferred vs. non-preferred). After running 5,000 permutations, we calculated a two-tailed p-value of `r pull(pval)`. This indicates that in a world where there is no true association between mating treatment and the number of eggs hatched, we would expect to see a difference as extreme as the observed one in about one in three cases due to random chance alone. We therefore fail to reject the null hypothesis. This suggests that there is insufficient evidence to support the claim that the number of hatched eggs is influenced by whether the male mated with a preferred or non-preferred female.* 

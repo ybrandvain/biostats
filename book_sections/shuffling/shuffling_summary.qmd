@@ -1,0 +1,372 @@
+## • 14. Shuffling summary {.unnumbered #shuffling_summary}
+
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr' ,'ggplot2','infer','palmerpenguins']
+  autoload-packages: true
+---
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(webexercises)
+library(dplyr)
+library(knitr)
+library(infer)
+library(ggplot2)
+library(palmerpenguins)
+```
+
+
+
+Links to: [Summary](#shuffling_summary_chapter-summary). [Chatbot tutor](#shuffling_summary_chatbot_tutor).  [Questions](#shuffling_summary_practice-questions). [Glossary](#shuffling_summary_glossary-of-terms). [R packages](#shuffling_summaryR_packages_introduced). [R functions](#shuffling_summary_key-r-functions). [More resources](#shuffling_summary_additional-resources).
+---
+
+## Chapter summary {#shuffling_summary_chapter-summary}  
+
+The null hypothesis is usually something like "the true population parameter of my response variable is the same for all values of my explanatory variable" (i.e. independence). Permutation approximates the null sampling distribution by (1) randomly swapping values of the explanatory variable in our data, and (2) calculating a summary of the associations in this randomly permuted data set (3) repeating this many times. We then find a p-value by finding the proportion of this null distribution that is as or more extreme than our observation. R's `infer` package has a bunch of handy tools to make permutation easier! 
+
+
+:::aside
+<h2>We Swapped Group Labels 10,000 Times...<br><br>You Won’t Believe What Happened Next!</h2> -- Permutation clickbait.
+
+:::
+
+
+### Chatbot tutor  {#shuffling_summary_chatbot_tutor} 
+
+:::tutor
+
+
+Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/g-6890ceababb881919cf0b449f58b30b1-permutation-tutor)). I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+
+:::
+
+
+## Practice Questions {#shuffling_summary_practice-questions}
+
+
+Try these questions! By using the R environment you can work without leaving this "book". I even pre-loaded all the packages you need! 
+
+:::exercises
+
+**Q1)** In which method is the **overall mean of the entire dataset identical** in every single replicate? `r mcq(c("Bootstrap", answer = "Permutation", "Both", "Neither"))`
+
+`r hide("Explanation")`
+**Permutation**. Because permutation only shuffles labels without changing the underlying numbers, the sum (and therefore the mean) of the entire dataset is constant across all replicates. Bootstrapping changes the data values in each replicate, so the overall mean will vary.
+`r unhide()`
+
+---
+
+**Q2)** Which method generates a **confidence interval** by simulating sampling error around an observed statistic? `r mcq(c(answer = "Bootstrap", "Permutation", "Both", "Neither"))`
+
+`r hide("Explanation")`
+**Bootstrap**. Bootstrapping is used to estimate the uncertainty of a sample statistic, which is what a confidence interval represents. It answers the question, "How precise is my estimate?"
+`r unhide()`
+
+--- 
+
+**Q3) **Which method is primarily used to generate a **p-value** by simulating a null hypothesis? `r mcq(c("Bootstrap", answer = "Permutation", "Both", "Neither"))`
+
+`r hide("Explanation")`
+**Permutation**. Permutation testing directly simulates the null hypothesis by breaking the association between variables. This process is used to calculate a p-value to answer the question, "How likely is my result if the null hypothesis is true?"
+`r unhide()`
+
+---
+
+**Q4)** For a **bootstrap** focussing on differences in mean body mass between male and female penguins, are the following statements True or False?       
+
+- *4a:*   The male mean will be identical in every replicate. `r torf(FALSE)`.  
+- *4b:*   The overall mean will be identical in every replicate. `r torf(FALSE)`.  
+- *4c:* The bootstrap distribution of the sex difference in body mass will be centered around the original estimate. `r torf(FALSE)`.  
+- *4d:* The bootstrap distribution of the sex difference in body mass will be centered around the value proposed by the null model (e.g. 0). `r torf(FALSE)`. 
+
+`r hide("Overall Explanation")`
+**Explanation:** Bootstrapping resamples the original data with replacement. This means the data values in each replicate are different, so the means for subgroups and the overall sample will vary. The entire purpose of bootstrapping is to simulate sampling error around the observed sample statistic to see how precise it is.
+`r unhide()`
+
+---
+
+**Q5)** For a **permutation** focusing on differences in mean body mass between male and female penguins, are the following statements True or False?       
+
+- *5a:*   The male mean will be identical in every replicate. `r torf(FALSE)`.  
+- *5b:*   The overall mean will be identical in every replicate. `r torf(TRUE)`.  
+- *5c:* The permuted distribution of the sex difference in body mass will be centered around the original estimate. `r torf(FALSE)`.  
+- *5d:* The permuted distribution of the sex difference in body mass will be centered around the value proposed by the null model (e.g. 0). `r torf(TRUE)`. 
+
+`r hide("Overall Explanation")`
+**Explanation:** A permutation test only shuffles the labels (e.g., "male" or "female") without changing the underlying data values. Because the set of numbers is always the same, the overall mean is constant in every replicate. This shuffling process breaks the link between the labels and the data, creating a null distribution that is centered on the value expected under the null hypothesis.
+`r unhide()`
+
+:::
+
+
+
+### The penguin data: 
+
+*Sexual dimorphism* - that is, differences in size, shape, behavior etc. between sexes is common in animals and can reveal a great deal about a species. The Adelie penguin has a whole bunch of "interesting" sexual behavior (e.g. [this note](https://en.wikipedia.org/wiki/Ad%C3%A9lie_penguin#Notes)), and it is worth exploring sex difference in their phenotypes. 
+
+The `penguins` data set (loaded) below --  a fun data set provided by the `palmerpenguins` package contains some basic data on Adelie penguins and other penguin species. The code below loads in the packages and data we need to explore these guys! 
+
+```{r}
+# Loading libraries
+library(palmerpenguins)
+library(dplyr)
+library(ggplot2)
+library(infer)
+```
+
+```{r}
+#| echo: false
+#| eval: false
+penguins|>
+  filter(!is.na(sex)) |>
+  ggplot(aes(x = sex, y = body_mass_g, color = sex)) +
+  geom_jitter(width = .2, size =3, alpha = .6)+
+  facet_grid(island~species)+
+  theme(legend.position = "none", 
+        axis.text = element_text(size = 14),
+        axis.title = element_text(size = 14),
+        strip.text = element_text(size = 14))
+```
+
+The code below builds on the quick [`glimpse()`](https://dplyr.tidyverse.org/reference/glimpse.html) of the data (above) by demonstrating how to [`filter()`](https://dplyr.tidyverse.org/reference/filter) the data and get numeric summaries by group. This refresher should help prepare you for the the next tasks
+
+
+```{webr-r}
+#| autorun: true
+penguins             |>
+ filter(species=="Chinstrap", island=="Dream")|>
+ group_by(year)     |>
+ summarise(median_bill_depth=median(bill_depth_mm))
+
+```
+
+
+:::exercises
+**Modify the code above** to find the `mean` `body_mass_g` of `Adelie` penguins from `Torgersen` island for each `sex`. 
+
+**Q6)** The mean body mass of Adelie penguins from Torgersen island  is `r fitb(answer = 639, tol = 12, num = TRUE)` g more larger than females.
+
+::: 
+
+```{webr-r}
+#| context: setup
+adelie_torgersen <- penguins             |>
+  filter(species=="Adelie", island=="Torgersen", !is.na(body_mass_g), !is.na(sex))
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Filtering data or Q7 - Q9:"
+adelie_torgersen <- penguins             |>
+  filter(species=="Adelie", 
+         island=="Torgersen", 
+         !is.na(body_mass_g), 
+         !is.na(sex))
+```
+
+```{webr-r}
+adelie_torgersen |># a pre-filtered data set
+    specify( A ~ B) |>
+    calculate(stat = "C", order = c(D,E))
+```
+
+:::exercises 
+**Q7)** Once you fill in the blanks, the code below finds the same answer for the sex difference in body mass using `infer`'s syntax. The blanks should be:    
+
+- A: `r fitb("body_mass_g")`.   
+- B: `r fitb("sex")`.  
+- C: `r fitb("diff in means")`.  
+- D: `r fitb("male")`.  
+- E: `r fitb("female")`.  
+
+`r hide("Q7 Hint")`
+- Hint A: Should be your response variable.  <details style="display: inline-block; vertical-align: middle;"><summary>Answer</summary>In this case "body_mass_g"</details>
+- Hint B: Should be your explanatory variable.  <details style="display: inline-block; vertical-align: middle;"><summary>Answer</summary>In this case "sex"</details>
+- Hint C: Should be your stat.  <details style="display: inline-block; vertical-align: middle;"><summary>Answer</summary>In this case "diff in means"</details>
+- Hint D: The first group in the subtraction order (**group1** - group2)  <details style="display: inline-block; vertical-align: middle;"><summary>Answer</summary>In this case "male"</details>
+- Hint E: The second group in the subtraction order (group1 - **group2**).  <details style="display: inline-block; vertical-align: middle;"><summary>Answer</summary>In this case "female"</details>
+`r unhide()`
+
+---
+
+**Q8)** Modify the code above to find the lower bound of the bootstrap 95% CI of the sex difference in body mass in grams from 5000 bootstrap replicates `r fitb(455, tol = 10, num = TRUE)`.
+
+`r hide("Q8 Hint")`
+Start with your pipeline from Q7, then:    
+
+- Use `infer`'s [`generate()`](https://infer.netlify.app/reference/generate.html) function to generate `reps` bootstrap replicates.    
+
+   - *Remember* to say that  `type = "bootstrap"`.   
+   - *Remember* this goes before `calculate()`.      
+    
+- Use `infer`'s [`get_ci()`](https://infer.tidymodels.org/reference/get_confidence_interval.html) function to get the confidence interval.    
+    - *Remember* this goes after `calculate()`.     
+
+`r hide("Just show the code already")`
+```{r}
+#| eval: false
+adelie_torgersen                            |>     
+  specify( A ~ B)                           |> # Fill in with answers from above
+  generate(reps = 5000, type = "bootstrap") |> # Makes the bootstrap
+  calculate(stat = "C", order = c(D,E))     |> # Fill in with answers from above 
+  get_ci(level = 0.95, type = "percentile")    # Get CI (remember the question asks about the lower bound)
+```
+`r unhide()`
+
+`r unhide()`
+
+---
+
+**Q9)** What is the null hypothesis for this example? `r longmcq(c("Male Adelie penguins are heavier, on average, than female Adelie penguins.", answer = "There is no difference in the mean body mass between male and female Adelie penguins.", "There is a difference in the mean body mass between male and female Adelie penguins.", "The observed difference in our sample is zero."))`
+
+---
+
+**Q10)** What is the alternative hypothesis for this example? `r longmcq(c("Male Adelie penguins are heavier, on average, than female Adelie penguins.",  "There is no difference in the mean body mass between male and female Adelie penguins.", answer = "There is a difference in the mean body mass between male and female Adelie penguins.", "The observed difference in our sample is zero."))`
+
+---
+
+**Q11)** Modify the code above to find the permutation-base p-value (from 5000 permutations).How would you report it?  `r mcq(c("0", answer = "< 3/5000", "NA","0.02","Between 0.02 and 0.05", ">0.05", "1/Inf"))`
+
+`r hide("Q11 Hint")`
+Start with your pipeline from Q8, then:      
+
+- Use `infer`'s [`hypothesize()`](https://infer.netlify.app/reference/hypothesize.html) to state the null.      
+   - *Remember* this goes after `specify()`.     
+   - In this case `null = "independence"`. 
+
+- Modify the line with `generate()`, so that now `type = "permute"`.    
+    - *Remember* this goes after `hypothesize()`.  
+    
+- Replace `get_ci()` with [`get_p_value()`](https://infer.tidymodels.org/reference/get_p_value.html).   
+    - Remember `"obs_stat = 639"`. Actually this is lazy. the better thing to do is calculate this, `pull()`  it, and assign it to variable in R. This will make your answer more exact because the permutation will understand ties correctly. 
+    - `direction = "two-sided"` 
+
+`r hide("Just show the code already")`
+```{r}
+#| eval: false
+adelie_torgersen                            |>     
+  specify( A ~ B)                           |> 
+  generate(reps = 5000, type = "permute")   |> 
+  calculate(stat = "C", order = c(D,E))     |> 
+  get_p_value(obs_stat = 639, direction = "two-sided")   # Get CI (remember the question asks about the lower bound)
+```
+`r unhide()`
+
+`r hide("What the he🏒🏒? Why is the answer from R wrong? A-hole")`
+If you did this right, you got a p-value of 0 with the warning: 
+
+<p style="color:red;">Warning: Please be cautious in reporting a p-value of 0. This result is an approximation based on the number of *reps* chosen in the *generate()* step. ℹ See *get_p_value()* (*?infer::get_p_value()*) for more information. </p>
+
+If you follow the link to [`get_p_value()`](https://infer.tidymodels.org/reference/get_p_value.html) it has a section, **Zero p-value**, which says:   
+
+
+Though a true p-value of 0 is impossible, get_p_value() may return 0 in some cases. This is due to the simulation-based nature of the {infer} package; the output of this function is an approximation based on the number of reps chosen in the generate() step. When the observed statistic is very unlikely given the null hypothesis, and only a small number of reps have been generated to form a null distribution, it is possible that the observed statistic will be more extreme than every test statistic generated to form the null distribution, resulting in an approximate p-value of 0. **In this case, the true p-value is a small value likely less than 3/reps (based on a poisson approximation).**
+`r unhide()`
+`r unhide()`
+
+---
+
+**Q12)** What do we do to the null hypothesis?  `r mcq(c(answer = "Reject it","Fail to reject it","Accept it","Fail to accept it"))`
+
+---
+
+
+**Q13)** We can't **KNOW** if the null hypothesis is true or false, but which do you think is far more likely?) `r longmcq(c("Null hypothesis is true",answer = "Null hypothesis is false", "he null hypothesis is equally likely to be TRUE or FALSE"))`
+
+---
+
+
+**Q14)** An ecologist studies the effect of sunlight on fish growth. They measure the body length of fish from two habitat types ('sunny' and 'shady') in five different ponds. A standard permutation test would be invalid because fish from the same pond are not independent.
+
+How should they correctly shuffle the data to test for a difference between habitats?
+`r longmcq(c("Shuffle all habitat labels ('sunny', 'shady') across all fish from all ponds.", answer = "Shuffle the habitat labels only among the fish within each individual pond.", "Shuffle the pond labels ('Pond 1', 'Pond 2', etc.) across all the fish.", "The data cannot be permuted because it violates the assumption of independence."))`
+
+`r hide("Explanation")`
+Explanation: This is a classic example of structured or "blocked" data. Fish within the same pond are more similar to each other than to fish in other ponds (a "pond effect"). To test the habitat effect without it being confounded by the pond effect, you must shuffle the habitat labels within each pond. This breaks the link between habitat and fish size while correctly preserving the underlying structure of the data.
+`r unhide()`
+
+
+---
+
+**Q15)** The logic of permutation testing is very flexible. For which of the following null hypotheses could you generate a null distribution by shuffling one variable relative to another? `r longmcq(c("(A) The slope of a regression line between penguin bill depth and bill length is zero.", "(B) There is no association between penguin species and their preferred island.", "(C) The mean body mass of a single sample of penguins is 3500g.", answer = "Both A and B.", "Both A and C.", "Both B and C.","All of the above.", "None of the above."))`
+:::
+
+
+## 📊 Glossary of Terms {#shuffling_summary_glossary-of-terms} 
+
+:::glossary
+
+* **Bootstrap Distribution**: The distribution of a statistic (e.g., the mean) calculated from a large number of bootstrap samples. It's used to approximate the sampling distribution.
+* **Bootstrap Replicate (or Bootstrap Sample)**: A new sample of the same size as the original, created by randomly drawing observations from the original sample *with replacement*.
+* **Bootstrap Standard Error**: The standard deviation of the bootstrap distribution, which serves as an estimate of the standard error of an estimate. 
+* **Bootstrapping**: A computational resampling method that approximates the sampling distribution by repeatedly taking samples *with replacement* from the original data.
+* **Confidence Interval (CI)**: A range of plausible values for an unknown population parameter, calculated from sample data. For example, a 95% confidence interval is generated by a process that is expected to capture the true parameter 95% of the time.
+* **Confidence Level**: Reasonable bounds we put around our estimate to acknowledge sampling error's impact on it. 
+* **Sampling with Replacement**: A sampling process where each selected item is returned to the pool before the next item is drawn, meaning an individual can be selected more than once. This is the core mechanism of bootstrapping.
+* **Sampling without Replacement**: A sampling process where a selected item is not returned to the pool, ensuring that all items in the final sample are distinct. This is how traditional statistical samples are taken.
+
+
+:::
+
+
+---
+
+## R Packages Introduced  {#shuffling_summaryR_packages_introduced}   
+
+:::packages
+
+There a re no new packages, but we continue to use **[`infer`](https://infer.netlify.app/):** this time for permutation. 
+
+:::
+
+---
+
+## 🛠️ Key R Functions{#shuffling_summary_key-r-functions}  
+
+ 
+:::functions
+
+
+
+### The infer pipeline   
+
+* `specify()`:    Used to declare the response and explanatory variables in an analysis (e.g., `specify(body_mass_g ~ sex)`).
+
+* `hypothesize()`:    Used to state the null hypothesis for a permutation test (e.g., `hypothesize(null = "independence")`).
+
+* `generate()`:    The core resampling function. Used to create bootstrap replicates (`type = "bootstrap"`) or permuted replicates (`type = "permute"`).
+    
+
+* `get_p_value()`:    Calculates a p-value by comparing an observed statistic to a null distribution generated by permutation.
+
+:::
+
+
+
+## Additional resources   {#shuffling_summary_additional-resources}
+
+:::learnmore 
+
+**Readings:**         
+
+-  [Resampling-based methods for biologists](https://peerj.com/articles/9089/) -  @fieberg2020.
+
+- [Chapter 9: Hypothesis Testing](https://moderndive.com/v2/hypothesis-testing.html) from [@ismay2019]. 
+
+- [The Permutation Test: A Visual Explanation of Statistical Testing](https://www.jwilber.me/permutationtest/).   
+
+- [Permutation tests for hypothesis testing with animal social network data: Problems and potential solutions](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13741) @farine2022.   
+
+- [Common permutation methods in animal social network analysis do not control for non-independence](https://link.springer.com/article/10.1007/s00265-022-03254-x) - @hart2022. 
+
+- [The benefits of permutation-based genome-wide association studies](https://academic.oup.com/jxb/article/75/17/5377/7703222) @maura2024.
+
+:::
+
+

@@ -1,0 +1,92 @@
+### **Knowledge Base: Permutation Testing Tutor**
+
+#### **1. Core Concepts**
+
+  * **What is a Permutation Test?**
+
+      * A computational, simulation-based method for Null Hypothesis Significance Testing (NHST).
+      * **Purpose:** To determine if an observed pattern in data (e.g., a difference between two groups) is statistically significant or if it could have happened due to random chance.
+
+  * **The Core Logic (Why It Works)**
+
+      * The null hypothesis states there is no association between the explanatory variable (e.g., "sex") and the response variable (e.g., "body mass").
+      * Permutation simulates this null hypothesis by randomly shuffling the explanatory variable's labels, which intentionally **breaks the real-world association**.
+      * By doing this thousands of times and calculating a test statistic for each shuffle, we build a **null distribution**—a picture of what the results look like when the null hypothesis is true.
+      * We then compare our single, real-world observed statistic to this null distribution to see how surprising it is.
+
+#### **2. Key Terminology**
+
+  * **Parameter:** A true numerical characteristic of a population (e.g., the true mean difference). It is a fixed, unknown value.
+  * **Statistic / Estimate:** A number calculated from sample data (e.g., the observed mean difference in the sample). A p-value is a statistic.
+  * **Null Hypothesis ($H\_0$):** The hypothesis of "no effect" or "no association." E.g., "There is no difference in mean body mass between males and females."
+  * **Alternative Hypothesis ($H\_A$):** The hypothesis that a real effect exists. E.g., "There is a difference in mean body mass between males and females."
+  * **p-value:** The probability of observing a test statistic as or more extreme than the one from our sample, *assuming the null hypothesis is true*. It is a measure of surprise.
+    * A **two-tailed test** (most common) considers extreme results in *both directions* and corresponds to an alternative hypothesis like "there is a difference" ($H_A: \mu_1 \neq \mu_2$). The p-value is the proportion of the null distribution in both tails. This is what we almost aways want to do  so be sure to count both tails
+  * **Null Distribution:** The distribution of test statistics from the permuted (shuffled) data. It represents the results expected under random chance if the null hypothesis is true.
+  * **Structured Permutation:** A permutation where shuffling is restricted to occur only *within* specific groups or blocks (e.g., within each `year`). This is used to handle non-independent or confounded data.
+
+#### **3. The Standard Procedure**
+
+A permutation test follows the standard steps of Null Hypothesis Significance Testing:
+
+1.  State the null ($H\_0$) and alternative ($H\_A$) hypotheses.
+2.  Decide on a test statistic (e.g., difference in means, slope).
+3.  Calculate the test statistic for the actual, un-shuffled data.
+4.  Permute the data by shuffling the explanatory variable.
+5.  Calculate the test statistic on the permuted data.
+6.  Repeat steps 4 and 5 many times (e.g., 5,000) to build the null distribution.
+7.  Calculate a p-value as the proportion of permuted statistics that are as or more extreme than the observed statistic.
+8.  Interpret the p-value (compare to $\\alpha$, e.g., 0.05).
+9.  Write up the results.
+
+#### **4. R Implementation**
+
+  * **Standard Permutation (`infer` package):**
+
+    ```r
+    # 1. Calculate observed statistic
+    obs_stat <- data |>
+      specify(response ~ explanatory) |>
+      calculate(stat = "diff in means", order = c("group1", "group2"))
+
+    # 2. Generate null distribution and get p-value
+    null_dist <- data |>
+      specify(response ~ explanatory) |>
+      hypothesize(null = "independence") |>
+      generate(reps = 5000, type = "permute") |>
+      calculate(stat = "diff in means", order = c("group1", "group2"))
+
+    get_p_value(x = null_dist, obs_stat = obs_stat, direction = "two-sided")
+    ```
+* **`get_p_value()`**
+    Calculates a p-value by comparing an observed statistic to a null distribution. The `direction = "two-sided"` argument specifies that it should calculate a **two-tailed** p-value by considering extreme values in both tails of the distribution.
+
+---
+  * **Structured Permutation (`dplyr` approach):**NOTE THE STUDENTS DO NOT NEED TO KNOW THIS
+
+    ```r
+    # Generate one replicate by shuffling within the 'blocking_variable'
+    perm_replicate <- data |>
+      group_by(blocking_variable) |>
+      mutate(perm_treatment = sample(explanatory_variable)) |>
+      ungroup()
+    # This process is repeated thousands of times to build the null distribution.
+    ```
+
+#### **5. Common Misconceptions & FAQs**
+
+  * **Q: What's the difference between permutation and bootstrapping?**
+
+      * **A:** **Permutation** shuffles labels to test a **hypothesis** (generates a p-value). **Bootstrapping** resamples with replacement to estimate **uncertainty** (generates a confidence interval).
+
+  * **Q: My p-value is 0. What does that mean?**
+
+      * **A:** It means none of your random shuffles produced a result as extreme as your observed data. A true p-value is never zero. You should report it as `p < 1/reps` (conservative) or `p < 3/reps` (common approximation). E.g., for 5000 reps, report `p < 3/5000`.
+
+  * **Q: The p-value is low, so I can "accept the alternative hypothesis," right?**
+
+      * **A:** Be careful with language. A low p-value lets you **reject the null hypothesis**. This provides *support for* the alternative hypothesis, but we don't formally "accept" it because statistical tests are about falsifying the null, not proving the alternative.
+
+  * **Q: My structured permutation null distribution isn't centered at zero. Is it broken?**
+
+      * **A:** No, that's the correct behavior\! The center of the structured null represents the effect of the confounding variable (e.g., the `year` effect). By keeping the structure, you've created a null distribution that correctly accounts for it. The p-value is then calculated based on the distance from *this new center*.

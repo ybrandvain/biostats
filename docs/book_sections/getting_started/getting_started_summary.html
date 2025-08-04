@@ -2327,6 +2327,41 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/shuffling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">14. Shuffling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/the_frogs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. The frogs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/permute.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Permute</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/permute_nonindependent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Structured Permutation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/shuffling_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Shuffling summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
@@ -2695,12 +2730,12 @@ Figure&nbsp;2: Some encouragement from <a href="https://allisonhorst.com/r-slack
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="exercises">
 <strong>Q1)</strong> Entering <em>"p"^2</em> into R produces which error?
-<div id="radio_IZWEXAUJFL" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_IZWEXAUJFL" value=""> <span>What error? It works great?</span></label><label><input type="radio" autocomplete="off" name="radio_IZWEXAUJFL" value=""> <span>Error: object p not found</span></label><label><input type="radio" autocomplete="off" name="radio_IZWEXAUJFL" value=""> <span>Error: object of type closure is not subsettable</span></label><label><input type="radio" autocomplete="off" name="radio_IZWEXAUJFL" value="answer"> <span>Error in “p”^2 : non-numeric argument to binary operator</span></label>
+<div id="radio_HNKVMADUYM" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_HNKVMADUYM" value=""> <span>What error? It works great?</span></label><label><input type="radio" autocomplete="off" name="radio_HNKVMADUYM" value=""> <span>Error: object p not found</span></label><label><input type="radio" autocomplete="off" name="radio_HNKVMADUYM" value=""> <span>Error: object of type closure is not subsettable</span></label><label><input type="radio" autocomplete="off" name="radio_HNKVMADUYM" value="answer"> <span>Error in “p”^2 : non-numeric argument to binary operator</span></label>
 </div>
 <strong>Q2)</strong> Which logical question provides an unexpected answer?
-<div id="radio_TKGXRABIQQ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_TKGXRABIQQ" value=""> <span>(2.0 + 1.0) == 3.0</span></label><label><input type="radio" autocomplete="off" name="radio_TKGXRABIQQ" value="answer"> <span>(0.2 + 0.1) == 0.3</span></label><label><input type="radio" autocomplete="off" name="radio_TKGXRABIQQ" value=""> <span>2^2 &gt; 8</span></label><label><input type="radio" autocomplete="off" name="radio_TKGXRABIQQ" value=""> <span>(1/0) == (10 * 1/0)</span></label>
+<div id="radio_MTIEQWLUVV" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_MTIEQWLUVV" value=""> <span>(2.0 + 1.0) == 3.0</span></label><label><input type="radio" autocomplete="off" name="radio_MTIEQWLUVV" value="answer"> <span>(0.2 + 0.1) == 0.3</span></label><label><input type="radio" autocomplete="off" name="radio_MTIEQWLUVV" value=""> <span>2^2 &gt; 8</span></label><label><input type="radio" autocomplete="off" name="radio_MTIEQWLUVV" value=""> <span>(1/0) == (10 * 1/0)</span></label>
 </div>
 <div class="webex-solution">
 <button>
@@ -2716,18 +2751,18 @@ Click here for an explanation
 <p>If you are worried about floating point errors, use the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/all.equal.html"><em>all.equal()</em></a> function instead of ==, or round to 10 decimal places before asking logical questions.</p>
 </div>
 <strong>Q3)</strong> R has a built-in dataset called <em>iris</em>. You can look at it or give it to functions by typing <em>iris</em>. Which variable type is the <em>Species</em> in the <em>iris</em> dataset?
-<div id="radio_MJFFHGTAWR" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_MJFFHGTAWR" value=""> <span>numeric</span></label><label><input type="radio" autocomplete="off" name="radio_MJFFHGTAWR" value=""> <span>logical</span></label><label><input type="radio" autocomplete="off" name="radio_MJFFHGTAWR" value=""> <span>character</span></label><label><input type="radio" autocomplete="off" name="radio_MJFFHGTAWR" value="answer"> <span>factor</span></label>
+<div id="radio_CAOMERLLFG" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_CAOMERLLFG" value=""> <span>numeric</span></label><label><input type="radio" autocomplete="off" name="radio_CAOMERLLFG" value=""> <span>logical</span></label><label><input type="radio" autocomplete="off" name="radio_CAOMERLLFG" value=""> <span>character</span></label><label><input type="radio" autocomplete="off" name="radio_CAOMERLLFG" value="answer"> <span>factor</span></label>
 </div>
 <p><strong>For the following questions consider the</strong> <strong><em>diabetes dataset</em></strong> <strong>available at: https://rb.gy/fan785</strong></p>
 <strong>Q4)</strong> Which variable in the diabetes dataset is a character but should be a number?:
-<div id="radio_THQRWKHWDP" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_THQRWKHWDP" value="answer"> <span>ratio</span></label><label><input type="radio" autocomplete="off" name="radio_THQRWKHWDP" value=""> <span>location</span></label><label><input type="radio" autocomplete="off" name="radio_THQRWKHWDP" value=""> <span>age</span></label><label><input type="radio" autocomplete="off" name="radio_THQRWKHWDP" value=""> <span>frame</span></label><label><input type="radio" autocomplete="off" name="radio_THQRWKHWDP" value=""> <span>none</span></label>
+<div id="radio_UPVYJUZSOX" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_UPVYJUZSOX" value="answer"> <span>ratio</span></label><label><input type="radio" autocomplete="off" name="radio_UPVYJUZSOX" value=""> <span>location</span></label><label><input type="radio" autocomplete="off" name="radio_UPVYJUZSOX" value=""> <span>age</span></label><label><input type="radio" autocomplete="off" name="radio_UPVYJUZSOX" value=""> <span>frame</span></label><label><input type="radio" autocomplete="off" name="radio_UPVYJUZSOX" value=""> <span>none</span></label>
 </div>
 <p><strong>Q5)</strong> True OR False: The numeric variable, <em>bp.1d</em>, is a double, but could be changed to an integer without changing any of our analyses: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select></p>
 <strong>Q6)</strong> Which categorical variable in the dataset is ordinal?
-<div id="radio_KVKHHVYHZV" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_KVKHHVYHZV" value=""> <span>id</span></label><label><input type="radio" autocomplete="off" name="radio_KVKHHVYHZV" value=""> <span>location</span></label><label><input type="radio" autocomplete="off" name="radio_KVKHHVYHZV" value=""> <span>gender</span></label><label><input type="radio" autocomplete="off" name="radio_KVKHHVYHZV" value="answer"> <span>frame</span></label>
+<div id="radio_LHESAMWEWK" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_LHESAMWEWK" value=""> <span>id</span></label><label><input type="radio" autocomplete="off" name="radio_LHESAMWEWK" value=""> <span>location</span></label><label><input type="radio" autocomplete="off" name="radio_LHESAMWEWK" value=""> <span>gender</span></label><label><input type="radio" autocomplete="off" name="radio_LHESAMWEWK" value="answer"> <span>frame</span></label>
 </div>
 <p><strong>Q7)</strong> You collected five leaves of the wild grape (<em>Vitis riparia</em>) and measured their length and width. You have a table of lengths and widths of each leaf and a formula for grape leaf area (below).</p>
 <p>The area of a grape leaf is: <span class="math display">\[\text{leaf area } = 0.851 \times \text{ leaf length } \times \text{ leaf width}\]</span> The data are here, each column is a leaf:</p>

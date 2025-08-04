@@ -731,6 +731,41 @@ div.csl-indent {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/shuffling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">14. Shuffling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/the_frogs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. The frogs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/permute.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Permute</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/permute_nonindependent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Structured Permutation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/shuffling_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Shuffling summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
@@ -782,8 +817,8 @@ div.csl-indent {
 <p>Try these questions!</p>
 <div class="exercises">
 <strong>Q1)</strong> What is the biggest mistake in the table below?
-<div id="radio_LQFQKJJWLF" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_LQFQKJJWLF" value=""> <span>ID should be lower case</span></label><label><input type="radio" autocomplete="off" name="radio_LQFQKJJWLF" value=""> <span>Its perfect, change nothing</span></label><label><input type="radio" autocomplete="off" name="radio_LQFQKJJWLF" value="answer"> <span>the column name, <em>weight</em> is not sufficiently descriptive, it should include the units.</span></label><label><input type="radio" autocomplete="off" name="radio_LQFQKJJWLF" value=""> <span>date_colleted_empty_means_same_as_above is too wordy, replace with <em>date</em></span></label><label><input type="radio" autocomplete="off" name="radio_LQFQKJJWLF" value="answer"> <span>Values for date_collected_empty_means_same_as_above are implied.</span></label><label><input type="radio" autocomplete="off" name="radio_LQFQKJJWLF" value=""> <span>date is in Year-Month-Day format, while Month-Day-Year format is preffered.</span></label>
+<div id="radio_RFIKTNQKBU" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_RFIKTNQKBU" value=""> <span>ID should be lower case</span></label><label><input type="radio" autocomplete="off" name="radio_RFIKTNQKBU" value=""> <span>Its perfect, change nothing</span></label><label><input type="radio" autocomplete="off" name="radio_RFIKTNQKBU" value="answer"> <span>the column name, <em>weight</em> is not sufficiently descriptive, it should include the units.</span></label><label><input type="radio" autocomplete="off" name="radio_RFIKTNQKBU" value=""> <span>date_colleted_empty_means_same_as_above is too wordy, replace with <em>date</em></span></label><label><input type="radio" autocomplete="off" name="radio_RFIKTNQKBU" value="answer"> <span>Values for date_collected_empty_means_same_as_above are implied.</span></label><label><input type="radio" autocomplete="off" name="radio_RFIKTNQKBU" value=""> <span>date is in Year-Month-Day format, while Month-Day-Year format is preffered.</span></label>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -834,18 +869,18 @@ Click here for explanation
 <p>.</p>
 <hr>
 <strong>Q2)</strong> What would you expect in a data dictionary accompanying the table above? (select all correct)
-<div id="radio_NCTUANPYVW" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_NCTUANPYVW" value="answer"> <span>The units for weight.</span></label><label><input type="radio" autocomplete="off" name="radio_NCTUANPYVW" value="answer"> <span>A statement that date is in Year-Month-Day format</span></label><label><input type="radio" autocomplete="off" name="radio_NCTUANPYVW" value="answer"> <span>A statement explaining that in the date colleted column, empty means same as above.</span></label>
+<div id="radio_FLJVAJVPLZ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_FLJVAJVPLZ" value="answer"> <span>The units for weight.</span></label><label><input type="radio" autocomplete="off" name="radio_FLJVAJVPLZ" value="answer"> <span>A statement that date is in Year-Month-Day format</span></label><label><input type="radio" autocomplete="off" name="radio_FLJVAJVPLZ" value="answer"> <span>A statement explaining that in the date colleted column, empty means same as above.</span></label>
 </div>
 <hr>
 <strong>Q3)</strong> How do you read data from a Excel sheet, called <em>raw_data</em> in an Excel filed named <em>bird_data.xlsx</em> located inside the R project you are working in?
-<div id="radio_OATRNWOYDH" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_OATRNWOYDH" value=""> <span>You cannot load excel files into R. You must save it as a csv, and read it in with read_csv().</span></label><label><input type="radio" autocomplete="off" name="radio_OATRNWOYDH" value="answer"> <span>Assuming the readxl package is installed and loaded, type read_xlsx(file = “bird_data.xlsx”, sheet = “raw_data”).</span></label><label><input type="radio" autocomplete="off" name="radio_OATRNWOYDH" value=""> <span>While you can read excel into R, you cannot specify the sheet.</span></label>
+<div id="radio_QAOXFSAZRR" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_QAOXFSAZRR" value=""> <span>You cannot load excel files into R. You must save it as a csv, and read it in with read_csv().</span></label><label><input type="radio" autocomplete="off" name="radio_QAOXFSAZRR" value="answer"> <span>Assuming the readxl package is installed and loaded, type read_xlsx(file = “bird_data.xlsx”, sheet = “raw_data”).</span></label><label><input type="radio" autocomplete="off" name="radio_QAOXFSAZRR" value=""> <span>While you can read excel into R, you cannot specify the sheet.</span></label>
 </div>
 <hr>
 <strong>Q4)</strong> What should you do to make code reproducible? (pick the best answer)
-<div id="radio_UHOJXAZXAX" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_UHOJXAZXAX" value=""> <span>Specify the working directory with setwd()</span></label><label><input type="radio" autocomplete="off" name="radio_UHOJXAZXAX" value=""> <span>Show the packages installed with install.packages()</span></label><label><input type="radio" autocomplete="off" name="radio_UHOJXAZXAX" value="answer"> <span>Restart R once your done, and rerun your script to see if it works</span></label>
+<div id="radio_PZSBVVDOFA" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_PZSBVVDOFA" value=""> <span>Specify the working directory with setwd()</span></label><label><input type="radio" autocomplete="off" name="radio_PZSBVVDOFA" value=""> <span>Show the packages installed with install.packages()</span></label><label><input type="radio" autocomplete="off" name="radio_PZSBVVDOFA" value="answer"> <span>Restart R once your done, and rerun your script to see if it works</span></label>
 </div>
 </div>
 <hr>

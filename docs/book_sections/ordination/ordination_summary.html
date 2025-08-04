@@ -2284,6 +2284,41 @@ globalThis.qwebrExecuteCode = async function (
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/shuffling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">14. Shuffling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/the_frogs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. The frogs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/permute.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Permute</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/permute_nonindependent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Structured Permutation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/shuffling_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Shuffling summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
@@ -2625,8 +2660,8 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <section id="warm-up" class="level3 exercises">
 <h3 class="anchored" data-anchor-id="warm-up">Warm up</h3>
 <strong>Q1)</strong> For which of these cases is a PCA <strong>most</strong> appropriate?
-<div id="radio_JCVDIDVHRG" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_JCVDIDVHRG" value=""> <span>You want to measure how strongly two continuous variables are correlated.</span></label><label><input type="radio" autocomplete="off" name="radio_JCVDIDVHRG" value="answer"> <span>You want to reduce a dataset with many continuous variables to a few variables that capture most of the variation.</span></label><label><input type="radio" autocomplete="off" name="radio_JCVDIDVHRG" value=""> <span>You have messy data with missing values and a mix of continuous and categorical variables.</span></label><label><input type="radio" autocomplete="off" name="radio_JCVDIDVHRG" value=""> <span>You’re hoping to discover natural clusters in your data.</span></label>
+<div id="radio_IJWZTJPONR" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_IJWZTJPONR" value=""> <span>You want to measure how strongly two continuous variables are correlated.</span></label><label><input type="radio" autocomplete="off" name="radio_IJWZTJPONR" value="answer"> <span>You want to reduce a dataset with many continuous variables to a few variables that capture most of the variation.</span></label><label><input type="radio" autocomplete="off" name="radio_IJWZTJPONR" value=""> <span>You have messy data with missing values and a mix of continuous and categorical variables.</span></label><label><input type="radio" autocomplete="off" name="radio_IJWZTJPONR" value=""> <span>You’re hoping to discover natural clusters in your data.</span></label>
 </div>
 <div class="webex-solution">
 <button>
@@ -2654,20 +2689,20 @@ Click here for explanation
 </div>
 <div class="exercises">
 <strong>Q2)</strong> Which of the plots above is most appropriate?
-<div id="radio_CVGTBKNDUS" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_CVGTBKNDUS" value=""> <span>A: It stretches PC2, making subtle vertical differences easier to see.</span></label><label><input type="radio" autocomplete="off" name="radio_CVGTBKNDUS" value=""> <span>B: It keeps the axes roughly square, which feels visually balanced and avoids exaggeration.</span></label><label><input type="radio" autocomplete="off" name="radio_CVGTBKNDUS" value="answer"> <span>C: It sets the axes proportional to the percent variance explained, making distances and angles in the plot geometrically meaningful.</span></label><label><input type="radio" autocomplete="off" name="radio_CVGTBKNDUS" value=""> <span>There is no 'best' because plot choice depends on audience and goals.</span></label>
+<div id="radio_NZKQCPOAIA" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_NZKQCPOAIA" value=""> <span>A: It stretches PC2, making subtle vertical differences easier to see.</span></label><label><input type="radio" autocomplete="off" name="radio_NZKQCPOAIA" value=""> <span>B: It keeps the axes roughly square, which feels visually balanced and avoids exaggeration.</span></label><label><input type="radio" autocomplete="off" name="radio_NZKQCPOAIA" value="answer"> <span>C: It sets the axes proportional to the percent variance explained, making distances and angles in the plot geometrically meaningful.</span></label><label><input type="radio" autocomplete="off" name="radio_NZKQCPOAIA" value=""> <span>There is no 'best' because plot choice depends on audience and goals.</span></label>
 </div>
 <strong>Q3)</strong> Based on the plot(s) above which species appears to have the largest petals (i.e., petal length and width)?
-<div id="radio_AQZEWPQKMK" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_AQZEWPQKMK" value=""> <span><em>setosa</em></span></label><label><input type="radio" autocomplete="off" name="radio_AQZEWPQKMK" value=""> <span><em>versicolor</em></span></label><label><input type="radio" autocomplete="off" name="radio_AQZEWPQKMK" value="answer"> <span><em>virginica</em></span></label><label><input type="radio" autocomplete="off" name="radio_AQZEWPQKMK" value=""> <span>🤷 PCA doesn’t tell us anything about trait values.</span></label>
+<div id="radio_HVIMQNLUJN" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_HVIMQNLUJN" value=""> <span><em>setosa</em></span></label><label><input type="radio" autocomplete="off" name="radio_HVIMQNLUJN" value=""> <span><em>versicolor</em></span></label><label><input type="radio" autocomplete="off" name="radio_HVIMQNLUJN" value="answer"> <span><em>virginica</em></span></label><label><input type="radio" autocomplete="off" name="radio_HVIMQNLUJN" value=""> <span>🤷 PCA doesn’t tell us anything about trait values.</span></label>
 </div>
 <strong>Q4)</strong> Based on the plot(s) above, how would you interpret PC2?
-<div id="radio_SGCDOLBFLI" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_SGCDOLBFLI" value=""> <span>PC2 reflects petal area: higher values mean larger petals</span></label><label><input type="radio" autocomplete="off" name="radio_SGCDOLBFLI" value=""> <span>PC2 reflects petal area: higher values mean smaller petals</span></label><label><input type="radio" autocomplete="off" name="radio_SGCDOLBFLI" value=""> <span>PC2 reflects sepal area: higher values mean larger sepals</span></label><label><input type="radio" autocomplete="off" name="radio_SGCDOLBFLI" value="answer"> <span>PC2 reflects sepal area: higher values mean smaller sepals</span></label><label><input type="radio" autocomplete="off" name="radio_SGCDOLBFLI" value=""> <span>There is no clear biological interpretation of PC2 from this plot</span></label><label><input type="radio" autocomplete="off" name="radio_SGCDOLBFLI" value=""> <span>We should never attempt to interpret PCs biologically</span></label><label><input type="radio" autocomplete="off" name="radio_SGCDOLBFLI" value=""> <span>PC2 should be ignored because it explains so little of the variance.</span></label>
+<div id="radio_XOSPSNUAKD" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XOSPSNUAKD" value=""> <span>PC2 reflects petal area: higher values mean larger petals</span></label><label><input type="radio" autocomplete="off" name="radio_XOSPSNUAKD" value=""> <span>PC2 reflects petal area: higher values mean smaller petals</span></label><label><input type="radio" autocomplete="off" name="radio_XOSPSNUAKD" value=""> <span>PC2 reflects sepal area: higher values mean larger sepals</span></label><label><input type="radio" autocomplete="off" name="radio_XOSPSNUAKD" value="answer"> <span>PC2 reflects sepal area: higher values mean smaller sepals</span></label><label><input type="radio" autocomplete="off" name="radio_XOSPSNUAKD" value=""> <span>There is no clear biological interpretation of PC2 from this plot</span></label><label><input type="radio" autocomplete="off" name="radio_XOSPSNUAKD" value=""> <span>We should never attempt to interpret PCs biologically</span></label><label><input type="radio" autocomplete="off" name="radio_XOSPSNUAKD" value=""> <span>PC2 should be ignored because it explains so little of the variance.</span></label>
 </div>
 <strong>Q5</strong> The correlation between petal width and petal area is 0.96. It is not unclear what to do in such cases, but one of these options iis not justifiable. Which one?
-<div id="radio_HVZJRWYTNJ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_HVZJRWYTNJ" value=""> <span>Don't change anything. These are different traits!</span></label><label><input type="radio" autocomplete="off" name="radio_HVZJRWYTNJ" value="answer"> <span>Drop one of the petal traits (it doesn't really matter which one).</span></label><label><input type="radio" autocomplete="off" name="radio_HVZJRWYTNJ" value="answer"> <span>If you drop one petal trait, be sure to drop a sepal trait</span></label><label><input type="radio" autocomplete="off" name="radio_HVZJRWYTNJ" value=""> <span>Drop both petal length and width, and replace them with petal area.</span></label>
+<div id="radio_PIQXDVHTTC" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_PIQXDVHTTC" value=""> <span>Don't change anything. These are different traits!</span></label><label><input type="radio" autocomplete="off" name="radio_PIQXDVHTTC" value="answer"> <span>Drop one of the petal traits (it doesn't really matter which one).</span></label><label><input type="radio" autocomplete="off" name="radio_PIQXDVHTTC" value="answer"> <span>If you drop one petal trait, be sure to drop a sepal trait</span></label><label><input type="radio" autocomplete="off" name="radio_PIQXDVHTTC" value=""> <span>Drop both petal length and width, and replace them with petal area.</span></label>
 </div>
 <p>.</p>
 <em>BONUS</em>: What would you do?
@@ -2690,8 +2725,8 @@ Click here for explanation
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="exercises">
 <strong>Q7)</strong> The plot above appears to show three clusters, but there is a problem (or two). What is th biggest problem?
-<div id="radio_VIMEKOZSHS" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_VIMEKOZSHS" value=""> <span>PCA is not meant for finding clusters</span></label><label><input type="radio" autocomplete="off" name="radio_VIMEKOZSHS" value=""> <span>PC2 only explains 19% of the variance so we should not pay much attention to it</span></label><label><input type="radio" autocomplete="off" name="radio_VIMEKOZSHS" value=""> <span>The middle cluster is largely made up of missing data</span></label><label><input type="radio" autocomplete="off" name="radio_VIMEKOZSHS" value=""> <span>Some variables are categorical so we should have run and FAMD analysis</span></label><label><input type="radio" autocomplete="off" name="radio_VIMEKOZSHS" value="answer"> <span>Something went into our PC that shouldn't have</span></label>
+<div id="radio_ZIBFGKVIAU" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ZIBFGKVIAU" value=""> <span>PCA is not meant for finding clusters</span></label><label><input type="radio" autocomplete="off" name="radio_ZIBFGKVIAU" value=""> <span>PC2 only explains 19% of the variance so we should not pay much attention to it</span></label><label><input type="radio" autocomplete="off" name="radio_ZIBFGKVIAU" value=""> <span>The middle cluster is largely made up of missing data</span></label><label><input type="radio" autocomplete="off" name="radio_ZIBFGKVIAU" value=""> <span>Some variables are categorical so we should have run and FAMD analysis</span></label><label><input type="radio" autocomplete="off" name="radio_ZIBFGKVIAU" value="answer"> <span>Something went into our PC that shouldn't have</span></label>
 </div>
 <div class="webex-solution">
 <button>
@@ -2716,8 +2751,8 @@ Explanation
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="exercises">
 <strong>Q8)</strong> What went wrong in this plot (Note, choose the worst mistake for this dataset)
-<div id="radio_WURVNAAIYE" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_WURVNAAIYE" value=""> <span>Nothing - it's great! PC1 splits the data into two groups!</span></label><label><input type="radio" autocomplete="off" name="radio_WURVNAAIYE" value=""> <span>Axes are not proportional to PVE.</span></label><label><input type="radio" autocomplete="off" name="radio_WURVNAAIYE" value="answer"> <span>Something went wrong. with PC1 - I should figure it out.</span></label><label><input type="radio" autocomplete="off" name="radio_WURVNAAIYE" value=""> <span>The data are not centered and scaled.</span></label>
+<div id="radio_RYWNBKYHII" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_RYWNBKYHII" value=""> <span>Nothing - it's great! PC1 splits the data into two groups!</span></label><label><input type="radio" autocomplete="off" name="radio_RYWNBKYHII" value=""> <span>Axes are not proportional to PVE.</span></label><label><input type="radio" autocomplete="off" name="radio_RYWNBKYHII" value="answer"> <span>Something went wrong. with PC1 - I should figure it out.</span></label><label><input type="radio" autocomplete="off" name="radio_RYWNBKYHII" value=""> <span>The data are not centered and scaled.</span></label>
 </div>
 <p><strong>Q9)</strong> Fix all the mistakes above (not just the biggest one) and remake this plot. What percent of variability in the data is attributable to PC2 <input class="webex-solveme nospaces" data-tol="0.16" size="4" data-answer="[&quot;6.15&quot;]"></p>
 <div class="webex-solution">
@@ -2744,8 +2779,8 @@ Hint 3
 <h3 class="anchored" data-anchor-id="pcalternatives">PCAlternatives</h3>
 <div class="exercises">
 <p><strong>Q10)</strong> In which of the following ordination methods is it most appropriate to interpret the distance between points in the plot as representing similarity between samples?</p>
-<div id="radio_KEMSBYKECI" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_KEMSBYKECI" value=""> <span>NMDS, because it’s designed for messy ecological data.</span></label><label><input type="radio" autocomplete="off" name="radio_KEMSBYKECI" value=""> <span>t-SNE, because it preserves local structure.</span></label><label><input type="radio" autocomplete="off" name="radio_KEMSBYKECI" value="answer"> <span>PCA and PCoA — but only if axes are scaled proportional to variance explained.</span></label><label><input type="radio" autocomplete="off" name="radio_KEMSBYKECI" value=""> <span>All of them — that’s what ordination plots are for!</span></label>
+<div id="radio_TYNHMJOJSO" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_TYNHMJOJSO" value=""> <span>NMDS, because it’s designed for messy ecological data.</span></label><label><input type="radio" autocomplete="off" name="radio_TYNHMJOJSO" value=""> <span>t-SNE, because it preserves local structure.</span></label><label><input type="radio" autocomplete="off" name="radio_TYNHMJOJSO" value="answer"> <span>PCA and PCoA — but only if axes are scaled proportional to variance explained.</span></label><label><input type="radio" autocomplete="off" name="radio_TYNHMJOJSO" value=""> <span>All of them — that’s what ordination plots are for!</span></label>
 </div>
 <div class="webex-solution">
 <button>
@@ -2758,8 +2793,8 @@ Explanation
 <p>2 ordered categorical variables (e.g., molt stage from 1–5, plumage brightness from dull to vibrant)</p>
 <p>Several missing values in most rows</p>
 <p>You want to visualize broad patterns and see if anything jumps out. Which approach is the least bad?</p>
-<div id="radio_UJJNSFOAMS" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_UJJNSFOAMS" value=""> <span>PCA - just ignore missing values and let prcomp() do its thing.</span></label><label><input type="radio" autocomplete="off" name="radio_UJJNSFOAMS" value="answer"> <span>FAMD - if you impute missing data first, it can handle mixed types and give interpretable dimensions.</span></label><label><input type="radio" autocomplete="off" name="radio_UJJNSFOAMS" value=""> <span>UMAP - it will figure out the structure automatically.</span></label><label><input type="radio" autocomplete="off" name="radio_UJJNSFOAMS" value=""> <span>NMDS - it ignores variable types and missing values, so it must be fine.</span></label>
+<div id="radio_SWWMVAAHXE" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_SWWMVAAHXE" value=""> <span>PCA - just ignore missing values and let prcomp() do its thing.</span></label><label><input type="radio" autocomplete="off" name="radio_SWWMVAAHXE" value="answer"> <span>FAMD - if you impute missing data first, it can handle mixed types and give interpretable dimensions.</span></label><label><input type="radio" autocomplete="off" name="radio_SWWMVAAHXE" value=""> <span>UMAP - it will figure out the structure automatically.</span></label><label><input type="radio" autocomplete="off" name="radio_SWWMVAAHXE" value=""> <span>NMDS - it ignores variable types and missing values, so it must be fine.</span></label>
 </div>
 <div class="webex-solution">
 <button>
