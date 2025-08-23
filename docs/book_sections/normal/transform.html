@@ -138,7 +138,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../assets/webex.css">
 </head>
 
-<body class="nav-sidebar floating fullcontent">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -891,7 +891,8 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
@@ -1074,6 +1075,20 @@ Figure&nbsp;1.1: <strong>A.</strong> The histogram of the raw petal area data sh
 </div>
 </div>
 </div>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-norm_meme" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A normal distribution is shown with three characters. At the low and high ends of the curve are characters representing simple and expert approaches, both labeled &quot;Bootstrap for uncertainty, Permute for NHST.&quot; In the large, central part of the curve is a crying character overwhelmed by a list of complex statistical models like &quot;Linear Model&quot; and &quot;GLMM.&quot; This is an adpatation of the popular meme.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-norm_meme-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../figs/linear_models/normal/normal_meme.png" class="img-fluid figure-img" alt="A normal distribution is shown with three characters. At the low and high ends of the curve are characters representing simple and expert approaches, both labeled &quot;Bootstrap for uncertainty, Permute for NHST.&quot; In the large, central part of the curve is a crying character overwhelmed by a list of complex statistical models like &quot;Linear Model&quot; and &quot;GLMM.&quot; This is an adpatation of the popular meme." width="1430">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-norm_meme-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.2: A meme to contrast different approaches to statistical analysis, based on perceived complexity versus wisdom. Permutation and permutation (when properly reflecting the structure of our data are the solustion to both simple and complex stats problems.)
+</figcaption>
+</figure>
+</div>
+</div></div></div>
 <div class="warning">
 <p>Be careful when log-transforming!! All data with a value of zero or less will disappear. For this reason, we often use a <code>log1p</code> transform, which adds one to each number before logging them.</p>
 </div>
@@ -1081,7 +1096,7 @@ Figure&nbsp;1.1: <strong>A.</strong> The histogram of the raw petal area data sh
 </section>
 <section id="when-transformation-fails" class="level3">
 <h3 class="anchored" data-anchor-id="when-transformation-fails">When transformation fails</h3>
-<p>Not all data can be made to be normal. If you are worried that even after transformation your data are too far from normal for standard linear models, don’t despair! We can build modles that better meet the data, permute/bootstrap, or find a better test.</p>
+<p>Not all data can be made to be normal. If you are worried that even after transformation your data are too far from normal for standard linear models, don’t despair! We can build modles that better meet the data, permute/bootstrap (<a href="#fig-norm_meme" class="quarto-xref">Figure&nbsp;<span>1.2</span></a>), or find a better test.</p>
 
 
 </section>

@@ -167,10 +167,23 @@ raw_hist + raw_qq + log10_hist  + log10_qq+plot_annotation(tag_levels  = "A")
 
 
 
+```{r}
+#| echo: false
+#| label: fig-norm_meme
+#| column: margin
+#| fig-alt: "A normal distribution is shown with three characters. At the low and high ends of the curve are characters representing simple and expert approaches, both labeled \"Bootstrap for uncertainty, Permute for NHST.\" In the large, central part of the curve is a crying character overwhelmed by a list of complex statistical models like \"Linear Model\" and \"GLMM.\" This is an adpatation of the popular meme."
+#| fig-cap: "A meme to contrast different approaches to statistical analysis, based on perceived complexity versus wisdom. Permutation and permutation (when properly reflecting the structure of our data are the solustion to both simple and complex stats problems.)"
+include_graphics("../../figs/linear_models/normal/normal_meme.png")
+```
+
 :::warning 
 Be careful when log-transforming!! All data with a value of zero or less will disappear. For this reason, we often use a `log1p` transform, which adds one to each number before logging them.    
 :::
 
+
+
+
+
 ### When transformation fails  
 
-Not all data can be made to be normal. If you are worried that even after transformation your data are too far from normal for standard linear models, don't despair! We can build modles that better meet the data, permute/bootstrap, or find a better test. 
+Not all data can be made to be normal. If you are worried that even after transformation your data are too far from normal for standard linear models, don't despair! We can build modles that better meet the data, permute/bootstrap (@fig-norm_meme), or find a better test. 
