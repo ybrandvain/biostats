@@ -1,0 +1,144 @@
+# Section IV: Stats for Linear Models {.unnumbered #stats_4_linear_models}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(knitr)
+```
+
+
+
+
+
+
+<article class="drop-cap">The major goals of statistics are to: (1) Summarize data, (2) Estimate uncertainty, (3) Test hypotheses, (4) Build models (5) and Infer cause. We have now touched on goals one through four. However, our [foray into model building](#linear_models) was brief.  Now that we understand uncertainty and null hypothesis significance testing, we can build and interpret statistical models with some sophistication. So let's go! </article><br>
+
+
+```{r}
+#| echo: false
+#| label: fig-whale
+#| fig-cap: "An example of teaching a linear model, byFrom [Allison Horst](https://allisonhorst.com/allison-horst)."
+#| fig-alt: "A humpback whale cartoon, teaching a class of dolphins, seal and another whale some calculus (probably) by pointing out the local maximum of a \"MAX SPLASH!\" function on a whiteboard."
+include_graphics("https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/3f6a6dd7-0401-4475-b727-eba2f62539c6_rw_3840.jpg?h=7e1ef515a690031da1386aefdb2293ab")
+```
+---
+
+## Linear Models Review
+
+Remember that we previously introduced linear models as a framework to estimate the conditional mean of the $i^{th}$ observation of a continuous response variable, $\hat{Y}_i$ for a (combination) of value(s) of the explanatory variables ($\text{explanatory variables}_i$): 
+
+
+
+\begin{equation} 
+\hat{Y}_i = f(\text{explanatory variables}_i)
+\end{equation} 
+
+
+:::aside
+**Conditional mean:** The expected value of a response variable given specific values of the explanatory variables (i.e., the model’s best guess for the response based on the explanatory variables).  
+:::
+
+## Adding Uncetainty and NHST  
+
+We have just completed our section on the foundations of statistics. In that section, we introduced the idea that we should make sure to quantify uncertainty when presenting estimates. 
+
+We also introduced the idea that the "null hypothesis significance testing" (NHST) tradition in statistics works by assuming that data came from the  "null model", and that we "reject" this hypothesis when the null model rarely generates values as extreme as what we see empirically. 
+
+Here, rather than using bootstrapping and permutation to quantify uncertainty and test null hypotheses, we run through the common mathematical tricks available to us in linear modelling. The models are the bread and butter of what we see in most bistats papers.   
+
+**However, whether we use mathematical or computational approaches to estimate uncertainty and test null hypotheses, the concepts are the same.**
+
+
+
+## Assumptions of linear models
+
+A major difference between linear models and computational approaches to stats is that while all statistical models make assumptions, linear models make a specific set of assumptions that are needed to make the math work.
+
+Luckily for us, we will see that:
+
+  * Many of these assumptions are actually appropriate most of the time.
+  * Linear models are often robust to modest violations of assumptions.
+  * We can build more specific models that better fit our data.
+
+We will say more about these points as we go on, but now let's introduce the major assumptions of linear models:
+
+### Linear models assume linearity
+
+Recall that "linear models" are "linear" because we find an individual's predicted value $\hat{Y_i}$ by adding up predictions from each component of the model. So, for example, $\hat{Y_i}$ equals the parameter estimate for the "intercept", $a$, plus its value for the first explanatory variable, $y_{1,i}$, times the effect of this variable, $b_1$, plus its value for the second explanatory variable, $y_{2,i}$ times its effect, $b_2$, etc.
+
+$$\hat{Y}_i = a + b_1 y_{1,i} + b_2 y_{2,i} + \dots{}$$
+
+Thus a fundamental assumption of linear models is that we make predictions by adding up the impact of each variable.
+
+:::aside
+This linearity assumption does not mean that we cannot include squared terms or interactions... In fact, the assumption of linearity sometimes requires that we add non-linear terms.
+:::
+
+### Linear models assume independence
+
+Linear models assume that observations are independent. Or more precisely, that they are independent conditional on the explanatory variables. A simple way to say this is that we assume the residuals are independent.
+
+As a reminder, a **residual** is the difference between observations and model predictions. So the residual value for individual $i$, $e_i$, is the difference between the value of their response variable, $Y_i$, and the value the model predicts given individual $i$'s values of explanatory variables, $\hat{Y\_i}$.
+
+$$e_i = Y_i -\hat{Y_i}$$
+
+### Linear models assume normality
+
+Not only do linear models assume independence of residuals, but they also assume the residuals are "normally distributed". A normal distribution is a symmetric, bell-shaped curve that occurs frequently in nature and has many convenient mathematical properties. The next chapter is dedicated to the normal distirbution.
+
+### Linear models assume constant variance
+
+Linear models assume that the variance of residuals is independent of the predicted value of the response variable, $\hat{Y\_i}$.
+
+:::aside
+Fancy words for these ideas are: <br> <br>
+
+**Homoscedasticity:** Variance of residuals is constant -- i.e. variance in residuals, $\sigma_e$ does not vary by the predicted value, $\hat{Y}$.
+
+**Heteroscedasticity:** Variance of residuals is not constant; it depends on predictors.
+
+:::
+
+### Linear models assume independence of explanatory variables
+
+For models with multiple explanatory variables, it is assumed that these predictors are not too tightly correlated with one another.
+
+:::aside
+**Multicollinearity** is the fancy word for high correlations between predictor variables.
+:::
+
+### What's ahead 
+
+This section gets into linear models, the workhorse for data analysis. We have [previously covered](#linear_models) some of the many types of common linear models but have done so without understanding uncertainty or NHST. Outside of this book, you may  have heard of and even done some of these analyses before. My goal is therefore for you to know how they work, how to interpret their output, and when the results can be trusted. To do that we will:
+
+- Chapter 15: Begins with an introduction to the normal distribution. We will also use that opportunity to refresh our understanding of residuals and brush up a bit on simple probability theory. 
+
+- Chapter 16: Considers how to include uncertainty and null hypothesis significance testing into our linear model, by considering the t-distribution. To do so we will focus on the simplest linear model -- one that simply models the response variable as a function of nothing. We can compare this to what we have previously accomplished by bootstrapping.
+
+- Chapter 17: Introduces a slightly more complex model -- a two sample t-test  which compares the means of two groups. We can compare this to what we have previously accomplished by bootstrapping and permutation.
+
+- Chapter 18:  Compares the means of more than two groups by an ANOVA. This chapter also introduces the *F* statistic, which plays a key role in interpreting linear models. 
+
+- Chapter 19: Introduces the "multiple testing problem" and explains how to conduct "post-hoc" tests to see if means of two groups differ when our overall test looked at many groups.   
+
+
+- Chapter 20: Introduces the regression -- how we predict one continuous variable from another. We also delve into the idea of a polynomial regression.
+
+- Chapter 21:  Introduces the ANCOVA in which the response variable is a function of one continuous and one categorical predictor. We also take this opportunity to look into "types of sums of squares"and how to be careful with R's defaults. 
+
+- Chapter 22: Introduces models that include interactions between explanatory variable.
+
+- Chapter 23: Introduces multiple regression, where we model a response using more than one continuous predictor.  
+
+--- 
+
+**After completing this section we will be equipped with the standard tools of biostatistics.** 
+
+--- 
+
+Following this section,
+
+- Section V will consider high-level issues including experimental design, causal inference, and bias. 
+
+- Finally, Section VI will introduce common approaches for dealing with data where the standard tools of linear modeling do not apply.

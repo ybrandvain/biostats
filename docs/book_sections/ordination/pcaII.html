@@ -811,6 +811,77 @@ window.Quarto = {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/stats_4_linear_models_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section IV: Stats for Linear Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/normal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">15. Normal distribution</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/normal_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/normal_properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Properties</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/noRmal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Simulations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/p_norm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Math</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/is_it_normal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Is It Normal?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/clt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. The Normal is Common</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Make It Normal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/normal_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -943,7 +1014,7 @@ window.Quarto = {
 <span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display page-columns page-full">
-<div id="fig-cov" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="A heatmap showing pairwise correlations between five traits in parviflora RILs. Blue cells represent positive correlations, orange cells represent negative correlations, and white indicates near-zero correlations. Strongest correlations include a perfect correlation of 1.0 between each trait and itself, a positive correlation of 0.294 between petal area and asd, and a negative correlation of -0.257 between stem diameter and lwc." data-fig-align="center" data-cap-location="margin">
+<div id="fig-cov" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-align="center" data-cap-location="margin" alt="A heatmap showing pairwise correlations between five traits in parviflora RILs. Blue cells represent positive correlations, orange cells represent negative correlations, and white indicates near-zero correlations. Strongest correlations include a perfect correlation of 1.0 between each trait and itself, a positive correlation of 0.294 between petal area and asd, and a negative correlation of -0.257 between stem diameter and lwc.">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-cov-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="pcaII_files/figure-html/fig-cov-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A heatmap showing pairwise correlations between five traits in parviflora RILs. Blue cells represent positive correlations, orange cells represent negative correlations, and white indicates near-zero correlations. Strongest correlations include a perfect correlation of 1.0 between each trait and itself, a positive correlation of 0.294 between petal area and asd, and a negative correlation of -0.257 between stem diameter and lwc.">
@@ -1037,7 +1108,7 @@ Figure&nbsp;1: Pairwise correlations among traits in parviflora recombinant inbr
 <div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-eigenVpca" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Five scatter plots (one for each principal component) compare PCA trait loadings from prcomp() with eigenvector values from eigen(). Each colored point represents a trait. Points lie closely along diagonal lines in each panel, indicating strong agreement between the two methods, except for potential sign flips." data-fig-align="center">
+<div id="fig-eigenVpca" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Five scatter plots (one for each principal component) compare PCA trait loadings from prcomp() with eigenvector values from eigen(). Each colored point represents a trait. Points lie closely along diagonal lines in each panel, indicating strong agreement between the two methods, except for potential sign flips.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-eigenVpca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="pcaII_files/figure-html/fig-eigenVpca-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="Five scatter plots (one for each principal component) compare PCA trait loadings from prcomp() with eigenvector values from eigen(). Each colored point represents a trait. Points lie closely along diagonal lines in each panel, indicating strong agreement between the two methods, except for potential sign flips.">
@@ -1116,7 +1187,7 @@ Figure&nbsp;2: <strong>Comparing PCA loadings from <code>prcomp()</code> and eig
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-covmat" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A heatmap of trait covariances among five Clarkia xantiana traits. The diagonal values represent trait variances, with petal area showing a much larger value (215.766) than the others. Color scale ranges from 0 to 200, highlighting petal area’s dominance in the matrix. Off-diagonal covariances are relatively small." data-fig-align="center">
+<div id="fig-covmat" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A heatmap of trait covariances among five Clarkia xantiana traits. The diagonal values represent trait variances, with petal area showing a much larger value (215.766) than the others. Color scale ranges from 0 to 200, highlighting petal area’s dominance in the matrix. Off-diagonal covariances are relatively small.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-covmat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="pcaII_files/figure-html/fig-covmat-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A heatmap of trait covariances among five Clarkia xantiana traits. The diagonal values represent trait variances, with petal area showing a much larger value (215.766) than the others. Color scale ranges from 0 to 200, highlighting petal area’s dominance in the matrix. Off-diagonal covariances are relatively small.">

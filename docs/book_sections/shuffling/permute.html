@@ -811,6 +811,77 @@ window.Quarto = {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/stats_4_linear_models_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section IV: Stats for Linear Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/normal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">15. Normal distribution</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/normal_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/normal_properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Properties</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/noRmal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Simulations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/p_norm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Math</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/is_it_normal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Is It Normal?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/clt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. The Normal is Common</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Make It Normal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/normal_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -932,7 +1003,7 @@ Null Hypothe...
 # A tibble: 1 × 1
    stat
   &lt;dbl&gt;
-1 -121.</code></pre>
+1  42.4</code></pre>
 </div>
 </div>
 <p>This represents one draw from the permuted (null) distribution. Now we do this a bunch to find the sampling distribution and calculate a p-value!</p>
@@ -1004,7 +1075,7 @@ Figure&nbsp;3: The null distribution generated from 5,000 permutations of the fr
 <pre><code># A tibble: 1 × 1
   p_value
     &lt;dbl&gt;
-1   0.318</code></pre>
+1   0.283</code></pre>
 </div>
 </div>
 <div class="fyi">
@@ -1022,7 +1093,7 @@ Figure&nbsp;3: The null distribution generated from 5,000 permutations of the fr
 <p><em>Step 9: Write up the results.</em> The final step is to write-up our results:</p>
 <p><em>In this study, we tested whether the number of hatched eggs differed between wood frogs that mated with preferred versus non-preferred females. Using a permutation test, we evaluated the null hypothesis that the number of eggs hatched does not differ between these two groups.</em></p>
 <p><em>On average, frogs that mated with their preferred partner hatched 345.11 eggs, while those that mated with their non-preferred partner hatched 413.93 eggs. The observed difference in the number of eggs hatched between the two groups was -68.82 eggs.</em></p>
-<p><em>To assess the significance of this observed difference, we generated a null distribution of the differences in egg counts by permuting the treatment labels (preferred vs.&nbsp;non-preferred). After running 5,000 permutations, we calculated a two-tailed p-value of 0.3184. This indicates that in a world where there is no true association between mating treatment and the number of eggs hatched, we would expect to see a difference as extreme as the observed one in about one in three cases due to random chance alone. We therefore fail to reject the null hypothesis. This suggests that there is insufficient evidence to support the claim that the number of hatched eggs is influenced by whether the male mated with a preferred or non-preferred female.</em></p>
+<p><em>To assess the significance of this observed difference, we generated a null distribution of the differences in egg counts by permuting the treatment labels (preferred vs.&nbsp;non-preferred). After running 5,000 permutations, we calculated a two-tailed p-value of 0.2828. This indicates that in a world where there is no true association between mating treatment and the number of eggs hatched, we would expect to see a difference as extreme as the observed one in about one in three cases due to random chance alone. We therefore fail to reject the null hypothesis. This suggests that there is insufficient evidence to support the claim that the number of hatched eggs is influenced by whether the male mated with a preferred or non-preferred female.</em></p>
 
 
 </section>

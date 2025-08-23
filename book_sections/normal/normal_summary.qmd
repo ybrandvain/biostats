@@ -1,0 +1,247 @@
+## • 15. Normal Summary {.unnumbered #normal_summary}
+
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr' ,'ggplot2','infer']
+  autoload-packages: true
+---
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(webexercises)
+library(dplyr)
+library(knitr)
+library(infer)
+library(ggplot2)
+```
+
+
+
+Links to: [Summary](#normal_summary_chapter-summary). [Chatbot tutor](#normal_summary_chatbot_tutor).  [Questions](#normal_summary_practice-questions). [Glossary](#normal_summary_glossary-of-terms). [R packages](#normal_summaryR_packages_introduced). [R functions](#normal_summary_key-r-functions). [More resources](#normal_summary_additional-resources).
+
+
+
+```{r}
+#| echo: false
+#| column: page-right
+#| label: fig-annyoy
+#| fig-cap: "[How to annoy a statistician from xkcd](https://xkcd.com/2118/). The rollover text sais \"It's the NORMAL distribution, not the TANGENT distribution.\" See the related [explainxkcd](https://www.explainxkcd.com/wiki/index.php/2118:_Normal_Distribution) for more info!"
+#| fig-alt: "The comic displays a normal distribution (bell curve). An asymmetric section of the curve is shaded, and a vertical line labeled \"MIDPOINT\" incorrectly indicates that this shaded area represents 52.7% of the total. A caption bubble points to this shaded area, stating, \"REMEMBER, 50% OF THE DISTRIBUTION FALLS BETWEEN THESE TWO LINES!\""
+include_graphics("https://imgs.xkcd.com/comics/normal_distribution_2x.png")
+```
+
+## Chapter summary {#normal_summary_chapter-summary}  
+
+
+The Normal Distribution is a symmetric, bell-shaped curve defined by its mean ($\mu$) and standard deviation ($\sigma$). Its importance in statistics comes from it's frequent use in statistics, which is justified by the Central Limit Theorem, which states that the regardless of the distribution of the population parameter, the sampling distribution of the mean will be approximately normal as the sample size gets large. We can standardize any normal distribution using a Z-transformation to calculate Z-scores, which allows us to find probabilities using the Probability Density Function of the Standard Normal Distribution. We assess if data are normal byusing a Quantile-Quantile (QQ) Plot and can apply transform data to make it normal.
+
+
+### Chatbot tutor  {#normal_summary_chatbot_tutor} 
+
+:::tutor
+
+
+Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/g-68a93cfbc0008191aba4bff044454bb2-normal-tutor)). I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+
+:::
+
+
+## Practice Questions {#normal_summary_practice-questions}
+
+
+Try these questions! By using the R environment you can work without leaving this "book". I even pre-loaded all the packages you need! 
+
+:::exercises
+
+
+**SETUP:** *The weights of singleton (that is, not twins) babies born in the U.S. are (roughly) normally distributed with a mean of 3.339 kg with a standard deviation of 0.573 kg.*
+
+---
+
+**Q1.** Roughly how many standard deviations away from the mean is a 5kg baby?
+`r fitb(2.9,tol = .2,num = TRUE)`
+
+`r hide("Explanation")`
+We calculate the Z-score: $Z = (5 - 3.339) / 0.573 = 1.661 / 0.573 \approx 2.9$. This is roughly 3 standard deviations.
+`r unhide()`
+
+---
+
+**Q2.** What is the name of the procedure you did to find the answer above?
+`r mcq(c("The Central Limit Theorem", "The q-transform", "The log-transform", answer = "The Z-transform"))`
+
+`r hide("Explanation")`
+The Z-transform is the procedure of taking a value, subtracting the mean, and dividing by the standard deviation to find out how many standard deviations away it is.
+`r unhide()`
+
+---
+
+**Q3.** Use the appropriate `_norm()` function to find the probability density that a baby is 5 kg.
+
+`r fitb(0.0105,tol = 0.001,num = TRUE)`
+
+`r hide("Explanation")`
+We use the `dnorm()` function for probability **d**ensity: `dnorm(x = 5, mean = 3.339, sd = 0.573)`, which equals 0.0105.
+`r unhide()`
+
+---
+
+**Q4.** The answer above describes the proportion of babies that will weigh 5 kg at birth.
+`r torf(FALSE)`
+
+`r hide("Explanation")`
+False. Probability **density** is not a direct probability or proportion. For a continuous variable, the probability of any *exact* value is zero. The density is the height of the curve, and the *area* under the curve gives the probability.
+`r unhide()`
+
+
+---
+
+**Q5.** Use the appropriate `_norm()` function to find the probability that a baby is greater than 5 kg.
+`r fitb( 0.0018, tol = 0.0009)`
+
+`r hide("Explanation")`
+We use the `pnorm()` function for cumulative **p**robability. To find the area in the upper tail (greater than), we set `lower.tail = FALSE`: `pnorm(q = 5, mean = 3.339, sd = 0.573, lower.tail = FALSE)`, which equals 0.0018.
+`r unhide()`
+
+---
+
+
+**Q6.** What percentage of babies are between three and four kg?
+`r mcq(c("40%", "50%", answer = "60%", "70%"))`
+
+`r hide("Explanation")`
+We find the area below 4 kg and subtract the area below 3 kg: `pnorm(4, 3.339, 0.573) - pnorm(3, 3.339, 0.573) = 0.875 - 0.277 = 0.598`, or about 60%.
+`r unhide()`
+
+---
+
+**Q7.** Imagine we took five babies born in a given hospital and calculated their mean weight. The standard deviation of this sampling distribution would equal:
+`r mcq(c("0.11", "0.15", answer = "0.25"))`
+
+`r hide("Explanation")`
+The standard deviation of the sampling distribution is the standard error, calculated as $\sigma / \sqrt{n}$. So, $0.573 / \sqrt{5} = 0.256$.
+`r unhide()`
+
+---
+
+**Q8.** Do you think baby weights are actually perfectly normal? If not, how might they deviate?
+
+```{=html}
+<div style="width:100%; height:300px; overflow:hidden; border:none;">
+  <iframe 
+    src="https://docs.google.com/forms/d/e/1FAIpQLSf4HtvBsUEww-EQ4MgHxENxjjyq4W_gi3JWKitlSYHQKYG1ZA/viewform?embedded=true" 
+    style="margin-top:-180px; height:330px; width:100%; border:none;" 
+    frameborder="0">
+  </iframe>
+</div>
+```
+      
+
+
+:::
+
+
+## 📊 Glossary of Terms {#normal_summary_glossary-of-terms} 
+
+:::glossary
+
+
+* **Normal Distribution**: A continuous probability distribution characterized by a symmetric, bell-shaped curve. It is defined by its mean ($\mu$) and standard deviation ($\sigma$). Also known as the Gaussian distribution.
+* **Probability Density Function (PDF)**: A function for continuous random variables where the area under the curve between two points represents the probability of the variable falling within that range. The total area under the curve is 1, but the density at a single point can be greater than 1.
+* **Probability Mass Function (PMF)**: A function for discrete random variables that gives the probability of a specific outcome. The sum of all probabilities from a PMF is 1.  
+* **Quantile-Quantile (QQ) Plot**: A plot of the quantiles of the observed data against the theoretical quantiles of a perfect normal distribution. This is used to assess if a dataset is approximately normally distributed -- if the data are normal, the points fall along a straight line.  
+* **Sampling Distribution (of the mean)**: The probability distribution of a statistic (like the mean) obtained from a large number of random samples drawn from a specific population.  
+* **Standard Normal Distribution**: A normal distribution with $\mu=0$, and $\sigma=1$.  
+* **Central Limit Theorem (CLT)**: A fundamental theorem in statistics which states that the sampling distribution of the mean of a sufficiently large number of samples will be approximately normally distributed, regardless of the shape of the original population's distribution.
+
+
+### Parameters & Estimates
+
+* **Mean ($\mu$)**: A measure of central tendency, calculated as the average of all values in a dataset. For a normal distribution, the mean is the center and peak of the curve.
+* **Variance ($\sigma^2$)**: The spread of data points around the mean: $\frac{\sum(x_i-\mu)}{n}$.
+* **Standard Deviation ($\sigma$)**: The square root of the variance. 
+* **Standard Error (SE)**: The standard deviation of the sampling distribution. For the sample mean, of a normally distributed variable, it is calculated as $\sigma / \sqrt{n}$.
+
+### Probability Rules
+
+* **Mutually Exclusive Events**: Two events that cannot occur at the same time. For example, a coin flip cannot be both heads and tails.  
+* **Addition Rule**: A probability rule stating that for mutually exclusive events, the probability of one event (A) or another event (B) occurring is the sum of their individual probabilities. $P(A \text{ or } B) = P(A) + P(B)$.
+* **Complement Rule**: A probability rulw stating that the probability of an event not occurring is equal to 1 minus the probability that the event does occur. $P(\text{not } A) = 1 - P(A)$.
+
+
+### Transformations & Tests
+
+* **Data Transformation**: The process of applying a mathematical function to each point in a dataset (e.g., taking the logarithm or square root) to change the mean, variance and/or shape of the data's distribution.
+* **Z-score**: A value that indicates how many standard deviations an observation is from the mean of its distribution. It is calculated using the Z-transformation.
+* **Z-transformation**: Converting a value, $x_i$, from any normal distribution (with mean $\mu$  and variance, $\sigma^2=1$) into a Z-score, $z_i$  from  the "standard normal distribution" (with $\mu=0$ and $\sigma^2 = 1$): $z_i = (x_i - \mu) / \sigma$.
+* **Z-test**: A test of the null hypothesis that a population's true mean equals its proposed null value, $\mu_0$. To do we find the distance (in standard errors) between our estimate, $\bar{x}$, and its null value $\mu_0$, as $Z=\frac{\bar{x}-\mu_0}{SE_x}$, where $SE_x$ is the standard error. We then find the two-tailed p-value as `2 * pnorm(q=abs(Z), sd =1, lower.tail = TRUE)`.
+
+
+:::
+
+
+
+
+
+
+---
+
+## 🛠️ Key R Functions{#normal_summary_key-r-functions}  
+
+ 
+:::functions
+
+
+* `dnorm()`: An R function that calculates the density (the height of the curve) of a **norm**al distribution at a specific point.   
+* `pnorm()`: An R function that calculates the cumulative probability (the area under the curve from $-\infty$ to a given value) for a normal distribution. It finds $P(X \le q)$.  
+* `qnorm()`: An R function that calculates the quantile for a given cumulative probability in a normal distribution. It is the inverse of `pnorm()` and is used to find critical values.   
+* `rnorm()`: An R function used to generate random numbers from a specified normal distribution.
+* `geom_qq()`: A `ggplot2` function that creates the scatter plot of points for a Quantile-Quantile plot (note in aes, set `sample = VARIABLE_OF_INTEREST`).   
+* `geom_qq_line()`: A `ggplot2` function that adds the straight reference line to a Quantile-Quantile plot, representing where the points would fall if the data were perfectly normal.    
+
+
+
+:::
+
+
+
+## Additional resources   {#normal_summary_additional-resources}
+
+:::learnmore 
+
+**Videos:**         
+
+
+
+
+
+
+- [The Normal Distribution: Crash Course Statistics #19](https://www.youtube.com/watch?v=rBjft49MAO8&t=1s): A clear description of the normal disitrbution, how it arises, its properties, and the central lmit theorem. This is a nice summary of the key concepts in this chapter.    
+
+- [But what is the Central Limit Theorem?](https://www.youtube.com/watch?v=zeJD6dqJ5lo) from 3Blue1Brown's youtube page]: An approachable introduction to more technical aspects of the normal distribution and the central limit theorm. This is the first video in his [youtube playlist on the central limit theorem](https://www.youtube.com/playlist?list=PLZHQObOWTQDOMxJDswBaLu8xBMKxSTvg8).    
+
+
+- [Khan Academy Central Limit Theorem](https://www.youtube.com/watch?v=JNm3M9cqWyc).    
+
+:::
+
+
+
+
+
+
+
+
+
+```{r}
+#| echo: false
+# https://docs.google.com/forms/d/1qVoNUL7VFPYryvp5ssZmT22rhhUwoDamPhjJ1PN3K-E/edit#responses
+# your not normal : https://allisonhorst.com/data-science-art
+
+```
+

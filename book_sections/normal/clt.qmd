@@ -1,0 +1,268 @@
+## • 15. The Normal is Common  {.unnumbered #clt}
+
+---
+format: html
+shinylive:
+  packages: ['dplyr', 'forcats','ggplot2','cowplot']
+  autoload-packages: true
+---
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:** You're getting ready to enter the world of linear models, but you've heard they all assume normality. What are the odds your data will actually meet that assumption? Here, you'll learn that the odds are good, and that it's often okay if your data isn't perfectly normal. You'll see that the normal distribution arises whenever we add up small, random deviations. This is the key to understanding why sampling distributions (which are built from sample means) so often end up being normally distributed, even when the raw data are not.
+
+**Learning goals:** By the end of this chapter you should be able to:
+
+1.  Explain the Central Limit Theorem (CLT) and why it is so important in statistics.
+2.  Distinguish between the distribution of data in your sample (or population) and the shape of the sampling distribution.   
+3.  Explain how the shape of the population distribution affects the sample size (`n`) needed for the CLT to apply.  
+
+
+:::
+
+---
+format: html
+shinylive:
+  packages: ['dplyr', 'forcats','ggplot2']
+  autoload-packages: true
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+library(cowplot)
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(shinylive)
+library(tidyr)
+#source("../../_common.R") 
+
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))
+```
+
+---
+
+
+
+## Why Normal Distributions Are Common   
+
+One amazing thing about the world is just how frequently normal distributions occur. The reason for this is that whenever a value results from adding up MANY INDEPENDENT factors, that value will follow a normal distribution, regardless of the underlying distribution of these individual factors. For example, your height is influenced by many genes in your genome, as well as numerous environmental factors, all contributing to this outcome.
+
+:::aside
+<a href="/gif/galton-board-LakNE4" title="Galton Board"><img src="https://i.makeagif.com/media/8-30-2024/LakNE4.gif" alt="Galton Board"></a> 
+**A [Galton board](https://en.wikipedia.org/wiki/Galton_board)!** At every peg, a bead has a 50/50 chance of bouncing left or right. The final position of the bead in a bin at the bottom is the sum of all these random left and right steps. Most often paths right and left even out and the bead lands in the center, but not always! This ultimately generates a normal distribution. 
+:::
+
+An important consequence of this is that the sampling distribution of means tends to be normally distributed, provided the sample size isn't too small. This principle, known as the **Central Limit Theorem**, is very useful in statistics. It allows us to create reasonable statistical models of sample means by assuming normality, even when the underlying data may not be perfectly normal.
+
+:::fyi
+The Central Limit Theorem is crucial for statistics because many of the statistical analyses we perform, which assume normality, are still valid even if the underlying data are not perfectly normal. **This central limit theorem is remarkably useful because it means we can use statistical tests that assume normality (like the t-test) to make inferences about the mean, even if our raw data isn't quite normally distributed.** 
+:::
+
+### How Large Must a Sample Be for Us to Trust the Central Limit Theorem?
+
+The Central Limit Theorem assures us that with a sufficiently large sample size, the sampling distribution of means will be normal, regardless of the distribution of the underlying data points. But how large is sufficiently large? The answer depends on how far from normal the initial data are. The less normal the original data, the larger the sample size needed before the sampling distribution becomes normal.
+
+
+The webapp below is a simulation of the sampling distribution to help you build an intuition for the Central Limit Theorem. It lets you draw samples from four different variables from our *parviflora* RILs plants at GC.
+
+- The top row of plots always shows the shape of the original data. 
+- The bottom row shows the sampling distribution of the mean, which is built from the averages of 1000 different samples.
+
+Use the *Sample Size (n)* slider for each variable, and evaluate how large `n` needs to be before the points form a straight line, signaling that the sampling distribution has become approximately normal.
+
+
+
+
+
+```{shinylive-r}
+#| column: page-right
+#| standalone: true
+#| viewerHeight: 1000
+library(shiny)
+library(bslib)
+library(ggplot2)
+library(dplyr)
+library(infer)
+library(cowplot)
+library(readr)
+library(tidyr)
+
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate == "1.8O" ~ "1.80",
+                                      .default = growth_rate),
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), !is.na(mean_visits)) |>
+  mutate(pink_flowers = as.numeric(petal_color == "pink")) |>
+  select(petal_area_mm, pink_flowers, mean_visits, prop_hybrid)
+
+
+# --- UI Definition ---
+ui <- fluidPage(
+    titlePanel("The Central Limit Theorem in Action"),
+    sidebarLayout(
+        sidebarPanel(
+            selectInput("var", "Population Distribution:",
+                        choices = c("Petal Area" = "petal_area_mm",
+                                    "Prop. Hybrid" = "prop_hybrid",
+                                    "Mean Visits" = "mean_visits",
+                                    "Pink Flowers" = "pink_flowers")),
+            selectInput("n", "Sample Size (n):",
+                        choices = c("2", "5", "10", "25", "50", "100")),
+            hr(),
+            helpText("We take 1000 random samples, each of the specified size, from the chosen population distribution. We then calculate the mean for each sample.")
+        ),
+        mainPanel(
+            plotOutput("distPlot", height = "600px")
+        )
+    )
+)
+
+# --- Server Logic ---
+server <- function(input, output) {
+
+    # Reactive expression to get the selected population data
+    population_dist <- reactive({
+        req(input$var)
+        tibble(x = gc_rils[[input$var]]) %>% drop_na()
+    })
+
+    # Reactive expression for the sampling distribution
+    sampling_dist <- reactive({
+        req(population_dist(), input$n)
+        n_reps <- 1000
+        pop_data <- population_dist()
+        
+        # Using a loop for clarity, equivalent to rep_sample_n
+        means <- replicate(n_reps, {
+            sample_data <- sample(pop_data$x, size = as.numeric(input$n), replace = TRUE)
+            mean(sample_data)
+        })
+        tibble(mean_x = means)
+    })
+
+    output$distPlot <- renderPlot({
+        pop_data <- population_dist()
+        samp_dist <- sampling_dist()
+        pop_mean <- mean(pop_data$x)
+
+        # --- Plots for Population Distribution (Top Row) ---
+        pop_hist <- ggplot(pop_data, aes(x = x)) +
+            geom_histogram(bins = 30, color = "white", fill = "pink") +
+            labs(x = "Observed Values", y = "Count", title = "Actual Data") +
+            theme_minimal(base_size = 14)+
+          theme(title = element_text(color = "pink"))
+
+        pop_qq <- ggplot(pop_data, aes(sample = x)) +
+            geom_qq(color = "pink") +
+            geom_qq_line(color = "pink") +
+            labs(x = "Theoretical Quantiles", y = "Sample Quantiles", title = "Actual Data") +
+            theme_minimal(base_size = 14)+
+          theme(title = element_text(color = "pink"))
+
+        # --- Plots for Sampling Distribution (Bottom Row) ---
+        samp_hist <- ggplot(samp_dist, aes(x = mean_x)) +
+            geom_histogram(bins = 30, color = "white", fill = "#3b82f6") +
+            labs(x = "Sample Means", y = "Count",title = "Simulated Sampling Dist.") +
+            theme_minimal(base_size = 14)+
+          theme(title = element_text(color = "#3b82f6"))
+
+        samp_qq <- ggplot(samp_dist, aes(sample = mean_x)) +
+            geom_qq(color = "#3b82f6") +
+            geom_qq_line(color = "#3b82f6") +
+            labs(x = "Theoretical Quantiles", y = "Sample Quantiles",title = "Simulated Sampling Dist.") +
+            theme_minimal(base_size = 14)+
+          theme(title = element_text(color = "#3b82f6"))
+
+        # --- Assemble the Grid with cowplot ---
+        
+        # Column and Row Labels
+        col1_label <- ggdraw() + draw_label("Histogram", fontface = 'bold', size = 16)
+        col2_label <- ggdraw() + draw_label("QQ Plot", fontface = 'bold', size = 16)
+        row1_label <- ggdraw() + draw_label("", angle = 270, fontface = 'bold', size = 16)
+        row2_label <- ggdraw() + draw_label("", angle = 270, fontface = 'bold', size = 16)
+
+        # Main title
+        main_title <- ggdraw() +
+            draw_label(sprintf("Population: %s | Sample Size n = %s", input$var, input$n),
+                       fontface = 'bold', size = 18, x = 0, hjust = 0) +
+            theme(plot.margin = margin(0, 0, 0, 7))
+
+        # Arrange plots
+        plot_row1 <- plot_grid(pop_hist, pop_qq, ncol = 2)
+        plot_row2 <- plot_grid(samp_hist, samp_qq, ncol = 2)
+        
+        # Add row labels
+        labeled_row1 <- plot_grid(plot_row1, row1_label, ncol = 2, rel_widths = c(1, 0.05))
+        labeled_row2 <- plot_grid(plot_row2, row2_label, ncol = 2, rel_widths = c(1, 0.05))
+
+        # Add column labels
+        top_row <- plot_grid(col1_label, col2_label, ncol = 2)
+        
+        # Combine everything
+        plot_grid(main_title, top_row, labeled_row1, labeled_row2, ncol = 1,
+                  rel_heights = c(0.1, 0.1, 1, 1))
+    })
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
+
+```
+
+---
+
+:::exercises
+For each of the populations below, use the app to find the smallest sample size (`n`) where the sampling distribution of the mean becomes approximately normal (i.e., the QQ plot is a straight line).
+
+---
+
+**Q1.** What is the minimum sample size for the **petal area** data?
+`r mcq(c("2", "5", answer = "25", "100"))`
+
+`r hide("Explanation")`
+At n=25, the QQ plot is reasonably straight, showing the CLT has taken effect. For smaller sample sizes, the QQ plot still shows some curvature. I couldn't tell if the rright answer was 10, 25 or 50 so I split the difference
+`r unhide()`
+
+---
+
+**Q2.**  What is the minimum sample size for the **proportion pink** data?
+`r mcq(c("2", "5", "10", answer = "25"))`
+
+`r hide("Explanation")`
+The sampling distribution only starts to look continuous and normal-like when the sample size is large enough. At n=25, the QQ plot straightens out nicely.
+`r unhide()`
+
+---
+
+**Q3.** What is the minimum sample size for the highly skewed **pollinator visits** data?
+`r mcq(c("2", "5", "25", answer = "100"))`
+
+`r hide("Explanation")`
+The original data is very skewed, so a large sample size is needed for the CLT to work. At n=25, the sampling distribution is still visibly skewed, but by n=100, it becomes much more symmetric and bell-shaped. 
+`r unhide()`
+:::

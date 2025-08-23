@@ -1,0 +1,317 @@
+## • 15. Is It Normal?  {.unnumbered #is_it_normal}
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating scenario:**  Many common statistical approaches assume that your data (or the model's residuals) are normally distributed. So before we can run and intepret such models we must bets able to evaluate if this assumption is fair. Here I show you how to do that!  
+
+**Learning goals:** By the end of this chapter you should be able to:  
+
+
+
+1.  Explain why visually assessing normality is often preferred over formal statistical tests of the null that data came from a normal.    
+2.  Create and interpret a Quantile-Quantile (QQ) plot to evaluate if a dataset is approximately normal.  
+3.  Visually recognize common patterns of non-normality (e.g. skew and bimodality).  
+
+
+
+:::
+
+---
+format: html
+shinylive:
+  packages: ['dplyr', 'forcats','ggplot2']
+  autoload-packages: true
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+library(cowplot)
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(shinylive)
+library(tidyr)
+#source("../../_common.R") 
+
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))
+```
+
+
+---
+
+
+```{r}
+#| echo: false
+#| label: fig-notnorm
+#| fig-cap: "A fun picture of a normal (orange) and non-normal (blue) distribution from [Allison Horst](https://allisonhorst.com/everything-else)."
+#| fig-alt: "Cartoon of a normal distribution looking skeptically at an excited looking bimodal / negatively skewed distribution. The first says to the second, \"you're not normal.\""
+include_graphics("../../figs/linear_models/normal/not_normal.png")
+```
+
+--- 
+
+
+
+## Is it normal?  
+
+
+Many standard statistical  approaches rely, to some extent, on normal data (or more specifically, a normally distributed sampling distribution of residuals).  It is therefore often important to know if our data (or at least the residuals of a linear model) are normally distributed, as this influences how much faith we have in the results of a given statistical procedure.   
+
+While there are ways to  formally test the null hypothesis that data come from a normal distribution, we rarely use these because deviations from normality can be most critical when we have the least power to detect them. For this reason,we typically rely on visual inspection rather than null hypothesis significance testing to assess whether data are approximately normal.   
+
+
+## "Quantile-Quantile" plots  and the eye test
+
+
+
+A [QQ (aka "quantile-quantile") plot](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot) is a useful tool to help us visually evaluate if data are roughly normal. It does so by comparing the quantiles of your data against the theoretical quantiles you would expect if your data came from some an ideal version of a specified distribution (in this case a normal distribution). If your data  normal, the points will fall along a straight line. 
+
+
+
+The QQ-plot of petal area in *parviflora* RILs planted at site GC  (@fig-qq) reveals that the points are fairly close to the predicted line, although both the small and large values are slightly larger than expected. Is this a big deal? Is this deviation surprising? To answer that, we need to understand the variability we expect from a normal distribution.
+
+```{r}
+#| label: fig-qq
+#| fig-cap: "A quantile-quantile plot of petal area in *parviflora* RILs."
+#| fig-alt: "The image shows a quantile-quantile (QQ) plot of petal lengths in *Clarkia xantiana ssp. parviflora* RILs. The x-axis represents the theoretical quantiles (z-transformed expectations), and the y-axis represents the observed petal area data. A straight line is drawn to indicate the expected values if the data were normally distributed. The plotted points fall near the line, though slight deviations can be observed at both the lower and upper ends, where the observed values are larger than expected." 
+#| warning: false
+#| message: false
+gc_rils |>
+  ggplot(aes(sample = petal_area_mm))+
+  geom_qq()+
+  geom_qq_line()+
+  labs(x = "Theoretical quantiles",
+       y = "Observed petal area",
+       title = "Normal QQ plot of petal area among parviflora RILs")
+```
+
+:::aside
+**Making a QQ plot in R:** We can create a QQ-plot using the [`geom_qq()`](https://ggplot2.tidyverse.org/reference/geom_qq.html) function and add a line with [`geom_qq_line()`](https://ggplot2.tidyverse.org/reference/geom_qq.html). Here, we map our quantity of interest onto the `sample` attribute. 
+:::
+
+
+
+### What normal distributions look like
+
+
+I’m always surprised by how easily I can convince myself that a sample doesn’t come from a normal distribution. Try hitting the *Generate a sample from the normal distribution* button in the app below a few times, and experiment with the sample size to get a sense of the variability in what samples from a normal distribution can look like.
+
+
+```{shinylive-r}
+#| column: page-right
+#| standalone: true
+#| viewerHeight: 900
+library(shiny)
+library(ggplot2)
+library(bslib)
+
+ui <- fluidPage(
+  theme = bs_theme(bootswatch = "flatly"),
+  titlePanel("Getting a feel for normal distributions"),
+  
+  fluidRow(
+    column(
+      12,
+      div(
+        style = "margin-bottom: 10px;",
+        actionButton("go", "Generate a sample from the normal distribution"),
+        br(), br(),
+        tags$label("Sample Size:", `for` = "n", style = "font-weight:600;")
+      ),
+      sliderInput(
+        "n", label = NULL, min = 10, max = 100, value = 24, step = 1, ticks = TRUE, width = "100%"
+      )
+    )
+  ),
+  
+  hr(),
+  h3(textOutput("subtitle")),
+  br(),
+  
+  # 2 x 2 plot grid
+  fluidRow(
+    column(
+      6,
+      h4("Histogram"),
+      plotOutput("hist", height = "220px")
+    ),
+    column(
+      6,
+      h4("Density plot"),
+      plotOutput("dens", height = "220px")
+    )
+  ),
+  fluidRow(
+    column(
+      6,
+      h4("quantile-quantile plot"),
+      plotOutput("qq", height = "220px")
+    ),
+    column(
+      6,
+      h4("Cumulative distribution"),
+      plotOutput("ecdf", height = "220px")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  # Re-sample ONLY when the button is clicked (and use current n)
+  sample_rv <- eventReactive(input$go, {
+    rnorm(input$n)
+  }, ignoreInit = TRUE)
+  
+  # Initialize once so there is something to show before first click
+  observeEvent(TRUE, {
+    if (is.null(isolate(sample_rv()))) {
+      isolate({
+        # seed-free initial draw; changes when button is pressed
+        assign("._init_x", rnorm(isolate(input$n)), envir = .GlobalEnv)
+      })
+    }
+  }, once = TRUE)
+  
+  x <- reactive({
+    z <- sample_rv()
+    if (is.null(z)) get("._init_x", envir = .GlobalEnv) else z
+  })
+  
+  output$subtitle <- renderText({
+    paste0("A sample of size ", length(x()), " from the standard normal distribution")
+  })
+  
+  output$hist <- renderPlot({
+    ggplot(data.frame(x = x()), aes(x)) +
+      geom_histogram(color = "black", fill = "grey40", alpha = 0.7, bins = max(6, round(sqrt(length(x()))))) +
+      labs(x = "x", y = "count") +
+      theme_minimal()
+  }, res = 150)
+  
+  output$dens <- renderPlot({
+    ggplot(data.frame(x = x()), aes(x)) +
+      geom_density(fill = "grey60", alpha = 0.5) +
+      labs(x = "x", y = "density") +
+      theme_minimal()
+  }, res = 150)
+  
+  output$qq <- renderPlot({
+    ggplot(data.frame(x = x()), aes(sample = x)) +
+      stat_qq(size = 1.6) +
+      stat_qq_line() +
+      labs(x = "theoretical", y = "sample") +
+      theme_minimal()
+  }, res = 150)
+  
+  output$ecdf <- renderPlot({
+    ggplot(data.frame(x = x()), aes(x)) +
+      stat_ecdf(geom = "step", linewidth = 0.9) +
+      coord_cartesian(ylim = c(0, 1)) +
+      labs(x = "x", y = "y") +
+      theme_minimal()
+  }, res = 150)
+}
+
+shinyApp(ui, server)
+```
+
+
+
+
+
+### Examples of a sample not from a normal distribution   
+
+
+
+Let's compare the samples from a normal distribution, in our shinyapp above, to cases in which the data are not normal.   For example,  
+
+- **@fig-msleepqq A-D** makes it clear that across the three *Iris* species, petal length is bimodal.
+-**@fig-msleepqq E-H** makes it clear that across all mammals the distribution of body weights are exponentially distributed.   
+
+These examples are a bit extreme. Over the term, we'll get practice in visually assessing if data are normal-ish.
+
+
+
+```{r}
+#| echo: false
+a <- ggplot(iris, aes(x = Petal.Length)) + geom_histogram(bins = 20)+labs(title = "\nA) All Iris petal lengths")+
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14))
+b <- ggplot(iris, aes(x = Petal.Length)) + geom_density(fill = "grey")+labs(title = "\nB) All Iris petal lengths")+
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14))
+c <- ggplot(iris, aes(sample = Petal.Length)) + geom_qq() + geom_qq_line()+labs(title = "\nC) All Iris petal lengths")+   
+  labs(x = "Theoretical quantiles",
+       y = "Observed petal length")+
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14))
+d <- ggplot(iris, aes(x = Petal.Length)) + stat_ecdf()+labs(title = "\nD) All Iris petal lengths")+
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14))
+
+```
+
+
+
+
+```{r} 
+#| label: fig-msleepqq
+#| fig-cap: "**A-D.** The distribution of petal lengths for the combined iris dataset. The histogram and density plot clearly show a bimodal distribution with two distinct groups, which causes the points on the QQ plot to form an S-curve rather than a straight line. **E-H.** The distribution of mammal body weights. All four plots reveal a strong right-skew, characteristic of an exponential-like distribution. This is seen in the L-shaped histogram, the long right tail of the density plot, and the pronounced upward curve of the points in the QQ plot." 
+#| fig-alt: "A multi-panel figure showing two datasets visualized in four different ways. The columns are labeled Histogram, Density Plot, QQ Plot, and CDF. The top row shows \"All iris petal lengths,\" which has a bimodal (two-humped) distribution. The bottom row shows \"Mammal body weights,\" which has a highly right-skewed distribution, with most data clustered near zero and a long tail extending to the right."
+#| fig-height: 6
+#| fig-width: 12
+#| echo: false
+#| message: false 
+#| warning: false
+#| column: page-right
+library(patchwork)
+a1 <- ggplot(msleep, aes(x = bodywt)) + geom_histogram(bins = 20)+labs(title = "\n E) Mammal body weights")+
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14))
+b1 <- ggplot(msleep, aes(x = bodywt))+ geom_density(fill = "grey")+labs(title = "\n F) Mammal body weights")+
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14))
+c1 <- ggplot(msleep, aes(sample = bodywt))+ geom_qq() + geom_qq_line()+labs(title = "\n G)Mammal body weights")+   
+  labs(x = "Theoretical quantiles",
+       y = "Observed body weight")+
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14))
+d1 <- ggplot(msleep, aes(x = bodywt)) + stat_ecdf()+labs(title = "\nH) Mammal body weights")+
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14))
+
+col1_label <- ggplot() + labs(title = "Histogram") + theme_void() + 
+    theme(plot.title = element_text(hjust = 0.5, size = 22, face = "bold"))
+
+col2_label <- ggplot() + labs(title = "Density Plot") + theme_void() + 
+    theme(plot.title = element_text(hjust = 0.5, size = 22, face = "bold"))
+
+col3_label <- ggplot() + labs(title = "QQ Plot") + theme_void() + 
+    theme(plot.title = element_text(hjust = 0.5, size = 22, face = "bold"))
+
+col4_label <- ggplot() + labs(title = "CDF") + theme_void() + 
+    theme(plot.title = element_text(hjust = 0.5, size = 22, face = "bold"))
+
+
+col1_label+ col2_label +col3_label+col4_label+ a+b+c+d +a1+b1+c1+d1 +plot_layout(ncol=4,nrow=3,heights = c(1, 10, 10) )
+```

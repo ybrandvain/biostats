@@ -797,6 +797,77 @@ window.Quarto = {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/stats_4_linear_models_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section IV: Stats for Linear Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/normal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">15. Normal distribution</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/normal_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/normal_properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Properties</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/noRmal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Simulations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/p_norm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Math</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/is_it_normal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Is It Normal?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/clt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. The Normal is Common</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Make It Normal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/normal_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -855,7 +926,7 @@ Reality is messy. There’s too much going on to notice everything at once. That
 <div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-holiday" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A two-panel figure. Panel A shows a diagram of double-strand break repair: broken DNA strands undergo resection, strand invasion, and DNA synthesis, leading to either double-strand break repair (DSBR) or synthesis-dependent strand annealing (SDSA) pathways, resulting in crossover or non-crossover products. Panel B is a bar graph showing frequencies of different DNA joint molecule types (X-shape, Type I, Type II, Complex) across three conditions (without RecU, RecU with low magnesium, and RecU with high magnesium). The X-shape structure is most common, with lower frequencies of other types." data-fig-align="center">
+<div id="fig-holiday" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A two-panel figure. Panel A shows a diagram of double-strand break repair: broken DNA strands undergo resection, strand invasion, and DNA synthesis, leading to either double-strand break repair (DSBR) or synthesis-dependent strand annealing (SDSA) pathways, resulting in crossover or non-crossover products. Panel B is a bar graph showing frequencies of different DNA joint molecule types (X-shape, Type I, Type II, Complex) across three conditions (without RecU, RecU with low magnesium, and RecU with high magnesium). The X-shape structure is most common, with lower frequencies of other types.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-holiday-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="../figs/summarizing_data/linear_models/holiday_junction_b.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A two-panel figure. Panel A shows a diagram of double-strand break repair: broken DNA strands undergo resection, strand invasion, and DNA synthesis, leading to either double-strand break repair (DSBR) or synthesis-dependent strand annealing (SDSA) pathways, resulting in crossover or non-crossover products. Panel B is a bar graph showing frequencies of different DNA joint molecule types (X-shape, Type I, Type II, Complex) across three conditions (without RecU, RecU with low magnesium, and RecU with high magnesium). The X-shape structure is most common, with lower frequencies of other types.">
@@ -887,7 +958,7 @@ Figure&nbsp;1: The Holiday Junction – one of my favorite scientific models, an
 </section>
 <section id="linear-models" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="linear-models">Linear models</h2>
-<p>Linear models are among the most common types of statistical model. Linear models estimate the conditional mean of the <span class="math inline">\(i^{th}\)</span> observation of a uous response variable, <span class="math inline">\(\hat{Y}_i\)</span> for a (combination) of value(s) of the explanatory variables (<span class="math inline">\(\text{explanatory variables}_i\)</span>):</p>
+<p>Linear models are among the most common types of statistical model. Linear models estimate the conditional mean of the <span class="math inline">\(i^{th}\)</span> observation of a continuous response variable, <span class="math inline">\(\hat{Y}_i\)</span> for a (combination) of value(s) of the explanatory variables (<span class="math inline">\(\text{explanatory variables}_i\)</span>):</p>
 <p><span class="math display">\[\begin{equation}
 \hat{Y}_i = f(\text{explanatory variables}_i)
 \end{equation}\]</span></p>

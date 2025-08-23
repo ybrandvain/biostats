@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Flower Picking Game — 100 Flowers + Stick Figure Collector</title>
+<style>
+  body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 0; background: #fffafc; color: #1f2937; }
+  header { padding: 12px 16px; background: white; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; }
+  main { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 340px 320px; gap: 12px; padding: 12px; }
+  .panel { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px; }
+  svg { width: 100%; height: 100%; display: block; }
+  .controls { padding: 12px; display:flex; gap:10px; align-items:center; }
+  button { padding: 8px 12px; border-radius: 8px; border: 1px solid #e5e7eb; background: #ec4899; color: white; font-weight: 700; cursor: pointer; }
+  button.secondary { background: white; color: #1f2937; }
+  .muted { color: #6b7280; font-size: 13px; }
+</style>
+</head>
+<body>
+<header>
+  <h1 style="margin:0;font-size:18px;">Flower Picking Game — One-at-a-time Sampling</h1>
+  <p class="muted" style="margin:4px 0 0">There are <strong>100 flowers</strong> in the field. A stick figure walks over, picks one (it disappears), we measure it in the bottom-left bay, and the cumulative histogram updates on the right.</p>
+  <div style="margin-top: 8px; display: flex; gap: 16px; align-items: center;">
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <label class="muted">True μ:</label>
+      <input type="number" id="popMean" value="30" min="15" max="50" step="0.5" style="width: 60px; padding: 4px; border: 1px solid #e5e7eb; border-radius: 4px;">
+      <span class="muted">mm</span>
+    </div>
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <label class="muted">True σ:</label>
+      <input type="number" id="popSd" value="4" min="1" max="8" step="0.1" style="width: 60px; padding: 4px; border: 1px solid #e5e7eb; border-radius: 4px;">
+      <span class="muted">mm</span>
+    </div>
+    <button id="updatePop" class="secondary" style="padding: 4px 8px; font-size: 12px;">Update Population</button>
+    <div style="margin-left: auto; font-size: 13px;">
+      <span class="muted">Sample: x̄ = <strong id="sampleMean">–</strong> mm, s = <strong id="sampleSd">–</strong> mm</span>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="panel">
+    <svg id="field" aria-label="Flower field with stick figure"></svg>
+  </div>
+  <div class="panel" style="grid-row: span 2;">
+    <svg id="hist" aria-label="Cumulative histogram of measured widths"></svg>
+  </div>
+  <div class="panel">
+    <svg id="measure" aria-label="Measuring bay"></svg>
+  </div>
+</main>
+<div class="controls">
+  <button id="sample1">Take 1 flower</button>
+  <button id="sample10" class="secondary">Take 10 (animated)</button>
+  <button id="newField" class="secondary">New Field</button>
+  <button id="reset" class="secondary">Reset</button>
+  <span class="muted">Last width: <strong id="lastW">–</strong> mm · Total sampled: <strong id="count">0</strong></span>
+</div>
+<script>
+const $ = sel => document.querySelector(sel);
+const delay = ms => new Promise(res => setTimeout(res, ms));
+const fmt = (x,d=2)=> Number.isFinite(x)? x.toFixed(d) : '–';
+function randn(){ let u=0,v=0; while(!u) u=Math.random(); while(!v) v=Math.random(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
+const rnorm = (mu,sigma)=> mu + sigma*randn();
+
+// ===== State =====
+let state = { mu:30, sigma:4, bins:10, flowers:[], observations:[], stick:null, currentFlowerInBay: null };
+const fieldSVG=$('#field'), histSVG=$('#hist'), measureSVG=$('#measure');
+function clear(svg){ while(svg.firstChild) svg.removeChild(svg.firstChild); }
+
+// ===== Drawing helpers =====
+function line(x1,y1,x2,y2,stroke='#6b7280',w=1){ 
+  const el=document.createElementNS('http://www.w3.org/2000/svg','line'); 
+  el.setAttribute('x1',x1); 
+  el.setAttribute('y1',y1); 
+  el.setAttribute('x2',x2); 
+  el.setAttribute('y2',y2); 
+  el.setAttribute('stroke',stroke); 
+  el.setAttribute('stroke-width',w); 
+  return el; 
+}
+
+/**
+ * Returns descriptive feedback based on a value's Z-score.
+ * @param {number} value The observed value (e.g., flower width).
+ * @param {number} mu The population mean.
+ * @param {number} sigma The population standard deviation.
+ * @returns {string} A descriptive string.
+ */
+function getFeedbackText(value, mu, sigma) {
+  const z = (value - mu) / sigma;
+  const absZ = Math.abs(z);
+
+  if (absZ >= 2) {
+    return `An unusually ${z > 0 ? 'large' : 'small'} flower! (Rare)`;
+  } else if (absZ >= 1) {
+    return `A bit ${z > 0 ? 'larger' : 'smaller'} than average.`;
+  } else {
+    return 'A very typical flower.';
+  }
+}
+
+function text(t,x,y,anchor='middle',fill='#1f2937',size=12){ 
+  const el=document.createElementNS('http://www.w3.org/2000/svg','text'); 
+  el.textContent=t; 
+  el.setAttribute('x',x); 
+  el.setAttribute('y',y); 
+  el.setAttribute('text-anchor',anchor); 
+  el.setAttribute('fill',fill); 
+  el.setAttribute('font-size',size); 
+  return el; 
+}
+
+function rect(x,y,w,h,fill='#ffffff',stroke='#e5e7eb',rx=10){ 
+  const el=document.createElementNS('http://www.w3.org/2000/svg','rect'); 
+  el.setAttribute('x',x); 
+  el.setAttribute('y',y); 
+  el.setAttribute('width',w); 
+  el.setAttribute('height',h); 
+  el.setAttribute('rx',rx); 
+  el.setAttribute('fill',fill); 
+  el.setAttribute('stroke',stroke); 
+  return el; 
+}
+
+// 5-petal flower icon - now with size based on width
+function flowerIcon(cx,cy,width,baseScale=1){ 
+  const g=document.createElementNS('http://www.w3.org/2000/svg','g'); 
+  g.classList.add('flower-node');
+  // Scale flower size more dramatically based on width for better visual correlation
+  const sizeScale = baseScale * Math.max(0.3, Math.min(2.0, width / state.mu));
+  
+  for(let i=0;i<5;i++){ 
+    const a=i/5*2*Math.PI; 
+    const px=cx+Math.cos(a)*8*sizeScale, py=cy+Math.sin(a)*8*sizeScale; 
+    const pet=document.createElementNS('http://www.w3.org/2000/svg','ellipse'); 
+    pet.setAttribute('cx',px); 
+    pet.setAttribute('cy',py); 
+    pet.setAttribute('rx',5*sizeScale); 
+    pet.setAttribute('ry',8*sizeScale); 
+    pet.setAttribute('fill','#f9a8d4'); 
+    pet.setAttribute('opacity','0.95'); 
+    g.appendChild(pet);
+  } 
+  const c=document.createElementNS('http://www.w3.org/2000/svg','circle'); 
+  c.setAttribute('cx',cx); 
+  c.setAttribute('cy',cy); 
+  c.setAttribute('r',4*sizeScale); 
+  c.setAttribute('fill','#be185d'); 
+  g.appendChild(c); 
+  return g; 
+}
+
+// simple stick figure (head, body, arms, legs); can optionally hold a flower
+// simple stick figure with bushy beard, glasses, and afro; can optionally hold a flower
+function stickFigure(cx, cy, scale = 1, holdingFlower = null) {
+  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  g.classList.add('stick');
+
+  // --- DRAWING ORDER HAS BEEN CORRECTED ---
+
+  // 1. Afro (drawn first, so it's in the back)
+  const afro = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  afro.setAttribute('d', `
+    M ${cx - 9 * scale}, ${cy - 15 * scale}
+    C ${cx - 12 * scale}, ${cy - 22 * scale}, ${cx + 12 * scale}, ${cy - 22 * scale}, ${cx + 9 * scale}, ${cy - 15 * scale}
+    C ${cx + 10 * scale}, ${cy - 10 * scale}, ${cx - 10 * scale}, ${cy - 10 * scale}, ${cx - 9 * scale}, ${cy - 15 * scale}
+    Z
+  `);
+  afro.setAttribute('fill', '#4a4a4a');
+  g.appendChild(afro);
+
+  // 2. Head (drawn on top of the afro)
+  const head = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  head.setAttribute('cx', cx);
+  head.setAttribute('cy', cy - 12 * scale);
+  head.setAttribute('r', 6 * scale);
+  head.setAttribute('fill', 'none');
+  head.setAttribute('stroke', '#111827');
+  head.setAttribute('stroke-width', 2);
+  g.appendChild(head);
+
+  // 3. Beard (drawn on top of the head)
+  const beard = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  // MODIFIED BEARD SHAPE for a rounder bottom
+  beard.setAttribute('d', `
+    M ${cx - 5.5 * scale}, ${cy - 9 * scale}
+    C ${cx - 6 * scale}, ${cy - 4 * scale}, ${cx - 5 * scale}, ${cy}, ${cx}, ${cy + 1 * scale}
+    C ${cx + 5 * scale}, ${cy}, ${cx + 6 * scale}, ${cy - 4 * scale}, ${cx + 5.5 * scale}, ${cy - 9 * scale}
+    Z
+  `);
+  beard.setAttribute('fill', '#6b6b6b');
+  g.appendChild(beard);
+
+  // 4. Glasses (drawn on top of the head and beard)
+  const glassL = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  glassL.setAttribute('cx', cx - 3 * scale);
+  glassL.setAttribute('cy', cy - 13 * scale);
+  glassL.setAttribute('r', 2.5 * scale);
+  glassL.setAttribute('stroke', '#111827');
+  glassL.setAttribute('stroke-width', 1.5);
+  glassL.setAttribute('fill', 'none');
+  g.appendChild(glassL);
+
+  const glassR = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  glassR.setAttribute('cx', cx + 3 * scale);
+  glassR.setAttribute('cy', cy - 13 * scale);
+  glassR.setAttribute('r', 2.5 * scale);
+  glassR.setAttribute('stroke', '#111827');
+  glassR.setAttribute('stroke-width', 1.5);
+  glassR.setAttribute('fill', 'none');
+  g.appendChild(glassR);
+
+  const bridge = line(cx - 0.5 * scale, cy - 13 * scale, cx + 0.5 * scale, cy - 13 * scale, '#111827', 1.5);
+  g.appendChild(bridge);
+
+  // 5. Body and limbs
+  const body = line(cx, cy - 6 * scale, cx, cy + 14 * scale, '#111827', 2);
+  g.appendChild(body);
+  const armL = line(cx, cy + 2 * scale, cx - 10 * scale, cy + 8 * scale, '#111827', 2);
+  g.appendChild(armL);
+  const armR = line(cx, cy + 2 * scale, cx + 10 * scale, cy + 8 * scale, '#111827', 2);
+  g.appendChild(armR);
+  const legL = line(cx, cy + 14 * scale, cx - 8 * scale, cy + 24 * scale, '#111827', 2);
+  g.appendChild(legL);
+  const legR = line(cx, cy + 14 * scale, cx + 8 * scale, cy + 24 * scale, '#111827', 2);
+  g.appendChild(legR);
+
+  // 6. Optional flower
+  if (holdingFlower) {
+    const flower = flowerIcon(cx + 10 * scale, cy + 6 * scale, holdingFlower.width, 0.5 * scale);
+    g.appendChild(flower);
+  }
+
+  return g;
+}
+
+// ===== Field generation (100 flowers) =====
+function regenerateField(){
+  clear(fieldSVG);
+  const w=fieldSVG.clientWidth||360, h=fieldSVG.clientHeight||340;
+
+  // 10x10 grid = 100 flowers
+  const cols=10, rows=10, pad=24;
+  const gx=(w-2*pad)/(cols-1), gy=(h-2*pad)/(rows-1);
+  const flowers=[];
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      const x=pad + c*gx + (Math.random()-0.5)*8;
+      const y=pad + r*gy + (Math.random()-0.5)*8;
+      const width=rnorm(state.mu,state.sigma);
+      const node=flowerIcon(x,y,width,0.7);
+      fieldSVG.appendChild(node);
+      flowers.push({x,y,width,node});
+    }
+  }
+  state.flowers=flowers;
+
+  // measuring bay label in measure panel is drawn elsewhere; add caption here
+  fieldSVG.appendChild(text('Click "Take 1 flower" — the collector walks to one flower', w/2, 16, 'middle', '#6b7280', 12));
+
+  // create stick figure at home position (top-left corner area)
+  if(!state.stick){ 
+    state.stick={x: pad, y: pad+24, node: stickFigure(pad, pad+24, 1, null)}; 
+    fieldSVG.appendChild(state.stick.node); 
+  }
+}
+
+// ===== Histogram rendering =====
+function renderHistogram(){
+ clear(histSVG);
+ const w=histSVG.clientWidth||360, h=histSVG.clientHeight||660;
+ const pad=40, innerW=w-2*pad, innerH=h-2*pad; // Increased pad for axis label room
+ const xMin=state.mu-4*state.sigma, xMax=state.mu+4*state.sigma;
+ const B=state.bins, binW=(xMax-xMin)/B;
+ const bins=Array.from({length:B},(_,i)=>({x0:xMin+i*binW,x1:xMin+(i+1)*binW,count:0}));
+ state.observations.forEach(v=>{
+  const idx=Math.max(0,Math.min(B-1,Math.floor((v-xMin)/binW)));
+  bins[idx].count++;
+ });
+ const maxCount=Math.max(1,...bins.map(b=>b.count));
+ const x=v=> pad + ((v-xMin)/(xMax-xMin))*innerW;
+ const y=c=> pad + innerH - (c/maxCount)*innerH;
+ // bars
+ bins.forEach(b=>{
+  const x0=x(b.x0), x1=x(b.x1);
+  const rect=document.createElementNS('http://www.w3.org/2000/svg','rect');
+  rect.setAttribute('x',x0+1);
+  rect.setAttribute('y',y(b.count));
+  rect.setAttribute('width',Math.max(0,x1-x0-2));
+  rect.setAttribute('height',(pad+innerH)-y(b.count));
+  rect.setAttribute('fill','#93c5fd');
+  histSVG.appendChild(rect);
+ });
+ // axis baseline
+ histSVG.appendChild(line(pad, pad+innerH, pad+innerW, pad+innerH, '#9ca3af',1.5));
+
+ // ===== NEW SECTION: Draw X-axis with labels =====
+ const axisLabels = [
+  state.mu - 2 * state.sigma,
+  state.mu,
+  state.mu + 2 * state.sigma
+ ];
+ axisLabels.forEach(val => {
+  const px = x(val);
+  histSVG.appendChild(line(px, pad + innerH, px, pad + innerH + 5, '#9ca3af', 1)); // Tick mark
+  histSVG.appendChild(text(fmt(val, 1), px, pad + innerH + 20, 'middle', '#6b7280', 12)); // Label
+ });
+ // ===== END NEW SECTION =====
+
+ // Update sample statistics
+ updateSampleStats();
+
+ histSVG.appendChild(text(`Samples: ${state.observations.length}`, w/2, h-12, 'middle', '#6b7280', 12));
+}
+
+// ===== Measuring bay rendering =====
+function renderMeasureBay(){
+ clear(measureSVG);
+ const w=measureSVG.clientWidth||360, h=measureSVG.clientHeight||320;
+ const bayPad=14;
+ const bayRect=rect(bayPad, bayPad, w-2*bayPad, h-2*bayPad, '#ffffff', '#e5e7eb', 12);
+ measureSVG.appendChild(bayRect);
+ measureSVG.appendChild(text('Measuring station', bayPad+8, bayPad+18, 'start', '#6b7280', 12));
+
+ const cx=w/2, cy=h/2-16;
+
+ const tapeY=cy+26;
+ const tapeLen=Math.min(180, w-40), startX=cx-tapeLen/2, endX=cx+tapeLen/2;
+ measureSVG.appendChild(line(startX,tapeY,endX,tapeY,'#6b7280',1.5));
+ for(let i=0;i<=8;i++){
+  const px=startX+(i/8)*tapeLen;
+  measureSVG.appendChild(line(px,tapeY-6,px,tapeY+6,'#9ca3af',1));
+ }
+
+ let pxLen = 0; 
+ if(state.currentFlowerInBay) {
+  const flowerSizeScale = Math.max(0.3, Math.min(2.0, state.currentFlowerInBay.width / state.mu));
+  const baseFlowerWidth = 16;
+  const visualFlowerWidth = baseFlowerWidth * flowerSizeScale * 1.2;
+  pxLen = Math.max(8, visualFlowerWidth * 1.2);
+ }
+
+ const left=document.createElementNS('http://www.w3.org/2000/svg','rect');
+ const right=document.createElementNS('http://www.w3.org/2000/svg','rect');
+ left.setAttribute('x',cx-pxLen/2);
+ left.setAttribute('y',tapeY-14);
+ left.setAttribute('width',3);
+ left.setAttribute('height',28);
+ left.setAttribute('fill','#10b981');
+ right.setAttribute('x',cx+pxLen/2);
+ right.setAttribute('y',tapeY-14);
+ right.setAttribute('width',3);
+ right.setAttribute('height',28);
+ right.setAttribute('fill','#10b981');
+ measureSVG.appendChild(left);
+ measureSVG.appendChild(right);
+
+ if(state.currentFlowerInBay) {
+  measureSVG.appendChild(flowerIcon(cx,cy,state.currentFlowerInBay.width,1.2));
+  measureSVG.appendChild(text(`${fmt(state.currentFlowerInBay.width)} mm`, cx, tapeY+24, 'middle', '#111827', 14));
+
+    // ===== NEW: Add descriptive feedback text =====
+    const feedback = getFeedbackText(state.currentFlowerInBay.width, state.mu, state.sigma);
+    const feedbackEl = text(feedback, cx, tapeY + 44, 'middle', '#4b5563', 13);
+    feedbackEl.style.fontStyle = 'italic';
+    measureSVG.appendChild(feedbackEl);
+    // ===== END NEW SECTION =====
+ }
+}
+
+// ===== Stick figure motion =====
+async function moveStickTo(x,y,holdingFlower=null){
+  // lazy: remove and redraw at new location to avoid complex transforms
+  if(state.stick && state.stick.node){ 
+    try{ fieldSVG.removeChild(state.stick.node); }catch(e){} 
+  }
+  state.stick.x = x; 
+  state.stick.y = y; 
+  state.stick.node = stickFigure(x, y, 1, holdingFlower);
+  fieldSVG.appendChild(state.stick.node);
+}
+
+async function animateStick(fromX,fromY,toX,toY,holdingFlower=null,steps=28){
+  for(let i=1;i<=steps;i++){
+    const t=i/steps; 
+    const x=fromX + (toX-fromX)*t; 
+    const y=fromY + (toY-fromY)*t;
+    await moveStickTo(x,y,holdingFlower); 
+    await delay(16);
+  }
+}
+
+// ===== Measuring animation in bay =====
+async function measureInPanel(f){
+  const w=measureSVG.clientWidth||360, h=measureSVG.clientHeight||320; 
+  const cx=w/2, cy=h/2-16;
+  
+  // Render bay with calipers closed (no flower yet)
+  renderMeasureBay();
+  
+  // Animate new flower dropping down from top
+  const newFlower = flowerIcon(cx,cy-60,f.width,1.2);
+  measureSVG.appendChild(newFlower);
+  
+  // Drop animation
+  for(let i=0; i<20; i++) {
+    newFlower.setAttribute('transform', `translate(0, ${i*3})`);
+    await delay(20);
+  }
+  
+  // Remove animated flower
+  if(newFlower.parentNode) newFlower.parentNode.removeChild(newFlower);
+  
+  // Now set the flower as current and redraw with flower in place
+  state.currentFlowerInBay = f;
+  renderMeasureBay();
+  
+  // Get the calipers that are now rendered and animate them opening
+  const calipers = measureSVG.querySelectorAll('rect[fill="#10b981"]');
+  const left = calipers[0];
+  const right = calipers[1];
+  
+  if(left && right) {
+    const flowerSizeScale = Math.max(0.3, Math.min(2.0, f.width / state.mu));
+    const baseFlowerWidth = 16;
+    const visualFlowerWidth = baseFlowerWidth * flowerSizeScale * 1.2;
+    const finalPxLen = Math.max(8, visualFlowerWidth * 1.2);
+    
+    let open=0, step=finalPxLen/20; 
+    while(open<finalPxLen){ 
+      open+=step; 
+      left.setAttribute('x',cx-open/2); 
+      right.setAttribute('x',cx+open/2); 
+      await delay(14);
+    }
+  }
+}
+
+// ===== Sampling flow =====
+async function takeOne(){
+ if(state.flowers.length===0){ return; }
+
+ // Clear previous flower from measuring bay immediately when new sample starts
+ if(state.currentFlowerInBay) {
+  state.currentFlowerInBay = null;
+  renderMeasureBay();
+ }
+ 
+ // ===== NEW: Step 1 - Announce the random selection =====
+ const w=fieldSVG.clientWidth||360, h=fieldSVG.clientHeight||340;
+ const noticeText = `Randomly selecting 1 of ${state.flowers.length} flowers...`;
+ const notice = text(noticeText, w / 2, h / 2, 'middle', '#be185d', 16);
+ notice.id = 'selection-notice';
+ fieldSVG.appendChild(notice);
+ await delay(400); // Brief pause to read text
+
+ // ===== NEW: Step 2 - "Shuffle" all flowers with a flash =====
+ const allPetals = [];
+ state.flowers.forEach(f => {
+  f.node.querySelectorAll('ellipse').forEach(p => allPetals.push(p));
+ });
+ allPetals.forEach(p => p.setAttribute('fill', '#ffffff')); // Flash white
+ await delay(150);
+ allPetals.forEach(p => p.setAttribute('fill', '#f9a8d4')); // Return to pink
+ await delay(150);
+ allPetals.forEach(p => p.setAttribute('fill', '#ffffff')); // Flash white again
+ await delay(150);
+ allPetals.forEach(p => p.setAttribute('fill', '#f9a8d4')); // Return to pink
+ 
+ fieldSVG.removeChild(notice); // Remove the text message
+ 
+ // ===== NEW: Step 3 - Choose and highlight ONE flower =====
+ const idx = Math.floor(Math.random()*state.flowers.length);
+ const f = state.flowers[idx];
+ // Highlight the chosen flower's petals in yellow
+ const chosenPetals = f.node.querySelectorAll('ellipse');
+ chosenPetals.forEach(p => p.setAttribute('fill', '#facc15'));
+ 
+ await delay(1000); // Pause so the user can see which flower was chosen
+ 
+ // ===== CONTINUE with existing animation =====
+ // animate stick to flower
+ await animateStick(state.stick.x, state.stick.y, f.x, f.y-6, null, 28);
+
+ // "pick" it: remove node, redraw stick holding flower
+ if(f.node && f.node.parentNode===fieldSVG){ fieldSVG.removeChild(f.node); }
+ await moveStickTo(f.x, f.y-6, f);
+
+ // short pause
+ await delay(200);
+
+ // ... (the rest of the function continues as before) ...
+ const dropX = 280; // Simplified for clarity
+ const dropY = 280; 
+
+ await animateStick(f.x, f.y-6, dropX, dropY-20, f, 28);
+ await moveStickTo(dropX, dropY-20, null);
+ const fallingFlower = flowerIcon(dropX, dropY-20, f.width, 0.7);
+ fieldSVG.appendChild(fallingFlower);
+ for(let i=0; i<15; i++) {
+  fallingFlower.setAttribute('transform', `translate(0, ${i*4})`);
+  await delay(25);
+ }
+ if(fallingFlower.parentNode === fieldSVG) {
+  fieldSVG.removeChild(fallingFlower);
+ }
+
+ state.observations.push(f.width);
+ $('#lastW').textContent = fmt(f.width);
+ $('#count').textContent = state.observations.length;
+ renderHistogram();
+ await measureInPanel(f);
+
+ state.flowers.splice(idx,1);
+
+ const homeX = 28, homeY = 48;
+ await animateStick(dropX, dropY-20, homeX, homeY, null, 20);
+}
+
+async function takeTen(){ 
+  for(let i=0;i<10 && state.flowers.length>0;i++){ 
+    await takeOne(); 
+    await delay(120);
+  } 
+}
+
+// ===== Sample statistics calculation =====
+function updateSampleStats(){
+  if(state.observations.length === 0) {
+    $('#sampleMean').textContent = '–';
+    $('#sampleSd').textContent = '–';
+    return;
+  }
+  
+  const n = state.observations.length;
+  const mean = state.observations.reduce((sum, x) => sum + x, 0) / n;
+  
+  let variance = 0;
+  if(n > 1) {
+    variance = state.observations.reduce((sum, x) => sum + Math.pow(x - mean, 2), 0) / (n - 1);
+  }
+  const sd = Math.sqrt(variance);
+  
+  $('#sampleMean').textContent = fmt(mean);
+  $('#sampleSd').textContent = n > 1 ? fmt(sd) : '–';
+}
+
+function updatePopulation(){
+  const newMu = parseFloat($('#popMean').value);
+  const newSigma = parseFloat($('#popSd').value);
+  
+  if(isNaN(newMu) || isNaN(newSigma) || newSigma <= 0) {
+    alert('Please enter valid numbers (σ must be > 0)');
+    return;
+  }
+  
+  state.mu = newMu;
+  state.sigma = newSigma;
+  
+  // Reset everything with new population parameters
+  resetAll();
+}
+
+function resetAll(){ 
+  state.observations=[]; 
+  state.stick=null; 
+  state.currentFlowerInBay=null;
+  $('#lastW').textContent='–'; 
+  $('#count').textContent='0'; 
+  updateSampleStats();
+  regenerateField(); 
+  renderHistogram(); 
+  renderMeasureBay(); 
+}
+
+// ===== Events =====
+$('#sample1').addEventListener('click', takeOne);
+$('#sample10').addEventListener('click', takeTen);
+$('#reset').addEventListener('click', resetAll);
+$('#updatePop').addEventListener('click', updatePopulation);
+$('#newField').addEventListener('click', resetAll);
+
+// ===== Init =====
+regenerateField(); renderHistogram(); renderMeasureBay(); updateSampleStats();
+</script>
+</body>
+</html>

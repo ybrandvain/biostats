@@ -1,0 +1,143 @@
+# 15. Normal distribution {.unnumbered #normal}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../_common.R") 
+
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))
+```
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+
+**Motivating scenario:** You are beginning your journey into linear modeling and have heard about the normal distribution. You know it's a key assumption of linear models and need a brush up.
+
+**Learning goals: By the end of this chapter you should be able to:**    
+
+1.  Identify the key features of a normal distribution.  
+2.  Explain the roles of the mean ($\mu$) and standard deviation ($\sigma$) in defining a normal distribution.  
+3.  Explain the central limit theorem and why the normal distribution is so common in nature.  
+4.  Explain the difference between a probability mass function (for discrete data) and a probability density function (for continuous data).  
+5.  Conduct a Z-transformation, understanding what a Z-score represents and why it is useful.  
+6.  Visually evaluate if a distribution is "normal-ish".  
+7.  Know common transformations to make a distribution more closely resemble the normal distribution.  
+
+:::
+
+
+--- 
+
+### Histograms  
+
+```{r}
+#| column: margin
+#| fig-cap: "A histogram showing the distribution of petal area of parviflora RILs planted at site GC."
+#| fig-alt: "A dark grey histogram on a light grey grid, plotting the frequency distribution of 'petal_area_mm'. The horizontal x-axis is 'petal_area_mm' and ranges from under 40 to over 100. The vertical y-axis is 'count' and ranges from 0 to 20. The distribution is unimodal, with the highest frequency bin (count of 20) located at approximately 60-65 mm. The frequencies decrease on either side of the peak, forming a slight tail to the right."
+#| label: fig-petal_area_hist
+#| code-fold: true
+#| code-summary: "Code to make a histogram" 
+ggplot(gc_rils, aes(x = petal_area_mm))+
+  geom_histogram(bins = 12, color = "white")+
+  theme(axis.title = element_text(size = 30),
+        axis.text = element_text(size = 30))
+```
+
+
+By now, we have seen a bunch of histograms. Some, like @fig-petal_area_hist, have come from raw data, while others have come from resampling techniques like bootstraps or permutations. As a refresher, histograms display the distribution of a single numeric variable by "binning" the data, placing these bins on the x axis, and displaying the number observations in a given x-bin on the y axis.  
+
+### Mathematical Distributions  
+
+
+Histograms are remarkably useful visualizations because they show the shape, range, and variability in a dataset. By knowing the shape of the data, we can understand the data’s statistical properties. 
+
+Although data comes in many shapes, there are some distributions that are so common in nature that they are given their own name and  come with many mathematical tools. If we are lucky (and we often are), the data can be reasonably approximated by one of these handful of mathematical distributions.  What  this means is that we can summarize a histogram by an equation. This also means we can have a pretty good sense of our data by knowing     
+
+- The mathematical distribution it (roughly) follows
+- The values of the key parameters in this distribution. 
+
+This is remarkably powerful because we can then effectively summarize hundreds of data points with a few numbers, and because we can apply a whole bunch of mathematical machinery to generate sampling distributions and do statistics!!  
+
+:::fyi
+This section focusses on the normal distribution. Other common statistical distributions include:   
+
+- **Binomial:**  The number of "successes" in *n* trials. This is a natural distribution for e.g. the number of hybrid seeds out of *n* genotyped offspring.  
+
+- **Poisson:** The number of observations in a certain space or over a certain time. This is a natural distribution for e.g. the number of pollinator visits observed in a fifteen minute time interval. 
+
+We will revisit these distributions later in the book.
+:::
+
+### The normal distribution 
+
+```{r}
+#| echo: false 
+#| label: fig-paranormal
+#| fig-cap: "Comparing the normal and paranormal distributions. From  @freeman2006."
+#| fig-alt: "A humorous, two-panel cartoon that plays on the term \"normal distribution.\" The top panel shows a classic bell curve, correctly labeled \"NORMAL DISTRIBUTION.\" The bottom panel provides the punchline by showing a simple cartoon ghost whose rounded shape mimics a bell curve; this panel is labeled \"PARANORMAL DISTRIBUTION.\""
+#| column: margin
+include_graphics("https://cdn.ncbi.nlm.nih.gov/pmc/blobs/1aa8/2465539/8245ec7e8544/ch33910.f1.jpg")
+
+```
+
+
+Perhaps the most common and well-known distribution has a shape similar to a bell and is called the normal distribution (@fig-paranormal). The normal distribution is characterized by a few key features:
+
+  * A single, central peak where the data are most frequent.
+  * Symmetry about the center line.
+
+The shape of this distribution is described precisely by its probability density function (PDF). This equation is defined by two key **parameters**:
+
+  * **The population mean, $\mu$,** which sets the center of the distribution.
+  * **The population standard deviation, $\sigma$,** which sets the width (or spread) of the distribution.
+
+$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}$$
+
+With these two parameters, we can fully characterize any normal distribution!
+
+### Sampling from a normal distribution 
+
+The equation obscures the fact that **sampling involves random chance**. The outcome of sampling isn't predetermined,  it's uncertain. However just because it's uncertain does not mean that all results are equally likely. 
+
+I built the webapp below to encourage you to "walk the field," pick *Clarkia xantiana* flowers, measure them, and see how a normal model captures that built-in randomness. Try to pick five, then ten then 30!
+
+<iframe src="normal/flowerpicking.html" width="1000" height="1000" frameborder="0" allowfullscreen></iframe>
+
+---
+
+### What's ahead
+
+Here is how we will wind through the normal distribution and learn a few other things on the journey:
+
+Of course. Here is the text to fill in that section, providing a roadmap for the rest of the chapter.
+
+***
+
+* [First, we'll get a feel for the normal distribution](#normal_intro), introducing the concept of a probability density function and how to calculate it in R.
+* [Next, we'll explore the key properties of the normal distribution](#normal_properties), using an interactive web app and R's `pnorm()` function to calculate probabilities. We'll also cover the Z-transformation, a key tool for standardizing data.
+* [Then, we'll simulate data from a normal distribution](#noRmal) to verify the mathematical properties of the normal to build a deeper intuition for the sampling process.
+* [We'll then discuss the Central Limit Theorem](#clt), the amazing principle that explains why the normal distribution is so common in statistics.
+* [Next, we'll cover the practical skills of assessing if your data is "normal-ish"](#is_it_normal) using visual tools like QQ plots.   
+* [Finally we'll explore common data transformations](#normal_transform) to make data normal.
+
+We conclude, as always, with a chapter summary.

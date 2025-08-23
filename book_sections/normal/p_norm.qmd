@@ -1,0 +1,167 @@
+## • 15. Normal Math  {.unnumbered #p_norm}
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating scenario:** You want to use R to calculate th probability that a draw from a normal falls in a certain range.
+
+**Learning goals:** By the end of this chapter you should be able to:  
+
+1.  **Use R's `pnorm()` function** to find the area in the upper or lower tail of any normal distribution, and understand its arguments.  
+2.  **Apply basic probability theory** to use output from `pnorm()` to find the probability that a draw from a nromal lands in some predetermined area.  
+    - **Use the Addition Rule** to find the probability of an outcome in either of two mutually exclusive ranges (e.g., a two-tailed p-value).     
+    - **Use the Complement Rule** to find the probability of an outcome falling within a given range.   
+3. Outline the steps of a basic Z-test and use `pnorm()` to calculate a two-tailed p-value from a Z-statistic.   
+:::
+
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr' ,'ggplot2']
+  autoload-packages: true
+---
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+```
+
+---
+
+## Finding probabilities of a range with `pnorm()`  
+
+I introduced a webapp that integrates the area under the standard normal curve for you, and have shown that you can use `rnorm()` to simulate a normal distribution. Here, I introduce how to use `pnorm()` to have R, rather than my webapp, calculate this area. 
+
+This is useful because we often want to calculate a p-value, which amounts to asking "*How much of the null sampling distribution is more extreme than my observed observed test statistic?*"
+
+### Intro to `pnorm()`
+
+```{r}
+#| echo: false
+#| label: fig-tails 
+#| fig-cap: "A normal distribution with a mean of 1.78 and a variance of 0.01. The shaded blue areas in the tails represent the probabilities of observing a value more than 1.5 standard deviations away from the mean. The left tail corresponds to `pnorm(lower.tail = TRUE)`, while the right tail corresponds to `pnorm(lower.tail = FALSE)`."
+mu           <- 1.78
+sigma        <- 0.1
+lower_limit  <- mu - 1.5 * sigma
+upper_limit  <- mu + 1.5 * sigma
+
+x_vals <- seq(mu - 4 * sigma, mu + 4 * sigma, length.out = 400)
+curve_data <- data.frame(
+  x = x_vals,
+  y = dnorm(x_vals, mean = mu, sd = sigma)
+)
+
+shade_data_left <- subset(curve_data, x <= lower_limit)
+shade_data_right <- subset(curve_data, x >= upper_limit)
+
+
+ggplot(curve_data, aes(x = x, y = y)) +
+  geom_line(linewidth = 1) +
+  geom_area(data = shade_data_left, aes(y = y), fill = "skyblue", alpha = 0.6) +
+  geom_area(data = shade_data_right, aes(y = y), fill = "skyblue", alpha = 0.6) +
+  labs(
+    title = "Normal Distribution μ = 1.78, σ = 0.1",
+    subtitle = "Shaded areas represent values more than 1.5 away from the mean.",
+    x = "Value",
+    y = "Probability Density"
+  ) +
+  annotate(x = 1.45, y = .5, geom = "label", label ="lower.tail = TRUE") +
+  annotate(x = 2.1, y = .5, geom = "label", label ="lower.tail = FALSE")
+```  
+
+We can find the probability that a sample from a normal is greater than or less than some value of interest with R's [`pnorm()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/Normal.html) function, which takes the arguments:    
+
+- `q`: The value of interest.   
+- `mean`: The population mean, $\mu$.      
+- `sd`: The population standard deviation, $\sigma$.   
+- `lower.tail`: Whether we want the upper or lower tail (see @fig-tails).      
+    - Set `lower.tail = TRUE` for the lower tail.  
+    - Set `lower.tail = FALSE` for the upper tail.   
+    
+Now, try it yourself. Use the webR console below to calculate the probability that a random draw from our distribution ($X \sim \mathcal{N}(1.78,\,0.01)$) is
+
+- Less than 1.63 (1.5 sd less than the mean): `r fitb(0.0668072, num = TRUE, tol = 0.001)`. 
+- Greater than 1.93 (1.5 sd more than the mean): `r fitb(0.0668072, num = TRUE, tol = 0.001)`. 
+
+
+
+```{webr-r}
+pnorm(q = __,mean = __, sd = __, lower.tail = __)
+```
+   
+`r hide("I give up")`. 
+
+*Less than 1.63:* type `pnorm(q = 1.63, mean = 1.78, sd = 0.1, lower.tail = TRUE)` = `r pnorm(q = 1.63, mean = 1.78, sd = 0.1, lower.tail = TRUE)`.     
+
+*Greater than 1.93:* type `pnorm(q = 1.93, mean = 1.78, sd = 0.1, lower.tail = FALSE)` = `r pnorm(q = 1.93, mean = 1.78, sd = 0.1, lower.tail = FALSE)`.
+`r unhide()`
+  
+If you got these answers right, you should have noticed that they are the same. This makes sense because the normal distribution is symmetric and both values are 1.5 standard deviations away from the mean.
+
+
+## Simple Probability Rules
+
+The `pnorm()` function is a great tool, but it has one limitation: it only calculates the probability from a single point out to one of the tails. This is useful, but it doesn't directly answer other common questions, like:
+
+* What's the probability of an extreme outcome in either tail (e.g., very high OR very low)? We use this to find a two-tailed p-value.  
+* What's the probability of an outcome falling in a specific range between two points? 
+
+Fortunately, by combining results from `pnorm()` with two simple rules from probability theory we can answer these sorts of questions. Below we'll cover:
+
+* How to find the probability of this or that.
+* How to find the probability that X falls in a range.
+
+### The Addition Rule for Mutually Exclusive Events
+
+Above we found that $6.68\%$ of the normal distribution is 1.5 standard deviations less than the population mean. We also found that $6.68\%$ of the normal distribution is 1.5 standard deviations greater than the population mean. 
+
+Because a single value cannot be in both the upper tail and the lower tail at the same time, these events are **mutually exclusive**. To find the total probability of either one OR the other happening, we simply add their individual probabilities.
+
+$$P(A \text{ or }B) = P(A) +P(B)$$
+So the percent of samples from a normal are either 1.5 standard deviations more than or 1.5 standard deviations less than the mean equals $0.0668 + 0.0668 = 0.1336$. Because these are symmetric we could have just multiplied $0.0668$ by two. However this addition rule applies for any combination of mutually exclusive options. 
+
+:::warning
+The simple addition rule only applies to mutually exclusive events. For nonexclusive events we need to subtract off cases where both events happen to avoid double counting.
+:::
+
+### The Complement Rule
+
+
+
+We just found that the probability of a value being more than one and a half standard deviations away from the mean is 0.1336. If we know the probability of an extreme outcome, what's the probability of a "typical" outcome (i.e., not an extreme one)?
+
+We can use the [complement rule](https://en.wikipedia.org/wiki/Complementary_event#Complement_rule) to answer this! Since the total probability of all possible outcomes must sum to 1, the probability of being within one and a half standard deviations is simply 1 minus the probability of being outside it.
+
+For example, to find the probability of a value falling within 1.5 standard deviations of the mean for a standard normal distribution, we would calculate: 
+
+$$P(-1.5 < X < 1.5) = 1 - P(X < -1.5 \text{ or } X > 1.5) = 1 - 0.1336 = 0.8664$$
+
+## The Z-test   
+
+We will introduce many specific statistical tests in the following chapters. However, many of them can be approximated by a simple Z-test. The Z-test evaluates the null hypothesis ($H_0$) that a normally distributed test statistic is equal to a specific value.
+
+
+To conduct a Z-test we:  
+
+- **Find our Z-statistic:** Z is the number of standard errors between our observation and the value proposed under the null hypothesis. We find it as $Z=\frac{\text{parameter estimate} - \text{null value of the parameter}}{SE_x}$.
+- **Find the two-tailed p-value** as `2 * pnorm(q = abs(Z), lower.tail = FALSE)`. 
+- Reject $H_0$ is $p < \alpha$ (where $\alpha$ is traditionally 0.05). Otherwise, fail to reject $H_0$. 
+
+:::note
+Finding the Z statistic should remind you of the Z-transform, but rather than transforming each data point, we transform our data summary. As such we subtract the proposed value under then null, $\mu_0$, from our observed value, $\bar{x}$, and divide buy the standard error (i.e. the standard deviation of the sampling distribution)
+
+$$Z=\frac{\bar{x}-\mu_0}{SE_x}$$
+:::
