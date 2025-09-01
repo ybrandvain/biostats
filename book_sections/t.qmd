@@ -1,0 +1,167 @@
+# 16. The t distribution {.unnumbered #normal}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../_common.R") 
+
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))
+```
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+
+**Motivating scenario:** We just learned about the normal distribution and Z-tests, but we realized a problem - we have a sample not a population. This means we can estimate the mean as $\bar{x}$ and the standard deviation as $s$, but we don't know their true parameter values $\mu$ and $\sigma$ (that's why we're doing stats after all). What to do? We can turn to the t-distribution!!
+
+**Learning goals: By the end of this chapter you should be able to:**    
+
+
+1. **Explain the difference between** the standard normal distribution ($Z$) and the $t$ distribution.  
+2. **Interpret a** $t$ **value simply.**  
+3. **Calculate and interpret Cohen's D** as a measure of effect size.     
+4. **Use the $t$ distribution to calculate a 95% confidence interval** for a sample from the normal distribution.     
+
+5. **Test the null hypothesis** that a sample mean comes from a population with a given parameter value by
+    - Performing a one-sample t-test.
+    - Performing a paired t-test.    
+6. **Use the `_t()` family of functions** in R to:  
+    - Calculate the probability of finding a value more extreme than a given number from a specified $t$ distribution using  [`pt()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/TDist.html).   
+    - Find a specified quantile of a $t$ distribution using [`qt()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/TDist.html).    
+7. **Use the `t.test()` function** to conduct one sample and paired t-tests in R.   
+
+
+
+:::
+
+
+--- 
+
+
+## The Dilemma
+
+[We previously](#normal) explored samples drawn from a normal distribution. A key takeaway was the Z-transformation:  
+
+- For a single observation, $z = \frac{x - \mu}{\sigma}$.    
+- For the mean of a sample of size $n$, $Z = \frac{\overline{x} - \mu_0}{\sigma / \sqrt{n}}$.     
+
+This allowed us to summarize the distance between an estimated mean, $\bar{x}$, and its null value, $\mu_0$, in standardized units (standard errors), regardless of the mean and variance.  This is super useful, because e.g. we can conduct null hypothesis significance testing and the like. 
+
+*However, there’s a problem:* We usually have only a sample and not the whole population (that's why we're doing statistics after all!). So have an **estimate** of the standard deviation $s$, and not its true parameter value $\sigma$. This means our standard error, too, is an estimate associated with uncertainty. Unfortunately, the Z-distribution does not account for this additional uncertainty.
+
+
+## The Solution
+
+Don't despair! The t-distribution can rescue us!!!      
+
+- Like the standard normal ("Z") distribution, the t-distribution is unimodal and symmetric.   
+- But, to account for the additional uncertainty that comes from using the sample standard deviation ($s$) instead of the true population value ($\sigma$), the t-distribution has "fatter tails" than the Z distribution.
+
+Because the tails are "fatter",  a larger proportion of its area in the tails beyond $\pm2$ (greater than 4.55%, compared to exactly 4.55% for the Z-distribution).   
+
+## Degrees of freedom   
+
+
+```{r}
+#| echo: false
+#| eval: false
+library(colorspace)
+library(gganimate)
+
+vals <- seq(-5,5,.01)
+all_dfs <- c(1,2,3,4,5,7,10,17,30,50,100)
+anim <- bind_rows(tibble(value = c(0,0),df = 0, prob_density = c(0,0), id = ""),
+                  tibble(value = rep(vals, times = length(all_dfs)),
+                         df    = rep(all_dfs, each = length(vals)),
+                         prob_density = dt(x = value, df = df)) %>%
+                    mutate(id = sprintf("t, df = %s",df)),
+                  tibble(value = c(0,0),df = 999, prob_density = c(0,0), id = ""))%>%
+  ggplot(aes(x = value, y = prob_density))+
+  geom_line( show.legend = FALSE)+
+  geom_line(data = tibble(x = seq(-5,5,.01), y = dnorm(seq(-5,5,.01))) , aes(x=x,y=y), color = "red") +
+  scale_color_discrete_sequential(palette = "Viridis",rev = FALSE)+
+  theme_light()+
+  annotate(x = -1.8, y = .06, geom = "text", label = "Z", color = "red", hjust= 0, size =5)+
+  geom_text(data = . %>% group_by(df, id) %>% summarise(value = -4.5, prob_density = 0.06),
+            aes(label = id), hjust= 0, size =5)+
+  labs(title = "Comparing Z and t distributions",subtitle = "Across t's degrees of freedom")+
+  theme(axis.text = element_text(size = 8), axis.title = element_text(size = 10),
+        plot.title =  element_text(size = 12),plot.subtitle =  element_text(size = 10))+
+  transition_states(df,
+                    transition_length = .2,
+                    state_length = 2)+
+  exit_disappear()+
+  exit_reset()+
+  enter_reset()
+
+
+animate(anim, height = 2.5, width = 5, units = "in", res = 150 )
+anim_save(path = "figs/linear_models/t/",filename = "tvz.gif")
+```
+
+```{r}
+#| label: fig-tvz 
+#| fig-cap: "Comparing the t (black) and standard normal (Z, red) distributions for different degrees of freedom."
+#| fig-alt: "A gif comparing the Z distribution and t distributions across different degrees of freedom. The x-axis is labeled 'value,' and the y-axis is labeled 'prob_density.' A red curve, representing the Z distribution, is centered at 0, with a peak at approximately 0.4. The plot shows a symmetric bell shape typical of the normal distribution, and the letter 'Z' is displayed near the center of the curve. The black line (indicating the t distribution) gets closer to the red line (the Z-distribution) as the degrees of freedom increase."
+#| echo: false
+include_graphics("../figs/linear_models/t/tvz.gif")
+```
+
+Now you might be wondering:   
+
+- *How "fat" are the tails of the t-distribution?* and     
+- *What proportion of samples from  a t-distribution are more than two standard errors away from the population mean?*   
+
+The answers to these questions depend on which t-distribution we're talking about. There are many each associated with a certain number of degrees of freedom. 
+
+The degrees of freedom reflect the number of observations that can vary before all values are determined, which is related to our uncertainty in our estimate -- the more the degrees of freedom, the less uncertainty! As such, tails get less "fat" and the t-distribution looks more and more like the standard normal (z) distribution as the degrees of freedom increase (@fig-tvz).
+
+
+
+
+## t as a Common Test Statistic    
+
+Since most sampling distributions are normal, but we rarely know the true population standard deviation, t-values are common in applied statistics. Each time we encounter a t-value, it tells us how many standard errors our estimate is away from the hypothesized parameter under the null hypothesis. 
+
+**Put simply** ***t*** **is the distance (in standard errors) between our estimate and its proposed value under the null (incorporating uncertainty in our estimate of the standard deviation)**
+
+
+:::fyi
+**You may see Z-tests in the literature.** Z tests are never the "right" thing to do, because we never have a population, but in some cases they aren't meaningfully "wrong". As sample sizes get large, the t and z distributions converge and so they will give essentially the same answer. For convenience you may see people use the z test in such cases, and that's fine by me.
+
+:::
+
+
+
+## What's Ahead
+
+In this chapter we introduce the t-distribution.
+
+* First, we cover the standard calculations for a t-distribution.
+* Next, we show how to use the t-distribution to find confidence intervals for an estimate of the mean.
+* Then, we introduce the one-sample and paired t-test as applications for null hypothesis significance testing.
+
+  * Along the way, we note the assumptions behind these tests.
+  * We also point out alternatives you might use when those assumptions aren’t met.
+* We take a short detour to revisit Cohen’s as a measure of effect size, and discuss the difference between statistical and practical significance.   
+
+As always, we end with a chapter summary!

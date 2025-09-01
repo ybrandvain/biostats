@@ -156,12 +156,15 @@ We will introduce many specific statistical tests in the following chapters. How
 
 To conduct a Z-test we:  
 
-- **Find our Z-statistic:** Z is the number of standard errors between our observation and the value proposed under the null hypothesis. We find it as $Z=\frac{\text{parameter estimate} - \text{null value of the parameter}}{SE_x}$.
+- **Find our Z-statistic:** Z is the number of standard errors between our observation and the value proposed under the null hypothesis. We find it as $Z=\frac{\bar{x} - \mu_0}{\sigma_\bar{x}}$, where:  
+    - $\bar{x}$ is the parameter estimate.      
+    - $\mu_0$ is the parameter value proposed by the null model.       
+    - $\sigma_\bar{x}$ is the standard error.   
 - **Find the two-tailed p-value** as `2 * pnorm(q = abs(Z), lower.tail = FALSE)`. 
 - Reject $H_0$ is $p < \alpha$ (where $\alpha$ is traditionally 0.05). Otherwise, fail to reject $H_0$. 
 
 :::note
 Finding the Z statistic should remind you of the Z-transform, but rather than transforming each data point, we transform our data summary. As such we subtract the proposed value under then null, $\mu_0$, from our observed value, $\bar{x}$, and divide buy the standard error (i.e. the standard deviation of the sampling distribution)
 
-$$Z=\frac{\bar{x}-\mu_0}{SE_x}$$
+$$Z=\frac{\bar{x}-\mu_0}{\sigma_\bar{x}}$$
 :::

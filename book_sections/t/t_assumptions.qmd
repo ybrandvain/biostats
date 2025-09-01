@@ -1,0 +1,231 @@
+## • 16. Assumptions of t {.unnumbered #t_assumptions}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+
+library(tidyr)
+library(dplyr)
+range_shift_file <- "https://whitlockschluter3e.zoology.ubc.ca/Data/chapter11/chap11q01RangeShiftsWithClimateChange.csv"
+range_shift <- read_csv(range_shift_file) |>
+  mutate(uphill = elevationalRangeShift > 0)|>
+  separate(taxonAndLocation, into = c("taxon", "location"), sep = "_")|>
+  mutate(taxon = ifelse(taxon == "butterfies","butterflies", taxon))
+```
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating scenario:** Statistical modelling allows us to test null hypotheses and quantify uncertainty. But results from these models are only as good as the data and the fit between data and assumptions of the analysis. Here we learn  how to check these assumptions. By mastering these concepts, you will become more than someone who can push a button in R, you will be a good biostatistician. 
+
+**Learning goals:** By the end of this section, you should be able to:
+
+1.  **List and explain** the assumptions made in using a t-distribution.
+2.  **Define** what it means for a test to be "robust" to a violation of an assumption.
+3.  **Use your brain** to think about the bias and independence of data.
+4.  **Use visual tools** like a QQ plot lineup and a tile plot to see if data are normal enough to proceed.
+5.  **Make and justify** a decision about if we are safe using a t-distribution after evaluating the assumptions of this distribution.
+:::
+
+---
+
+## Assumptions in statistical models 
+
+
+Modeling uncertainty and testing null hypotheses requires an appropriate sampling distribution. But remember our challenge - we are stuck with a single sample so we don't have a sampling distribution.  To make this distribution, we must make some assumptions. For resampling methods like bootstrapping and permutation, we assume the data are independent and collected without bias. Parametric methods, like the t-test, use a well-defined statistical distribution (here, the t-distribution) as a shortcut to get a sampling distribution. This shortcut is only valid if its own assumptions are met. When using the t-distribution, we assume: 
+  
+
+- Data are independent.   
+- Data are collected without bias.  
+- The mean is an appropriate summary of the data. AND  
+- Data are normally distributed. 
+
+
+
+## What to Do When We Violate Assumptions  
+
+If our data meet assumptions, we can trust our inference. If data do not meet assumptions, the validity of our inferences is no longer guaranteed. Rather we must think hard about our data and what we know about our distribution to evaluate whether we can trust our inference (i.e. if our inferences are robust to violations of assumptions) or not. 
+
+The robustness of our inference depends on which assumptions are broken, and how severe any such violations are. For example, because the central limit theorem states any sampling distribution approaches the normal distribution as sample sizes get large the t-distribution is robust to modest deviations from normality.  Here's  what to do if our data violate different assumption:   
+
+   
+- **Bias** is very difficult to address and is best managed by designing a better study. However, if you fully know the bias of the data, you can try an advanced technique to model this bias.         
+
+- **Whether the mean is a meaningful summary** is a biological question, and a different summary could be evaluated by other methods. For example you could bootstrap the data and generate some other summary of the data if you want. 
+
+- **Non-independent data can be modeled**, but such models are beyond the scope of this chapter.      
+
+
+- **The normality assumption is the easiest to address.** If this assumption is violated, we can:  
+   - Ignore it (if the violation is minor) because the central limit theorem helps us. OR  
+   - Transform the data to an appropriate scale. OR  
+   - Use bootstrapping to estimate uncertainty and/or conduct a [binomial test](https://en.wikipedia.org/wiki/Binomial_test), treating values greater than $\mu_0$ as "successes" and less than $\mu_0$ as "failures" (covered in future chapters).  
+
+## Evaluating Assumptions for our Data
+
+
+
+```{r}
+#| echo: false
+#| eval: false
+shift_summaries <- range_shift|>
+  summarise(mean_shift = mean(elevationalRangeShift),
+            sd_shift   = sd(elevationalRangeShift),
+            sample_size = n())
+
+
+sim_data <- tibble(elevationalRangeShift = 
+                     rnorm(n = 31*8,
+                           mean = shift_summaries|>pull(mean_shift), 
+                           sd   = shift_summaries|>pull(sd_shift)))|>
+  mutate(trial = rep(c(1:3,5:9), each = 31))
+  
+real_data <- range_shift  |>
+  select(elevationalRangeShift)|>
+  mutate(trial =4)
+
+
+challenge_Plot <- bind_rows(sim_data,real_data)|> 
+  ggplot(aes(sample = elevationalRangeShift))+
+  geom_qq(alpha = .8, size = 1.3)+
+  geom_qq_line()+
+  facet_wrap(~trial)+
+  theme(axis.ticks = element_blank(),
+        axis.text = element_blank())
+
+
+challenge_plot <- challenge_Plot +  labs(x = "Theoretical quantile",y= "Data", title = "Normal distribution lineup",subtitle = "One is the actual data. I made the other eight with rnorm(). Click for the answer.")
+
+highlight_box <- data.frame(trial = 4)
+highlight_wrong_box <- data.frame(trial = (1:9)[-4])
+
+reveal_plot <- challenge_Plot + 
+  geom_rect(
+    data = highlight_box,
+    aes(xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf),
+    fill = "yellow",
+    alpha = 0.4,
+    inherit.aes = FALSE)+
+  geom_rect(
+    data = highlight_wrong_box,
+    aes(xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf),
+    fill = "red",
+    alpha = 0.4,
+    inherit.aes = FALSE
+  )+
+  labs(x = "Theoretical quantile",y= "Data", title = "Normal distribution lineup solution",subtitle = "#4 is the actual data. Click to go back.")
+
+ggsave(plot = challenge_plot ,filename = "../../figs/linear_models/t/challenge.png",  width = 6,    height = 6,units = "in",dpi = 150 )
+ggsave(plot = reveal_plot ,filename = "../../figs/linear_models/t/reveal.png",  width = 6,    height = 6,units = "in",dpi = 150)
+```
+
+
+- **Are the data biased?** Hopefully not, but this depends on the study design. For example, we might want to know if species had as much opportunity to increase in elevation as to decrease. How were the species selected? etc etc...   
+
+- **Is the mean a meaningful summary of the data?** My sense is yes, but take a look and judge for yourself.
+
+
+- **Are the data independent?** I'm not sure about this. We see that some locations and some taxa are there more than once (@fig-nonindep). My sense is this means the data are not actually independent.  What if there's something unique about low-elevation regions in the UK? This isn't necessarily a reason to stop the analysis, but it's worth considering.  
+
+```{r}
+#| echo: false
+#| warning: false
+#| label: fig-nonindep
+#| message: false
+#| fig-width: 13
+#| fig-height: 10
+#| fig-cap: "A tile plot showing the number of observations for each combination of taxon and geographic location in the dataset. Each colored cell represents a unique study group. The concentration of data points in certain locations (e.g., the UK) and for certain taxa (e.g., plants) highlights the potential non-independence among observations."
+#| fig-alt: "A tile plot showing the structure of the dataset. The x-axis lists geographic locations like \"UK\" and \"Switzerland\", and the y-axis lists taxonomic groups like \"plants\" and \"birds\". The grid shows that most combinations are empty, but the \"UK\" column contains the most data points across many different taxa, and the \"plants\" row has data from the most locations."
+data_structure <- range_shift |>
+    count(location, taxon)|>
+    complete(location, taxon, fill = list(n = 0))
+
+
+# Create the tile plot
+ggplot(data_structure, aes(y = taxon, x = location, fill = factor(n))) +
+    geom_tile( linewidth = 0.25,color="lightgrey") +
+    scale_fill_manual(values = c("white","darkblue","gold")) +
+    labs(
+        x = "Location", 
+        y = "Taxon",
+        title = "Counts of data points per taxon and location"
+    ) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 22,vjust = 1),
+          axis.text.y = element_text(size = 22),
+          axis.title =  element_text(size = 25),
+          legend.title =  element_text(size = 25),
+          legend.text = element_text(size = 22),
+          title =  element_text(size = 25))+
+    labs(fill = "n")
+```
+
+
+
+
+- **Is the sample (or more specifically, the sampling distribution) normal?** My sense is that the data are normal enough! But you can view the data and decide for yourself. As a guide, the image below displays nine quantile-quantile plots -- one shows our data while the other eight were generated with `rnorm()`. Can you easily tell which one is from the real data? I sure can't, so this seems normal enough to me! 
+
+```{r}
+#| column: margin
+#| eval: false
+
+# Code for qq plot 
+
+range_shift|>
+  ggplot(aes(sample = elevationalRangeShift))+
+  geom_qq()+
+  geom_qq_line()
+```
+
+```{=html}
+<script>
+function togglePlotsStacked() {
+  var challenge = document.getElementById('challenge-plot-stacked');
+  var reveal = document.getElementById('reveal-plot-stacked');
+
+  // Check if the reveal plot is currently hidden
+  if (reveal.style.visibility === 'hidden') {
+    // If yes, make it visible
+    reveal.style.visibility = 'visible';
+  } else {
+    // Otherwise, hide it
+    reveal.style.visibility = 'hidden';
+  }
+}
+</script>
+
+<div 
+  style="position: relative; cursor: pointer;" 
+  onclick="togglePlotsStacked()">
+
+  <img 
+    id="challenge-plot-stacked" 
+    src="../../figs/linear_models/t/challenge.png" 
+    alt="A 3x3 grid of QQ plots. Click to see the answer." 
+    style="width:100%;"
+  >
+  <img 
+    id="reveal-plot-stacked" 
+    src="../../figs/linear_models/t/reveal.png" 
+    alt="The same 3x3 grid, but panel 4 is highlighted in yellow, while the other eight are highighted in red." 
+    style="width:100%; position: absolute; top: 0; left: 0; visibility: hidden;"
+  >
+
+</div>
+```
+
+## LFG
+
+Although the data may not be fully independent, it roughly meets the assumptions of the t-distribution. Now that we've evaluated our assumptions let's get to statin!

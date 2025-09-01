@@ -2399,6 +2399,65 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">16. The t distribution</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. t: Example Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/summaries_4_t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Data summaries for t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Assumptions of t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_CI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Uncertain-t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/one_sample_t_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. One sample t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/one_sample_t_test_in_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. One sample t-test in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/paired_t_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. The “Paired” t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. t Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
@@ -2823,13 +2882,21 @@ I give up
 <p>We will introduce many specific statistical tests in the following chapters. However, many of them can be approximated by a simple Z-test. The Z-test evaluates the null hypothesis (<span class="math inline">\(H_0\)</span>) that a normally distributed test statistic is equal to a specific value.</p>
 <p>To conduct a Z-test we:</p>
 <ul>
-<li><strong>Find our Z-statistic:</strong> Z is the number of standard errors between our observation and the value proposed under the null hypothesis. We find it as <span class="math inline">\(Z=\frac{\text{parameter estimate} - \text{null value of the parameter}}{SE_x}\)</span>.</li>
+<li><strong>Find our Z-statistic:</strong> Z is the number of standard errors between our observation and the value proposed under the null hypothesis. We find it as <span class="math inline">\(Z=\frac{\bar{x} - \mu_0}{\sigma_\bar{x}}\)</span>, where:
+<ul>
+<li><span class="math inline">\(\bar{x}\)</span> is the parameter estimate.<br>
+</li>
+<li><span class="math inline">\(\mu_0\)</span> is the parameter value proposed by the null model.<br>
+</li>
+<li><span class="math inline">\(\sigma_\bar{x}\)</span> is the standard error.<br>
+</li>
+</ul></li>
 <li><strong>Find the two-tailed p-value</strong> as <code>2 * pnorm(q = abs(Z), lower.tail = FALSE)</code>.</li>
 <li>Reject <span class="math inline">\(H_0\)</span> is <span class="math inline">\(p &lt; \alpha\)</span> (where <span class="math inline">\(\alpha\)</span> is traditionally 0.05). Otherwise, fail to reject <span class="math inline">\(H_0\)</span>.</li>
 </ul>
 <div class="note">
 <p>Finding the Z statistic should remind you of the Z-transform, but rather than transforming each data point, we transform our data summary. As such we subtract the proposed value under then null, <span class="math inline">\(\mu_0\)</span>, from our observed value, <span class="math inline">\(\bar{x}\)</span>, and divide buy the standard error (i.e.&nbsp;the standard deviation of the sampling distribution)</p>
-<p><span class="math display">\[Z=\frac{\bar{x}-\mu_0}{SE_x}\]</span></p>
+<p><span class="math display">\[Z=\frac{\bar{x}-\mu_0}{\sigma_\bar{x}}\]</span></p>
 </div>
 
 

@@ -1,0 +1,195 @@
+## • 16. One sample t-test in R  {.unnumbered #one_sample_t_test_in_R}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+
+```
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating Example:** You understand the t-distribution, and using it for estimating uncertainty and testing the null that a mean equals $\mu_0$. But it's a lot of work to do this. If only there were an easier way 🤔. Here, we show how R can do this for us.   
+
+**Learning Goals:** By the end of this section, you will be able to:
+
+1.  **Perform** a one-sample t-test using the `t.test()` function.
+2.  **Use** the `broom` package (`tidy()`, `augment()`) to generate clean, predictable output from model objects.
+3.  **Frame** a one-sample t-test as a simple linear model using the `lm()` function.
+4.  **Interpret** the output of `summary()` for a simple linear model.
+
+:::
+
+
+
+---
+
+
+```{r}
+#| code-fold: true
+#| code-summary: "Code to load and process data"
+library(tidyr)
+library(dplyr)
+range_shift_file <- "https://whitlockschluter3e.zoology.ubc.ca/Data/chapter11/chap11q01RangeShiftsWithClimateChange.csv"
+range_shift <- read_csv(range_shift_file) |>
+  mutate(uphill = elevationalRangeShift > 0)|>
+  separate(taxonAndLocation, into = c("taxon", "location"), sep = "_")
+```
+
+## Stats in R
+
+> "What does a one-sample t-test in R mean", you ask, realizing we just did that. Let me explain... 
+
+```{r}
+#| echo: false
+#| column: margin
+#| label: fig-easypeezy
+#| fig-cap: "R can make things easy! Image made with ChatGPT." 
+#| fig-alt: "A poster saying \"Easy peasy lemon squeezy.\"" 
+library(knitr)
+include_graphics("../../figs/linear_models/t/easy_peasy.png")
+```
+
+We just worked through the calculations for a confidence interval and a hypothesis test step by step. But R can do this for us in a single line.  Now that you know how it works and what R is doing, I can show you how to have R do this work for you.
+
+## t.test()   
+
+
+The [`t.test()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/t.test.html) function is the easiest way to run a one-sample t-test in R. There are two relevant arguments:      
+
+- `x`: A vector of observations.   
+- `mu`: $\mu_0$ -- i.e. the expected value of `x` under the null hypothesis.  
+
+:::aside
+**Note:** Because `x` must be a vector, I `pull()` it out of its tibble.
+:::
+
+```{r}
+t.test(x = pull(range_shift,elevationalRangeShift) , mu = 0)
+```
+
+---
+
+### Tidying up R model outputs
+
+The output of `t-test()` includes:  
+
+- The test statistic, *t*.  
+- The degrees of freedom.  
+- The p-value.  
+- The 95% confidence interval.  
+- The sample estimate (in this case the mean).     
+
+While all of these results match our calculations (and are faster and easier to do), there is one problem -- they are a mess. That is, they are stored in a format that you can read, but it's not easy to process with a computer. The [`tidy()`](https://broom.tidymodels.org/reference/tidy.lm.html) function in  the [`broom`](https://broom.tidymodels.org/) package offers a convenient format:   
+
+
+
+```{r}
+#| eval: false
+library(broom)
+t.test(x = pull(range_shift,elevationalRangeShift) , mu = 0) |>
+  tidy() 
+```
+
+```{r}
+#| echo: false
+library(broom)
+t.test(x = pull(range_shift,elevationalRangeShift) , mu = 0) |>
+  tidy()|>
+  mutate(p.value = formatC(signif(p.value,3)) )|>
+  mutate_at(c(1:2,4:6), round, digits = 2)|>
+  gt(caption = "t.test() output piped through broom's tidy() function")
+```
+
+:::aside
+**The `statistic` here is the t-value.** The `statistic` column will contain the value of whichever test statistic your analysis produces.
+:::
+
+
+## The general linear model framework in R
+
+An alternative approach to the  `t.test()` function is to use the R's framework for linear models. Remember that a linear model predicts the value of the response variable of the $i^{th}$ observation $\hat{Y_i}$ as a function of things in our model. For a one sample t-test, our model only contains the mean, which we represent as the "intercept", $a$:      
+
+$$\hat{Y_i} = a$$
+
+Of course, actual observations $Y_i$, will deviate from model predictions. This deviation, known as the "residual" is shown as $e_i$:   
+
+$$Y_i = \hat{Y_i} + e_i$$
+$$Y_i =  a+e_i$$
+
+The `lm()` function in `R` builds such linear models. If we are only modelling the mean, the syntax is:     
+
+- `lm(y ~ 1)` if `y` is a  vector, or   
+- `lm(y ~ 1, data = dataset)` if `y` is a column in a tibble (or dataframe)   
+
+Here the `1` ells R to fit the simplest possible model: an intercept-only model. The estimate for this intercept will be the overall mean of our response variable:    
+
+```{r}
+lm(elevationalRangeShift ~ 1, data = range_shift)
+```
+
+---
+
+:::fyi
+This may seem like overkill for a one-sample t-test, but the linear model framework generalizes to regression, ANOVA, and more. Seeing a one-sample t-test as a linear model prepares us for the models we’ll meet next.
+:::
+
+### summary() provides p-values and test statistics  
+
+`lm()` just returns the mean, but it actually calculates so much more! To access information like the standard error, t-value, p value (reported as `Pr(>|t|)`), and degrees of freedom,  pipe the output to [`summary()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/summary.lm.html):     
+
+```{r}
+lm(elevationalRangeShift ~ 1, data = range_shift) |>
+  summary()
+```
+
+---
+
+### tidy() cleans up the output  
+
+As above, we can use [`broom`](https://broom.tidymodels.org/)'s [`tidy()`](https://broom.tidymodels.org/reference/tidy.lm.html) function to turn this output into a more convenient format:     
+
+```{r}
+library(broom)
+lm(elevationalRangeShift ~ 1, data = range_shift) |>
+  tidy()
+```
+
+---
+
+```{r}
+#| echo: false
+#| column: margin
+lm(elevationalRangeShift ~ 1, data = range_shift) |>
+  augment()|>
+  select(1:3)|>
+  mutate_all(round, digits = 3)|>
+  slice_head(n = 5)|>
+  gt(caption = "Fitted values and residuals from augment()")
+```
+
+### augment() shows residuals (and more)
+
+[`broom`](https://broom.tidymodels.org/)'s [`augment()`](https://broom.tidymodels.org/reference/augment.lm.html) function shows each observation's the actual value, predicted  value (`.fitted`) and residual (`.resid`).  I'm only showing the first three columns because they are the only ones we've covered so far, and I only show the first five rows to save space.
+
+
+```{r}
+#| eval: false
+library(broom)
+lm(elevationalRangeShift ~ 1, data = range_shift) |>
+  augment()|>
+  select(1:3)|>
+  slice_head(n = 5)
+```
+

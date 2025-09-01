@@ -1,0 +1,417 @@
+## • 16. t Summary {.unnumbered #t_summary}
+
+```{webr-r}
+#| context: setup
+library(stringr)
+library(dplyr)
+library(readr)
+library(ggplot2)
+link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/chap12q23HyenaGiggles.csv"
+hyenas<-read_csv(link) |>
+ rename_all( str_remove, "IndividualGiggleVariation") |>
+ mutate(diffs=subordinate - dominant)
+```
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr' ,'ggplot2', 'broom', 'stringr']
+  autoload-packages: true
+---
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(webexercises)
+library(dplyr)
+library(knitr)
+library(infer)
+library(ggplot2)
+```
+
+
+
+Links to: [Summary](#t_summary_chapter-summary). [Chatbot tutor](#t_summary_chatbot_tutor).  [Questions](#t_summary_practice-questions). [Glossary](#t_summary_glossary-of-terms). [R packages](#t_summaryR_packages_introduced). [R functions](#t_summary_key-r-functions). [More resources](#t_summary_additional-resources).
+
+
+
+```{r}
+#| echo: false
+#| column: margin
+#| label: fig-teacherst
+#| fig-cap: "[T distribution  adapted from xkcd](https://xkcd.com/1347/). The rollover text sais \"If data fails the teachers t-test you can force it to take it again until it passes.\" See the related [explainxkcd](https://www.explainxkcd.com/wiki/index.php/1347:_t_Distribution) for more info!"
+#| fig-alt: "[A physical bell-curve-shaped object labeled \"Student's t distribution\" is resting on a table. Cueball is working with it and a piece of paper.] Cueball: Hmm. [Cueball looks at the piece of paper.] Cueball: ...nope.  [Cueball picks up the object and begins to walk off the panel with it.] [Cueball comes back onto the panel, now carrying an object shaped like a much more complex curve, with many symmetric spikes and dips, labeled \"Teacher's t distribution\".]"
+include_graphics("../../figs/linear_models/t/teacherst.png")
+```
+
+## Chapter summary {#t_summary_chapter-summary}  
+
+
+The *t*-distribution is a symmetric, bell-shaped curve defined by its degrees of freedom. Like the standard normal deviate, *Z*, the *t*-value measures the distance (in units of standard errors) between a sample estimate and a hypothesized population parameter. Compared to the *Z*-distribution, the *t*-distribution has "fatter tails," reflecting the extra uncertainty from estimating the standard deviation. 
+
+We use the *t*-distribution to quantify uncertainty and to conduct a *one-sample t-test* of the null hypothesis that an approximately normally distributed sample came from a population with mean $\mu_0$. A particularly useful application is the *paired t-test*. Here, each natural pair is split across two conditions, and we calculate differences in the response variable within each pair. The test then evaluates whether these differences are consistent with a null mean difference of $\mu_0=0$.
+
+
+
+
+### Chatbot tutor  {#t_summary_chatbot_tutor} 
+
+:::tutor
+
+
+Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/g-68b5014fafb881919923b5a1b582b79e-t-distribution-tutor)). I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+
+:::
+
+
+## Practice Questions {#t_summary_practice-questions}
+
+
+Try these questions! By using the R environment you can work without leaving this "book". I even pre-loaded all the packages you need! 
+
+
+### Part 1: Concepts
+
+
+:::exercises
+
+
+
+**Q1.**  The difference between a t-value and a z-value is: `r longmcq(c("The z assumes the mean is zero, the t does not","The z assumes that samples come from a normal distribution, the t does not",answer = "The z assumes that we know the true population standard deviation, the t assumes we only have an estimate"))`
+
+---
+
+**Q2.** If our sample is not perfectly normal:  `r longmcq(c( "We cannot use t-based tests, as the assume normality, and are not useful if data aren't normal", answer = "We can use t-based tests so long as the sample is sufficiently large, and the deviations from normality aren't too big, so the central limit theorem bails us out.", "This has no impact on t - that's why we us a t-distribution instead of a z distribution"))`
+
+
+---
+
+**Q3.**  The t and z distributions will never be the exact same. But when will they be nearly identical?   `r longmcq(c( answer = "When the sample size is large","When the standard deviation is small","When data are normal", "Never, these are very different distributions - this is akin to asking when an orange and apple are similar."))`
+
+
+---
+
+**Q4.** Which is the best summary of the effect size for normally distributed data? `r longmcq(c("The p-value", "The difference between the parameter and its null value", answer = "The difference between the parameter and its null value, standardized by the standard deviation", "The difference between the parameter and its null value, standardized by the standard error"))`
+
+:::
+
+---
+
+### Part 2: Example
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| code-fold: true
+#| fig-height: 9
+#| code-summary: "Code for the plots below"
+#| fig-cap: "**Paired differences in hyena “giggles” by dominance status.** Each pair comprises one dominant and one subordinate hyena. Left: raw paired measurements with lines connecting each pair. Right: the within-pair difference (subordinate − dominant); points above 0 indicate more giggling by subordinates. The black point shows the mean difference with a 95% CI. Most pairs show positive differences, consistent with subordinates giggling more on average. (Data redrawn from Mathevon et al. 2010.)"
+#| column: margin
+#| fig-alt: "Two side-by-side panels. Left: A slopegraph with two x-axis categories - \"dominant\" and \"subordinate\" - showing paired hyenas’ giggle measures. Each pair is connected by a line; most lines slope upward (teal), indicating the subordinate giggles more; a few slope slightly downward (red), indicating the dominant giggles more. Right: A dot plot of the difference per pair (subordinate minus dominant) jittered horizontally around a single x-position. A horizontal reference line at 0 marks no difference. Most points are above 0 (teal); two are below 0 (red). A black point with a vertical error bar shows the mean difference and its 95% CI, which lies entirely above 0. Annotations label \"Subordinate laughs more\" for positive values and \"Dominant laughs more\" for negative values."
+#| label: fig-giggles
+# Load necessary libraries
+library(stringr)
+library(readr)       # For reading CSV files
+library(ggplot2)     # For creating visualizations
+library(tidyr)       # For data tidying (reshaping data)
+library(dplyr)       # For data manipulation
+library(patchwork)   # For combining ggplot2 plots
+library(ggrepel)     # For repelling text labels in plots (you need this for geom_text_repel)
+library(ggthemes)
+
+# Define the URL to the CSV data file
+link <- "https://whitlockschluter3e.zoology.ubc.ca/Data/chapter12/chap12q23HyenaGiggles.csv"
+
+# Read the CSV file and clean up column names (removing "IndividualGiggleVariation" from column names)
+# Also create new variables: 'subord_minus_dom' (difference between subordinate and dominant giggles)
+# and 'sign' (indicates whether the difference is positive or negative)
+hyenas <-  read_csv(link) %>%
+  rename_all(str_remove, "IndividualGiggleVariation") %>%
+  mutate(subord_minus_dom = subordinate - dominant,
+         sign = case_when(subord_minus_dom > 0 ~ "+",  # Positive sign if subordinate giggles more
+                          subord_minus_dom < 0 ~ "-")) # Negative sign if dominant giggles more
+
+# Reshape data to long format for plotting, with columns for 'dom' (dominance status) and 'giggles' (giggle counts)
+long_hyenas <-  hyenas %>% 
+  pivot_longer(cols = c("subordinate", "dominant"), names_to = "dom", values_to = "giggles")
+
+# Create a slope graph showing the change in giggles between subordinate and dominant pairs
+# The lines connect the subordinate and dominant giggle counts for each pair, colored by 'sign'
+slope_o_graph <- ggplot(long_hyenas, aes(x = dom, y = giggles, group = pair, 
+                                         label = pair, color = sign)) +
+  geom_line(linewidth = 1.3) +   # Add lines connecting subordinate and dominant giggles
+  theme(axis.text.x = element_text(size = 22),  # Customize axis text and labels
+        axis.title.x = element_text(size = 22),
+        axis.text.y = element_text(size = 22), 
+        axis.title.y = element_text(size = 22)) +  # No outer background
+  labs(x = "Dominance\n--------------------------------------------------------") +  # Label for x-axis
+  theme(legend.position = "none")  # No legend
+
+# Create a jitter plot showing the differences in giggles between subordinates and dominants
+# Each point represents the difference in giggles, colored by 'sign'
+diff_graph <- ggplot(hyenas, aes(x = 0, y = subord_minus_dom)) +
+  geom_jitter(aes(color = sign), height = 0, width = .03, size = 7, alpha = .7, show.legend = FALSE) + # Jittered points
+  geom_hline(yintercept = 0) +  # Horizontal line at y = 0 to represent no difference
+  stat_summary(fun.data = "mean_cl_normal") +  # Add summary statistics (mean and confidence interval)
+  theme(axis.text.x = element_blank(),  # Customize axis text and labels
+        axis.title.x = element_text(size = 22),
+        axis.text.y = element_text(size = 22), 
+        axis.title.y = element_text(size = 22)) +  # No outer background
+  labs(y = "Difference in giggling\n(Subordinate minus dominant)", x = "random jitter to show points") +  # Axis labels
+  coord_cartesian(ylim = c(-.21, .21), xlim = c(-.14, .1)) +  # Set limits for the axes
+  geom_label(data = tibble(sign = c("-", "+"),   # Add text labels indicating what the positive/negative signs mean
+                           x = -.1, 
+                           subord_minus_dom = c(-.1, .1),
+                           label = c("Dominant\nlaughs\nmore", "Subordinate\nlaughs\nmore")),
+             aes(label = label, x = x, color = sign), size = 8, show.legend = FALSE)
+
+# Combine the two plots (slope graph and difference graph) side by side using patchwork
+slope_o_graph / diff_graph + plot_annotation(tag_levels = "A")&
+  theme(plot.tag = element_text(size = 25))
+```
+
+
+
+```{r}
+#| echo: false
+library(knitr)
+include_url("https://www.youtube.com/embed/FQaSRKP8Dho?si=iUzw0axcFnCypJkQ")
+```
+
+*Enjoy this video of hyena laughter.*   
+
+---
+
+**Setup.** We’re not sure about the function of laughter, but there are some ideas that it could function to show dominance or subordinates. [Mathevon and colleagues](https://bmcecol.biomedcentral.com/articles/10.1186/1472-6785-10-9) looked into this idea in hyenas. They found natural pairs of hyenas hanging out and noted which of the two was dominant and which was subordinate. They provided a measure of giggling (big number means more giggles). Because these data come naturally paired, we can conduct a t-test on the difference between pairs by testing the null hypothesis that this difference is zero. The data are available [here](https://whitlockschluter3e.zoology.ubc.ca/Data/chapter12/chap12q23HyenaGiggles.csv), plotted in @fig-giggles, loaded below, and presented in  Table 1:   
+
+
+```{r}
+#| echo: false
+#| column: margin
+#| message: false
+#| warning: false
+library(stringr);  library(dplyr); library(readr); library(ggplot2)
+link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/chap12q23HyenaGiggles.csv"
+hyenas<-read_csv(link) |>
+ rename_all( str_remove, "IndividualGiggleVariation") |>
+ mutate(diffs = subordinate - dominant)
+library(gt)
+gt(hyenas,caption = "Table 1")
+```
+
+```{r}
+#| message: false
+#| warning: false
+library(stringr);  library(dplyr); library(readr); library(ggplot2)
+link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/chap12q23HyenaGiggles.csv"
+hyenas<-read_csv(link) |>
+ rename_all( str_remove, "IndividualGiggleVariation") |>
+ mutate(diffs = subordinate - dominant)
+```
+
+
+
+
+:::exercises
+
+
+```{webr-r}
+#| fig-width: 6
+# space for you to make a qqplot
+```
+
+
+**Q5.** Make a qq-plot. Then evaluate it in relation to the normality assumption. `r longmcq(c("The data are perfectly normal", answer = "The data likely deviate somewhat from normality, but a t-test is probably ok","The data deviate strongly from normality and any test assuming normality cannot be trusted"))`
+
+
+
+`r hide("Click here for code if you're stuck")`
+
+```{r}
+ggplot(hyenas, aes(sample = diffs))+
+  geom_qq() +
+  geom_qq_line()
+```
+
+`r unhide()`
+
+---
+
+For the next few questions, fill in the blanks to find:   
+- The standard deviation of the differences (`sd_diff`).    
+- Cohen’s d (`cohens_d`).         
+- The standard error (`se_diff`).  
+- The t-value (`t`).  
+
+
+```{webr-r}
+hyenas |>
+  summarise(
+    n = n(),
+    mean_diff = mean(diffs),
+    sd_diff = __(__),
+    cohens_d = __ / __,
+    se_diff = __ / __,
+    t = __ / __
+  )
+```
+
+
+
+**Q6.** The difference between in laughter between subordinate and dominant hyenas is ___ **standard errors** away from the zero. `r fitb(2.85,tol = 0.051,num = TRUE)`.
+
+
+`r hide("Explanation")`
+This is the t-value! 
+`r unhide()`
+
+---
+
+
+**Q7*.* The 95% CI is calculated as the mean ± ___ times the critical t-value at 𝛼= 0.05. `r mcq(c("Cohen's d", "The standard deviation", "The variance", "t", answer = "The standard error", "1.96"))`
+
+---
+
+
+
+```{webr-r}
+# Find the critical value here
+```
+
+**Q8.** To find this two tailed, 95% confidence interval, you must find the critical t-value. For this case the critical t-value equals (return the absolute value) `r fitb(2.30,tol = 0.01,num = TRUE)`.
+
+`r hide("Click here for help")`
+
+We use the `qt()`function to find the critical t-value. There are two key arguments 
+
+- **`p`: which equals $\alpha/2$.** Because we're looking for the 95% confidence interval, $\alpha = 1.00 -0.95 = 0.05$. So `p` = $\alpha/2 =0.025$.      
+
+- **`df`: The degrees of freedom, which equals $n - 1$.** Because $n=9$, we have eight degrees of freedom.  
+
+`qt()` also takes an optional argument, `lower.tail`. Setting this to `FALSE` returns a poistive number. 
+
+`r hide("Return above to try yourself, or click here for code")`
+
+```{webr-r}
+qt(p = 0.025, df = 8, lower.tail = FALSE)
+```
+
+`r unhide()`
+
+
+
+`r unhide()`
+
+---
+
+**Q9.** Given the answers to *Q7* and *Q8* do you think the difference between subordinates and dominants is statistically significant at the $\alpha = 0.05$ level? `r longmcq(c(answer = "yes because t is greater than the critical value", "no because t is greater than the critical value","we can't know this until we find our p-value"))`
+
+---
+
+**Q10.** Therefore, according to traditional statistical practice, we `r longmcq(c(answer = "Proceed as if the null is false (interpret results accordingly), while recognizing that there is a real chance we're wrong","Proceed as if the null is true (interpret results accordingly), while recognizing that there is a real chance we're wrong","Reserve all judgement until we prove that the null is true (or false)" ))`
+
+
+
+
+---
+
+**Q11.** Say you found a p-value of *p*. Which would be a correct  interpretation of  p? `r longmcq(c("p is the probability that the null hypothesis generated the data (or something more extreme).", "p is the probability that the null hypothesis is true.", answer = "p is the probability that a random sample from the null hypothesis would be as or more extreme than the data"))` 
+
+---
+
+
+**Q12.** Say I had data from another two dominant individuals and another two subordinate individuals, but they were not from a pair. Would it be legit to randomly pair them and do a paired t-test? `r mcq(c("Yes", answer ="No"))`
+
+
+:::
+
+
+## 📊 Glossary of Terms {#t_summary_glossary-of-terms} 
+
+:::glossary
+
+* **t-distribution**: A continuous probability distribution, similar to the normal distribution but with heavier tails to account for uncertainty when the population standard deviation is unknown. Defined by its degrees of freedom.
+* **Degrees of Freedom (df)**: The number of independent values in a calculation that are free to vary. For a one-sample t-test, $df = n-1$.
+* **Critical Value ($t\_{\alpha/2, df}$)**: The cutoff from the t-distribution that marks the boundary for rejecting the null hypothesis at a chosen significance level $\alpha$.
+* **Effect Size**: A quantitative measure of the magnitude of a phenomenon; here it describes how far the sample mean is from the null hypothesis mean, in standardized units.
+    * **Cohen’s d**: A standardized effect size calculated as the mean difference divided by the sample standard deviation, $d = (\bar{x} - \mu\_0)/s$.
+* **t-value**: The distance in estimated standard errors between a sample estimate of the mean $\bar{x}$, and its hypothesized value under the null hypothesis, $\mu_0$.    
+    - *t* is  calculated as $\frac{\bar{x} - \mu_0}{s_\bar{x}}$, where $s_\bar{x}$ is the estimate of the standard error (below). 
+    - *t* is the test statistic for a t-test.    
+* **Standard Error (SE)**: An estimate of the standard deviation of the sampling distribution, calculated as $s_\bar{x}=\frac{s}{\sqrt{n}}$  for the mean of a normal or t-distribution.  
+* **One-Sample t-test**: A test used to compare the mean of a single sample to a hypothesized population mean.  
+* **Paired t-test**: A test comparing the means of two related samples (e.g., before vs. after, or paired individuals), by analyzing the distribution of their differences.  
+
+:::
+
+
+
+
+
+
+---
+
+## 🛠️ Key R Functions{#t_summary_key-r-functions}  
+
+ 
+:::functions
+
+- `pt():` Finds cumulative probabilities for a t-distribution (area under the curve up to a value).   
+
+- `qt():` Finds critical values (quantiles) for a t-distribution, e.g. for confidence intervals.   
+
+- `t.test():` Performs one-sample, two-sample, or paired t-tests in R.    
+    - *One sample"* `t.test(x = your_vector, mu = mu0)`. 
+        - You may need to `pull()` your vector from a column in a tibble.   
+        - $\mu_0$ is the value of $\mu$ under the null hypotheses
+    - *Paired:* `t.test(x = your_vector_of_diffs, mu = 0)`.  OR    `t.test(x = vector_treat_a,y = vector_treat_b, paired = TRUE)`.  
+
+
+- `lm():` Fits linear models; an intercept-only model (lm(y ~ 1)) is equivalent to a one-sample t-test.   
+
+`geom_qq()` and `geom_qq_line()`: Create QQ plots to visually check whether data are close enough to normal. 
+    - Remember to set `aes(sample = THING)` instead of `aes(x = THING)`. 
+
+
+:::
+
+
+
+## Additional resources   {#t_summary_additional-resources}
+
+:::learnmore 
+
+**Videos:**         
+
+
+
+
+
+
+- [The Normal Distribution: Crash Course Statistics #19](https://www.youtube.com/watch?v=rBjft49MAO8&t=1s): A clear description of the normal disitrbution, how it arises, its properties, and the central lmit theorem. This is a nice summary of the key concepts in this chapter.    
+
+- [But what is the Central Limit Theorem?](https://www.youtube.com/watch?v=zeJD6dqJ5lo) from 3Blue1Brown's youtube page]: An approachable introduction to more technical aspects of the normal distribution and the central limit theorm. This is the first video in his [youtube playlist on the central limit theorem](https://www.youtube.com/playlist?list=PLZHQObOWTQDOMxJDswBaLu8xBMKxSTvg8).    
+
+
+- [Khan Academy Central Limit Theorem](https://www.youtube.com/watch?v=JNm3M9cqWyc).    
+
+:::
+
+
+
+
+
+
+
+
+
+```{r}
+#| echo: false
+# https://docs.google.com/forms/d/1qVoNUL7VFPYryvp5ssZmT22rhhUwoDamPhjJ1PN3K-E/edit#responses
+# your not normal : https://allisonhorst.com/data-science-art
+
+```
+

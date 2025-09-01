@@ -1,0 +1,90 @@
+## • 16. t: Example Data {.unnumbered #t_example}
+
+
+:::note
+We are taking another break from our *Clarkia* data, as I couldn't find a great example for a one-tailed t-test there.
+:::
+
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))
+```
+
+```{r}
+#| echo: false
+#| label: fig-greenmountiains
+#| fig-cap: "The Green Mountains of Vermont, a location for one of the studies on plant range shifts included in the Chen et al. (2011) meta-analysis. (Photo by Jared C. Benedict, shared on [wikimedia commons](https://commons.wikimedia.org/wiki/File:South_from_Mount_Mansfield.jpg), under a CC BY-SA 4.0 license)." 
+#| fig-alt: "A scenic landscape photo looking south from a mountain summit. Rolling green mountains stretch into the distance under a partly cloudy blue sky."
+include_graphics("https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/South_from_Mount_Mansfield.jpg/2560px-South_from_Mount_Mansfield.jpg")
+```
+
+---
+
+
+## Set up and scientific hypothesis 
+
+As the climate warms, the habitats suitable for many species are moving. Species can respond in several ways: they can adapt to the new conditions, tolerate them, or move to track their preferred environment. If they can't do any of these, they may go extinct locally. A study (@Chen2011)  combined  data for over thirty taxonomic groups to address a key question: '*Do species, on average, move to higher elevations to keep up with a changing climate?'*"
+
+
+## Hypotheses
+
+* **Null Hypothesis ($H_0$):** The true mean elevational shift ($\mu$) is zero. Any observed shift from our sample is due to random chance ($H_0: \mu=0$).  
+* **Alternative Hypothesis ($H_A$):** The true mean elevational shift ($\mu$) is not zero. Species are, on average, shifting their elevation ($H_A: \mu \neq 0$).     
+
+   - Note that although the scientific hypothesis was one-tailed, it is common practice to test the two-tailed alternative hypothesis, and a one-tailed test raises suspicions. 
+   
+   
+## The data    
+
+The data , are available [here](https://whitlockschluter3e.zoology.ubc.ca/Data/chapter11/chap11q01RangeShiftsWithClimateChange.csv) and represent the rate of upward or downward movement of a species' range, measured in meters per decade. Each data point is the mean elevation shift for a particular taxonomic group in a specific geographic region (e.g., plants in the Green Mountains in Vermont - @fig-greenmountiains).   A positive value indicates a species group has moved uphill to a higher elevation, while a negative value means it has moved downhill to a lower elevation.
+
+```{r}
+#| code-fold: true
+library(tidyr)
+library(dplyr)
+range_shift_file <- "https://whitlockschluter3e.zoology.ubc.ca/Data/chapter11/chap11q01RangeShiftsWithClimateChange.csv"
+range_shift <- read_csv(range_shift_file) |>
+  mutate(uphill = elevationalRangeShift > 0)|>
+  separate(taxonAndLocation, into = c("taxon", "location"), sep = "_")
+```
+
+
+```{r}
+#| echo: false
+library(DT)
+datatable(range_shift)
+```
+
+## Our path 
+
+
+- First, we'll estimate, summarize, and visualize.   
+- Then, We will then consider the assumptions of the t-distribution and see if our data meets the assumptions.   
+- Next we'll measure uncertainty.  
+- Then we'll test the null hypothesis that mean range shift is zero, first with our own calculations, and then with R's built in [`t-test()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/t.test.html) function.   
+- Finally, we'll write up our results.    
+
+After we finish this example, we'll introduce the "paired t-test" as a special case of the one sample t-test.   
+

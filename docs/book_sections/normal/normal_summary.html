@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../references.html" rel="next">
+<link href="../../book_sections/t.html" rel="next">
 <link href="../../book_sections/normal/transform.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -846,6 +846,65 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">16. The t distribution</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. t: Example Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/summaries_4_t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Data summaries for t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Assumptions of t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_CI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Uncertain-t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/one_sample_t_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. One sample t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/one_sample_t_test_in_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. One sample t-test in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/paired_t_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. The “Paired” t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. t Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
@@ -997,7 +1056,7 @@ Explanation
 <li><strong>Mean (<span class="math inline">\(\mu\)</span>)</strong>: A measure of central tendency, calculated as the average of all values in a dataset. For a normal distribution, the mean is the center and peak of the curve.</li>
 <li><strong>Variance (<span class="math inline">\(\sigma^2\)</span>)</strong>: The spread of data points around the mean: <span class="math inline">\(\frac{\sum(x_i-\mu)}{n}\)</span>.</li>
 <li><strong>Standard Deviation (<span class="math inline">\(\sigma\)</span>)</strong>: The square root of the variance.</li>
-<li><strong>Standard Error (SE)</strong>: The standard deviation of the sampling distribution. For the sample mean, of a normally distributed variable, it is calculated as <span class="math inline">\(\sigma / \sqrt{n}\)</span>.</li>
+<li><strong>Standard Error (<span class="math inline">\(\sigma_\bar{x}\)</span>)</strong>: The standard deviation of the sampling distribution. For the sample mean, of a normally distributed variable, it is calculated as <span class="math inline">\(\sigma_\bar{x} =\frac{\sigma}{\sqrt{n}}\)</span>.</li>
 </ul>
 </section>
 <section id="probability-rules" class="level3">
@@ -1015,7 +1074,7 @@ Explanation
 <li><strong>Data Transformation</strong>: The process of applying a mathematical function to each point in a dataset (e.g., taking the logarithm or square root) to change the mean, variance and/or shape of the data’s distribution.</li>
 <li><strong>Z-score</strong>: A value that indicates how many standard deviations an observation is from the mean of its distribution. It is calculated using the Z-transformation.</li>
 <li><strong>Z-transformation</strong>: Converting a value, <span class="math inline">\(x_i\)</span>, from any normal distribution (with mean <span class="math inline">\(\mu\)</span> and variance, <span class="math inline">\(\sigma^2=1\)</span>) into a Z-score, <span class="math inline">\(z_i\)</span> from the “standard normal distribution” (with <span class="math inline">\(\mu=0\)</span> and <span class="math inline">\(\sigma^2 = 1\)</span>): <span class="math inline">\(z_i = (x_i - \mu) / \sigma\)</span>.</li>
-<li><strong>Z-test</strong>: A test of the null hypothesis that a population’s true mean equals its proposed null value, <span class="math inline">\(\mu_0\)</span>. To do we find the distance (in standard errors) between our estimate, <span class="math inline">\(\bar{x}\)</span>, and its null value <span class="math inline">\(\mu_0\)</span>, as <span class="math inline">\(Z=\frac{\bar{x}-\mu_0}{SE_x}\)</span>, where <span class="math inline">\(SE_x\)</span> is the standard error. We then find the two-tailed p-value as <code>2 * pnorm(q=abs(Z), sd =1, lower.tail = TRUE)</code>.</li>
+<li><strong>Z-test</strong>: A test of the null hypothesis that a population’s true mean equals its proposed null value, <span class="math inline">\(\mu_0\)</span>. To do we find the distance (in standard errors) between our estimate, <span class="math inline">\(\bar{x}\)</span>, and its null value <span class="math inline">\(\mu_0\)</span>, as <span class="math inline">\(Z=\frac{\bar{x}-\mu_0}{\sigma_\bar{x}}\)</span>, where <span class="math inline">\(\sigma_\bar{x}\)</span> is the standard error. We then find the two-tailed p-value as <code>2 * pnorm(q=abs(Z), sd =1, lower.tail = TRUE)</code>.</li>
 </ul>
 </section>
 </div>
@@ -1688,8 +1747,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../book_sections/t.html" class="pagination-link" aria-label="16. The t distribution">
+        <span class="nav-page-text">16. The t distribution</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -880,6 +880,65 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">16. The t distribution</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. t: Example Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/summaries_4_t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Data summaries for t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Assumptions of t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_CI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Uncertain-t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/one_sample_t_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. One sample t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/one_sample_t_test_in_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. One sample t-test in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/paired_t_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. The “Paired” t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. t Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
@@ -928,10 +987,15 @@ window.Quarto = {
 <li><p>Explain the concept of a probability density for continuous data and how it differs from a probability mass function for discrete data.</p></li>
 <li><p>Use R’s <code>dnorm()</code> function to find the probability density of a specific value from a normal distribution.<br>
 </p></li>
-<li><p>Know that the standard error is the the standard deviation of the sampling distribution.</p>
+<li><p>Know that the standard error, <span class="math inline">\(\sigma_\bar{x}\)</span>, is the the standard deviation of the sampling distribution.</p>
 <ul>
-<li>The standard error of a sample from a normal distribution is <span class="math inline">\(\sigma/\sqrt{n}\)</span> where <span class="math inline">\(n\)</span> is the sample size.<br>
+<li>The standard error of a sample from a normal distribution is <span class="math inline">\(\sigma_\bar{x} = \frac{\sigma}{\sqrt{n}}\)</span> where:
+<ul>
+<li><span class="math inline">\(\sigma = \frac{\Sigma(x_i-\mu)^2}{n}\)</span> is the population standard deviation,<br>
 </li>
+<li><span class="math inline">\(n\)</span> is the sample size.<br>
+</li>
+</ul></li>
 </ul></li>
 </ol>
 </div>
@@ -969,7 +1033,7 @@ window.Quarto = {
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-petal_area_hist_norm" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A histogram with a superimposed red curve. The horizontal x-axis is labeled &quot;log10_petal_area_mm&quot; and ranges from below 1.6 to over 2.0. The vertical y-axis is labeled &quot;count&quot; and ranges from 0 to 25. The dark grey histogram bars form a bell shape, peaking near an x-value of 1.8. The smooth, red bell curve closely traces the outline of the histogram bars.">
+<div id="fig-petal_area_hist_norm" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A histogram with a superimposed red curve. The horizontal x-axis is labeled &quot;log10_petal_area_mm&quot; and ranges from below 1.6 to over 2.0. The vertical y-axis is labeled &quot;count&quot; and ranges from 0 to 25. The dark grey histogram bars form a bell shape, peaking near an x-value of 1.8. The smooth, red bell curve closely traces the outline of the histogram bars." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-petal_area_hist_norm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="normal_intro_files/figure-html/fig-petal_area_hist_norm-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="A histogram with a superimposed red curve. The horizontal x-axis is labeled &quot;log10_petal_area_mm&quot; and ranges from below 1.6 to over 2.0. The vertical y-axis is labeled &quot;count&quot; and ranges from 0 to 25. The dark grey histogram bars form a bell shape, peaking near an x-value of 1.8. The smooth, red bell curve closely traces the outline of the histogram bars.">
@@ -1021,7 +1085,7 @@ Figure&nbsp;1: A histogram showing the distribution of the log_10 transformed pe
 <h3 class="anchored" data-anchor-id="probability-density-functions">Probability density functions</h3>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-dnorm" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A line graph showing a red, bell-shaped curve representing the probability density of a normal distribution. The horizontal x-axis is labeled &quot;log<sub>10</sub> petal area (mm)&quot; and ranges from approximately 1.5 to 2.1. The vertical y-axis is labeled &quot;probability density&quot; and ranges from 0 to 4. The curve peaks around an x-value of 1.78.">
+<div id="fig-dnorm" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A line graph showing a red, bell-shaped curve representing the probability density of a normal distribution. The horizontal x-axis is labeled &quot;log<sub>10</sub> petal area (mm)&quot; and ranges from approximately 1.5 to 2.1. The vertical y-axis is labeled &quot;probability density&quot; and ranges from 0 to 4. The curve peaks around an x-value of 1.78." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-dnorm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="normal_intro_files/figure-html/fig-dnorm-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="A line graph showing a red, bell-shaped curve representing the probability density of a normal distribution. The horizontal x-axis is labeled &quot;log<sub>10</sub> petal area (mm)&quot; and ranges from approximately 1.5 to 2.1. The vertical y-axis is labeled &quot;probability density&quot; and ranges from 0 to 4. The curve peaks around an x-value of 1.78.">
@@ -1067,7 +1131,12 @@ Figure&nbsp;2: The normal distribution that fits the log-10 transformed petal ar
 <section id="the-probability-density-of-a-sample-mean" class="level3">
 <h3 class="anchored" data-anchor-id="the-probability-density-of-a-sample-mean">The Probability Density of a Sample Mean</h3>
 <p>Remember that the standard deviation of the sampling distribution is called the standard error. To calculate the probability density of a sample mean, we substitute <span class="math inline">\(\sigma\)</span> (the variance of the normal distribution) with the the standard deviation of a normal distribution (i.e.&nbsp;the standard error of the mean. Mathematically, the standard error of the mean of a normal sampling distribution, <span class="math inline">\(\sigma_\bar{x}\)</span>, equals:</p>
-<p><span class="math display">\[\sigma_\bar{x}=\frac{\sigma}{\sqrt{n}}\]</span></p>
+<p><span class="math display">\[\sigma_\bar{x}=\frac{\sigma}{\sqrt{n}}\text{ where: }\]</span></p>
+<ul>
+<li><span class="math inline">\(\sigma=\frac{\Sigma(x_i-\mu)^2}{n}\)</span>$ is the population standard error.<br>
+</li>
+<li><span class="math inline">\(n\)</span> is the sample size.</li>
+</ul>
 <p>For instance: the probability density that a random draw of size n from a normal distribution with mean 1.7815 of and sd of 0.0998 will have a sample mean of 1.8739 equals:</p>
 <ul>
 <li><p><code>dnorm(1.8739, mean =  1.7815, sd = 0.0998/sqrt(2))</code> = 2.399 for <span class="math inline">\(n\)</span> of 2.</p></li>

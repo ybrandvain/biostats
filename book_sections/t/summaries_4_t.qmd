@@ -1,0 +1,130 @@
+## • 16. Data summaries for t {.unnumbered #summaries_4_t}
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating scenario:** You have some data of a single numeric variable. Before running any formal tests, you need to get to visualize and summarize the data!
+
+**Learning goals:** By the end of this section, you should be able to:
+
+1.  **Calculate** the mean and standard deviation for a sample in R.
+2.  **Define, calculate, and interpret** Cohen's D as a standardized measure of effect size for a one-sample test.
+3.  **Create** a histogram using `ggplot2` to visualize the distribution of a sample.
+4.  **Use** summary statistics and a histogram to provide a preliminary, descriptive answer to a research question.
+
+:::
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(gt)
+library(tidyr)
+source("../../_common.R") 
+```
+
+
+```{r}
+#| code-fold: true
+#| code-summary: "Code to load and process data"
+library(tidyr)
+library(dplyr)
+range_shift_file <- "https://whitlockschluter3e.zoology.ubc.ca/Data/chapter11/chap11q01RangeShiftsWithClimateChange.csv"
+range_shift <- read_csv(range_shift_file) |>
+  mutate(uphill = elevationalRangeShift > 0)|>
+  separate(taxonAndLocation, into = c("taxon", "location"), sep = "_")
+```
+
+---
+
+We have previously considered standard [summaries of univariate data](#univariate_summaries). Because the $t$-distribution assumes a normal distribution, we  focus on standard parametric estimates. These include:    
+
+- **The mean:** A measure of central tendency, $\bar{x} = \frac{\Sigma x_i}{n}$.    
+- **The standard deviation:** A measure of central spread, $s = \frac{\Sigma(x_1-\bar{x})^2}{n-1}$.    
+- **Cohen's D:** A standardized measure of effect size, $D = \frac{\bar{x}-\mu_0}{s}$. 
+
+
+::: aside
+We introduced Cohen's D in the [associations section](#associations), but can be used for a single numeric variable as well!      
+:::
+
+I calculate these below:   
+
+
+```{r}
+#| column: margin
+#| echo: false
+library(gt) # package for pretty tables
+mu_0 <-0 
+
+# summarize data
+range_shift_summary <- range_shift |>
+  summarise(mean     = mean(elevationalRangeShift),
+            sd       = sd(elevationalRangeShift),
+            cohens_d = (mean - mu_0) / sd)  
+range_shift_summary |>
+  mutate_all(round, digits= 2)     |>
+  # pretty table
+  gt(caption = "Summarizing range shift data") |>
+  opt_css(css = "caption { white-space: nowrap; }")
+```
+
+
+```{r}
+# set null to zero
+mu_0 <-0 
+
+# summarize data
+range_shift_summary <- range_shift |>
+  summarise(mean     = mean(elevationalRangeShift),
+            sd       = sd(elevationalRangeShift),
+            cohens_d = (mean - mu_0) / sd)  
+```
+
+As a reminder    
+
+- Cohen's D between 0.50 and 0.80 is considered a "medium" effect.    
+- Cohen's D between 0.80 and 1.20 is considered a "large" effect.  
+- Cohen's D between 1.20 and 2.00 is considered a "very large" effect.   
+
+So, our observed Cohen's D of 1.28 means that this effect is quite strong!  
+
+## Data visualization   
+
+We will develop a few visualizations of our data. For now, I present a simple histogram.  @fig-histele, clearly shows that most species have moved uphill. It also allows us to evaluate if the data are  normalish, as assumed by the t distribution. We spend the next section thinking harder about assumptions of the t distribution, and if our data.  
+
+```{r}
+#| eval: false
+#| code-fold: true
+#| code-summary: "Code to make our histogram"
+range_shift |>
+ ggplot(aes(x = elevationalRangeShift ))+
+ geom_histogram(color = "white",
+                breaks = seq(-20,110,10))+
+  geom_vline(color = "red", lty = 2, xintercept = 0)+
+  labs(x = "Per decade increase in altitude (meters).")
+```
+
+```{r}
+#| echo: false
+#| label: fig-histele
+#| fig-height: 4
+#| fig-cap: "A histogram showing the distribution of observed elevational range shifts (in meters per decade) for 30 taxonomic groups. The vertical red line indicates a shift of zero, the value specified by the null hypothesis. [Data](https://whitlockschluter3e.zoology.ubc.ca/Data/chapter11/chap11q01RangeShiftsWithClimateChange.csv) from @Chen2011."
+#| fig-alt: "A histogram of elevational range shifts. The x-axis ranges from roughly -20 to 100, and the y-axis (count) goes up to 7. Most of the bars are to the right of a vertical red line at x=0, indicating that most species groups shifted to higher elevations."
+range_shift |>
+ ggplot(aes(x = elevationalRangeShift ))+
+ geom_histogram(color = "white",
+                breaks = seq(-20,110,10))+
+  geom_vline(color = "red", linewidth = 1, xintercept = 0)+
+  labs(x = "Increase in altitude (meters) per decade")+
+  theme(axis.text = element_text(size = 14),
+        axis.title = element_text(size = 18))
+```

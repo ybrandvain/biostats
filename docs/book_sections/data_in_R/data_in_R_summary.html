@@ -2424,6 +2424,65 @@ globalThis.qwebrExecuteCode = async function (
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">16. The t distribution</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. t: Example Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/summaries_4_t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Data summaries for t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Assumptions of t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_CI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Uncertain-t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/one_sample_t_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. One sample t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/one_sample_t_test_in_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. One sample t-test in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/paired_t_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. The “Paired” t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. t Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
@@ -2770,8 +2829,8 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="exercises">
 <strong>Q1)</strong> The code above returns the error: "Error: could not find function "summarise"". How can you solve this?
-<div id="radio_ZUJMDLTFSO" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_ZUJMDLTFSO" value=""> <span>Change “summarise” to “summarize”</span></label><label><input type="radio" autocomplete="off" name="radio_ZUJMDLTFSO" value="answer"> <span>load the dplyr library</span></label>
+<div id="radio_DWMDXYBSXE" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_DWMDXYBSXE" value=""> <span>Change “summarise” to “summarize”</span></label><label><input type="radio" autocomplete="off" name="radio_DWMDXYBSXE" value="answer"> <span>load the dplyr library</span></label>
 </div>
 <hr>
 <p><strong>Q2)</strong> Revisit the pollinator visitation dataset we explored. Which location has a greater anther stigma distance (<code>asd_mm</code>)? <select class="webex-select"><option value="blank"></option><option value="answer">They are the same</option><option value="">SM</option><option value="">GC</option><option value="">S6</option></select></p>
@@ -2920,13 +2979,13 @@ Click here for explanation
 </div>
 <hr>
 <strong>Q6</strong> You should always make sure data are tidy when (pick best answer)
-<div id="radio_PYHRKNRYMZ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_PYHRKNRYMZ" value=""> <span>collecting data</span></label><label><input type="radio" autocomplete="off" name="radio_PYHRKNRYMZ" value=""> <span>presenting data</span></label><label><input type="radio" autocomplete="off" name="radio_PYHRKNRYMZ" value="answer"> <span>analyzing data with dplyr</span></label><label><input type="radio" autocomplete="off" name="radio_PYHRKNRYMZ" value=""> <span>all of the above</span></label>
+<div id="radio_KRCFCZNUTT" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_KRCFCZNUTT" value=""> <span>collecting data</span></label><label><input type="radio" autocomplete="off" name="radio_KRCFCZNUTT" value=""> <span>presenting data</span></label><label><input type="radio" autocomplete="off" name="radio_KRCFCZNUTT" value="answer"> <span>analyzing data with dplyr</span></label><label><input type="radio" autocomplete="off" name="radio_KRCFCZNUTT" value=""> <span>all of the above</span></label>
 </div>
 <hr>
 <strong>Q7</strong> What is wrong with the code below (pick the most egregious issue).
-<div id="radio_OHEUSELLCT" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_OHEUSELLCT" value="answer"> <span>I overwrote iris and lost the raw data</span></label><label><input type="radio" autocomplete="off" name="radio_OHEUSELLCT" value=""> <span>I did not show the output</span></label><label><input type="radio" autocomplete="off" name="radio_OHEUSELLCT" value=""> <span>I used summarise() rather than summarize()</span></label><label><input type="radio" autocomplete="off" name="radio_OHEUSELLCT" value=""> <span>I did not tell R to remove missing data when calculating the mean.</span></label>
+<div id="radio_ANJNILIKHH" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ANJNILIKHH" value="answer"> <span>I overwrote iris and lost the raw data</span></label><label><input type="radio" autocomplete="off" name="radio_ANJNILIKHH" value=""> <span>I did not show the output</span></label><label><input type="radio" autocomplete="off" name="radio_ANJNILIKHH" value=""> <span>I used summarise() rather than summarize()</span></label><label><input type="radio" autocomplete="off" name="radio_ANJNILIKHH" value=""> <span>I did not tell R to remove missing data when calculating the mean.</span></label>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> iris <span class="sc">|&gt;</span> </span>

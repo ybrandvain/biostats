@@ -1,0 +1,239 @@
+## 📚 Knowledge Base: *t* Chapter (Integrated)
+
+t_chapter:
+
+---
+
+## Section: The t distribution
+
+**Key Points**
+- t-distribution has fatter tails than Z because we estimate σ with s.  
+- More uncertainty with small samples, but as df → ∞, t ≈ Z.  
+- Degrees of freedom = n – 1 when estimating a mean.
+
+**Learning Goals**
+- Distinguish Z vs t distributions.  
+- Interpret a t-value as “# of SEs away from the null”.  
+- Understand df and why they matter.  
+
+**Potential Confusions**
+- Students often think Z is “more correct” — clarify that Z assumes σ known (almost never true).  
+- Confusion between sd vs se.  
+- Why df = n – 1 (connect to loss of information once mean is estimated).  
+
+**Connections**
+- Sets the stage for CI (*Uncertain-t*) and hypothesis testing.  
+- Helps explain why one-sample t-test replaces Z-test.  
+
+---
+
+## Section: Data Summaries for t
+
+**Key Points**
+- Start by summarizing univariate data: mean, sd, Cohen’s d.  
+- Histogram visualization helps check “normalish” distribution.  
+- Cohen’s d gives standardized effect size.  
+
+**Learning Goals**
+- Calculate mean, sd, Cohen’s d in R.  
+- Interpret Cohen’s d magnitudes (small/medium/large).  
+- Use histograms to check data shape.  
+
+**Potential Confusions**
+- Mixing up Cohen’s d with t.  
+- Thinking histograms “prove” normality.  
+
+**Connections**
+- Builds on earlier chapter’s univariate summaries.  
+- Leads into checking assumptions of t.  
+
+---
+
+## Section: Assumptions of t
+
+**Key Points**
+- Assumptions: independence, unbiased sampling, mean is appropriate summary, normality.  
+- t is robust to mild non-normality (thanks to CLT).  
+- Violations: bias is serious, non-independence requires new models, non-normality can be transformed or handled with resampling.  
+
+**Learning Goals**
+- List and explain assumptions.  
+- Understand robustness concept.  
+- Use QQ plots and lineup plots to assess normality.  
+
+**Potential Confusions**
+- Students think “robust” = always safe. Clarify robustness depends on type of violation.  
+- Confusion between independence vs bias.  
+- Normality of data vs normality of sampling distribution.  
+
+**Connections**
+- Sets criteria for when to trust inference.  
+- Feeds into CI (*Uncertain-t*) and hypothesis testing.  
+
+---
+
+## Section: Uncertain-t (Confidence Intervals)
+
+**Key Points**
+- SE = s / √n.  
+- df = n – 1 tells us which t-distribution to use.  
+- CI formula: $\bar{x} \pm t_{\alpha/2, df} \times SE$.  
+- CI ≠ probability the true mean is inside; instead, method contains truth ~95% of the time.  
+
+**Learning Goals**
+- Define and calculate SE.  
+- Find critical t with `qt()`.  
+- Construct and interpret 95% CI.  
+
+**Potential Confusions**
+- Students interpret CI as “95% chance the mean is inside”.  
+- Forget to divide α by 2 for two-tailed CI.  
+- Mix up sd, se, and CI width.  
+
+**Connections**
+- Builds directly on “The t distribution” section.  
+- Leads to hypothesis testing.  
+- Bootstrap CI is an alternative — tutor can note pros/cons.  
+
+---
+
+## Section: One-sample t-test
+
+**Key Points**
+- Test whether sample mean differs from null μ0.  
+- t = (x̄ − μ0)/SE.  
+- p-value = probability under null t-distribution of a statistic as extreme as observed.  
+- Reject null if p < α.  
+
+**Learning Goals**
+- Steps of a one-sample t-test.  
+- Calculate t manually and in R.  
+- Interpret p-value.  
+- Write results clearly.  
+
+**Potential Confusions**
+- Thinking p-value = probability null is true.  
+- Forgetting to multiply tail by 2 in two-sided tests.  
+- Mistaking statistical significance for biological importance.  
+
+**Connections**
+- Directly uses CI logic.  
+- Foundation for paired t-test and two-sample tests.  
+
+---
+
+## Section: One-sample t-test in R
+
+**Key Points**
+- `t.test()` automates calculations.  
+- `tidy()` from broom makes clean output.  
+- `lm(y ~ 1)` frames the test as a linear model.  
+
+**Learning Goals**
+- Perform t-test with `t.test()`.  
+- Use `tidy()` to interpret results.  
+- Understand intercept-only model.  
+
+**Potential Confusions**
+- Students overwhelmed by messy `t.test()` output.  
+- Confusion about intercept in `lm()`.  
+
+**Connections**
+- Links t-tests into general linear model framework.  
+- Prepares students for ANOVA, regression.  
+
+---
+
+## Section: Paired t-test
+
+**Key Points**
+- A paired t-test is a one-sample t-test on within-pair differences.  
+- Higher power because it controls for between-pair variation.  
+- df = number of pairs − 1.  
+
+**Learning Goals**
+- Recognize when data are paired.  
+- Calculate and interpret paired t-test.  
+- Visualize paired data (lines connecting pairs, histogram of differences).  
+
+**Potential Confusions**
+- Students may think you can randomly pair observations.  
+- Confusion about analyzing raw values vs differences.  
+- Forgetting that CI and effect size should be for differences.  
+
+**Connections**
+- Builds on one-sample t-test.  
+- Leads naturally to two-sample t-test when data aren’t paired.  
+
+---
+
+## 🛠️ Key R Functions {#t_summary_key-r-functions}
+
+:::functions
+* `pt()`: Cumulative probability for t-distribution.  
+* `qt()`: Quantile (critical value) for t-distribution.  
+* `t.test()`: Performs one-sample, two-sample, or paired t-tests.  
+* `lm()`: Fits linear models; `lm(y ~ 1)` = one-sample test of mean.  
+* `summary()`: Summarizes lm/t-test outputs.  
+* `tidy()`: From broom, cleans model/test outputs.  
+* `augment()`: From broom, gives fitted values/residuals.  
+* `geom_qq()`: Makes QQ scatter plot.  
+* `geom_qq_line()`: Adds reference line to QQ plot.  
+:::
+
+---
+
+## 📊 Glossary of Terms {#t_summary_glossary-of-terms}
+
+:::glossary
+* **t-distribution**: Symmetric, bell-shaped distribution with heavier tails than normal; accounts for SE uncertainty.  
+* **Degrees of Freedom (df)**: Independent pieces of information; for one-sample t, df = n − 1.  
+* **Standard Error (SE)**: SD of sampling distribution of the mean, $s/√n$.  
+* **Critical Value**: Cutoff value of t (or z) marking rejection region.  
+* **Confidence Interval (CI)**: Interval constructed so that 95% of such intervals will contain the true parameter.  
+* **Null Hypothesis ($H_0$)**: Assumes no effect (e.g. μ = μ0).  
+* **Alternative Hypothesis ($H_A$)**: Competing claim (μ ≠ μ0).  
+* **Test Statistic (t)**: Distance in SEs from null mean.  
+* **Cohen’s D**: Standardized effect size: (x̄ − μ0)/s.  
+* **p-value**: Probability of seeing data as extreme as observed under null.  
+* **Robustness**: Ability of a test to remain valid under mild assumption violations.  
+* **Paired t-test**: One-sample t-test applied to paired differences.  
+:::
+
+---
+
+## ❓ Common Student Questions & Misconceptions
+
+1. **Why not always use Z-tests?**  
+   – Because σ is almost never known; t adjusts for estimating σ with s.  
+
+2. **What’s the difference between sd and se?**  
+   – sd measures spread in data; se measures uncertainty in the mean.  
+
+3. **Does p < 0.05 mean the null is false?**  
+   – No. It means the data would be unlikely if the null were true.  
+
+4. **Can we say there’s a 95% chance the mean is in the CI?**  
+   – No. The CI method contains the true mean 95% of the time, but for any one interval the true mean is either in or out.  
+
+5. **Why can’t I randomly pair data for a paired t-test?**  
+   – Pairing must come from natural or designed pairing; random pairing invalidates the assumptions.  
+
+6. **Is a small p-value always important?**  
+   – No. It could reflect a trivial effect with a large sample. Check effect size (Cohen’s d) and CI.  
+
+7. **Do data need to be perfectly normal for t-tests?**  
+   – No. t is robust to mild non-normality, especially with larger samples.  
+
+---
+
+## ✏️ Notation Clarifications
+
+:::notation
+
+* **Standard Error (Normal)**: $\sigma_{\bar{x}} = \sigma / \sqrt{n}$ (uses true population SD).  
+* **Standard Error (t-distribution)**: $s_{\bar{x}} = s / \sqrt{n}$ (uses estimated sample SD).  
+
+⚠️ Students may confuse $s$ (sample sd) with $s_{\bar{x}}$ (standard error). The tutor should always reinforce this distinction using Yaniv’s notation.
+
+:::

@@ -40,9 +40,11 @@ gc_rils <- ril_data |>
     
 2.  Explain the concept of a probability density  for continuous data and how it differs from a probability mass function for discrete data.
 3.  Use R's `dnorm()` function to find the probability density of a specific value from a normal distribution.  
-4.  Know that the standard error is the the standard deviation of the sampling distribution.     
+4.  Know that the standard error, $\sigma_\bar{x}$, is the the standard deviation of the sampling distribution.     
 
-    - The standard error of a sample from a normal distribution is $\sigma/\sqrt{n}$ where $n$ is the sample size.   
+     - The standard error of a sample from a normal distribution is $\sigma_\bar{x} = \frac{\sigma}{\sqrt{n}}$ where:    
+        - $\sigma = \frac{\Sigma(x_i-\mu)^2}{n}$ is the population standard deviation,  
+        - $n$ is the sample size.   
 :::
 
 
@@ -197,7 +199,10 @@ This means that rather than summing to one (as traditional "**probability masses
 
 Remember that the standard deviation of the sampling distribution is called the standard error. To calculate the probability density of a sample mean, we substitute $\sigma$ (the variance of the normal distribution)  with the the standard deviation of a normal distribution (i.e. the standard error of the mean. Mathematically, the standard error of the mean of a normal sampling distribution, $\sigma_\bar{x}$, equals:  
 
-$$\sigma_\bar{x}=\frac{\sigma}{\sqrt{n}}$$ 
+$$\sigma_\bar{x}=\frac{\sigma}{\sqrt{n}}\text{ where: }$$ 
+
+- $\sigma=\frac{\Sigma(x_i-\mu)^2}{n}$$ is the population standard error.   
+- $n$ is the sample size.   
 
 For instance: the probability density that a random draw of size n from a normal distribution with mean 1.7815 of and sd of 0.0998 will have a sample mean of 1.8739 equals:  
 

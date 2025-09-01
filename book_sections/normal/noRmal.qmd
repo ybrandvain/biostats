@@ -99,7 +99,16 @@ normal_sampling_sim <- tibble(
 datatable(normal_sampling_sim |> mutate(x = round(x, digits = 4)))
 ```
 
-We know by now that the **standard error is the standard deviation of the sampling distribution.** I briefly informed you that for the normal the mathematical formula for the standard error of the mean is $SE_\bar{x} = \sigma/\sqrt{n}$, were $n$ is the sample size. Let's convince ourselves of this by simulation and then make sure that $\approx 68\%$ of sample means, $\bar{x}$ are within one SE of the population mean $\mu$. 
+We know by now that the **standard error is the standard deviation of the sampling distribution.** I briefly informed you that for the normal the mathematical formula for the standard error of the mean is:     
+ 
+$$\sigma_\bar{x} = \sigma/\sqrt{n}\text{ where: }$$        
+
+- $\sigma = \frac{\Sigma{(x_i-\mu)}}{n}$.    
+- $n$ is the sample size.     
+
+Let's convince ourselves of this by simulation and then make sure that $\approx 68\%$ of sample means, $\bar{x}$ are within one SE of the population mean $\mu$. 
+
+
 
 To do so we will set up a scenario in which our simulation results are "grouped". Summarizing each sample with the mean generates a sampling distribution.   
 
@@ -156,6 +165,7 @@ b <- sample_means |>
 
 a+b+ plot_annotation(tag_levels = 'A')
 ```
+
 We can calculate the standard deviation of the sample means in @fig-norm_sampling_dist as show in the margin. You can see that the standard deviation of the sampling distirbution of the standard normal with a sample size of 9 is approximately $1/3$, which reassuringly is the standard deviation ($\sigma = 1$) divided by the square root of the sample size, $\sqrt{n} = \sqrt{9} =3$.
 
 ```{r}

@@ -1,0 +1,83 @@
+
+
+## 🗣️ Tutor Guidance for Figures  
+
+tutor_guidance:
+
+  - Students will reference figures by **section name and figure number** (e.g., "Figure 2 in the Paired t-test section").  
+  - If a student gives only a figure number without a section, **ask for clarification** before answering (e.g., "Do you mean Figure 2 in the Uncertain-t section or Figure 2 in the Paired t-test section?").  
+  - When responding:  
+      * Use the **caption** to explain the figure’s purpose or interpretation.  
+      * Use the **alt text** to describe what the figure literally shows (helpful if the student is struggling to 'see' the pattern).  
+  - Keep answers **short and clear (1–3 sentences)** unless the student explicitly asks for more depth.  
+  - If the student asks how the figure connects to statistics (e.g., "what does this mean for the assumptions of t?"), use the figure as an entry point but bring the answer back to the **core statistical concept**.  
+
+
+## 📚 Knowledge Base: Figures for the *t* Chapter  
+
+t_chapter_figures:
+
+  summaries_for_t:
+    - figure_number: "Figure 1"
+      section: "Data Summaries for t"
+      caption: "A histogram showing the distribution of observed elevational range shifts (in meters per decade) for 30 taxonomic groups. The vertical red line indicates a shift of zero, the value specified by the null hypothesis."
+      alt: "Histogram of elevational range shifts from -20 to ~100 meters. Most bars are to the right of a red dashed vertical line at zero, indicating most groups moved uphill."
+      label: fig-histele
+      source: "Data from Chen et al. (2011)."
+
+  assumptions_of_t:
+    - figure_number: "Figure 1"
+      section: "Assumptions of t"
+      caption: "A tile plot showing the number of observations for each combination of taxon and geographic location in the dataset."
+      alt: "Grid plot with taxa on the y-axis and locations on the x-axis; cells shaded to show counts. Strong clustering appears in the UK and for plants, suggesting potential non-independence."
+      label: fig-nonindep
+    - figure_number: "Unnumbered"
+      section: "Assumptions of t"
+      caption: "Normal distribution lineup: one panel shows the real data, eight show simulated normal data."
+      alt: "3×3 grid of QQ plots; one panel shows slightly deviating points from the line, while others resemble perfect normal samples. Used as a challenge to spot the real dataset."
+      label: fig-lineup
+
+  uncertain_t:
+    - figure_number: "Figure 1"
+      section: "Uncertain-t"
+      caption: "The probability density function for a t-distribution with 30 degrees of freedom."
+      alt: "Bell-shaped t-distribution curve centered at zero, slightly wider tails than a normal distribution."
+      label: fig-t30
+    - figure_number: "Figure 2"
+      section: "Uncertain-t"
+      caption: "Critical values for the t-distribution with x degrees of freedom (α=0.05). The dashed red line shows the Z critical value (df = ∞)."
+      alt: "Scatterplot of critical t-values vs. degrees of freedom. Points approach the red dashed horizontal line at 1.96 as df increases."
+      label: fig-tcrit
+    - figure_number: "Figure 3"
+      section: "Uncertain-t"
+      caption: "Change in the elevation of 31 species with t-based 95% confidence interval."
+      alt: "Scatterplot of jittered points for elevational shifts, separated into uphill (teal) and downhill (red). Vertical bar shows the mean and CI."
+      label: fig-eleva1
+      source: "Data from Chen et al. (2011)."
+
+  one_sample_t:
+    - figure_number: "Figure 1"
+      section: "One sample t-test"
+      caption: "The probability density function for a t-distribution with 30 degrees of freedom, with dashed red lines showing the value observed in the data."
+      alt: "Bell-shaped t-distribution centered at zero with vertical dashed lines at ±7.14, far in the tails, indicating strong deviation from the null."
+      label: fig-t30sig
+
+  one_sample_t_in_r:
+    - figure_number: "Figure 1"
+      section: "One sample t-test in R"
+      caption: "R can make things easy!"
+      alt: "Poster graphic reading 'Easy peasy lemon squeezy.'"
+      label: fig-easypeezy
+      source: "Image made with ChatGPT."
+
+  paired_t:
+    - figure_number: "Figure 1"
+      section: "Paired t-test"
+      caption: "(A) Unpaired view: Hybridization proportion for each RIL at LB and SR, with means ± 95% CIs. (B) Paired view: Each line connects the same RIL across sites. (C) Histogram of within-RIL differences (SR–LB) with a red CI bar."
+      alt: "Three panels: unpaired scatter with site means, paired lines linking sites for each RIL, and histogram of SR–LB differences with a red horizontal CI bar."
+      label: fig-paired1
+    - figure_number: "Figure 2"
+      section: "Paired t-test"
+      caption: "QQ-plot of differences in hybridization (Sawmill Road – Lower Breckenridge)."
+      alt: "Quantile-quantile plot of SR–LB hybridization differences. Points fall close to the reference line, indicating approximate normality of differences."
+      label: fig-qq_diffs

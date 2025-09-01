@@ -165,7 +165,7 @@ The standard deviation of the sampling distribution is the standard error, calcu
 * **Mean ($\mu$)**: A measure of central tendency, calculated as the average of all values in a dataset. For a normal distribution, the mean is the center and peak of the curve.
 * **Variance ($\sigma^2$)**: The spread of data points around the mean: $\frac{\sum(x_i-\mu)}{n}$.
 * **Standard Deviation ($\sigma$)**: The square root of the variance. 
-* **Standard Error (SE)**: The standard deviation of the sampling distribution. For the sample mean, of a normally distributed variable, it is calculated as $\sigma / \sqrt{n}$.
+* **Standard Error ($\sigma_\bar{x}$)**: The standard deviation of the sampling distribution. For the sample mean, of a normally distributed variable, it is calculated as $\sigma_\bar{x} =\frac{\sigma}{\sqrt{n}}$.
 
 ### Probability Rules
 
@@ -179,7 +179,7 @@ The standard deviation of the sampling distribution is the standard error, calcu
 * **Data Transformation**: The process of applying a mathematical function to each point in a dataset (e.g., taking the logarithm or square root) to change the mean, variance and/or shape of the data's distribution.
 * **Z-score**: A value that indicates how many standard deviations an observation is from the mean of its distribution. It is calculated using the Z-transformation.
 * **Z-transformation**: Converting a value, $x_i$, from any normal distribution (with mean $\mu$  and variance, $\sigma^2=1$) into a Z-score, $z_i$  from  the "standard normal distribution" (with $\mu=0$ and $\sigma^2 = 1$): $z_i = (x_i - \mu) / \sigma$.
-* **Z-test**: A test of the null hypothesis that a population's true mean equals its proposed null value, $\mu_0$. To do we find the distance (in standard errors) between our estimate, $\bar{x}$, and its null value $\mu_0$, as $Z=\frac{\bar{x}-\mu_0}{SE_x}$, where $SE_x$ is the standard error. We then find the two-tailed p-value as `2 * pnorm(q=abs(Z), sd =1, lower.tail = TRUE)`.
+* **Z-test**: A test of the null hypothesis that a population's true mean equals its proposed null value, $\mu_0$. To do we find the distance (in standard errors) between our estimate, $\bar{x}$, and its null value $\mu_0$, as $Z=\frac{\bar{x}-\mu_0}{\sigma_\bar{x}}$, where $\sigma_\bar{x}$ is the standard error. We then find the two-tailed p-value as `2 * pnorm(q=abs(Z), sd =1, lower.tail = TRUE)`.
 
 
 :::
