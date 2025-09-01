@@ -76,15 +76,3 @@ range_shift <- read_csv(range_shift_file) |>
 library(DT)
 datatable(range_shift)
 ```
-
-## Our path 
-
-
-- First, we'll estimate, summarize, and visualize.   
-- Then, We will then consider the assumptions of the t-distribution and see if our data meets the assumptions.   
-- Next we'll measure uncertainty.  
-- Then we'll test the null hypothesis that mean range shift is zero, first with our own calculations, and then with R's built in [`t-test()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/t.test.html) function.   
-- Finally, we'll write up our results.    
-
-After we finish this example, we'll introduce the "paired t-test" as a special case of the one sample t-test.   
-

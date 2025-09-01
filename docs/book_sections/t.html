@@ -992,7 +992,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="degrees-of-freedom">Degrees of freedom</h2>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-tvz" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A gif comparing the Z distribution and t distributions across different degrees of freedom. The x-axis is labeled 'value,' and the y-axis is labeled 'prob_density.' A red curve, representing the Z distribution, is centered at 0, with a peak at approximately 0.4. The plot shows a symmetric bell shape typical of the normal distribution, and the letter 'Z' is displayed near the center of the curve. The black line (indicating the t distribution) gets closer to the red line (the Z-distribution) as the degrees of freedom increase." data-fig-align="center">
+<div id="fig-tvz" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A gif comparing the Z distribution and t distributions across different degrees of freedom. The x-axis is labeled 'value,' and the y-axis is labeled 'prob_density.' A red curve, representing the Z distribution, is centered at 0, with a peak at approximately 0.4. The plot shows a symmetric bell shape typical of the normal distribution, and the letter 'Z' is displayed near the center of the curve. The black line (indicating the t distribution) gets closer to the red line (the Z-distribution) as the degrees of freedom increase.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-tvz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="../figs/linear_models/t/tvz.gif" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A gif comparing the Z distribution and t distributions across different degrees of freedom. The x-axis is labeled 'value,' and the y-axis is labeled 'prob_density.' A red curve, representing the Z distribution, is centered at 0, with a peak at approximately 0.4. The plot shows a symmetric bell shape typical of the normal distribution, and the letter 'Z' is displayed near the center of the curve. The black line (indicating the t distribution) gets closer to the red line (the Z-distribution) as the degrees of freedom increase.">
@@ -1023,18 +1023,14 @@ Figure&nbsp;1: Comparing the t (black) and standard normal (Z, red) distribution
 </section>
 <section id="whats-ahead" class="level2">
 <h2 class="anchored" data-anchor-id="whats-ahead">What’s Ahead</h2>
-<p>In this chapter we introduce the t-distribution.</p>
+<p>In this chapter we introduce the <em>t</em>-distribution.</p>
 <ul>
-<li><p>First, we cover the standard calculations for a t-distribution.</p></li>
-<li><p>Next, we show how to use the t-distribution to find confidence intervals for an estimate of the mean.</p></li>
-<li><p>Then, we introduce the one-sample and paired t-test as applications for null hypothesis significance testing.</p>
-<ul>
-<li>Along the way, we note the assumptions behind these tests.</li>
-<li>We also point out alternatives you might use when those assumptions aren’t met.</li>
-</ul></li>
-<li><p>We take a short detour to revisit Cohen’s as a measure of effect size, and discuss the difference between statistical and practical significance.</p></li>
+<li>We begin by <a href="t/t_example.html">introducing a non-<em>Clarkia</em> dataset</a> to motivate our discussion.</li>
+<li>Next, we <a href="t/summaries_4_t.html">review standard summaries of single continuous variables</a>, and consider the <a href="t/t_assumptions.html">assumptions required to justify using the <em>t</em>-distribution</a> to model such data.</li>
+<li>We then <a href="t/t_CI.html">calculate 95% confidence intervals for data modeled by the <em>t</em>-distribution</a>, and show how the <a href="t/one_sample_t_test.html">“one sample” <em>t</em>-test</a> can be used to evaluate the null hypothesis that a sample comes from a population with mean $_0$. After working through the math and logic of this “one-sample <em>t</em>-test,” we see how <a href="t/one_sample_t_test_in_R.html">R can do most of this heavy lifting for us</a>.</li>
+<li>Finally, we work through the <a href="t/paired_t_test.html">“paired” <em>t</em>-test</a>, a particularly useful version of the one-sample test that asks whether the mean difference between paired observations under different treatments differs from zero (i.e., no difference).</li>
+<li>As always, we conclude with a <a href="">chapter summary</a>.</li>
 </ul>
-<p>As always, we end with a chapter summary!</p>
 
 
 </section>

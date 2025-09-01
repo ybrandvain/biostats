@@ -154,14 +154,12 @@ Since most sampling distributions are normal, but we rarely know the true popula
 
 ## What's Ahead
 
-In this chapter we introduce the t-distribution.
 
-* First, we cover the standard calculations for a t-distribution.
-* Next, we show how to use the t-distribution to find confidence intervals for an estimate of the mean.
-* Then, we introduce the one-sample and paired t-test as applications for null hypothesis significance testing.
+In this chapter we introduce the *t*-distribution.
 
-  * Along the way, we note the assumptions behind these tests.
-  * We also point out alternatives you might use when those assumptions aren’t met.
-* We take a short detour to revisit Cohen’s as a measure of effect size, and discuss the difference between statistical and practical significance.   
+* We begin by [introducing a non-*Clarkia* dataset](#t_example) to motivate our discussion.
+* Next, we [review standard summaries of single continuous variables](#summaries_4_t), and consider the [assumptions required to justify using the *t*-distribution](#t_assumptions) to model such data.
+* We then [calculate 95% confidence intervals for data modeled by the *t*-distribution](#t_CI), and show how the ["one sample" *t*-test](#one_sample_t_test) can be used to evaluate the null hypothesis that a sample comes from a population with mean \$\mu\_0\$. After working through the math and logic of this "one-sample *t*-test," we see how [R can do most of this heavy lifting for us](#one_sample_t_test_in_R).
+* Finally, we work through the ["paired" *t*-test](#paired_t_test), a particularly useful version of the one-sample test that asks whether the mean difference between paired observations under different treatments differs from zero (i.e., no difference).
+* As always, we conclude with a [chapter summary]().
 
-As always, we end with a chapter summary!
