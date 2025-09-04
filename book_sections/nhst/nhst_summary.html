@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>• 13. NHST summary – Applied Biostatistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../book_sections/shuffling.html" rel="next">
+<link href="../../book_sections/nhst/nhst_gotchas.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-d4394cde7c380170a4469b96acf338b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-90eb7791a5c5b81885cedfef0a190562.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../assets/sticky-notes.css">
+<link rel="stylesheet" href="../../assets/table-styles.css">
+<link rel="stylesheet" href="../../assets/webex.css">
+</head>
+
+<body class="nav-sidebar floating fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/nhst.html">13. Null Hypothesis Significance Testing</a></li><li class="breadcrumb-item"><a href="../../book_sections/nhst/nhst_summary.html">• 13. NHST summary</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      <img src="../../figs/fun_figs/stamp.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Applied Biostatistics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/clarkia_and_its_data/clarkia_and_its_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motivating biology and datasets</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/example_mini/varType.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Types of Variables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/intro2r_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SECTION I: Intro to R</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/getting_started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Getting started with R</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/getting_started/functions_and_vectors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Functions and vectors</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/getting_started/loading_packages_and_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Load packages and data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/getting_started/data_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Data types in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/getting_started/rstudio_orientation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Orientation to RStudio</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/getting_started/getting_started_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Getting started summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/data_in_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Data in R</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_in_R/add_vars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Adding columns w mutate</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_in_R/select_vars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Selecting columns</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_in_R/summarize_vars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Summarizing columns</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_in_R/choose_rows.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Choose rows</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_in_R/data_in_R_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Data in R summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Introduction to ggplot</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/intro_to_ggplot/one_continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. A continuous variable</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/intro_to_ggplot/saving_ggplots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Saving a ggplot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/intro_to_ggplot/cont_cat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Continuous y/categorical x</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/intro_to_ggplot/two_categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Two categorical variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/intro_to_ggplot/two_continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Two continuous variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/intro_to_ggplot/many_explanatory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Many explanatory vars</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/intro_to_ggplot/ggplot_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. ggplot summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/reproducible_science.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Reproducible Science</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/reproducible_science/collecting_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 4. Collecting data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/reproducible_science/reproducible_analyses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 4. Reproducible analyses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/reproducible_science/reproducible_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 4. Reproducibility summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/summarizing_data_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section II: Summarizing data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/univariate_summaries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5. Simple Summaries</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/univariate_summaries/summarizing_shape.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Summarizing shape</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/univariate_summaries/changing_shape.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Changing shape</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/univariate_summaries/summarizing_center.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Summarizing the center</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/univariate_summaries/summarizing_variability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Summarizing variability</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/univariate_summaries/summarizing_summaries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Summarizing summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/associations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6. Associations</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/associations/cat_cont.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 6. Categorical + numeric</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/associations/two_categorical_vars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 6. Two categorical vars</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/associations/cont_cont.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 6. Two numeric vars</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/associations/summarizing_associations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 6. Association Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/linear_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7. Linear Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/linear_models/mean.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Mean</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/linear_models/lm_cat_pred.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Categorical predictor</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/linear_models/regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Linear regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/linear_models/two_predictors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Two predictors</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/linear_models/lm_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Linear model summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/ordination.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">8. Ordination</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/ordination/pca.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. PCA quick start</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/ordination/pcaII.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. PCA deeper dive</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/ordination/pcaIII.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. PCA – Gotchas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/ordination/pcalternatives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. PCAlternatives</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/ordination/ordination_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. Ordination summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/data_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">9. Better Figures</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_viz/audience&amp;delivery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Audience &amp; Format</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_viz/honest_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Honest plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_viz/transparent_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Transparent plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_viz/clear_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Clear plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_viz/avoid_distractions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Avoid Distractions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_viz/accessible_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Accessible Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_viz/writing_about_figures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Writing about plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/data_viz/dataviz_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Dataviz Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/betteR_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">10. Better Figures in R</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/betteR_plots/plotting_tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 10. Tools for BetteR plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/betteR_plots/cleaR_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 10. Making cleaR plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/betteR_plots/plots_foR_medium.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 10. Plots for the medium</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/betteR_plots/betteR_plots_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 10. Better ggplots summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/stats_foundation_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section III: Stats Foundations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/sampling_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">11. Intro to Sampling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/sampling_error.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Error</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/sampling_bias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Bias</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/nonindependence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Non-independence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/better_sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Better</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/sampling/sampling_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/uncertainty.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">12. Uncertainty</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/uncertainty/bootstrap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 12. Bootstrap</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/uncertainty/ci.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 12. Confidence Intervals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/uncertainty/boot_infer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 12. Bootstrapping w/<code>infer</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/uncertainty/boot_gotchas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 12. Gotchas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/uncertainty/uncertainty_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 12. Uncertainty summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/nhst.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">13. Null Hypothesis Significance Testing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/nhst/statistical_hypotheses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. Statistical Hypotheses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/nhst/p_values.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. P Values</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/nhst/statistical_significance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. Statistical Significance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/nhst/nhst_gotchas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. Considerations for NHST</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/nhst/nhst_summary.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">• 13. NHST summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/shuffling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">14. Shuffling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/the_frogs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. The frogs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/permute.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Permute</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/permute_nonindependent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Structured Permutation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/shuffling/shuffling_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Shuffling summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/stats_4_linear_models_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section IV: Stats for Linear Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/normal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">15. Normal distribution</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/normal_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/normal_properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Properties</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/noRmal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Simulations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/p_norm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Math</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/is_it_normal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Is It Normal?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/clt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. The Normal is Common</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Make It Normal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/normal/normal_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">16. The t distribution</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. t: Example Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/summaries_4_t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Data summaries for t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Assumptions of t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_CI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Uncertain-t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/one_sample_t_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. One sample t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/one_sample_t_test_in_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. One sample t-test in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/paired_t_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. The “Paired” t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/t/t_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. t Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/two_ts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">17. A binary explanatory variable</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/2t_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Two-t Assumptions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/nhst.html">13. Null Hypothesis Significance Testing</a></li><li class="breadcrumb-item"><a href="../../book_sections/nhst/nhst_summary.html">• 13. NHST summary</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="uncertainty_summary" class="quarto-section-identifier">• 13. NHST summary</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Links to: <a href="#nhst_summary_chapter-summary">Summary</a>. <a href="#nhst_summary_chatbot_tutor">Chatbot tutor</a>. <a href="#nhst_summary_practice-questions">Questions</a>. <a href="#nhst_summary_glossary-of-terms">Glossary</a>. <a href="#nhst_summary_additional-resources">More resources</a>.</p>
+<hr>
+<section id="nhst_summary_chapter-summary" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="nhst_summary_chapter-summary">Chapter summary</h2>
+<p>Null Hypothesis Significance Testing is a tool to judge if we should interpret a scientific result as sampling error or as a genuine biological process. The first step is coming up with the <strong>null hypothesis</strong> and finding a <strong>“test statistic”</strong> to boil our observations down to a single number. We then find the null distribution of the test statistic under the null model and place our actual observation on this null sampling distribution. We calculate a <strong>p-value</strong> as the proportion of the null distribution that is “as or more extreme” as our observation (remember to look at both tails). We “reject the null” when our p-value is less than <span class="math inline">\(\alpha\)</span> (our <strong>“false positive rate”</strong>), which is set to 0.05 by tradition. We fail to reject the null otherwise. Unfortunately, failing to reject the null does not mean the null is true. This whole business is a bit tricky, so make sure you don’t misinterpret your p-value.</p>
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-CIs" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="A two-panel comic by @epilielle explaining the correct interpretation of confidence intervals. **Panel 1:** Says &quot;People think confidence intervals are like archery,&quot; and  shows a variable &quot;true value&quot; (an arrow) being shot at a fixed &quot;confidence interval&quot; (a target). **Panel 2** says: &quot;But really confidence intervals are more like ring toss,&quot; and shows a variable &quot;confidence interval&quot; (a ring) being tossed at a fixed &quot;true value&quot; (a post), illustrating that the parameter is fixed while the interval is what varies and might capture it.">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-CIs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
+<img src="../../figs/stats_foundations/uncertainty/CIs.png" class="img-fluid figure-img column-page-right" alt="A two-panel comic by @epilielle explaining the correct interpretation of confidence intervals. **Panel 1:** Says &quot;People think confidence intervals are like archery,&quot; and  shows a variable &quot;true value&quot; (an arrow) being shot at a fixed &quot;confidence interval&quot; (a target). **Panel 2** says: &quot;But really confidence intervals are more like ring toss,&quot; and shows a variable &quot;confidence interval&quot; (a ring) being tossed at a fixed &quot;true value&quot; (a post), illustrating that the parameter is fixed while the interval is what varies and might capture it." width="942">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-CIs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Understanding confidence intervals is tricky. This cartoon by <a href="https://medium.com/@EpiEllie">Ellie Murray</a> is the best explanation I have found to date. I copy and paste directly from her <a href="https://medium.com/@EpiEllie/having-confidence-in-confidence-intervals-8f881712d837">medium post</a> “<em>I’ve often heard students mis-use the target analogy to describe their confidence interval as if it were the fixed target, and the ”true” value was the arrow that may or may not land on the target 95% of the time…. But, a confidence interval isn’t fixed — the ”true” value is the part they should view as fixed. To avoid this misunderstanding, I like to explain confidence intervals with ring toss. The ”truth” is in a fixed place, and it’s the confidence interval ring that may or may not land where you want it to… A side benefit: this analogy can help students see why a 99% confidence interval would be wider than a 95% interval — the bigger the ring, the easier the game of ring toss!</em>”. While we’re at it, Ishould mention that Ellie Murray co-host’s a fantastic podcast called <a href="https://casualinfer.libsyn.com/">“Casual inference”</a>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="nhst_summary_chatbot_tutor" class="level3">
+<h3 class="anchored" data-anchor-id="nhst_summary_chatbot_tutor">Chatbot tutor</h3>
+<div class="tutor">
+<p>Please interact with this custom chatbot (<a href="https://chatgpt.com/g/g-688846360e2c81918951a31b10cbebf6-nhst-tutor"><strong>link here</strong></a>). I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up and then stopping when you feel like you got what you needed from it.</p>
+</div>
+</section>
+</section>
+<section id="nhst_summary_practice-questions" class="level2">
+<h2 class="anchored" data-anchor-id="nhst_summary_practice-questions">Practice Questions</h2>
+<p>Try these questions!</p>
+<div class="exercises">
+<strong>Q1)</strong> Null or alternative? Identify whether each of the following statements is more appropriate as a <strong>null hypothesis</strong>:
+<div id="radio_TGQAXSQVGW" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_TGQAXSQVGW" value=""> <span>The number of hours that grade school children spend doing homework predicts their future success on standardized tests.</span></label><label><input type="radio" autocomplete="off" name="radio_TGQAXSQVGW" value="answer"> <span>King cheetahs on average run the same speed as standard spotted cheetahs.</span></label><label><input type="radio" autocomplete="off" name="radio_TGQAXSQVGW" value=""> <span>The mean length of African elephant tusks has changed over the last 100 years.</span></label>
+</div>
+<p>.</p>
+<hr>
+<strong>Q2)</strong> Assume the null hypothesis is TRUE. Which one of the following statements is true?
+<div id="radio_GMOBYPUMNQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_GMOBYPUMNQ" value=""> <span>A study with a larger sample is more likely than a smaller study to get the result that P &lt; 0.05.</span></label><label><input type="radio" autocomplete="off" name="radio_GMOBYPUMNQ" value=""> <span>A study with a large sample is less likely than a smaller study to get the result that P &lt; 0.05</span></label><label><input type="radio" autocomplete="off" name="radio_GMOBYPUMNQ" value="answer"> <span>A study with a large sample is equally likely compared to a smaller study to get the result that P &lt; 0.05.</span></label>
+</div>
+<hr>
+<strong>Q3)</strong> Assume the null hypothesis is FALSE. Which one of the following statements is true?
+<div id="radio_HPLJKNJGUF" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_HPLJKNJGUF" value="answer"> <span>A study with a larger sample is more likely than a smaller study to get the result that P &lt; 0.05.</span></label><label><input type="radio" autocomplete="off" name="radio_HPLJKNJGUF" value=""> <span>A study with a large sample is less likely than a smaller study to get the result that P &lt; 0.05</span></label><label><input type="radio" autocomplete="off" name="radio_HPLJKNJGUF" value=""> <span>A study with a large sample is equally likely compared to a smaller study to get the result that P &lt; 0.05.</span></label>
+</div>
+</div>
+<ul>
+<li>Can parents distinguish their own children by smell alone? To investigate, Porter and Moore (1981) gave new T-shirts to children of nine mothers. Each child wore his or shirt to bed for three consecutive nights. During the day, from waking until bedtime, the shirts were kept in individually sealed plastic bags. No scented soaps or perfumes were used during the study. Each mother was given the shirt of her child and that of another, randomly chosen child and asked to identify her own by smell. Eight of nine mothers identified their children correctly. Use this study to answer the following questions, using a two-sided significance level 𝛼 = 0.05.</li>
+</ul>
+<div class="exercises">
+<strong>Q4)</strong> <span class="math inline">\(H_0\)</span>: What is the appropriate NULL hypothesis?
+<div id="radio_IAKUPHGNIL" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_IAKUPHGNIL" value="answer"> <span>Mothers correctly guess their children's shirts half of the time</span></label><label><input type="radio" autocomplete="off" name="radio_IAKUPHGNIL" value=""> <span>Mothers correctly guess their children's shirts half of the time or less</span></label><label><input type="radio" autocomplete="off" name="radio_IAKUPHGNIL" value=""> <span>Mothers correctly guess their children's shirts more than half of the time</span></label><label><input type="radio" autocomplete="off" name="radio_IAKUPHGNIL" value=""> <span>Mothers do not correctly guess their children's shirts half of the time</span></label>
+</div>
+<hr>
+<strong>Q5)</strong> <span class="math inline">\(H_A\)</span>: What is the appropriate ALTERNATIVE hypothesis?
+<div id="radio_GBDXSABSXO" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_GBDXSABSXO" value=""> <span>Mothers correctly guess their children's shirts half of the time</span></label><label><input type="radio" autocomplete="off" name="radio_GBDXSABSXO" value=""> <span>Mothers correctly guess their children's shirts half of the time or less</span></label><label><input type="radio" autocomplete="off" name="radio_GBDXSABSXO" value=""> <span>Mothers correctly guess their children's shirts more than half of the time</span></label><label><input type="radio" autocomplete="off" name="radio_GBDXSABSXO" value="answer"> <span>Mothers do not correctly guess their children's shirts half of the time</span></label>
+</div>
+<div class="webex-solution">
+<button>
+Explanation of Q5
+</button>
+<p>Remember we should do two-tailed tests!</p>
+</div>
+</div>
+<p>For the questions below refer to the following figure. Numbers over bars show the probability of x moms guessing right assuming the null hypothesis is true.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="../../figs/stats_foundations/nhst/null_dist.png" class="img-fluid figure-img" width="624"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="exercises">
+<p><strong>Q6)</strong> Recall that eight of nine mothers identified their children correctly. Use the numbers on the figure above to estimate a P-value. <input class="webex-solveme nospaces" data-tol="0.001" size="4" data-answer="[&quot;0.04&quot;,&quot;.04&quot;]"></p>
+<hr>
+<p><strong>Q7)</strong> What do we do to the null hypothesis in this case? <select class="webex-select"><option value="blank"></option><option value="answer">Reject it</option><option value="">Fail to Reject it</option><option value="">Accept it</option><option value="">Fail to accept it</option><option value="">Not enough information</option></select></p>
+<hr>
+<p><strong>Q8)</strong> In this case, the null hypothesis <select class="webex-select"><option value="blank"></option><option value="">Is True</option><option value="">Is False</option><option value="">has a 3.6% chance of being true</option><option value="">has a 4% chance of being true</option><option value="answer">need more info</option></select></p>
+<hr>
+<strong>Q9)</strong> The prosecutor’s fallacy is the mistaken thought that arises from assuming that
+<div id="radio_XMHZDRMAEL" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XMHZDRMAEL" value=""> <span>people are innocent until proven guilty</span></label><label><input type="radio" autocomplete="off" name="radio_XMHZDRMAEL" value=""> <span>people are guilty until proven innocent</span></label><label><input type="radio" autocomplete="off" name="radio_XMHZDRMAEL" value=""> <span>data are collected without sampling error</span></label><label><input type="radio" autocomplete="off" name="radio_XMHZDRMAEL" value="answer"> <span>the probability of the model given the data is the probability of the data given the model</span></label><label><input type="radio" autocomplete="off" name="radio_XMHZDRMAEL" value=""> <span>assuming all evidence in a criminal case are independent and collected without bias</span></label>
+</div>
+</div>
+</section>
+<section id="nhst_summary_glossary-of-terms" class="level2">
+<h2 class="anchored" data-anchor-id="nhst_summary_glossary-of-terms">📊 Glossary of Terms</h2>
+<div class="glossary">
+<ul>
+<li><p><strong>The Null Hypothesis</strong>: A skeptical explanation, made for the sake of argument, which suggests that data come from an uninteresting or “boring” population.</p></li>
+<li><p><strong>The Alternative Hypothesis</strong>: A claim that the data do not come from the “boring” population.</p></li>
+<li><p><strong>The Test Statistic</strong>: A single number that summarizes the data. We compare the observed test statistic to its sampling distribution under the null model.</p></li>
+<li><p><strong>P-value</strong>: The probability that a random sample drawn from the null model would be as extreme or more extreme than what is observed.</p></li>
+<li><p><strong><span class="math inline">\(\alpha\)</span></strong>: The probability that we reject a true null hypothesis. We can decide what this is, but by convention, <span class="math inline">\(\alpha\)</span> is usually set at 0.05.</p></li>
+<li><p><strong>False Positive</strong>: Rejecting the null when the null is true.</p></li>
+<li><p><strong>False Negative</strong>: Failing to reject the null when it is false.</p></li>
+<li><p><strong>Power</strong>: The probability of rejecting a false null hypothesis. We cannot directly set this — it depends on sample size and the size of the effect, but we can design experiments aiming for a certain level of power.</p></li>
+<li><p><strong>Test Statistic:</strong> A single number calculated from sample data that summarizes the difference between observations and what is expected under the null hypothesis.</p></li>
+</ul>
+</div>
+</section>
+<section id="nhst_summary_additional-resources" class="level2">
+<h2 class="anchored" data-anchor-id="nhst_summary_additional-resources">Additional resources</h2>
+<div class="learnmore">
+<p><strong>Readings:</strong></p>
+<ul>
+<li><p>Numerous readings from the <a href="https://scientistseessquirrel.wordpress.com">Scientist Sees Squirrel blog</a> by <a href="https://sheard.ext.unb.ca/">Stephen B. Heard</a> including: <a href="https://scientistseessquirrel.wordpress.com/2015/02/09/in-defence-of-the-p-value/">In defence of the P-value</a>, <a href="https://scientistseessquirrel.wordpress.com/2015/11/16/is-nearly-significant-ridiculous/">Is “nearly significant” ridiculous?</a>, and <a href="https://scientistseessquirrel.wordpress.com/2017/04/03/two-tired-misconceptions-about-null-hypotheses/">Two tired misconceptions about null hypotheses</a>.</p></li>
+<li><p><a href="https://www.tandfonline.com/doi/pdf/10.1080/01621459.2017.1311263?casa_token=60fh_ztCytkAAAAA:Swz3jXQlf9LWUw-HAHXhHh2r5_OgxJS3-L5g1Waq1GugNX_txrsQJTGsVdjHQodQIsUsVF5ot3kmKQ">Some Natural Solutions to the p-Value Communication Problem—and Why They Won’t Work</a> <span class="citation" data-cites="gelman2017">(<a href="../../references.html#ref-gelman2017" role="doc-biblioref">Gelman &amp; Carlin, 2017</a>)</span>.</p></li>
+<li><p><a href="https://www.tandfonline.com/doi/pdf/10.1080/00031305.2016.1154108?needAccess=true">Statement on P-values from the American Statistical Association</a> <span class="citation" data-cites="wasserstein2016">(<a href="../../references.html#ref-wasserstein2016" role="doc-biblioref">Wasserstein &amp; Lazar, 2016</a>)</span>.</p></li>
+<li><p><a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01505">The p-value statement, five years on</a><span class="citation" data-cites="pvalue5years">(<a href="../../references.html#ref-pvalue5years" role="doc-biblioref">Matthews, 2021</a>)</span></p></li>
+<li><p><a href="https://www.nature.com/articles/d41586-019-00857-9?fbclid=IwAR3K6PysQ9FY4togs39BSciW3YsK-Pf6EE0Il9R8zxkW4GvrGBHFuz8yF5c">Scientists rise up against statistical significance</a> by <span class="citation" data-cites="amrhein2019">Amrhein et al. (<a href="../../references.html#ref-amrhein2019" role="doc-biblioref">2019</a>)</span>.</p></li>
+</ul>
+<p><strong>Webapps:</strong></p>
+<ul>
+<li><a href="https://istats.shinyapps.io/power/">Errors and Power in Significance Testing webapp</a>.</li>
+</ul>
+<p><strong>Videos:</strong></p>
+<ul>
+<li><p><a href="https://www.youtube.com/watch?v=eesUdFlYMh8">P-values and The prosecutor’s falacy</a> from calling bullshit.</p></li>
+<li><p><a href="https://www.youtube.com/watch?v=2QsTJclNqVs">Probability, Part 7: What is Null Hypothesis Significance Testing?</a> from Simplistics (QuantPsych). An opiniated but entertaining presentation of p-values &amp; NHST.</p></li>
+</ul>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-amrhein2019" class="csl-entry" role="listitem">
+Amrhein, V., Greenland, S., &amp; McShane, B. (2019). Scientists rise up against statistical significance. <em>Nature</em>, <em>567</em>(7748), 305.
+</div>
+<div id="ref-gelman2017" class="csl-entry" role="listitem">
+Gelman, A., &amp; Carlin, J. (2017). Some natural solutions to the p-value communication problem—and why they won’t work. <em>Journal of the American Statistical Association</em>, <em>112</em>(519), 899–901. <a href="https://doi.org/10.1080/01621459.2017.1311263">https://doi.org/10.1080/01621459.2017.1311263</a>
+</div>
+<div id="ref-pvalue5years" class="csl-entry" role="listitem">
+Matthews, R. (2021). The p-value statement, five years on. <em>Significance</em>, <em>18</em>(2), 16–19. https://doi.org/<a href="https://doi.org/10.1111/1740-9713.01505">https://doi.org/10.1111/1740-9713.01505</a>
+</div>
+<div id="ref-wasserstein2016" class="csl-entry" role="listitem">
+Wasserstein, R. L., &amp; Lazar, N. A. (2016). The ASA statement on p-values: Context, process, and purpose. <em>The American Statistician</em>, <em>70</em>(2), 129–133. <a href="https://doi.org/10.1080/00031305.2016.1154108">https://doi.org/10.1080/00031305.2016.1154108</a>
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  update_total_correct();
+}
+
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../book_sections/nhst/nhst_gotchas.html" class="pagination-link" aria-label="• 13. Considerations for NHST">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 13. Considerations for NHST</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../book_sections/shuffling.html" class="pagination-link" aria-label="14. Shuffling">
+        <span class="nav-page-text">14. Shuffling</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

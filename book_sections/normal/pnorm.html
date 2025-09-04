@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Standard Normal Distribution</title>
+  <style>
+    body { font-family: sans-serif; }
+    canvas {
+      border: 1px solid black;
+      margin-top: 10px;
+    }
+    #controls {
+      margin-top: 8px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    #controls input[type="text"] {
+      width: 90px;
+      padding: 6px 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    #controls button {
+      padding: 6px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #f6f6f6;
+      cursor: pointer;
+    }
+    #controls button:hover { background: #eee; }
+    #info, #hint {
+      margin-top: 6px;
+      font-size: 14px;
+    }
+    #cursorX {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: rgba(255,255,255,0.8);
+      padding: 2px 6px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    .wrap {
+      position: relative; 
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <h4>Webapp: Prob a Draw from the Standard Normal Dist Falls in a Range</h4>
+  <p>Click and drag on the curve <em>or</em> type values below.</p>
+
+  <div class="wrap">
+    <canvas id="normalCanvas" width="650" height="300" aria-label="Standard normal curve from -4 to 4"></canvas>
+    <div id="cursorX">x = 0.00</div>
+  </div>
+
+  <div id="controls">
+    <label for="minX"><strong>Min</strong></label>
+    <input id="minX" type="text" inputmode="decimal" placeholder="-1.00 or -inf" aria-label="Minimum x value">
+    <label for="maxX"><strong>Max</strong></label>
+    <input id="maxX" type="text" inputmode="decimal" placeholder="1.50 or inf" aria-label="Maximum x value">
+    <button id="shadeBtn" type="button">Shade</button>
+    <button id="clearBtn" type="button">Clear</button>
+  </div>
+
+  <div id="info" role="status" aria-live="polite"></div>
+  <div id="hint">Tip: Leave Min blank for −∞, Max blank for ∞. Type <code>inf</code>, <code>∞</code>, or any number.</div>
+
+  <script>
+    // --- Canvas & drawing setup ---
+    const canvas = document.getElementById("normalCanvas");
+    const ctx = canvas.getContext("2d");
+    const width = canvas.width;
+    const height = canvas.height;
+    const padding = 40;
+    const cursorLabel = document.getElementById("cursorX");
+    const info = document.getElementById("info");
+
+    // --- Inputs & buttons ---
+    const minInput = document.getElementById("minX");
+    const maxInput = document.getElementById("maxX");
+    const shadeBtn = document.getElementById("shadeBtn");
+    const clearBtn = document.getElementById("clearBtn");
+
+    // --- Math helpers ---
+    function normalPDF(x) {
+      return (1 / Math.sqrt(2 * Math.PI)) * Math.exp(-0.5 * x * x);
+    }
+    function erf(x) {
+      const sign = x < 0 ? -1 : 1;
+      x = Math.abs(x);
+      const a1 = 0.254829592, a2 = -0.284496736, a3 = 1.421413741;
+      const a4 = -1.453152027, a5 = 1.061405429, p = 0.3275911;
+      const t = 1 / (1 + p * x);
+      const y = 1 - ((((a5 * t + a4) * t + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
+      return sign * y;
+    }
+    function normalCDF(x) {
+      return 0.5 * (1 + erf(x / Math.sqrt(2)));
+    }
+
+    // --- Coordinate transforms (domain -4..4) ---
+    function xToCanvas(x) {
+      return padding + ((x + 4) / 8) * (width - 2 * padding);
+    }
+    function canvasToX(canvasX) {
+      return ((canvasX - padding) / (width - 2 * padding)) * 8 - 4;
+    }
+    function yToCanvas(y) {
+      const maxPDF = normalPDF(0);
+      return height - padding - (y / maxPDF) * (height - 2 * padding);
+    }
+
+    // --- Draw curve & ticks ---
+    function drawCurve() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Axes baseline
+      ctx.beginPath();
+      ctx.moveTo(padding, height - padding);
+      ctx.lineTo(width - padding, height - padding);
+      ctx.strokeStyle = "#000";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Curve
+      ctx.beginPath();
+      ctx.moveTo(xToCanvas(-4), yToCanvas(normalPDF(-4)));
+      for (let x = -4; x <= 4; x += 0.01) {
+        ctx.lineTo(xToCanvas(x), yToCanvas(normalPDF(x)));
+      }
+      ctx.strokeStyle = "black";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      drawXTicks();
+    }
+
+    function drawXTicks() {
+      ctx.font = "12px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillStyle = "black";
+      ctx.strokeStyle = "#000";
+      for (let x = -4; x <= 4; x++) {
+        const cx = xToCanvas(x);
+        const cy = height - padding;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx, cy + 5);
+        ctx.stroke();
+        ctx.fillText(x.toString(), cx, cy + 18);
+      }
+    }
+
+    // --- Shading ---
+    function shadeRegion(x1, x2) {
+      const left = Math.max(-4, Math.min(x1, x2));
+      const right = Math.min(4, Math.max(x1, x2));
+      if (right <= left) return;
+
+      const step = 0.01;
+      ctx.beginPath();
+      ctx.moveTo(xToCanvas(left), yToCanvas(0));
+      for (let x = left; x <= right; x += step) {
+        ctx.lineTo(xToCanvas(x), yToCanvas(normalPDF(x)));
+      }
+      ctx.lineTo(xToCanvas(right), yToCanvas(0));
+      ctx.closePath();
+      ctx.fillStyle = "#ffe6f7";
+      ctx.fill();
+    }
+
+    // --- Parsing & formatting of inputs (support ±∞/±inf/blank) ---
+    function parseBound(str, sign) {
+      // sign: -1 for min, +1 for max (blank means infinity in that direction)
+      if (str == null) return null;
+      const s = String(str).trim().toLowerCase();
+      if (s === "" || s === "inf" || s === "+inf" || s === "infinity" || s === "∞" || s === "+∞") {
+        return sign > 0 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY;
+      }
+      if (s === "-inf" || s === "-infinity" || s === "−∞" || s === "-∞") {
+        return Number.NEGATIVE_INFINITY;
+      }
+      const v = Number(s);
+      return Number.isFinite(v) ? v : null;
+    }
+
+    function fmtDisplay(x) {
+      if (x === Number.NEGATIVE_INFINITY) return "−∞";
+      if (x === Number.POSITIVE_INFINITY) return "∞";
+      return x.toFixed(2);
+    }
+
+    function clampToVisible(x) {
+      if (x === Number.NEGATIVE_INFINITY) return -4;
+      if (x === Number.POSITIVE_INFINITY) return 4;
+      return Math.max(-4, Math.min(4, x));
+    }
+
+    // --- Core update from any source (inputs or drag) ---
+    function updateVisualization(fromMin, fromMax) {
+      // swap if out of order
+      let a = fromMin, b = fromMax;
+      if (a != null && b != null && a > b) [a, b] = [b, a];
+
+      // For area, treat infinities as true ±∞
+      const cdfA = (a === Number.NEGATIVE_INFINITY) ? 0 : normalCDF(a);
+      const cdfB = (b === Number.POSITIVE_INFINITY) ? 1 : normalCDF(b);
+      const area = (cdfB - cdfA);
+
+      // Redraw & shade visible portion only
+      drawCurve();
+      shadeRegion(clampToVisible(a), clampToVisible(b));
+
+      info.textContent = `The area between x = ${fmtDisplay(a)} and x = ${fmtDisplay(b)} is ${area.toFixed(4)}`;
+
+      // Reflect normalized formatted values back to inputs (do not force user typing mid-typing)
+      minInput.value = fmtDisplay(a === null ? Number.NEGATIVE_INFINITY : a);
+      maxInput.value = fmtDisplay(b === null ? Number.POSITIVE_INFINITY : b);
+    }
+
+    // --- Click & drag selection ---
+    let dragging = false;
+    let startX = null;
+
+    canvas.addEventListener("mousedown", (e) => {
+      dragging = true;
+      startX = e.offsetX;
+    });
+
+    canvas.addEventListener("mouseup", (e) => {
+      if (!dragging) return;
+      dragging = false;
+      const endX = e.offsetX;
+
+      let rawX1 = canvasToX(Math.min(startX, endX));
+      let rawX2 = canvasToX(Math.max(startX, endX));
+
+      // Convert beyond bounds to infinities for area; clamp for drawing
+      let minVal = rawX1 < -4 ? Number.NEGATIVE_INFINITY : rawX1;
+      let maxVal = rawX2 > 4 ? Number.POSITIVE_INFINITY : rawX2;
+
+      updateVisualization(minVal, maxVal);
+    });
+
+    canvas.addEventListener("mousemove", (e) => {
+      const x = canvasToX(e.offsetX);
+      if (x < -4) {
+        cursorLabel.textContent = "x = -∞";
+      } else if (x > 4) {
+        cursorLabel.textContent = "x = ∞";
+      } else {
+        cursorLabel.textContent = `x = ${x.toFixed(2)}`;
+      }
+    });
+
+    // --- Input handlers ---
+    function handleShadeFromInputs() {
+      const a = parseBound(minInput.value, -1);
+      const b = parseBound(maxInput.value, +1);
+
+      // If a or b is null (unparseable), default blanks to infinities, else ignore
+      const aSafe = (a === null) ? Number.NEGATIVE_INFINITY : a;
+      const bSafe = (b === null) ? Number.POSITIVE_INFINITY : b;
+
+      updateVisualization(aSafe, bSafe);
+    }
+
+    shadeBtn.addEventListener("click", handleShadeFromInputs);
+
+    // Update live on Enter key inside inputs
+    [minInput, maxInput].forEach(inp => {
+      inp.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") handleShadeFromInputs();
+      });
+      // Optional: live update on blur
+      inp.addEventListener("blur", handleShadeFromInputs);
+    });
+
+    clearBtn.addEventListener("click", () => {
+      minInput.value = "";
+      maxInput.value = "";
+      drawCurve();
+      info.textContent = "";
+    });
+
+    // Initial draw
+    drawCurve();
+  </script>
+</body>
+</html>
