@@ -939,6 +939,35 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/two_ts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">17. A binary explanatory variable</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/2t_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. two-t Assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/2t_calcs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. two-t Calculations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/uncertain2t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Uncertain-2t</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
@@ -975,7 +1004,7 @@ window.Quarto = {
 
 
 <div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<p><strong>Motivating scenario:</strong> Statistical modelling allows us to test null hypotheses and quantify uncertainty. But results from these models are only as good as the data and the fit between data and assumptions of the analysis. Here we learn how to check these assumptions. By mastering these concepts, you will become more than someone who can push a button in R, you will be a good biostatistician.</p>
+<p><strong>Motivating scenario:</strong> Statistical modelling allows us to test null hypotheses and quantify uncertainty. But results from these models are only as good as the data and the fit between data and assumptions of the analysis. Here we learn how to check these assumptions, and learn what to do when assumptions are violated.</p>
 <p><strong>Learning goals:</strong> By the end of this section, you should be able to:</p>
 <ol type="1">
 <li><strong>List and explain</strong> the assumptions made in using a t-distribution.</li>
@@ -1026,7 +1055,7 @@ window.Quarto = {
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-nonindep" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A tile plot showing the structure of the dataset. The x-axis lists geographic locations like &quot;UK&quot; and &quot;Switzerland&quot;, and the y-axis lists taxonomic groups like &quot;plants&quot; and &quot;birds&quot;. The grid shows that most combinations are empty, but the &quot;UK&quot; column contains the most data points across many different taxa, and the &quot;plants&quot; row has data from the most locations.">
+<div id="fig-nonindep" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A tile plot showing the structure of the dataset. The x-axis lists geographic locations like &quot;UK&quot; and &quot;Switzerland&quot;, and the y-axis lists taxonomic groups like &quot;plants&quot; and &quot;birds&quot;. The grid shows that most combinations are empty, but the &quot;UK&quot; column contains the most data points across many different taxa, and the &quot;plants&quot; row has data from the most locations." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-nonindep-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="t_assumptions_files/figure-html/fig-nonindep-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A tile plot showing the structure of the dataset. The x-axis lists geographic locations like &quot;UK&quot; and &quot;Switzerland&quot;, and the y-axis lists taxonomic groups like &quot;plants&quot; and &quot;birds&quot;. The grid shows that most combinations are empty, but the &quot;UK&quot; column contains the most data points across many different taxa, and the &quot;plants&quot; row has data from the most locations.">

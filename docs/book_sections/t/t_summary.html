@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../references.html" rel="next">
+<link href="../../book_sections/two_ts.html" rel="next">
 <link href="../../book_sections/t/paired_t_test.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -2492,6 +2492,35 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/two_ts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">17. A binary explanatory variable</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/2t_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. two-t Assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/2t_calcs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. two-t Calculations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/uncertain2t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Uncertain-2t</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
@@ -2846,23 +2875,23 @@ Figure&nbsp;1: <a href="https://xkcd.com/1347/">T distribution adapted from xkcd
 <h3 class="anchored" data-anchor-id="part-1-concepts">Part 1: Concepts</h3>
 <div class="exercises">
 <strong>Q1.</strong> The difference between a t-value and a z-value is:
-<div id="radio_WIBZWKFRME" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_WIBZWKFRME" value=""> <span>The z assumes the mean is zero, the t does not</span></label><label><input type="radio" autocomplete="off" name="radio_WIBZWKFRME" value=""> <span>The z assumes that samples come from a normal distribution, the t does not</span></label><label><input type="radio" autocomplete="off" name="radio_WIBZWKFRME" value="answer"> <span>The z assumes that we know the true population standard deviation, the t assumes we only have an estimate</span></label>
+<div id="radio_KTAUPCPJSF" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_KTAUPCPJSF" value=""> <span>The z assumes the mean is zero, the t does not</span></label><label><input type="radio" autocomplete="off" name="radio_KTAUPCPJSF" value=""> <span>The z assumes that samples come from a normal distribution, the t does not</span></label><label><input type="radio" autocomplete="off" name="radio_KTAUPCPJSF" value="answer"> <span>The z assumes that we know the true population standard deviation, the t assumes we only have an estimate</span></label>
 </div>
 <hr>
 <strong>Q2.</strong> If our sample is not perfectly normal:
-<div id="radio_WSJVMZIRIO" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_WSJVMZIRIO" value=""> <span>We cannot use t-based tests, as the assume normality, and are not useful if data aren't normal</span></label><label><input type="radio" autocomplete="off" name="radio_WSJVMZIRIO" value="answer"> <span>We can use t-based tests so long as the sample is sufficiently large, and the deviations from normality aren't too big, so the central limit theorem bails us out.</span></label><label><input type="radio" autocomplete="off" name="radio_WSJVMZIRIO" value=""> <span>This has no impact on t - that's why we us a t-distribution instead of a z distribution</span></label>
+<div id="radio_MKHNVFHVIY" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_MKHNVFHVIY" value=""> <span>We cannot use t-based tests, as the assume normality, and are not useful if data aren't normal</span></label><label><input type="radio" autocomplete="off" name="radio_MKHNVFHVIY" value="answer"> <span>We can use t-based tests so long as the sample is sufficiently large, and the deviations from normality aren't too big, so the central limit theorem bails us out.</span></label><label><input type="radio" autocomplete="off" name="radio_MKHNVFHVIY" value=""> <span>This has no impact on t - that's why we us a t-distribution instead of a z distribution</span></label>
 </div>
 <hr>
 <strong>Q3.</strong> The t and z distributions will never be the exact same. But when will they be nearly identical?
-<div id="radio_DDSGUSWPQK" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_DDSGUSWPQK" value="answer"> <span>When the sample size is large</span></label><label><input type="radio" autocomplete="off" name="radio_DDSGUSWPQK" value=""> <span>When the standard deviation is small</span></label><label><input type="radio" autocomplete="off" name="radio_DDSGUSWPQK" value=""> <span>When data are normal</span></label><label><input type="radio" autocomplete="off" name="radio_DDSGUSWPQK" value=""> <span>Never, these are very different distributions - this is akin to asking when an orange and apple are similar.</span></label>
+<div id="radio_MTBFLERERL" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_MTBFLERERL" value="answer"> <span>When the sample size is large</span></label><label><input type="radio" autocomplete="off" name="radio_MTBFLERERL" value=""> <span>When the standard deviation is small</span></label><label><input type="radio" autocomplete="off" name="radio_MTBFLERERL" value=""> <span>When data are normal</span></label><label><input type="radio" autocomplete="off" name="radio_MTBFLERERL" value=""> <span>Never, these are very different distributions - this is akin to asking when an orange and apple are similar.</span></label>
 </div>
 <hr>
 <strong>Q4.</strong> Which is the best summary of the effect size for normally distributed data?
-<div id="radio_YWKHOMQCYL" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_YWKHOMQCYL" value=""> <span>The p-value</span></label><label><input type="radio" autocomplete="off" name="radio_YWKHOMQCYL" value=""> <span>The difference between the parameter and its null value</span></label><label><input type="radio" autocomplete="off" name="radio_YWKHOMQCYL" value="answer"> <span>The difference between the parameter and its null value, standardized by the standard deviation</span></label><label><input type="radio" autocomplete="off" name="radio_YWKHOMQCYL" value=""> <span>The difference between the parameter and its null value, standardized by the standard error</span></label>
+<div id="radio_OIUGPVDYMP" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_OIUGPVDYMP" value=""> <span>The p-value</span></label><label><input type="radio" autocomplete="off" name="radio_OIUGPVDYMP" value=""> <span>The difference between the parameter and its null value</span></label><label><input type="radio" autocomplete="off" name="radio_OIUGPVDYMP" value="answer"> <span>The difference between the parameter and its null value, standardized by the standard deviation</span></label><label><input type="radio" autocomplete="off" name="radio_OIUGPVDYMP" value=""> <span>The difference between the parameter and its null value, standardized by the standard error</span></label>
 </div>
 </div>
 <hr>
@@ -2893,23 +2922,23 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
 <div class="cell page-columns page-full">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="npdajfrxvs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#npdajfrxvs table {
+<div id="zbuqptnogq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zbuqptnogq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#npdajfrxvs thead, #npdajfrxvs tbody, #npdajfrxvs tfoot, #npdajfrxvs tr, #npdajfrxvs td, #npdajfrxvs th {
+#zbuqptnogq thead, #zbuqptnogq tbody, #zbuqptnogq tfoot, #zbuqptnogq tr, #zbuqptnogq td, #zbuqptnogq th {
   border-style: none;
 }
 
-#npdajfrxvs p {
+#zbuqptnogq p {
   margin: 0;
   padding: 0;
 }
 
-#npdajfrxvs .gt_table {
+#zbuqptnogq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2935,12 +2964,12 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   border-left-color: #D3D3D3;
 }
 
-#npdajfrxvs .gt_caption {
+#zbuqptnogq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#npdajfrxvs .gt_title {
+#zbuqptnogq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2952,7 +2981,7 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   border-bottom-width: 0;
 }
 
-#npdajfrxvs .gt_subtitle {
+#zbuqptnogq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2964,7 +2993,7 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   border-top-width: 0;
 }
 
-#npdajfrxvs .gt_heading {
+#zbuqptnogq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2976,13 +3005,13 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   border-right-color: #D3D3D3;
 }
 
-#npdajfrxvs .gt_bottom_border {
+#zbuqptnogq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#npdajfrxvs .gt_col_headings {
+#zbuqptnogq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2997,7 +3026,7 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   border-right-color: #D3D3D3;
 }
 
-#npdajfrxvs .gt_col_heading {
+#zbuqptnogq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3017,7 +3046,7 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   overflow-x: hidden;
 }
 
-#npdajfrxvs .gt_column_spanner_outer {
+#zbuqptnogq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3029,15 +3058,15 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   padding-right: 4px;
 }
 
-#npdajfrxvs .gt_column_spanner_outer:first-child {
+#zbuqptnogq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#npdajfrxvs .gt_column_spanner_outer:last-child {
+#zbuqptnogq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#npdajfrxvs .gt_column_spanner {
+#zbuqptnogq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3049,11 +3078,11 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   width: 100%;
 }
 
-#npdajfrxvs .gt_spanner_row {
+#zbuqptnogq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#npdajfrxvs .gt_group_heading {
+#zbuqptnogq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3079,7 +3108,7 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   text-align: left;
 }
 
-#npdajfrxvs .gt_empty_group_heading {
+#zbuqptnogq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3094,15 +3123,15 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   vertical-align: middle;
 }
 
-#npdajfrxvs .gt_from_md > :first-child {
+#zbuqptnogq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#npdajfrxvs .gt_from_md > :last-child {
+#zbuqptnogq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#npdajfrxvs .gt_row {
+#zbuqptnogq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3121,7 +3150,7 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   overflow-x: hidden;
 }
 
-#npdajfrxvs .gt_stub {
+#zbuqptnogq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3134,7 +3163,7 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   padding-right: 5px;
 }
 
-#npdajfrxvs .gt_stub_row_group {
+#zbuqptnogq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3148,15 +3177,15 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   vertical-align: top;
 }
 
-#npdajfrxvs .gt_row_group_first td {
+#zbuqptnogq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#npdajfrxvs .gt_row_group_first th {
+#zbuqptnogq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#npdajfrxvs .gt_summary_row {
+#zbuqptnogq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3166,16 +3195,16 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   padding-right: 5px;
 }
 
-#npdajfrxvs .gt_first_summary_row {
+#zbuqptnogq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#npdajfrxvs .gt_first_summary_row.thick {
+#zbuqptnogq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#npdajfrxvs .gt_last_summary_row {
+#zbuqptnogq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3185,7 +3214,7 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   border-bottom-color: #D3D3D3;
 }
 
-#npdajfrxvs .gt_grand_summary_row {
+#zbuqptnogq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3195,7 +3224,7 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   padding-right: 5px;
 }
 
-#npdajfrxvs .gt_first_grand_summary_row {
+#zbuqptnogq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3205,7 +3234,7 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   border-top-color: #D3D3D3;
 }
 
-#npdajfrxvs .gt_last_grand_summary_row_top {
+#zbuqptnogq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3215,11 +3244,11 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   border-bottom-color: #D3D3D3;
 }
 
-#npdajfrxvs .gt_striped {
+#zbuqptnogq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#npdajfrxvs .gt_table_body {
+#zbuqptnogq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3228,7 +3257,7 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   border-bottom-color: #D3D3D3;
 }
 
-#npdajfrxvs .gt_footnotes {
+#zbuqptnogq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3242,7 +3271,7 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   border-right-color: #D3D3D3;
 }
 
-#npdajfrxvs .gt_footnote {
+#zbuqptnogq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3251,7 +3280,7 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   padding-right: 5px;
 }
 
-#npdajfrxvs .gt_sourcenotes {
+#zbuqptnogq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3265,7 +3294,7 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   border-right-color: #D3D3D3;
 }
 
-#npdajfrxvs .gt_sourcenote {
+#zbuqptnogq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3273,72 +3302,72 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
   padding-right: 5px;
 }
 
-#npdajfrxvs .gt_left {
+#zbuqptnogq .gt_left {
   text-align: left;
 }
 
-#npdajfrxvs .gt_center {
+#zbuqptnogq .gt_center {
   text-align: center;
 }
 
-#npdajfrxvs .gt_right {
+#zbuqptnogq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#npdajfrxvs .gt_font_normal {
+#zbuqptnogq .gt_font_normal {
   font-weight: normal;
 }
 
-#npdajfrxvs .gt_font_bold {
+#zbuqptnogq .gt_font_bold {
   font-weight: bold;
 }
 
-#npdajfrxvs .gt_font_italic {
+#zbuqptnogq .gt_font_italic {
   font-style: italic;
 }
 
-#npdajfrxvs .gt_super {
+#zbuqptnogq .gt_super {
   font-size: 65%;
 }
 
-#npdajfrxvs .gt_footnote_marks {
+#zbuqptnogq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#npdajfrxvs .gt_asterisk {
+#zbuqptnogq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#npdajfrxvs .gt_indent_1 {
+#zbuqptnogq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#npdajfrxvs .gt_indent_2 {
+#zbuqptnogq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#npdajfrxvs .gt_indent_3 {
+#zbuqptnogq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#npdajfrxvs .gt_indent_4 {
+#zbuqptnogq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#npdajfrxvs .gt_indent_5 {
+#zbuqptnogq .gt_indent_5 {
   text-indent: 25px;
 }
 
-#npdajfrxvs .katex-display {
+#zbuqptnogq .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#npdajfrxvs div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zbuqptnogq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3424,8 +3453,8 @@ Figure&nbsp;2: <strong>Paired differences in hyena “giggles” by dominance st
 <div id="qwebr-insertion-location-2"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <strong>Q5.</strong> Make a qq-plot. Then evaluate it in relation to the normality assumption.
-<div id="radio_RYMUALPTJE" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_RYMUALPTJE" value=""> <span>The data are perfectly normal</span></label><label><input type="radio" autocomplete="off" name="radio_RYMUALPTJE" value="answer"> <span>The data likely deviate somewhat from normality, but a t-test is probably ok</span></label><label><input type="radio" autocomplete="off" name="radio_RYMUALPTJE" value=""> <span>The data deviate strongly from normality and any test assuming normality cannot be trusted</span></label>
+<div id="radio_ZZKBNRVZEI" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ZZKBNRVZEI" value=""> <span>The data are perfectly normal</span></label><label><input type="radio" autocomplete="off" name="radio_ZZKBNRVZEI" value="answer"> <span>The data likely deviate somewhat from normality, but a t-test is probably ok</span></label><label><input type="radio" autocomplete="off" name="radio_ZZKBNRVZEI" value=""> <span>The data deviate strongly from normality and any test assuming normality cannot be trusted</span></label>
 </div>
 <div class="webex-solution">
 <button>
@@ -3485,18 +3514,18 @@ Return above to try yourself, or click here for code
 </div>
 <hr>
 <strong>Q9.</strong> Given the answers to <em>Q7</em> and <em>Q8</em> do you think the difference between subordinates and dominants is statistically significant at the <span class="math inline">\(\alpha = 0.05\)</span> level?
-<div id="radio_MNSSARPIKV" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_MNSSARPIKV" value="answer"> <span>yes because t is greater than the critical value</span></label><label><input type="radio" autocomplete="off" name="radio_MNSSARPIKV" value=""> <span>no because t is greater than the critical value</span></label><label><input type="radio" autocomplete="off" name="radio_MNSSARPIKV" value=""> <span>we can't know this until we find our p-value</span></label>
+<div id="radio_WHOGKPQZCE" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_WHOGKPQZCE" value="answer"> <span>yes because t is greater than the critical value</span></label><label><input type="radio" autocomplete="off" name="radio_WHOGKPQZCE" value=""> <span>no because t is greater than the critical value</span></label><label><input type="radio" autocomplete="off" name="radio_WHOGKPQZCE" value=""> <span>we can't know this until we find our p-value</span></label>
 </div>
 <hr>
 <strong>Q10.</strong> Therefore, according to traditional statistical practice, we
-<div id="radio_JJXDACINBP" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_JJXDACINBP" value="answer"> <span>Proceed as if the null is false (interpret results accordingly), while recognizing that there is a real chance we're wrong</span></label><label><input type="radio" autocomplete="off" name="radio_JJXDACINBP" value=""> <span>Proceed as if the null is true (interpret results accordingly), while recognizing that there is a real chance we're wrong</span></label><label><input type="radio" autocomplete="off" name="radio_JJXDACINBP" value=""> <span>Reserve all judgement until we prove that the null is true (or false)</span></label>
+<div id="radio_MKGQVXKUSX" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_MKGQVXKUSX" value="answer"> <span>Proceed as if the null is false (interpret results accordingly), while recognizing that there is a real chance we're wrong</span></label><label><input type="radio" autocomplete="off" name="radio_MKGQVXKUSX" value=""> <span>Proceed as if the null is true (interpret results accordingly), while recognizing that there is a real chance we're wrong</span></label><label><input type="radio" autocomplete="off" name="radio_MKGQVXKUSX" value=""> <span>Reserve all judgement until we prove that the null is true (or false)</span></label>
 </div>
 <hr>
 <strong>Q11.</strong> Say you found a p-value of <em>p</em>. Which would be a correct interpretation of p?
-<div id="radio_ZXNWAZNOGQ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_ZXNWAZNOGQ" value=""> <span>p is the probability that the null hypothesis generated the data (or something more extreme).</span></label><label><input type="radio" autocomplete="off" name="radio_ZXNWAZNOGQ" value=""> <span>p is the probability that the null hypothesis is true.</span></label><label><input type="radio" autocomplete="off" name="radio_ZXNWAZNOGQ" value="answer"> <span>p is the probability that a random sample from the null hypothesis would be as or more extreme than the data</span></label>
+<div id="radio_BFRTYNRIPZ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_BFRTYNRIPZ" value=""> <span>p is the probability that the null hypothesis generated the data (or something more extreme).</span></label><label><input type="radio" autocomplete="off" name="radio_BFRTYNRIPZ" value=""> <span>p is the probability that the null hypothesis is true.</span></label><label><input type="radio" autocomplete="off" name="radio_BFRTYNRIPZ" value="answer"> <span>p is the probability that a random sample from the null hypothesis would be as or more extreme than the data</span></label>
 </div>
 <hr>
 <p><strong>Q12.</strong> Say I had data from another two dominant individuals and another two subordinate individuals, but they were not from a pair. Would it be legit to randomly pair them and do a paired t-test? <select class="webex-select"><option value="blank"></option><option value="">Yes</option><option value="answer">No</option></select></p>
@@ -4200,8 +4229,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../book_sections/two_ts.html" class="pagination-link" aria-label="17. A binary explanatory variable">
+        <span class="nav-page-text">17. A binary explanatory variable</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

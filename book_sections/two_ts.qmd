@@ -1,0 +1,56 @@
+# 17. A binary explanatory variable  {.unnumbered #two_ts}
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../_common.R") 
+
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))|>
+  select(petal_color, petal_area_mm, num_hybrid, offspring_genotyped, prop_hybrid, mean_visits , asd_mm )
+```
+
+
+<article class="drop-cap">One of the most common questions is *“What’s the difference?”* We often want to know: </article>     
+
+* *What’s the difference between the vaccinated and the unvaccinated?*
+* *What’s the difference in children’s mental health before and after the advent of social media?*
+* *What’s the difference in hybridization rate between pink and white plants?*
+
+:::aside
+**NOTE:** We usually want to know cause (e.g., “Will a vaccine help or hurt?”), but we're often stuck with associations (e.g., “What’s the difference between vaccinated and unvaccinated people?”). Causal claims require careful experiments or other formal approaches to causal inference.
+:::
+
+
+## The *t*-distribution
+
+We can use the *t*-distribution to evaluate the null hypothesis that two samples come from the same statistical population.
+
+* **Paired comparisons:** When data are naturally paired, we can use a one-sample *t*-test on the differences between members of each pair. This design provide us great statistcal powerful to reject false null hypotheses because pairs "soak up" variability unrelated to treatment. This gives us more sensitivity to detect real effects.
+
+* **Unpaired comparisons:** In many cases, natural pairing is impracticle or impossible. For example, there is no natural "pairing" in comparisons between pink and white *parviflora* RILs. In these situations, we test whether the means of two independent samples differ.
+
+## Our Path  
+
+We will return to our *Clarkia* RILs and compare pollinator visitation on to pink and white flowered RILs at site Sawmill Road. We might think that pink flowers attract more pollinator visits than white flowers (our scientific hypothesis). Recasting this idea as a (two-tailed) statistical hypotheses: 
+
+- **Null hypothesis:** The mean number of pollinators visits to pink and white flowered *parviflora* RILs are the same.   
+- **Alternative hypothesis:** The mean number of pollinators visits to pink and white flowered *parviflora* RILs  differ.   

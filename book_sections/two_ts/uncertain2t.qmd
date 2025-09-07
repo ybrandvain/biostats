@@ -1,0 +1,132 @@
+## • 16. Uncertain-2t {.unnumbered #uncertain2t}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+```
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating scenario:** We have summarized the difference in the means of two groups. But we know that all estimates should be accompanied by our estimate of uncertainty in them.  
+
+**Learning goals:** By the end of this section, you should be able to:   
+
+- **Quantify** uncertainty in estimates of difference in the mean as the:  
+    - Standard Error.   
+    - The 95% Confidence Interval.   
+:::
+
+```{r}
+#| column: margin
+#| code-fold: true
+#| code-summary: "Loading and processing data"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+SR_rils <- readr::read_csv(ril_link) |>
+  filter(location == "SR") |>
+  select(ril, petal_color, mean_visits) |>
+  filter(!is.na(mean_visits), !is.na(petal_color))
+
+SR_rils  <- SR_rils                          |> 
+  mutate(log_visits = log(.2 + mean_visits))
+
+color_visit_summaries <- SR_rils |>
+  group_by(petal_color)|>
+  summarise(MEAN = mean(log_visits),
+            VAR        = var(log_visits),
+            N                 = n())
+```
+---
+
+
+
+## Estimating Uncertainty  in Mean Difference 
+
+A "point" estimate is just that -- our informed guess of a parameter value. But we now know enough to flinch when we hear or calculate such an estimate. We know that estimates  come from samples and therefore we need to addinformation about the uncertainty in any estimate before rushing to intepret it.
+
+To estimate uncertainty in the difference in means we find the "pooled standard error" and then go to our t-distribution to turn this into a confidence interval.
+
+- **The standard error for the difference in means** is a strange looking equation: 
+
+:::aside 
+**$SE_{\overline{x_1}-\overline{x_2}}$ for our example:**  
+$$
+\begin{align}
+SE_{\overline{x_1}-\overline{x_2}} &= \sqrt{s_p^2 \Big(\frac{1}{n_1} + \frac{1}{n_2}\Big)}\\
+&= \sqrt{0.693\times\Big({\frac{1}{57}+\frac{1}{50}\Big)}}\\ 
+&=0.161
+\end{align}
+$$
+:::
+
+$$SE_{\overline{x_1}-\overline{x_2}} = \sqrt{s_p^2 \Big(\frac{1}{n_1} + \frac{1}{n_2}\Big)}$$
+
+
+
+
+- **The 95% confidence interval of the difference in means:** Is pretty straightforward. Now that we have our standard error, we simply multiply it by $t_{\text{crit, }{\alpha=0.05\text{, }df_\text{total}}}$.     
+
+    - The total degrees of freedom is the sum of the degrees of freedom for each estimate: 
+    
+$$
+\begin{align}
+df_\text{total} &= df_1+df_2 \\
+&= (n_1 - 1) + (n_2-1)\\ 
+&= n_{total}-2
+\end{align}
+$$
+
+
+   
+**Let's calculate the standard error and 95% confidence interval for the estimate of the mean difference "by hand" in R:**
+
+
+```{r}
+#| column: margin
+#| echo: false
+color_visit_summaries|>
+  mutate(DF = N-1)|>
+  summarise(mean_diff   = diff(MEAN) |> abs(),
+            pooled_var  = sum((N-1)*(VAR)) / (sum(N)-2),
+            df_total    = sum(DF),
+            se          = sqrt(pooled_var*(sum(1/N))),
+            crit_t      = qt(p = 0.025, 
+                             df = df_total, 
+                             lower.tail = FALSE),
+            lower_95_CI = mean_diff - se * crit_t,
+            upper_95_CI = mean_diff + se * crit_t)|>
+  mutate_all(round, digits= 3)|>
+  pivot_longer(values_to = "value", cols=1:7,names_to = "thing")|>
+  gt()
+              
+```         
+
+```{r}
+#| eval: false
+color_visit_summaries|>
+  mutate(DF = N-1)|>
+  summarise(mean_diff   = diff(MEAN) |> abs(),
+            pooled_var  = sum((N-1)*(VAR)) / (sum(N)-2),
+            df_total    = sum(DF),
+            se          = sqrt(pooled_var*(sum(1/N))),
+            crit_t      = qt(p = 0.025, 
+                             df = df_total, 
+                             lower.tail = FALSE),
+            lower_95_CI = mean_diff - se * crit_t,
+            upper_95_CI = mean_diff + se * crit_t)
+```         
+:::warning
+We have done all our
+:::

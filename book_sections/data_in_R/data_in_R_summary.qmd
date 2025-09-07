@@ -71,7 +71,19 @@ iris |>
 
 ---  
 
-**Q2)** Revisit the pollinator visitation dataset we explored. Which location has a greater anther stigma distance (`asd_mm`)?  `r mcq(c(answer = "They are the same", "SM", "GC", "S6"))`   
+**Q2)** Revisit the pollinator visitation dataset we explored. Which location has a greater anther stigma distance (`asd_mm`)?  `r mcq(c("They are the same", answer =  "SM", "GC", "S6"))`   
+
+`r hide("Click here for explanation")`
+
+```{r}
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link)
+ril_data      |>
+  group_by(location) |>
+  summarise(avg_asd = mean(asd_mm, na.rm = TRUE))
+```
+
+`r unhide()`
 
 ---  
 

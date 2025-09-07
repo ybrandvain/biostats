@@ -2449,6 +2449,35 @@ globalThis.qwebrExecuteCode = async function (
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/two_ts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">17. A binary explanatory variable</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/2t_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. two-t Assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/2t_calcs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. two-t Calculations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/uncertain2t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Uncertain-2t</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
@@ -2817,13 +2846,13 @@ Figure&nbsp;2: A histogram showing the distribution of lengths for all human gen
 </div>
 <div class="exercises">
 <strong>Q3)</strong> As seen in <a href="#fig-genes" class="quarto-xref">Figure&nbsp;<span>2</span></a>, the distribution of human gene lengths is ___ (<em>find all correct</em>)
-<div id="radio_TLGKKSSEUQ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_TLGKKSSEUQ" value="answer"> <span>Unimodal</span></label><label><input type="radio" autocomplete="off" name="radio_TLGKKSSEUQ" value=""> <span>Bimodal</span></label><label><input type="radio" autocomplete="off" name="radio_TLGKKSSEUQ" value=""> <span>Symmetric</span></label><label><input type="radio" autocomplete="off" name="radio_TLGKKSSEUQ" value="answer"> <span>Right Skewed</span></label>
+<div id="radio_BIBITXZBEE" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_BIBITXZBEE" value="answer"> <span>Unimodal</span></label><label><input type="radio" autocomplete="off" name="radio_BIBITXZBEE" value=""> <span>Bimodal</span></label><label><input type="radio" autocomplete="off" name="radio_BIBITXZBEE" value=""> <span>Symmetric</span></label><label><input type="radio" autocomplete="off" name="radio_BIBITXZBEE" value="answer"> <span>Right Skewed</span></label>
 </div>
 <p>.</p>
 <strong>Q4)</strong> <a href="#fig-genes" class="quarto-xref">Figure&nbsp;<span>2</span></a> displays ___
-<div id="radio_AHHPXAWUXS" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_AHHPXAWUXS" value=""> <span>the sampling distribution</span></label><label><input type="radio" autocomplete="off" name="radio_AHHPXAWUXS" value="answer"> <span>the population distribution</span></label>
+<div id="radio_DHQBYVLSBZ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_DHQBYVLSBZ" value=""> <span>the sampling distribution</span></label><label><input type="radio" autocomplete="off" name="radio_DHQBYVLSBZ" value="answer"> <span>the population distribution</span></label>
 </div>
 </div>
 <p><strong>Sampling wrong:</strong> I tried to create a sampling distribution for median human gene length by randomly selecting nucleotides from the human exome, finding the gene they were in, noting its length, and removing it from my list until I had the lengths of fifty genes in the human genome. I did this one thousand times to get medians from one thousand samples of size fifty (<a href="#fig-genes-2" class="quarto-xref">Figure&nbsp;<span>3</span></a>).</p>
@@ -2843,14 +2872,14 @@ Figure&nbsp;3: The distribution of the estimated mean length of human genes. Her
 </div>
 <div class="exercises">
 <strong>Q5)</strong> The difference between the true population mean (red line) and my estimates from samples of size fifty (bars in histogram) are most likely explained by
-<div id="radio_DFFPBRPAQR" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_DFFPBRPAQR" value="answer"> <span>Sampling bias</span></label><label><input type="radio" autocomplete="off" name="radio_DFFPBRPAQR" value=""> <span>Non-independence</span></label><label><input type="radio" autocomplete="off" name="radio_DFFPBRPAQR" value=""> <span>Sampling Error</span></label><label><input type="radio" autocomplete="off" name="radio_DFFPBRPAQR" value=""> <span>The unreliability of the law of large numbers</span></label>
+<div id="radio_AEGFUATAXN" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_AEGFUATAXN" value="answer"> <span>Sampling bias</span></label><label><input type="radio" autocomplete="off" name="radio_AEGFUATAXN" value=""> <span>Non-independence</span></label><label><input type="radio" autocomplete="off" name="radio_AEGFUATAXN" value=""> <span>Sampling Error</span></label><label><input type="radio" autocomplete="off" name="radio_AEGFUATAXN" value=""> <span>The unreliability of the law of large numbers</span></label>
 </div>
 <p>.</p>
 <p><strong>Q6)</strong> YANIV INSERT CHATBOT. Explain your reasoning for the answer above. Any guesses on how I could have gotten this so wrong? How could this be fixed?</p>
 <strong>Q7)</strong> Why is the range of values so much smaller in <a href="#fig-genes-2" class="quarto-xref">Figure&nbsp;<span>3</span></a> than in <a href="#fig-genes" class="quarto-xref">Figure&nbsp;<span>2</span></a>?
-<div id="radio_ABCEEBRYQU" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_ABCEEBRYQU" value=""> <span>Sampling bias</span></label><label><input type="radio" autocomplete="off" name="radio_ABCEEBRYQU" value=""> <span>Non-independence</span></label><label><input type="radio" autocomplete="off" name="radio_ABCEEBRYQU" value=""> <span>Sampling error</span></label><label><input type="radio" autocomplete="off" name="radio_ABCEEBRYQU" value="answer"> <span>Parameter estimates are usualy have a tighter distribution than all observed values.</span></label>
+<div id="radio_XUDHUVPYHD" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XUDHUVPYHD" value=""> <span>Sampling bias</span></label><label><input type="radio" autocomplete="off" name="radio_XUDHUVPYHD" value=""> <span>Non-independence</span></label><label><input type="radio" autocomplete="off" name="radio_XUDHUVPYHD" value=""> <span>Sampling error</span></label><label><input type="radio" autocomplete="off" name="radio_XUDHUVPYHD" value="answer"> <span>Parameter estimates are usualy have a tighter distribution than all observed values.</span></label>
 </div>
 </div>
 <p><strong>For the following questions, refer to <a href="#fig-genes-3" class="quarto-xref">Figure&nbsp;<span>4</span></a> (right).</strong></p>
@@ -2870,12 +2899,12 @@ Figure&nbsp;4: The effect of sample size on the sampling distribution of the mea
 </div></div></div>
 <div class="exercises">
 <strong>Q8)</strong> What aspect of sampling is responsible for the difference between the plots in <a href="#fig-genes-3" class="quarto-xref">Figure&nbsp;<span>4</span></a>?
-<div id="radio_VZOXBHIYMS" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_VZOXBHIYMS" value=""> <span>There is less sampling bias in larger samples</span></label><label><input type="radio" autocomplete="off" name="radio_VZOXBHIYMS" value=""> <span>There is less non-independence in larger samples</span></label><label><input type="radio" autocomplete="off" name="radio_VZOXBHIYMS" value="answer"> <span>There is less sampling error in larger samples</span></label>
+<div id="radio_PATLNDFNWF" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_PATLNDFNWF" value=""> <span>There is less sampling bias in larger samples</span></label><label><input type="radio" autocomplete="off" name="radio_PATLNDFNWF" value=""> <span>There is less non-independence in larger samples</span></label><label><input type="radio" autocomplete="off" name="radio_PATLNDFNWF" value="answer"> <span>There is less sampling error in larger samples</span></label>
 </div>
 <strong>Q9)</strong> Which sample size is associated with the smallest standard error?
-<div id="radio_WVTFGNEGHY" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_WVTFGNEGHY" value=""> <span>5</span></label><label><input type="radio" autocomplete="off" name="radio_WVTFGNEGHY" value=""> <span>30</span></label><label><input type="radio" autocomplete="off" name="radio_WVTFGNEGHY" value="answer"> <span>500</span></label><label><input type="radio" autocomplete="off" name="radio_WVTFGNEGHY" value=""> <span>They all have approximately the same standard error</span></label>
+<div id="radio_HVSNJAWJRE" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_HVSNJAWJRE" value=""> <span>5</span></label><label><input type="radio" autocomplete="off" name="radio_HVSNJAWJRE" value=""> <span>30</span></label><label><input type="radio" autocomplete="off" name="radio_HVSNJAWJRE" value="answer"> <span>500</span></label><label><input type="radio" autocomplete="off" name="radio_HVSNJAWJRE" value=""> <span>They all have approximately the same standard error</span></label>
 </div>
 <p><strong>Q10)</strong> For the sampling distribution for samples of size n in <a href="#fig-genes-3" class="quarto-xref">Figure&nbsp;<span>4</span></a>, approximately what proportion samples have a mean greater than the population mean?</p>
 <ul>
