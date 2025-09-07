@@ -2858,8 +2858,8 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="exercises">
 <strong>Q1)</strong> The code above returns the error: "Error: could not find function "summarise"". How can you solve this?
-<div id="radio_VWTVFHZLIX" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_VWTVFHZLIX" value=""> <span>Change “summarise” to “summarize”</span></label><label><input type="radio" autocomplete="off" name="radio_VWTVFHZLIX" value="answer"> <span>load the dplyr library</span></label>
+<div id="radio_VZWMKKUAGY" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_VZWMKKUAGY" value=""> <span>Change “summarise” to “summarize”</span></label><label><input type="radio" autocomplete="off" name="radio_VZWMKKUAGY" value="answer"> <span>load the dplyr library</span></label>
 </div>
 <hr>
 <p><strong>Q2)</strong> Revisit the pollinator visitation dataset we explored. Which location has a greater anther stigma distance (<code>asd_mm</code>)? <select class="webex-select"><option value="blank"></option><option value="">They are the same</option><option value="answer">SM</option><option value="">GC</option><option value="">S6</option></select></p>
@@ -2869,20 +2869,10 @@ Click here for explanation
 </button>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(ril_link)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 593 Columns: 17
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr  (5): ril, location, growth_rate, petal_color, crossDir
-dbl (12): prop_hybrid, mean_visits, petal_area_mm, date_first_flw, node_firs...
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ril_data      <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location) <span class="sc">|&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_asd =</span> <span class="fu">mean</span>(asd_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ril_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(ril_link)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>ril_data      <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location) <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_asd =</span> <span class="fu">mean</span>(asd_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 2
   location avg_asd
@@ -3040,24 +3030,24 @@ Click here for explanation
 </div>
 <hr>
 <strong>Q6</strong> You should always make sure data are tidy when (pick best answer)
-<div id="radio_UTMCZGCANT" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_UTMCZGCANT" value=""> <span>collecting data</span></label><label><input type="radio" autocomplete="off" name="radio_UTMCZGCANT" value=""> <span>presenting data</span></label><label><input type="radio" autocomplete="off" name="radio_UTMCZGCANT" value="answer"> <span>analyzing data with dplyr</span></label><label><input type="radio" autocomplete="off" name="radio_UTMCZGCANT" value=""> <span>all of the above</span></label>
+<div id="radio_YEINULETLI" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_YEINULETLI" value=""> <span>collecting data</span></label><label><input type="radio" autocomplete="off" name="radio_YEINULETLI" value=""> <span>presenting data</span></label><label><input type="radio" autocomplete="off" name="radio_YEINULETLI" value="answer"> <span>analyzing data with dplyr</span></label><label><input type="radio" autocomplete="off" name="radio_YEINULETLI" value=""> <span>all of the above</span></label>
 </div>
 <hr>
 <strong>Q7</strong> What is wrong with the code below (pick the most egregious issue).
-<div id="radio_KWYINQLAZT" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_KWYINQLAZT" value="answer"> <span>I overwrote iris and lost the raw data</span></label><label><input type="radio" autocomplete="off" name="radio_KWYINQLAZT" value=""> <span>I did not show the output</span></label><label><input type="radio" autocomplete="off" name="radio_KWYINQLAZT" value=""> <span>I used summarise() rather than summarize()</span></label><label><input type="radio" autocomplete="off" name="radio_KWYINQLAZT" value=""> <span>I did not tell R to remove missing data when calculating the mean.</span></label>
+<div id="radio_ZTEBVLQMMX" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ZTEBVLQMMX" value="answer"> <span>I overwrote iris and lost the raw data</span></label><label><input type="radio" autocomplete="off" name="radio_ZTEBVLQMMX" value=""> <span>I did not show the output</span></label><label><input type="radio" autocomplete="off" name="radio_ZTEBVLQMMX" value=""> <span>I used summarise() rather than summarize()</span></label><label><input type="radio" autocomplete="off" name="radio_ZTEBVLQMMX" value=""> <span>I did not tell R to remove missing data when calculating the mean.</span></label>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> iris <span class="sc">|&gt;</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_sepal_length =</span>  <span class="fu">mean</span>(Sepal.Length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> iris <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_sepal_length =</span>  <span class="fu">mean</span>(Sepal.Length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
 <p><strong>Q8</strong> After running the code below, how many rows and columns will the output tibble have? <em>NOTE</em> The original data has 593 rows, 7 columns and 186 unique RILs* <select class="webex-select"><option value="blank"></option><option value="">1 row, 1 column</option><option value="">1 row, 2 columns</option><option value="">2 rows, 2 columns</option><option value="answer">186 rows, 2 columns</option><option value="">186 rows, 7 columns</option><option value="">593 rows, 2 columns</option><option value="">593 rows, 7 columns</option></select></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ril_data   <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(ril) <span class="sc">|&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ril_data   <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(ril) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">avg_visits =</span> <span class="fu">mean</span>(mean_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <hr>

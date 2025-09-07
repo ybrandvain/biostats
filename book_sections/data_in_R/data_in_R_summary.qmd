@@ -76,6 +76,8 @@ iris |>
 `r hide("Click here for explanation")`
 
 ```{r}
+#| message: false
+#| warning: false
 ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
 ril_data <- readr::read_csv(ril_link)
 ril_data      |>
