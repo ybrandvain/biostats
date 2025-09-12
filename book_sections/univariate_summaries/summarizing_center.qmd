@@ -339,6 +339,7 @@ kable(tmp, digits = 3) |>
 #| echo: false
 #| message: false
 #| warning: false
+#| clumn: page-right
 #| label: fig-dist
 #| fig-cap: "*Distributions of select traits in Clarkia datasets*. This figure shows histograms of three different variables from two datasets: Recombinant Inbred Line (RIL) populations and a hybrid zone dataset. The left panel displays the distribution of petal area (log10 mm^2)  in the RIL dataset, showing a unimodal distribution. The middle panel presents the log10-transformed petal area (log10 cm^2) in the hybrid zone dataset, which appears bimodal. The right panel illustrates the number of pollinator visits at GC in the RIL dataset, showing a highly right-skewed distribution with many zero observations."
 #| fig-alt: "A set of three histograms comparing trait distributions in Clarkia datasets. The left panel, labeled 'RIL dataset,' shows a histogram of petal area (log10 mm^2), with a unimodal distribution centered around 1.8 log10 mm^2. The middle panel, labeled 'Hybrid zone dataset,' displays a histogram of log10-transformed petal area (in log10 cm^2), appearing bimodal with peaks near -0.5 and 0.5. The right panel, also from the RIL dataset, shows pollinator visits at GC, with a strongly right-skewed distribution where most values are close to zero."
@@ -365,13 +366,19 @@ a+b+c
 ```
 
 
+```{r}
+#| eval: false
+#| echo: false
 :::exercises
 
 **Now let's refresh our understanding of standard summaries of central tendency, by reflecting on what we are trying to capture / describe.**  For each of the plots in @fig-dist, above, consider the appropriate  summary. Most importantly explain what the summary is getting at, why it is more appropriate than other options, and what (if anything) it fails to capture. Then provide guesstimates of these summaries. <br><br>  <html><textarea rows="6" cols="50" placeholder="Your answer here..."></textarea></html>
 
 :::
+```
 
-
+```{=html}
+<iframe src="../../widget.html?prompt_id=cool-down-summarizing-differently-shaped-distributions-1757603403" width="100%" height="800" style="border:none;"></iframe>
+```
 
 
 

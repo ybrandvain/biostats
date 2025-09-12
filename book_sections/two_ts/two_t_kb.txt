@@ -1,0 +1,201 @@
+## 📚 Knowledge Base: Two-Sample *t* Chapter (Integrated)
+
+two _t_chapter:
+
+---
+
+## Section: Assumptions of the Two-Sample *t*
+
+**Key Points**
+
+* Assumptions: independence, unbiased sampling, mean is appropriate summary, residuals are approximately normal, equal variance.
+* Normality = within-group distributions are roughly normal, not combined data.
+* Equal variance = homoscedasticity; standard test assumes it.
+* t-test is robust to modest violations of normality and variance equality.
+
+**Learning Goals**
+
+* List and explain assumptions of the two-sample t-test.
+* Evaluate assumptions with plots and summaries.
+* Recognize when to transform, bootstrap, or use alternative tests.
+
+**Potential Confusions**
+
+* Students may think bimodal combined data = violation (when within-group is fine).
+* Confusing independence vs equal variance.
+* Believing “robust” means always safe.
+
+**Connections**
+
+* Builds directly on one-sample t-test assumptions.
+* Prepares for linear modeling framework.
+
+---
+
+## Section: Data Summaries & Calculations
+
+**Key Points**
+
+* Summarize group means, variances, sample sizes.
+* Pooled variance formula combines group variances weighted by df.
+* Difference in means quantifies raw effect.
+* Cohen’s D standardizes difference by pooled SD.
+
+**Learning Goals**
+
+* Calculate group means, variances, n.
+* Derive pooled variance and Cohen’s D.
+* Interpret standardized vs raw differences.
+
+**Potential Confusions**
+
+* Mixing up pooled variance with simple average variance.
+* Confusing Cohen’s D with t-statistic.
+* Forgetting to use transformed data when summarizing.
+
+**Connections**
+
+* Links to effect size reporting in later regression/ANOVA chapters.
+
+---
+
+## Section: The Two-Sample *t*-Test
+
+**Key Points**
+
+* Test statistic compares observed difference in means to expected difference under null.
+* Standard error accounts for within-group variance and sample sizes.
+* Standard test assumes equal variance; Welch’s test does not.
+* Both yield t-values, df, p-values, and confidence intervals.
+
+**Learning Goals**
+
+* Write null and alternative hypotheses for two means.
+* Calculate t-statistic by hand and with R.
+* Interpret p-value relative to critical t.
+* Report results with both significance and effect size.
+
+**Potential Confusions**
+
+* Thinking p-value = probability null is true.
+* Confusing equal variance vs unequal variance tests.
+* Interpreting transformed means biologically.
+
+**Connections**
+
+* Bridges one-sample t to linear models (`lm(y ~ group)`).
+* Leads into ANOVA as a generalization.
+
+---
+
+## Section: Alternatives & Robustness
+
+**Key Points**
+
+* If normality violated → transform, bootstrap, or use Wilcoxon rank-sum.
+* If variances unequal → Welch’s test.
+* Bootstrap = flexible for uncertainty; permutation = for hypothesis tests.
+* Resampling approaches often robust and intuitive.
+
+**Learning Goals**
+
+* Identify when assumptions fail.
+* Choose appropriate alternative method.
+* Understand tradeoffs between methods.
+
+**Potential Confusions**
+
+* Students may think Wilcoxon = same as comparing means.
+* Believing transformation always “fixes” problems.
+
+**Connections**
+
+* Links back to bootstrapping/permutation from earlier chapters.
+* Anticipates GLMs and mixed-effects models for complex data.
+
+---
+
+## Section: Writing Up Results
+
+**Key Points**
+
+* Report means, difference in means, effect size, test statistic, df, p-value, and CI.
+* Interpret results in biological as well as statistical terms.
+* Transparency about transformation decisions is important.
+
+**Learning Goals**
+
+* Write clear, concise, and complete results.
+* Emphasize both statistical and biological significance.
+
+**Potential Confusions**
+
+* Students may over-emphasize p-value and neglect effect size.
+* Confusion between transformed vs raw scale reporting.
+
+**Connections**
+
+* Reinforces scientific communication skills emphasized across chapters.
+
+---
+
+## 🛠️ Key R Functions {#2t\_summary\_key-r-functions}
+
+* `t.test()`: Performs one-sample, two-sample, or paired *t*-tests.
+* `wilcox.test()`: Rank-sum test for comparing medians.
+* `mean()`: Group averages.
+* `var()`: Group variances.
+* `summarise()`: Summarize grouped data (dplyr).
+* `mutate()`: Create/transform columns (e.g. log-transformation).
+* `broom::tidy()`: Clean `t.test()` output into tidy tables.
+* `ggplot() + stat_summary()`: Visualize group means and CIs.
+
+---
+
+## 📊 Glossary of Terms {#2t\_summary\_glossary-of-terms}
+
+* **Two-sample *t*-test**: Test for difference in means between two independent groups.
+* **Welch’s *t*-test**: Two-sample test that does not assume equal variances.
+* **Residuals**: Differences between observed values and group means.
+* **Homoscedasticity**: Equal variances across groups.
+* **Pooled variance (\$s\_p^2\$)**: Weighted average of group variances.
+* **Cohen’s D**: Standardized effect size for mean differences.
+* **Permutation test**: Randomization test for null hypothesis.
+* **Bootstrap**: Resampling method for estimating uncertainty.
+* **Wilcoxon rank-sum test**: Non-parametric alternative comparing medians.
+* **p-value**: Probability of observing data as extreme as sample if null is true.
+* **Confidence interval**: Range of plausible values for mean difference.
+
+---
+
+## ❓ Common Student Questions & Misconceptions
+
+1. **Why not always use Welch’s test?**
+   – It’s safer with unequal variance, but standard t-test is simpler to teach and matches linear modeling framework.
+
+2. **Does non-normal combined data violate assumptions?**
+   – No, only within-group normality matters.
+
+3. **Is the Wilcoxon test comparing means?**
+   – No, it compares distributions/medians.
+
+4. **Do variances have to be exactly equal?**
+   – No, t-tests are robust unless variance ratio > \~4:1.
+
+5. **What does “robust” mean here?**
+   – The test still works reasonably well with small violations, but not all.
+
+6. **Why transform data?**
+   – To reduce skewness and approximate normality, but interpretation on transformed scale may be tricky.
+
+---
+
+## ✏️ Notation Clarifications
+
+* **Difference in means**: \$\Delta \bar{x} = \bar{x}\_1 - \bar{x}\_2\$.
+* **Pooled variance**: \$s\_p^2 = \frac{df\_1 s\_1^2 + df\_2 s\_2^2}{df\_1 + df\_2}\$.
+* **Cohen’s D**: \$d = \frac{\bar{x}\_1 - \bar{x}\_2}{s\_p}\$.
+* **t-statistic**: \$t = \frac{(\bar{x}\_1 - \bar{x}*2)}{s*{\overline{x\_1 - x\_2}}}\$.
+
+⚠️ Students often confuse pooled variance with simple averaging, and may conflate Cohen’s D with the t-value.
+

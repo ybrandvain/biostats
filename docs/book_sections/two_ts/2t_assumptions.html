@@ -966,6 +966,18 @@ window.Quarto = {
  <span class="menu-text">• 16. Uncertain-2t</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/nhs2t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. two-sample t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/2t_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 17. Two t Summary</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -1004,7 +1016,7 @@ window.Quarto = {
 
 
 <div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-<p><strong>Motivating scenario:</strong> We’re getting ready to compare means of two-samples. We have some understanding that statistical models make assumptions, and know that sometimes violating assumptions is a big deal, while in other cases analyses are robust to such violations of assumptions. Here we explore th assumptions of the two sample t-test, and what to do when data do not meet these assumptions.</p>
+<p><strong>Motivating scenario:</strong> We’re getting ready to compare means of two-samples. We have some understanding that statistical models make assumptions, and know that sometimes violating assumptions is a big deal, while in other cases analyses are robust to such violations of assumptions. Here we explore the assumptions of the two sample t-test, and what to do when data do not meet these assumptions.</p>
 <p><strong>Learning goals:</strong> By the end of this section, you should be able to:</p>
 <ol type="1">
 <li><strong>List and explain</strong> the assumptions made in analyzing data with a “two-sample t-test”.<br>
@@ -1059,10 +1071,10 @@ window.Quarto = {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mean_visits), <span class="sc">!</span><span class="fu">is.na</span>(petal_color))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>These data are independent (we use only one value per RIL – the mean across plants of a given RIL genotype), collected without bias (nice job Brooke!), and the mean seems like a good summary. So let’s look into the asumptions of normality and equal variance:</p>
+<p>These data are independent (we use only one value per RIL – the mean across plants of a given RIL genotype), collected without bias (nice job Brooke!), and the mean seems like a good summary. So let’s look into the assumptions of normality and equal variance:</p>
 <section id="data-are-far-from-normal-but-transformation-helps." class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="data-are-far-from-normal-but-transformation-helps.">4. Data are far from normal, but transformation helps.</h3>
-<p>A look at the raw data shows that pollinators visits are far from normal – for both petal color morphs, many RILs have nearly no visits, while some have many visits (<a href="#fig-colohist" class="quarto-xref">Figure&nbsp;<span>1</span></a> A). After log-transformation<span class="math inline">\(^*\)</span> (<a href="#fig-colohist" class="quarto-xref">Figure&nbsp;<span>1</span></a> B), the data becomes closer to normal – however, the many white flowers receiving no pollinator visits <strong><span class="math inline">\(^\$\)</span></strong> remain, resulting a a modest (but good enough for most stats) deviation from normality.</p>
+<p>A look at the raw data shows that pollinators visits are far from normal – for both petal color morphs, many RILs have nearly no visits, while some have many visits (<a href="#fig-colohist" class="quarto-xref">Figure&nbsp;<span>1</span></a> A). After log-transformation<span class="math inline">\(^*\)</span> (<a href="#fig-colohist" class="quarto-xref">Figure&nbsp;<span>1</span></a> B), the data becomes closer to normal – however, the many white flowers receiving no pollinator visits <strong><span class="math inline">\(^\$\)</span></strong> remain, resulting a modest (but good enough for most stats) deviation from normality.</p>
 
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
 <p><strong><span class="math inline">\(^*\)</span> or more specifically</strong> log(x+0.2) transformation. <br><br></p>
@@ -1090,7 +1102,7 @@ window.Quarto = {
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>a<span class="sc">+</span>b<span class="sc">+</span><span class="fu">plot_layout</span>(<span class="at">axis_titles =</span> <span class="st">"collect_y"</span>) <span class="sc">+</span> <span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">"A"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display page-columns page-full">
-<div id="fig-colohist" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-align="center" alt="Two panels compare histograms of mean visits to pink and white flowers. Panel A (raw data) shows both pink and white distributions with most values near zero and long right tails, creating skewed shapes. Panel B (log-transformed data) shows the same groups after applying a log(+0.2) transformation. The pink distribution becomes symmetric and bell-like, while the white distribution is less skewed but still uneven. Bars are outlined in black, with pink fill for pink flowers and white fill for white flowers.">
+<div id="fig-colohist" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Two panels compare histograms of mean visits to pink and white flowers. Panel A (raw data) shows both pink and white distributions with most values near zero and long right tails, creating skewed shapes. Panel B (log-transformed data) shows the same groups after applying a log(+0.2) transformation. The pink distribution becomes symmetric and bell-like, while the white distribution is less skewed but still uneven. Bars are outlined in black, with pink fill for pink flowers and white fill for white flowers." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-colohist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
 <img src="2t_assumptions_files/figure-html/fig-colohist-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img column-page-right" style="width:95.0%" alt="Two panels compare histograms of mean visits to pink and white flowers. Panel A (raw data) shows both pink and white distributions with most values near zero and long right tails, creating skewed shapes. Panel B (log-transformed data) shows the same groups after applying a log(+0.2) transformation. The pink distribution becomes symmetric and bell-like, while the white distribution is less skewed but still uneven. Bars are outlined in black, with pink fill for pink flowers and white fill for white flowers.">
@@ -1109,23 +1121,23 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
 <div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="yndrxaodsn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#yndrxaodsn table {
+<div id="gfrvgofxch" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#gfrvgofxch table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#yndrxaodsn thead, #yndrxaodsn tbody, #yndrxaodsn tfoot, #yndrxaodsn tr, #yndrxaodsn td, #yndrxaodsn th {
+#gfrvgofxch thead, #gfrvgofxch tbody, #gfrvgofxch tfoot, #gfrvgofxch tr, #gfrvgofxch td, #gfrvgofxch th {
   border-style: none;
 }
 
-#yndrxaodsn p {
+#gfrvgofxch p {
   margin: 0;
   padding: 0;
 }
 
-#yndrxaodsn .gt_table {
+#gfrvgofxch .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1151,12 +1163,12 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-left-color: #D3D3D3;
 }
 
-#yndrxaodsn .gt_caption {
+#gfrvgofxch .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#yndrxaodsn .gt_title {
+#gfrvgofxch .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1168,7 +1180,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-bottom-width: 0;
 }
 
-#yndrxaodsn .gt_subtitle {
+#gfrvgofxch .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1180,7 +1192,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-top-width: 0;
 }
 
-#yndrxaodsn .gt_heading {
+#gfrvgofxch .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1192,13 +1204,13 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-right-color: #D3D3D3;
 }
 
-#yndrxaodsn .gt_bottom_border {
+#gfrvgofxch .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yndrxaodsn .gt_col_headings {
+#gfrvgofxch .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1213,7 +1225,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-right-color: #D3D3D3;
 }
 
-#yndrxaodsn .gt_col_heading {
+#gfrvgofxch .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1233,7 +1245,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   overflow-x: hidden;
 }
 
-#yndrxaodsn .gt_column_spanner_outer {
+#gfrvgofxch .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1245,15 +1257,15 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   padding-right: 4px;
 }
 
-#yndrxaodsn .gt_column_spanner_outer:first-child {
+#gfrvgofxch .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yndrxaodsn .gt_column_spanner_outer:last-child {
+#gfrvgofxch .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yndrxaodsn .gt_column_spanner {
+#gfrvgofxch .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1265,11 +1277,11 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   width: 100%;
 }
 
-#yndrxaodsn .gt_spanner_row {
+#gfrvgofxch .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#yndrxaodsn .gt_group_heading {
+#gfrvgofxch .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1295,7 +1307,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   text-align: left;
 }
 
-#yndrxaodsn .gt_empty_group_heading {
+#gfrvgofxch .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1310,15 +1322,15 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   vertical-align: middle;
 }
 
-#yndrxaodsn .gt_from_md > :first-child {
+#gfrvgofxch .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yndrxaodsn .gt_from_md > :last-child {
+#gfrvgofxch .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yndrxaodsn .gt_row {
+#gfrvgofxch .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1337,7 +1349,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   overflow-x: hidden;
 }
 
-#yndrxaodsn .gt_stub {
+#gfrvgofxch .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1350,7 +1362,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   padding-right: 5px;
 }
 
-#yndrxaodsn .gt_stub_row_group {
+#gfrvgofxch .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1364,15 +1376,15 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   vertical-align: top;
 }
 
-#yndrxaodsn .gt_row_group_first td {
+#gfrvgofxch .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#yndrxaodsn .gt_row_group_first th {
+#gfrvgofxch .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#yndrxaodsn .gt_summary_row {
+#gfrvgofxch .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1382,16 +1394,16 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   padding-right: 5px;
 }
 
-#yndrxaodsn .gt_first_summary_row {
+#gfrvgofxch .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#yndrxaodsn .gt_first_summary_row.thick {
+#gfrvgofxch .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#yndrxaodsn .gt_last_summary_row {
+#gfrvgofxch .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1401,7 +1413,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-bottom-color: #D3D3D3;
 }
 
-#yndrxaodsn .gt_grand_summary_row {
+#gfrvgofxch .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1411,7 +1423,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   padding-right: 5px;
 }
 
-#yndrxaodsn .gt_first_grand_summary_row {
+#gfrvgofxch .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1421,7 +1433,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-top-color: #D3D3D3;
 }
 
-#yndrxaodsn .gt_last_grand_summary_row_top {
+#gfrvgofxch .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1431,11 +1443,11 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-bottom-color: #D3D3D3;
 }
 
-#yndrxaodsn .gt_striped {
+#gfrvgofxch .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#yndrxaodsn .gt_table_body {
+#gfrvgofxch .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1444,7 +1456,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-bottom-color: #D3D3D3;
 }
 
-#yndrxaodsn .gt_footnotes {
+#gfrvgofxch .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1458,7 +1470,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-right-color: #D3D3D3;
 }
 
-#yndrxaodsn .gt_footnote {
+#gfrvgofxch .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1467,7 +1479,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   padding-right: 5px;
 }
 
-#yndrxaodsn .gt_sourcenotes {
+#gfrvgofxch .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1481,7 +1493,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-right-color: #D3D3D3;
 }
 
-#yndrxaodsn .gt_sourcenote {
+#gfrvgofxch .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1489,72 +1501,72 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   padding-right: 5px;
 }
 
-#yndrxaodsn .gt_left {
+#gfrvgofxch .gt_left {
   text-align: left;
 }
 
-#yndrxaodsn .gt_center {
+#gfrvgofxch .gt_center {
   text-align: center;
 }
 
-#yndrxaodsn .gt_right {
+#gfrvgofxch .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yndrxaodsn .gt_font_normal {
+#gfrvgofxch .gt_font_normal {
   font-weight: normal;
 }
 
-#yndrxaodsn .gt_font_bold {
+#gfrvgofxch .gt_font_bold {
   font-weight: bold;
 }
 
-#yndrxaodsn .gt_font_italic {
+#gfrvgofxch .gt_font_italic {
   font-style: italic;
 }
 
-#yndrxaodsn .gt_super {
+#gfrvgofxch .gt_super {
   font-size: 65%;
 }
 
-#yndrxaodsn .gt_footnote_marks {
+#gfrvgofxch .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#yndrxaodsn .gt_asterisk {
+#gfrvgofxch .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#yndrxaodsn .gt_indent_1 {
+#gfrvgofxch .gt_indent_1 {
   text-indent: 5px;
 }
 
-#yndrxaodsn .gt_indent_2 {
+#gfrvgofxch .gt_indent_2 {
   text-indent: 10px;
 }
 
-#yndrxaodsn .gt_indent_3 {
+#gfrvgofxch .gt_indent_3 {
   text-indent: 15px;
 }
 
-#yndrxaodsn .gt_indent_4 {
+#gfrvgofxch .gt_indent_4 {
   text-indent: 20px;
 }
 
-#yndrxaodsn .gt_indent_5 {
+#gfrvgofxch .gt_indent_5 {
   text-indent: 25px;
 }
 
-#yndrxaodsn .katex-display {
+#gfrvgofxch .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#yndrxaodsn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#gfrvgofxch div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1602,7 +1614,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
 <div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-norm" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A meme with three cartoon figures superimposed on a bell curve. The central figure, crying with glasses, says: &quot;Hmm… linear model? random effects? covariates? mixed effect? GLMM?&quot; On the left, a simple character smiles with the text: &quot;Bootstrap for uncertainty, permute for NHST.&quot; On the right, a hooded character repeats the same phrase. The normal curve behind them shows percentages (68%, 95%, 99.7%) corresponding to standard deviations.">
+<div id="fig-norm" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A meme with three cartoon figures superimposed on a bell curve. The central figure, crying with glasses, says: &quot;Hmm… linear model? random effects? covariates? mixed effect? GLMM?&quot; On the left, a simple character smiles with the text: &quot;Bootstrap for uncertainty, permute for NHST.&quot; On the right, a hooded character repeats the same phrase. The normal curve behind them shows percentages (68%, 95%, 99.7%) corresponding to standard deviations." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-norm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="../../figs/linear_models/permute_meme.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A meme with three cartoon figures superimposed on a bell curve. The central figure, crying with glasses, says: &quot;Hmm… linear model? random effects? covariates? mixed effect? GLMM?&quot; On the left, a simple character smiles with the text: &quot;Bootstrap for uncertainty, permute for NHST.&quot; On the right, a hooded character repeats the same phrase. The normal curve behind them shows percentages (68%, 95%, 99.7%) corresponding to standard deviations.">
@@ -1620,7 +1632,7 @@ Figure&nbsp;2: A stats meme! At the novice and expert ends of the experience dis
 </li>
 <li>Bootstrap to estimate uncertainty and permute to test null hypotheses (<a href="#fig-norm" class="quarto-xref">Figure&nbsp;<span>2</span></a>). OR<br>
 </li>
-<li>Use a rank-based “non-parametric” test. Such tests are more formaly a test for difference in medians. They work by ranking the data and comparing the observed distribution of rankings between groups to the null. We can do this in R as follows, which leads to serious rejection of the null hypothesis:</li>
+<li>Use a rank-based “non-parametric” test. Such tests are more formally a test for difference in medians. They work by ranking the data and comparing the observed distribution of rankings between groups to the null. We can do this in R as follows, which leads to serious rejection of the null hypothesis:</li>
 </ol></li>
 </ul>
 <div class="cell" data-layout-align="center">

@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../references.html" rel="next">
+<link href="../../book_sections/two_ts/nhs2t.html" rel="next">
 <link href="../../book_sections/two_ts/2t_calcs.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -966,6 +966,18 @@ window.Quarto = {
  <span class="menu-text">• 16. Uncertain-2t</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/nhs2t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. two-sample t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/2t_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 17. Two t Summary</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -1016,8 +1028,7 @@ window.Quarto = {
 </ul></li>
 </ul>
 </div>
-
-<div class="no-row-height column-margin column-container"><div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Loading and processing data</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ril_link <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"</span></span>
@@ -1035,17 +1046,23 @@ window.Quarto = {
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">VAR        =</span> <span class="fu">var</span>(log_visits),</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">N                 =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-</div></div><hr>
+</div>
+<hr>
 <section id="estimating-uncertainty-in-mean-difference" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="estimating-uncertainty-in-mean-difference">Estimating Uncertainty in Mean Difference</h2>
-<p>A “point” estimate is just that – our informed guess of a parameter value. But we now know enough to flinch when we hear or calculate such an estimate. We know that estimates come from samples and therefore we need to addinformation about the uncertainty in any estimate before rushing to intepret it.</p>
-<p>To estimate uncertainty in the difference in means we find the “pooled standard error” and then go to our t-distribution to turn this into a confidence interval.</p>
-<ul>
-<li><strong>The standard error for the difference in means</strong> is a strange looking equation:</li>
-</ul>
+<p>A “point” estimate is just that – our informed guess of a parameter value. Point estimates come from samples, so we should always pair them with an uncertainty estimate. To estimate uncertainty in the difference in means we find the “pooled standard error” and then go to our t-distribution to turn this into a confidence interval.</p>
 
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p><strong><span class="math inline">\(SE_{\overline{x_1}-\overline{x_2}}\)</span> for our example:</strong><br>
+<p><strong>Remember:</strong> The equation for the pooled variance: <span class="math display">\[s^2_p = \frac{\text{df}_1 \times s_1^2+ \text{df}_2 \times s_2^2}{\text{df}_\text{total}}\]</span>.</p>
+<ul>
+<li><span class="math inline">\(s_i^2\)</span>: The variance within group <span class="math inline">\(i\)</span>.<br>
+</li>
+<li><span class="math inline">\(\text{df}_i\)</span>: The degrees of freedom in group <span class="math inline">\(i\)</span>.<br>
+</li>
+<li><span class="math inline">\(\text{df}_\text{total}\)</span>: The total degrees of freedom (defined in text below).</li>
+</ul>
+<hr>
+<p><br><br> <strong><span class="math inline">\(SE_{\overline{x_1}-\overline{x_2}}\)</span> for our example:</strong><br>
 <span class="math display">\[
 \begin{align}
 SE_{\overline{x_1}-\overline{x_2}} &amp;= \sqrt{s_p^2 \Big(\frac{1}{n_1} + \frac{1}{n_2}\Big)}\\
@@ -1053,7 +1070,10 @@ SE_{\overline{x_1}-\overline{x_2}} &amp;= \sqrt{s_p^2 \Big(\frac{1}{n_1} + \frac
 &amp;=0.161
 \end{align}
 \]</span></p>
-</div></div><p><span class="math display">\[SE_{\overline{x_1}-\overline{x_2}} = \sqrt{s_p^2 \Big(\frac{1}{n_1} + \frac{1}{n_2}\Big)}\]</span></p>
+</div></div><ul>
+<li><strong>The standard error for the difference in means</strong> is a strange looking equation. Recall that $s^2_p is the “pooled variance” and using this value implies that we believe that variance is similar within each group:</li>
+</ul>
+<p><span class="math display">\[SE_{\overline{x_1}-\overline{x_2}} = \sqrt{s_p^2 \Big(\frac{1}{n_1} + \frac{1}{n_2}\Big)}\]</span></p>
 <ul>
 <li><p><strong>The 95% confidence interval of the difference in means:</strong> Is pretty straightforward. Now that we have our standard error, we simply multiply it by <span class="math inline">\(t_{\text{crit, }{\alpha=0.05\text{, }df_\text{total}}}\)</span>.</p>
 <ul>
@@ -1071,23 +1091,23 @@ df_\text{total} &amp;= df_1+df_2 \\
 <div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="ewanyuddmc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ewanyuddmc table {
+<div id="mfyztrpyhi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mfyztrpyhi table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ewanyuddmc thead, #ewanyuddmc tbody, #ewanyuddmc tfoot, #ewanyuddmc tr, #ewanyuddmc td, #ewanyuddmc th {
+#mfyztrpyhi thead, #mfyztrpyhi tbody, #mfyztrpyhi tfoot, #mfyztrpyhi tr, #mfyztrpyhi td, #mfyztrpyhi th {
   border-style: none;
 }
 
-#ewanyuddmc p {
+#mfyztrpyhi p {
   margin: 0;
   padding: 0;
 }
 
-#ewanyuddmc .gt_table {
+#mfyztrpyhi .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1113,12 +1133,12 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-left-color: #D3D3D3;
 }
 
-#ewanyuddmc .gt_caption {
+#mfyztrpyhi .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ewanyuddmc .gt_title {
+#mfyztrpyhi .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1130,7 +1150,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-bottom-width: 0;
 }
 
-#ewanyuddmc .gt_subtitle {
+#mfyztrpyhi .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1142,7 +1162,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-top-width: 0;
 }
 
-#ewanyuddmc .gt_heading {
+#mfyztrpyhi .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1154,13 +1174,13 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-right-color: #D3D3D3;
 }
 
-#ewanyuddmc .gt_bottom_border {
+#mfyztrpyhi .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ewanyuddmc .gt_col_headings {
+#mfyztrpyhi .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1175,7 +1195,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-right-color: #D3D3D3;
 }
 
-#ewanyuddmc .gt_col_heading {
+#mfyztrpyhi .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1195,7 +1215,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   overflow-x: hidden;
 }
 
-#ewanyuddmc .gt_column_spanner_outer {
+#mfyztrpyhi .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1207,15 +1227,15 @@ df_\text{total} &amp;= df_1+df_2 \\
   padding-right: 4px;
 }
 
-#ewanyuddmc .gt_column_spanner_outer:first-child {
+#mfyztrpyhi .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ewanyuddmc .gt_column_spanner_outer:last-child {
+#mfyztrpyhi .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ewanyuddmc .gt_column_spanner {
+#mfyztrpyhi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1227,11 +1247,11 @@ df_\text{total} &amp;= df_1+df_2 \\
   width: 100%;
 }
 
-#ewanyuddmc .gt_spanner_row {
+#mfyztrpyhi .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ewanyuddmc .gt_group_heading {
+#mfyztrpyhi .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1257,7 +1277,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   text-align: left;
 }
 
-#ewanyuddmc .gt_empty_group_heading {
+#mfyztrpyhi .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1272,15 +1292,15 @@ df_\text{total} &amp;= df_1+df_2 \\
   vertical-align: middle;
 }
 
-#ewanyuddmc .gt_from_md > :first-child {
+#mfyztrpyhi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ewanyuddmc .gt_from_md > :last-child {
+#mfyztrpyhi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ewanyuddmc .gt_row {
+#mfyztrpyhi .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1299,7 +1319,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   overflow-x: hidden;
 }
 
-#ewanyuddmc .gt_stub {
+#mfyztrpyhi .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1312,7 +1332,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   padding-right: 5px;
 }
 
-#ewanyuddmc .gt_stub_row_group {
+#mfyztrpyhi .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1326,15 +1346,15 @@ df_\text{total} &amp;= df_1+df_2 \\
   vertical-align: top;
 }
 
-#ewanyuddmc .gt_row_group_first td {
+#mfyztrpyhi .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ewanyuddmc .gt_row_group_first th {
+#mfyztrpyhi .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ewanyuddmc .gt_summary_row {
+#mfyztrpyhi .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1344,16 +1364,16 @@ df_\text{total} &amp;= df_1+df_2 \\
   padding-right: 5px;
 }
 
-#ewanyuddmc .gt_first_summary_row {
+#mfyztrpyhi .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ewanyuddmc .gt_first_summary_row.thick {
+#mfyztrpyhi .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ewanyuddmc .gt_last_summary_row {
+#mfyztrpyhi .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1363,7 +1383,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-bottom-color: #D3D3D3;
 }
 
-#ewanyuddmc .gt_grand_summary_row {
+#mfyztrpyhi .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1373,7 +1393,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   padding-right: 5px;
 }
 
-#ewanyuddmc .gt_first_grand_summary_row {
+#mfyztrpyhi .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1383,7 +1403,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-top-color: #D3D3D3;
 }
 
-#ewanyuddmc .gt_last_grand_summary_row_top {
+#mfyztrpyhi .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1393,11 +1413,11 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-bottom-color: #D3D3D3;
 }
 
-#ewanyuddmc .gt_striped {
+#mfyztrpyhi .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ewanyuddmc .gt_table_body {
+#mfyztrpyhi .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1406,7 +1426,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-bottom-color: #D3D3D3;
 }
 
-#ewanyuddmc .gt_footnotes {
+#mfyztrpyhi .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1420,7 +1440,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-right-color: #D3D3D3;
 }
 
-#ewanyuddmc .gt_footnote {
+#mfyztrpyhi .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1429,7 +1449,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   padding-right: 5px;
 }
 
-#ewanyuddmc .gt_sourcenotes {
+#mfyztrpyhi .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1443,7 +1463,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-right-color: #D3D3D3;
 }
 
-#ewanyuddmc .gt_sourcenote {
+#mfyztrpyhi .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1451,72 +1471,72 @@ df_\text{total} &amp;= df_1+df_2 \\
   padding-right: 5px;
 }
 
-#ewanyuddmc .gt_left {
+#mfyztrpyhi .gt_left {
   text-align: left;
 }
 
-#ewanyuddmc .gt_center {
+#mfyztrpyhi .gt_center {
   text-align: center;
 }
 
-#ewanyuddmc .gt_right {
+#mfyztrpyhi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ewanyuddmc .gt_font_normal {
+#mfyztrpyhi .gt_font_normal {
   font-weight: normal;
 }
 
-#ewanyuddmc .gt_font_bold {
+#mfyztrpyhi .gt_font_bold {
   font-weight: bold;
 }
 
-#ewanyuddmc .gt_font_italic {
+#mfyztrpyhi .gt_font_italic {
   font-style: italic;
 }
 
-#ewanyuddmc .gt_super {
+#mfyztrpyhi .gt_super {
   font-size: 65%;
 }
 
-#ewanyuddmc .gt_footnote_marks {
+#mfyztrpyhi .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ewanyuddmc .gt_asterisk {
+#mfyztrpyhi .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ewanyuddmc .gt_indent_1 {
+#mfyztrpyhi .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ewanyuddmc .gt_indent_2 {
+#mfyztrpyhi .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ewanyuddmc .gt_indent_3 {
+#mfyztrpyhi .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ewanyuddmc .gt_indent_4 {
+#mfyztrpyhi .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ewanyuddmc .gt_indent_5 {
+#mfyztrpyhi .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ewanyuddmc .katex-display {
+#mfyztrpyhi .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ewanyuddmc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#mfyztrpyhi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1575,8 +1595,529 @@ df_\text{total} &amp;= df_1+df_2 \\
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">lower_95_CI =</span> mean_diff <span class="sc">-</span> se <span class="sc">*</span> crit_t,</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">upper_95_CI =</span> mean_diff <span class="sc">+</span> se <span class="sc">*</span> crit_t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><strong>Note</strong> these summaries are interesting but are pretty tough to interpret as i dont know of anyone who thinks on the <code>log(x+0.2</code>) scale. A</p>
 <div class="warning">
-<p>We have done all our</p>
+<p>We have done all our calculations on <code>log(x+0.2)</code> transformed data. Interpretation of these results on the original linear scale is tricky, and cannot be achieved without some additional assumptions.</p>
+</div>
+</section>
+<section id="an-alternative-bootstrap-to-quantify-uncertainty" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="an-alternative-bootstrap-to-quantify-uncertainty">An alternative: Bootstrap to quantify uncertainty</h2>
+<p>Everything above is statistically valid—the data meet the assumptions of the analysis. The bummer, as we noted, is that the results are awkward to interpret. As scientists, we balance values differently - I usually prioritize clarity over perfection. As such I often presentplainly interpretable summaries over technically perfect but opaque ones.</p>
+<p>Below, I bootstrap (see the <a href="../uncertainty.html">section on uncertainty</a> for review) the untransformed data to obtain a 95% confidence interval without making assumptions about equal variance or normality. The 95% bootstrap CI ranges from 0.50 to 1.52. This interval is roughly the mean <span class="math inline">\(\pm 2 \times \text{Bootstrapped SE}\)</span>, suggesting that in this case, results are robust to violations of the assumption of normality.</p>
+<p>In a later section you will see that this is basically we would get from a version of the t-test that does not assume equal variance (<em>we assume unequal variance because on a linear scale the variancesare very different!</em>). This further suggests tha the t-machinery is pretty robust to violations of normality assumptions.</p>
+<div class="cell page-columns page-full" data-layout-align="center">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-boot" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A histogram of 5,000 bootstrap estimates of the difference in mean pollinator visits between pink and white RILs (pink − white). The distribution is centered near 1.0, with most mass between roughly 0.5 and 1.5. Two red vertical lines indicate the 2.5th and 97.5th percentile cutoffs (about 0.50 and 1.52). A dashed vertical line can mark the observed sample difference." data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="uncertain2t_files/figure-html/fig-boot-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A histogram of 5,000 bootstrap estimates of the difference in mean pollinator visits between pink and white RILs (pink − white). The distribution is centered near 1.0, with most mass between roughly 0.5 and 1.5. Two red vertical lines indicate the 2.5th and 97.5th percentile cutoffs (about 0.50 and 1.52). A dashed vertical line can mark the observed sample difference.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits (pink − white) on the original (linear) scale. The histogram shows 5,000 bootstrapped estimates of the mean difference; the red vertical lines mark the 95% percentile CI (here ≈ 0.50 to 1.52).
+</figcaption>
+</figure>
+</div>
+</div></div></div>
+<div class="cell page-columns page-full" data-layout-align="center">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="mndeziylwq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mndeziylwq table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#mndeziylwq thead, #mndeziylwq tbody, #mndeziylwq tfoot, #mndeziylwq tr, #mndeziylwq td, #mndeziylwq th {
+  border-style: none;
+}
+
+#mndeziylwq p {
+  margin: 0;
+  padding: 0;
+}
+
+#mndeziylwq .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#mndeziylwq .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#mndeziylwq .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#mndeziylwq .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#mndeziylwq .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mndeziylwq .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mndeziylwq .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mndeziylwq .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#mndeziylwq .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#mndeziylwq .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#mndeziylwq .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#mndeziylwq .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#mndeziylwq .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#mndeziylwq .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#mndeziylwq .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#mndeziylwq .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#mndeziylwq .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#mndeziylwq .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#mndeziylwq .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mndeziylwq .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#mndeziylwq .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#mndeziylwq .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#mndeziylwq .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mndeziylwq .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#mndeziylwq .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#mndeziylwq .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mndeziylwq .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mndeziylwq .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#mndeziylwq .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mndeziylwq .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#mndeziylwq .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mndeziylwq .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mndeziylwq .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mndeziylwq .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mndeziylwq .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mndeziylwq .gt_left {
+  text-align: left;
+}
+
+#mndeziylwq .gt_center {
+  text-align: center;
+}
+
+#mndeziylwq .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#mndeziylwq .gt_font_normal {
+  font-weight: normal;
+}
+
+#mndeziylwq .gt_font_bold {
+  font-weight: bold;
+}
+
+#mndeziylwq .gt_font_italic {
+  font-style: italic;
+}
+
+#mndeziylwq .gt_super {
+  font-size: 65%;
+}
+
+#mndeziylwq .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#mndeziylwq .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#mndeziylwq .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#mndeziylwq .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#mndeziylwq .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#mndeziylwq .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#mndeziylwq .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#mndeziylwq .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#mndeziylwq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<caption>Bootstrapped SEs and CI's</caption>
+<thead>
+<tr class="gt_col_headings header">
+<th id="se" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">se</th>
+<th id="lower_95" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">lower_95</th>
+<th id="estimate" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">estimate</th>
+<th id="upper_95" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">upper_95</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right" headers="se">0.249</td>
+<td class="gt_row gt_right" headers="lower_95">0.556</td>
+<td class="gt_row gt_right" headers="estimate">1.026</td>
+<td class="gt_row gt_right" headers="upper_95">1.519</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div></div></div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># SUMMARIZE THE DATA</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>raw_diff <span class="ot">&lt;-</span> SR_rils <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(mean_visits <span class="sc">~</span> petal_color) <span class="sc">|&gt;</span>            <span class="co"># response ~ explanatory</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"diff in means"</span>,                <span class="co"># difference in group means</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"pink"</span>, <span class="st">"white"</span>))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># BOOTSTRAP</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>boot_SR_visits <span class="ot">&lt;-</span>  SR_rils <span class="sc">%&gt;%</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(mean_visits <span class="sc">~</span> petal_color) <span class="sc">|&gt;</span>            <span class="co"># specify response ~ explanatory</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">5000</span>, <span class="at">type =</span> <span class="st">"bootstrap"</span>) <span class="sc">|&gt;</span>     <span class="co"># resample</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"diff in means"</span>,                <span class="co"># calculate difference in means</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"pink"</span>, <span class="st">"white"</span>))</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># SUMMARIZE THE BOOTSTRAP</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>bootsummary <span class="ot">&lt;-</span> boot_SR_visits <span class="sc">|&gt;</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">se =</span> <span class="fu">sd</span>(stat),</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">lower_95 =</span> <span class="fu">quantile</span>(stat, <span class="at">prob =</span> <span class="fl">0.025</span>),</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate =</span> <span class="fu">pull</span>(raw_diff ),</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">upper_95 =</span> <span class="fu">quantile</span>(stat, <span class="at">prob =</span> <span class="fl">0.975</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -2218,8 +2759,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../book_sections/two_ts/nhs2t.html" class="pagination-link" aria-label="• 16. two-sample t-test">
+        <span class="nav-page-text">• 16. two-sample t-test</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

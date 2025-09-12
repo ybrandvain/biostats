@@ -3,8 +3,8 @@
 ---
 format: html
 shinylive:
-  packages: ['dplyr', 'forcats','ggplot2','cowplot']
   autoload-packages: true
+  packages: ["shiny","bslib","ggplot2","dplyr","infer","cowplot","readr","tidyr"]
 ---
 
 ::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
@@ -40,6 +40,7 @@ library(stringr)
 library(DT)
 library(webexercises)
 library(ggplot2)
+library(shinylive)
 library(tidyr)
 library(cowplot)
 library(tweetrmd)

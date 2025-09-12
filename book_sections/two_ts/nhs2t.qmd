@@ -1,0 +1,190 @@
+## • 16. two-sample t-test {.unnumbered #nhs2t}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+library(gt)
+source("../../_common.R") 
+```
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating scenario:** We want to test the null that two groups have the same mean.
+
+**Learning goals:** By the end of this section, you should be able to:   
+
+-  **Explain the logic of the two-sample t-test** and how it relates to comparing group means.
+
+- **Calculate the test statistic and p-value** by hand and interpret it relative to a critical value.  
+
+- **Use R’s t.test() function** to test for differences between two groups.  
+
+- **Write up results of a two sample t-test** in terms of both statistical significance and effect size, and connect them back to biological meaning.
+
+:::
+
+```{r}
+#| code-fold: true
+#| code-summary: "Loading and processing data"
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+SR_rils <- readr::read_csv(ril_link) |>
+  filter(location == "SR") |>
+  select(ril, petal_color, mean_visits) |>
+  filter(!is.na(mean_visits), !is.na(petal_color))
+
+SR_rils  <- SR_rils                          |> 
+  mutate(log_visits = log(.2 + mean_visits))
+
+color_visit_summaries <- SR_rils |>
+  group_by(petal_color)|>
+  summarise(MEAN = mean(log_visits),
+            VAR        = var(log_visits),
+            N                 = n())
+```
+
+## Testing the null of equal means  
+
+In the previous section, we calculated a difference in $\text{log}(\text{visits} + 0.2)$ between pink and white flowers at site SM of $0.366- (-0.445) = 0.811$.  We also quantified uncertainty about this estimate as a standard error of 0.161. Recalling the equation for t: 
+
+$$t = \frac{\bar{x}-\mu_0}{s_\bar{x}}  = \frac{(\bar{x_1}-\bar{x_2})-0}{s_\overline{x_1-x_2}}$$ 
+In this case 
+
+$$t = \frac{0.366- (-0.445)}{0.161}=5.04$$ 
+
+
+
+Since we had  105 degrees of freedom, our critical t is going to be close to 1.96. Because our observed t-value of $\approx 5$ is way bigger than our critical t-value of $\approx 2$, we strongly reject the null hypothesis that pink and white-flowered *Clarkia xantiana subspecies parviflora* RILs at site SM are visited equally by pollinators.  
+
+:::aside
+More precisely, *crit-t* = `qt(0.025, df= 102,lower.tail = F)` = $1.983
+:::
+
+We can use the `pt()` function to quantify exactly how rarely the null would generate a result this or more extreme as follows:
+
+`2 * pt(q = 5.037267, df = 105, lower.tail = FALSE)` =  `2e-06` 
+
+## A two sample t-test in R 
+
+We can use the "formula" syntax in the t.test() function to have R test this null for us. Note that we set `var.equal = TRUE`. We see that this provides p-values and 95% confidence intervals identical to what we calculated ourselves:    
+
+```{r}
+t.test(log_visits ~ petal_color, data = SR_rils, var.equal = TRUE)
+```
+
+Again, we can make this output tidy / easier to process in R with the [`tidy()`](https://generics.r-lib.org/reference/tidy.html) function in the [`broom` package](https://broom.tidymodels.org/): 
+
+:::aside 
+For some reason  that I don't understand, `tidy()` labels the column with the "degrees of freedom" as "parameter". smdh.
+:::
+
+```{r}
+#| eval: false
+library(broom)
+t.test(log_visits ~ petal_color, data = SR_rils, var.equal = TRUE)|>
+  tidy()
+```
+
+```{r}
+#| echo: false
+library(broom)
+t.test(log_visits ~ petal_color, data = SR_rils, var.equal = TRUE)|>
+  tidy() |>
+  mutate_at(c(1:4,7:8) ,round, digits = 3)|>
+  mutate(p.value= "2.0e-6")|>
+  gt()
+```
+
+
+
+**If our data were untransformed, or if the transformation led to a clean biological interpretation we would be done.**  Our (transformed) data met test assumptions, we got interesting results etc.  However, I  have no idea how to interpret $\text{log}(\text{visits} + 0.2)$. So, for example the standard error and 95% confidence interval around our estimated mean difference are not easy to interpret. In such cases we have to use our understanding of biology, our value on clear communication, and our understanding of statistics and statistical assumptions to present a responsible and interpretable analysis. Below, I  provide one potential route which builds on our bootstrap results.
+
+### A two sample t-test is often robust  
+
+Now that we know we can reject the null when data are transformed to meet assumptions of the two-sample t-test, and we have an estimate of the bootstrap 95% confidence interval,  we could complement these analyses with an analysis of the untransformed data. This step is not always necessary or reliable - but we are using our brains  to tell a coherent story. 
+
+**First let's calculate our summary statistics:**
+
+```{r}
+#| echo: false
+#| column: margin
+SR_rils |>
+  group_by(petal_color)|>
+  summarise(MEAN = mean(mean_visits),
+            VAR        = var(mean_visits),
+            N                 = n())|>
+  mutate_at(-1, round, digits = 3)|>
+  mutate(DF = N-1)|>
+  summarise(mean_diff  = diff(MEAN) |> abs(), 
+            pooled_var = sum(DF*(VAR)) / (sum(DF)),
+            pooled_sd  = sqrt(pooled_var),
+            cohens_D   = mean_diff / pooled_sd)|>
+    pivot_longer(values_to = "estimate", cols=1:4,names_to = "summary")|>
+    mutate(estimate = round(estimate, digits=3))|>
+  gt()
+```
+
+
+
+```{r}
+color_visit_summaries <- SR_rils |>
+  group_by(petal_color)|>
+  summarise(MEAN = mean(mean_visits),
+            VAR        = var(mean_visits),
+            N                 = n()) |>
+    summarise(mean_diff  = diff(MEAN) |> abs(), 
+              pooled_var = sum((N-1)*(VAR)) / (sum(N)-2),
+              pooled_sd  = sqrt(pooled_var),
+              cohens_D   = mean_diff / pooled_sd)
+```
+
+**Now let's use R to test the null hypothesis and estimate confidence intervals.**For fun let's compare results from an analysis assuming equal variance to one that does not: 
+
+```{r}
+#| eval: false
+#| column: page-right
+bind_rows(
+  t.test(mean_visits ~ petal_color, data = SR_rils, var.equal = TRUE)|> tidy(),
+  t.test(mean_visits ~ petal_color, data = SR_rils, var.equal = FALSE)|> tidy()
+)
+```
+
+
+```{r}
+#| echo: false
+bind_rows(
+  t.test(mean_visits ~ petal_color, data = SR_rils, var.equal = TRUE)|> tidy(),
+  t.test(mean_visits ~ petal_color, data = SR_rils, var.equal = FALSE)|> tidy()
+)|>
+  mutate_at(c(1:4,7:8) ,round, digits = 3)|>
+  mutate_at(6 ,round, digits = 1)|>
+  mutate(p.value= c("1.65e-4","1.61e-4"))|>
+  gt()
+```
+
+
+:::fyi
+The [Welch's two sample t-test](https://en.wikipedia.org/wiki/Welch%27s_t-test) does not assume equal variance, and in practice is universally better than the standard two-sample t-test (that's why R has it as a default). 
+
+$$t = \frac{\overline{X}_1 - \overline{X}_2}{\sqrt{\frac{s_1^2}{N_1} + \frac{s_2^2}{N_2}}}
+\text{, and degrees of freedom: } \text{df} \approx \frac{\left(\frac{s_1^2}{N_1} + \frac{s_2^2}{N_2}\right)^2}{\frac{s_1^4}{N_1^2 \times df_1} + \frac{s_2^4}{N_2^2 \times df_2}}$$
+
+However the standard two-sample t-test is often good enough. It also has the benefit of being much like all linear modelling efforts, and is  simpler mathematically, so we usually teach the standard two-sample t-test. In practice the difference between these rarely matters, except for when the variance between groups is massively different
+:::
+
+## Writing up results
+
+Now we can write up our results. Note this takes some thinking because we had to make some decisions. Here's my attempt:   
+
+
+*At the Sawmill Road site, pink-flowered Clarkia xantiana ssp. parviflora RILs received, on average, more pollinators during a 15-minute observation than white-flowered RILs (mean pink = 1.76, mean white = 0.73). The mean difference of 1.03 visits was statistically significant (Welch’s t = 4.05, df = 89.6, p = 0.00016) and associated with a moderate-to-large effect size (Cohen’s D = 0.75). Results were robust to the right-skew in the data: a log(x + 0.2)-transformed analysis yielded an even stronger signal (t = 5.03, df = 106, p = 0.000002), and bootstrap confidence intervals closely matched analytic ones. We reject the null and conclude that pink-flowered plants attract more pollinators than white-flowered plants at this site.*
+

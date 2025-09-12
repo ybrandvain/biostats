@@ -966,6 +966,18 @@ window.Quarto = {
  <span class="menu-text">• 16. Uncertain-2t</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/nhs2t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. two-sample t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/2t_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 17. Two t Summary</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -1051,7 +1063,7 @@ window.Quarto = {
 </details>
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-visits" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A scatterplot with two groups on the x-axis, labeled &quot;pink&quot; and &quot;white.&quot; Pink points (left) and white points (right) represent log-transformed visit counts for individual RILs. The pink group has a higher spread of values, many above zero, while the white group clusters closer to zero or below. Bold black vertical bars indicate the mean and confidence interval for each group, and a dashed black line connects the two means, showing that the pink group has more visits than the white group.">
+<div id="fig-visits" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A scatterplot with two groups on the x-axis, labeled &quot;pink&quot; and &quot;white.&quot; Pink points (left) and white points (right) represent log-transformed visit counts for individual RILs. The pink group has a higher spread of values, many above zero, while the white group clusters closer to zero or below. Bold black vertical bars indicate the mean and confidence interval for each group, and a dashed black line connects the two means, showing that the pink group has more visits than the white group." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-visits-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="2t_calcs_files/figure-html/fig-visits-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A scatterplot with two groups on the x-axis, labeled &quot;pink&quot; and &quot;white.&quot; Pink points (left) and white points (right) represent log-transformed visit counts for individual RILs. The pink group has a higher spread of values, many above zero, while the white group clusters closer to zero or below. Bold black vertical bars indicate the mean and confidence interval for each group, and a dashed black line connects the two means, showing that the pink group has more visits than the white group.">
@@ -1070,23 +1082,23 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
 <div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="qsdyckhyam" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qsdyckhyam table {
+<div id="gucitfefyi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#gucitfefyi table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qsdyckhyam thead, #qsdyckhyam tbody, #qsdyckhyam tfoot, #qsdyckhyam tr, #qsdyckhyam td, #qsdyckhyam th {
+#gucitfefyi thead, #gucitfefyi tbody, #gucitfefyi tfoot, #gucitfefyi tr, #gucitfefyi td, #gucitfefyi th {
   border-style: none;
 }
 
-#qsdyckhyam p {
+#gucitfefyi p {
   margin: 0;
   padding: 0;
 }
 
-#qsdyckhyam .gt_table {
+#gucitfefyi .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1112,12 +1124,12 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   border-left-color: #D3D3D3;
 }
 
-#qsdyckhyam .gt_caption {
+#gucitfefyi .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qsdyckhyam .gt_title {
+#gucitfefyi .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1129,7 +1141,7 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   border-bottom-width: 0;
 }
 
-#qsdyckhyam .gt_subtitle {
+#gucitfefyi .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1141,7 +1153,7 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   border-top-width: 0;
 }
 
-#qsdyckhyam .gt_heading {
+#gucitfefyi .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1153,13 +1165,13 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   border-right-color: #D3D3D3;
 }
 
-#qsdyckhyam .gt_bottom_border {
+#gucitfefyi .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qsdyckhyam .gt_col_headings {
+#gucitfefyi .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1174,7 +1186,7 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   border-right-color: #D3D3D3;
 }
 
-#qsdyckhyam .gt_col_heading {
+#gucitfefyi .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1194,7 +1206,7 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   overflow-x: hidden;
 }
 
-#qsdyckhyam .gt_column_spanner_outer {
+#gucitfefyi .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1206,15 +1218,15 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   padding-right: 4px;
 }
 
-#qsdyckhyam .gt_column_spanner_outer:first-child {
+#gucitfefyi .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qsdyckhyam .gt_column_spanner_outer:last-child {
+#gucitfefyi .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qsdyckhyam .gt_column_spanner {
+#gucitfefyi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1226,11 +1238,11 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   width: 100%;
 }
 
-#qsdyckhyam .gt_spanner_row {
+#gucitfefyi .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qsdyckhyam .gt_group_heading {
+#gucitfefyi .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1256,7 +1268,7 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   text-align: left;
 }
 
-#qsdyckhyam .gt_empty_group_heading {
+#gucitfefyi .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1271,15 +1283,15 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   vertical-align: middle;
 }
 
-#qsdyckhyam .gt_from_md > :first-child {
+#gucitfefyi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qsdyckhyam .gt_from_md > :last-child {
+#gucitfefyi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qsdyckhyam .gt_row {
+#gucitfefyi .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1298,7 +1310,7 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   overflow-x: hidden;
 }
 
-#qsdyckhyam .gt_stub {
+#gucitfefyi .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1311,7 +1323,7 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   padding-right: 5px;
 }
 
-#qsdyckhyam .gt_stub_row_group {
+#gucitfefyi .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1325,15 +1337,15 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   vertical-align: top;
 }
 
-#qsdyckhyam .gt_row_group_first td {
+#gucitfefyi .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qsdyckhyam .gt_row_group_first th {
+#gucitfefyi .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qsdyckhyam .gt_summary_row {
+#gucitfefyi .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1343,16 +1355,16 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   padding-right: 5px;
 }
 
-#qsdyckhyam .gt_first_summary_row {
+#gucitfefyi .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qsdyckhyam .gt_first_summary_row.thick {
+#gucitfefyi .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qsdyckhyam .gt_last_summary_row {
+#gucitfefyi .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1362,7 +1374,7 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   border-bottom-color: #D3D3D3;
 }
 
-#qsdyckhyam .gt_grand_summary_row {
+#gucitfefyi .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1372,7 +1384,7 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   padding-right: 5px;
 }
 
-#qsdyckhyam .gt_first_grand_summary_row {
+#gucitfefyi .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1382,7 +1394,7 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   border-top-color: #D3D3D3;
 }
 
-#qsdyckhyam .gt_last_grand_summary_row_top {
+#gucitfefyi .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1392,11 +1404,11 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   border-bottom-color: #D3D3D3;
 }
 
-#qsdyckhyam .gt_striped {
+#gucitfefyi .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qsdyckhyam .gt_table_body {
+#gucitfefyi .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1405,7 +1417,7 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   border-bottom-color: #D3D3D3;
 }
 
-#qsdyckhyam .gt_footnotes {
+#gucitfefyi .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1419,7 +1431,7 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   border-right-color: #D3D3D3;
 }
 
-#qsdyckhyam .gt_footnote {
+#gucitfefyi .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1428,7 +1440,7 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   padding-right: 5px;
 }
 
-#qsdyckhyam .gt_sourcenotes {
+#gucitfefyi .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1442,7 +1454,7 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   border-right-color: #D3D3D3;
 }
 
-#qsdyckhyam .gt_sourcenote {
+#gucitfefyi .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1450,72 +1462,72 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
   padding-right: 5px;
 }
 
-#qsdyckhyam .gt_left {
+#gucitfefyi .gt_left {
   text-align: left;
 }
 
-#qsdyckhyam .gt_center {
+#gucitfefyi .gt_center {
   text-align: center;
 }
 
-#qsdyckhyam .gt_right {
+#gucitfefyi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qsdyckhyam .gt_font_normal {
+#gucitfefyi .gt_font_normal {
   font-weight: normal;
 }
 
-#qsdyckhyam .gt_font_bold {
+#gucitfefyi .gt_font_bold {
   font-weight: bold;
 }
 
-#qsdyckhyam .gt_font_italic {
+#gucitfefyi .gt_font_italic {
   font-style: italic;
 }
 
-#qsdyckhyam .gt_super {
+#gucitfefyi .gt_super {
   font-size: 65%;
 }
 
-#qsdyckhyam .gt_footnote_marks {
+#gucitfefyi .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qsdyckhyam .gt_asterisk {
+#gucitfefyi .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qsdyckhyam .gt_indent_1 {
+#gucitfefyi .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qsdyckhyam .gt_indent_2 {
+#gucitfefyi .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qsdyckhyam .gt_indent_3 {
+#gucitfefyi .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qsdyckhyam .gt_indent_4 {
+#gucitfefyi .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qsdyckhyam .gt_indent_5 {
+#gucitfefyi .gt_indent_5 {
   text-indent: 25px;
 }
 
-#qsdyckhyam .katex-display {
+#gucitfefyi .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#qsdyckhyam div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#gucitfefyi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1559,7 +1571,7 @@ Figure&nbsp;1: Each point shows an individual RIL’s mean pollinator visits on 
 <h3 class="anchored" data-anchor-id="estimating-summaries-of-differences">Estimating summaries of differences:</h3>
 <p>We would also like to summarise the data jointly, including the variance, the difference in groups means, and a standardized summary of this difference:</p>
 <ul>
-<li><strong>The pooled variance:</strong> To both estimate the effect size as Cohen’s D, and estimate uncertainty we need to calculate the variance. But we have two groups, so we need something like “the average varaince within each group.” The pooled variance, <span class="math inline">\(s^2_p\)</span> – the variance in each group weighted by their degrees of freedom and divided by the total degrees of freedom is this average (see margin for hand calculation).</li>
+<li><strong>The pooled variance:</strong> To both estimate the effect size as Cohen’s D, and estimate uncertainty we need to calculate the variance. But we have two groups, so we need something like “the average variance within each group.” The pooled variance, <span class="math inline">\(s^2_p\)</span> – the variance in each group weighted by their degrees of freedom and divided by the total degrees of freedom is this average (see margin for hand calculation).</li>
 </ul>
 
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
@@ -1579,23 +1591,23 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
 <div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="isqmyzegjv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#isqmyzegjv table {
+<div id="lucaxonxkl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#lucaxonxkl table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#isqmyzegjv thead, #isqmyzegjv tbody, #isqmyzegjv tfoot, #isqmyzegjv tr, #isqmyzegjv td, #isqmyzegjv th {
+#lucaxonxkl thead, #lucaxonxkl tbody, #lucaxonxkl tfoot, #lucaxonxkl tr, #lucaxonxkl td, #lucaxonxkl th {
   border-style: none;
 }
 
-#isqmyzegjv p {
+#lucaxonxkl p {
   margin: 0;
   padding: 0;
 }
 
-#isqmyzegjv .gt_table {
+#lucaxonxkl .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1621,12 +1633,12 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   border-left-color: #D3D3D3;
 }
 
-#isqmyzegjv .gt_caption {
+#lucaxonxkl .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#isqmyzegjv .gt_title {
+#lucaxonxkl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1638,7 +1650,7 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   border-bottom-width: 0;
 }
 
-#isqmyzegjv .gt_subtitle {
+#lucaxonxkl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1650,7 +1662,7 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   border-top-width: 0;
 }
 
-#isqmyzegjv .gt_heading {
+#lucaxonxkl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1662,13 +1674,13 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   border-right-color: #D3D3D3;
 }
 
-#isqmyzegjv .gt_bottom_border {
+#lucaxonxkl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#isqmyzegjv .gt_col_headings {
+#lucaxonxkl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1683,7 +1695,7 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   border-right-color: #D3D3D3;
 }
 
-#isqmyzegjv .gt_col_heading {
+#lucaxonxkl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1703,7 +1715,7 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   overflow-x: hidden;
 }
 
-#isqmyzegjv .gt_column_spanner_outer {
+#lucaxonxkl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1715,15 +1727,15 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   padding-right: 4px;
 }
 
-#isqmyzegjv .gt_column_spanner_outer:first-child {
+#lucaxonxkl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#isqmyzegjv .gt_column_spanner_outer:last-child {
+#lucaxonxkl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#isqmyzegjv .gt_column_spanner {
+#lucaxonxkl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1735,11 +1747,11 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   width: 100%;
 }
 
-#isqmyzegjv .gt_spanner_row {
+#lucaxonxkl .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#isqmyzegjv .gt_group_heading {
+#lucaxonxkl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1765,7 +1777,7 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   text-align: left;
 }
 
-#isqmyzegjv .gt_empty_group_heading {
+#lucaxonxkl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1780,15 +1792,15 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   vertical-align: middle;
 }
 
-#isqmyzegjv .gt_from_md > :first-child {
+#lucaxonxkl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#isqmyzegjv .gt_from_md > :last-child {
+#lucaxonxkl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#isqmyzegjv .gt_row {
+#lucaxonxkl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1807,7 +1819,7 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   overflow-x: hidden;
 }
 
-#isqmyzegjv .gt_stub {
+#lucaxonxkl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1820,7 +1832,7 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   padding-right: 5px;
 }
 
-#isqmyzegjv .gt_stub_row_group {
+#lucaxonxkl .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1834,15 +1846,15 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   vertical-align: top;
 }
 
-#isqmyzegjv .gt_row_group_first td {
+#lucaxonxkl .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#isqmyzegjv .gt_row_group_first th {
+#lucaxonxkl .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#isqmyzegjv .gt_summary_row {
+#lucaxonxkl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1852,16 +1864,16 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   padding-right: 5px;
 }
 
-#isqmyzegjv .gt_first_summary_row {
+#lucaxonxkl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#isqmyzegjv .gt_first_summary_row.thick {
+#lucaxonxkl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#isqmyzegjv .gt_last_summary_row {
+#lucaxonxkl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1871,7 +1883,7 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   border-bottom-color: #D3D3D3;
 }
 
-#isqmyzegjv .gt_grand_summary_row {
+#lucaxonxkl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1881,7 +1893,7 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   padding-right: 5px;
 }
 
-#isqmyzegjv .gt_first_grand_summary_row {
+#lucaxonxkl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1891,7 +1903,7 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   border-top-color: #D3D3D3;
 }
 
-#isqmyzegjv .gt_last_grand_summary_row_top {
+#lucaxonxkl .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1901,11 +1913,11 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   border-bottom-color: #D3D3D3;
 }
 
-#isqmyzegjv .gt_striped {
+#lucaxonxkl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#isqmyzegjv .gt_table_body {
+#lucaxonxkl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1914,7 +1926,7 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   border-bottom-color: #D3D3D3;
 }
 
-#isqmyzegjv .gt_footnotes {
+#lucaxonxkl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1928,7 +1940,7 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   border-right-color: #D3D3D3;
 }
 
-#isqmyzegjv .gt_footnote {
+#lucaxonxkl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1937,7 +1949,7 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   padding-right: 5px;
 }
 
-#isqmyzegjv .gt_sourcenotes {
+#lucaxonxkl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1951,7 +1963,7 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   border-right-color: #D3D3D3;
 }
 
-#isqmyzegjv .gt_sourcenote {
+#lucaxonxkl .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1959,72 +1971,72 @@ s^2_p &amp;= \frac{df_1 \times s^2_1 + df_2 \times s^2_2}{df_1+df_2} \\
   padding-right: 5px;
 }
 
-#isqmyzegjv .gt_left {
+#lucaxonxkl .gt_left {
   text-align: left;
 }
 
-#isqmyzegjv .gt_center {
+#lucaxonxkl .gt_center {
   text-align: center;
 }
 
-#isqmyzegjv .gt_right {
+#lucaxonxkl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#isqmyzegjv .gt_font_normal {
+#lucaxonxkl .gt_font_normal {
   font-weight: normal;
 }
 
-#isqmyzegjv .gt_font_bold {
+#lucaxonxkl .gt_font_bold {
   font-weight: bold;
 }
 
-#isqmyzegjv .gt_font_italic {
+#lucaxonxkl .gt_font_italic {
   font-style: italic;
 }
 
-#isqmyzegjv .gt_super {
+#lucaxonxkl .gt_super {
   font-size: 65%;
 }
 
-#isqmyzegjv .gt_footnote_marks {
+#lucaxonxkl .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#isqmyzegjv .gt_asterisk {
+#lucaxonxkl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#isqmyzegjv .gt_indent_1 {
+#lucaxonxkl .gt_indent_1 {
   text-indent: 5px;
 }
 
-#isqmyzegjv .gt_indent_2 {
+#lucaxonxkl .gt_indent_2 {
   text-indent: 10px;
 }
 
-#isqmyzegjv .gt_indent_3 {
+#lucaxonxkl .gt_indent_3 {
   text-indent: 15px;
 }
 
-#isqmyzegjv .gt_indent_4 {
+#lucaxonxkl .gt_indent_4 {
   text-indent: 20px;
 }
 
-#isqmyzegjv .gt_indent_5 {
+#lucaxonxkl .gt_indent_5 {
   text-indent: 25px;
 }
 
-#isqmyzegjv .katex-display {
+#lucaxonxkl .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#isqmyzegjv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#lucaxonxkl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>

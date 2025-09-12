@@ -125,13 +125,13 @@ div.csl-indent {
 <link href="../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
 <script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="../site_libs/datatables-binding-0.33/datatables.js"></script>
+<script src="../site_libs/datatables-binding-0.34.0/datatables.js"></script>
 <script src="../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="../site_libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="../site_libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
 <script src="../site_libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
-<link href="../site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
-<script src="../site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="../site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
+<script src="../site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
 <script src="../site_libs/twitter-widget-0.0.1/widgets.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.47.0/min/vs/editor/editor.main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -2521,6 +2521,18 @@ globalThis.qwebrExecuteCode = async function (
  <span class="menu-text">• 16. Uncertain-2t</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/two_ts/nhs2t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. two-sample t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/two_ts/2t_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 17. Two t Summary</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -2912,8 +2924,8 @@ Data is the currency of science. But data cannot speak – they have no voice. S
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-89e33b53b26d52fb0338" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-89e33b53b26d52fb0338">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12"],[1,2,3,4,5,6,7,8,9,10,11,12],[54.27,54.27,54.27,54.26,54.26,54.26,54.27,54.27,54.27,54.27,54.27,54.27],[47.83,47.83,47.84,47.83,47.84,47.83,47.84,47.84,47.83,47.84,47.84,47.83],[16.77,16.77,16.76,16.77,16.77,16.77,16.77,16.77,16.77,16.77,16.77,16.77],[26.94,26.94,26.93,26.94,26.93,26.94,26.94,26.94,26.94,26.93,26.94,26.94],[-0.06,-0.07000000000000001,-0.07000000000000001,-0.06,-0.06,-0.06,-0.07000000000000001,-0.07000000000000001,-0.07000000000000001,-0.06,-0.07000000000000001,-0.07000000000000001]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>dataset<\/th>\n      <th>mean_x<\/th>\n      <th>mean_y<\/th>\n      <th>stdev_x<\/th>\n      <th>stdev_y<\/th>\n      <th>cor_xy<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":3,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"dataset","targets":1},{"name":"mean_x","targets":2},{"name":"mean_y","targets":3},{"name":"stdev_x","targets":4},{"name":"stdev_y","targets":5},{"name":"cor_xy","targets":6}],"order":[],"orderClasses":false,"lengthMenu":[3,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-9757ab0f758b10735205" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-9757ab0f758b10735205">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12"],[1,2,3,4,5,6,7,8,9,10,11,12],[54.27,54.27,54.27,54.26,54.26,54.26,54.27,54.27,54.27,54.27,54.27,54.27],[47.83,47.83,47.84,47.83,47.84,47.83,47.84,47.84,47.83,47.84,47.84,47.83],[16.77,16.77,16.76,16.77,16.77,16.77,16.77,16.77,16.77,16.77,16.77,16.77],[26.94,26.94,26.93,26.94,26.93,26.94,26.94,26.94,26.94,26.93,26.94,26.94],[-0.06,-0.07000000000000001,-0.07000000000000001,-0.06,-0.06,-0.06,-0.07000000000000001,-0.07000000000000001,-0.07000000000000001,-0.06,-0.07000000000000001,-0.07000000000000001]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>dataset<\/th>\n      <th>mean_x<\/th>\n      <th>mean_y<\/th>\n      <th>stdev_x<\/th>\n      <th>stdev_y<\/th>\n      <th>cor_xy<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":3,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"dataset","targets":1},{"name":"mean_x","targets":2},{"name":"mean_y","targets":3},{"name":"stdev_x","targets":4},{"name":"stdev_y","targets":5},{"name":"cor_xy","targets":6}],"order":[],"orderClasses":false,"lengthMenu":[3,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <hr>

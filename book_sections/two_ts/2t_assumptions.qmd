@@ -21,7 +21,7 @@ source("../../_common.R")
 
 ::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
 
-**Motivating scenario:** We're getting ready to compare means of two-samples. We have some understanding that statistical models make assumptions, and know that sometimes violating assumptions is a big deal, while in other cases analyses are robust to such violations of assumptions. Here we explore th assumptions of the two sample t-test, and what to do when data do not meet these assumptions.  
+**Motivating scenario:** We're getting ready to compare means of two-samples. We have some understanding that statistical models make assumptions, and know that sometimes violating assumptions is a big deal, while in other cases analyses are robust to such violations of assumptions. Here we explore the assumptions of the two sample t-test, and what to do when data do not meet these assumptions.  
 
 **Learning goals:** By the end of this section, you should be able to:
 
@@ -70,11 +70,11 @@ SR_rils <- readr::read_csv(ril_link) |>
   filter(!is.na(mean_visits), !is.na(petal_color))
 ```
 
-These data are independent (we use only one value per RIL -- the mean across plants of a given RIL genotype), collected without bias (nice job Brooke!), and the mean seems like a good summary. So let's look into the asumptions of normality and equal variance: 
+These data are independent (we use only one value per RIL -- the mean across plants of a given RIL genotype), collected without bias (nice job Brooke!), and the mean seems like a good summary. So let's look into the assumptions of normality and equal variance: 
 
 ### 4. Data are far from normal, but transformation helps.
 
-A look at the raw data shows that pollinators visits are far from normal -- for both petal color morphs, many RILs have nearly no visits, while some have many visits (@fig-colohist A). After log-transformation$^*$ (@fig-colohist B), the data becomes closer to normal -- however, the many white flowers receiving no pollinator visits **$^\$$** remain, resulting a a modest (but good enough for most stats) deviation from normality.
+A look at the raw data shows that pollinators visits are far from normal -- for both petal color morphs, many RILs have nearly no visits, while some have many visits (@fig-colohist A). After log-transformation$^*$ (@fig-colohist B), the data becomes closer to normal -- however, the many white flowers receiving no pollinator visits **$^\$$** remain, resulting a  modest (but good enough for most stats) deviation from normality.
 
 :::aside
 **$^*$ or more specifically** log(x+0.2) transformation. <br><br>
@@ -169,7 +169,7 @@ include_graphics("../../figs/linear_models/permute_meme.jpeg")
 - **When data are not normal:** We can   
    1. Transform the data (as above).   
    2. Bootstrap to estimate uncertainty   and permute to test null hypotheses (@fig-norm).   OR   
-   3. Use a rank-based "non-parametric" test. Such tests are more formaly a test for difference in medians. They work by ranking the data and comparing the observed distribution of rankings between groups to the null. We can do this in R as follows, which leads to serious rejection of the null hypothesis: 
+   3. Use a rank-based "non-parametric" test. Such tests are more formally a test for difference in medians. They work by ranking the data and comparing the observed distribution of rankings between groups to the null. We can do this in R as follows, which leads to serious rejection of the null hypothesis: 
    
 ```{r}
 wilcox.test(log_visits ~ petal_color, data = SR_rils, exact = FALSE)

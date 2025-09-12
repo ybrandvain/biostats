@@ -100,7 +100,7 @@ one_perm|>ungroup()|>rename(perm_treatment= treatment)|> select(-replicate)|>
   geom_violin(show.legend = FALSE)+
   geom_jitter(aes(color = treatment), size = 3, alpha = .6,  width= .2) +  
   stat_summary(fun.data = mean_cl_boot, geom = "pointrange", color = "black", show.legend = FALSE,linewidth = 1.2)+
-  labs(color = "Actual\ntreatment", x = "Permuted \"Treatment\"" , "# Eggs hatched")+
+  labs(color = "Actual\ntreatment", x = "Permuted \"Treatment\"" , y="# Eggs hatched")+
   theme(axis.text = element_text(size = 16),
         axis.title = element_text(size = 16),
         legend.text = element_text(size = 16),

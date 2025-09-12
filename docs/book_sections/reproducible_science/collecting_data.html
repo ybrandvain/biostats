@@ -923,6 +923,18 @@ div.csl-indent {
  <span class="menu-text">• 16. Uncertain-2t</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/nhs2t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. two-sample t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/2t_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 17. Two t Summary</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -974,7 +986,7 @@ div.csl-indent {
 <hr>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-data_collection" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Researchers conducting fieldwork on a steep hillside covered in blooming *Clarkia xantiana* flowers. One researcher in the foreground, wearing a blue beanie and dark clothing, is seated among the flowers, writing on a clipboard. Another researcher in a red jacket is also recording data, while a third person in a hat is partially visible. The background features rolling, dry, shrub-covered hills under an overcast sky.">
+<div id="fig-data_collection" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Researchers conducting fieldwork on a steep hillside covered in blooming *Clarkia xantiana* flowers. One researcher in the foreground, wearing a blue beanie and dark clothing, is seated among the flowers, writing on a clipboard. Another researcher in a red jacket is also recording data, while a third person in a hat is partially visible. The background features rolling, dry, shrub-covered hills under an overcast sky." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-data_collection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="../../figs/intro_to_R/reproducible_science/more_xan.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="Researchers conducting fieldwork on a steep hillside covered in blooming *Clarkia xantiana* flowers. One researcher in the foreground, wearing a blue beanie and dark clothing, is seated among the flowers, writing on a clipboard. Another researcher in a red jacket is also recording data, while a third person in a hat is partially visible. The background features rolling, dry, shrub-covered hills under an overcast sky.">
@@ -1019,7 +1031,7 @@ Figure&nbsp;1: Researchers collecting data on <em>Clarkia</em> pollinator visita
 <p>It’s also smart to include metadata at the top—things like the date, location, and who collected the data. Whether this metadata gets its own column or is written at the top depends on practical needs—if one person is responsible for an entire sheet, maybe it belongs at the top, not repeated for every sample (contrary to the example in <a href="#fig-datasheet" class="quarto-xref">Figure&nbsp;<span>2</span></a>).</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-datasheet" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A black-and-white field data sheet template with blank spaces for entering site name, date, time, weather conditions (cloud cover, wind, humidity, temperature), plant descriptions, personnel contact information, and other notes. Below these fields is a structured table with column headers: Species, ID#, Sex, Location Description, Time, GPS, Photos?, Collector, and Notes, with multiple empty rows for data entry.">
+<div id="fig-datasheet" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A black-and-white field data sheet template with blank spaces for entering site name, date, time, weather conditions (cloud cover, wind, humidity, temperature), plant descriptions, personnel contact information, and other notes. Below these fields is a structured table with column headers: Species, ID#, Sex, Location Description, Time, GPS, Photos?, Collector, and Notes, with multiple empty rows for data entry." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-datasheet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="../../figs/intro_to_R/reproducible_science/sample_datasheet.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200.0%" alt="A black-and-white field data sheet template with blank spaces for entering site name, date, time, weather conditions (cloud cover, wind, humidity, temperature), plant descriptions, personnel contact information, and other notes. Below these fields is a structured table with column headers: Species, ID#, Sex, Location Description, Time, GPS, Photos?, Collector, and Notes, with multiple empty rows for data entry.">
@@ -1047,7 +1059,7 @@ Figure&nbsp;2: Example field data sheet designed for recording ecological and bi
 <div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-good_names" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A table comparing bad and good variable naming practices. The top section, labeled &quot;Bad&quot; in red, contains three tables with problematic variable names such as &quot;#Bugs,&quot; &quot;X1,&quot; and &quot;Num_bugs_5_to_2_pm.&quot; These names include special characters, unclear abbreviations, or excessive detail. The bottom section, labeled &quot;Good&quot; in blue, presents two tables with improved names like &quot;numBugs&quot; and &quot;n_Bugs,&quot; which follow consistent, clear, and readable naming conventions.">
+<div id="fig-good_names" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A table comparing bad and good variable naming practices. The top section, labeled &quot;Bad&quot; in red, contains three tables with problematic variable names such as &quot;#Bugs,&quot; &quot;X1,&quot; and &quot;Num_bugs_5_to_2_pm.&quot; These names include special characters, unclear abbreviations, or excessive detail. The bottom section, labeled &quot;Good&quot; in blue, presents two tables with improved names like &quot;numBugs&quot; and &quot;n_Bugs,&quot; which follow consistent, clear, and readable naming conventions." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-good_names-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="../../figs/intro_to_R/reproducible_science/goodNames4Things.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A table comparing bad and good variable naming practices. The top section, labeled &quot;Bad&quot; in red, contains three tables with problematic variable names such as &quot;#Bugs,&quot; &quot;X1,&quot; and &quot;Num_bugs_5_to_2_pm.&quot; These names include special characters, unclear abbreviations, or excessive detail. The bottom section, labeled &quot;Good&quot; in blue, presents two tables with improved names like &quot;numBugs&quot; and &quot;n_Bugs,&quot; which follow consistent, clear, and readable naming conventions.">
@@ -1074,7 +1086,7 @@ Figure&nbsp;3: A comparison of bad and good variable naming conventions in a dat
 <p>Alongside your data dictionary, you should also create a README file that provides an overview of the project and dataset, explaining the purpose of the study and how the data were collected. The README should include a description of each row and column in the dataset. While there may be some overlap with the data dictionary, this is fine. The data dictionary can serve as a quick reference for plotting and performing quality control, whereas the README provides a higher-level summary, designed for those who may not have been directly involved in the project but are seriously interested in the data.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-datadictionary" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A screenshot of a data dictionary table with four columns labeled &quot;name,&quot; &quot;plot_name,&quot; &quot;group,&quot; and &quot;description.&quot; The table defines variables used in a dataset, such as &quot;mouse&quot; (animal identifier), &quot;sex&quot; (Male or Female), &quot;sac_date&quot; (date of sacrifice), and other clinical or demographic variables like coat color and days on diet. The descriptions provide explanations for each variable's meaning and classification.">
+<div id="fig-datadictionary" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A screenshot of a data dictionary table with four columns labeled &quot;name,&quot; &quot;plot_name,&quot; &quot;group,&quot; and &quot;description.&quot; The table defines variables used in a dataset, such as &quot;mouse&quot; (animal identifier), &quot;sex&quot; (Male or Female), &quot;sac_date&quot; (date of sacrifice), and other clinical or demographic variables like coat color and days on diet. The descriptions provide explanations for each variable's meaning and classification." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-datadictionary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="http://www.tandfonline.com/cms/asset/a0ee9bd4-ec62-4aa0-85cd-ef3514ba63bd/utas_a_1375989_f0009_b.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A screenshot of a data dictionary table with four columns labeled &quot;name,&quot; &quot;plot_name,&quot; &quot;group,&quot; and &quot;description.&quot; The table defines variables used in a dataset, such as &quot;mouse&quot; (animal identifier), &quot;sex&quot; (Male or Female), &quot;sac_date&quot; (date of sacrifice), and other clinical or demographic variables like coat color and days on diet. The descriptions provide explanations for each variable's meaning and classification.">

@@ -1,0 +1,392 @@
+## • 17. Two t Summary {.unnumbered #2t_summary}
+
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr' , 'ggplot2','infer','broom','janitor','Hmisc']
+  autoload-packages: true
+---
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(webexercises)
+library(dplyr)
+library(knitr)
+library(infer)
+library(ggplot2)
+library(DT)
+```
+
+
+
+Links to: [Summary](#2t_summary_chapter-summary). [Chatbot tutor](#2t_summary_chatbot_tutor).  [Questions](#2t_summary_practice-questions). [Glossary](#2t_summary_glossary-of-terms). [R functions](#2t_summary_key-r-functions). [More resources](#2t_summary_additional-resources).
+
+
+
+```{r}
+#| echo: false
+#| label: fig-ts
+#| fig-cap: "Artwork by [\\@allison_horst](https://allisonhorst.com/)"
+#| fig-alt: "Cartoon illustration of two smiling, blob-like bell curves labeled Sample 1 (purple) and Sample 2 (orange). They wave cheerfully beneath a colorful banner that reads 2-Sample T-Tests."
+include_graphics("../../figs/linear_models/two_ts/two-sample-t.png")
+```
+
+## Chapter summary {#2t_summary_chapter-summary}  
+
+We can naturally build from our description and analysis of a single sample to the more common scenario of comparing two samples. When data meet the assumptions of independence, lack of bias, being well summarized by the mean, normal residuals, and equal variance between groups, we can use the standard *t*-test machinery (with a slightly different calculation for the standard error) to test null hypotheses and estimate uncertainty. When group variances differ, we can use Welch's *t*-testfor unequal variance.
+
+
+### Chatbot tutor  {#2t_summary_chatbot_tutor} 
+
+:::tutor
+
+
+Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/g-68c3a28f94848191b4c91bcd61cdd87d-two-sample-t-tutor)). I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+
+:::
+
+
+## Practice Questions {#2t_summary_practice-questions}
+
+
+Try these questions! By using the R environment you can work without leaving this "book". I even pre-loaded all the packages you need! 
+
+:::exercises
+
+
+**SETUP:** *There are plenty of reasons to choose your partner carefully. In much of the biological world a key reason is "evolutionary fitness" - presumably organisms evolve to choose mates that will help them make more (or healthier) children. This could, for example explain Kermit’s resistance in one of the more complex love stories of our time, as frogs and pigs are unlikely to make healthy children.*. 
+
+*To evaluate this this idea @swierk2019, identified a males top choice out of two female wood frogs and then had them mate with the preferred or unpreferred female and counted the number of hatched eggs.*
+
+The R code below loads the data It is meant to be loaded onto this console below too, but if something goes wrong, just paste this into your R console outside of this book
+:::
+
+```{r}
+#| message: false
+#| warning: false
+library(dplyr);    library(readr);  library(ggplot2);   library(janitor)
+frog_link <- "https://raw.githubusercontent.com/ybrandvain/biostat/master/data/Swierk_Langkilde_BEHECO_1.csv"
+frogs <- read_csv(frog_link) |>
+  clean_names()
+```
+
+```{r}
+#| echo: false
+#| column: page-right
+datatable(frogs, options = list(pageLength = 4))
+```
+
+```{webr-r}
+#| context: setup
+library(janitor)
+library(dplyr)
+library(Hmisc)
+library(readr)
+library(ggplot2)
+library(broom)
+library(infer)
+frog_link <- "https://raw.githubusercontent.com/ybrandvain/biostat/master/data/Swierk_Langkilde_BEHECO_1.csv"
+frogs <- read_csv(frog_link) |>
+  clean_names()
+```
+
+
+--- 
+
+
+
+```{webr-r}
+ggplot(frogs, aes( x = treatment, 
+                   y = hatched_eggs, 
+                   color = treatment)) +
+    geom____()   +
+    stat_summary(fun.data = "mean_cl_normal", 
+                 color = "black", 
+                 geom = "errorbar", 
+                 width = .3) +
+  theme(legend.position = "none")
+```
+
+:::exercises
+**Q1.** Complete the code above, what pattern do you see? `r longmcq(c(answer = "Similar numbers of hatched eggs in preferred and nonpreferred treatments", "Way more hatched eggs in the preferred treatment", "Way more hatched eggs in the nonpreferred treatment"))`
+:::
+
+
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-height: 3
+#| out-width: "100%"
+#| label: fig-hists
+#| fig-cap: "Histograms of the number of hatched eggs across treatments. (A) Distribution when pooling both treatments together. (B) Distributions shown separately for the nonpreferred and the preferred treatments."
+#| fig-alt: "Panel A shows a histogram of hatched eggs across all treatments, with most values clustered around 250 but spread up to 1000. Panel B splits this into two histograms: the nonpreferred treatment (red, left) with a broader, flatter spread, and the preferred treatment (teal, right) with a strong peak near 250 hatched eggs. Both panels use the same x-axis (0–1000 hatched eggs) and y-axis (count)."
+library(patchwork)
+
+A <- ggplot(frogs|>mutate(t = "both treatments"), aes( x = hatched_eggs)) +
+    geom_histogram(bins = 16, color = "white")  +
+    facet_wrap(~t)+
+    theme( strip.text = element_text(size = 18))
+
+B <- ggplot(frogs, aes( x = hatched_eggs, fill = treatment)) +
+    geom_histogram(bins = 16, color = "white")  +
+    facet_wrap(~treatment)+
+  theme(legend.position = "none",
+        strip.text = element_text(size = 18))
+
+A + B  + 
+  plot_layout(widths = c(1,2))+
+  plot_annotation(tag_levels = "A")
+```
+
+
+
+:::exercises 
+
+**Q2.** Consider @fig-hists, above. Which plot is more useful to evaluate the normality assumption of the two sample t-test?
+`r longmcq(c("A) Both treaments combined.", answer =  "B) Seperate data by treatment.", "It depends, you should integrate information from both.",  "Nether plot is appropriate"))`
+
+:::
+
+---
+
+```{webr-r}
+frogs |> 
+  group_by(treatment)|>
+  summarise(MEAN = mean(hatched_eggs),
+            VAR  = var(hatched_eggs),
+            N    = n())
+```
+
+:::exercises 
+
+**Q3.** Consider the output of the code above. Should you feel comfortable assuming homoscedasticity for a two sample t-test.  `r longmcq(c(answer= "Yes", "No", "Maybe","I don't know (I need to run a statistical test to evaluate this assumption)","Can you repeat the question?"))`
+
+---
+
+
+**Q4.** For now we'll go on with a t-test approach, regardless. So find the pooled variance in the R interface above `r fitb(answer = 61556, num = TRUE, tol = 6)`.
+
+
+`r hide("Click for pooled variance equation")`
+$$s^2_p = \frac{\text{df}_1 \times s^2_1 + \text{df}_2 \times s^2_2}{\text{df}_1+\text{df}_2} \text{, and df}_i = n_i-1$$
+`r unhide()`
+
+`r hide("Click for worked answer")` 
+
+- We can copy and paste R output into a calculator (that calculator might be R). I think this is best for understanding. 
+
+```{r}
+frogs |> 
+  group_by(treatment)|>
+  summarise(MEAN = mean(hatched_eggs),
+            VAR  = var(hatched_eggs),
+            N    = n())
+
+# Pooled variance
+((56118*(29-1)) +(67412*(27-1))) / (29 + 27 - 2)
+```
+
+**OR**  
+
+- We do this in one long workflow in R. I think this is the best practice for getting exact answers. 
+
+```{r}
+frogs |> 
+    group_by(treatment)|>
+    summarise(MEAN = mean(hatched_eggs),
+              VAR  = var(hatched_eggs),
+              N    = n())|>
+    summarise(pooled_var = sum((N-1)*VAR) / (sum(N)-2) )
+```  
+
+`r unhide()`
+
+
+---
+
+**Q5.** Given the answers above, characterize this effect size. 
+
+`r longmcq(c(answer = "Not worth reporting (Cohen's D is less than 0.01)", "Tiny	(Cohen's D is between 0.01 and 0.20)", "Small	(Cohen's D is between 0.20 and 0.50)", "Medium	(Cohen's D is between 0.50 and 0.80)", "Large	(Cohen's D is between 0.80 and 1.10)", "Very large	(Cohen's D is between 1.20 and 2.00)", "Huge	(Cohen's D is greater than 2.00)"))`
+
+
+---
+
+
+
+**Q6.**  From this Cohens D value, we conclude that:
+`r longmcq(c("We should reject the null hypothesis","We should fail to reject the null hypothesis","The null is false","The null is true",answer = "Even if the re sults were  stitically significant they would be practically meaningless."))`
+
+---
+
+**Q7** State the null hypothesis <html><textarea rows="6" cols="50" placeholder="Your answer here..."></textarea></html>
+
+---
+
+**Q8** State the alternative hypothesis <html><textarea rows="6" cols="50" placeholder="Your answer here..."></textarea></html>
+`r hide("Explanation")`
+We find the area below 4 kg and subtract the area below 3 kg: `pnorm(4, 3.339, 0.573) - pnorm(3, 3.339, 0.573) = 0.875 - 0.277 = 0.598`, or about 60%.
+`r unhide()`
+
+--- 
+
+```{webr-r}
+# Run  a two sample t-test here. 
+# Note for this case assume equal variance
+
+```
+
+
+
+**Q9.** Which values are NOT IN the 95% confidence interval or the difference (i.e. preferred - preferred) select all that apply:
+`r longmcq(c(answer = "-92", "-42","2","52","102","152","202",answer = "252"))`
+
+---
+
+**Q10)** The output of the code above shows a p-value of $\approx 0.30$, so we reject the null hypothesis. The output also shows a t-value of $\approx 1$. If all I knew was that p-value would I be able to reject the null at $\alpha = 0.05$? `r mcq(c("Yes", answer = "No","Can't tell you without the degress of freedom."))`
+
+---
+
+**Q11.** We fail to reject the null hypothesis. This means the null is `r mcq(c("TRUE","FALSE",answer = "I dont know"))`.
+
+
+:::
+
+
+## 📊 Glossary of Terms {#2t_summary_glossary-of-terms} 
+
+:::glossary
+
+
+### Assumptions
+
+* **Independence**: Each observation must be independent of others; in two-sample designs, each group’s values should not influence the other.
+
+* **Unbiased Sampling**: Data should be collected without systematic bias so that results generalize to the population.
+
+* **Normality of Residuals**: Within each group, the distribution of residuals (observed – group mean) should be approximately normal.
+
+* **Homoscedasticity (Equal Variance)**: The spread of values should be roughly the same in each group. In practice, differences smaller than a 4:1 ratio usually have little effect.
+
+### Summaries & Estimates
+
+* **Group Mean ($\bar{x}$)**: The average of all observations in a group.
+
+* **Variance ($s^2$)**: The spread of observations within a group, calculated as $s^2 = \frac{\sum (x_i - \bar{x})^2}{n-1}$.
+
+* **Pooled Variance (\$s\_p^2\$)**: A weighted average of group variances used in the standard two-sample *t*-test:
+  $s_p^2 = \frac{df_1 s_1^2 + df_2 s_2^2}{df_1 + df_2}$
+
+* **Difference in Means ($\Delta \bar{x}$)**: The difference between the two group averages, $\Delta \bar{x} = \bar{x}_1 - \bar{x}_2$.
+
+* **Cohen’s D**: A standardized measure of effect size for two means:
+  $d = \frac{\bar{x}_1 - \bar{x}_2}{s_p}$
+  
+### The Two-Sample t-Test
+
+* **Test Statistic (t)**: Measures how many standard errors separate the observed difference from the null hypothesis difference (usually 0):
+  $t = \frac{(\bar{x}_1 - \bar{x}_2)}{s_{\overline{x_1 - x_2}}}$
+
+* **Degrees of Freedom (df)**: For the standard test with equal variance:
+  $df = (n_1 - 1) + (n_2 - 1) = n_1 + n_2 - 2$
+
+* **Welch’s *t*-Test**: A version of the *t*-test that does not assume equal variance. The denominator uses each group’s variance scaled by its sample size, and $df$ are approximated with the Welch–Satterthwaite equation.
+
+
+* **Wilcoxon Rank-Sum Test**: A non-parametric alternative to the two-sample *t*-test that compares the ranks of values between groups, effectively testing for differences in medians.
+
+
+:::
+
+
+
+
+
+
+---
+
+## 🛠️ Key R Functions{#2t_summary_key-r-functions}  
+
+ 
+:::functions
+
+### Functions
+
+
+* `t.test()`: Performs a one-sample, two-sample, or paired *t*-test. Use the formula syntax `t.test(y ~ group, data = df, var.equal = TRUE)` for the standard two-sample test. By default, Welch’s test is used (`var.equal = FALSE`).
+
+* `wilcox.test()`: Performs the Wilcoxon rank-sum test (Mann–Whitney U test), a non-parametric alternative that compares medians between two groups.
+
+* `broom::tidy()`: Converts test outputs (like from `t.test()`) into tidy data frames, making it easier to report and manipulate results.
+
+
+### Syntax 
+
+- *Two-sample t-test (equal variance assumed)*    
+
+```{r}
+#| eval: false
+t.test(y ~ group, data = df, var.equal = TRUE)
+```
+
+- *Two-sample Welch’s t-test (default in R, no equal variance assumption)*    
+ 
+```{r}
+#| eval: false
+t.test(y ~ group, data = df)
+```
+
+- *Wilcoxon rank-sum test (non-parametric alternative)*      
+
+```{r}
+#| eval: false
+wilcox.test(y ~ group, data = df, exact = FALSE)
+```
+
+
+
+:::
+
+
+
+## Additional resources   {#2t_summary_additional-resources}
+
+:::learnmore 
+
+**Videos:**         
+
+
+
+
+- [Crash Course Statistics #27 T test](https://www.youtube.com/watch?v=AGh66ZPpOSQ).
+
+- [Kahn Academy: Two sample t-test](https://www.khanacademy.org/math/ap-statistics/xfb5d8e68:inference-quantitative-means/two-sample-t-test-means/v/two-sample-t-test-for-difference-of-means).    
+
+**Other resources:**    
+
+- [Datanovia: t-test](https://www.datanovia.com/en/lessons/how-to-do-a-t-test-in-r-calculation-and-reporting/how-to-do-two-sample-t-test-in-r/)
+
+
+:::
+
+
+
+
+
+
+
+
+
+```{r}
+#| echo: false
+# https://docs.google.com/forms/d/1qVoNUL7VFPYryvp5ssZmT22rhhUwoDamPhjJ1PN3K-E/edit#responses
+# your not normal : https://allisonhorst.com/data-science-art
+
+```
+

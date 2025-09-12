@@ -13,6 +13,7 @@ library(DT)
 library(webexercises)
 library(ggplot2)
 library(tidyr)
+library(gt)
 source("../../_common.R") 
 ```
 
@@ -30,7 +31,6 @@ source("../../_common.R")
 :::
 
 ```{r}
-#| column: margin
 #| code-fold: true
 #| code-summary: "Loading and processing data"
 ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
@@ -54,13 +54,19 @@ color_visit_summaries <- SR_rils |>
 
 ## Estimating Uncertainty  in Mean Difference 
 
-A "point" estimate is just that -- our informed guess of a parameter value. But we now know enough to flinch when we hear or calculate such an estimate. We know that estimates  come from samples and therefore we need to addinformation about the uncertainty in any estimate before rushing to intepret it.
+A "point" estimate is just that -- our informed guess of a parameter value. Point estimates come from samples, so we should always pair them with an uncertainty estimate. To estimate uncertainty in the difference in means we find the "pooled standard error" and then go to our t-distribution to turn this into a confidence interval.
 
-To estimate uncertainty in the difference in means we find the "pooled standard error" and then go to our t-distribution to turn this into a confidence interval.
 
-- **The standard error for the difference in means** is a strange looking equation: 
+:::aside
+**Remember:** The  equation for the pooled variance: $$s^2_p = \frac{\text{df}_1 \times s_1^2+ \text{df}_2 \times s_2^2}{\text{df}_\text{total}}$$.   
 
-:::aside 
+- $s_i^2$: The variance within group $i$.     
+- $\text{df}_i$: The degrees of freedom in group $i$.     
+- $\text{df}_\text{total}$: The total degrees of freedom (defined in text below).     
+
+
+------------
+<br><br>
 **$SE_{\overline{x_1}-\overline{x_2}}$ for our example:**  
 $$
 \begin{align}
@@ -69,7 +75,12 @@ SE_{\overline{x_1}-\overline{x_2}} &= \sqrt{s_p^2 \Big(\frac{1}{n_1} + \frac{1}{
 &=0.161
 \end{align}
 $$
+
 :::
+
+- **The standard error for the difference in means** is a strange looking equation. Recall that $s^2_p is the "pooled variance" and using this value implies that we believe that variance is similar within each group:  
+
+
 
 $$SE_{\overline{x_1}-\overline{x_2}} = \sqrt{s_p^2 \Big(\frac{1}{n_1} + \frac{1}{n_2}\Big)}$$
 
@@ -127,6 +138,103 @@ color_visit_summaries|>
             lower_95_CI = mean_diff - se * crit_t,
             upper_95_CI = mean_diff + se * crit_t)
 ```         
+
+**Note** these summaries are interesting but are pretty tough to interpret as i dont know of anyone who thinks on the `log(x+0.2`) scale. A
+
 :::warning
-We have done all our
+We have done all our calculations on `log(x+0.2)` transformed data. Interpretation of these results on the original linear scale is tricky, and cannot be achieved without some additional assumptions.
 :::
+
+## An alternative: Bootstrap to quantify uncertainty   
+
+
+Everything above is statistically valid—the data meet the assumptions of the analysis. The bummer, as we noted, is that the results are awkward to interpret. As scientists, we  balance values differently - I usually prioritize clarity over perfection. As such I often presentplainly interpretable summaries over technically perfect but opaque ones. 
+
+Below, I bootstrap (see the [section on uncertainty](#uncertainty) for review) the untransformed data to obtain a 95% confidence interval without making assumptions about equal variance or normality. The 95% bootstrap CI ranges from 0.50 to 1.52. This interval is roughly the mean $\pm 2 \times \text{Bootstrapped SE}$, suggesting that in this case, results are robust to violations of the assumption of normality. 
+
+In a later section you will see that this is basically we would get from a version of the t-test that does not assume equal variance (*we assume unequal variance because on a linear scale the variancesare very different!*). This further suggests tha the t-machinery is pretty robust to violations of normality assumptions.   
+
+
+
+```{r}
+#| column: margin
+#| echo: false
+#| fig-cap: "Bootstrap sampling distribution of the difference in mean visits (pink − white) on the original (linear) scale. The histogram shows 5,000 bootstrapped estimates of the mean difference; the red vertical lines mark the 95% percentile CI (here ≈ 0.50 to 1.52)."
+#| fig-alt: "A histogram of 5,000 bootstrap estimates of the difference in mean pollinator visits between pink and white RILs (pink − white). The distribution is centered near 1.0, with most mass between roughly 0.5 and 1.5. Two red vertical lines indicate the 2.5th and 97.5th percentile cutoffs (about 0.50 and 1.52). A dashed vertical line can mark the observed sample difference."
+#| label: fig-boot
+library(infer)
+library(tidyr)
+raw_diff <- SR_rils %>%
+  specify(mean_visits ~ petal_color) |>            # response ~ explanatory
+  calculate(stat = "diff in means",                # difference in group means
+            order = c("pink", "white"))
+
+# BOOTSTRAP
+boot_SR_visits <-  SR_rils %>%
+  specify(mean_visits ~ petal_color) |>            # specify response ~ explanatory
+  generate(reps = 5000, type = "bootstrap") |>     # resample
+  calculate(stat = "diff in means",                # calculate difference in means
+            order = c("pink", "white"))
+
+boot_SR_visits |> 
+  ggplot(aes(x = stat))+
+  geom_histogram(color = "white")+
+  geom_vline(data= 
+               boot_SR_visits |> 
+               get_confidence_interval() |> 
+               pivot_longer(cols= 1:2),
+             aes(xintercept = value), 
+             color = "red")+
+  labs(x = "Bootstrapped diff in means\n(pink - white)",
+       title = "Bootstrapped sampling\ndistribution")+
+  theme(axis.text.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.x = element_text(size = 28),
+        axis.title.x = element_text(size = 28),
+        title = element_text(size = 32))
+```
+
+```{r}
+#| column: margin
+#| echo: false
+bootsummary <- boot_SR_visits |>
+  summarise(
+    se = sd(stat),
+    lower_95 = quantile(stat, prob = 0.025),
+    estimate = pull(raw_diff ),
+    upper_95 = quantile(stat, prob = 0.975)
+    )
+
+bootsummary |> 
+  mutate_all(round, digits = 3)|>
+  gt(caption = "Bootstrapped SEs and CI's")
+```
+
+
+```{r}
+#| eval: false
+library(infer)
+
+# SUMMARIZE THE DATA
+raw_diff <- SR_rils %>%
+  specify(mean_visits ~ petal_color) |>            # response ~ explanatory
+  calculate(stat = "diff in means",                # difference in group means
+            order = c("pink", "white"))
+
+# BOOTSTRAP
+boot_SR_visits <-  SR_rils %>%
+  specify(mean_visits ~ petal_color) |>            # specify response ~ explanatory
+  generate(reps = 5000, type = "bootstrap") |>     # resample
+  calculate(stat = "diff in means",                # calculate difference in means
+            order = c("pink", "white"))
+
+# SUMMARIZE THE BOOTSTRAP
+bootsummary <- boot_SR_visits |>
+  summarise(
+    se = sd(stat),
+    lower_95 = quantile(stat, prob = 0.025),
+    estimate = pull(raw_diff ),
+    upper_95 = quantile(stat, prob = 0.975)
+    )
+```
+

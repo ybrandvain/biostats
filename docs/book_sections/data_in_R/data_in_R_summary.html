@@ -2510,6 +2510,18 @@ globalThis.qwebrExecuteCode = async function (
  <span class="menu-text">• 16. Uncertain-2t</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/nhs2t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. two-sample t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/two_ts/2t_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 17. Two t Summary</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -2858,8 +2870,8 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="exercises">
 <strong>Q1)</strong> The code above returns the error: "Error: could not find function "summarise"". How can you solve this?
-<div id="radio_VZWMKKUAGY" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_VZWMKKUAGY" value=""> <span>Change “summarise” to “summarize”</span></label><label><input type="radio" autocomplete="off" name="radio_VZWMKKUAGY" value="answer"> <span>load the dplyr library</span></label>
+<div id="radio_BEHPPIKAMK" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_BEHPPIKAMK" value=""> <span>Change “summarise” to “summarize”</span></label><label><input type="radio" autocomplete="off" name="radio_BEHPPIKAMK" value="answer"> <span>load the dplyr library</span></label>
 </div>
 <hr>
 <p><strong>Q2)</strong> Revisit the pollinator visitation dataset we explored. Which location has a greater anther stigma distance (<code>asd_mm</code>)? <select class="webex-select"><option value="blank"></option><option value="">They are the same</option><option value="answer">SM</option><option value="">GC</option><option value="">S6</option></select></p>
@@ -3030,13 +3042,13 @@ Click here for explanation
 </div>
 <hr>
 <strong>Q6</strong> You should always make sure data are tidy when (pick best answer)
-<div id="radio_YEINULETLI" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_YEINULETLI" value=""> <span>collecting data</span></label><label><input type="radio" autocomplete="off" name="radio_YEINULETLI" value=""> <span>presenting data</span></label><label><input type="radio" autocomplete="off" name="radio_YEINULETLI" value="answer"> <span>analyzing data with dplyr</span></label><label><input type="radio" autocomplete="off" name="radio_YEINULETLI" value=""> <span>all of the above</span></label>
+<div id="radio_QPAUIHNCTZ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_QPAUIHNCTZ" value=""> <span>collecting data</span></label><label><input type="radio" autocomplete="off" name="radio_QPAUIHNCTZ" value=""> <span>presenting data</span></label><label><input type="radio" autocomplete="off" name="radio_QPAUIHNCTZ" value="answer"> <span>analyzing data with dplyr</span></label><label><input type="radio" autocomplete="off" name="radio_QPAUIHNCTZ" value=""> <span>all of the above</span></label>
 </div>
 <hr>
 <strong>Q7</strong> What is wrong with the code below (pick the most egregious issue).
-<div id="radio_ZTEBVLQMMX" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_ZTEBVLQMMX" value="answer"> <span>I overwrote iris and lost the raw data</span></label><label><input type="radio" autocomplete="off" name="radio_ZTEBVLQMMX" value=""> <span>I did not show the output</span></label><label><input type="radio" autocomplete="off" name="radio_ZTEBVLQMMX" value=""> <span>I used summarise() rather than summarize()</span></label><label><input type="radio" autocomplete="off" name="radio_ZTEBVLQMMX" value=""> <span>I did not tell R to remove missing data when calculating the mean.</span></label>
+<div id="radio_NRWYMZGSNT" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_NRWYMZGSNT" value="answer"> <span>I overwrote iris and lost the raw data</span></label><label><input type="radio" autocomplete="off" name="radio_NRWYMZGSNT" value=""> <span>I did not show the output</span></label><label><input type="radio" autocomplete="off" name="radio_NRWYMZGSNT" value=""> <span>I used summarise() rather than summarize()</span></label><label><input type="radio" autocomplete="off" name="radio_NRWYMZGSNT" value=""> <span>I did not tell R to remove missing data when calculating the mean.</span></label>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> iris <span class="sc">|&gt;</span> </span>
