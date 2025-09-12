@@ -37,7 +37,7 @@ include_graphics("../../figs/linear_models/two_ts/two-sample-t.png")
 
 ## Chapter summary {#2t_summary_chapter-summary}  
 
-We can naturally build from our description and analysis of a single sample to the more common scenario of comparing two samples. When data meet the assumptions of independence, lack of bias, being well summarized by the mean, normal residuals, and equal variance between groups, we can use the standard *t*-test machinery (with a slightly different calculation for the standard error) to test null hypotheses and estimate uncertainty. When group variances differ, we can use Welch's *t*-testfor unequal variance.
+We can naturally build from our description and analysis of a single sample to the more common scenario of comparing two samples. When data meet the assumptions of independence, lack of bias, being well summarized by the mean, normal residuals, and equal variance between groups, we can use the standard *t*-test machinery (with a slightly different calculation for the standard error) to test null hypotheses and estimate uncertainty. When group variances differ, we can use Welch's *t*-test for unequal variance.
 
 
 ### Chatbot tutor  {#2t_summary_chatbot_tutor} 
@@ -221,7 +221,7 @@ frogs |>
 
 
 **Q6.**  From this Cohens D value, we conclude that:
-`r longmcq(c("We should reject the null hypothesis","We should fail to reject the null hypothesis","The null is false","The null is true",answer = "Even if the re sults were  stitically significant they would be practically meaningless."))`
+`r longmcq(c("We should reject the null hypothesis","We should fail to reject the null hypothesis","The null is false","The null is true",answer = "Even if statistically significant, this effect size would be practically negligible."))`
 
 ---
 
@@ -230,9 +230,7 @@ frogs |>
 ---
 
 **Q8** State the alternative hypothesis <html><textarea rows="6" cols="50" placeholder="Your answer here..."></textarea></html>
-`r hide("Explanation")`
-We find the area below 4 kg and subtract the area below 3 kg: `pnorm(4, 3.339, 0.573) - pnorm(3, 3.339, 0.573) = 0.875 - 0.277 = 0.598`, or about 60%.
-`r unhide()`
+
 
 --- 
 
@@ -244,7 +242,7 @@ We find the area below 4 kg and subtract the area below 3 kg: `pnorm(4, 3.339, 0
 
 
 
-**Q9.** Which values are NOT IN the 95% confidence interval or the difference (i.e. preferred - preferred) select all that apply:
+**Q9.** Which values are NOT IN the 95% confidence interval or the difference (i.e. preferred - nonpreferred) select all that apply:
 `r longmcq(c(answer = "-92", "-42","2","52","102","152","202",answer = "252"))`
 
 ---
@@ -254,6 +252,11 @@ We find the area below 4 kg and subtract the area below 3 kg: `pnorm(4, 3.339, 0
 ---
 
 **Q11.** We fail to reject the null hypothesis. This means the null is `r mcq(c("TRUE","FALSE",answer = "I dont know"))`.
+
+
+---
+
+**Q12.** If you had to make a bet, the safer bet in this case is that the null hypothesis is  `r mcq(c(answer = "TRUE","FALSE"))`
 
 
 :::

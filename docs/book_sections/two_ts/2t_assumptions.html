@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>• 16. two-t Assumptions – Applied Biostatistics</title>
+<title>• 17. Two-t Assumptions – Applied Biostatistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -147,7 +147,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/two_ts.html">17. A binary explanatory variable</a></li><li class="breadcrumb-item"><a href="../../book_sections/two_ts/2t_assumptions.html">• 16. two-t Assumptions</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/two_ts.html">17. A binary explanatory variable</a></li><li class="breadcrumb-item"><a href="../../book_sections/two_ts/2t_assumptions.html">• 17. Two-t Assumptions</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -951,25 +951,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/two_ts/2t_assumptions.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">• 16. two-t Assumptions</span></a>
+ <span class="menu-text">• 17. Two-t Assumptions</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/two_ts/2t_calcs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">• 16. two-t Calculations</span></a>
+ <span class="menu-text">• 17. Two-t Calculations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/two_ts/uncertain2t.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">• 16. Uncertain-2t</span></a>
+ <span class="menu-text">• 17. Uncertain-2t</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/two_ts/nhs2t.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">• 16. two-sample t-test</span></a>
+ <span class="menu-text">• 17. Two-sample t-test</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -996,9 +996,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/two_ts.html">17. A binary explanatory variable</a></li><li class="breadcrumb-item"><a href="../../book_sections/two_ts/2t_assumptions.html">• 16. two-t Assumptions</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/two_ts.html">17. A binary explanatory variable</a></li><li class="breadcrumb-item"><a href="../../book_sections/two_ts/2t_assumptions.html">• 17. Two-t Assumptions</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="2t_assumptions" class="quarto-section-identifier">• 16. two-t Assumptions</span></h1>
+<h1 class="title"><span id="2t_assumptions" class="quarto-section-identifier">• 17. Two-t Assumptions</span></h1>
 </div>
 
 
@@ -1102,7 +1102,7 @@ window.Quarto = {
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>a<span class="sc">+</span>b<span class="sc">+</span><span class="fu">plot_layout</span>(<span class="at">axis_titles =</span> <span class="st">"collect_y"</span>) <span class="sc">+</span> <span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">"A"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display page-columns page-full">
-<div id="fig-colohist" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Two panels compare histograms of mean visits to pink and white flowers. Panel A (raw data) shows both pink and white distributions with most values near zero and long right tails, creating skewed shapes. Panel B (log-transformed data) shows the same groups after applying a log(+0.2) transformation. The pink distribution becomes symmetric and bell-like, while the white distribution is less skewed but still uneven. Bars are outlined in black, with pink fill for pink flowers and white fill for white flowers." data-fig-align="center">
+<div id="fig-colohist" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-align="center" alt="Two panels compare histograms of mean visits to pink and white flowers. Panel A (raw data) shows both pink and white distributions with most values near zero and long right tails, creating skewed shapes. Panel B (log-transformed data) shows the same groups after applying a log(+0.2) transformation. The pink distribution becomes symmetric and bell-like, while the white distribution is less skewed but still uneven. Bars are outlined in black, with pink fill for pink flowers and white fill for white flowers.">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-colohist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
 <img src="2t_assumptions_files/figure-html/fig-colohist-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img column-page-right" style="width:95.0%" alt="Two panels compare histograms of mean visits to pink and white flowers. Panel A (raw data) shows both pink and white distributions with most values near zero and long right tails, creating skewed shapes. Panel B (log-transformed data) shows the same groups after applying a log(+0.2) transformation. The pink distribution becomes symmetric and bell-like, while the white distribution is less skewed but still uneven. Bars are outlined in black, with pink fill for pink flowers and white fill for white flowers.">
@@ -1121,23 +1121,23 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
 <div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="gfrvgofxch" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gfrvgofxch table {
+<div id="nggyuxagqf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nggyuxagqf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gfrvgofxch thead, #gfrvgofxch tbody, #gfrvgofxch tfoot, #gfrvgofxch tr, #gfrvgofxch td, #gfrvgofxch th {
+#nggyuxagqf thead, #nggyuxagqf tbody, #nggyuxagqf tfoot, #nggyuxagqf tr, #nggyuxagqf td, #nggyuxagqf th {
   border-style: none;
 }
 
-#gfrvgofxch p {
+#nggyuxagqf p {
   margin: 0;
   padding: 0;
 }
 
-#gfrvgofxch .gt_table {
+#nggyuxagqf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1163,12 +1163,12 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-left-color: #D3D3D3;
 }
 
-#gfrvgofxch .gt_caption {
+#nggyuxagqf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gfrvgofxch .gt_title {
+#nggyuxagqf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1180,7 +1180,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-bottom-width: 0;
 }
 
-#gfrvgofxch .gt_subtitle {
+#nggyuxagqf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1192,7 +1192,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-top-width: 0;
 }
 
-#gfrvgofxch .gt_heading {
+#nggyuxagqf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1204,13 +1204,13 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-right-color: #D3D3D3;
 }
 
-#gfrvgofxch .gt_bottom_border {
+#nggyuxagqf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gfrvgofxch .gt_col_headings {
+#nggyuxagqf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1225,7 +1225,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-right-color: #D3D3D3;
 }
 
-#gfrvgofxch .gt_col_heading {
+#nggyuxagqf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1245,7 +1245,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   overflow-x: hidden;
 }
 
-#gfrvgofxch .gt_column_spanner_outer {
+#nggyuxagqf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1257,15 +1257,15 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   padding-right: 4px;
 }
 
-#gfrvgofxch .gt_column_spanner_outer:first-child {
+#nggyuxagqf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gfrvgofxch .gt_column_spanner_outer:last-child {
+#nggyuxagqf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gfrvgofxch .gt_column_spanner {
+#nggyuxagqf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1277,11 +1277,11 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   width: 100%;
 }
 
-#gfrvgofxch .gt_spanner_row {
+#nggyuxagqf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gfrvgofxch .gt_group_heading {
+#nggyuxagqf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1307,7 +1307,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   text-align: left;
 }
 
-#gfrvgofxch .gt_empty_group_heading {
+#nggyuxagqf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1322,15 +1322,15 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   vertical-align: middle;
 }
 
-#gfrvgofxch .gt_from_md > :first-child {
+#nggyuxagqf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gfrvgofxch .gt_from_md > :last-child {
+#nggyuxagqf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gfrvgofxch .gt_row {
+#nggyuxagqf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1349,7 +1349,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   overflow-x: hidden;
 }
 
-#gfrvgofxch .gt_stub {
+#nggyuxagqf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1362,7 +1362,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   padding-right: 5px;
 }
 
-#gfrvgofxch .gt_stub_row_group {
+#nggyuxagqf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1376,15 +1376,15 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   vertical-align: top;
 }
 
-#gfrvgofxch .gt_row_group_first td {
+#nggyuxagqf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gfrvgofxch .gt_row_group_first th {
+#nggyuxagqf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gfrvgofxch .gt_summary_row {
+#nggyuxagqf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1394,16 +1394,16 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   padding-right: 5px;
 }
 
-#gfrvgofxch .gt_first_summary_row {
+#nggyuxagqf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gfrvgofxch .gt_first_summary_row.thick {
+#nggyuxagqf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gfrvgofxch .gt_last_summary_row {
+#nggyuxagqf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1413,7 +1413,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-bottom-color: #D3D3D3;
 }
 
-#gfrvgofxch .gt_grand_summary_row {
+#nggyuxagqf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1423,7 +1423,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   padding-right: 5px;
 }
 
-#gfrvgofxch .gt_first_grand_summary_row {
+#nggyuxagqf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1433,7 +1433,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-top-color: #D3D3D3;
 }
 
-#gfrvgofxch .gt_last_grand_summary_row_top {
+#nggyuxagqf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1443,11 +1443,11 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-bottom-color: #D3D3D3;
 }
 
-#gfrvgofxch .gt_striped {
+#nggyuxagqf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gfrvgofxch .gt_table_body {
+#nggyuxagqf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1456,7 +1456,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-bottom-color: #D3D3D3;
 }
 
-#gfrvgofxch .gt_footnotes {
+#nggyuxagqf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1470,7 +1470,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-right-color: #D3D3D3;
 }
 
-#gfrvgofxch .gt_footnote {
+#nggyuxagqf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1479,7 +1479,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   padding-right: 5px;
 }
 
-#gfrvgofxch .gt_sourcenotes {
+#nggyuxagqf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1493,7 +1493,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   border-right-color: #D3D3D3;
 }
 
-#gfrvgofxch .gt_sourcenote {
+#nggyuxagqf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1501,72 +1501,72 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
   padding-right: 5px;
 }
 
-#gfrvgofxch .gt_left {
+#nggyuxagqf .gt_left {
   text-align: left;
 }
 
-#gfrvgofxch .gt_center {
+#nggyuxagqf .gt_center {
   text-align: center;
 }
 
-#gfrvgofxch .gt_right {
+#nggyuxagqf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gfrvgofxch .gt_font_normal {
+#nggyuxagqf .gt_font_normal {
   font-weight: normal;
 }
 
-#gfrvgofxch .gt_font_bold {
+#nggyuxagqf .gt_font_bold {
   font-weight: bold;
 }
 
-#gfrvgofxch .gt_font_italic {
+#nggyuxagqf .gt_font_italic {
   font-style: italic;
 }
 
-#gfrvgofxch .gt_super {
+#nggyuxagqf .gt_super {
   font-size: 65%;
 }
 
-#gfrvgofxch .gt_footnote_marks {
+#nggyuxagqf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gfrvgofxch .gt_asterisk {
+#nggyuxagqf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gfrvgofxch .gt_indent_1 {
+#nggyuxagqf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gfrvgofxch .gt_indent_2 {
+#nggyuxagqf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gfrvgofxch .gt_indent_3 {
+#nggyuxagqf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gfrvgofxch .gt_indent_4 {
+#nggyuxagqf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gfrvgofxch .gt_indent_5 {
+#nggyuxagqf .gt_indent_5 {
   text-indent: 25px;
 }
 
-#gfrvgofxch .katex-display {
+#nggyuxagqf .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#gfrvgofxch div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#nggyuxagqf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1614,7 +1614,7 @@ Figure&nbsp;1: Evaluating the normality assumptions for the raw (A), and log tra
 <div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-norm" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A meme with three cartoon figures superimposed on a bell curve. The central figure, crying with glasses, says: &quot;Hmm… linear model? random effects? covariates? mixed effect? GLMM?&quot; On the left, a simple character smiles with the text: &quot;Bootstrap for uncertainty, permute for NHST.&quot; On the right, a hooded character repeats the same phrase. The normal curve behind them shows percentages (68%, 95%, 99.7%) corresponding to standard deviations." data-fig-align="center">
+<div id="fig-norm" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A meme with three cartoon figures superimposed on a bell curve. The central figure, crying with glasses, says: &quot;Hmm… linear model? random effects? covariates? mixed effect? GLMM?&quot; On the left, a simple character smiles with the text: &quot;Bootstrap for uncertainty, permute for NHST.&quot; On the right, a hooded character repeats the same phrase. The normal curve behind them shows percentages (68%, 95%, 99.7%) corresponding to standard deviations.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-norm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="../../figs/linear_models/permute_meme.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A meme with three cartoon figures superimposed on a bell curve. The central figure, crying with glasses, says: &quot;Hmm… linear model? random effects? covariates? mixed effect? GLMM?&quot; On the left, a simple character smiles with the text: &quot;Bootstrap for uncertainty, permute for NHST.&quot; On the right, a hooded character repeats the same phrase. The normal curve behind them shows percentages (68%, 95%, 99.7%) corresponding to standard deviations.">
@@ -2289,8 +2289,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../book_sections/two_ts/2t_calcs.html" class="pagination-link" aria-label="• 16. two-t Calculations">
-        <span class="nav-page-text">• 16. two-t Calculations</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../book_sections/two_ts/2t_calcs.html" class="pagination-link" aria-label="• 17. Two-t Calculations">
+        <span class="nav-page-text">• 17. Two-t Calculations</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

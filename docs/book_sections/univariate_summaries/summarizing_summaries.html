@@ -2524,25 +2524,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/two_ts/2t_assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">• 16. two-t Assumptions</span></a>
+ <span class="menu-text">• 17. Two-t Assumptions</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/two_ts/2t_calcs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">• 16. two-t Calculations</span></a>
+ <span class="menu-text">• 17. Two-t Calculations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/two_ts/uncertain2t.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">• 16. Uncertain-2t</span></a>
+ <span class="menu-text">• 17. Uncertain-2t</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/two_ts/nhs2t.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">• 16. two-sample t-test</span></a>
+ <span class="menu-text">• 17. Two-sample t-test</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -2916,8 +2916,8 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <div class="exercises">
 <p><strong>The tabs above</strong> – Iris, Faithful, and Rivers – all attempt to make histograms, but include errors, and may have improper bin sizes. (Click the Iris tab if they are initially empty).</p>
 <strong>Q1)</strong> Iris, Faithful, and Rivers – all attempt to make histograms, but include errors. Which code snippet makes the best version of the Iris plot (ignoring bin size)?
-<div id="radio_CABYYPLAQT" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_CABYYPLAQT" value=""> <span>ggplot(iris,aes(x = Sepal.Width, fill = 'white'))+ geom_histogram()</span></label><label><input type="radio" autocomplete="off" name="radio_CABYYPLAQT" value=""> <span>ggplot(iris,aes(x = Sepal.Width, color = 'white'))+ geom_histogram()</span></label><label><input type="radio" autocomplete="off" name="radio_CABYYPLAQT" value="answer"> <span>ggplot(iris,aes(x = Sepal.Width))+ geom_histogram(color = 'white')</span></label><label><input type="radio" autocomplete="off" name="radio_CABYYPLAQT" value=""> <span>ggplot(iris,aes(x = Sepal.Width))+ geom_histogram(color = white)</span></label><label><input type="radio" autocomplete="off" name="radio_CABYYPLAQT" value=""> <span>ggplot(iris,aes(x = Sepal.Width))+ geom_histogram(fill = 'white')</span></label>
+<div id="radio_FZFRYRBXTF" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_FZFRYRBXTF" value=""> <span>ggplot(iris,aes(x = Sepal.Width, fill = 'white'))+ geom_histogram()</span></label><label><input type="radio" autocomplete="off" name="radio_FZFRYRBXTF" value=""> <span>ggplot(iris,aes(x = Sepal.Width, color = 'white'))+ geom_histogram()</span></label><label><input type="radio" autocomplete="off" name="radio_FZFRYRBXTF" value="answer"> <span>ggplot(iris,aes(x = Sepal.Width))+ geom_histogram(color = 'white')</span></label><label><input type="radio" autocomplete="off" name="radio_FZFRYRBXTF" value=""> <span>ggplot(iris,aes(x = Sepal.Width))+ geom_histogram(color = white)</span></label><label><input type="radio" autocomplete="off" name="radio_FZFRYRBXTF" value=""> <span>ggplot(iris,aes(x = Sepal.Width))+ geom_histogram(fill = 'white')</span></label>
 </div>
 <hr>
 <p><strong>Before addressing this set of questions fix the errors in the histograms of Iris, Faithful, and Rivers, and adjust the bin size of each plot until you think it is appropriate.</strong> (Click any of the tabs if they are initially empty).</p>
@@ -2933,8 +2933,8 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <div class="exercises">
 <p><strong>Q3)</strong> I calculate means in two different ways above and get different answers. Which is correct? <select class="webex-select"><option value="blank"></option><option value="">mean_mass_1</option><option value="answer">mean_mass_2</option><option value="">it depends</option></select></p>
 <strong>Q4)</strong> What went wrong in calculating these means?
-<div id="radio_DSXUGOXMFP" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_DSXUGOXMFP" value="answer"> <span>n() counts the number of entries, but we need the number of non-NA entries.</span></label><label><input type="radio" autocomplete="off" name="radio_DSXUGOXMFP" value=""> <span>na.rm should be set to TRUE, not T</span></label><label><input type="radio" autocomplete="off" name="radio_DSXUGOXMFP" value=""> <span>The denominator for the mean is (n - 1), not n.</span></label><label><input type="radio" autocomplete="off" name="radio_DSXUGOXMFP" value=""> <span>Nothing – they are both potentially correct depedning on your goals.</span></label>
+<div id="radio_KDVGPDNACR" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_KDVGPDNACR" value="answer"> <span>n() counts the number of entries, but we need the number of non-NA entries.</span></label><label><input type="radio" autocomplete="off" name="radio_KDVGPDNACR" value=""> <span>na.rm should be set to TRUE, not T</span></label><label><input type="radio" autocomplete="off" name="radio_KDVGPDNACR" value=""> <span>The denominator for the mean is (n - 1), not n.</span></label><label><input type="radio" autocomplete="off" name="radio_KDVGPDNACR" value=""> <span>Nothing – they are both potentially correct depedning on your goals.</span></label>
 </div>
 <hr>
 <p><strong>Q5)</strong> Accounting for species differences in mean body mass, which penguin species shows the greatest variability in body mass? <select class="webex-select"><option value="blank"></option><option value="answer">Adelie</option><option value="">Chinstrap</option><option value="">Gentoo</option></select></p>
@@ -2976,28 +2976,28 @@ Click here for code
 </div>
 </div>
 <strong>Q6a)</strong> The mean is roughly
-<div id="radio_COSDBKIOPG" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_COSDBKIOPG" value=""> <span>Six</span></label><label><input type="radio" autocomplete="off" name="radio_COSDBKIOPG" value="answer"> <span>One and three quarters</span></label><label><input type="radio" autocomplete="off" name="radio_COSDBKIOPG" value=""> <span>Five hundred and seventy nine</span></label><label><input type="radio" autocomplete="off" name="radio_COSDBKIOPG" value="answer"> <span>We cannot estimate the mean from this plot.</span></label>
+<div id="radio_ILCDUZMSQI" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ILCDUZMSQI" value=""> <span>Six</span></label><label><input type="radio" autocomplete="off" name="radio_ILCDUZMSQI" value="answer"> <span>One and three quarters</span></label><label><input type="radio" autocomplete="off" name="radio_ILCDUZMSQI" value=""> <span>Five hundred and seventy nine</span></label><label><input type="radio" autocomplete="off" name="radio_ILCDUZMSQI" value="answer"> <span>We cannot estimate the mean from this plot.</span></label>
 </div>
 <strong>Q6b)</strong> The median is roughly
-<div id="radio_AJCDFMYXCQ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_AJCDFMYXCQ" value=""> <span>Six</span></label><label><input type="radio" autocomplete="off" name="radio_AJCDFMYXCQ" value="answer"> <span>One and three quarters</span></label><label><input type="radio" autocomplete="off" name="radio_AJCDFMYXCQ" value="answer"> <span>Five hundred and seventy nine</span></label><label><input type="radio" autocomplete="off" name="radio_AJCDFMYXCQ" value=""> <span>We cannot estimate the median from this plot.</span></label>
+<div id="radio_NSNCJSLFAM" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_NSNCJSLFAM" value=""> <span>Six</span></label><label><input type="radio" autocomplete="off" name="radio_NSNCJSLFAM" value="answer"> <span>One and three quarters</span></label><label><input type="radio" autocomplete="off" name="radio_NSNCJSLFAM" value="answer"> <span>Five hundred and seventy nine</span></label><label><input type="radio" autocomplete="off" name="radio_NSNCJSLFAM" value=""> <span>We cannot estimate the median from this plot.</span></label>
 </div>
 <strong>Q6c)</strong> The mode is roughly
-<div id="radio_UYHMEVQEAI" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_UYHMEVQEAI" value=""> <span>Six</span></label><label><input type="radio" autocomplete="off" name="radio_UYHMEVQEAI" value="answer"> <span>One and three quarters</span></label><label><input type="radio" autocomplete="off" name="radio_UYHMEVQEAI" value=""> <span>Five hundred and seventy nine</span></label><label><input type="radio" autocomplete="off" name="radio_UYHMEVQEAI" value="answer"> <span>We cannot estimate the mode from this plot.</span></label>
+<div id="radio_GDOKIKXTOI" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_GDOKIKXTOI" value=""> <span>Six</span></label><label><input type="radio" autocomplete="off" name="radio_GDOKIKXTOI" value="answer"> <span>One and three quarters</span></label><label><input type="radio" autocomplete="off" name="radio_GDOKIKXTOI" value=""> <span>Five hundred and seventy nine</span></label><label><input type="radio" autocomplete="off" name="radio_GDOKIKXTOI" value="answer"> <span>We cannot estimate the mode from this plot.</span></label>
 </div>
 <strong>Q6d)</strong> The interquartile range is roughly
-<div id="radio_POFBVFQZBS" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_POFBVFQZBS" value=""> <span>Six</span></label><label><input type="radio" autocomplete="off" name="radio_POFBVFQZBS" value="answer"> <span>One and three quarters</span></label><label><input type="radio" autocomplete="off" name="radio_POFBVFQZBS" value=""> <span>The median</span></label><label><input type="radio" autocomplete="off" name="radio_POFBVFQZBS" value=""> <span>Five hundred and seventy nine</span></label><label><input type="radio" autocomplete="off" name="radio_POFBVFQZBS" value=""> <span>We cannot estimate the IQR from this plot.</span></label>
+<div id="radio_UZRWXPIFQS" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_UZRWXPIFQS" value=""> <span>Six</span></label><label><input type="radio" autocomplete="off" name="radio_UZRWXPIFQS" value="answer"> <span>One and three quarters</span></label><label><input type="radio" autocomplete="off" name="radio_UZRWXPIFQS" value=""> <span>The median</span></label><label><input type="radio" autocomplete="off" name="radio_UZRWXPIFQS" value=""> <span>Five hundred and seventy nine</span></label><label><input type="radio" autocomplete="off" name="radio_UZRWXPIFQS" value=""> <span>We cannot estimate the IQR from this plot.</span></label>
 </div>
 <strong>Q6e)</strong> The range is roughly
-<div id="radio_JBTAJYPQOL" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_JBTAJYPQOL" value="answer"> <span>Six</span></label><label><input type="radio" autocomplete="off" name="radio_JBTAJYPQOL" value=""> <span>One and three quarters</span></label><label><input type="radio" autocomplete="off" name="radio_JBTAJYPQOL" value=""> <span>The median</span></label><label><input type="radio" autocomplete="off" name="radio_JBTAJYPQOL" value=""> <span>Five hundred and seventy nine</span></label><label><input type="radio" autocomplete="off" name="radio_JBTAJYPQOL" value=""> <span>We cannot estimate the range from this plot.</span></label>
+<div id="radio_GQTMMEUBDS" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_GQTMMEUBDS" value="answer"> <span>Six</span></label><label><input type="radio" autocomplete="off" name="radio_GQTMMEUBDS" value=""> <span>One and three quarters</span></label><label><input type="radio" autocomplete="off" name="radio_GQTMMEUBDS" value=""> <span>The median</span></label><label><input type="radio" autocomplete="off" name="radio_GQTMMEUBDS" value=""> <span>Five hundred and seventy nine</span></label><label><input type="radio" autocomplete="off" name="radio_GQTMMEUBDS" value=""> <span>We cannot estimate the range from this plot.</span></label>
 </div>
 <strong>Q6f)</strong> The variance is roughly
-<div id="radio_TXVXOUQHSD" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_TXVXOUQHSD" value=""> <span>Six</span></label><label><input type="radio" autocomplete="off" name="radio_TXVXOUQHSD" value=""> <span>One and three quarters</span></label><label><input type="radio" autocomplete="off" name="radio_TXVXOUQHSD" value=""> <span>The median</span></label><label><input type="radio" autocomplete="off" name="radio_TXVXOUQHSD" value=""> <span>Five hundred and seventy nine</span></label><label><input type="radio" autocomplete="off" name="radio_TXVXOUQHSD" value="answer"> <span>We cannot estimate the variance from this plot.</span></label>
+<div id="radio_BFBZBSTMZG" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_BFBZBSTMZG" value=""> <span>Six</span></label><label><input type="radio" autocomplete="off" name="radio_BFBZBSTMZG" value=""> <span>One and three quarters</span></label><label><input type="radio" autocomplete="off" name="radio_BFBZBSTMZG" value=""> <span>The median</span></label><label><input type="radio" autocomplete="off" name="radio_BFBZBSTMZG" value=""> <span>Five hundred and seventy nine</span></label><label><input type="radio" autocomplete="off" name="radio_BFBZBSTMZG" value="answer"> <span>We cannot estimate the variance from this plot.</span></label>
 </div>
 <hr>
 <p><strong>Brooke planted RILs at four different locations, and found tremendous variation in the proportion of hybrid seed across locations.</strong> The first step in quantifying this variation is to calculate the sum of squares, so let’s do it. Use the image below (<a href="#fig-ss" class="quarto-xref">Figure&nbsp;<span>1</span></a>) to calculates sum of squares for proportion hybrid seeds across plants planted at four different locations.</p>
@@ -3023,8 +3023,8 @@ Figure&nbsp;1
 <p><strong>Q7b)</strong> So <strong>the variance is</strong> <input class="webex-solveme nospaces" data-tol="0.0006" size="6" data-answer="[&quot;0.0072&quot;,&quot;.0072&quot;]"></p>
 <p><strong>Q7c)</strong> The <strong>standard deviation</strong> is <input class="webex-solveme nospaces" data-tol="0.035" size="10" data-answer="[&quot;0.08485281&quot;,&quot;.08485281&quot;]"></p>
 <strong>Q7d)</strong> Accounting for differences in their means, how does the variability in the proportion of hybrid seed across locations compare to the variability in petal area among RILs? (<a href="https://ybrandvain.quarto.pub/applied-biostatistics-summarizingdata/book_sections/univariate_summaries/summarizing_variability.html#parametric-summaries-of-variability-example">refer to this section for reference</a>)
-<div id="radio_TJFUMYDWUA" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_TJFUMYDWUA" value=""> <span>They are very similar</span></label><label><input type="radio" autocomplete="off" name="radio_TJFUMYDWUA" value=""> <span>Petal area among RILs is roughly thirty times as variable</span></label><label><input type="radio" autocomplete="off" name="radio_TJFUMYDWUA" value="answer"> <span>The proportion of hybrid seed among sites is roughly two times as variable</span></label><label><input type="radio" autocomplete="off" name="radio_TJFUMYDWUA" value=""> <span>You cannot compare variability for different traits measured on such different scales</span></label>
+<div id="radio_ZDFEQDFQOY" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ZDFEQDFQOY" value=""> <span>They are very similar</span></label><label><input type="radio" autocomplete="off" name="radio_ZDFEQDFQOY" value=""> <span>Petal area among RILs is roughly thirty times as variable</span></label><label><input type="radio" autocomplete="off" name="radio_ZDFEQDFQOY" value="answer"> <span>The proportion of hybrid seed among sites is roughly two times as variable</span></label><label><input type="radio" autocomplete="off" name="radio_ZDFEQDFQOY" value=""> <span>You cannot compare variability for different traits measured on such different scales</span></label>
 </div>
 <div class="webex-solution">
 <button>

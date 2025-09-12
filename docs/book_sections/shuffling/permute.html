@@ -951,25 +951,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/two_ts/2t_assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">• 16. two-t Assumptions</span></a>
+ <span class="menu-text">• 17. Two-t Assumptions</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/two_ts/2t_calcs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">• 16. two-t Calculations</span></a>
+ <span class="menu-text">• 17. Two-t Calculations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/two_ts/uncertain2t.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">• 16. Uncertain-2t</span></a>
+ <span class="menu-text">• 17. Uncertain-2t</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/two_ts/nhs2t.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">• 16. two-sample t-test</span></a>
+ <span class="menu-text">• 17. Two-sample t-test</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -1049,7 +1049,7 @@ window.Quarto = {
 <div class="cell page-columns page-full" data-layout-align="left">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-kermit" class="quarto-float quarto-figure quarto-figure-left anchored" data-fig-align="left" alt="An image of Kermit the Frog wearing sunglasses and a pink suit with a wig, walking confidently. The humorous style adds a playful and lighthearted vibe to the scene.">
+<div id="fig-kermit" class="quarto-float quarto-figure quarto-figure-left anchored" alt="An image of Kermit the Frog wearing sunglasses and a pink suit with a wig, walking confidently. The humorous style adds a playful and lighthearted vibe to the scene." data-fig-align="left">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kermit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://media.giphy.com/media/pRHkn0CC08Wn6/giphy.gif" class="img-fluid quarto-figure quarto-figure-left figure-img" alt="An image of Kermit the Frog wearing sunglasses and a pink suit with a wig, walking confidently. The humorous style adds a playful and lighthearted vibe to the scene.">
@@ -1103,7 +1103,7 @@ Null Hypothe...
 # A tibble: 1 × 1
    stat
   &lt;dbl&gt;
-1 -80.4</code></pre>
+1  59.4</code></pre>
 </div>
 </div>
 <p>This represents one draw from the permuted (null) distribution. Now we do this a bunch to find the sampling distribution and calculate a p-value!</p>
@@ -1175,7 +1175,7 @@ Figure&nbsp;3: The null distribution generated from 5,000 permutations of the fr
 <pre><code># A tibble: 1 × 1
   p_value
     &lt;dbl&gt;
-1   0.302</code></pre>
+1   0.314</code></pre>
 </div>
 </div>
 <div class="fyi">
@@ -1193,7 +1193,7 @@ Figure&nbsp;3: The null distribution generated from 5,000 permutations of the fr
 <p><em>Step 9: Write up the results.</em> The final step is to write-up our results:</p>
 <p><em>In this study, we tested whether the number of hatched eggs differed between wood frogs that mated with preferred versus non-preferred females. Using a permutation test, we evaluated the null hypothesis that the number of eggs hatched does not differ between these two groups.</em></p>
 <p><em>On average, frogs that mated with their preferred partner hatched 345.11 eggs, while those that mated with their non-preferred partner hatched 413.93 eggs. The observed difference in the number of eggs hatched between the two groups was -68.82 eggs.</em></p>
-<p><em>To assess the significance of this observed difference, we generated a null distribution of the differences in egg counts by permuting the treatment labels (preferred vs.&nbsp;non-preferred). After running 5,000 permutations, we calculated a two-tailed p-value of 0.302. This indicates that in a world where there is no true association between mating treatment and the number of eggs hatched, we would expect to see a difference as extreme as the observed one in about one in three cases due to random chance alone. We therefore fail to reject the null hypothesis. This suggests that there is insufficient evidence to support the claim that the number of hatched eggs is influenced by whether the male mated with a preferred or non-preferred female.</em></p>
+<p><em>To assess the significance of this observed difference, we generated a null distribution of the differences in egg counts by permuting the treatment labels (preferred vs.&nbsp;non-preferred). After running 5,000 permutations, we calculated a two-tailed p-value of 0.3144. This indicates that in a world where there is no true association between mating treatment and the number of eggs hatched, we would expect to see a difference as extreme as the observed one in about one in three cases due to random chance alone. We therefore fail to reject the null hypothesis. This suggests that there is insufficient evidence to support the claim that the number of hatched eggs is influenced by whether the male mated with a preferred or non-preferred female.</em></p>
 
 
 </section>
