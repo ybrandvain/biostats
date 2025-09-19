@@ -120,7 +120,7 @@ c<- prcomp(iris|>select(-Species), scale = T, center = T)|>
 **Q4)** Based on the plot(s) above, how would you interpret PC2? `r longmcq(c( "PC2 reflects petal area: higher values mean larger petals",   "PC2 reflects petal area: higher values mean smaller petals","PC2 reflects sepal area: higher values mean larger sepals",   answer = "PC2 reflects sepal area: higher values mean smaller sepals",   "There is no clear biological interpretation of PC2 from this plot",   "We should never attempt to interpret PCs biologically",   "PC2 should be ignored because it explains so little of the variance."))`
 
 
-**Q5** The correlation between petal width and petal area is 0.96. It is not unclear what to do in such cases, but one of these options iis not justifiable.  Which one? `r longmcq(c( "Don't change anything. These are different traits!",   answer = "Drop one of the petal traits (it doesn't really matter which one).", answer = "If you drop one petal trait, be sure to drop a sepal trait" , "Drop both petal length and width, and replace them with petal area."))`.
+**Q5** The correlation between petal width and petal area is 0.96. It is not unclear what to do in such cases, but one of these options is least justifiable.  Which one? `r longmcq(c( "Don't change anything. These are different traits!",   "Drop one of the petal traits (it doesn't really matter which one).", answer = "If you drop one petal trait, be sure to drop a sepal trait" , "Drop both petal length and width, and replace them with petal area."))`.
 
 *BONUS*: What would you do?  <html><textarea rows="4" cols="50" placeholder="Which options would you choose and why?"></textarea><br><br></html>   
 
