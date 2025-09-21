@@ -224,10 +224,39 @@ babies |>
   theme(axis.text.x = element_text(angle = 90, size=12))
 ```
 
-**Rather than me telling you what's wrong here** I want you to figure out what's wrong and fix it. But you won't be on your own, this chatbot tutor is here to help!
+:::exercises
+**Rather than me telling you what's wrong here** I want you to figure out what's wrong and fix it. But you won't be on your own, this [**chatbot tutor**](https://chatgpt.com/g/g-68cff7684f108191ad749b5e7b2b7eba-help-fixing-plot) is here to help! [**Prompt available here**](https://docs.google.com/document/d/e/2PACX-1vQmZrPc3A_4llzC16NyhstnBFo7_Txvzvg0JlGSkZtIW30SUiuiBi_VOyREzW5qMv-hGMKycnUVHwky/pub) if you want to make your own gem.
+
+`r hide("HINT")`
+Not all days the same length.
+`r unhide()`
 
 
-<iframe src="../../dishonestY_chatbot.html" width="100%" height="520px" style="border:0px solid #ccc;"></iframe>
+`r hide("SOLUTION")`
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+babies <- tibble(month = c("January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"),
+    births = c(28015, 25714, 29004, 28138, 29890, 29847,31138, 30892,30549, 30759, 29159, 28773))|>
+  mutate(month = fct_relevel(month, "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"))
+```
+
+```{r}
+babies |>
+  mutate(days_per_month = (c(31,28,31,30,31,30,31,31,30,31,30,31)),
+  births_per_day  = births /days_per_month)|>
+  ggplot(aes(x=month, y=births_per_day, group=1))+
+  geom_point(size = 3)+
+  geom_line(lty = 2)+
+  theme(axis.text.x = element_text(angle = 90, size=12))
+```
+
+`r unhide()`
+:::
 
 ```{r}
 #| echo: false

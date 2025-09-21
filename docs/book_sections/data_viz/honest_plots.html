@@ -2509,6 +2509,29 @@ globalThis.qwebrExecuteCode = async function (
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/f.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">18. F this!</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/f/from_sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. F the ratio of variance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/f/f_calcs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. Calculations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
@@ -3004,9 +3027,36 @@ Figure&nbsp;5: Broken y-axes can be misleading if not clearly marked. Panel A in
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div id="qwebr-insertion-location-2"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-<p><strong>Rather than me telling you what’s wrong here</strong> I want you to figure out what’s wrong and fix it. But you won’t be on your own, this chatbot tutor is here to help!</p>
-<iframe src="../../dishonestY_chatbot.html" width="100%" height="520px" style="border:0px solid #ccc;">
-</iframe>
+<div class="exercises">
+<p><strong>Rather than me telling you what’s wrong here</strong> I want you to figure out what’s wrong and fix it. But you won’t be on your own, this <a href="https://chatgpt.com/g/g-68cff7684f108191ad749b5e7b2b7eba-help-fixing-plot"><strong>chatbot tutor</strong></a> is here to help! <a href="https://docs.google.com/document/d/e/2PACX-1vQmZrPc3A_4llzC16NyhstnBFo7_Txvzvg0JlGSkZtIW30SUiuiBi_VOyREzW5qMv-hGMKycnUVHwky/pub"><strong>Prompt available here</strong></a> if you want to make your own gem.</p>
+<div class="webex-solution">
+<button>
+HINT
+</button>
+<p>Not all days the same length.</p>
+</div>
+<div class="webex-solution">
+<button>
+SOLUTION
+</button>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>babies <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">days_per_month =</span> (<span class="fu">c</span>(<span class="dv">31</span>,<span class="dv">28</span>,<span class="dv">31</span>,<span class="dv">30</span>,<span class="dv">31</span>,<span class="dv">30</span>,<span class="dv">31</span>,<span class="dv">31</span>,<span class="dv">30</span>,<span class="dv">31</span>,<span class="dv">30</span>,<span class="dv">31</span>)),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">births_per_day  =</span> births <span class="sc">/</span>days_per_month)<span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>month, <span class="at">y=</span>births_per_day, <span class="at">group=</span><span class="dv">1</span>))<span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>)<span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">lty =</span> <span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">size=</span><span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="honest_plots_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
 <hr>
 <p><strong>DishonestY: Y’s meaning depends on X:</strong> Sometimes values on the y-axis have different meanings for different values on the x-axis. For example, inflation tends to push prices up over time, and more people are born—or die—in larger populations. In these cases, showing raw values can mislead. It’s better to standardize the y-axis so it has a consistent meaning across x (like deaths per 1,000 people or inflation-adjusted cost), or to give viewers some point of reference so they can make fair comparisons.</p>
 </section>
