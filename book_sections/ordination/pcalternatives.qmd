@@ -73,7 +73,7 @@ PCA assumes that data are continuous and have nice distributions. Although PCA c
 MCA is appropriate when all your variables are categorical, especially nominal variables with multiple categories. MCA applies a method similar to PCA to uncover patterns of association among the categorical variables and reduce dimensionality.
 
 You can run an MCA using the [`mca()`](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/mca.html) function from the **MASS** package in R, or for more in-depth analyses and nicer figures you may want to use the [MCA](http://factominer.free.fr/factomethods/multiple-correspondence-analysis.html) function in the [factoMineR](http://factominer.free.fr/) package. You interpret the output much like a PCA. That is, each axis summarizes shared patterns across the variables, and the biplot shows which samples and categories tend to cluster together. 
-Nice and clear start! Here are a few suggested edits to tighten grammar, clarify the meaning, and better match the tone and structure from earlier in your book:
+
 
 The code below and the resulting figure (@fig-mca) show a worked example using the *parviflora* RIL dataset. The MCA analysis includes three categorical traits: `visited` (whether the plant received any visits), `petal_color`, and `petal_area` (binned as small / medium / large). Points are colored by whether each plant made at least one hybrid. Dim 1 (which is like PC1) separates plants with pink petals and visits from those with white petals and no visits — and aligns closely with whether or not the plant made a hybrid.
 

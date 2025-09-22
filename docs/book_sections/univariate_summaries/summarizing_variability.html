@@ -1140,7 +1140,7 @@ Figure&nbsp;2: <strong>Understanding the squared deviation.</strong> The “Sum 
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_petal_area =</span> <span class="fu">mean</span>(petal_area_mm),</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">ss_petal_area =</span> <span class="fu">sum</span>((petal_area_mm <span class="sc">-</span> mean_petal_area)<span class="sc">^</span><span class="dv">2</span>),</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">var_petal_area =</span> ss_petal_area <span class="sc">/</span> (<span class="fu">n</span>()<span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd_petal_area =</span> <span class="fu">sqrt</span>(ss_petal_area ),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd_petal_area =</span> <span class="fu">sqrt</span>(var_petal_area),</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">CV_petal_area =</span> sd_petal_area <span class="sc">/</span> mean_petal_area )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
