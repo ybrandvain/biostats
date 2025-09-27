@@ -1,0 +1,93 @@
+# 18. F this! {#f}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../_common.R") 
+```
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating scenario:**  you have a fresh new data set and want to check it out. How do you go about looking into it?     
+
+**Learning goals: By the end of this chapter you should be able to**  
+
+
+1. Explain how total variability can be partitioned into model (explained) and residual (unexplained) components, and interpret visual representations of this partitioning.  
+2. Calculate and interpret key values in an ANOVA analysis including:   
+   - Mean squares for the model and error terms.  
+   - The F statistic as  theratio of mean squares.     
+   - R^2$ as a measure of effect size in one-way models.
+3. Recognize the connection between the two sample t test and the F test when comparing two groups.    
+4. Recognize the assumptions of ANOVA and interpret correlations with care. 
+
+
+:::     
+
+---
+
+
+```{r}
+#| echo: false
+#| column: margin
+#| fig-cap: "Our white and pink parviflora flowers!"
+#| fig-alt: "A picture of one white and one pink parviflora flower."
+#| label: fig-whitepink
+include_graphics("../clarkia_pics/white_pink_xan.png")
+```
+
+
+<article class="drop-cap">The $F$ distribution is often introduced after the t-distribution to clear a path to comparing means of more that two groups. This makes sense, as the $F$ lends itself to this application. But, in my view at least, that introduction to the $F$ does it a disservice. More than simply offering a way to compare more than two groups, the $F$ provides us a new way to think about variability in data. Specifically, the $F$ allows us to "partition variance" into variance into  components associated with variables in our model and "residual" variance that is not in our model. </article><br>
+Here, I introduce the $F$ as a tool to understand variability within and between two samples. By focusing our first application of the $F$ to the topic we covered previously (just in the last chapter, in fact), we can use our additional brain power to think about what the $F$ is going on!.
+
+
+## The utility of $F$  
+
+In the coming chapters you will see that this view of "partitioning variance" has broad utility. In addition to its utility in partitioning variability within and among two groups, the approach in this chapter can be applied to 
+
+- More than two groups.    
+- A numeric explanatory variable.   
+- Multiple explanatory variables, and even 
+- Explanatory variables whose interaction influences the response variable.  
+
+We will work through these applications in coming chapters!   
+
+
+## Data and hypotheses for this section   
+
+
+
+In the previous section, we saw that at sawmill road, pink parviflora RILs attracted more pollinators than did white parviflora RILs. We cared about this because we want to know if petal color influences hybridization -- a question we will aress later. 
+
+But there is a bigger motivating question than what happens in an experiment - we want to know what has actually happened (and what is happening) in nature. In this chapter we get at the question of "does petal color influence hybridization?" in a somewhat backwards way. Instead of asking if pink flowers set more hybrid seed than white flowers, we analyze sequence data from pink and white flowered parviflora found in natural hybrid zones and ask if one petal color is associated with more introgression of xantiana ancestry. 
+
+:::aside
+[Introgression](https://en.wikipedia.org/wiki/Introgression) is the incorporation of ancestry from one lineage into the genome of another, this happens by hybridization and subsequent backcrossing.
+:::
+
+## What's ahead   
+
+In this section 
+
+- We go through the mathemagical foundation of partitioning variance and how this relates to our understanding populations, and samples as draws from the sampling distribution.    
+
+- We then show how to calculate the sum of squares error an sums of squares model and related measures.   
+
+- Next, we introduce $r^2$ as the "effect size" in such a model, and provide guidance on how to interpret this common summary.  
+
+- We then show how to use this partitioning of variance to test the null hypothesis that all groups represent samples from the same population. 
+
+- Before the chapter summary, we reflect a bit on correlation, causation and artifacts that may influence the patterns that we observe. 
+

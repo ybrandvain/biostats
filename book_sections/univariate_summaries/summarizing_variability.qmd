@@ -350,7 +350,7 @@ gc_rils |>
   summarise(mean_petal_area = mean(petal_area_mm),
             ss_petal_area = sum((petal_area_mm - mean_petal_area)^2),
             var_petal_area = ss_petal_area / (n()-1),
-            sd_petal_area = sqrt(ss_petal_area ),
+            sd_petal_area = sqrt(var_petal_area),
             CV_petal_area = sd_petal_area / mean_petal_area )
 ```
 

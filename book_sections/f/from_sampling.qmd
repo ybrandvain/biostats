@@ -1,0 +1,108 @@
+## •  18. F the ratio of variance  {.unnumbered  #from_sampling}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(janitor)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+clarkis_hz <-read_csv("~/Downloads/clarkiaContactZone_bio3272_petal_color_30_70_refined.csv")|>
+  clean_names()|>
+  mutate(site = ifelse(site == "SAW", "SR",site))
+```
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+
+**Motivating Scenario:**   
+You want to understand what goes into calculating F and where this logic comes from.  
+
+
+
+**Learning Goals: By the end of this subchapter, you should be able to:**
+
+1. **Explain** how variance among sample means relates to variance in the population.
+2. **Define** mean squares for the model and for error. 
+3. **Interpret** the $F$ ratio as a comparison of variance among vs. within groups.
+4. **Recognize** that if all groups represent samples from the same population, the expected value of $F$ is one (allowing for sampling error).
+
+:::
+
+---
+
+## Predicting $\sigma_\bar{x}$ from $\sigma$
+
+
+Remember our "statistical" view of were data comes from. We imagine that the data we observe are a sample of size $n$ from a population with a true mean $\mu$ and standard deviation $\sigma_x$. Although we can't know these true parameters, we estimate them using the sample mean $\bar{x}$ and standard deviation $s$
+
+
+
+We envision the distribution of sample means we would get by repeatedly sampling from the same population as the **sampling distribution**. If the population is normally distributed with standard deviation $\sigma$, then the standard deviation of the sample means (aka the standard error) is:
+
+$$\sigma_{\overline{x}} = \frac{\sigma}{\sqrt{n}}$$
+
+
+
+
+```{r}
+#| column: margin
+#| echo: false
+#| label: fig-anova
+#| fig-cap: "Tha F distirbution is magic."
+#| fig-alt: "Animated GIF of a bespectacled character in a wizard costume declaring, \"I'm a mathe-magician!\" while a groaning sound effect appears as subtitles."
+include_graphics("https://media.giphy.com/media/3orif8Epddpd8KSELe/giphy.gif")
+```
+
+
+
+Squaring both sides gives the variance of the sampling distribution of the mean as the population variance divided by the sample size: 
+
+$$\sigma_{\overline{x}}^2 = \frac{\sigma_x^2}{n}$$
+
+Multiplying both sides by $n$, reveals the variance among sample means  (for the same population) times the sample size should equal the variance in the population: 
+
+$$\sigma_{\overline{x}}^2 \times n  = \sigma_x^2$$
+
+
+
+
+### Parameters and estimates in an $F$
+  
+So we can turn these ideas into parameters to estimate. 
+
+| Source | Parameter | Estimate | Notation |
+|:-|:-|:-|:-|
+| Model  | $n \times \sigma_\bar{x}^2$ | Mean squares model | $\text{MS}_\text{ Model}$ |
+| Error | $\sigma^2_x$ | Mean squares error | $\text{MS}_\text{ Error}$ |
+| Total         | $n \times \sigma_\bar{x}^2 + \sigma^2_x$ | Mean squares total  | $\text{MS}_\text{ Total}$  |
+
+We can use these values to calculate the ratio of variance among and within groups, $F$. **Notice** that when our two samples come from the same population, we expect $F$ to euqal one (save some sampling error).
+
+
+$$F = \frac{\text{MS}_\text{Model}}{ \text{MS}_\text{Error} }$$
+
+
+:::fyi
+In one-way ANOVA, what I call "Mean squares model" ($\text{MS}_\text{Model}$) is often called "Mean squares group" ( $\text{MS}_\text{Groups}$). I use mean squares model to highlight that this extends beyond ANOVA to regression and other linear models.
+:::
+
+
+### Implications for NHST:
+
+The derivations above **ASSUMES** that samples are 
+
+* If all groups are drawn from the same population (the null hypothesis), then this equality holds: the variance among group means is exactly what we’d expect from sampling error.  
+
+* If groups come from different populations (the alternative), then the variance among group means will be larger than $\sigma^2$.
+
+In the next section we will see how we can use this framework to test the null that all samples come from the same statistical population.

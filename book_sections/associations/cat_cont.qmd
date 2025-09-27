@@ -160,14 +160,14 @@ Similarly, the means of `prop_hybrid` conditional on visitation status are aroun
 #| eval: false
 gc_rils |>
   group_by(visited)|>
-  summarise(grand_mean_prop_hybrid = mean(prop_hybrid, na.rm =TRUE))
+  summarise(conditional_mean_prop_hybrid = mean(prop_hybrid, na.rm =TRUE))
 ```
 
 ```{r}
 #| echo: false
 gc_rils |>
   group_by(visited)|>
-  summarise(grand_mean_prop_hybrid = mean(prop_hybrid, na.rm =TRUE))|>
+  summarise(conditional_mean_prop_hybrid = mean(prop_hybrid, na.rm =TRUE))|>
   kable()
 ```
 
@@ -188,7 +188,9 @@ mean_notvisited <- gc_rils |>
 
 ## Summarizing associations: Cohen's D  {#cat_cont_summarizing-associations-cohens-d}  
 
-Above, we found that on average, visited plants produced 0.287 more hybrids than unvisited ones. That might seem like a big difference — but raw differences can be hard to interpret on their own. Is 0.287 a lot? A little? To better understand how meaningful that difference is, we can compare it to the variability in hybrid seed production. Cohen’s D helps us do just that — it standardizes the difference in means by the vraiabiliuty within groups (the pooled standard deviation), allowing for more intuitive comparisons across studies and systems.  For this dataset, that gives us a D of 1.4 (see calculation below) — a very large effect size (see guide in margin). This suggests that being visited (during our observation window) is strongly associated with producing more hybrid seeds.
+Above, we found that on average, visited plants produced 0.287 more hybrids than unvisited ones. That might seem like a big difference — but raw differences can be hard to interpret on their own. Is 0.287 a lot? A little? To better understand how meaningful that difference is, we can compare it to the variability in hybrid seed production. Cohen’s D helps us do just that — it standardizes the difference in means by the variability within groups (the pooled standard deviation), allowing for more intuitive comparisons across studies and systems.  For this dataset, that gives us a D of 1.4 (see calculation below) — a very large effect size (see guide in margin). This suggests that being visited (during our observation window) is strongly associated with producing more hybrid seeds.
+
+$$\text{Cohen's D} = \frac{\text{Difference in means}}{\text{pooled sd}}$$
 
 :::aside
 
@@ -226,10 +228,10 @@ cohensD <- (mean_visited   - mean_notvisited) /  pooled_sd
 
 # Print this out
 sprintf("Cohen's D is (%s - %s)/(%s) = %s",
-        round(pooled_sd, digits = 3),
-        round(pull(mean_visited)   , digits = 3),
-        round(pull(mean_notvisited), digits = 3),
-        round(pull(cohensD) , digits = 3)
+        round(mean_visited, digits = 3),
+        round(mean_notvisited   , digits = 3),
+        round(pooled_sd , digits = 3),
+        round(cohensD , digits = 3)
         )
 
 

@@ -1,0 +1,15 @@
+{
+  "hash": "75ffb5a7b23847c6b322a718a46b2423",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# 18. Variance among groups from variance within the populaiton {.unnumbered  #from_sampling}\n\n\n\n\n\n\n::: {.cell}\n\n:::\n\n\n\n\n\n\n\n## Predicting among goup variance ($\\sigma_\\bar{x}$) from variance within groups ($\\sigma$)\n\n\nRemember our \"statistical\" view of were data comes from. We imagine that the data we see is a sample of size $n$ taken from the population, which has a true mean $\\mu$ and standard deviation $\\sigma$. We acknowledge that we cannot know these true population parameters, but estimate them from our sample as mean , $\\bar{x}$, and standard deviation $s$.  \n\nRecall that for a sample of size $n$ from the normal, the standard deviation of  means equals the population standard deviation divided by the square root of the sample size:  $$\\sigma_{\\overline{x}} = \\frac{\\sigma}{\\sqrt{n}}$$  \n\n\n\n\n\n\n::: {.cell .column-margin layout-align=\"center\"}\n::: {.cell-output-display}\n![Tha F distirbution is magic.](https://media.giphy.com/media/3orif8Epddpd8KSELe/giphy.gif){#fig-anova fig-align='center' fig-alt='Animated GIF of a bespectacled character in a wizard costume declaring, \"I\\'m a mathe-magician!\" while a groaning sound effect appears as subtitles.' width=95%}\n:::\n:::\n\n\n\n\n\n\n\nSquaring both sides gives the variance of the sampling distribution of the mean as the population variance divided by the sample size: \n\n$$\\sigma_{\\overline{x}}^2 = \\frac{\\sigma^2}{n}$$\n\nMultiplying both sides by $n$, reveals the variance among sample means  (for the same population) times the sample size should equal the variance in the population: \n\n$$\\sigma_{\\overline{Y}}^2 \\times n  = \\sigma^2$$\n\n### Implications for NHST:\n\nThe derivations above **ASSUMES** that samples are \n\n* If all groups are drawn from the same population (the null hypothesis), then this equality holds: the variance among group means is exactly what we’d expect from sampling error.  \n\n* If groups come from different populations (the alternative), then the variance among group means will be larger than $\\sigma^2$.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

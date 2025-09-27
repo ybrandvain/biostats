@@ -1,0 +1,119 @@
+## •  18. F and anova in R  {.unnumbered  #FR}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(janitor)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+library(forcats)
+source("../../_common.R") 
+hz_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/zones_df_admix_weight_cutoff0.9_gps_dist2het_phenos_excl_GC.csv"
+clarkia_hz <- read_csv(hz_link)|> 
+  select(-weighted)|>
+  rename(admix_proportion = `cutoff0.9`) |>
+  filter(!is.na(admix_proportion))|>
+  clean_names() |>
+  mutate(site = if_else(site == "SAW", "SR", site)) |>
+  filter(subsp=="P")|>
+  filter(site == "SM") |>
+  mutate(tmp = as.numeric(factor(petal_color)) + admix_proportion,
+         id = factor(id),
+         id = fct_reorder(id, tmp))
+```
+
+
+**Motivating Scenario:**  Now that you know what goes into calculating the sums of squares, degrees of freedom, mean squares, and F, you can want R to do this all for you. Here, we run an ANOVA in R and learn how to read the results it gives back.
+
+
+**Learning Goals: By the end of this subchapter, you should be able to:**. 
+
+- Run a one-way ANOVA in R using both `aov() |> summary()` and `lm() |> anova()` pipelines.  
+
+- Interpret the ANOVA table which includes sums of squares, mean squares, F statistic, and p-value.
+
+
+- Use the `broom` package to:    
+    - `tidy()` ANOVA results and 
+    - `glance()` at  model-level summaries (like $R^2$).
+
+:::
+
+---
+
+In the previous sections we worked through the math and the theory, and even how we could use R to do our calculations or us. This is all useful and I hope it helps you understand what is going on behind the scenes. But now that we know what's going on, we can have R do our work for us. Here, I show you two ways to have R calculate F and conduct an anova test for us. 
+
+In so doing we consider how to interpret R's output, and how to convert it to a "tidy" format with `broom`'s `glance()` and `tidy()` functions.
+
+## The `aov() |> summary()` pipeline
+
+The [`aov()`](https://stat.ethz.ch/R-manual/R-devel/RHOME/library/stats/html/aov.html) function is built specifically to conduct ANOVA in R. To do so, it uses the familiar   formula syntax: `(RESPONSE ~ EXPLANATORY, data = DATA)` 
+
+
+```{r}
+#| echo: false
+#| column: margin
+include_graphics("../../figs/linear_models/F/aov.png")
+```
+
+```{r}
+admix_anova <- aov(admix_proportion ~ petal_color, data= clarkia_hz )
+```
+
+The [`aov()`](https://stat.ethz.ch/R-manual/R-devel/RHOME/library/stats/html/aov.html) object contains the relevant sums of squares (which match our hand calculations!) and the degrees of freedom. To actually view the [ANOVA table](https://online.stat.psu.edu/stat415/lesson/13/13.2), we use [`summary()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/summary.html) on the aov object. This table includes the sums of squares, mean squares, the F statistic, and the associated p-value.
+
+
+```{r}
+summary(admix_anova)
+```
+
+---
+
+
+`broom`'s `tidy()` function provides this out put in a "tidy" format, its `glance()`  function shows some relevant summaries of the model (including $R^2$).
+
+```{r}
+library(broom)
+tidy(admix_anova)
+glance(admix_anova)
+```
+
+
+## The `lm() |> anova()` pipeline
+
+Alternatively, we can fit a linear model and then hand it to [`anova()`](https://stat.ethz.ch/R-manual/R-devel/RHOME/library/stats/html/anova.html)
+ to create the ANOVA table. This produces the same output as `aov() |> summary()`, but the intermediate object is an lm object rather than an aov object. Sometimes one format is just easier to work with than the other, but your answers will be the same.
+ 
+
+
+```{r}
+lm(admix_proportion ~ petal_color, data= clarkia_hz ) |>
+  anova()
+```
+--- 
+
+If we want more information about our model, we can pass the lm object to [`glance()`](https://broom.tidymodels.org/reference/glance.lm.html):
+
+
+```{r}
+
+lm(admix_proportion ~ petal_color, data= clarkia_hz ) |>
+  glance()
+```
+
+:::aside
+`glance()` works on model objects like `lm` or `aov`, but not on the ANOVA table itself. So `lm() |> anova() |> glance()` returns an empty tibble.
+::: 
+
+
+https://bookdown.org/steve_midway/DAR/understanding-anova-in-r.html
+
+https://www.crumplab.com/rstatsforpsych/semester-project-2021.html
