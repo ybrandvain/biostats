@@ -6,6 +6,10 @@ format: html
 webr:
   packages: ['dplyr', 'readr']
   autoload-packages: true
+
+resources:
+  - widget.html
+  - widget-script.js
 ---
 
 ```{r}
@@ -137,9 +141,14 @@ ggplot(samp_dist_a , aes(x = gene.length/1000))+
 
 **Q5)** The difference between the true population mean (red line) and my estimates from samples of size fifty (bars in histogram) are most likely explained by  `r longmcq(c( answer = "Sampling bias", "Non-independence", "Sampling Error", "The unreliability of the law of large numbers"))`.
 
-**Q6)** YANIV INSERT CHATBOT. Explain your reasoning for the answer above. Any guesses on how I could have gotten this so wrong? How could this be fixed? 
+**Q6)** 
 
-  
+```{=html}
+<iframe src="../../widget.html?prompt_id=q6-explain-1759004682" width="100%" height="800" style="border:none;"></iframe>
+```
+
+
+
 
 **Q7)** Why is the range of values so much smaller in @fig-genes-2 than in @fig-genes?   `r longmcq(c( "Sampling bias","Non-independence", "Sampling error", answer = "Parameter estimates are usualy have a tighter distribution than all observed values."))`
 
@@ -215,7 +224,13 @@ gene_lengths <- read_csv(link)
 
 **Q13)** The standard deviation in gene length  `r fitb(2037, num = TRUE, tol = 37)`.  
 
-**Q14)** The standard error in estimated gene length  `r fitb("NA",ignore_case = TRUE)`.  
+**Q14)** The standard error in estimated gene length  `r fitb("NA",ignore_case = TRUE)`.
+
+`r hide("Click for answer")`
+
+This is the entire populations. We have a parameter known withoutsampling error, so there is not standard error.
+
+`r unhide()`
 
 :::
 

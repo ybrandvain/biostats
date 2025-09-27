@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tutor</title>
+    <style>
+        body { margin: 0; padding: 0; }
+        .dv-challenge-widget { font-family: system-ui, -apple-system, sans-serif; max-width: 700px; margin: 1em auto; border: 1px solid #e0e0e0; border-radius: 12px; padding: 2.5em; box-shadow: 0 4px 12px rgba(0,0,0,0.05); background-color: #fff; line-height: 1.6; color: #333; }
+        .dv-challenge-widget h1 { font-size: 1.75em; font-weight: 600; margin-top: 0; margin-bottom: 1em; color: #1a1a1a; }
+        .dv-challenge-widget h4 { font-size: 1.1em; font-weight: 600; color: #2c2c2c; margin-top: 0; margin-bottom: 0.5em; }
+        #question-container { background-color: #f9fafb; padding: 1.5em; border-radius: 8px; margin-bottom: 1.5em; border: 1px solid #e5e7eb; }
+        #question-text { font-style: italic; color: #4b5563; }
+        #chart-image { width: 100%; border: 1px solid #e5e7eb; border-radius: 8px; margin-top: 1em; }
+        #feedback-container { border: 1px solid #d1fae5; padding: 1.5em; margin-top: 1.5em; background-color: #f0fdf4; border-radius: 8px; display: none; }
+        #feedback-result { white-space: pre-wrap; font-size: 1em; color: #374151; }
+        #student-answer { width: 100%; box-sizing: border-box; height: 150px; margin-bottom: 1em; font-size: 1em; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; resize: vertical; transition: border-color 0.2s, box-shadow 0.2s; }
+        button { background-color: #2563eb; color: white; padding: 12px 20px; border: none; border-radius: 6px; font-size: 1em; font-weight: 500; cursor: pointer; transition: background-color 0.2s; }
+        button:hover { background-color: #1d4ed8; }
+        .loader { border: 5px solid #e5e7eb; border-top: 5px solid #2563eb; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; display: none; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="dv-challenge-widget">
+        <h1 id="widget-title">Loading...</h1>
+        <div id="question-container">
+            <strong>Question:</strong>
+            <p id="question-text">Loading question content...</p>
+            <img src="" id="chart-image" alt="" style="display: none;">
+        </div>
+        
+        <form id="answer-form">
+             <div style="margin-bottom: 1em;">
+                <label for="student-id" style="font-weight: 500; font-size: 0.9em;">Student ID (Optional):</label><br>
+                <input type="text" id="student-id" name="student_id" placeholder="Enter your X.500" style="width: 50%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+            </div>
+            <label for="student-answer" style="font-weight: 500; font-size: 0.9em;">Your Answer:</label><br>
+            <textarea id="student-answer" name="student_answer" placeholder="Enter your answer here..." required></textarea><br>
+            <button type="submit">Submit for Feedback</button>
+        </form>
+
+        <div class="loader" id="loader"></div>
+
+        <div id="feedback-container" style="display: none;">
+            <h4>AI Teaching Assistant Feedback:</h4>
+            <div id="feedback-result"></div>
+        </div>
+        
+        <div id="rating-container" style="display: none;">
+            <h4>Rate this Feedback (Optional)</h4>
+            <form id="rating-form">
+                <div style="margin-bottom: 0.5em;">
+                    <label>Rating:</label>
+                    <input type="radio" name="rating" value="1" required> 1
+                    <input type="radio" name="rating" value="2"> 2
+                    <input type="radio" name="rating" value="3"> 3
+                    <input type="radio" name="rating" value="4"> 4
+                    <input type="radio" name="rating" value="5"> 5
+                </div>
+                <div style="margin-top: 1em;">
+                    <label for="rating-comment" style="display: block; margin-bottom: 0.5em;">Comments:</label>
+                    <textarea id="rating-comment" style="width: 100%; height: 60px; padding: 8px; border-radius: 4px; border: 1px solid #ccc;"></textarea>
+                </div>
+                <button type="submit" style="margin-top: 1em;">Submit Rating</button>
+            </form>
+            <p id="rating-thanks" style="color: #16a34a; font-weight: 500; display: none;">Thanks for your feedback!</p>
+        </div>
+    </div> <script src="widget-script.js"></script>
+</body>
+</html>
