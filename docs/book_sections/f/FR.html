@@ -1012,7 +1012,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/f/Finding_connections.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Finding_connections</span></span></a>
+ <span class="menu-text">• 18. F-inding connecTions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/f/f_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. F (ANOVA) summary</span></a>
   </div>
 </li>
       </ul>
@@ -1052,6 +1058,7 @@ window.Quarto = {
 </header>
 
 
+<div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
 <p><strong>Motivating Scenario:</strong> Now that you know what goes into calculating the sums of squares, degrees of freedom, mean squares, and F, you can want R to do this all for you. Here, we run an ANOVA in R and learn how to read the results it gives back.</p>
 <p><strong>Learning Goals: By the end of this subchapter, you should be able to:</strong>.</p>
 <ul>
@@ -1063,9 +1070,9 @@ window.Quarto = {
 <li><code>glance()</code> at model-level summaries (like <span class="math inline">\(R^2\)</span>).</li>
 </ul></li>
 </ul>
-<p>:::</p>
+</div>
 <hr>
-<p>In the previous sections we worked through the math and the theory, and even how we could use R to do our calculations or us. This is all useful and I hope it helps you understand what is going on behind the scenes. But now that we know what’s going on, we can have R do our work for us. Here, I show you two ways to have R calculate F and conduct an anova test for us.</p>
+<p>In the previous sections we worked through the math and the theory, and even how we could use R to do our calculations for us. This is all useful and I hope it helps you understand what is going on behind the scenes. But now that we know what’s going on, we can have R do our work for us. Here, I show you two ways to have R calculate F and conduct an anova test for us.</p>
 <p>In so doing we consider how to interpret R’s output, and how to convert it to a “tidy” format with <code>broom</code>’s <code>glance()</code> and <code>tidy()</code> functions.</p>
 <section id="the-aov-summary-pipeline" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="the-aov-summary-pipeline">The <code>aov() |&gt; summary()</code> pipeline</h2>
@@ -1095,7 +1102,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 </div>
 </div>
 <hr>
-<p><code>broom</code>’s <code>tidy()</code> function provides this out put in a “tidy” format, its <code>glance()</code> function shows some relevant summaries of the model (including <span class="math inline">\(R^2\)</span>).</p>
+<p><code>broom</code>’s <code>tidy()</code> function provides this output in a “tidy” format, its <code>glance()</code> function shows some relevant summaries of the model (including <span class="math inline">\(R^2\)</span>).</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(admix_anova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1117,7 +1124,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 </section>
 <section id="the-lm-anova-pipeline" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="the-lm-anova-pipeline">The <code>lm() |&gt; anova()</code> pipeline</h2>
-<p>Alternatively, we can fit a linear model and then hand it to <a href="https://stat.ethz.ch/R-manual/R-devel/RHOME/library/stats/html/anova.html"><code>anova()</code></a> to create the ANOVA table. This produces the same output as <code>aov() |&gt; summary()</code>, but the intermediate object is an lm object rather than an aov object. Sometimes one format is just easier to work with than the other, but your answers will be the same.</p>
+<p>Alternatively, we can fit a linear model and then hand it to <a href="https://stat.ethz.ch/R-manual/R-devel/RHOME/library/stats/html/anova.html"><code>anova()</code></a> to create the ANOVA table. This produces the same output as <code>aov() |&gt; summary()</code>, but the intermediate object is an lm object rather than an aov object. Sometimes one format is just easier to work with than the other, but your results will be the same.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(admix_proportion <span class="sc">~</span> petal_color, <span class="at">data=</span> clarkia_hz ) <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anova</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1148,8 +1155,46 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
 <p><code>glance()</code> works on model objects like <code>lm</code> or <code>aov</code>, but not on the ANOVA table itself. So <code>lm() |&gt; anova() |&gt; glance()</code> returns an empty tibble.</p>
-</div></div><p>https://bookdown.org/steve_midway/DAR/understanding-anova-in-r.html</p>
-<p>https://www.crumplab.com/rstatsforpsych/semester-project-2021.html</p>
+</div></div><hr>
+<div class="note">
+<p><strong>Here is a brief summary of common linear model workflows in R and what they give us.</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 25%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Task</th>
+<th>Function(s)</th>
+<th>Output object</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Run ANOVA directly</td>
+<td><code>aov() |&gt; summary()</code></td>
+<td>ANOVA table</td>
+</tr>
+<tr class="even">
+<td>Run via linear model</td>
+<td><code>lm() |&gt; anova()</code></td>
+<td>same ANOVA table, but model object is <code>lm</code></td>
+</tr>
+<tr class="odd">
+<td>Tidy results</td>
+<td><code>broom::tidy()</code></td>
+<td>tidy table of terms</td>
+</tr>
+<tr class="even">
+<td>Model summary</td>
+<td><code>broom::glance()</code></td>
+<td>includes R², df, etc.</td>
+</tr>
+</tbody>
+</table>
+</div>
 
 
 </section>
@@ -1772,8 +1817,8 @@ window.onload = function() {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../book_sections/f/Finding_connections.html" class="pagination-link" aria-label="Finding_connections">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Finding_connections</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../book_sections/f/Finding_connections.html" class="pagination-link" aria-label="•  18. F-inding connecTions">
+        <span class="nav-page-text">• 18. F-inding connecTions</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

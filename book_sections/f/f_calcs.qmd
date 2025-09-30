@@ -69,7 +69,7 @@ Let's look at the association between admixture proportion of natural *parviflor
 #| fig-width: 12
 #| column: page-right
 #| label: fig-devs 
-#| fig-cap: "Partitioning the contribution of petal color and error to admixture proportion of pink and white parviflora plants in the Sawmill Road hybrid zone. **(A)** Model deviation: Lines show the distance between each sample's predicted value (i.e. group means) and the grand mean (black line). **(B)** Error (residual) deviation: Lines show the distance between each observation and its predicted value (i.e. group means). **(C)** Total deviation: Lines show the distance between each observation and the grand mean."
+#| fig-cap: "Partitioning the contribution of petal color and error to admixture proportion of pink and white parviflora plants in the Squirrel Mountain hybrid zone. **(A)** Model deviation: Lines show the distance between each sample's predicted value (i.e. group means) and the grand mean (black line). **(B)** Error (residual) deviation: Lines show the distance between each observation and its predicted value (i.e. group means). **(C)** Total deviation: Lines show the distance between each observation and the grand mean."
 #| fig-alt: "Three side-by-side scatterplots show how variation is partitioned in ANOVA. Each panel shows admixture proportions (y-axis) for plants with either pink (red) or white (blue) petals. A horizontal black line marks the grand mean; horizontal red and blue bars mark group means. Vertical black lines connect points to their reference mean. **A** Model deviation: Shows vertical lines from group means to the grand mean, representing between-group variation. **B** Error (residual) deviation: Shows vertical lines from individual points to their group mean, representing within-group (aka error, aka residual) variation. **C** Total deviation: Shows vertical lines from individual points to the grand mean, representing overall variation."
 library(broom)
 library(patchwork)
@@ -297,7 +297,7 @@ Remember NHST is only one goal of statistics -- we also want to know the extent 
 
 $$R^2 = \frac{\text{SS}_\text{model}}{\text{SS}_\text{total}}$$ 
 
-$R^2$ summarizes the effect size as the proportion of variance in the response variable explained by our model. For our example, petal color "explains"  $r^2 = \frac{0.00183}{0.00288} =0.635$, or $\approx 63%$ of the variance in admixture proportion at Sawmill Road.
+$R^2$ summarizes the effect size as the proportion of variance in the response variable explained by our model. For our example, petal color "explains"  $r^2 = \frac{0.00183}{0.00288} =0.635$, or $\approx 63%$ of the variance in admixture proportion at Squirrel Mountain.
 
 **INTERPRETING $R^2$**
 
@@ -312,7 +312,7 @@ It is important to note that, although $R^2$ is a good summary of effect size, i
 #| column: margin
 #| label: fig-downsamp
 #| fig-alt: "A line plot shows how mean $R^2$ increases as the number of white-flowered samples increases from 3 to 27. The y-axis represents mean $R^2$, ranging from 0.4 to 0.65. A red dashed horizontal line at 0.635 represents the $R^2$ from the full dataset. The trend line, made up of black dots connected by a dashed line, shows a clear upward trend that flattens as sample size increases."
-#| fig-cap: "The impact of relative sampling effort on $R^2$ for a linear model predicting admixture proportion from petal color in parviflora plants from sawmill road. Each point represents the average $R^2$ across 30 random subsamples of white-flowered individuals (pink-flowered sample size held constant at 18). The red dashed line indicates the $R^2$ value (0.635) from the full dataset with 28 white and 18 pink individuals."
+#| fig-cap: "The impact of relative sampling effort on $R^2$ for a linear model predicting admixture proportion from petal color in parviflora plants from Squirrel Mountain. Each point represents the average $R^2$ across 30 random subsamples of white-flowered individuals (pink-flowered sample size held constant at 18). The red dashed line indicates the $R^2$ value (0.635) from the full dataset with 28 white and 18 pink individuals."
 
 subsample <- function(n_white){dat2 <- bind_rows(
     (clarkia_hz |> 

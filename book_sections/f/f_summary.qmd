@@ -1,0 +1,478 @@
+## • 18. F (ANOVA) summary {.unnumbered #f_summary}
+
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr', 'broom' ,'ggplot2', 'forcats']
+  autoload-packages: true
+---
+
+
+Links to: [Summary](#f_summary_chapter-summary). [Chatbot tutor](#f_summary_chatbot_tutor).  [Questions](#f_summary_practice-questions). [Glossary](#t_summary_glossary-of-terms). [R packages](#f_summaryR_packages_introduced). [R functions](#f_summary_key-r-functions). [More resources](#f_summary_additional-resources).
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(webexercises)
+library(dplyr)
+library(janitor)
+library(readr)
+library(knitr)
+library(infer)
+library(ggplot2)
+library(forcats)
+```
+
+---
+
+
+```{r}
+#| echo: false
+#| column: margin
+#| fig-cap: "Enjoy this \"insomnia meme\" about the ANOVA. From [this video](https://www.youtube.com/watch?v=9W4gOJZfKhA)"
+#| fig-alt:  "A four-panel comic shows a brain talking to a person in bed at night. In panel one, the brain asks, \"What is ANOVA?\" In panel two, the person replies, \"Analysis of Variance.\" In panel three, the brain nervously asks, \"Then why do we compare means?\" In panel four, the person lies awake in the dark, wide-eyed, clearly disturbed by the question."
+library(knitr)
+include_graphics("../../figs/linear_models/f/anova_joke.jpg")
+```
+
+
+## Chapter summary  {#f_summary_chapter-summary}  
+ 
+The analysis of variance (ANOVA) provides a way to understand variation by breaking the variability attributable to our model, and variability uncounted for by our model. The F statistic compares these two sources of variation. Under the null hypothesis that the groups come from the same (statistical) population, the ratio of between to within group variation has an expected value of  one. In the special case of two groups, ANOVA and the two-sample t-test are mathematically equivalent—both quantify how much separation exists between group means relative to expected sampling variation. 
+
+
+### Chatbot tutor  {#f_summary_chatbot_tutor} 
+
+:::tutor
+
+
+
+Please interact with this custom chatbot ([**link here**](https://chatgpt.com/g/g-68db186815108191a327731289b4d1e4-f-tutor)). I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+
+:::
+
+
+
+
+## Practice Questions {#t_summary_practice-questions}
+
+
+Try these questions! By using the R environment you can work without leaving this "book". I even pre-loaded all the packages you need! 
+
+
+### Part 1: Reflecting on this chapter 
+
+*In this chapter we used the ANOVA to test the null hypothesis that pink and white parviflora flowers have the same admixture proportion at Sawmill Road.*  
+
+:::exercises
+
+
+
+**Q1)** Under the null hypothesis that both groups come from the same population, the expected value of $F$ is `r mcq(c("0", answer = "1", "It depends on the degrees of freedom"))`.
+
+**Q2)** If $F$ is greater than the expected value under the null, *(select all correct)* `r longmcq(c("The null is false", "The null is true","We reject the null", "We fail to reject the null" , answer = "We may or may not reject the null depending on the degrees of freedom."))`.
+
+
+**Q3)** If $F$ is less than the expected value under the null, *(select all correct)* `r longmcq(c("The null is false", "The null is true","We reject the null", answer = "We fail to reject the null" ,  "We may or may not reject the null depending on the degrees of freedom."))`.
+
+
+**Q4)** Our p-value was very small (much less than the traditional (\alpha = 0.05) threshold). This means... *(select all correct)*: `r longmcq(c(answer = "It would be incredibly unlikely to observe such an extreme F statistic if the null hypothesis were true", "Pollinators avoid white flowers", "The pink petal color has introgressed from xantiana" ))`. 
+
+
+:::
+
+
+
+### Part 2: Recognizing types of sums of squares (from code)
+
+Consider the code below for the next three questions: 
+
+```{r}
+#| eval: false
+SS <- data |>
+  mutate(grand_mean = mean(response))|>
+  group_by(explanatory)|>
+  mutate(yhat = mean(response))|>
+  ungroup()|>
+  summarise(SS_A = sum((yhat - grand_mean)^2),
+            SS_B = sum((response - yhat)^2),
+            SS_C = sum((response - grand_mean)^2) )
+```
+
+
+
+:::exercises
+
+**Q5)** Consider the code above. Which calculates $\text{SS}_\text{error}$? `r mcq(c( "SS_A", answer = "SS_B","SS_C"))`
+
+**Q6)** Consider the code above. Which calculates $\text{SS}_\text{model}$? `r mcq(c(answer = "SS_A","SS_B", "SS_C"))`
+
+**Q7)** Consider the code above. Which calculates $\text{SS}_\text{total}$?  `r mcq(c("SS_A","SS_B", answer ="SS_C"))`
+
+:::
+
+### Part 3: New analysis 
+
+*Now let's look at the same question in a different location, Site 22. First let me process the data for you:*  
+
+
+
+```{webr-r}
+#| context: setup
+#| message: false
+#| warning: false
+library(janitor)
+library(forcats)
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(broom)
+hz_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/zones_df_admix_weight_cutoff0.9_gps_dist2het_phenos_excl_GC.csv"
+
+clarkia_s22_hz <- read_csv(hz_link)|> 
+  rename(admix_proportion = `cutoff0.9`) |>
+  filter(!is.na(admix_proportion), !is.na(petal_color), subsp=="P", site == "S22")|>
+  clean_names() |>
+  mutate(tmp = as.numeric(factor(petal_color)) + admix_proportion,
+         id = factor(id),
+         id = fct_reorder(id, tmp))|>
+  select(admix_proportion, petal_color,id)
+```
+
+---
+
+
+
+```{r}
+#| code-fold: true
+#| code-summary: "Processing data for S22 hybrid zone"
+#| message: false
+#| warning: false
+hz_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/zones_df_admix_weight_cutoff0.9_gps_dist2het_phenos_excl_GC.csv"
+
+
+clarkia_s22_hz <- read_csv(hz_link)|> 
+  rename(admix_proportion = `cutoff0.9`) |>
+  filter(!is.na(admix_proportion), !is.na(petal_color), subsp=="P", site == "S22")|>
+  clean_names() |>
+  mutate(tmp = as.numeric(factor(petal_color)) + admix_proportion,
+         id = as.factor(id),
+         id = fct_reorder(id, tmp))|>
+  select(admix_proportion, petal_color,id)
+```
+
+```{webr-r}
+#| autorun: true
+glimpse(clarkia_s22_hz)
+
+## CODE HERE TO FIND GROUP MEANS
+
+```
+
+---
+
+:::exercises
+**Q8)** Use the area above to find the difference in the admixture proportion between pink- and white- flowered *parviflora* plants at Site 22. Please return a positive number (pink minus white) `r fitb(0.0199,num = TRUE,tol = 0.002)`.
+
+`r hide("Code")`
+
+```{r}
+#  Group the dataset by petal color, then calculate the mean admixture proportion for each group
+mean_admix_by_petal_color <- clarkia_s22_hz |> 
+  group_by(petal_color) |>                     # group data into pink vs white flowers
+  summarise(mean_admix = mean(admix_proportion))  # calculate mean admixture proportion per group
+
+
+mean_admix_by_petal_color #  View the resulting summary table
+
+#  Calculate the difference in mean admixture proportion between the two petal colors
+# `diff()` takes the second value minus the first value of `mean_admix`
+# (Order depends on how petal_color is sorted in the data!)
+mean_admix_by_petal_color |> 
+  summarise(diff_admix = diff(mean_admix))
+```
+
+This is white minus pink, so be sure to enter the absolute value.
+`r unhide()`
+
+:::
+
+
+```{r}
+#| echo: false
+#| fig-height: 4
+#| fig-width: 12
+#| column: page-right
+#| label: fig-devs2 
+#| fig-cap: "Partitioning the contribution of petal color and error to admixture proportion of pink and white parviflora plants in the S22 hybrid zone."
+#| fig-alt: "Three dot-and-line plots (A–C) show admixture proportions for pink and white flowers, ordered by value. **Panel A**: Vertical lines extend from each point to its group’s mean, forming two stepped shapes. **Panel B:** Vertical lines extend from each point to a single horizontal line that spans both groups. **Panel C**: Vertical lines extend from each group’s mean to a single horizontal line across groups."
+library(patchwork)
+clarkia_s22_hz <- clarkia_s22_hz |>
+  group_by(petal_color)|>
+  mutate(yhat = mean(admix_proportion))|>
+  ungroup()|>
+  mutate(resid = admix_proportion -  yhat)
+
+base_plot <- clarkia_s22_hz |>
+  ggplot(aes(x = id, y = admix_proportion, color =  petal_color))+
+  geom_point()+
+  theme_light()+
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
+
+error <- base_plot + 
+  geom_segment(aes(x = id, xend = id, yend = yhat),show.legend = FALSE)+
+  geom_segment(data = clarkia_s22_hz|> 
+                 group_by(petal_color) |> 
+                 summarise(min_id = min(as.numeric(id)), 
+                           max_id=max(as.numeric(id)), 
+                           mean_admix = unique(yhat)) ,
+               show.legend = FALSE,
+               aes(x = min_id, xend = max_id, yend = mean_admix, y = mean_admix))
+
+model <- base_plot + 
+  geom_segment(data = clarkia_s22_hz |> 
+                 mutate(mean_admix = mean( admix_proportion)),
+               show.legend = FALSE,
+               aes(x = id, xend = id, y = mean_admix, yend = yhat))+
+  geom_segment(data = clarkia_s22_hz|> 
+                 group_by(petal_color) |> 
+                 summarise(min_id = min(as.numeric(id)), 
+                           max_id=max(as.numeric(id)), 
+                           mean_admix = unique(yhat)) ,
+               aes(x = min_id, xend = max_id, yend = mean_admix, y = mean_admix),
+               show.legend = FALSE)+
+  geom_hline(data = clarkia_s22_hz |> 
+               summarise(mean_admix = mean(admix_proportion)),
+             aes(yintercept = mean_admix))
+
+total <- base_plot + 
+  geom_segment(data = clarkia_s22_hz |> 
+                 mutate(mean_admix = mean( admix_proportion)),
+               aes(x = id, xend = id, y = mean_admix, yend =admix_proportion),
+               show.legend = FALSE)+
+  geom_hline(data = clarkia_s22_hz |> 
+               summarise(mean_admix = mean(admix_proportion)),
+             aes(yintercept = mean_admix))
+
+(error + total + model) +
+  plot_layout(guides = "collect",
+              axis_titles = "collect",
+              axes = "collect_y") &
+  plot_annotation(tag_levels = "A")&
+  theme(legend.position = "bottom",
+        legend.text = element_text(size = 20),
+        legend.title = element_text(size = 20),)
+```
+
+
+
+:::exercises
+
+**Q9)** Consider the plots above. Which has lines showing the "error" deviation? `r mcq(c(answer = "A","B","C"))`
+
+**Q10)** Consider the plots above. Which has lines showing the "model" deviation? `r mcq(c("A","B",answer = "C"))`
+
+**Q11)** Consider the plots above. Which has lines showing the "total" deviation? `r mcq(c("A",answer ="B", "C"))`
+:::
+
+---
+
+Now let's run the model! 
+
+```{webr-r}
+#| autorun: true
+lm(admix_proportion ~ petal_color, data = clarkia_s22_hz)|>
+  anova()
+```
+
+:::exercises
+**Q12)** Given the p-value, what do you do to the null hypothesis? `r longmcq(c(answer = "Reject it", "Fail to reject it", "Accept it","Fail to accept it"))`
+
+**Q13)** This means the null  `r longmcq(c("Is true", "Is false", "Has a 0.00805 chance of being true", answer = "We can’t say for sure."))`
+
+**Q14)** From this output, the $R^2$ value is:   `r fitb(answer = 0.233 , tol = 0.018, num = TRUE)`. 
+
+`r hide("Help")`
+ 
+Recall:   
+ 
+- $R^2 = \frac{\text{SS}_\text{model}}{\text{SS}_\text{total}}$     
+- $\text{SS}_\text{total} = \text{SS}_\text{model} +\text{SS}_\text{error}$       
+
+`r unhide()`
+
+**Q15)**  From this output and your answer to question eight ("What's the difference in mean admixture proportion by petal color"), Cohen's D is `r longmcq(c("Not worth reporting (< 0.01)","Tiny (0.01 – 0.20)", "Small (0.20 – 0.50)",  "Medium (0.50 – 0.80)", answer = "Large (0.80 – 1.20)", "Very large (1.20 – 2.00)", "Huge (> 2.00)"))`. 
+
+`r hide("Equation for Cohen's D")`
+
+$$\text{Cohen's D} = \frac{\text{Difference in group means}}{\text{pooled standard deviation}}$$
+`r unhide()`
+
+`r hide("Finding the pooled standard deviation")`
+
+With just two samples the mean squared error equals the pooled variance. So the square root of this is the pooled standard deviation. 
+
+`r unhide()`
+
+
+`r hide("Math")`
+
+$$D = \frac{0.0199}{\sqrt{0.00031557}}$$   
+
+$$D = \frac{0.0199}{0.01776}$$     
+
+$$D = 1.12$$     
+`r unhide()`
+
+:::
+
+https://bookdown.org/steve_midway/DAR/understanding-anova-in-r.html
+
+https://www.crumplab.com/rstatsforpsych/semester-project-2021.html
+
+
+## 📊 Glossary of Terms {#f_glossary}
+
+---
+
+:::glossary
+
+
+#### 📚 **1. Core Concepts**
+
+* **Analysis of Variance (ANOVA)**: A statistical framework that partitions total variability in a dataset into variability explained by a model (between groups) and variability left unexplained (within groups).
+* **Partitioning Variance**: Decomposing total variability into distinct components (e.g., model vs. error) to understand sources of variation.
+* **Null Hypothesis ($H_0$)**: The assumption that all groups are samples from the same statistical population; under H₀, the expected value of the F statistic is 1.
+* **Alternative Hypothesis ($H_1$)**: The assumption that at least one group comes from a different population, resulting in more between-group variation than expected by chance.
+
+---
+
+#### 🔢 **2. Variance Components**
+
+* **Between-Group Variability**: Variation among group means, attributed to the model (e.g., differences between pink vs. white flowers in admixture proportion).
+* **Within-Group Variability**: Variation among individuals within groups, reflecting background noise and sampling error. 
+* **Total Variability**: The sum of between-group and within-group variability.
+
+---
+
+#### 🧮 **3. Sums of Squares, Mean Squares, and their ratio ($F$)**
+
+* **Sum of Squares (SS)**: A measure of variability; calculated by summing squared deviations.
+
+
+  * **$\text{SS}_\text{model}$ (aka $\text{SS}_\text{groups}$))**: Variability explained by our explanatory variable(s).  
+  * **$\text{SS}_\text{error}$ (aka $\text{SS}_\text{residual}$))**: Variability within groups, not explained by the model.
+  * **$\text{SS}_\text{total}$**: Total variability in the response variable.
+* **Degrees of Freedom (df)**: The number of independent pieces of information used to estimate variability.   
+  - $\text{df}_\text{model} = $n_\text{groups}-1$.  
+  - $\text{df}_\text{error} = $n - n_\text{groups}$.  
+* **Mean Square (MS)**: An estimate of variance obtained by dividing SS by its degrees of freedom.
+
+  * **$\text{MS}_\text{model}$** =$\frac{\text{MS}_\text{model}}{\text{df}_\text{model}}$  
+  * **$\text{MS}_\text{error}$** =$\frac{\text{SS}_\text{error}}{\text{df}_\text{error}}$ 
+  
+* **F Statistic**: A ratio of variances that compares between-group variability ($\text{MS}_\text{model}$) to within-group variability ($\text{MS}_\text{error}$).
+$$F = \frac{\text{MS}_\text{model}}{\text{MS}_\text{error}}$$  
+
+
+
+
+:::
+
+## R Packages Introduced  {#f_summaryR_packages-introduced}  
+
+:::packages
+
+
+This chapter relies on packages you've already encountered, including:
+
+
+- **[`broom`](https://broom.tidymodels.org/)**: Tidies model outputs (like fitted values and residuals) into neat data frames.
+- **[`ggplot2`](https://ggplot2.tidyverse.org/)**: Used for visualizing data and model fits.
+
+:::
+
+
+
+## 🛠️ Key R Functions {#f_summary_key-r-functions}
+
+:::functions
+
+* **`aov()`**:
+  Fits an analysis of variance model directly.
+
+
+* **summary()**:   Use `summary()` on the resulting object to view the ANOVA table, including sums of squares, mean squares, F statistic, and p-value.
+
+
+```{r}
+#| eval: false
+aov(response ~ group, data = dataset)|>
+  summary()
+
+```
+
+---
+
+* **`anova()`**:
+  Produces an ANOVA table from a fitted linear model.
+
+```{r}
+#| eval: false
+lm(response ~ group, data = dataset) |> 
+    anova()
+```
+
+  This approach is mathematically identical to `aov()` for one-way ANOVA, but uses a linear model object as input.
+
+---
+
+* **`lm()`**:
+  Fits a linear model.
+
+```{r}
+#| eval: false
+lm(response ~ group, data = dataset)
+```
+
+One-way ANOVA is just a special case of a linear model with a categorical predictor. This makes it easy to extend to more complex designs later.
+
+---
+
+* **`tidy()`** and **`glance()`** *(from the `broom` package)*:
+
+  * `tidy()` formats the ANOVA table into a tidy data frame.
+  * `glance()` returns model-level summaries, including ( R^2 ).
+
+```{r}
+#| eval: false
+aov(response ~ group, data = dataset) |> 
+  broom::glance()
+```
+
+::: 
+
+---
+
+
+## Additional resources   {#t_summary_additional-resources}
+
+:::learnmore 
+
+**Book chapters:**   
+
+[Chapter 7: Understanding the ANOVA in R](https://bookdown.org/steve_midway/DAR/understanding-anova-in-r.html) from "[Data Analysis in R](https://bookdown.org/steve_midway/DAR/)"
+ 
+**Videos:**         
+
+
+
+[Kahn Academy ANOVA](https://www.khanacademy.org/math/statistics-probability/analysis-of-variance-anova-library/analysis-of-variance-anova/v/anova-1-calculating-sst-total-sum-of-squares) 
+
+[Partitioning Variance For ANOVA and linear modelling](https://www.youtube.com/watch?v=qh66ScABeM0)
+
+:::
+

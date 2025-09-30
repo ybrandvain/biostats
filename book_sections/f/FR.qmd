@@ -30,6 +30,9 @@ clarkia_hz <- read_csv(hz_link)|>
          id = fct_reorder(id, tmp))
 ```
 
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
 
 **Motivating Scenario:**  Now that you know what goes into calculating the sums of squares, degrees of freedom, mean squares, and F, you can want R to do this all for you. Here, we run an ANOVA in R and learn how to read the results it gives back.
 
@@ -49,7 +52,7 @@ clarkia_hz <- read_csv(hz_link)|>
 
 ---
 
-In the previous sections we worked through the math and the theory, and even how we could use R to do our calculations or us. This is all useful and I hope it helps you understand what is going on behind the scenes. But now that we know what's going on, we can have R do our work for us. Here, I show you two ways to have R calculate F and conduct an anova test for us. 
+In the previous sections we worked through the math and the theory, and even how we could use R to do our calculations for us. This is all useful and I hope it helps you understand what is going on behind the scenes. But now that we know what's going on, we can have R do our work for us. Here, I show you two ways to have R calculate F and conduct an anova test for us. 
 
 In so doing we consider how to interpret R's output, and how to convert it to a "tidy" format with `broom`'s `glance()` and `tidy()` functions.
 
@@ -78,7 +81,7 @@ summary(admix_anova)
 ---
 
 
-`broom`'s `tidy()` function provides this out put in a "tidy" format, its `glance()`  function shows some relevant summaries of the model (including $R^2$).
+`broom`'s `tidy()` function provides this output in a "tidy" format, its `glance()`  function shows some relevant summaries of the model (including $R^2$).
 
 ```{r}
 library(broom)
@@ -90,7 +93,7 @@ glance(admix_anova)
 ## The `lm() |> anova()` pipeline
 
 Alternatively, we can fit a linear model and then hand it to [`anova()`](https://stat.ethz.ch/R-manual/R-devel/RHOME/library/stats/html/anova.html)
- to create the ANOVA table. This produces the same output as `aov() |> summary()`, but the intermediate object is an lm object rather than an aov object. Sometimes one format is just easier to work with than the other, but your answers will be the same.
+ to create the ANOVA table. This produces the same output as `aov() |> summary()`, but the intermediate object is an lm object rather than an aov object. Sometimes one format is just easier to work with than the other, but your results will be the same.
  
 
 
@@ -113,7 +116,17 @@ lm(admix_proportion ~ petal_color, data= clarkia_hz ) |>
 `glance()` works on model objects like `lm` or `aov`, but not on the ANOVA table itself. So `lm() |> anova() |> glance()` returns an empty tibble.
 ::: 
 
+---
 
-https://bookdown.org/steve_midway/DAR/understanding-anova-in-r.html
+::: note
 
-https://www.crumplab.com/rstatsforpsych/semester-project-2021.html
+**Here is a brief summary of common linear model workflows in R  and what they give us.** 
+
+| Task                 | Function(s)           | Output object                              |
+| -------------------- | --------------------- | ------------------------------------------ |
+| Run ANOVA directly   | `aov() |> summary()` | ANOVA table                                |
+| Run via linear model | `lm() |> anova()`    | same ANOVA table, but model object is `lm` |
+| Tidy results         | `broom::tidy()`       | tidy table of terms                        |
+| Model summary        | `broom::glance()`     | includes R², df, etc.                      |
+
+:::

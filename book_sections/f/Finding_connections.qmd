@@ -1,5 +1,162 @@
----
-title: "Finding_connections"
-format: html
+## •  18. F-inding connecTions  {.unnumbered  #finding_connections}
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(forcats)
+library(readr)
+library(stringr)
+library(janitor)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+source("../../_common.R") 
+hz_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/zones_df_admix_weight_cutoff0.9_gps_dist2het_phenos_excl_GC.csv"
+clarkia_hz <- read_csv(hz_link)|> 
+  select(-weighted)|>
+  rename(admix_proportion = `cutoff0.9`) |>
+  filter(!is.na(admix_proportion))|>
+  clean_names() |>
+  mutate(site = if_else(site == "SAW", "SR", site)) |>
+  filter(subsp=="P")|>
+  filter(site == "SM") |>
+  mutate(tmp = as.numeric(factor(petal_color)) + admix_proportion,
+         id = factor(id),
+         id = fct_reorder(id, tmp))
+```
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating Scenario:**
+In the previous chapter we compared two groups as a two sample t-test. In this chapter, we basically did the same thing as an ANOVA. You want to know the relationship between these approaches.
+
+**Learning Goals: By the end of this subchapter, you should be able to:**
+
+* Explain why a two-sample t-test and a one-way ANOVA with two groups are mathematically equivalent.
+* Describe how **t** and **F** statistics are related and what each measures.
+* Connect $r$ (correlation) and $R^2$ (proportion of variance explained).  
+* Recognize these equivalences as special cases of the general linear model framework. 
+
+
+
+:::
+
 ---
 
+> Should I conduct an ANOVA or t-test?
+
+This question is commonly asked by students with data in hand, and even by professors on an exam to evaluate students' understanding. The answer is -- for a case with a binary explanatory variable it makes absolutely no difference. 
+
+Reassuringly whether conducting and ANOVA or a t-test on a continuous response and a binary explanatory variable we get the exact same p-value. This is reassuring, as we would like our answers to be robust to such an arbitrary choice. It's up to you whether you prefer to present results in terms of the number of standard errors separating the groups, or as a ratio of mean squares. 
+
+Here we go through some connections between these modeling approaches. 
+
+
+::: {.callout-note}
+**This section is fully optional** I just think it's cool.
+:::
+
+### Comparing F and t 
+
+Let's consider our example from this chapter -- comparing the admixture proportion of pink and white flowers at Squirrel Mountain. 
+
+A t-test provides the following results: 
+
+```{r}
+t.test(admix_proportion ~ petal_color, data = clarkia_hz, var.equal=TRUE)
+```
+---
+
+```{r}
+lm(admix_proportion ~ petal_color, data = clarkia_hz) |>
+  anova()
+```
+---
+
+**The most obvious similarities here are:**    
+
+- The p-values are identical, and 
+- $\text{df}_\text{error}$ for the ANOVA equals $\text{df}$ for the t-test. .  
+
+**But wait, there's more:** 
+
+- Additionally the F value (76.539), is simply the t-value (8.7486) squared.   
+- Finally, although R did not show us this,  the Mean Squares error of  0.0000239 equals the pooled variance: 
+
+```{r}
+# finding the pooled variance
+clarkia_hz |>
+    filter(!is.na(petal_color))|>
+    group_by(petal_color)|>
+    mutate(mean_admix = mean(admix_proportion ))|>
+    ungroup()|>
+    mutate(deviation = admix_proportion - mean_admix) |>
+    summarise(pooled_var = sum(deviation^2) / (n() - 2))
+```
+
+---
+
+This is all to say that the two sample t-test and an ANOVA with two groups are essentially identical. I hope this makes us feel good about moving on to more complex ANOVAs, and about linear models more broadly.
+
+:::note
+**Why does $F = t^2$?**
+
+- t measures the difference between group means in standard error units (i.e., how many standard deviations of the sampling distribution separate the groups).  
+
+- F compares the variance between groups to the variance within groups, so it's measured on the variance scale.  
+
+Because variance is just the square of a standard deviation, F is simply the square of the corresponding t when there are two groups.
+
+:::
+
+### $R^2$ is the square of $r$  
+
+Remember that $R^2$ is the "proportion of variance explained" (i.e. the proportion of variance in our response variable that we can pin on our explanatory variable).
+
+:::aside
+$$R^2 = \frac{\text{SS}_\text{model}}{\text{SS}_\text{total}}$$. 
+
+:::
+
+We can find $R^2$ from the output of our linear model: 
+
+```{r}
+library(broom)
+aov(admix_proportion ~ petal_color, data = clarkia_hz) |>
+    glance()|> 
+    kable()
+```
+
+---
+
+
+You also may remember that $r$ is the correlation between variables. If we assign a numeric value of zero to the explanatory variable for one category (e.g., white flowers), and one for the other category (e.g., pink flowers), we can calculate a correlation ($r$). If we square this correlation $r$ squared equals $R^2$!
+
+:::aside
+$$r = \frac{ \text{cov}_{x,y} }{s_x \times s_y}$$ 
+:::
+
+
+
+
+
+```{r}
+#| echo: false
+#| column: margin
+#| fig-cap: "The spiderman meme for ANOVA / regression"
+#| fig-alt: "Two identical Spider-Man characters point at each other. One is labeled \"ANOVA,\" the other \"Regression.\""
+include_graphics("https://www.accountingexperiments.com/media/anova_regression_hu8d7b78fdb8970f110a404e1ae11b4c8f_365153_1200x1200_fit_q85_h2_lanczos_3.webp")
+```
+
+```{r}
+clarkia_hz |> 
+  filter(!is.na(petal_color))|>
+  mutate(petal_color_num = ifelse(petal_color == "white", 0 ,1))|>
+  summarise(r = cor(petal_color_num , admix_proportion),
+            r.squared = r^2)
+```

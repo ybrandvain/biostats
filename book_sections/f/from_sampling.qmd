@@ -15,7 +15,7 @@ library(webexercises)
 library(ggplot2)
 library(tidyr)
 source("../../_common.R") 
-clarkis_hz <-read_csv("~/Downloads/clarkiaContactZone_bio3272_petal_color_30_70_refined.csv")|>
+clarkis_hz <-read_csv("https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/zones_df_admix_weight_cutoff0.9_gps_dist2het_phenos_excl_GC.csv")|>
   clean_names()|>
   mutate(site = ifelse(site == "SAW", "SR",site))
 ```
@@ -43,7 +43,7 @@ You want to understand what goes into calculating F and where this logic comes f
 ## Predicting $\sigma_\bar{x}$ from $\sigma$
 
 
-Remember our "statistical" view of were data comes from. We imagine that the data we observe are a sample of size $n$ from a population with a true mean $\mu$ and standard deviation $\sigma_x$. Although we can't know these true parameters, we estimate them using the sample mean $\bar{x}$ and standard deviation $s$
+Remember our "statistical" view of where data come from. We imagine that the data we observe are a sample of size $n$ from a population with a true mean $\mu$ and standard deviation $\sigma_x$. Although we can't know these true parameters, we estimate them using the sample mean $\bar{x}$ and standard deviation $s$
 
 
 
@@ -58,7 +58,7 @@ $$\sigma_{\overline{x}} = \frac{\sigma}{\sqrt{n}}$$
 #| column: margin
 #| echo: false
 #| label: fig-anova
-#| fig-cap: "Tha F distirbution is magic."
+#| fig-cap: "The F distirbution is magic."
 #| fig-alt: "Animated GIF of a bespectacled character in a wizard costume declaring, \"I'm a mathe-magician!\" while a groaning sound effect appears as subtitles."
 include_graphics("https://media.giphy.com/media/3orif8Epddpd8KSELe/giphy.gif")
 ```
@@ -86,7 +86,7 @@ So we can turn these ideas into parameters to estimate.
 | Error | $\sigma^2_x$ | Mean squares error | $\text{MS}_\text{ Error}$ |
 | Total         | $n \times \sigma_\bar{x}^2 + \sigma^2_x$ | Mean squares total  | $\text{MS}_\text{ Total}$  |
 
-We can use these values to calculate the ratio of variance among and within groups, $F$. **Notice** that when our two samples come from the same population, we expect $F$ to euqal one (save some sampling error).
+We can use these values to calculate the ratio of variance among and within groups, $F$. **Notice** that when our two samples come from the same population, we expect $F$ to equal one (save some sampling error).
 
 
 $$F = \frac{\text{MS}_\text{Model}}{ \text{MS}_\text{Error} }$$

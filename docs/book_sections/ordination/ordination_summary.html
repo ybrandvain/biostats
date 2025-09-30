@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -52,15 +52,16 @@ div.csl-indent {
 <meta name="quarto:offset" content="../../">
 <link href="../../book_sections/data_viz.html" rel="next">
 <link href="../../book_sections/ordination/pcalternatives.html" rel="prev">
-<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-d4394cde7c380170a4469b96acf338b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-710ea84994903bc41163d01235b9627e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-90eb7791a5c5b81885cedfef0a190562.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-82a15b99bf7720207ddddc281aa6ceca.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -1648,7 +1649,7 @@ globalThis.qwebrExecuteCode = async function (
 <link rel="stylesheet" href="../../assets/webex.css">
 </head>
 
-<body class="nav-sidebar floating fullcontent">
+<body class="nav-sidebar floating fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -2508,7 +2509,25 @@ globalThis.qwebrExecuteCode = async function (
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/f/f_calcs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">• 18. Calculations</span></a>
+ <span class="menu-text">• 18. F Calculations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/f/FR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. F and anova in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/f/Finding_connections.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. F-inding connecTions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/f/f_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. F (ANOVA) summary</span></a>
   </div>
 </li>
       </ul>
@@ -2854,8 +2873,8 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <section id="warm-up" class="level3 exercises">
 <h3 class="anchored" data-anchor-id="warm-up">Warm up</h3>
 <strong>Q1)</strong> For which of these cases is a PCA <strong>most</strong> appropriate?
-<div id="radio_IWDSJYVXZW" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_IWDSJYVXZW" value=""> <span>You want to measure how strongly two continuous variables are correlated.</span></label><label><input type="radio" autocomplete="off" name="radio_IWDSJYVXZW" value="answer"> <span>You want to reduce a dataset with many continuous variables to a few variables that capture most of the variation.</span></label><label><input type="radio" autocomplete="off" name="radio_IWDSJYVXZW" value=""> <span>You have messy data with missing values and a mix of continuous and categorical variables.</span></label><label><input type="radio" autocomplete="off" name="radio_IWDSJYVXZW" value=""> <span>You’re hoping to discover natural clusters in your data.</span></label>
+<div id="radio_TDDUZZZUGD" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_TDDUZZZUGD" value=""> <span>You want to measure how strongly two continuous variables are correlated.</span></label><label><input type="radio" autocomplete="off" name="radio_TDDUZZZUGD" value="answer"> <span>You want to reduce a dataset with many continuous variables to a few variables that capture most of the variation.</span></label><label><input type="radio" autocomplete="off" name="radio_TDDUZZZUGD" value=""> <span>You have messy data with missing values and a mix of continuous and categorical variables.</span></label><label><input type="radio" autocomplete="off" name="radio_TDDUZZZUGD" value=""> <span>You’re hoping to discover natural clusters in your data.</span></label>
 </div>
 <div class="webex-solution">
 <button>
@@ -2883,20 +2902,20 @@ Click here for explanation
 </div>
 <div class="exercises">
 <strong>Q2)</strong> Which of the plots above is most appropriate?
-<div id="radio_LEYETUYQKZ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_LEYETUYQKZ" value=""> <span>A: It stretches PC2, making subtle vertical differences easier to see.</span></label><label><input type="radio" autocomplete="off" name="radio_LEYETUYQKZ" value=""> <span>B: It keeps the axes roughly square, which feels visually balanced and avoids exaggeration.</span></label><label><input type="radio" autocomplete="off" name="radio_LEYETUYQKZ" value="answer"> <span>C: It sets the axes proportional to the percent variance explained, making distances and angles in the plot geometrically meaningful.</span></label><label><input type="radio" autocomplete="off" name="radio_LEYETUYQKZ" value=""> <span>There is no 'best' because plot choice depends on audience and goals.</span></label>
+<div id="radio_QKPWBQAALJ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_QKPWBQAALJ" value=""> <span>A: It stretches PC2, making subtle vertical differences easier to see.</span></label><label><input type="radio" autocomplete="off" name="radio_QKPWBQAALJ" value=""> <span>B: It keeps the axes roughly square, which feels visually balanced and avoids exaggeration.</span></label><label><input type="radio" autocomplete="off" name="radio_QKPWBQAALJ" value="answer"> <span>C: It sets the axes proportional to the percent variance explained, making distances and angles in the plot geometrically meaningful.</span></label><label><input type="radio" autocomplete="off" name="radio_QKPWBQAALJ" value=""> <span>There is no 'best' because plot choice depends on audience and goals.</span></label>
 </div>
 <strong>Q3)</strong> Based on the plot(s) above which species appears to have the largest petals (i.e., petal length and width)?
-<div id="radio_QZKFDIJREI" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_QZKFDIJREI" value=""> <span><em>setosa</em></span></label><label><input type="radio" autocomplete="off" name="radio_QZKFDIJREI" value=""> <span><em>versicolor</em></span></label><label><input type="radio" autocomplete="off" name="radio_QZKFDIJREI" value="answer"> <span><em>virginica</em></span></label><label><input type="radio" autocomplete="off" name="radio_QZKFDIJREI" value=""> <span>🤷 PCA doesn’t tell us anything about trait values.</span></label>
+<div id="radio_FZUUZGNQYJ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_FZUUZGNQYJ" value=""> <span><em>setosa</em></span></label><label><input type="radio" autocomplete="off" name="radio_FZUUZGNQYJ" value=""> <span><em>versicolor</em></span></label><label><input type="radio" autocomplete="off" name="radio_FZUUZGNQYJ" value="answer"> <span><em>virginica</em></span></label><label><input type="radio" autocomplete="off" name="radio_FZUUZGNQYJ" value=""> <span>🤷 PCA doesn’t tell us anything about trait values.</span></label>
 </div>
 <strong>Q4)</strong> Based on the plot(s) above, how would you interpret PC2?
-<div id="radio_ZMPUFOWUGE" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_ZMPUFOWUGE" value=""> <span>PC2 reflects petal area: higher values mean larger petals</span></label><label><input type="radio" autocomplete="off" name="radio_ZMPUFOWUGE" value=""> <span>PC2 reflects petal area: higher values mean smaller petals</span></label><label><input type="radio" autocomplete="off" name="radio_ZMPUFOWUGE" value=""> <span>PC2 reflects sepal area: higher values mean larger sepals</span></label><label><input type="radio" autocomplete="off" name="radio_ZMPUFOWUGE" value="answer"> <span>PC2 reflects sepal area: higher values mean smaller sepals</span></label><label><input type="radio" autocomplete="off" name="radio_ZMPUFOWUGE" value=""> <span>There is no clear biological interpretation of PC2 from this plot</span></label><label><input type="radio" autocomplete="off" name="radio_ZMPUFOWUGE" value=""> <span>We should never attempt to interpret PCs biologically</span></label><label><input type="radio" autocomplete="off" name="radio_ZMPUFOWUGE" value=""> <span>PC2 should be ignored because it explains so little of the variance.</span></label>
+<div id="radio_RHUEPBWLDA" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_RHUEPBWLDA" value=""> <span>PC2 reflects petal area: higher values mean larger petals</span></label><label><input type="radio" autocomplete="off" name="radio_RHUEPBWLDA" value=""> <span>PC2 reflects petal area: higher values mean smaller petals</span></label><label><input type="radio" autocomplete="off" name="radio_RHUEPBWLDA" value=""> <span>PC2 reflects sepal area: higher values mean larger sepals</span></label><label><input type="radio" autocomplete="off" name="radio_RHUEPBWLDA" value="answer"> <span>PC2 reflects sepal area: higher values mean smaller sepals</span></label><label><input type="radio" autocomplete="off" name="radio_RHUEPBWLDA" value=""> <span>There is no clear biological interpretation of PC2 from this plot</span></label><label><input type="radio" autocomplete="off" name="radio_RHUEPBWLDA" value=""> <span>We should never attempt to interpret PCs biologically</span></label><label><input type="radio" autocomplete="off" name="radio_RHUEPBWLDA" value=""> <span>PC2 should be ignored because it explains so little of the variance.</span></label>
 </div>
 <strong>Q5</strong> The correlation between petal width and petal area is 0.96. It is clear what to do in such cases, but one of these options is least justifiable. Which one?
-<div id="radio_SEEDTFBBWI" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_SEEDTFBBWI" value=""> <span>Don't change anything. These are different traits!</span></label><label><input type="radio" autocomplete="off" name="radio_SEEDTFBBWI" value=""> <span>Drop one of the petal traits (it doesn't really matter which one).</span></label><label><input type="radio" autocomplete="off" name="radio_SEEDTFBBWI" value="answer"> <span>If you drop one petal trait, be sure to drop a sepal trait</span></label><label><input type="radio" autocomplete="off" name="radio_SEEDTFBBWI" value=""> <span>Drop both petal length and width, and replace them with petal area.</span></label>
+<div id="radio_DLDWIHFWMW" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_DLDWIHFWMW" value=""> <span>Don't change anything. These are different traits!</span></label><label><input type="radio" autocomplete="off" name="radio_DLDWIHFWMW" value=""> <span>Drop one of the petal traits (it doesn't really matter which one).</span></label><label><input type="radio" autocomplete="off" name="radio_DLDWIHFWMW" value="answer"> <span>If you drop one petal trait, be sure to drop a sepal trait</span></label><label><input type="radio" autocomplete="off" name="radio_DLDWIHFWMW" value=""> <span>Drop both petal length and width, and replace them with petal area.</span></label>
 </div>
 <p>.</p>
 <em>BONUS</em>: What would you do?
@@ -2919,8 +2938,8 @@ Click here for explanation
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="exercises">
 <strong>Q7)</strong> The plot above appears to show three clusters, but there is a problem (or two). What is th biggest problem?
-<div id="radio_CPRBHXGAMZ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_CPRBHXGAMZ" value=""> <span>PCA is not meant for finding clusters</span></label><label><input type="radio" autocomplete="off" name="radio_CPRBHXGAMZ" value=""> <span>PC2 only explains 19% of the variance so we should not pay much attention to it</span></label><label><input type="radio" autocomplete="off" name="radio_CPRBHXGAMZ" value=""> <span>The middle cluster is largely made up of missing data</span></label><label><input type="radio" autocomplete="off" name="radio_CPRBHXGAMZ" value=""> <span>Some variables are categorical so we should have run and FAMD analysis</span></label><label><input type="radio" autocomplete="off" name="radio_CPRBHXGAMZ" value="answer"> <span>Something went into our PC that shouldn't have</span></label>
+<div id="radio_ZGKFUFCWQJ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ZGKFUFCWQJ" value=""> <span>PCA is not meant for finding clusters</span></label><label><input type="radio" autocomplete="off" name="radio_ZGKFUFCWQJ" value=""> <span>PC2 only explains 19% of the variance so we should not pay much attention to it</span></label><label><input type="radio" autocomplete="off" name="radio_ZGKFUFCWQJ" value=""> <span>The middle cluster is largely made up of missing data</span></label><label><input type="radio" autocomplete="off" name="radio_ZGKFUFCWQJ" value=""> <span>Some variables are categorical so we should have run and FAMD analysis</span></label><label><input type="radio" autocomplete="off" name="radio_ZGKFUFCWQJ" value="answer"> <span>Something went into our PC that shouldn't have</span></label>
 </div>
 <div class="webex-solution">
 <button>
@@ -2945,8 +2964,8 @@ Explanation
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="exercises">
 <strong>Q8)</strong> What went wrong in this plot (Note, choose the worst mistake for this dataset)
-<div id="radio_VWTEIHKEKA" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_VWTEIHKEKA" value=""> <span>Nothing - it's great! PC1 splits the data into two groups!</span></label><label><input type="radio" autocomplete="off" name="radio_VWTEIHKEKA" value=""> <span>Axes are not proportional to PVE.</span></label><label><input type="radio" autocomplete="off" name="radio_VWTEIHKEKA" value="answer"> <span>Something went wrong. with PC1 - I should figure it out.</span></label><label><input type="radio" autocomplete="off" name="radio_VWTEIHKEKA" value=""> <span>The data are not centered and scaled.</span></label>
+<div id="radio_CPKSLRULCF" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_CPKSLRULCF" value=""> <span>Nothing - it's great! PC1 splits the data into two groups!</span></label><label><input type="radio" autocomplete="off" name="radio_CPKSLRULCF" value=""> <span>Axes are not proportional to PVE.</span></label><label><input type="radio" autocomplete="off" name="radio_CPKSLRULCF" value="answer"> <span>Something went wrong. with PC1 - I should figure it out.</span></label><label><input type="radio" autocomplete="off" name="radio_CPKSLRULCF" value=""> <span>The data are not centered and scaled.</span></label>
 </div>
 <p><strong>Q9)</strong> Fix all the mistakes above (not just the biggest one) and remake this plot. What percent of variability in the data is attributable to PC2 <input class="webex-solveme nospaces" data-tol="0.16" size="4" data-answer="[&quot;6.15&quot;]"></p>
 <div class="webex-solution">
@@ -2973,8 +2992,8 @@ Hint 3
 <h3 class="anchored" data-anchor-id="pcalternatives">PCAlternatives</h3>
 <div class="exercises">
 <p><strong>Q10)</strong> In which of the following ordination methods is it most appropriate to interpret the distance between points in the plot as representing similarity between samples?</p>
-<div id="radio_IWGMBJULBP" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_IWGMBJULBP" value=""> <span>NMDS, because it’s designed for messy ecological data.</span></label><label><input type="radio" autocomplete="off" name="radio_IWGMBJULBP" value=""> <span>t-SNE, because it preserves local structure.</span></label><label><input type="radio" autocomplete="off" name="radio_IWGMBJULBP" value="answer"> <span>PCA and PCoA — but only if axes are scaled proportional to variance explained.</span></label><label><input type="radio" autocomplete="off" name="radio_IWGMBJULBP" value=""> <span>All of them — that’s what ordination plots are for!</span></label>
+<div id="radio_BEGOKJZKZH" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_BEGOKJZKZH" value=""> <span>NMDS, because it’s designed for messy ecological data.</span></label><label><input type="radio" autocomplete="off" name="radio_BEGOKJZKZH" value=""> <span>t-SNE, because it preserves local structure.</span></label><label><input type="radio" autocomplete="off" name="radio_BEGOKJZKZH" value="answer"> <span>PCA and PCoA — but only if axes are scaled proportional to variance explained.</span></label><label><input type="radio" autocomplete="off" name="radio_BEGOKJZKZH" value=""> <span>All of them — that’s what ordination plots are for!</span></label>
 </div>
 <div class="webex-solution">
 <button>
@@ -2987,8 +3006,8 @@ Explanation
 <p>2 ordered categorical variables (e.g., molt stage from 1–5, plumage brightness from dull to vibrant)</p>
 <p>Several missing values in most rows</p>
 <p>You want to visualize broad patterns and see if anything jumps out. Which approach is the least bad?</p>
-<div id="radio_PPJDALZDOJ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_PPJDALZDOJ" value=""> <span>PCA - just ignore missing values and let prcomp() do its thing.</span></label><label><input type="radio" autocomplete="off" name="radio_PPJDALZDOJ" value="answer"> <span>FAMD - if you impute missing data first, it can handle mixed types and give interpretable dimensions.</span></label><label><input type="radio" autocomplete="off" name="radio_PPJDALZDOJ" value=""> <span>UMAP - it will figure out the structure automatically.</span></label><label><input type="radio" autocomplete="off" name="radio_PPJDALZDOJ" value=""> <span>NMDS - it ignores variable types and missing values, so it must be fine.</span></label>
+<div id="radio_FFPLYMWQKA" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_FFPLYMWQKA" value=""> <span>PCA - just ignore missing values and let prcomp() do its thing.</span></label><label><input type="radio" autocomplete="off" name="radio_FFPLYMWQKA" value="answer"> <span>FAMD - if you impute missing data first, it can handle mixed types and give interpretable dimensions.</span></label><label><input type="radio" autocomplete="off" name="radio_FFPLYMWQKA" value=""> <span>UMAP - it will figure out the structure automatically.</span></label><label><input type="radio" autocomplete="off" name="radio_FFPLYMWQKA" value=""> <span>NMDS - it ignores variable types and missing values, so it must be fine.</span></label>
 </div>
 <div class="webex-solution">
 <button>
@@ -3368,241 +3387,247 @@ window.onload = function() {
 
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-          // target, if specified
-          link.setAttribute("target", "_blank");
-          if (link.getAttribute("rel") === null) {
-            link.setAttribute("rel", "noopener");
-          }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
         }
       }
+      return false;
     }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
-        return container.innerHTML
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -3610,185 +3635,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../../book_sections/ordination/pcalternatives.html" class="pagination-link" aria-label="• 8. PCAlternatives">

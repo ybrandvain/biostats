@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; Finding_connections – Applied Biostatistics</title>
+<title>• 18. F-inding connecTions – Applied Biostatistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,7 +65,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../references.html" rel="next">
+<link href="../../book_sections/f/f_summary.html" rel="next">
 <link href="../../book_sections/f/FR.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -70,13 +105,42 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../assets/sticky-notes.css">
 <link rel="stylesheet" href="../../assets/table-styles.css">
 <link rel="stylesheet" href="../../assets/webex.css">
 </head>
 
-<body class="nav-sidebar floating fullcontent quarto-light">
+<body class="nav-sidebar floating slimcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -85,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/f.html">18. F this!</a></li><li class="breadcrumb-item"><a href="../../book_sections/f/Finding_connections.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Finding_connections</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/f.html">18. F this!</a></li><li class="breadcrumb-item"><a href="../../book_sections/f/Finding_connections.html">• 18. F-inding connecTions</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -948,7 +1012,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/f/Finding_connections.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Finding_connections</span></span></a>
+ <span class="menu-text">• 18. F-inding connecTions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/f/f_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. F (ANOVA) summary</span></a>
   </div>
 </li>
       </ul>
@@ -964,13 +1034,14 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/f.html">18. F this!</a></li><li class="breadcrumb-item"><a href="../../book_sections/f/Finding_connections.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Finding_connections</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../book_sections/f.html">18. F this!</a></li><li class="breadcrumb-item"><a href="../../book_sections/f/Finding_connections.html">• 18. F-inding connecTions</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Finding_connections</span></h1>
+<h1 class="title"><span id="finding_connections" class="quarto-section-identifier">• 18. F-inding connecTions</span></h1>
 </div>
 
 
@@ -987,8 +1058,179 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<div class="motivation" style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+<p><strong>Motivating Scenario:</strong> In the previous chapter we compared two groups as a two sample t-test. In this chapter, we basically did the same thing as an ANOVA. You want to know the relationship between these approaches.</p>
+<p><strong>Learning Goals: By the end of this subchapter, you should be able to:</strong></p>
+<ul>
+<li>Explain why a two-sample t-test and a one-way ANOVA with two groups are mathematically equivalent.</li>
+<li>Describe how <strong>t</strong> and <strong>F</strong> statistics are related and what each measures.</li>
+<li>Connect <span class="math inline">\(r\)</span> (correlation) and <span class="math inline">\(R^2\)</span> (proportion of variance explained).<br>
+</li>
+<li>Recognize these equivalences as special cases of the general linear model framework.</li>
+</ul>
+</div>
+<hr>
+<blockquote class="blockquote">
+<p>Should I conduct an ANOVA or t-test?</p>
+</blockquote>
+<p>This question is commonly asked by students with data in hand, and even by professors on an exam to evaluate students’ understanding. The answer is – for a case with a binary explanatory variable it makes absolutely no difference.</p>
+<p>Reassuringly whether conducting and ANOVA or a t-test on a continuous response and a binary explanatory variable we get the exact same p-value. This is reassuring, as we would like our answers to be robust to such an arbitrary choice. It’s up to you whether you prefer to present results in terms of the number of standard errors separating the groups, or as a ratio of mean squares.</p>
+<p>Here we go through some connections between these modeling approaches.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>This section is fully optional</strong> I just think it’s cool.</p>
+</div>
+</div>
+<section id="comparing-f-and-t" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-f-and-t">Comparing F and t</h3>
+<p>Let’s consider our example from this chapter – comparing the admixture proportion of pink and white flowers at Squirrel Mountain.</p>
+<p>A t-test provides the following results:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(admix_proportion <span class="sc">~</span> petal_color, <span class="at">data =</span> clarkia_hz, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  admix_proportion by petal_color
+t = 8.7486, df = 44, p-value = 3.486e-11
+alternative hypothesis: true difference in means between group pink and group white is not equal to 0
+95 percent confidence interval:
+ 0.009949917 0.015906235
+sample estimates:
+ mean in group pink mean in group white 
+        0.018958210         0.006030134 </code></pre>
+</div>
+</div>
+<hr>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(admix_proportion <span class="sc">~</span> petal_color, <span class="at">data =</span> clarkia_hz) <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anova</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: admix_proportion
+            Df    Sum Sq    Mean Sq F value    Pr(&gt;F)    
+petal_color  1 0.0018312 0.00183122  76.539 3.486e-11 ***
+Residuals   44 0.0010527 0.00002393                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<hr>
+<p><strong>The most obvious similarities here are:</strong></p>
+<ul>
+<li>The p-values are identical, and</li>
+<li><span class="math inline">\(\text{df}_\text{error}\)</span> for the ANOVA equals <span class="math inline">\(\text{df}\)</span> for the t-test. .</li>
+</ul>
+<p><strong>But wait, there’s more:</strong></p>
+<ul>
+<li>Additionally the F value (76.539), is simply the t-value (8.7486) squared.<br>
+</li>
+<li>Finally, although R did not show us this, the Mean Squares error of 0.0000239 equals the pooled variance:</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># finding the pooled variance</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>clarkia_hz <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(petal_color))<span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(petal_color)<span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">mean_admix =</span> <span class="fu">mean</span>(admix_proportion ))<span class="sc">|&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>()<span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">deviation =</span> admix_proportion <span class="sc">-</span> mean_admix) <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">pooled_var =</span> <span class="fu">sum</span>(deviation<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (<span class="fu">n</span>() <span class="sc">-</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  pooled_var
+       &lt;dbl&gt;
+1  0.0000239</code></pre>
+</div>
+</div>
+<hr>
+<p>This is all to say that the two sample t-test and an ANOVA with two groups are essentially identical. I hope this makes us feel good about moving on to more complex ANOVAs, and about linear models more broadly.</p>
+<div class="note">
+<p><strong>Why does <span class="math inline">\(F = t^2\)</span>?</strong></p>
+<ul>
+<li><p>t measures the difference between group means in standard error units (i.e., how many standard deviations of the sampling distribution separate the groups).</p></li>
+<li><p>F compares the variance between groups to the variance within groups, so it’s measured on the variance scale.</p></li>
+</ul>
+<p>Because variance is just the square of a standard deviation, F is simply the square of the corresponding t when there are two groups.</p>
+</div>
+</section>
+<section id="r2-is-the-square-of-r" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="r2-is-the-square-of-r"><span class="math inline">\(R^2\)</span> is the square of <span class="math inline">\(r\)</span></h3>
+<p>Remember that <span class="math inline">\(R^2\)</span> is the “proportion of variance explained” (i.e.&nbsp;the proportion of variance in our response variable that we can pin on our explanatory variable).</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p><span class="math display">\[R^2 = \frac{\text{SS}_\text{model}}{\text{SS}_\text{total}}\]</span>.</p>
+</div></div><p>We can find <span class="math inline">\(R^2\)</span> from the output of our linear model:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(admix_proportion <span class="sc">~</span> petal_color, <span class="at">data =</span> clarkia_hz) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">glance</span>()<span class="sc">|&gt;</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">logLik</th>
+<th style="text-align: right;">AIC</th>
+<th style="text-align: right;">BIC</th>
+<th style="text-align: right;">deviance</th>
+<th style="text-align: right;">nobs</th>
+<th style="text-align: right;">r.squared</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">180.4843</td>
+<td style="text-align: right;">-354.9686</td>
+<td style="text-align: right;">-349.4827</td>
+<td style="text-align: right;">0.0010527</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">0.6349717</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr>
+<p>You also may remember that <span class="math inline">\(r\)</span> is the correlation between variables. If we assign a numeric value of zero to the explanatory variable for one category (e.g., white flowers), and one for the other category (e.g., pink flowers), we can calculate a correlation (<span class="math inline">\(r\)</span>). If we square this correlation <span class="math inline">\(r\)</span> squared equals <span class="math inline">\(R^2\)</span>!</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p><span class="math display">\[r = \frac{ \text{cov}_{x,y} }{s_x \times s_y}\]</span></p>
+</div></div><div class="cell page-columns page-full" data-layout-align="center">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.accountingexperiments.com/media/anova_regression_hu8d7b78fdb8970f110a404e1ae11b4c8f_365153_1200x1200_fit_q85_h2_lanczos_3.webp" class="img-fluid figure-img" style="width:95.0%" alt="Two identical Spider-Man characters point at each other. One is labeled &quot;ANOVA,&quot; the other &quot;Regression.&quot;"></p>
+<figcaption>The spiderman meme for ANOVA / regression</figcaption>
+</figure>
+</div>
+</div></div></div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>clarkia_hz <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(petal_color))<span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">petal_color_num =</span> <span class="fu">ifelse</span>(petal_color <span class="sc">==</span> <span class="st">"white"</span>, <span class="dv">0</span> ,<span class="dv">1</span>))<span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">r =</span> <span class="fu">cor</span>(petal_color_num , admix_proportion),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">r.squared =</span> r<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+      r r.squared
+  &lt;dbl&gt;     &lt;dbl&gt;
+1 0.797     0.635</code></pre>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script>
@@ -1608,8 +1850,8 @@ window.onload = function() {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../book_sections/f/f_summary.html" class="pagination-link" aria-label="• 18. F (ANOVA) summary">
+        <span class="nav-page-text">• 18. F (ANOVA) summary</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -1,0 +1,340 @@
+# KB — Section “F Calculations” (ANOVA via variance partitioning)
+
+## 0) Voice & usage
+
+* **Tone:** concise, supportive, student-facing. Ask quick check-ins before giving answers.
+* **Style:** use *your* terminology (model deviation, error/residual deviation, total deviation; sums of squares; mean squares; F). Prefer **plain words first**, formulas after.
+* **R pipeline:** tidyverse + broom; show computations with grouped data, `summarise()`, `mutate()`, and `modelr`/`augment()` when useful. Avoid base-R unless necessary.
+
+---
+
+## 1) Where this section fits (student prior knowledge)
+
+Students already know:
+
+* **Two-sample t-test:** compares two means using a standardized difference with pooled or Welch SE.
+* **NHST:** null, test statistic, reference distribution, p-value.
+* **Sampling distribution:** repeating the same estimator many times → distribution of estimates; **SE** summarizes spread.
+
+This section generalizes the t-test idea to **k groups** by reframing “difference in means” as **between-group variance vs within-group variance**. The F statistic is a ratio of *mean squares* (variance-like quantities).
+
+---
+
+## 2) Section-specific learning goals
+
+By the end, students should be able to:
+
+1. **Explain variance partitioning**: total deviation = model (between) deviation + error (within) deviation.
+2. **Define and compute sums of squares**:
+
+   * (SS_\text{total}=\sum (y_i-\bar y)^2)
+   * (SS_\text{model}=\sum (\hat y_i-\bar y)^2) (a.k.a. between-groups)
+   * (SS_\text{error}=\sum (y_i-\hat y_i)^2) (a.k.a. residual/within)
+   * and verify (SS_T = SS_M + SS_E).
+3. **Connect sums of squares to mean squares** via degrees of freedom:
+
+   * (MS_M = SS_M / (k-1))
+   * (MS_E = SS_E / (n-k)).
+4. **Compute and interpret F**: (F = MS_M / MS_E); large F means the between-group signal is big relative to within-group noise.
+5. **Relate ANOVA ↔ two-sample t**: for (k=2), (F = t^2).
+6. **Interpret (R^2)** as (SS_M/SS_T) and understand how group balance/variance affects it.
+7. **Read and explain the two figures in this section** and reproduce the logic in R with tidyverse.
+
+---
+
+## 3) Conceptual throughline (how to teach this)
+
+* Start with the **same decomposition** students already saw when learning residuals:
+  *observed* (y_i) = *fitted mean* (\hat y_i) + *residual* (e_i).
+* Stack deviations as **vertical line segments** (your Figure 1):
+
+  * **Model deviation**: (\hat y_i - \bar y) (how each group mean differs from the grand mean).
+  * **Error/residual deviation**: (y_i - \hat y_i) (how individuals differ from their group mean).
+  * **Total deviation**: (y_i - \bar y).
+* Squaring and summing line segments → **SS**. Scaling by df → **MS**. Ratio **MS_M / MS_E** → **F**.
+
+---
+
+## 4) Figure-level guidance
+
+### Figure 1 — Partitioning deviations (A–C)
+
+**What students should notice**
+
+* Panel **(A) Model deviation +**: thick horizontal segments at each group mean; vertical lines from the **grand mean** up to each **group mean** visualize *between-group* differences.
+* Panel **(B) Error (residual) deviation =**: vertical segments from each **point** to its **group mean** (within-group scatter).
+* Panel **(C) Total deviation**: vertical segments from each **point** to the **grand mean**.
+* The takeaway: **(A) + (B) = (C)** at the *sums of squares* level: (SS_M + SS_E = SS_T).
+
+**Tutor walkthrough prompts**
+
+* “Point to the grand mean line; now point to a group mean. Which deviation is which?”
+* “Choose one observation. Trace: point → group mean (residual) and group mean → grand mean (model). Now add them: point → grand mean (total).”
+* “How would increasing within-group scatter change panel (B)? What happens to F?”
+
+**Common misconceptions & nudges**
+
+* Confusing *model deviation* with *residuals*.
+
+  * Nudge: “Model deviation uses **means vs grand mean**; residual uses **point vs its group mean**.”
+* Thinking equality holds for raw deviations (it holds for **sums of squares**).
+
+  * Nudge: “Check by summing **squared** lengths, not raw signed deviations.”
+
+---
+
+### Figure 2 — (R^2) vs group composition
+
+**What students should notice**
+
+* x-axis: **number of white** (group balance changing).
+* y-axis: **mean (R^2)** from repeated splits/subsamples.
+* The dashed line suggests a plateau; as groups become more balanced (or as n grows), (R^2) stabilizes.
+
+**Tutor walkthrough prompts**
+
+* “Why does (R^2 = SS_M/SS_T) depend on both group separation and within-group noise?”
+* “What happens to (R^2) if you keep the same means but increase within-group spread?”
+* “Why might very small, imbalanced samples yield unstable (R^2)? (Think sampling variability.)”
+
+**Misconceptions**
+
+* Treating (R^2) as ‘goodness’ independent of design.
+
+  * Nudge: “It’s a *proportion of explained variance*—design (balance, n, spread) matters.”
+
+---
+
+## 5) Minimal math (student-friendly)
+
+* **Deviations:** (y_i-\bar y = (\hat y_i-\bar y) + (y_i-\hat y_i)).
+* **Sums of squares:** (SS_T = \sum(y_i-\bar y)^2), (SS_M=\sum(\hat y_i-\bar y)^2), (SS_E=\sum(y_i-\hat y_i)^2).
+* **Degrees of freedom:** (df_M=k-1), (df_E=n-k).
+* **Mean squares:** (MS_M=SS_M/df_M), (MS_E=SS_E/df_E).
+* **F:** (F = MS_M / MS_E).
+* **Link to t:** with (k=2), (F=t^2).
+
+---
+
+## 6) Tidyverse pipeline (reproducible walkthrough)
+
+### 6.1 Compute group & grand means, deviations, SS
+
+```r
+library(dplyr)
+library(tidyr)
+library(broom)
+
+dat <- df |>                    # your tibble with y and group
+  drop_na(y, group)
+
+# grand mean & group means
+means <- dat |>
+  summarise(y_bar = mean(y), .groups = "drop") |>
+  crossing(
+    dat |> group_by(group) |> summarise(y_hat = mean(y), .groups="drop")
+  )
+
+# join means back and compute deviations
+devs <- dat |>
+  left_join(means, by = character()) |>   # adds y_bar and y_hat per group
+  group_by(group) |>
+  mutate(
+    resid = y - y_hat,           # within-group deviation
+    model_dev = y_hat - y_bar,   # between-group deviation (same within group)
+    total_dev = y - y_bar
+  ) |> ungroup()
+
+SS_T <- sum(devs$total_dev^2)
+SS_M <- devs |>
+  distinct(group, model_dev) |>
+  summarise(ss = sum(model_dev^2) * (dat |> count(group) |> pull(n))) |>
+  pull(ss)
+SS_E <- sum(devs$resid^2)
+
+stopifnot(all.equal(SS_T, SS_M + SS_E))
+```
+
+### 6.2 Mean squares, F, and R²
+
+```r
+k  <- n_distinct(dat$group)
+n  <- nrow(dat)
+dfM <- k - 1
+dfE <- n - k
+
+MS_M <- SS_M / dfM
+MS_E <- SS_E / dfE
+Fval <- MS_M / MS_E
+R2   <- SS_M / SS_T
+```
+
+### 6.3 Sanity check with `lm()` + `anova()` + `glance()`
+
+```r
+fit <- lm(y ~ group, data = dat)
+anova_tbl <- anova(fit)
+broom::glance(fit) |> select(r.squared, df, df.residual, sigma)
+
+# F from ANOVA table equals Fval above; R2 equals broom::glance(fit)$r.squared
+```
+
+### 6.4 Link back to two-sample t (optional quick demo)
+
+```r
+# For k = 2 only:
+fit2 <- lm(y ~ group, data = dat |> filter(group %in% c("A","B")))
+F_lm <- anova(fit2)$`F value`[1]
+
+t_out <- t.test(y ~ group, data = dat |> filter(group %in% c("A","B")), var.equal = TRUE)
+t_to_F <- (t_out$statistic)^2
+
+all.equal(as.numeric(F_lm), as.numeric(t_to_F))  # TRUE (up to rounding)
+```
+
+
+
+
+
+### 6.5 Alternative: Using `augment()` to compute SS
+
+Another nice way to get sums of squares is to fit a linear model and use `augment()` to attach **fitted values** and **residuals** to each observation.
+
+```r
+library(broom)
+library(dplyr)
+
+fit <- lm(y ~ group, data = dat)
+
+aug <- augment(fit) |> 
+  mutate(grand_mean = mean(y))
+
+aug |>
+  summarise(
+    SS_T = sum((y - grand_mean)^2),
+    SS_M = sum((.fitted - grand_mean)^2),
+    SS_E = sum(.resid^2)
+  )
+
+```
+
+This pipeline is often the **cleanest** way to show students the *exact same partitioning* that was illustrated in Figure 1:
+
+* `.fitted - grand_mean` = **model deviation**
+* `.resid` = **error deviation**
+* `y - grand_mean` = **total deviation**
+
+Students can also use this to extract MS and F quickly:
+
+```r
+anova(fit)  # gives SS, df, MS, F
+```
+
+This helps them connect **geometric reasoning (deviations)** to **standard R outputs** they’ll see later.
+
+---
+
+## 📐 Math Details (optional, if students ask)
+
+ANOVA is algebraically equivalent to comparing two models:
+
+* **Null model:** one grand mean for everyone
+* **Group model:** separate mean for each group
+
+We can write the total sum of squares as
+
+[
+SS_T = \sum_{i=1}^n (y_i - \bar y)^2 .
+]
+
+The model’s fitted values (\hat y_i) are group means. The *explained* (model) sum of squares is
+
+[
+SS_M = \sum_{i=1}^n (\hat y_i - \bar y)^2 ,
+]
+
+and the *error* sum of squares is
+
+[
+SS_E = \sum_{i=1}^n (y_i - \hat y_i)^2 .
+]
+
+Because of how linear models work, this partition holds exactly:
+
+[
+SS_T = SS_M + SS_E .
+]
+
+The **F statistic** compares **between-group variance** to **within-group variance**:
+
+[
+F = \frac{MS_M}{MS_E}
+= \frac{SS_M / (k - 1)}{SS_E / (n - k)} .
+]
+
+For **two groups**, ANOVA and the two-sample t-test are equivalent:
+
+[
+F = t^2 .
+]
+
+Geometrically, linear model fits correspond to **projections** in an n-dimensional space; (SS_T) is total squared distance from the grand mean, (SS_M) is the squared length of the projection onto the group subspace, and (SS_E) is the leftover perpendicular length.
+---
+
+## 7) Tutor move set (how to respond)
+
+**Default response pattern (1–3 sentences):**
+
+1. Start with a *micro-question* that checks the student’s current mental model.
+2. Give a *targeted hint* that nudges them one step.
+3. Offer a concrete action (point to a panel, compute a quantity, run a code line).
+
+**Examples**
+
+* “In panel B, are we measuring point→group mean or group mean→grand mean? Try naming one observation and tracing the arrow.”
+* “Great! Now square those residuals and add them up—what piece of SS does that build?”
+* “Your F is low. Which term is bigger—MS_M or MS_E? What change in the plot would raise MS_M?”
+* “For k=2, check `t^2`. Does it match your F from `anova()`?”
+
+**If student is stuck**
+
+* Offer a **guided decomposition**: “Compute `SS_T`, then `SS_E` from residuals in panel B; the remainder is `SS_M`. Confirm the equality.”
+* Provide **one runnable code chunk** only; ask them to interpret the output.
+
+---
+
+## 8) Common pitfalls & quick fixes
+
+* **Mixing deviations:** remind “model deviation uses means; residual uses points.”
+* **Forgetting df:** students divide SS by n; nudge: “between uses (k-1), within uses (n-k).”
+* **Reading (R^2) as absolute goodness:** tie back to design (balance, n, noise).
+* **Over-relying on p-values:** emphasize **effect + variance decomposition** first, p-value second.
+
+---
+
+## 9) Mini checks (the tutor can ask)
+
+* “State in words what (MS_M) and (MS_E) measure.”
+* “Why can (F) never be negative?”
+* “If you double within-group SD but keep group means fixed, what happens to (F) and (R^2)?”
+* “How does ANOVA reduce to the two-sample t-test?”
+
+---
+
+## 10) Glossary (student-friendly)
+
+* **Grand mean (\bar y):** mean across everyone.
+* **Group mean (\hat y):** mean within a group.
+* **Residual:** point – its group mean.
+* **SS(_T), SS(_M), SS(_E):** total, model (between), error (within) sums of squares.
+* **MS(_M), MS(_E):** variance-like averages of SS using df.
+* **F:** ratio (MS_M/MS_E), big when groups differ more than within-group noise.
+* **(R^2):** proportion of variance explained, (SS_M/SS_T).
+
+---
+
+## 11) How the tutor should reference your figures
+
+* **Figure 1:** “the three-panel deviations graphic” (A model, B residual, C total).
+* **Figure 2:** “the (R^2) vs n_white curve with dashed target line.”
+* The tutor should be able to **walk a single observation** through panel B, then **reconstruct SS** and **compute F** using the pipeline above.

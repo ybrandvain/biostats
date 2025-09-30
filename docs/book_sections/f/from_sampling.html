@@ -977,7 +977,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/f/Finding_connections.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Finding_connections</span></span></a>
+ <span class="menu-text">• 18. F-inding connecTions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/f/f_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. F (ANOVA) summary</span></a>
   </div>
 </li>
       </ul>
@@ -1031,7 +1037,7 @@ You want to understand what goes into calculating F and where this logic comes f
 <hr>
 <section id="predicting-sigma_barx-from-sigma" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="predicting-sigma_barx-from-sigma">Predicting <span class="math inline">\(\sigma_\bar{x}\)</span> from <span class="math inline">\(\sigma\)</span></h2>
-<p>Remember our “statistical” view of were data comes from. We imagine that the data we observe are a sample of size <span class="math inline">\(n\)</span> from a population with a true mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma_x\)</span>. Although we can’t know these true parameters, we estimate them using the sample mean <span class="math inline">\(\bar{x}\)</span> and standard deviation <span class="math inline">\(s\)</span></p>
+<p>Remember our “statistical” view of where data come from. We imagine that the data we observe are a sample of size <span class="math inline">\(n\)</span> from a population with a true mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma_x\)</span>. Although we can’t know these true parameters, we estimate them using the sample mean <span class="math inline">\(\bar{x}\)</span> and standard deviation <span class="math inline">\(s\)</span></p>
 <p>We envision the distribution of sample means we would get by repeatedly sampling from the same population as the <strong>sampling distribution</strong>. If the population is normally distributed with standard deviation <span class="math inline">\(\sigma\)</span>, then the standard deviation of the sample means (aka the standard error) is:</p>
 <p><span class="math display">\[\sigma_{\overline{x}} = \frac{\sigma}{\sqrt{n}}\]</span></p>
 <div class="cell page-columns page-full" data-layout-align="center">
@@ -1043,7 +1049,7 @@ You want to understand what goes into calculating F and where this logic comes f
 <img src="https://media.giphy.com/media/3orif8Epddpd8KSELe/giphy.gif" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="Animated GIF of a bespectacled character in a wizard costume declaring, &quot;I'm a mathe-magician!&quot; while a groaning sound effect appears as subtitles.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-anova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Tha F distirbution is magic.
+Figure&nbsp;1: The F distirbution is magic.
 </figcaption>
 </figure>
 </div>
@@ -1091,7 +1097,7 @@ Figure&nbsp;1: Tha F distirbution is magic.
 </tr>
 </tbody>
 </table>
-<p>We can use these values to calculate the ratio of variance among and within groups, <span class="math inline">\(F\)</span>. <strong>Notice</strong> that when our two samples come from the same population, we expect <span class="math inline">\(F\)</span> to euqal one (save some sampling error).</p>
+<p>We can use these values to calculate the ratio of variance among and within groups, <span class="math inline">\(F\)</span>. <strong>Notice</strong> that when our two samples come from the same population, we expect <span class="math inline">\(F\)</span> to equal one (save some sampling error).</p>
 <p><span class="math display">\[F = \frac{\text{MS}_\text{Model}}{ \text{MS}_\text{Error} }\]</span></p>
 <div class="fyi">
 <p>In one-way ANOVA, what I call “Mean squares model” (<span class="math inline">\(\text{MS}_\text{Model}\)</span>) is often called “Mean squares group” ( <span class="math inline">\(\text{MS}_\text{Groups}\)</span>). I use mean squares model to highlight that this extends beyond ANOVA to regression and other linear models.</p>
