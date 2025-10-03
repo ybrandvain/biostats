@@ -29,14 +29,18 @@ Links to: [Summary](#nhst_summary_chapter-summary). [Chatbot tutor](#nhst_summar
 
 Null Hypothesis Significance Testing is a tool to judge if we should interpret a scientific result as sampling error or as a genuine biological process. The first step is coming up with the **null hypothesis** and finding a **"test statistic"** to boil our observations down to a single number. We then find the null distribution of the test statistic under the null model and place our actual observation on this null sampling distribution. We calculate a **p-value** as the proportion of the null distribution that is "as or more extreme" as our observation (remember to look at both tails). We "reject the null" when our p-value is less than $\alpha$ (our **"false positive rate"**), which is set to 0.05 by tradition. We fail to reject the null otherwise. Unfortunately, failing to reject the null does not mean the null is true. This whole business is a bit tricky, so make sure you don't misinterpret your p-value.
 
-```{r}
-#| echo: false
-#| column: page-right
-#| label: fig-CIs
-#| fig-cap: "Understanding confidence intervals is tricky. This cartoon by [Ellie Murray](https://medium.com/@EpiEllie) is the best explanation I have found to date. I copy and paste directly from her [medium post](https://medium.com/@EpiEllie/having-confidence-in-confidence-intervals-8f881712d837) \"*I've often heard students mis-use the target analogy to describe their confidence interval as if it were the fixed target, and the \"true\" value was the arrow that may or may not land on the target 95% of the time.... But, a confidence interval isn’t fixed — the \"true\" value is the part they should view as fixed. To avoid this misunderstanding, I like to explain confidence intervals with ring toss. The \"truth\" is in a fixed place, and it’s the confidence interval ring that may or may not land where you want it to... A side benefit: this analogy can help students see why a 99% confidence interval would be wider than a 95% interval — the bigger the ring, the easier the game of ring toss!*\". While we're at it, Ishould mention that Ellie Murray co-host's a  fantastic podcast called [\"Casual inference\"](https://casualinfer.libsyn.com/)."
-#| fig-alt: "A two-panel comic by @epilielle explaining the correct interpretation of confidence intervals. **Panel 1:** Says \"People think confidence intervals are like archery,\" and  shows a variable \"true value\" (an arrow) being shot at a fixed \"confidence interval\" (a target). **Panel 2** says: \"But really confidence intervals are more like ring toss,\" and shows a variable \"confidence interval\" (a ring) being tossed at a fixed \"true value\" (a post), illustrating that the parameter is fixed while the interval is what varies and might capture it."
-include_graphics("../../figs/stats_foundations/uncertainty/CIs.png")
-```
+
+---
+
+<figure>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ax0tDcFkPic?si=K5EcLcNlyvPbmqyk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+  <figcaption>
+    🌿 A short video introducing the concept of sampling distributions.
+  </figcaption>
+</figure>
+
 
 ### Chatbot tutor  {#nhst_summary_chatbot_tutor} 
 
