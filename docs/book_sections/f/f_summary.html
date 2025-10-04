@@ -2913,19 +2913,18 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 
 
 <p>Links to: <a href="#f_summary_chapter-summary">Summary</a>. <a href="#f_summary_chatbot_tutor">Chatbot tutor</a>. <a href="#f_summary_practice-questions">Questions</a>. <a href="../t/t_summary.html#t_summary_glossary-of-terms">Glossary</a>. <a href="#f_summaryR_packages_introduced">R packages</a>. <a href="#f_summary_key-r-functions">R functions</a>. <a href="#f_summary_additional-resources">More resources</a>.</p>
-<hr>
+<section id="f_summary_chapter-summary" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="f_summary_chapter-summary">Chapter summary</h2>
 <div class="cell page-columns page-full">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../figs/linear_models/f/anova_joke.png" class="img-fluid figure-img" alt="A four-panel comic shows a brain talking to a person in bed at night. In panel one, the brain asks, &quot;What is ANOVA?&quot; In panel two, the person replies, &quot;Analysis of Variance.&quot; In panel three, the brain nervously asks, &quot;Then why do we compare means?&quot; In panel four, the person lies awake in the dark, wide-eyed, clearly disturbed by the question." width="862"></p>
+<p><img src="../../figs/linear_models/f/anova_joke.jpg" class="img-fluid figure-img" alt="A four-panel comic shows a brain talking to a person in bed at night. In panel one, the brain asks, &quot;What is ANOVA?&quot; In panel two, the person replies, &quot;Analysis of Variance.&quot; In panel three, the brain nervously asks, &quot;Then why do we compare means?&quot; In panel four, the person lies awake in the dark, wide-eyed, clearly disturbed by the question." width="240"></p>
 <figcaption>Enjoy this “insomnia meme” about the ANOVA. From <a href="https://www.youtube.com/watch?v=9W4gOJZfKhA">this video</a></figcaption>
 </figure>
 </div>
 </div></div></div>
-<section id="f_summary_chapter-summary" class="level2">
-<h2 class="anchored" data-anchor-id="f_summary_chapter-summary">Chapter summary</h2>
 <p>The analysis of variance (ANOVA) provides a way to understand variation by breaking the variability attributable to our model, and variability uncounted for by our model. The F statistic compares these two sources of variation. Under the null hypothesis that the groups come from the same (statistical) population, the ratio of between to within group variation has an expected value of one. In the special case of two groups, ANOVA and the two-sample t-test are mathematically equivalent—both quantify how much separation exists between group means relative to expected sampling variation.</p>
 <section id="f_summary_chatbot_tutor" class="level3">
 <h3 class="anchored" data-anchor-id="f_summary_chatbot_tutor">Chatbot tutor</h3>
@@ -2943,18 +2942,18 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <div class="exercises">
 <p><strong>Q1)</strong> Under the null hypothesis that both groups come from the same population, the expected value of <span class="math inline">\(F\)</span> is <select class="webex-select"><option value="blank"></option><option value="">0</option><option value="answer">1</option><option value="">It depends on the degrees of freedom</option></select>.</p>
 <strong>Q2)</strong> If <span class="math inline">\(F\)</span> is greater than the expected value under the null, <em>(select all correct)</em>
-<div id="radio_EKZXLYXLKA" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_EKZXLYXLKA" value=""> <span>The null is false</span></label><label><input type="radio" autocomplete="off" name="radio_EKZXLYXLKA" value=""> <span>The null is true</span></label><label><input type="radio" autocomplete="off" name="radio_EKZXLYXLKA" value=""> <span>We reject the null</span></label><label><input type="radio" autocomplete="off" name="radio_EKZXLYXLKA" value=""> <span>We fail to reject the null</span></label><label><input type="radio" autocomplete="off" name="radio_EKZXLYXLKA" value="answer"> <span>We may or may not reject the null depending on the degrees of freedom.</span></label>
+<div id="radio_DPZSPNSICZ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_DPZSPNSICZ" value=""> <span>The null is false</span></label><label><input type="radio" autocomplete="off" name="radio_DPZSPNSICZ" value=""> <span>The null is true</span></label><label><input type="radio" autocomplete="off" name="radio_DPZSPNSICZ" value=""> <span>We reject the null</span></label><label><input type="radio" autocomplete="off" name="radio_DPZSPNSICZ" value=""> <span>We fail to reject the null</span></label><label><input type="radio" autocomplete="off" name="radio_DPZSPNSICZ" value="answer"> <span>We may or may not reject the null depending on the degrees of freedom.</span></label>
 </div>
 <p>.</p>
 <strong>Q3)</strong> If <span class="math inline">\(F\)</span> is less than the expected value under the null, <em>(select all correct)</em>
-<div id="radio_FFSSPRTLWH" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_FFSSPRTLWH" value=""> <span>The null is false</span></label><label><input type="radio" autocomplete="off" name="radio_FFSSPRTLWH" value=""> <span>The null is true</span></label><label><input type="radio" autocomplete="off" name="radio_FFSSPRTLWH" value=""> <span>We reject the null</span></label><label><input type="radio" autocomplete="off" name="radio_FFSSPRTLWH" value="answer"> <span>We fail to reject the null</span></label><label><input type="radio" autocomplete="off" name="radio_FFSSPRTLWH" value=""> <span>We may or may not reject the null depending on the degrees of freedom.</span></label>
+<div id="radio_TZLYRSBGUQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_TZLYRSBGUQ" value=""> <span>The null is false</span></label><label><input type="radio" autocomplete="off" name="radio_TZLYRSBGUQ" value=""> <span>The null is true</span></label><label><input type="radio" autocomplete="off" name="radio_TZLYRSBGUQ" value=""> <span>We reject the null</span></label><label><input type="radio" autocomplete="off" name="radio_TZLYRSBGUQ" value="answer"> <span>We fail to reject the null</span></label><label><input type="radio" autocomplete="off" name="radio_TZLYRSBGUQ" value=""> <span>We may or may not reject the null depending on the degrees of freedom.</span></label>
 </div>
 <p>.</p>
 <strong>Q4)</strong> Our p-value was very small (much less than the traditional (= 0.05) threshold). This means… <em>(select all correct)</em>:
-<div id="radio_WJPBRBDNTP" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_WJPBRBDNTP" value="answer"> <span>It would be incredibly unlikely to observe such an extreme F statistic if the null hypothesis were true</span></label><label><input type="radio" autocomplete="off" name="radio_WJPBRBDNTP" value=""> <span>Pollinators avoid white flowers</span></label><label><input type="radio" autocomplete="off" name="radio_WJPBRBDNTP" value=""> <span>The pink petal color has introgressed from xantiana</span></label>
+<div id="radio_KUYALRIWAO" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_KUYALRIWAO" value="answer"> <span>It would be incredibly unlikely to observe such an extreme F statistic if the null hypothesis were true</span></label><label><input type="radio" autocomplete="off" name="radio_KUYALRIWAO" value=""> <span>Pollinators avoid white flowers</span></label><label><input type="radio" autocomplete="off" name="radio_KUYALRIWAO" value=""> <span>The pink petal color has introgressed from xantiana</span></label>
 </div>
 <p>.</p>
 </div>
@@ -3064,12 +3063,12 @@ Figure&nbsp;1: Partitioning the contribution of petal color and error to admixtu
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="exercises">
 <strong>Q12)</strong> Given the p-value, what do you do to the null hypothesis?
-<div id="radio_ADCTTLYIRI" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_ADCTTLYIRI" value="answer"> <span>Reject it</span></label><label><input type="radio" autocomplete="off" name="radio_ADCTTLYIRI" value=""> <span>Fail to reject it</span></label><label><input type="radio" autocomplete="off" name="radio_ADCTTLYIRI" value=""> <span>Accept it</span></label><label><input type="radio" autocomplete="off" name="radio_ADCTTLYIRI" value=""> <span>Fail to accept it</span></label>
+<div id="radio_LJJHIGSDKH" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_LJJHIGSDKH" value="answer"> <span>Reject it</span></label><label><input type="radio" autocomplete="off" name="radio_LJJHIGSDKH" value=""> <span>Fail to reject it</span></label><label><input type="radio" autocomplete="off" name="radio_LJJHIGSDKH" value=""> <span>Accept it</span></label><label><input type="radio" autocomplete="off" name="radio_LJJHIGSDKH" value=""> <span>Fail to accept it</span></label>
 </div>
 <strong>Q13)</strong> This means the null
-<div id="radio_TZQIZMGJUK" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_TZQIZMGJUK" value=""> <span>Is true</span></label><label><input type="radio" autocomplete="off" name="radio_TZQIZMGJUK" value=""> <span>Is false</span></label><label><input type="radio" autocomplete="off" name="radio_TZQIZMGJUK" value=""> <span>Has a 0.00805 chance of being true</span></label><label><input type="radio" autocomplete="off" name="radio_TZQIZMGJUK" value="answer"> <span>We can’t say for sure.</span></label>
+<div id="radio_YJIMRJMRWG" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_YJIMRJMRWG" value=""> <span>Is true</span></label><label><input type="radio" autocomplete="off" name="radio_YJIMRJMRWG" value=""> <span>Is false</span></label><label><input type="radio" autocomplete="off" name="radio_YJIMRJMRWG" value=""> <span>Has a 0.00805 chance of being true</span></label><label><input type="radio" autocomplete="off" name="radio_YJIMRJMRWG" value="answer"> <span>We can’t say for sure.</span></label>
 </div>
 <p><strong>Q14)</strong> From this output, the <span class="math inline">\(R^2\)</span> value is: <input class="webex-solveme nospaces" data-tol="0.018" size="5" data-answer="[&quot;0.233&quot;,&quot;.233&quot;]">.</p>
 <div class="webex-solution">
@@ -3084,8 +3083,8 @@ Help
 </ul>
 </div>
 <strong>Q15)</strong> From this output and your answer to question eight (“What’s the difference in mean admixture proportion by petal color”), Cohen’s D is
-<div id="radio_QUWQQEQKDR" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_QUWQQEQKDR" value=""> <span>Not worth reporting (&lt; 0.01)</span></label><label><input type="radio" autocomplete="off" name="radio_QUWQQEQKDR" value=""> <span>Tiny (0.01 – 0.20)</span></label><label><input type="radio" autocomplete="off" name="radio_QUWQQEQKDR" value=""> <span>Small (0.20 – 0.50)</span></label><label><input type="radio" autocomplete="off" name="radio_QUWQQEQKDR" value=""> <span>Medium (0.50 – 0.80)</span></label><label><input type="radio" autocomplete="off" name="radio_QUWQQEQKDR" value="answer"> <span>Large (0.80 – 1.20)</span></label><label><input type="radio" autocomplete="off" name="radio_QUWQQEQKDR" value=""> <span>Very large (1.20 – 2.00)</span></label><label><input type="radio" autocomplete="off" name="radio_QUWQQEQKDR" value=""> <span>Huge (&gt; 2.00)</span></label>
+<div id="radio_XNZAFGCODE" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XNZAFGCODE" value=""> <span>Not worth reporting (&lt; 0.01)</span></label><label><input type="radio" autocomplete="off" name="radio_XNZAFGCODE" value=""> <span>Tiny (0.01 – 0.20)</span></label><label><input type="radio" autocomplete="off" name="radio_XNZAFGCODE" value=""> <span>Small (0.20 – 0.50)</span></label><label><input type="radio" autocomplete="off" name="radio_XNZAFGCODE" value=""> <span>Medium (0.50 – 0.80)</span></label><label><input type="radio" autocomplete="off" name="radio_XNZAFGCODE" value="answer"> <span>Large (0.80 – 1.20)</span></label><label><input type="radio" autocomplete="off" name="radio_XNZAFGCODE" value=""> <span>Very large (1.20 – 2.00)</span></label><label><input type="radio" autocomplete="off" name="radio_XNZAFGCODE" value=""> <span>Huge (&gt; 2.00)</span></label>
 </div>
 <p>.</p>
 <div class="webex-solution">
