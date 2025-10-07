@@ -1643,6 +1643,35 @@ globalThis.qwebrExecuteCode = async function (
 
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../assets/sticky-notes.css">
 <link rel="stylesheet" href="../../assets/table-styles.css">
@@ -2320,6 +2349,41 @@ globalThis.qwebrExecuteCode = async function (
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/chi2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">14-B. χ2</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/chi2/expectations_and_differences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. What to expect</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/chi2/associations_between_catvars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> Two Cats</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/chi2/chi2_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> distribution</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/chi2/chi2_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/filler.html" class="sidebar-item-text sidebar-link">
@@ -2336,11 +2400,11 @@ globalThis.qwebrExecuteCode = async function (
       <div class="sidebar-item-container"> 
             <a href="../../book_sections/normal.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">15. Normal distribution</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/normal/normal_intro.html" class="sidebar-item-text sidebar-link">
@@ -2395,11 +2459,11 @@ globalThis.qwebrExecuteCode = async function (
       <div class="sidebar-item-container"> 
             <a href="../../book_sections/t.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">16. The t distribution</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/t/t_example.html" class="sidebar-item-text sidebar-link">
@@ -2454,11 +2518,11 @@ globalThis.qwebrExecuteCode = async function (
       <div class="sidebar-item-container"> 
             <a href="../../book_sections/two_ts.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">17. A binary explanatory variable</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/two_ts/2t_assumptions.html" class="sidebar-item-text sidebar-link">
@@ -2495,11 +2559,11 @@ globalThis.qwebrExecuteCode = async function (
       <div class="sidebar-item-container"> 
             <a href="../../book_sections/f.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">18. F this!</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/f/from_sampling.html" class="sidebar-item-text sidebar-link">
@@ -2901,13 +2965,13 @@ Figure&nbsp;2: A histogram showing the distribution of lengths for all human gen
 </div>
 <div class="exercises">
 <strong>Q3)</strong> As seen in <a href="#fig-genes" class="quarto-xref">Figure&nbsp;<span>2</span></a>, the distribution of human gene lengths is ___ (<em>find all correct</em>)
-<div id="radio_VYSEBINTJR" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_VYSEBINTJR" value="answer"> <span>Unimodal</span></label><label><input type="radio" autocomplete="off" name="radio_VYSEBINTJR" value=""> <span>Bimodal</span></label><label><input type="radio" autocomplete="off" name="radio_VYSEBINTJR" value=""> <span>Symmetric</span></label><label><input type="radio" autocomplete="off" name="radio_VYSEBINTJR" value="answer"> <span>Right Skewed</span></label>
+<div id="radio_JHHOKBAWLX" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_JHHOKBAWLX" value="answer"> <span>Unimodal</span></label><label><input type="radio" autocomplete="off" name="radio_JHHOKBAWLX" value=""> <span>Bimodal</span></label><label><input type="radio" autocomplete="off" name="radio_JHHOKBAWLX" value=""> <span>Symmetric</span></label><label><input type="radio" autocomplete="off" name="radio_JHHOKBAWLX" value="answer"> <span>Right Skewed</span></label>
 </div>
 <p>.</p>
 <strong>Q4)</strong> <a href="#fig-genes" class="quarto-xref">Figure&nbsp;<span>2</span></a> displays ___
-<div id="radio_KCSMFPMDTW" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_KCSMFPMDTW" value=""> <span>the sampling distribution</span></label><label><input type="radio" autocomplete="off" name="radio_KCSMFPMDTW" value="answer"> <span>the population distribution</span></label>
+<div id="radio_VRCNLPKOTW" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_VRCNLPKOTW" value=""> <span>the sampling distribution</span></label><label><input type="radio" autocomplete="off" name="radio_VRCNLPKOTW" value="answer"> <span>the population distribution</span></label>
 </div>
 </div>
 <p><strong>Sampling wrong:</strong> I tried to create a sampling distribution for median human gene length by randomly selecting nucleotides from the human exome, finding the gene they were in, noting its length, and removing it from my list until I had the lengths of fifty genes in the human genome. I did this one thousand times to get medians from one thousand samples of size fifty (<a href="#fig-genes-2" class="quarto-xref">Figure&nbsp;<span>3</span></a>).</p>
@@ -2927,15 +2991,15 @@ Figure&nbsp;3: The distribution of the estimated mean length of human genes. Her
 </div>
 <div class="exercises">
 <strong>Q5)</strong> The difference between the true population mean (red line) and my estimates from samples of size fifty (bars in histogram) are most likely explained by
-<div id="radio_UUOYIMPJYQ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_UUOYIMPJYQ" value="answer"> <span>Sampling bias</span></label><label><input type="radio" autocomplete="off" name="radio_UUOYIMPJYQ" value=""> <span>Non-independence</span></label><label><input type="radio" autocomplete="off" name="radio_UUOYIMPJYQ" value=""> <span>Sampling Error</span></label><label><input type="radio" autocomplete="off" name="radio_UUOYIMPJYQ" value=""> <span>The unreliability of the law of large numbers</span></label>
+<div id="radio_DFJPDROBUR" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_DFJPDROBUR" value="answer"> <span>Sampling bias</span></label><label><input type="radio" autocomplete="off" name="radio_DFJPDROBUR" value=""> <span>Non-independence</span></label><label><input type="radio" autocomplete="off" name="radio_DFJPDROBUR" value=""> <span>Sampling Error</span></label><label><input type="radio" autocomplete="off" name="radio_DFJPDROBUR" value=""> <span>The unreliability of the law of large numbers</span></label>
 </div>
 <p>.</p>
 <p><strong>Q6)</strong></p>
 <iframe src="../../widget.html?prompt_id=q6-explain-1759004682" width="100%" height="800" style="border:none;"></iframe>
 <strong>Q7)</strong> Why is the range of values so much smaller in <a href="#fig-genes-2" class="quarto-xref">Figure&nbsp;<span>3</span></a> than in <a href="#fig-genes" class="quarto-xref">Figure&nbsp;<span>2</span></a>?
-<div id="radio_PSMNDYMGJC" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_PSMNDYMGJC" value=""> <span>Sampling bias</span></label><label><input type="radio" autocomplete="off" name="radio_PSMNDYMGJC" value=""> <span>Non-independence</span></label><label><input type="radio" autocomplete="off" name="radio_PSMNDYMGJC" value=""> <span>Sampling error</span></label><label><input type="radio" autocomplete="off" name="radio_PSMNDYMGJC" value="answer"> <span>Parameter estimates are usualy have a tighter distribution than all observed values.</span></label>
+<div id="radio_LTSHMQTEZN" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_LTSHMQTEZN" value=""> <span>Sampling bias</span></label><label><input type="radio" autocomplete="off" name="radio_LTSHMQTEZN" value=""> <span>Non-independence</span></label><label><input type="radio" autocomplete="off" name="radio_LTSHMQTEZN" value=""> <span>Sampling error</span></label><label><input type="radio" autocomplete="off" name="radio_LTSHMQTEZN" value="answer"> <span>Parameter estimates are usualy have a tighter distribution than all observed values.</span></label>
 </div>
 </div>
 <p><strong>For the following questions, refer to <a href="#fig-genes-3" class="quarto-xref">Figure&nbsp;<span>4</span></a> (right).</strong></p>
@@ -2955,12 +3019,12 @@ Figure&nbsp;4: The effect of sample size on the sampling distribution of the mea
 </div></div></div>
 <div class="exercises">
 <strong>Q8)</strong> What aspect of sampling is responsible for the difference between the plots in <a href="#fig-genes-3" class="quarto-xref">Figure&nbsp;<span>4</span></a>?
-<div id="radio_ATTTSKVZYK" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_ATTTSKVZYK" value=""> <span>There is less sampling bias in larger samples</span></label><label><input type="radio" autocomplete="off" name="radio_ATTTSKVZYK" value=""> <span>There is less non-independence in larger samples</span></label><label><input type="radio" autocomplete="off" name="radio_ATTTSKVZYK" value="answer"> <span>There is less sampling error in larger samples</span></label>
+<div id="radio_BNIOXLSBNR" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_BNIOXLSBNR" value=""> <span>There is less sampling bias in larger samples</span></label><label><input type="radio" autocomplete="off" name="radio_BNIOXLSBNR" value=""> <span>There is less non-independence in larger samples</span></label><label><input type="radio" autocomplete="off" name="radio_BNIOXLSBNR" value="answer"> <span>There is less sampling error in larger samples</span></label>
 </div>
 <strong>Q9)</strong> Which sample size is associated with the smallest standard error?
-<div id="radio_RTMVXBOGKY" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_RTMVXBOGKY" value=""> <span>5</span></label><label><input type="radio" autocomplete="off" name="radio_RTMVXBOGKY" value=""> <span>30</span></label><label><input type="radio" autocomplete="off" name="radio_RTMVXBOGKY" value="answer"> <span>500</span></label><label><input type="radio" autocomplete="off" name="radio_RTMVXBOGKY" value=""> <span>They all have approximately the same standard error</span></label>
+<div id="radio_XQWNDWYHHD" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XQWNDWYHHD" value=""> <span>5</span></label><label><input type="radio" autocomplete="off" name="radio_XQWNDWYHHD" value=""> <span>30</span></label><label><input type="radio" autocomplete="off" name="radio_XQWNDWYHHD" value="answer"> <span>500</span></label><label><input type="radio" autocomplete="off" name="radio_XQWNDWYHHD" value=""> <span>They all have approximately the same standard error</span></label>
 </div>
 <p><strong>Q10)</strong> For the sampling distribution for samples of size n in <a href="#fig-genes-3" class="quarto-xref">Figure&nbsp;<span>4</span></a>, approximately what proportion samples have a mean greater than the population mean?</p>
 <ul>

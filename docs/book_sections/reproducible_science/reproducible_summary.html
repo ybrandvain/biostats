@@ -90,6 +90,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../assets/sticky-notes.css">
 <link rel="stylesheet" href="../../assets/table-styles.css">
@@ -767,6 +796,41 @@ div.csl-indent {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/chi2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">14-B. χ2</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/chi2/expectations_and_differences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. What to expect</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/chi2/associations_between_catvars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> Two Cats</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/chi2/chi2_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> distribution</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/chi2/chi2_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/filler.html" class="sidebar-item-text sidebar-link">
@@ -783,11 +847,11 @@ div.csl-indent {
       <div class="sidebar-item-container"> 
             <a href="../../book_sections/normal.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">15. Normal distribution</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/normal/normal_intro.html" class="sidebar-item-text sidebar-link">
@@ -842,11 +906,11 @@ div.csl-indent {
       <div class="sidebar-item-container"> 
             <a href="../../book_sections/t.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">16. The t distribution</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/t/t_example.html" class="sidebar-item-text sidebar-link">
@@ -901,11 +965,11 @@ div.csl-indent {
       <div class="sidebar-item-container"> 
             <a href="../../book_sections/two_ts.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">17. A binary explanatory variable</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/two_ts/2t_assumptions.html" class="sidebar-item-text sidebar-link">
@@ -942,11 +1006,11 @@ div.csl-indent {
       <div class="sidebar-item-container"> 
             <a href="../../book_sections/f.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">18. F this!</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/f/from_sampling.html" class="sidebar-item-text sidebar-link">
@@ -1030,8 +1094,8 @@ div.csl-indent {
 <p>Try these questions!</p>
 <div class="exercises">
 <strong>Q1)</strong> What is the biggest mistake in the table below?
-<div id="radio_LTVRLRHEMH" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_LTVRLRHEMH" value=""> <span>ID should be lower case</span></label><label><input type="radio" autocomplete="off" name="radio_LTVRLRHEMH" value=""> <span>Its perfect, change nothing</span></label><label><input type="radio" autocomplete="off" name="radio_LTVRLRHEMH" value="answer"> <span>the column name, <em>weight</em> is not sufficiently descriptive, it should include the units.</span></label><label><input type="radio" autocomplete="off" name="radio_LTVRLRHEMH" value=""> <span>date_colleted_empty_means_same_as_above is too wordy, replace with <em>date</em></span></label><label><input type="radio" autocomplete="off" name="radio_LTVRLRHEMH" value="answer"> <span>Values for date_collected_empty_means_same_as_above are implied.</span></label><label><input type="radio" autocomplete="off" name="radio_LTVRLRHEMH" value=""> <span>date is in Year-Month-Day format, while Month-Day-Year format is preffered.</span></label>
+<div id="radio_JDRQYUNEQD" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_JDRQYUNEQD" value=""> <span>ID should be lower case</span></label><label><input type="radio" autocomplete="off" name="radio_JDRQYUNEQD" value=""> <span>Its perfect, change nothing</span></label><label><input type="radio" autocomplete="off" name="radio_JDRQYUNEQD" value="answer"> <span>the column name, <em>weight</em> is not sufficiently descriptive, it should include the units.</span></label><label><input type="radio" autocomplete="off" name="radio_JDRQYUNEQD" value=""> <span>date_colleted_empty_means_same_as_above is too wordy, replace with <em>date</em></span></label><label><input type="radio" autocomplete="off" name="radio_JDRQYUNEQD" value="answer"> <span>Values for date_collected_empty_means_same_as_above are implied.</span></label><label><input type="radio" autocomplete="off" name="radio_JDRQYUNEQD" value=""> <span>date is in Year-Month-Day format, while Month-Day-Year format is preffered.</span></label>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -1082,18 +1146,18 @@ Click here for explanation
 <p>.</p>
 <hr>
 <strong>Q2)</strong> What would you expect in a data dictionary accompanying the table above? (select all correct)
-<div id="radio_QFKGCWVQKZ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_QFKGCWVQKZ" value="answer"> <span>The units for weight.</span></label><label><input type="radio" autocomplete="off" name="radio_QFKGCWVQKZ" value="answer"> <span>A statement that date is in Year-Month-Day format</span></label><label><input type="radio" autocomplete="off" name="radio_QFKGCWVQKZ" value="answer"> <span>A statement explaining that in the date colleted column, empty means same as above.</span></label>
+<div id="radio_KASUAYWIIX" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_KASUAYWIIX" value="answer"> <span>The units for weight.</span></label><label><input type="radio" autocomplete="off" name="radio_KASUAYWIIX" value="answer"> <span>A statement that date is in Year-Month-Day format</span></label><label><input type="radio" autocomplete="off" name="radio_KASUAYWIIX" value="answer"> <span>A statement explaining that in the date colleted column, empty means same as above.</span></label>
 </div>
 <hr>
 <strong>Q3)</strong> How do you read data from a Excel sheet, called <em>raw_data</em> in an Excel filed named <em>bird_data.xlsx</em> located inside the R project you are working in?
-<div id="radio_UQWDCDPODU" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_UQWDCDPODU" value=""> <span>You cannot load excel files into R. You must save it as a csv, and read it in with read_csv().</span></label><label><input type="radio" autocomplete="off" name="radio_UQWDCDPODU" value="answer"> <span>Assuming the readxl package is installed and loaded, type read_xlsx(file = “bird_data.xlsx”, sheet = “raw_data”).</span></label><label><input type="radio" autocomplete="off" name="radio_UQWDCDPODU" value=""> <span>While you can read excel into R, you cannot specify the sheet.</span></label>
+<div id="radio_ZKUKXOBXOA" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ZKUKXOBXOA" value=""> <span>You cannot load excel files into R. You must save it as a csv, and read it in with read_csv().</span></label><label><input type="radio" autocomplete="off" name="radio_ZKUKXOBXOA" value="answer"> <span>Assuming the readxl package is installed and loaded, type read_xlsx(file = “bird_data.xlsx”, sheet = “raw_data”).</span></label><label><input type="radio" autocomplete="off" name="radio_ZKUKXOBXOA" value=""> <span>While you can read excel into R, you cannot specify the sheet.</span></label>
 </div>
 <hr>
 <strong>Q4)</strong> What should you do to make code reproducible? (pick the best answer)
-<div id="radio_EZISIGUUFF" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_EZISIGUUFF" value=""> <span>Specify the working directory with setwd()</span></label><label><input type="radio" autocomplete="off" name="radio_EZISIGUUFF" value=""> <span>Show the packages installed with install.packages()</span></label><label><input type="radio" autocomplete="off" name="radio_EZISIGUUFF" value="answer"> <span>Restart R once your done, and rerun your script to see if it works</span></label>
+<div id="radio_ERLLFKTABV" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ERLLFKTABV" value=""> <span>Specify the working directory with setwd()</span></label><label><input type="radio" autocomplete="off" name="radio_ERLLFKTABV" value=""> <span>Show the packages installed with install.packages()</span></label><label><input type="radio" autocomplete="off" name="radio_ERLLFKTABV" value="answer"> <span>Restart R once your done, and rerun your script to see if it works</span></label>
 </div>
 </div>
 <hr>

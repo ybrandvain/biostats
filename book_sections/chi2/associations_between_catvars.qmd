@@ -1,0 +1,224 @@
+## • 14B. $\chi^2$ Two Cats {.unnumbered #expectations_and_differences}
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+library(cowplot)
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(shinylive)
+library(tidyr)
+source("../../_common.R") 
+
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+sr_rils <- ril_data |>
+  filter(location == "SR", !is.na(prop_hybrid), ! is.na(mean_visits))
+```
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+**Motivating scenario:**   We want to know if two binary things are associated. Here we show how to use permutation to test the null hypothesis of no such association.
+
+**Learning goals:** By the end of this chapter you should be able to:   
+
+- **Calculate expected counts** from a 2X2 table.   
+
+- **Calculate $chi^2$ for such data** and compare it to its null sampling distribution to find a p-value.   
+
+- **Interpret** the result of this test.
+
+:::
+
+---
+
+
+We are often interested to know if two variables are associated. The $\chi^2$ statistic is useful when examining associations between two categorical variables. For example, we can calculate a deviation from expected counts to see if pink-flowered parviflora RILs are more likely to receive a pollinator than are white-flowered parviflora RILs.
+
+## Quantifying associations
+
+As you may recall, if two categorical outcomes are independent, the probability of both occurring together equals the product of their individual probabilities.
+For example, if these two variables are independent, we would expect the probability that a plant is both pink-flowered and visited by a pollinator to equal the proportion of pink flowers multiplied by the proportion of flowers receiving a pollinator visit.
+We can quantify the association between two binary variables as:
+
+- The covariance: $Cov_{A,B} = P_{AB} -P_A \times P_B$.   
+- The correlation:  $r_{A,B}=\frac{Cov_{A,B}}{s_A,s_B}$. 
+
+:::aside 
+This formula is approximately right, but to get the answer exactly we would need to introduce Bessel's correction (i.e. the denominator should be $n-1$, not $n$). For now, this is good enough.  
+
+This formula is approximately correct, but to get the exact value we’d need to include Bessel’s correction—that is, divide by n – 1 instead of n (we could achieve this by multiplying by $n /(n-1)$. For our purposes, this simpler version is good enough to capture the idea.
+:::
+
+So, for our example, the covariance between pink flowers and receiving a pollinator visit among parviflora RILs at site Sawmill Road is 0.0502, and the correlation is 0.310. 
+
+```{r}
+#| column: page-right
+sr_rils|>
+    filter(!is.na(petal_color), !is.na(visited))|>
+    summarise(n            = n(), 
+        p_visited          = mean(visited),
+        p_pink             = mean(petal_color== "pink"),
+        p_pink_and_visited = mean(visited &petal_color== "pink" ),
+        cov_pink_visited   = p_pink_and_visited - p_pink * p_visited,
+        cor_pink_visited   = cov_pink_visited / (sd(visited)* sd(petal_color=="pink")))
+```
+
+We can estimate the uncertainty in this value using bootstrapping. To do so, I will convert these binary variables to 0/1 so R treats them as numeric.
+
+```{r}
+library(infer)
+sr_rils <- sr_rils|>
+  filter(!is.na(petal_color), !is.na(visited))|>
+  mutate(pink_01 = as.numeric(petal_color == "pink"),
+         visited_01 = as.numeric(visited))
+
+# find the bootstrap confidence interval
+sr_rils |>
+    specify(visited_01 ~ pink_01) |>
+    generate(reps = 50000, type = "bootstrap") |>
+    calculate(stat = "correlation")  |>
+    get_ci(level = 0.95)
+```
+
+This bootstrap-based 95% confidence interval does not cross zero, suggesting that we should reject the null hypothesis of no association. 
+
+
+To formally evaluate this idea using null hypothesis significance testing (NHST), we need:
+ 
+- A test statistic to measure,   
+- A way to generate the sampling distribution of this test statistic under the null hypothesis of no association. 
+
+As you can see by permutation, using our observed correlation as the test statistic,  this suggestion is correct. More precisely, we find a p-value of 0.0027. We therefore reject the null hypothesis. 
+
+```{r}
+#| eval: false
+sr_rils |>
+    specify(visited_01 ~ pink_01) |>
+    hypothesize(null = "independence") |> 
+    generate(reps = 10000, type = "permute") |>
+    calculate(stat = "correlation")  |>
+    get_p_value(0.310,direction = "both")
+```
+
+```{r}
+#| echo: false
+tibble(p_value = 0.00272) # to save on computation each compile
+```
+
+## Contingent expectations
+
+Everything above is 100% legit. We can conduct a permutation test on any test statistic. However, as a bridge to the idea of an analytically derived null distribution, let’s calculate a $\chi^2$ value as our test statistic:
+
+$$\chi^2 = \Sigma{\frac{(\text{observed}_i - \text{expected}_i)^2}{\text{expected}_i}}$$
+
+:::aside 
+Note that while $\chi^2$ is a useful test statistic, it does not convey effect size, so it should be used for hypothesis testing rather than as a summary measure.
+::: 
+
+**OBSERVATIONS**
+
+To start, we need the observed counts in each category: 
+
+```{r}
+#| column: page-right
+sr_rils|>
+    filter(!is.na(petal_color), !is.na(visited))|>
+    summarise(n_pink_visit     = sum(petal_color== "pink"  & visited),
+              n_white_visit    = sum(petal_color== "white" & visited),
+              n_pink_novisit   = sum(petal_color== "pink"  & !visited),
+              n_white_novisit  = sum(petal_color== "white" & !visited))                                           |>kable()
+```
+
+---
+
+**EXPECTATIONS**
+
+We then need the expected counts in each category under the null of no expected association. To do so we multiply probabilities of each outcome to find the expected proportion in each category (same intuition above), and multiply by n to turn these expected proportions into expected counts: 
+
+
+
+```{r}
+#| column: page-right
+sr_rils|>
+    filter(!is.na(petal_color), !is.na(visited))|>
+    summarise(n            = n(), 
+        p_visited          = mean(visited),
+        p_pink             = mean(petal_color== "pink"),
+        pink_visit_expect  =  n * p_visited * p_pink,
+        white_visit_expect =  n * p_visited * (1-p_pink),
+        pink_novisit_expect  =  n * (1-p_visited) * p_pink,
+        white_novisit_expect  =  n * (1-p_visited) * (1-p_pink))                                           |>kable()
+```
+
+---
+
+**$\chi^2$**
+We can then calculate $\chi^2$ as 
+
+$$\frac{(52-46.8)^2}{46.8}+\frac{(39-44.2)^2}{44.2}+\frac{(1-6.17)^2}{6.17}+\frac{(11-5.83)^2}{5.83} =  10.10633$$
+
+---
+
+**NHST:**
+
+We can permute with the infer() pipeline. Note that we specify `stat = "Chisq"`, and  `correct = FALSE`. This later argument calcualtes the actual $\chi^2$ value. 
+
+
+```{r}
+### permute the data 10k times
+all_perms <- sr_rils|>
+    specify(visited ~ petal_color,success = "TRUE") |>  
+    hypothesize(null = "independence") |>
+    generate(reps = 10000, type = "permute") |>
+    calculate(stat = "Chisq", correct = FALSE)
+```
+
+
+
+```{r}
+#| fig.height: 4
+#| code-fold: true
+#| code-summary: "Plot the permutation results"
+#| fig-cap: "Permutation-based null distribution of χ² values under the hypothesis of independence. The red vertical line marks the observed χ² statistic from the real petal color and pollinator visitation data at the Sawmill Road site."
+#| fig-alt: "Histogram of simulated χ² values with most counts near zero and a few large ones. A red line at the far right marks the observed χ² value, showing it is unusually large compared to the permutation-based null distribution."
+#| label: fig-permchi2gof
+all_perms |>
+  ggplot(aes(x = stat))+
+  geom_histogram(bins = 9, color = "white")+
+  geom_vline(xintercept = 10.1, color = "firebrick")+
+  annotate(x = 8,y =6000,color = "firebrick", geom = "label",   label = "observed~chi^2",  parse = TRUE, size = 6)+
+labs(x = expression(chi^2), title = "Permutation based null distribution")
+```
+
+We can use this to find the p-value. Note that we only examine the right tail of the $\chi^2$ distribution because it encompasses all possible ways to deviate from expectations. This analysis confirms our rejection of the null. It appears that pink flowers are more likely to receive pollinator visits than white flowers.
+
+
+```{r}
+# calculate the actual chi2
+observed_chi2 <- sr_rils|>
+    specify(visited ~ petal_color,success = "TRUE") |>  
+    hypothesize(null = "independence") |>
+    calculate(stat = "Chisq", correct = FALSE)
+
+get_p_value(obs_stat = observed_chi2, all_perms, direction = "right" )
+```

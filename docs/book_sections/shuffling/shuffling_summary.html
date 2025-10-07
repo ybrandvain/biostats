@@ -85,7 +85,7 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../book_sections/stats_4_linear_models_index.html" rel="next">
+<link href="../../book_sections/chi2.html" rel="next">
 <link href="../../book_sections/shuffling/permute_nonindependent.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -1678,6 +1678,35 @@ globalThis.qwebrExecuteCode = async function (
 
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../assets/sticky-notes.css">
 <link rel="stylesheet" href="../../assets/table-styles.css">
@@ -2355,6 +2384,41 @@ globalThis.qwebrExecuteCode = async function (
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/chi2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">14-B. χ2</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/chi2/expectations_and_differences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. What to expect</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/chi2/associations_between_catvars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> Two Cats</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/chi2/chi2_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> distribution</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/chi2/chi2_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/filler.html" class="sidebar-item-text sidebar-link">
@@ -2371,11 +2435,11 @@ globalThis.qwebrExecuteCode = async function (
       <div class="sidebar-item-container"> 
             <a href="../../book_sections/normal.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">15. Normal distribution</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/normal/normal_intro.html" class="sidebar-item-text sidebar-link">
@@ -2430,11 +2494,11 @@ globalThis.qwebrExecuteCode = async function (
       <div class="sidebar-item-container"> 
             <a href="../../book_sections/t.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">16. The t distribution</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/t/t_example.html" class="sidebar-item-text sidebar-link">
@@ -2489,11 +2553,11 @@ globalThis.qwebrExecuteCode = async function (
       <div class="sidebar-item-container"> 
             <a href="../../book_sections/two_ts.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">17. A binary explanatory variable</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/two_ts/2t_assumptions.html" class="sidebar-item-text sidebar-link">
@@ -2530,11 +2594,11 @@ globalThis.qwebrExecuteCode = async function (
       <div class="sidebar-item-container"> 
             <a href="../../book_sections/f.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">18. F this!</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../book_sections/f/from_sampling.html" class="sidebar-item-text sidebar-link">
@@ -3088,13 +3152,13 @@ Just show the code already
 </div>
 <hr>
 <strong>Q9)</strong> What is the null hypothesis for this example?
-<div id="radio_DNZYLUJWGO" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_DNZYLUJWGO" value=""> <span>Male Adelie penguins are heavier, on average, than female Adelie penguins.</span></label><label><input type="radio" autocomplete="off" name="radio_DNZYLUJWGO" value="answer"> <span>There is no difference in the mean body mass between male and female Adelie penguins.</span></label><label><input type="radio" autocomplete="off" name="radio_DNZYLUJWGO" value=""> <span>There is a difference in the mean body mass between male and female Adelie penguins.</span></label><label><input type="radio" autocomplete="off" name="radio_DNZYLUJWGO" value=""> <span>The observed difference in our sample is zero.</span></label>
+<div id="radio_RVJOCOCGJW" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_RVJOCOCGJW" value=""> <span>Male Adelie penguins are heavier, on average, than female Adelie penguins.</span></label><label><input type="radio" autocomplete="off" name="radio_RVJOCOCGJW" value="answer"> <span>There is no difference in the mean body mass between male and female Adelie penguins.</span></label><label><input type="radio" autocomplete="off" name="radio_RVJOCOCGJW" value=""> <span>There is a difference in the mean body mass between male and female Adelie penguins.</span></label><label><input type="radio" autocomplete="off" name="radio_RVJOCOCGJW" value=""> <span>The observed difference in our sample is zero.</span></label>
 </div>
 <hr>
 <strong>Q10)</strong> What is the alternative hypothesis for this example?
-<div id="radio_ISHJCUYXKV" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_ISHJCUYXKV" value=""> <span>Male Adelie penguins are heavier, on average, than female Adelie penguins.</span></label><label><input type="radio" autocomplete="off" name="radio_ISHJCUYXKV" value=""> <span>There is no difference in the mean body mass between male and female Adelie penguins.</span></label><label><input type="radio" autocomplete="off" name="radio_ISHJCUYXKV" value="answer"> <span>There is a difference in the mean body mass between male and female Adelie penguins.</span></label><label><input type="radio" autocomplete="off" name="radio_ISHJCUYXKV" value=""> <span>The observed difference in our sample is zero.</span></label>
+<div id="radio_FMXEVNFUSQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_FMXEVNFUSQ" value=""> <span>Male Adelie penguins are heavier, on average, than female Adelie penguins.</span></label><label><input type="radio" autocomplete="off" name="radio_FMXEVNFUSQ" value=""> <span>There is no difference in the mean body mass between male and female Adelie penguins.</span></label><label><input type="radio" autocomplete="off" name="radio_FMXEVNFUSQ" value="answer"> <span>There is a difference in the mean body mass between male and female Adelie penguins.</span></label><label><input type="radio" autocomplete="off" name="radio_FMXEVNFUSQ" value=""> <span>The observed difference in our sample is zero.</span></label>
 </div>
 <hr>
 <p><strong>Q11)</strong> Modify the code above to find the permutation-base p-value (from 5000 permutations).How would you report it? <select class="webex-select"><option value="blank"></option><option value="">0</option><option value="answer">&lt; 3/5000</option><option value="">NA</option><option value="">0.02</option><option value="">Between 0.02 and 0.05</option><option value="">&gt;0.05</option><option value="">1/Inf</option></select></p>
@@ -3148,14 +3212,14 @@ Warning: Please be cautious in reporting a p-value of 0. This result is an appro
 <p><strong>Q12)</strong> What do we do to the null hypothesis? <select class="webex-select"><option value="blank"></option><option value="answer">Reject it</option><option value="">Fail to reject it</option><option value="">Accept it</option><option value="">Fail to accept it</option></select></p>
 <hr>
 <strong>Q13)</strong> We can’t <strong>KNOW</strong> if the null hypothesis is true or false, but which do you think is far more likely?)
-<div id="radio_MIJXIEFIWY" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_MIJXIEFIWY" value=""> <span>Null hypothesis is true</span></label><label><input type="radio" autocomplete="off" name="radio_MIJXIEFIWY" value="answer"> <span>Null hypothesis is false</span></label><label><input type="radio" autocomplete="off" name="radio_MIJXIEFIWY" value=""> <span>he null hypothesis is equally likely to be TRUE or FALSE</span></label>
+<div id="radio_JWAYRRIXGN" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_JWAYRRIXGN" value=""> <span>Null hypothesis is true</span></label><label><input type="radio" autocomplete="off" name="radio_JWAYRRIXGN" value="answer"> <span>Null hypothesis is false</span></label><label><input type="radio" autocomplete="off" name="radio_JWAYRRIXGN" value=""> <span>he null hypothesis is equally likely to be TRUE or FALSE</span></label>
 </div>
 <hr>
 <p><strong>Q14)</strong> An ecologist studies the effect of sunlight on fish growth. They measure the body length of fish from two habitat types (‘sunny’ and ‘shady’) in five different ponds. A standard permutation test would be invalid because fish from the same pond are not independent.</p>
 How should they correctly shuffle the data to test for a difference between habitats?
-<div id="radio_BQEWCCIHHX" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_BQEWCCIHHX" value=""> <span>Shuffle all habitat labels ('sunny', 'shady') across all fish from all ponds.</span></label><label><input type="radio" autocomplete="off" name="radio_BQEWCCIHHX" value="answer"> <span>Shuffle the habitat labels only among the fish within each individual pond.</span></label><label><input type="radio" autocomplete="off" name="radio_BQEWCCIHHX" value=""> <span>Shuffle the pond labels ('Pond 1', 'Pond 2', etc.) across all the fish.</span></label><label><input type="radio" autocomplete="off" name="radio_BQEWCCIHHX" value=""> <span>The data cannot be permuted because it violates the assumption of independence.</span></label>
+<div id="radio_JSGXFSSHKZ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_JSGXFSSHKZ" value=""> <span>Shuffle all habitat labels ('sunny', 'shady') across all fish from all ponds.</span></label><label><input type="radio" autocomplete="off" name="radio_JSGXFSSHKZ" value="answer"> <span>Shuffle the habitat labels only among the fish within each individual pond.</span></label><label><input type="radio" autocomplete="off" name="radio_JSGXFSSHKZ" value=""> <span>Shuffle the pond labels ('Pond 1', 'Pond 2', etc.) across all the fish.</span></label><label><input type="radio" autocomplete="off" name="radio_JSGXFSSHKZ" value=""> <span>The data cannot be permuted because it violates the assumption of independence.</span></label>
 </div>
 <div class="webex-solution">
 <button>
@@ -3165,8 +3229,8 @@ Explanation
 </div>
 <hr>
 <strong>Q15)</strong> The logic of permutation testing is very flexible. For which of the following null hypotheses could you generate a null distribution by shuffling one variable relative to another?
-<div id="radio_BVFJVEAGBC" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_BVFJVEAGBC" value=""> <span>(A) The slope of a regression line between penguin bill depth and bill length is zero.</span></label><label><input type="radio" autocomplete="off" name="radio_BVFJVEAGBC" value=""> <span>(B) There is no association between penguin species and their preferred island.</span></label><label><input type="radio" autocomplete="off" name="radio_BVFJVEAGBC" value=""> <span>(C) The mean body mass of a single sample of penguins is 3500g.</span></label><label><input type="radio" autocomplete="off" name="radio_BVFJVEAGBC" value="answer"> <span>Both A and B.</span></label><label><input type="radio" autocomplete="off" name="radio_BVFJVEAGBC" value=""> <span>Both A and C.</span></label><label><input type="radio" autocomplete="off" name="radio_BVFJVEAGBC" value=""> <span>Both B and C.</span></label><label><input type="radio" autocomplete="off" name="radio_BVFJVEAGBC" value=""> <span>All of the above.</span></label><label><input type="radio" autocomplete="off" name="radio_BVFJVEAGBC" value=""> <span>None of the above.</span></label>
+<div id="radio_CEZSOGXZYM" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_CEZSOGXZYM" value=""> <span>(A) The slope of a regression line between penguin bill depth and bill length is zero.</span></label><label><input type="radio" autocomplete="off" name="radio_CEZSOGXZYM" value=""> <span>(B) There is no association between penguin species and their preferred island.</span></label><label><input type="radio" autocomplete="off" name="radio_CEZSOGXZYM" value=""> <span>(C) The mean body mass of a single sample of penguins is 3500g.</span></label><label><input type="radio" autocomplete="off" name="radio_CEZSOGXZYM" value="answer"> <span>Both A and B.</span></label><label><input type="radio" autocomplete="off" name="radio_CEZSOGXZYM" value=""> <span>Both A and C.</span></label><label><input type="radio" autocomplete="off" name="radio_CEZSOGXZYM" value=""> <span>Both B and C.</span></label><label><input type="radio" autocomplete="off" name="radio_CEZSOGXZYM" value=""> <span>All of the above.</span></label><label><input type="radio" autocomplete="off" name="radio_CEZSOGXZYM" value=""> <span>None of the above.</span></label>
 </div>
 </div>
 </section>
@@ -3858,8 +3922,8 @@ window.onload = function() {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../book_sections/stats_4_linear_models_index.html" class="pagination-link" aria-label="Section IV: Stats for Linear Models">
-        <span class="nav-page-text">Section IV: Stats for Linear Models</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../book_sections/chi2.html" class="pagination-link" aria-label="14-B. χ2">
+        <span class="nav-page-text">14-B. χ2</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

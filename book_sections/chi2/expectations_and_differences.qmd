@@ -1,0 +1,373 @@
+## • 14B. What to expect {.unnumbered #expectations_and_differences}
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+library(cowplot)
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(shinylive)
+library(tidyr)
+#source("../../_common.R") 
+
+ril_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/clarkia_rils.csv"
+ril_data <- readr::read_csv(ril_link) |>
+  dplyr::mutate(growth_rate = case_when(growth_rate =="1.8O" ~ "1.80",
+                                          .default = growth_rate),  
+                growth_rate = as.numeric(growth_rate),
+                visited = mean_visits > 0)
+gc_rils <- ril_data |>
+  filter(location == "GC", !is.na(prop_hybrid), ! is.na(mean_visits))
+```
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+**Motivating scenario:**   We want to know how to summarize deviations from expectations and how to use this summary and its null distribution to test null hypotheses.
+
+**Learning goals:** By the end of this chapter you should be able to:   
+
+- Explain what a $\chi^2$  statistic measures conceptually.  
+
+- Calculate a $\chi^2$ value as a test statistic to quantify  deviations between  observations deviate and expectations.
+
+- Compare an observed $\chi^2$ value to its null sampling distribution to  find a p-value and conduct NHST.  
+
+:::
+
+---
+
+If I told a class of forty-one students to pick an integer between one and ten at random, we would expect the following: 
+
+---
+
+| Number |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 |
+|--------|----|----|----|----|----|----|----|----|----|----|
+| Expected Count |  4.1 |  4.1 |  4.1 |  4.1 |  4.1 |  4.1 |  4.1 |  4.1 |  4.1 |  4.1 |
+
+---
+
+But, of course, we never get exactly what we expect. This difference between expectation and observation can be due to both sampling error (because our sample was finite) and sampling bias (because people don't really pick numbers at random). 
+
+@fig-unif below shows the number of times each number (one through ten) was  chosen by a student in my course. Because these results come from students, the deviation can be attributed to some combination of sampling error and sampling bias. 
+
+```{r}
+#| fig-height: 3
+#| code-fold: true
+#| label: fig-unif
+#| fig-cap: "Observed counts of numbers 1–10 as provided by 41 students in applied biostatistics. Each number has an expected count of 4.1 (blue horizontal line) under a uniform distribution, but sampling error and/or sampling bias causes observed frequencies to deviate from this expectation."
+#| fig-alt: "Bar plot of counts for numbers 1–10 from 41 student responses, showing uneven bars around the expected value of 4.1."
+
+peoples_numbers <- tibble(numbers= c(6,5,9,9,3,7,8,1,3,2,3,4,3,2,4,7,10,2,5,6,7,3,3,7,6,6,9,5,6,6,7,7,8,6,10,7,10,2,6,8,4))
+
+
+ggplot(peoples_numbers, aes(x=numbers))+
+    geom_bar()+
+    scale_x_continuous(breaks = 1:10)+
+    geom_hline(yintercept = 0:max(table(pull(peoples_numbers))), color = "white")+
+    geom_hline(yintercept = 4.1, color = "blue")+
+labs(title="Students \'randomly\' choosing numbers")
+```
+
+## $\chi^2$ quantifies the deviation from expectation. 
+
+How can we summarize the multidimensional view in @fig-unif into a single summary statistic?  While there are many potential options (e.g., the number of times the most common number appears, the difference in counts between odds and evens, etc.). $\chi^2$ -- the sum of squared differences between observed and expected counts in each category divided by the expected counts in each category --  is the most common summary. 
+
+$$\chi^2 = \sum{\frac{(\text{Observed}_i - \text{Expected}_i)^2}{\text{Expected}_i}}$$
+
+---
+
+```{r}
+#| echo: false
+x<- tibble("quantity" = c("expected","observed"),
+`1`=c(4.1,1),`2`=c(4.1,4),`3`=c(4.1,6),`4`=c(4.1,3),`5`=c(4.1,3),`6`=c(4.1,8),`7`=c(4.1,7),`8`=c(4.1,3),`9`=c(4.1,3),`10`=c(4.1,3))
+
+x<- x |> bind_rows(x|>summarise(across(-quantity, ~ .[quantity == "expected"] - .[quantity == "observed"])) %>%
+    mutate(quantity = "$\\text{expected} - \\text{observed}$")|> relocate(quantity,1))
+
+x<- x |> bind_rows(x|>summarise(across(-quantity, ~ (.[quantity == "expected"] - .[quantity == "observed"])^2)) %>%
+                   mutate(quantity = "$(\\text{expected} - \\text{observed})^2$")|> relocate(quantity,1))
+
+x<- x |> bind_rows(x|>summarise(across(-quantity, ~ (((.[quantity == "expected"] - .[quantity == "observed"])^2)/.[quantity == "expected"]))) %>%
+                   mutate(quantity = "$\\frac{(\\text{expected} - \\text{observed})^2}{\\text{expected}}$")|> relocate(quantity,1))|>
+mutate_at(-1,round, digits = 3)
+
+kable(x, escape = FALSE)
+```
+
+
+---
+
+So in our case, $\chi^2 = 2.34 + 0.00244 + 0.880+ 0.295 + 0.295 + 3.71 + 2.05 +0.295+ 0.295 +0.295$ 
+$\chi^2 = 10.462$.  
+
+## Quantifying exceptionality of deviations
+
+I literally have no idea what a $\chi^2$ of ten means. Ten sounds like a big number, but what do I know??? 
+
+
+One issue is that χ² depends on sample size: with more data, even tiny deviations from expectation can give you a large χ² value. So we need to quantify how large the deviation itself is, independent of how many observations we have.
+
+
+Fortunately, our friend Cohen came up with a measure of the "effect size" for this case. Cohen’s w measures the overall departure from the expected pattern in a standardized way:
+
+$\text{Cohen’s }w = \sqrt{\frac{\chi^2}{n}}$
+
+
+So for our case, $\text{Cohen's w} = \frac{10.462}{41} = \sqrt{\frac{1}{4}}=\frac{1}{2}$. This is a borderline large effect! 
+
+:::aside
+**Interpreting the "effect size" of Cohen's w.** 
+
+| Effect size | w    |
+| ----------- | ---- |
+| Small       | 0.10 |
+| Medium      | 0.30 |
+| Large       | 0.50 |
+:::
+
+So in this case, even though our sample isn’t huge, the pattern of student "random" number choices differs substantially from the uniform expectation. Cohen’s w helps us separate how interesting the pattern is from how certain we are about it.
+
+## Quantifying surprisingness of deviations
+
+Effect size is important, but we also want to know  if our observations can be easily attributable to sampling error. This is where we turn to NHST. 
+
+To conduct this (or any) NHST, we  compare our observed test statistic to its expected distribution under the null hypothesis. Because we do not have paired observations to permute, I introduce simulation as a different computational approach to generate a null sampling distribution. 
+
+
+:::aside
+Later in this chapter we will see that the math for this sampling distribution is also worked out , so we don't need to simulate, but I hope this helps us understand.
+:::
+
+
+To start with, we can randomly select an integer from one to ten forty-one times to generate a single sample:
+
+```{r}
+#| echo: false
+set.seed(999)
+some_numbers <- sample(1:10,size = 41, replace = TRUE) # generate a random
+```
+
+```{r}
+#| eval: false
+some_numbers <- sample(1:10,size = 41, replace = TRUE) # generate a random sample
+```
+
+---
+
+
+@fig-unifb shows that our sample differs from one random sample from the sampling distribution. 
+
+
+```{r}
+#| fig-height: 3.5
+#| code-fold: true
+#| label: fig-unifb
+#| fig-cap: "Observed counts of numbers 1–10 as provided by 41 random answers from R. Each number has an expected count of 4.1 (blue horizontal line) under a uniform distribution, but sampling alone causes observed frequencies to deviate from this expectation. The red points display student responses."
+#| fig-alt: "Bar plot of counts for numbers 1–10 from 41 random answers from R, showing uneven bars around the expected value of 4.1. The red points are actual data"
+
+# to find chi2
+obs <- table(some_numbers)
+expected <- rep(41/10, 10)  # expected counts under uniform distribution 4.1 for each bin
+chi2 <- sum((obs - expected)^2 / expected) # calculate chi-squared statistic
+
+
+
+rand_num <- tibble(rand_num = some_numbers) # put these in a tibble for plotting
+
+ggplot(rand_num, aes(x=rand_num))+
+    geom_bar()+
+    scale_x_continuous(breaks = 1:10)+
+    geom_hline(yintercept = 0:max(table(pull(rand_num))), color = "white")+
+    geom_hline(yintercept = 4.1, color = "blue")+
+geom_point(data = peoples_numbers|>group_by(numbers)|>tally(),
+aes(x = numbers, y = n), color = "firebrick", size = 4)+
+labs(title="Comparing random answers, to students \'randomly\' choosing numbers")+
+annotate(x = 3, y = 9.25,label = paste("χ² random data = " , round(chi2, 2)), geom = "text",size= 6)+
+annotate(x = 3, y = 7.5 ,label = "χ² student data = 10.46" , geom = "text",size= 6, color = "firebrick")+
+coord_cartesian(ylim = c(0,10))
+```
+
+---
+
+
+But, of course, that is just comparing one sample to another. To get a p-value, we find the proportion of the sampling distribution as or more extreme than what we have seen.  @fig-unifc shows that about one quarter of the 50 random samples have a $\chi^2$ value more extreme than what we observed in our data. Thus, we will fail to reject the null hypothesis.
+
+:::aside
+**This is a one-tailed test** because the $\chi^2$ statistic incorporates all ways to be weird.
+:::
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-height: 3.5
+#| label: fig-unifc
+#| fig-cap: "Animation comparing a computer’s random number choices (bars) to students’ \"random\" choices (red dots) over repeated trials. The blue horizontal line shows the expected count for each number if choices were perfectly uniform. Each frame represents a new simulated dataset for the computer."
+#| fig-alt: "Animated bar chart of random vs student number choices; blue line shows expected counts. Roughly 1/4 of random samples have a  χ² that exceeds the student-generated data."
+library(gganimate)
+
+# --------------------------
+# Parameters
+# --------------------------
+n_bins      <- 10
+sample_size <- 41
+n_samples   <- 50
+expected    <- sample_size / n_bins  # 4.1
+
+# --------------------------
+# Students' data (assumes a tibble `peoples_numbers` with col `numbers`)
+# e.g., peoples_numbers <- tibble(numbers = c(7,9,3,3,7,6,6,8,10,7, ...))
+# --------------------------
+people_counts <- peoples_numbers |>
+  count(numbers, name = "count") |>
+  rename(draw = numbers) |>
+  complete(draw = 1:n_bins, fill = list(count = 0))
+
+chi2_students <- people_counts |>
+  summarise(chi2 = sum((count - expected)^2 / expected)) |>
+  pull(chi2)
+
+# --------------------------
+# Simulate many random samples (size = 41) from 1:10
+# --------------------------
+sim <- tibble(
+  sample_id = rep(1:n_samples, each = sample_size),
+  draw      = sample(1:n_bins, size = n_samples * sample_size, replace = TRUE)
+)
+
+# Count per bin, per sample; ensure all bins exist
+counts <- sim |>
+  count(sample_id, draw, name = "count") |>
+  complete(sample_id, draw = 1:n_bins, fill = list(count = 0)) |>
+  ungroup()
+
+# χ² for each sample_id
+chi2_per_sample <- counts |>
+  group_by(sample_id) |>
+  summarise(chi2 = sum((count - expected)^2 / expected), .groups = "drop") |>
+  mutate(label = sprintf("χ² random data = %.2f", chi2),
+         x = 3, y = 9.25)
+
+# Constant label row for students' χ²
+student_label <- tibble(
+  sample_id = 1:n_samples,
+  x = 3, y = 7.5,
+  label = sprintf("χ² student data = %.2f", chi2_students)
+)
+
+# For y-limits
+max_y <- max(counts$count, people_counts$count, na.rm = TRUE)
+max_y <- max(max_y, 10)  # ensure at least 10 like your static plot
+
+# --------------------------
+# Animated plot
+# --------------------------
+p <- ggplot(counts, aes(x = draw, y = count)) +
+  # dynamic χ² label for the random sample
+  # gridlines like your original (white horizontals)
+  geom_hline(yintercept = 0:max_y, color = "white") +
+  geom_hline(yintercept = 0:10, color = "white")+
+  geom_text(
+    data = chi2_per_sample,
+    aes(x = x, y = y, label = label),
+    size = 6, inherit.aes = FALSE
+  ) +
+  # constant χ² label for the student data
+  geom_text(
+    data = student_label,
+    aes(x = x, y = y, label = label),
+    color = "firebrick", size = 6, inherit.aes = FALSE
+  ) +
+  geom_col() +
+  # expected line
+  geom_hline(yintercept = expected, color = "blue") +
+  # overlay student counts as red points (constant across frames)
+  geom_point(
+    data = people_counts,
+    aes(x = draw, y = count),
+    color = "firebrick", size = 4, inherit.aes = FALSE
+  ) +
+  scale_x_continuous(breaks = 1:n_bins) +
+  scale_y_continuous(breaks = seq(0,10,2)) +
+  coord_cartesian(ylim = c(0, max_y)) +
+  labs(
+    title = "Comparing random answers to students 'randomly' choosing numbers",
+    x = "Number",
+    y = "Count"
+  ) +
+  transition_manual(sample_id)
+
+anim <- animate(p, fps = 2, end_pause = 20)
+anim
+
+```
+
+---
+
+To find a more precise p-value, we will conduct one thousand such  simulations. @fig-unifd reveals that 29% of the null sampling distribution has $\chi^2$ values greater than what we saw in class, so our p-value is 0.29, and we fail to reject the null hypothesis that people chose numbers at random. 
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-height: 3.5
+#| label: fig-unifd
+#| fig-cap: "Sampling distribution of χ² statistics under the null model, generated by repeated random simulations. Each bar shows how often a particular χ² value arose when the data truly were generated under the null. The red vertical line marks the χ² value observed in our actual data."
+#| fig-alt: "Histogram of simulated χ² values; red line marks the observed statistic, lying slightly right of the center peak."
+
+# --------------------------
+# Parameters
+# --------------------------
+n_bins      <- 10
+sample_size <- 41
+n_samples   <- 10000
+expected    <- sample_size / n_bins  # 4.1
+
+# --------------------------
+# Simulate many random samples (size = 41) from 1:10
+# --------------------------
+sim <- tibble(
+  sample_id = rep(1:n_samples, each = sample_size),
+  draw      = sample(1:n_bins, size = n_samples * sample_size, replace = TRUE)
+)
+
+# Count per bin, per sample; ensure all bins exist
+counts <- sim |>
+  count(sample_id, draw, name = "count") |>
+  complete(sample_id, draw = 1:n_bins, fill = list(count = 0)) |>
+  ungroup()
+
+# χ² for each sample_id
+chi2_per_sample <- counts |>
+  group_by(sample_id) |>
+  summarise(chi2 = sum((count - expected)^2 / expected), .groups = "drop")
+
+ggplot(chi2_per_sample, aes(x = chi2))+
+    geom_histogram(color = "white", bins = 25)+
+    geom_vline(xintercept = 10.46, color = "red")
+```
+
+
+## Interpretation
+
+We fail to reject the null. This means that sampling error can easily explain the difference between our observations and expectations. But **this does not mean that people chose numbers at random** it simply means that we don't have enough evidence to argue against this skeptical "null hypothesis."
+
+https://www.youtube.com/watch?v=7_cs1YlZoug

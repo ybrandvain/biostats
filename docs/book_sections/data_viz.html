@@ -1689,6 +1689,35 @@ globalThis.qwebrExecuteCode = async function (
 
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../assets/sticky-notes.css">
 <link rel="stylesheet" href="../assets/table-styles.css">
@@ -2366,6 +2395,41 @@ globalThis.qwebrExecuteCode = async function (
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/chi2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">14-B. χ2</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/chi2/expectations_and_differences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. What to expect</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/chi2/associations_between_catvars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> Two Cats</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/chi2/chi2_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> distribution</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/chi2/chi2_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../book_sections/filler.html" class="sidebar-item-text sidebar-link">
@@ -2382,11 +2446,11 @@ globalThis.qwebrExecuteCode = async function (
       <div class="sidebar-item-container"> 
             <a href="../book_sections/normal.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">15. Normal distribution</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../book_sections/normal/normal_intro.html" class="sidebar-item-text sidebar-link">
@@ -2441,11 +2505,11 @@ globalThis.qwebrExecuteCode = async function (
       <div class="sidebar-item-container"> 
             <a href="../book_sections/t.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">16. The t distribution</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../book_sections/t/t_example.html" class="sidebar-item-text sidebar-link">
@@ -2500,11 +2564,11 @@ globalThis.qwebrExecuteCode = async function (
       <div class="sidebar-item-container"> 
             <a href="../book_sections/two_ts.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">17. A binary explanatory variable</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../book_sections/two_ts/2t_assumptions.html" class="sidebar-item-text sidebar-link">
@@ -2541,11 +2605,11 @@ globalThis.qwebrExecuteCode = async function (
       <div class="sidebar-item-container"> 
             <a href="../book_sections/f.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">18. F this!</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../book_sections/f/from_sampling.html" class="sidebar-item-text sidebar-link">
@@ -2967,8 +3031,8 @@ Data is the currency of science. But data cannot speak – they have no voice. S
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-35cf0bf92b8d55ee844f" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-35cf0bf92b8d55ee844f">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12"],[1,2,3,4,5,6,7,8,9,10,11,12],[54.27,54.27,54.27,54.26,54.26,54.26,54.27,54.27,54.27,54.27,54.27,54.27],[47.83,47.83,47.84,47.83,47.84,47.83,47.84,47.84,47.83,47.84,47.84,47.83],[16.77,16.77,16.76,16.77,16.77,16.77,16.77,16.77,16.77,16.77,16.77,16.77],[26.94,26.94,26.93,26.94,26.93,26.94,26.94,26.94,26.94,26.93,26.94,26.94],[-0.06,-0.07000000000000001,-0.07000000000000001,-0.06,-0.06,-0.06,-0.07000000000000001,-0.07000000000000001,-0.07000000000000001,-0.06,-0.07000000000000001,-0.07000000000000001]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>dataset<\/th>\n      <th>mean_x<\/th>\n      <th>mean_y<\/th>\n      <th>stdev_x<\/th>\n      <th>stdev_y<\/th>\n      <th>cor_xy<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":3,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"dataset","targets":1},{"name":"mean_x","targets":2},{"name":"mean_y","targets":3},{"name":"stdev_x","targets":4},{"name":"stdev_y","targets":5},{"name":"cor_xy","targets":6}],"order":[],"orderClasses":false,"lengthMenu":[3,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-31420e78fbf53a0a0456" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-31420e78fbf53a0a0456">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12"],[1,2,3,4,5,6,7,8,9,10,11,12],[54.27,54.27,54.27,54.26,54.26,54.26,54.27,54.27,54.27,54.27,54.27,54.27],[47.83,47.83,47.84,47.83,47.84,47.83,47.84,47.84,47.83,47.84,47.84,47.83],[16.77,16.77,16.76,16.77,16.77,16.77,16.77,16.77,16.77,16.77,16.77,16.77],[26.94,26.94,26.93,26.94,26.93,26.94,26.94,26.94,26.94,26.93,26.94,26.94],[-0.06,-0.07000000000000001,-0.07000000000000001,-0.06,-0.06,-0.06,-0.07000000000000001,-0.07000000000000001,-0.07000000000000001,-0.06,-0.07000000000000001,-0.07000000000000001]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>dataset<\/th>\n      <th>mean_x<\/th>\n      <th>mean_y<\/th>\n      <th>stdev_x<\/th>\n      <th>stdev_y<\/th>\n      <th>cor_xy<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":3,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"dataset","targets":1},{"name":"mean_x","targets":2},{"name":"mean_y","targets":3},{"name":"stdev_x","targets":4},{"name":"stdev_y","targets":5},{"name":"cor_xy","targets":6}],"order":[],"orderClasses":false,"lengthMenu":[3,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <hr>
