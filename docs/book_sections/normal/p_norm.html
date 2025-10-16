@@ -1658,7 +1658,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../assets/webex.css">
 </head>
 
-<body class="nav-sidebar floating fullcontent quarto-light">
+<body class="nav-sidebar floating slimcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -2576,6 +2576,53 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">19. &gt;2 Catgeories</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/multiple_testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. Multiple testing problem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/anova_lm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA: a linear model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/anova_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">anova_example</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/post_hoc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">post_hoc</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/sig_groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">sig_groups</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/anova_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">anova_summary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
@@ -2587,9 +2634,10 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.47.0/min/vs/loader.js"></script>
 <script type="module" id="qwebr-monaco-editor-init">
 
@@ -2912,11 +2960,11 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </ol>
 </div>
 <hr>
-<section id="finding-probabilities-of-a-range-with-pnorm" class="level2">
+<section id="finding-probabilities-of-a-range-with-pnorm" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="finding-probabilities-of-a-range-with-pnorm">Finding probabilities of a range with <code>pnorm()</code></h2>
 <p>I introduced a webapp that integrates the area under the standard normal curve for you, and have shown that you can use <code>rnorm()</code> to simulate a normal distribution. Here, I introduce how to use <code>pnorm()</code> to have R, rather than my webapp, calculate this area.</p>
 <p>This is useful because we often want to calculate a p-value, which amounts to asking “<em>How much of the null sampling distribution is more extreme than my observed observed test statistic?</em>”</p>
-<section id="intro-to-pnorm" class="level3">
+<section id="intro-to-pnorm" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="intro-to-pnorm">Intro to <code>pnorm()</code></h3>
 <div class="cell">
 <div class="cell-output-display">
@@ -2948,7 +2996,10 @@ Figure&nbsp;1: A normal distribution with a mean of 1.78 and a variance of 0.01.
 </ul></li>
 </ul>
 <p>Now, try it yourself. Use the webR console below to calculate the probability that a random draw from our distribution (<span class="math inline">\(X \sim \mathcal{N}(1.78,\,0.01)\)</span>) is</p>
-<ul>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>*<strong>Remember the notation:</strong> <span class="math inline">\(\mathcal{N}(1.78,\,0.01)\)</span> means a normally distributed random variable with mean 1.78 and variance 0.01 (i.e.&nbsp;standard deviation pod <span class="math inline">\(\sqrt{0.01}=0.1\)</span>).</p>
+</div></div><ul>
 <li>Less than 1.63 (1.5 sd less than the mean): <input class="webex-solveme nospaces" data-tol="0.001" size="9" data-answer="[&quot;0.0668072&quot;,&quot;.0668072&quot;]">.</li>
 <li>Greater than 1.93 (1.5 sd more than the mean): <input class="webex-solveme nospaces" data-tol="0.001" size="9" data-answer="[&quot;0.0668072&quot;,&quot;.0668072&quot;]">.</li>
 </ul>
