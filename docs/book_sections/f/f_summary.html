@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../references.html" rel="next">
+<link href="../../book_sections/anova.html" rel="next">
 <link href="../../book_sections/f/Finding_connections.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -2611,6 +2611,65 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">19. &gt;2 Catgeories</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/multiple_testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. Multiple testing problem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/anova_lm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA: a linear model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/anova_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/anova_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA Example</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/post_hoc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. Post hoc tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/sig_groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. Significance groups</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/Ranova_pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. R ANOVA pipeline</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/anova_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
@@ -2960,18 +3019,18 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <div class="exercises">
 <p><strong>Q1)</strong> Under the null hypothesis that both groups come from the same population, the expected value of <span class="math inline">\(F\)</span> is <select class="webex-select"><option value="blank"></option><option value="">0</option><option value="answer">1</option><option value="">It depends on the degrees of freedom</option></select>.</p>
 <strong>Q2)</strong> If <span class="math inline">\(F\)</span> is greater than the expected value under the null, <em>(select all correct)</em>
-<div id="radio_RKGPZNGYJW" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_RKGPZNGYJW" value=""> <span>The null is false</span></label><label><input type="radio" autocomplete="off" name="radio_RKGPZNGYJW" value=""> <span>The null is true</span></label><label><input type="radio" autocomplete="off" name="radio_RKGPZNGYJW" value=""> <span>We reject the null</span></label><label><input type="radio" autocomplete="off" name="radio_RKGPZNGYJW" value=""> <span>We fail to reject the null</span></label><label><input type="radio" autocomplete="off" name="radio_RKGPZNGYJW" value="answer"> <span>We may or may not reject the null depending on the degrees of freedom.</span></label>
+<div id="radio_CEGCOTGTKA" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_CEGCOTGTKA" value=""> <span>The null is false</span></label><label><input type="radio" autocomplete="off" name="radio_CEGCOTGTKA" value=""> <span>The null is true</span></label><label><input type="radio" autocomplete="off" name="radio_CEGCOTGTKA" value=""> <span>We reject the null</span></label><label><input type="radio" autocomplete="off" name="radio_CEGCOTGTKA" value=""> <span>We fail to reject the null</span></label><label><input type="radio" autocomplete="off" name="radio_CEGCOTGTKA" value="answer"> <span>We may or may not reject the null depending on the degrees of freedom.</span></label>
 </div>
 <p>.</p>
 <strong>Q3)</strong> If <span class="math inline">\(F\)</span> is less than the expected value under the null, <em>(select all correct)</em>
-<div id="radio_WKJOCVLTYT" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_WKJOCVLTYT" value=""> <span>The null is false</span></label><label><input type="radio" autocomplete="off" name="radio_WKJOCVLTYT" value=""> <span>The null is true</span></label><label><input type="radio" autocomplete="off" name="radio_WKJOCVLTYT" value=""> <span>We reject the null</span></label><label><input type="radio" autocomplete="off" name="radio_WKJOCVLTYT" value="answer"> <span>We fail to reject the null</span></label><label><input type="radio" autocomplete="off" name="radio_WKJOCVLTYT" value=""> <span>We may or may not reject the null depending on the degrees of freedom.</span></label>
+<div id="radio_MVEAEYGBHH" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_MVEAEYGBHH" value=""> <span>The null is false</span></label><label><input type="radio" autocomplete="off" name="radio_MVEAEYGBHH" value=""> <span>The null is true</span></label><label><input type="radio" autocomplete="off" name="radio_MVEAEYGBHH" value=""> <span>We reject the null</span></label><label><input type="radio" autocomplete="off" name="radio_MVEAEYGBHH" value="answer"> <span>We fail to reject the null</span></label><label><input type="radio" autocomplete="off" name="radio_MVEAEYGBHH" value=""> <span>We may or may not reject the null depending on the degrees of freedom.</span></label>
 </div>
 <p>.</p>
 <strong>Q4)</strong> Our p-value was very small (much less than the traditional (= 0.05) threshold). This means… <em>(select all correct)</em>:
-<div id="radio_HNUCVSOIJK" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_HNUCVSOIJK" value="answer"> <span>It would be incredibly unlikely to observe such an extreme F statistic if the null hypothesis were true</span></label><label><input type="radio" autocomplete="off" name="radio_HNUCVSOIJK" value=""> <span>Pollinators avoid white flowers</span></label><label><input type="radio" autocomplete="off" name="radio_HNUCVSOIJK" value=""> <span>The pink petal color has introgressed from xantiana</span></label>
+<div id="radio_QCVBFEBKXZ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_QCVBFEBKXZ" value="answer"> <span>It would be incredibly unlikely to observe such an extreme F statistic if the null hypothesis were true</span></label><label><input type="radio" autocomplete="off" name="radio_QCVBFEBKXZ" value=""> <span>Pollinators avoid white flowers</span></label><label><input type="radio" autocomplete="off" name="radio_QCVBFEBKXZ" value=""> <span>The pink petal color has introgressed from xantiana</span></label>
 </div>
 <p>.</p>
 </div>
@@ -3081,12 +3140,12 @@ Figure&nbsp;1: Partitioning the contribution of petal color and error to admixtu
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="exercises">
 <strong>Q12)</strong> Given the p-value, what do you do to the null hypothesis?
-<div id="radio_JUHNJJFPFT" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_JUHNJJFPFT" value="answer"> <span>Reject it</span></label><label><input type="radio" autocomplete="off" name="radio_JUHNJJFPFT" value=""> <span>Fail to reject it</span></label><label><input type="radio" autocomplete="off" name="radio_JUHNJJFPFT" value=""> <span>Accept it</span></label><label><input type="radio" autocomplete="off" name="radio_JUHNJJFPFT" value=""> <span>Fail to accept it</span></label>
+<div id="radio_JWQVUQGPGC" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_JWQVUQGPGC" value="answer"> <span>Reject it</span></label><label><input type="radio" autocomplete="off" name="radio_JWQVUQGPGC" value=""> <span>Fail to reject it</span></label><label><input type="radio" autocomplete="off" name="radio_JWQVUQGPGC" value=""> <span>Accept it</span></label><label><input type="radio" autocomplete="off" name="radio_JWQVUQGPGC" value=""> <span>Fail to accept it</span></label>
 </div>
 <strong>Q13)</strong> This means the null
-<div id="radio_MCHIYTYIYA" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_MCHIYTYIYA" value=""> <span>Is true</span></label><label><input type="radio" autocomplete="off" name="radio_MCHIYTYIYA" value=""> <span>Is false</span></label><label><input type="radio" autocomplete="off" name="radio_MCHIYTYIYA" value=""> <span>Has a 0.00805 chance of being true</span></label><label><input type="radio" autocomplete="off" name="radio_MCHIYTYIYA" value="answer"> <span>We can’t say for sure.</span></label>
+<div id="radio_RHQNWPKFKG" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_RHQNWPKFKG" value=""> <span>Is true</span></label><label><input type="radio" autocomplete="off" name="radio_RHQNWPKFKG" value=""> <span>Is false</span></label><label><input type="radio" autocomplete="off" name="radio_RHQNWPKFKG" value=""> <span>Has a 0.00805 chance of being true</span></label><label><input type="radio" autocomplete="off" name="radio_RHQNWPKFKG" value="answer"> <span>We can’t say for sure.</span></label>
 </div>
 <p><strong>Q14)</strong> From this output, the <span class="math inline">\(R^2\)</span> value is: <input class="webex-solveme nospaces" data-tol="0.018" size="5" data-answer="[&quot;0.233&quot;,&quot;.233&quot;]">.</p>
 <div class="webex-solution">
@@ -3101,8 +3160,8 @@ Help
 </ul>
 </div>
 <strong>Q15)</strong> From this output and your answer to question eight (“What’s the difference in mean admixture proportion by petal color”), Cohen’s D is
-<div id="radio_LABIHOMAUS" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_LABIHOMAUS" value=""> <span>Not worth reporting (&lt; 0.01)</span></label><label><input type="radio" autocomplete="off" name="radio_LABIHOMAUS" value=""> <span>Tiny (0.01 – 0.20)</span></label><label><input type="radio" autocomplete="off" name="radio_LABIHOMAUS" value=""> <span>Small (0.20 – 0.50)</span></label><label><input type="radio" autocomplete="off" name="radio_LABIHOMAUS" value=""> <span>Medium (0.50 – 0.80)</span></label><label><input type="radio" autocomplete="off" name="radio_LABIHOMAUS" value="answer"> <span>Large (0.80 – 1.20)</span></label><label><input type="radio" autocomplete="off" name="radio_LABIHOMAUS" value=""> <span>Very large (1.20 – 2.00)</span></label><label><input type="radio" autocomplete="off" name="radio_LABIHOMAUS" value=""> <span>Huge (&gt; 2.00)</span></label>
+<div id="radio_DLWHHRKPOO" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_DLWHHRKPOO" value=""> <span>Not worth reporting (&lt; 0.01)</span></label><label><input type="radio" autocomplete="off" name="radio_DLWHHRKPOO" value=""> <span>Tiny (0.01 – 0.20)</span></label><label><input type="radio" autocomplete="off" name="radio_DLWHHRKPOO" value=""> <span>Small (0.20 – 0.50)</span></label><label><input type="radio" autocomplete="off" name="radio_DLWHHRKPOO" value=""> <span>Medium (0.50 – 0.80)</span></label><label><input type="radio" autocomplete="off" name="radio_DLWHHRKPOO" value="answer"> <span>Large (0.80 – 1.20)</span></label><label><input type="radio" autocomplete="off" name="radio_DLWHHRKPOO" value=""> <span>Very large (1.20 – 2.00)</span></label><label><input type="radio" autocomplete="off" name="radio_DLWHHRKPOO" value=""> <span>Huge (&gt; 2.00)</span></label>
 </div>
 <p>.</p>
 <div class="webex-solution">
@@ -3865,8 +3924,8 @@ window.onload = function() {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../book_sections/anova.html" class="pagination-link" aria-label="19. >2 Catgeories">
+        <span class="nav-page-text">19. &gt;2 Catgeories</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -1,0 +1,179 @@
+## •  19. ANOVA: a  linear model  {.unnumbered  #anova_lm}
+
+---
+format: html
+webr:
+  autoload-packages: true
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(janitor)
+library(ggforce)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+library(broom)
+library(forcats)
+source("../../_common.R") 
+
+hz_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/zones_df_admix_weight_cutoff0.9_gps_dist2het_phenos_excl_GC.csv"
+
+clarkia_hz <- read_csv(hz_link)|> 
+  select(-weighted)|>
+  rename(admix_proportion = `cutoff0.9`) |>
+  filter(!is.na(admix_proportion))|>
+  clean_names() |>
+  mutate(site = if_else(site == "SAW", "SR", site)) |>
+  filter(subsp=="P")|>
+  mutate(site = fct_reorder(site, mean_petal_area_sq_cm))
+```
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:**  You know that many statistical models are simply a type of linear model. How can we think about an ANOVA as a linear model and intrpret the coefficients from thsi model
+
+
+**Learning Goals: By the end of this subchapter, you should be able to:**    
+
+1. Recognize that ANOVA is a special case of a linear model.  
+
+2. Interpret model coefficients (intercept, slopes) in the context of group means.  
+
+3. Know what a residual is and find residual values with math or the `augment()` function.
+  
+4. Change the reference level and interpret how it affects model output.  
+:::
+
+---
+
+
+Recall that "linear models" are "linear" because we find an individual's predicted value $\hat{Y_i}$ by adding up predictions from each component of the model. So, for example, $\hat{Y_i}$ equals the parameter estimate for the "intercept", $a$, plus its value for the first explanatory variable, $y_{1,i}$, times the effect of this variable, $b_1$, plus its value for the second explanatory variable, $y_{2,i}$ times its effect, $b_2$, etc.
+
+$$\hat{Y}_i = a + b_1 y_{1,i} + b_2 y_{2,i} + \dots{}$$
+
+Just like a one or two sample t-test, the ANOVA is a linear model. As such, it models group means as a function of group membership. This works by picking one group as the  "reference level" and having that group's mean represented as the intercept. Then each "slope" $b$ is the difference between that group's mean and the reference group's mean, and the corresponding $y_i$s are one if the  individual is in that group and zero otherwise.   
+ 
+:::aside
+By default R chooses the reference levels as the alphabetically first one. We often don't want that (e.g. you may want the control to be first). The [`fct_relevel()` function](https://forcats.tidyverse.org/reference/fct_relevel.html) in the [`forcats` package](https://forcats.tidyverse.org/) can help (see fyi below)!
+:::
+
+
+
+```{r}
+hybrid_anova <- lm(admix_proportion ~ site, data = clarkia_hz )
+```
+
+```{r}
+#| echo: false
+hybrid_anova$coefficients |> round(digits = 4)
+```
+We cast this as a linear model as follows: $\widehat{\text{admix prop}}_i = 0.0071 + 0.0183 \times \text{S22}_{i}  + 0.0025 \times \text{SM}_{i}  +  0.0221  \times \text{S26}_{i}$. 
+
+Here SR is the "reference level", and as such, SR's mean  admixture proportion equals the intercept, 0.0071. Similarly, we estimate an admixture proportion of  `0.0183 + 0.0071 =  0.0254` at site S22. 
+
+
+
+
+:::exercises
+
+
+**Your turn:** Use the linear model output to find the estimated admixture proportion at each of the following locations:
+
+```{webr-r}
+# Model output from above
+#(Intercept)  siteS22   siteSM   siteS6 
+#     0.0071   0.0183   0.0025   0.0221 
+#--------------------------------------
+# Run Calculations below
+0.0071           # SR
+0.0071 + 0.0183  # Site 22
+                 # Site SM
+                 # Site S6
+```
+
+- **Squirrel Mountain(SM)** `r fitb(0.0096,tol = 0.0005,num = TRUE)`.  
+- **Site 6 (S6)** `r fitb( 0.0292,tol = 0.0003,num = TRUE)`.  
+
+:::
+
+
+## Residuals
+
+Of course, individual observations deviate from their predicted value! As you know by now the difference between an observation, $Y_i$ and its predicted value, $\hat{Y_i}$ is called the residual, $\epsilon_i$. @fig-resid  shows the residuals as the length of the lines connecting individual observations to group means. 
+
+:::aside
+**Mathematical descriptions of residuals** 
+$$\hat{Y_i}=Y_i+\epsilon_i$$
+$$Y_i=\hat{Y_i}-\epsilon_i$$
+$$\epsilon_i= Y_i-\hat{Y_i}$$
+:::
+
+
+```{r}
+#| fig-height: 3
+#| fig-width: 12
+#| label: fig-resid
+#| echo: false
+clarkia_hz |>
+  arrange(as.numeric(as.factor(site)) + admix_proportion)|>
+  filter(!is.na(admix_proportion))|>
+  mutate(id= 1:n())|>
+  group_by(site)|>
+  mutate(mean_prop = mean(admix_proportion))|>
+  ggplot(aes(x = id, y = admix_proportion, color = site))+
+  geom_point()+
+  geom_segment(aes(xend = id, yend = mean_prop) ,linewidth = .3)+
+  theme(legend.position = "inside",legend.position.inside = c(0.08,.8),
+        axis.text.x = element_blank(), axis.title.x = element_blank())
+
+```
+
+Recall that the `augment()` function in the broom package shows $\hat{Y_i}$ as the `.fitted` column, and the residuals as the `.resid` column: 
+
+```{r}
+#| eval: false
+library(broom)
+augment(hybrid_anova)
+```
+
+
+```{r}
+#| echo: false
+augment(hybrid_anova)|> 
+select(1:4)|>head()|>
+mutate_at(c(1,3,4), round, digits = 4)|>kable()
+```
+
+
+---
+
+:::fyi
+**Changing reference levels** Alphabetical order is not always the "right" order. For example, in this data set of *Daphnia* resistance to a poisonous cyanobacteria across years with high, medium and low concentrations of cyanobacteria.
+
+```{r}
+daphnia_data <- read_csv("https://whitlockschluter3e.zoology.ubc.ca/Data/chapter15/chap15q17DaphniaResistance.csv")
+
+lm(resistance ~ cyandensity, data = daphnia_data)
+```
+
+The code below uses the [`fct_relevel()` function](https://forcats.tidyverse.org/reference/fct_relevel.html) in the [`forcats` package](https://forcats.tidyverse.org/) to change the order of our factors, so the reference level makes more sense. 
+
+```{r}
+library(forcats)
+daphnia_data <- daphnia_data |>
+  mutate(cyandensity =fct_relevel(cyandensity, "low","med","high"))
+
+lm(resistance ~ cyandensity, data = daphnia_data)
+```
+
+:::

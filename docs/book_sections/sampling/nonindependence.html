@@ -1058,6 +1058,65 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">19. &gt;2 Catgeories</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/multiple_testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. Multiple testing problem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/anova_lm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA: a linear model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/anova_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/anova_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA Example</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/post_hoc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. Post hoc tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/sig_groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. Significance groups</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/Ranova_pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. R ANOVA pipeline</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/anova_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
@@ -1161,7 +1220,7 @@ You are designing your study or critically evaluating someone else’s research.
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-pseudorep" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A boxplot comparing the &quot;prop_hybrid&quot; for two categories on the x-axis: &quot;pink&quot; and &quot;white.&quot; For the &quot;pink&quot; category, most data points are clustered near zero. For the &quot;white&quot; category, the data points are more spread out, with many points between 0.2 and 0.5. The mean and confidence interval for the &quot;white&quot; category is visibly higher than for the &quot;pink&quot; category.">
+<div id="fig-pseudorep" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A boxplot comparing the &quot;prop_hybrid&quot; for two categories on the x-axis: &quot;pink&quot; and &quot;white.&quot; For the &quot;pink&quot; category, most data points are clustered near zero. For the &quot;white&quot; category, the data points are more spread out, with many points between 0.2 and 0.5. The mean and confidence interval for the &quot;white&quot; category is visibly higher than for the &quot;pink&quot; category." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pseudorep-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="nonindependence_files/figure-html/fig-pseudorep-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A boxplot comparing the &quot;prop_hybrid&quot; for two categories on the x-axis: &quot;pink&quot; and &quot;white.&quot; For the &quot;pink&quot; category, most data points are clustered near zero. For the &quot;white&quot; category, the data points are more spread out, with many points between 0.2 and 0.5. The mean and confidence interval for the &quot;white&quot; category is visibly higher than for the &quot;pink&quot; category.">
@@ -1184,7 +1243,7 @@ Figure&nbsp;1: The proportion of hybrid offspring produced by pink- and white-fl
 <div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-quadrat" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two researchers on a sunny, grassy hillside. One is kneeling and placing her hands inside a square quadrat frame that is laid on the ground over a patch of low-lying plants.">
+<div id="fig-quadrat" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two researchers on a sunny, grassy hillside. One is kneeling and placing her hands inside a square quadrat frame that is laid on the ground over a patch of low-lying plants." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-quadrat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="../../figs/stats_foundations/sampling/shelly_lauren_clarkia.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%" alt="Two researchers on a sunny, grassy hillside. One is kneeling and placing her hands inside a square quadrat frame that is laid on the ground over a patch of low-lying plants.">

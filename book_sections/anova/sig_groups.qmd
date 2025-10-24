@@ -1,0 +1,121 @@
+## •  19. Significance groups {.unnumbered  #sig_groups}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(janitor)
+library(ggforce)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+library(broom)
+library(forcats)
+source("../../_common.R") 
+
+hz_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/zones_df_admix_weight_cutoff0.9_gps_dist2het_phenos_excl_GC.csv"
+
+clarkia_hz <- read_csv(hz_link)|> 
+  select(-weighted)|>
+  rename(admix_proportion = `cutoff0.9`) |>
+  filter(!is.na(admix_proportion))|>
+  clean_names() |>
+  mutate(site = if_else(site == "SAW", "SR", site)) |>
+  filter(subsp=="P")|>
+  mutate(site = fct_reorder(site, mean_petal_area_sq_cm))
+```
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+
+**Motivating Scenario:** You have conducted your post-hoc tests. So, you know  if a given pair differ significantly from one another. Now, you want to effectively summarize all these pairwise differences. Our goal here is to simplify a complex table of pairwise comparisons into a compact, easy-to-read and interpret summary.
+
+
+
+**Learning Goals: By the end of this subchapter, you should be able to:**
+
+* Derive and label significance groups ("a", "b", etc.) from pairwise comparison results.   
+* Explain the meaning of overlapping letters (e.g., "a,b") in significance group displays.   
+* Visualize significance groups on plots to clearly communicate post-hoc results with ggplot.  
+
+:::
+
+
+---
+
+```{r}
+#| echo: false
+#| column:  margin
+library(tibble)
+(aov(admix_proportion ~ site, data = clarkia_hz)|> TukeyHSD())[["site"]]|>data.frame()|> rownames_to_column(var = "comparison")|> mutate_at(2:5, round, digits =4)|>select(c(1,5))|>mutate(significant = p.adj < 0.05)|>kable()
+```
+
+
+So we now know which pairs differ from one another! But, there is a real mental burden in trying to make sense of results from many pairwise tests. Defining "significance groups" helps us present results of a post-hoc test.  Here, we assign the same letter to groups that do not significantly differ, and different letters to groups that do. In our case we see that:
+
+- Site SR and site S22 significantly differ. So we put them in different significance groups.   
+   - We'll assign SR to group "a".
+   - We'll assign S22 to group "b". 
+- Site SR does not differ significantly from site SM, but does differ from Site S22. 
+  - We'll assign SM to group "a".  
+- Site S6  differs significantly from sites SR and SM, but does not differ from Site S22. 
+  - We'll assign S6 to group "b".  
+  
+These letter-based summaries are handy for communicating complex post-hoc results. But remember, they are shorthand for results of your post-hoc tests, not new analyses. We can communicate these groups by adding this information to a plot:
+
+```{r}
+#| fig-height: 3
+library(ggforce)
+hz_summary <-clarkia_hz |>
+  group_by(site)|>
+  summarise(mean_admix_proportion = mean(admix_proportion ),
+            mean_plus_two_sd = mean_admix_proportion + 2*sd(admix_proportion))|>
+  mutate(sig_group = case_when(site %in% c("SR","SM")~"a",
+                               site %in% c("S22","S6")~"b"))
+
+clarkia_hz |>
+  ggplot(aes(x = site, y = admix_proportion , color = site))+
+  geom_boxplot(outliers = FALSE)+
+  geom_sina(size =5, alpha = .64)+
+  geom_text(data = hz_summary, aes(y = .05, label = sig_group),
+            size = 8, position = position_nudge(x = .3))+
+  theme(legend.position = "none")
+```
+
+## Tricky cases  
+
+```{r}
+#| echo: false
+#| column: margin
+tibble(comparison = c("X-Y","X-Z","Y-Z"),significant =c(TRUE, FALSE, FALSE))|>kable()
+```
+
+Consider the hypothetical (and not uncommon) outcome of a post-hoc test, displayed in the right margin. Here:
+
+- Groups X and Y significantly differ. So we put them in different significance groups.   
+   - We'll assign X to group "a".
+   - We'll assign Y to group "b". 
+- But Z differs from neither group. So,
+   - We'll assign Z to groups "a" and "b" because it does not significantly differ from either group. In a plot we would show this as "a,b".
+   
+When you see a category with two letters (like ‘a,b’), it means the sample is not significantly different from categories in group a and in group b, but all categories uniquely assigned to a are significantly different from all categories uniquely assigned to group group b.
+
+
+## R automation
+
+As you might imagine, logic-ing this all out can get messy. Luckily, you can pipe your glht() output into the cld() function which will  assign samples to "significance groups":
+
+```{r}
+library(multcomp)
+lm(admix_proportion ~ site, data = clarkia_hz)|>
+    glht(linfct = mcp(site = "Tukey"))|>
+    cld()
+```
+

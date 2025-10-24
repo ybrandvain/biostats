@@ -1,0 +1,288 @@
+## • 19. ANOVA summary {.unnumbered #anova_summary}
+
+---
+format: html
+webr:
+  packages: ['dplyr', 'readr', 'broom' ,'ggplot2', 'forcats','multcomp','broom','Hmisc','patchwork']
+  autoload-packages: true
+---
+
+
+Links to: [Summary](#anova_summary_chapter-summary). [Chatbot tutor](#anova_summary_chatbot_tutor).  [Questions](#anova_summary_practice-questions). [Glossary](#t_summary_glossary-of-terms). [R packages](#anova_summaryR_packages_introduced). [R functions](#anova_summary_key-r-functions). [More resources](#anova_summary_additional-resources).
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(webexercises)
+library(dplyr)
+library(janitor)
+library(readr)
+library(knitr)
+library(infer)
+library(ggplot2)
+library(forcats)
+```
+
+
+
+
+## Chapter summary  {#anova_summary_chapter-summary}  
+ 
+ 
+
+
+
+```{r}
+#| echo: false
+#| column: margin
+#| fig-cap: "Enjoy this \"insomnia meme\" about the ANOVA. From [this video](https://www.youtube.com/watch?v=9W4gOJZfKhA)"
+#| fig-alt:  "A four-panel comic shows a brain talking to a person in bed at night. In panel one, the brain asks, \"What is ANOVA?\" In panel two, the person replies, \"Analysis of Variance.\" In panel three, the brain nervously asks, \"Then why do we compare means?\" In panel four, the person lies awake in the dark, wide-eyed, clearly disturbed by the question. please"
+library(knitr)
+include_graphics("../../figs/linear_models/f/anova_joke.jpg")
+```
+ 
+We previously introduced F and the ANOVA approach as an alternative to the two sample t-test. Here we show it's true utility - by testing the single null hypothesis that all sample come from the same statistical population, we avoid the "multiple testing problem." As such, compared to the naive testing of all pairwise differences, the ANOVA approach allows us to farily test for differences in means among numerous groups. If we reject the null that all groups are equal, we conduct a "post-hoc" test to see which groups differ.
+
+### Chatbot tutor  {#anova_summary_chatbot_tutor} 
+
+:::tutor
+
+
+
+Please interact with this custom chatbot ([**ChatGPT link here**](https://chatgpt.com/g/g-68faf019c2788191bcf1fbc8a80d0c6b-anova-tutor), Now Gemini alllows us to share gems! [Gemini link here](https://gemini.google.com/gem/1jxezNFbnQb9Uy7x8ne7OF847sSUYH4lU?usp=sharing)). I have made to help you with this chapter. I suggest interacting with at least ten back-and-forths to ramp up  and then stopping when you feel like you got what you needed from it. 
+
+:::
+
+
+
+## Practice Questions {#t_summary_practice-questions}
+
+
+Try these questions! By using the R environment you can work without leaving this "book". I even pre-loaded all the packages you need! 
+
+
+### Setup
+
+Fiddler males have a greatly enlarged "major" claw, which is used to attract females and to defend a burrow. Darnell and Munguia (2011) suggested that this appendage might also acts as a heat sink, keeping males cooler while out of the burrow on hot days. To test this, they placed four groups of crabs into separate plastic cups and supplied a source of radiant heat (60-watt light bulb) from above. The four groups were intact male crabs; male crabs with the major claw removed; male crabs with the other (minor) claw removed (control), and intact female ﬁddler crabs. They measured body temperature of crabs every 10 minutes for 1.5 hours. These measurements were used to calculate a rate of heat gain for every individual crab in degrees C/log minute.
+
+Rates of heat gain for all crabs are loaded here as `crabs` but can be downloaded from this link: 
+https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/crabs.csv 
+
+
+
+
+```{webr-r}
+#| context: setup
+#| message: false
+#| warning: false
+library(forcats)
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(multcomp)
+library(broom)
+library(Hmisc)
+library(patchwork)
+
+crab_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/crabs.csv"
+
+crabs <- read_csv(crab_link)
+```
+
+
+```{webr-r}
+```
+
+:::exercises
+**Q1.a)** There are four groups. How many potential pairwise comparisons are there? `r fitb("6")`.
+
+`r hide("Explanation")`
+For 4 groups, the number of unique pairs is:
+$$\frac{k(k - 1)}{2} = \frac{4(3)}{2} = 6$$
+`r unhide()`
+
+
+**Q1.b)** What is the probability of incorrectly rejecting one true null (at the $\alpha$ threshold of 0.05) if all of these nulls were true? `r fitb(0.265, num = TRUE, tol = .05)`
+
+`r hide("Explanation")`
+The probability of not incorrectly rejecting a true null is 0.95. To not falsely reejct any try nulls we need six such successes. 
+$$0.95^6 \approx 0.735$$ 
+So the probability of incorrectly rejecting at least one true null is:
+
+$$1 - 0.735 = 0.265 $$
+
+`r unhide()`
+:::
+
+--- 
+
+```{webr-r}
+#| autorun: true
+library(ggplot2); library(Hmisc); library(broom);
+library(multcomp); library(broom)
+
+crabs |>
+  ggplot(aes(x = crabType , 
+             y = bodyTemperature, 
+             color = crabType))+
+  geom_jitter(height = 0, width = .2, size = 3)+
+  stat_summary(color = "black", 
+               fun.data = "mean_cl_normal")+
+  theme(legend.position= "none")
+```
+:::exercises
+
+**Q2)** Consider the plot above. Before running an ANOVA or posthoc test, which  comparisons do you think is most lilely to be significantly different? `r longmcq(c("female x male major removed",answer = "female x male minor removed", "intact x male major removed","intact x male minor removed", "male major removed x male minor removed"))`
+
+
+:::
+
+---
+
+**Calculate the sample size, mean, and variance for each treatment** 
+
+```{webr-r}
+```
+
+
+:::exercises
+
+**Q3)** Compare the variance with in each treatment. What is the greatest fold difference in variance between  treatments? `r longmcq(c("It's exactly the same",answer = "Less than two-fold", "Between two and five-fold", "Between five and ten-fold","More than ten-fold"))`
+
+**Q4)** With this difference in variance among groups, the assumption of homoscedasticity is  `r longmcq(c(answer = "Probably not a major concern", "Somewhat worrisome, but we can plow ahead anyways", "A big concern, we must transform or try a Welch's ANOVA"))`
+
+
+
+:::
+
+```{r}
+#| echo: false
+#| column: page-right
+include_graphics("../../figs/linear_models/anova/anova_decomp.png")
+```
+
+---
+
+
+:::exercises
+
+**Q5.a)** Which of the plots above  shows total deviations? `r mcq(c("a",answer = "b","c"))`.   
+**Q5.b)** Which of the plots above  shows model deviations? `r mcq(c("a","b", answer = "c"))`.    
+**Q5.c)** Which of the plots above  shows error deviations? `r mcq(c(answer = "a","b","c"))`.  
+:::
+
+---
+
+**Assume we where using the code below to build an ANOVA for the crabs data**  
+
+
+
+```{r}
+#| eval: false
+crabs                                          |>
+    mutate(grand_mean = mean(bodyTemperature)) |>
+    group_by(crabType)                         |>
+    mutate(group_mean = mean(bodyTemperature)) |>
+    ungroup()                                  |>
+    summarise(this_partition = sum((group_mean - grand_mean)^2))
+```
+
+:::exercises
+
+
+**Q6)** What would be the best name for `this_partition`? `r mcq(c("MS_total", "MS_model", "MS_error", "SS_total", answer = "SS_model", "SS_error"))`
+:::
+
+
+```{webr-r}
+lm(bodyTemperature ~ crabType, data = crabs) |>
+  augment() ->  augmented_crab
+
+augmented_crab |> 
+    ggplot(aes(x= bodyTemperature))+
+    geom_qq()+
+    geom_qq_line()+
+    facet_wrap(~crabType)+
+    labs(title = "Plot 1", x="bodyTemperature")
+
+augmented_crab |> 
+    ggplot(aes(x= bodyTemperature))+
+    geom_qq()+
+    geom_qq_line()+
+    labs(title = "Plot 2", x="bodyTemperature")
+
+augmented_crab |> 
+    ggplot(aes(x= .fitted))+
+    geom_qq()+
+    geom_qq_line()+
+    facet_wrap(~crabType)+
+    labs(title = "Plot 3", x=".fitted")
+
+augmented_crab |> 
+    ggplot(aes(x= .resid))+
+    geom_qq()+
+    geom_qq_line()+
+    facet_wrap(~crabType)+
+    labs(title = "Plot 4", x=".resid")
+```
+   
+---
+
+:::exercises
+
+
+**Q7.a)** Why didn't the code above work?  `r longmcq(c("We did not load the *broom* pacakge", "We never generated *augmented_crab*", "you must use the original tibble, not *augment()* output to make a plot", answer= "geom_qq expects the aesthetic to be called *sample*, not *x*"))`
+
+
+**Q7.b)** Fixing this error, which assumption are these plots meant evaluate?  `r longmcq(c("Equal variance among groups", answer= "Normal distirbutions of residuals", "Independence" , "Unbiased data"))`
+
+**Q7.c)** Which wo of the plots are reasonable ways to evaluate this assumption. Fixing this error, which assumption are these plots meant evaluate?  `r longmcq(c("Plot 1 and Plot 2", "Plot 1 and Plot 3", answer = "Plot 1 and Plot 4", "Plot 2 and Plot 3", "Plot 2 and Plot 4", "Plot 3 and Plot 4"))`
+
+---
+
+**Q8)**  In the context of an ANOVA, which R command gives you:       
+
+ 
+**Q8.a)** Estimates of model coefficients ONLY?   `r longmcq(c("*lm(y ~ x) |> anova()* OR *aov(y ~ x) |> summary()*", "*aov(y ~ x) |> TukeyHSD()*",  "*lm(y ~ x)|> summary()* ",answer =  "*lm(y ~ x)*"))`
+
+**Q8.b)** An ANOVA table `r longmcq(c(answer =  "*lm(y ~ x) |> anova()* OR *aov(y ~ x) |> summary()*", "aov(y ~ x) |> TukeyHSD()",  "lm(y ~ x)|> summary()","*lm(y ~ x)*"))`
+
+
+**Q8.c)** Results of post-hoc tests  `r longmcq(c( "*lm(y ~ x) |> anova()* OR *aov(y ~ x) |> summary()*", answer = "aov(y ~ x) |> TukeyHSD()",  "lm(y ~ x)|> summary() ","*lm(y ~ x)*"))`
+
+**Q8.d)** Model coefficients and standard errors,  plus numerous potentially misleading p-values and t-values that should largely be ignored `r longmcq(c( "*lm(y ~ x) |> anova()* OR *aov(y ~ x) |> summary()*", "aov(y ~ x) |> TukeyHSD()", answer =  "lm(y ~ x)|> summary() ","*lm(y ~ x)*"))`
+
+:::
+
+--- 
+
+**Run the relevant statistical tests below**
+```{webr-r}
+#| context: setup
+#| message: false
+#| warning: false
+crabs <- mutate(crabs , crabType=factor(crabType))
+```
+
+```{webr-r}
+#| autorun: true
+# For stupid reasons crabType must be a factor
+crabs <- mutate(crabs , crabType=factor(crabType))
+
+```
+
+
+---
+
+:::exercises
+
+
+**Q9)**  Run an anova on the data. What do we do to the null hypothesis? `r mcq(c(answer = "Reject it","Fail to reject it","Accept it","Fail to accept it"))`   
+
+
+**Q10)** According to. the post-hoc test, if female intact is in significance group, "a", which group(s) is intact male male major in? `r mcq(c("a only", "b only", "c only", "a,b", "a,c",answer = "b,c","a,b,bc"))`
+
+
+:::

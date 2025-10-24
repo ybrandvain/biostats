@@ -1,0 +1,89 @@
+# 19. >2 Catgeories {#anova}
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(DT)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+library(janitor)
+library(forcats)
+source("../_common.R") 
+
+hz_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/zones_df_admix_weight_cutoff0.9_gps_dist2het_phenos_excl_GC.csv"
+
+clarkia_hz <- read_csv(hz_link)|> 
+  select(-weighted)|>
+  rename(admix_proportion = `cutoff0.9`) |>
+  filter(!is.na(admix_proportion))|>
+  clean_names() |>
+  mutate(site = if_else(site == "SAW", "SR", site)) |>
+  filter(subsp=="P")|>
+  mutate(site = fct_reorder(site, mean_petal_area_sq_cm))
+
+```
+
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:**   
+
+
+**Learning Goals: By the end of this chapter, you should be able to:** 
+
+:::     
+
+---
+
+
+```{r}
+#| echo: false
+#| column: margin
+include_graphics("../clarkia_pics/xan_greenhouse.png")   
+```
+
+
+We have considered both the two-sample t-test, and the variance partitioning approach, to test the null hypothesis that group means do not differ. We saw that these approaches give the same answers when analyzing a continuous response variable with a binary explanatory variable. Here, we consider what to do when our explanatory variable has more than two "levels". 
+
+We will see that testing for a difference between each group mean in a pairwise manner introduces a "multiple testing problem." We show that the ANOVA approach allows us to overcome this multiple testing problem by testing null hypotheses that the true group means are identical (i.e. there is no variance among groups in our population). We then show how you can use the "post-hoc" testing framework to adjust your t-values to incorporate the fact that you are  testing multiple hypotheses **after** you found that not all groups means are equal.
+
+
+## Example data
+
+
+
+Here we revisit our data from the last section -- parviflora plants collected from natural hybrid zone. Here we will look at the variability in petal area among parviflora populations. The is potentially interesting because ecological features and the admixture proportion differ across sites, and it's worth noting if this is associated with any differences in key phenotypes in the field!  The data are plotted below:
+
+```{r}
+#| message: false
+#| warning: false
+#| code-fold: true
+#| fig-height: 4
+#| code-summary: "Code for plotting"
+library(ggforce)
+ggplot(clarkia_hz , aes(x = site, y =mean_petal_area_sq_cm, color = site))+
+    geom_violin()+
+    geom_sina(alpha = .4, size = 2)+
+    stat_summary(fun.data = "mean_cl_normal",geom = "errorbar", color = "black",width = .15)+
+    labs(y = expression(Mean~petal~area~(cm^2)))+
+    theme(legend.position = "none", 
+          axis.text = element_text(size = 12), 
+          axis.title = element_text(size = 12))
+
+```
+
+
+## Let's goooooo
+
+How to anlyze these data. As we will see soon, doing a bunch of t-tests is not the answer, but an ANOVA, foloowed by post-hooc tests is! Let's see why this is, and how to do it.

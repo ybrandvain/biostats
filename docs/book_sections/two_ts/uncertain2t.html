@@ -1058,6 +1058,65 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../book_sections/anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">19. &gt;2 Catgeories</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/multiple_testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. Multiple testing problem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/anova_lm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA: a linear model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/anova_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/anova_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA Example</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/post_hoc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. Post hoc tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/sig_groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. Significance groups</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/Ranova_pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. R ANOVA pipeline</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../book_sections/anova/anova_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
@@ -1169,23 +1228,23 @@ df_\text{total} &amp;= df_1+df_2 \\
 <div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="lvmgrmydyo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#lvmgrmydyo table {
+<div id="ltppiwgrvv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ltppiwgrvv table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#lvmgrmydyo thead, #lvmgrmydyo tbody, #lvmgrmydyo tfoot, #lvmgrmydyo tr, #lvmgrmydyo td, #lvmgrmydyo th {
+#ltppiwgrvv thead, #ltppiwgrvv tbody, #ltppiwgrvv tfoot, #ltppiwgrvv tr, #ltppiwgrvv td, #ltppiwgrvv th {
   border-style: none;
 }
 
-#lvmgrmydyo p {
+#ltppiwgrvv p {
   margin: 0;
   padding: 0;
 }
 
-#lvmgrmydyo .gt_table {
+#ltppiwgrvv .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1211,12 +1270,12 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-left-color: #D3D3D3;
 }
 
-#lvmgrmydyo .gt_caption {
+#ltppiwgrvv .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#lvmgrmydyo .gt_title {
+#ltppiwgrvv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1228,7 +1287,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-bottom-width: 0;
 }
 
-#lvmgrmydyo .gt_subtitle {
+#ltppiwgrvv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1240,7 +1299,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-top-width: 0;
 }
 
-#lvmgrmydyo .gt_heading {
+#ltppiwgrvv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1252,13 +1311,13 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-right-color: #D3D3D3;
 }
 
-#lvmgrmydyo .gt_bottom_border {
+#ltppiwgrvv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#lvmgrmydyo .gt_col_headings {
+#ltppiwgrvv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1273,7 +1332,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-right-color: #D3D3D3;
 }
 
-#lvmgrmydyo .gt_col_heading {
+#ltppiwgrvv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1293,7 +1352,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   overflow-x: hidden;
 }
 
-#lvmgrmydyo .gt_column_spanner_outer {
+#ltppiwgrvv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1305,15 +1364,15 @@ df_\text{total} &amp;= df_1+df_2 \\
   padding-right: 4px;
 }
 
-#lvmgrmydyo .gt_column_spanner_outer:first-child {
+#ltppiwgrvv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#lvmgrmydyo .gt_column_spanner_outer:last-child {
+#ltppiwgrvv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#lvmgrmydyo .gt_column_spanner {
+#ltppiwgrvv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1325,11 +1384,11 @@ df_\text{total} &amp;= df_1+df_2 \\
   width: 100%;
 }
 
-#lvmgrmydyo .gt_spanner_row {
+#ltppiwgrvv .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#lvmgrmydyo .gt_group_heading {
+#ltppiwgrvv .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1355,7 +1414,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   text-align: left;
 }
 
-#lvmgrmydyo .gt_empty_group_heading {
+#ltppiwgrvv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1370,15 +1429,15 @@ df_\text{total} &amp;= df_1+df_2 \\
   vertical-align: middle;
 }
 
-#lvmgrmydyo .gt_from_md > :first-child {
+#ltppiwgrvv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#lvmgrmydyo .gt_from_md > :last-child {
+#ltppiwgrvv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#lvmgrmydyo .gt_row {
+#ltppiwgrvv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1397,7 +1456,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   overflow-x: hidden;
 }
 
-#lvmgrmydyo .gt_stub {
+#ltppiwgrvv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1410,7 +1469,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   padding-right: 5px;
 }
 
-#lvmgrmydyo .gt_stub_row_group {
+#ltppiwgrvv .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1424,15 +1483,15 @@ df_\text{total} &amp;= df_1+df_2 \\
   vertical-align: top;
 }
 
-#lvmgrmydyo .gt_row_group_first td {
+#ltppiwgrvv .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#lvmgrmydyo .gt_row_group_first th {
+#ltppiwgrvv .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#lvmgrmydyo .gt_summary_row {
+#ltppiwgrvv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1442,16 +1501,16 @@ df_\text{total} &amp;= df_1+df_2 \\
   padding-right: 5px;
 }
 
-#lvmgrmydyo .gt_first_summary_row {
+#ltppiwgrvv .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#lvmgrmydyo .gt_first_summary_row.thick {
+#ltppiwgrvv .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#lvmgrmydyo .gt_last_summary_row {
+#ltppiwgrvv .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1461,7 +1520,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-bottom-color: #D3D3D3;
 }
 
-#lvmgrmydyo .gt_grand_summary_row {
+#ltppiwgrvv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1471,7 +1530,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   padding-right: 5px;
 }
 
-#lvmgrmydyo .gt_first_grand_summary_row {
+#ltppiwgrvv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1481,7 +1540,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-top-color: #D3D3D3;
 }
 
-#lvmgrmydyo .gt_last_grand_summary_row_top {
+#ltppiwgrvv .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1491,11 +1550,11 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-bottom-color: #D3D3D3;
 }
 
-#lvmgrmydyo .gt_striped {
+#ltppiwgrvv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#lvmgrmydyo .gt_table_body {
+#ltppiwgrvv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1504,7 +1563,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-bottom-color: #D3D3D3;
 }
 
-#lvmgrmydyo .gt_footnotes {
+#ltppiwgrvv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1518,7 +1577,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-right-color: #D3D3D3;
 }
 
-#lvmgrmydyo .gt_footnote {
+#ltppiwgrvv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1527,7 +1586,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   padding-right: 5px;
 }
 
-#lvmgrmydyo .gt_sourcenotes {
+#ltppiwgrvv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1541,7 +1600,7 @@ df_\text{total} &amp;= df_1+df_2 \\
   border-right-color: #D3D3D3;
 }
 
-#lvmgrmydyo .gt_sourcenote {
+#ltppiwgrvv .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1549,72 +1608,72 @@ df_\text{total} &amp;= df_1+df_2 \\
   padding-right: 5px;
 }
 
-#lvmgrmydyo .gt_left {
+#ltppiwgrvv .gt_left {
   text-align: left;
 }
 
-#lvmgrmydyo .gt_center {
+#ltppiwgrvv .gt_center {
   text-align: center;
 }
 
-#lvmgrmydyo .gt_right {
+#ltppiwgrvv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#lvmgrmydyo .gt_font_normal {
+#ltppiwgrvv .gt_font_normal {
   font-weight: normal;
 }
 
-#lvmgrmydyo .gt_font_bold {
+#ltppiwgrvv .gt_font_bold {
   font-weight: bold;
 }
 
-#lvmgrmydyo .gt_font_italic {
+#ltppiwgrvv .gt_font_italic {
   font-style: italic;
 }
 
-#lvmgrmydyo .gt_super {
+#ltppiwgrvv .gt_super {
   font-size: 65%;
 }
 
-#lvmgrmydyo .gt_footnote_marks {
+#ltppiwgrvv .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#lvmgrmydyo .gt_asterisk {
+#ltppiwgrvv .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#lvmgrmydyo .gt_indent_1 {
+#ltppiwgrvv .gt_indent_1 {
   text-indent: 5px;
 }
 
-#lvmgrmydyo .gt_indent_2 {
+#ltppiwgrvv .gt_indent_2 {
   text-indent: 10px;
 }
 
-#lvmgrmydyo .gt_indent_3 {
+#ltppiwgrvv .gt_indent_3 {
   text-indent: 15px;
 }
 
-#lvmgrmydyo .gt_indent_4 {
+#ltppiwgrvv .gt_indent_4 {
   text-indent: 20px;
 }
 
-#lvmgrmydyo .gt_indent_5 {
+#ltppiwgrvv .gt_indent_5 {
   text-indent: 25px;
 }
 
-#lvmgrmydyo .katex-display {
+#ltppiwgrvv .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#lvmgrmydyo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ltppiwgrvv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1686,7 +1745,7 @@ df_\text{total} &amp;= df_1+df_2 \\
 <div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-boot" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A histogram of 5,000 bootstrap estimates of the difference in mean pollinator visits between pink and white RILs (pink − white). The distribution is centered near 1.0, with most mass between roughly 0.5 and 1.5. Two red vertical lines indicate the 2.5th and 97.5th percentile cutoffs (about 0.50 and 1.52). A dashed vertical line can mark the observed sample difference.">
+<div id="fig-boot" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A histogram of 5,000 bootstrap estimates of the difference in mean pollinator visits between pink and white RILs (pink − white). The distribution is centered near 1.0, with most mass between roughly 0.5 and 1.5. Two red vertical lines indicate the 2.5th and 97.5th percentile cutoffs (about 0.50 and 1.52). A dashed vertical line can mark the observed sample difference." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-boot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="uncertain2t_files/figure-html/fig-boot-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A histogram of 5,000 bootstrap estimates of the difference in mean pollinator visits between pink and white RILs (pink − white). The distribution is centered near 1.0, with most mass between roughly 0.5 and 1.5. Two red vertical lines indicate the 2.5th and 97.5th percentile cutoffs (about 0.50 and 1.52). A dashed vertical line can mark the observed sample difference.">
@@ -1700,23 +1759,23 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
 <div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="vridskscuh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vridskscuh table {
+<div id="bajcituztq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#bajcituztq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vridskscuh thead, #vridskscuh tbody, #vridskscuh tfoot, #vridskscuh tr, #vridskscuh td, #vridskscuh th {
+#bajcituztq thead, #bajcituztq tbody, #bajcituztq tfoot, #bajcituztq tr, #bajcituztq td, #bajcituztq th {
   border-style: none;
 }
 
-#vridskscuh p {
+#bajcituztq p {
   margin: 0;
   padding: 0;
 }
 
-#vridskscuh .gt_table {
+#bajcituztq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1742,12 +1801,12 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   border-left-color: #D3D3D3;
 }
 
-#vridskscuh .gt_caption {
+#bajcituztq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vridskscuh .gt_title {
+#bajcituztq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1759,7 +1818,7 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   border-bottom-width: 0;
 }
 
-#vridskscuh .gt_subtitle {
+#bajcituztq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1771,7 +1830,7 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   border-top-width: 0;
 }
 
-#vridskscuh .gt_heading {
+#bajcituztq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1783,13 +1842,13 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   border-right-color: #D3D3D3;
 }
 
-#vridskscuh .gt_bottom_border {
+#bajcituztq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vridskscuh .gt_col_headings {
+#bajcituztq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1804,7 +1863,7 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   border-right-color: #D3D3D3;
 }
 
-#vridskscuh .gt_col_heading {
+#bajcituztq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1824,7 +1883,7 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   overflow-x: hidden;
 }
 
-#vridskscuh .gt_column_spanner_outer {
+#bajcituztq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1836,15 +1895,15 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   padding-right: 4px;
 }
 
-#vridskscuh .gt_column_spanner_outer:first-child {
+#bajcituztq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vridskscuh .gt_column_spanner_outer:last-child {
+#bajcituztq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vridskscuh .gt_column_spanner {
+#bajcituztq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1856,11 +1915,11 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   width: 100%;
 }
 
-#vridskscuh .gt_spanner_row {
+#bajcituztq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vridskscuh .gt_group_heading {
+#bajcituztq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1886,7 +1945,7 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   text-align: left;
 }
 
-#vridskscuh .gt_empty_group_heading {
+#bajcituztq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1901,15 +1960,15 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   vertical-align: middle;
 }
 
-#vridskscuh .gt_from_md > :first-child {
+#bajcituztq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vridskscuh .gt_from_md > :last-child {
+#bajcituztq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vridskscuh .gt_row {
+#bajcituztq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1928,7 +1987,7 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   overflow-x: hidden;
 }
 
-#vridskscuh .gt_stub {
+#bajcituztq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1941,7 +2000,7 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   padding-right: 5px;
 }
 
-#vridskscuh .gt_stub_row_group {
+#bajcituztq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1955,15 +2014,15 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   vertical-align: top;
 }
 
-#vridskscuh .gt_row_group_first td {
+#bajcituztq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vridskscuh .gt_row_group_first th {
+#bajcituztq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vridskscuh .gt_summary_row {
+#bajcituztq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1973,16 +2032,16 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   padding-right: 5px;
 }
 
-#vridskscuh .gt_first_summary_row {
+#bajcituztq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vridskscuh .gt_first_summary_row.thick {
+#bajcituztq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vridskscuh .gt_last_summary_row {
+#bajcituztq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1992,7 +2051,7 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   border-bottom-color: #D3D3D3;
 }
 
-#vridskscuh .gt_grand_summary_row {
+#bajcituztq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2002,7 +2061,7 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   padding-right: 5px;
 }
 
-#vridskscuh .gt_first_grand_summary_row {
+#bajcituztq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2012,7 +2071,7 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   border-top-color: #D3D3D3;
 }
 
-#vridskscuh .gt_last_grand_summary_row_top {
+#bajcituztq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2022,11 +2081,11 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   border-bottom-color: #D3D3D3;
 }
 
-#vridskscuh .gt_striped {
+#bajcituztq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vridskscuh .gt_table_body {
+#bajcituztq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2035,7 +2094,7 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   border-bottom-color: #D3D3D3;
 }
 
-#vridskscuh .gt_footnotes {
+#bajcituztq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2049,7 +2108,7 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   border-right-color: #D3D3D3;
 }
 
-#vridskscuh .gt_footnote {
+#bajcituztq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2058,7 +2117,7 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   padding-right: 5px;
 }
 
-#vridskscuh .gt_sourcenotes {
+#bajcituztq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2072,7 +2131,7 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   border-right-color: #D3D3D3;
 }
 
-#vridskscuh .gt_sourcenote {
+#bajcituztq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2080,72 +2139,72 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
   padding-right: 5px;
 }
 
-#vridskscuh .gt_left {
+#bajcituztq .gt_left {
   text-align: left;
 }
 
-#vridskscuh .gt_center {
+#bajcituztq .gt_center {
   text-align: center;
 }
 
-#vridskscuh .gt_right {
+#bajcituztq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vridskscuh .gt_font_normal {
+#bajcituztq .gt_font_normal {
   font-weight: normal;
 }
 
-#vridskscuh .gt_font_bold {
+#bajcituztq .gt_font_bold {
   font-weight: bold;
 }
 
-#vridskscuh .gt_font_italic {
+#bajcituztq .gt_font_italic {
   font-style: italic;
 }
 
-#vridskscuh .gt_super {
+#bajcituztq .gt_super {
   font-size: 65%;
 }
 
-#vridskscuh .gt_footnote_marks {
+#bajcituztq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vridskscuh .gt_asterisk {
+#bajcituztq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vridskscuh .gt_indent_1 {
+#bajcituztq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vridskscuh .gt_indent_2 {
+#bajcituztq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vridskscuh .gt_indent_3 {
+#bajcituztq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vridskscuh .gt_indent_4 {
+#bajcituztq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vridskscuh .gt_indent_5 {
+#bajcituztq .gt_indent_5 {
   text-indent: 25px;
 }
 
-#vridskscuh .katex-display {
+#bajcituztq .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#vridskscuh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#bajcituztq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2162,10 +2221,10 @@ Figure&nbsp;1: Bootstrap sampling distribution of the difference in mean visits 
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_right" headers="se">0.248</td>
-<td class="gt_row gt_right" headers="lower_95">0.532</td>
+<td class="gt_row gt_right" headers="se">0.25</td>
+<td class="gt_row gt_right" headers="lower_95">0.541</td>
 <td class="gt_row gt_right" headers="estimate">1.026</td>
-<td class="gt_row gt_right" headers="upper_95">1.508</td>
+<td class="gt_row gt_right" headers="upper_95">1.542</td>
 </tr>
 </tbody>
 </table>

@@ -1,0 +1,190 @@
+## •  19. Post hoc tests  {.unnumbered  #post_hoc}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(janitor)
+library(ggforce)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+library(broom)
+library(forcats)
+source("../../_common.R") 
+
+hz_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/zones_df_admix_weight_cutoff0.9_gps_dist2het_phenos_excl_GC.csv"
+
+clarkia_hz <- read_csv(hz_link)|> 
+  select(-weighted)|>
+  rename(admix_proportion = `cutoff0.9`) |>
+  filter(!is.na(admix_proportion))|>
+  clean_names() |>
+  mutate(site = if_else(site == "SAW", "SR", site)) |>
+  filter(subsp=="P")|>
+  mutate(site = fct_reorder(site, mean_petal_area_sq_cm))
+```
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+
+**Motivating Scenario:**You rejected ANOVA’s null hypothesis that all group means are equal, but you’re still not happy. You want to know which groups differ!
+
+**Learning Goals: By the end of this subchapter, you should be able to:**
+
+* Distinguish between planned and unplanned (post hoc) comparisons.
+* Conduct and interpret post hoc tests in R using functions such as `TukeyHSD()`, `glht()`, and `games_howell_test()`.
+* Interpret the results of pairwise comparisons and summarize which groups differ significantly.
+* Avoid conducting post-hoc tests when you fail to reject ANOVA’s null hypothesis.
+
+
+
+:::
+
+
+---
+
+## Motivation
+
+ANOVA tells us that at least one group differs, but not which one. So, if you failed to reject the null, you're done! But, if  you did reject the null, this rejection might feel a bit hollow. You know that not all groups are the same, but you don't know which groups differ from one another, so what's the point even? 
+
+Here, we introduce post-hoc tests. Post hoc is Latin for "after this". So, after you reject the null hypothesis that all groups come from the same population, you can run a post hoc test to see which groups differ from one another. Post hoc tests are much like pairwise t-tests, with slight modifications to control for false positives from multiple comparisons and to account for the fact that we’ve already rejected the overall null hypothesis  that all groups are the same.
+
+
+:::warning
+Do not run a post-hoc test if you fail to reject the null!
+:::
+
+## P-values from `lm() |> summary()`  are wrong
+
+You might think "*Hey, I know how to find p-values associated with specific categories, I can just pipe the `lm()` output into `summary()`.*" But you would be wrong. 
+
+```{r}
+#| eval: false
+lm(admix_proportion ~ site, data = clarkia_hz)|>
+    summary()
+```
+
+
+```{r}
+#| echo: false
+include_graphics("../../figs/linear_models/anova/bad.png")  
+```
+ 
+---
+
+The outputs of this pipeline below is not fully meaningless, but are often misleading and should be ignored for multi-group comparisons. Hopefully the rows are familiar by now:   
+
+-  **Estimate**:  The estimated coefficient for that term in the model. For `(Intercept)`, it's the mean of the reference group. For the other groups its the deviation from this mean.      
+-  **Std. Error**: Is the uncertainty in this estimated value.   
+-  **t-value**: Is the distance between our estimated value and 0 in units of standard errors (i.e. `Estimate / Std. Error`).   
+-  **Pr(>|t|):** Is the p-value: `2 * pt(abs(t), df, lower.tail = FALSE)`. 
+
+The estimate and standard error are usually interesting and meaningful. However, the t-value and p-value from the `lm() |> summary()` pipeline are usually useless and confusing.  
+
+- For the `(Intercept)` row, these relate to the null hypothesis that this value equals zero. In our case this is clearly stupid -- the admixture proportion cannot be negative, so any nonzero value means we know the mean is not zero. 
+
+- the t- and p-values test whether each category differs from the reference level. While these hypotheses may be interesting, these summaries should still be ignored because:    
+
+   - The t-value is wrong because it uses the total error degrees of freedom. This is wrong because in ANOVA, we partition variance among groups, so the residual df used here aren’t appropriate for multiple comparisons. 
+   - The p-value is wrong because it comes from a wrong t-value, and because it does not acknowledge the multiple comparisons or the fact that we already reject the null from the ANOVA.
+
+Additionally, this output does not allow us to test differences between two non-reference categories.
+
+
+## Post-hoc tests
+
+There are two flavors of post-hoc tests. 
+
+**In "planned comparisons"** we are only interested in a small subset of the potential pairwise comparisons. In these cases, we limit our analysis to specific differences that are interesting for biological reasons, and ignore most of the potential comparisons. Planned comparisons provide more power, because we limit our attention to a small number of tests. 
+
+::: aside
+I will not focus planned comparisons. See [this resource](https://web.pdx.edu/~newsomj/uvclass/ho_planned%20contrasts.pdf) for more information.
+:::
+
+**In "unplanned comparisons"** we are interested in all potential pairwise differences. Post-hoc test overcome the multiple comparisons problem by building a sampling distribution that conditions on there being at least one difference and numerous pairwise tests. Below we introduce numerous ways how to conduct unplanned post-hoc tests in R. 
+
+:::aside 
+The Tukey-Kramer method's is one common post hoc test. Its test statistic. $q$  measures the distance bewtween group means in standard error units.    
+
+$q= \frac{Y_i-Y_j}{SE}$, where $\text{SE} = \sqrt{\text{MS}_\text{error}(\frac{1}{n_i}+ \frac{1}{n_j})}$.
+:::
+
+
+
+
+
+### From `aov()`
+
+
+If we built our ANOVA with the `aov()` function, piping this output to the  [`TukeyHSD()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/TukeyHSD.html) conducts this post-hoc test for you. You can see from the example below that we resoundingly reject  the null that means are equal for all pairwise comparisons except SR vs SM, and S6 vs S22. 
+
+```{r}
+#| eval: false
+aov(admix_proportion ~ site, data = clarkia_hz)|> 
+  TukeyHSD()
+```
+
+```{r}
+#| echo: false
+library(tibble)
+(aov(admix_proportion ~ site, data = clarkia_hz)|> TukeyHSD())[["site"]]|>data.frame()|> rownames_to_column(var = "comparison")|> mutate_at(2:5, round, digits =4)|>kable()
+```
+
+---
+
+### From `lm()`
+
+If we built our anova as a linear model we can conduct a similar post-hoc test the [`glht()`](https://search.r-project.org/CRAN/refmans/multcomp/html/glht.html) function in the [`multicomp`](https://multcomp.r-forge.r-project.org/) package. This implementation of the Tukey  test is slightly different from how it's done in TukeyHSD(), so our p-values are slightly different.
+
+
+:::aside
+We will see later that this approach can be generalized to more complex linear models.
+:::
+
+```{r}
+#| message: false
+#| warning: false
+library(multcomp)
+lm(admix_proportion ~ site, data = clarkia_hz)|>
+    glht(linfct = mcp(site = "Tukey"))|>
+    summary()
+```
+
+---
+
+## From Welch's ANOVA
+
+The Games Howell test, available in the [`rstatix`](https://rpkgs.datanovia.com/rstatix/) package (as [`games_howell_test()`](https://search.r-project.org/CRAN/refmans/rstatix/html/games_howell_test.html)), is a post-hoc test which does not assume equal variance among groups. You can see that our main conclusions hold, but that we have slightly more power and can now reject the null that SR and SM have the same admixture proportion. 
+
+*However* I worry that this power is unearned, as a I fear the low variance in sites SR and SM may reflect non-independence of data at each site.  
+
+
+
+```{r}
+#| message: false
+#| warning: false
+#| eval: false
+library(rstatix)
+games_howell_test(admix_proportion ~ site, data = clarkia_hz)
+```
+
+
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+#| column: page-right
+library(rstatix)
+games_howell_test(admix_proportion ~ site, data = clarkia_hz)|>
+  mutate_at(4:7, round, digits =4)|>
+kable()
+```

@@ -1,0 +1,257 @@
+## •  19. ANOVA Example  {.unnumbered  #anova_example}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tweetrmd)
+library(knitr)
+library(dplyr)
+library(readr)
+library(stringr)
+library(janitor)
+library(ggforce)
+library(webexercises)
+library(ggplot2)
+library(tidyr)
+library(broom)
+library(forcats)
+source("../../_common.R") 
+
+hz_link <- "https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/zones_df_admix_weight_cutoff0.9_gps_dist2het_phenos_excl_GC.csv"
+
+clarkia_hz <- read_csv(hz_link)|> 
+  select(-weighted)|>
+  rename(admix_proportion = `cutoff0.9`) |>
+  filter(!is.na(admix_proportion))|>
+  clean_names() |>
+  mutate(site = if_else(site == "SAW", "SR", site)) |>
+  filter(subsp=="P")|>
+  mutate(site = fct_reorder(site, mean_petal_area_sq_cm))
+```
+
+
+::: {.motivation style="background-color: #ffe6f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+
+**Motivating Scenario:**  You're ready to run an ANOVA with more than two groups! 
+
+**Learning Goals: By the end of this subchapter, you should be able to:**    
+
+
+- Calculate sums of squares, mean squares, the F statistic, and the associated p-value "by hand."  
+
+- Generate and Interpret ANOVA output from R (aov() or lm() pipelines) and relate it to the  variance partitioning.
+
+
+:::
+
+---
+
+We [previously saw](#f_calcs) how to partition variance components to calculate the relevant sums of squares needed to conduct an ANOVA and estimate the proportion of variance explained by our model. Recall that we found:
+
+- **Sum of Squares Model**  The sum of the squared difference between each individual's predicted value and the grand mean.    
+
+- **Sum of Squares Error**  The sum of the squared difference between each observed value and their predicted value.
+
+Together these sum to equal 
+
+- **Sum of Squares Total**  The sum of the squared difference between each observed value and the grand mean.
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| fig-height: 4
+#| fig-width: 12
+#| column: page-right
+#| label: fig-devs 
+#| fig-cap: "Partitioning the contribution of location and error to admixture proportion of  plants collected from four locations. **(A)** Model deviation: Lines show the distance between each sample's predicted value (i.e. group means) and the grand mean (black line). **(B)** Error (residual) deviation: Lines show the distance between each observation and its predicted value (i.e. group means). **(C)** Total deviation: Lines show the distance between each observation and the grand mean."
+#| fig-alt: "Three side-by-side scatterplots show how variation is partitioned in ANOVA. Each panel shows admixture proportions (y-axis) for plants from one of four hybrid zones. A horizontal black line marks the grand mean; horizontal red and blue bars mark group means. Vertical black lines connect points to their reference mean. **A** Model deviation: Shows vertical lines from group means to the grand mean, representing between-group variation. **B** Error (residual) deviation: Shows vertical lines from individual points to their group mean, representing within-group (aka error, aka residual) variation. **C** Total deviation: Shows vertical lines from individual points to the grand mean, representing overall variation."
+library(broom)
+library(patchwork)
+library(tidyverse)
+
+
+# ---- Load & prepare data ----
+clarkia_hz <- clarkia_hz |>
+  mutate(tmp = as.numeric(factor(site)) + admix_proportion,
+         id = factor(id),
+         id = fct_reorder(id, tmp))
+
+# Fit model
+site_lm <- lm(admix_proportion ~ site, data = clarkia_hz)
+
+# Add augment info
+plot_dat <- augment(site_lm) |>
+  mutate(id = row_number(),
+         mean_admix = mean(admix_proportion, na.rm = TRUE)) |>
+  mutate(tmp = as.numeric(factor(site)) + admix_proportion,
+         id = factor(id),
+         id = fct_reorder(id, tmp))
+
+# Data for mean lines per group
+mean_lines <- plot_dat |>
+  group_by(site) |>
+  summarise(xstart = min(as.numeric(id)),
+            xend   = max(as.numeric(id)),
+            mean_val = mean(admix_proportion),
+            .groups = "drop")
+
+# --- (C) Total deviation ---
+c <- ggplot(plot_dat,
+            aes(x = as.numeric(id), y = admix_proportion, color = site)) +
+  geom_point(alpha = 0.7, size = 2) +
+  geom_hline(aes(yintercept = mean_admix)) +
+  labs(title = "  (C) Total deviation",
+       color = "Site",
+       y = "Admixture proportion") +
+  geom_segment(aes(xend = as.numeric(id), 
+                   yend = mean_admix),
+               color = "black", alpha = 0.5, linewidth = 0.5) +
+  theme_light(base_size = 13) +
+  theme(axis.title.x = element_blank(),
+        axis.text.x  = element_blank(),
+        axis.ticks.x = element_blank())
+
+# --- (A) Model deviation ---
+a <- ggplot(plot_dat,
+            aes(x = as.numeric(id), y = admix_proportion, color = site)) +
+  geom_point(alpha = 0.7, size = 2) +
+  geom_hline(aes(yintercept = mean_admix)) +
+  # deviation lines
+  geom_segment(aes(xend = as.numeric(id), y = .fitted, yend = mean_admix),
+               color = "black", alpha = 0.5, linewidth = 0.5) +
+  # fitted line
+  geom_line(aes(y = .fitted), linewidth = 1.2, show.legend = FALSE) +
+  # horizontal group means
+  geom_segment(data = mean_lines,
+               aes(x = xstart, xend = xend,
+                   y = mean_val, yend = mean_val,
+                   color = site), show.legend = FALSE,
+               linewidth = 1.2, inherit.aes = FALSE) +
+  labs(title = "(A) Model deviation +",
+       color = "Site",
+       y = "Admixture proportion")  +
+  theme_light(base_size = 13) +
+  theme(axis.title.x = element_blank(),
+        axis.text.x  = element_blank(),
+        axis.ticks.x = element_blank())
+
+# --- (B) Error deviation ---
+b <- ggplot(plot_dat,
+            aes(x = as.numeric(id), y = admix_proportion, color = site)) +
+  geom_point(alpha = 0.7, size = 2) +
+  geom_hline(aes(yintercept = mean_admix)) +
+  # deviation lines to fitted
+  geom_segment(aes(xend = as.numeric(id), yend = .fitted),
+               color = "black", alpha = 0.5, linewidth = 0.5) +
+  # fitted line
+  geom_line(aes(y = .fitted), linewidth = 1.2, show.legend = FALSE) +
+  # horizontal group means
+  geom_segment(data = mean_lines,
+               aes(x = xstart, xend = xend,
+                   y = mean_val, yend = mean_val,
+                   color = site),
+               linewidth = 1.2, inherit.aes = FALSE, show.legend = FALSE) +
+  labs(title = "(B) Error (residual) deviation =",
+       color = "Site",
+       y = "Admixture proportion")  +
+  theme_light(base_size = 13) +
+  theme(axis.title.x = element_blank(),
+        axis.text.x  = element_blank(),
+        axis.ticks.x = element_blank())
+
+
+
+# Combine panels with shared y-axis and legend
+(a + b + c) +
+  plot_layout(guides = "collect",
+              axis_titles = "collect",
+              axes = "collect_y") &
+  theme(legend.position = "right",
+        legend.text = element_text(size = 20),
+        legend.title = element_text(size = 20),)
+
+```
+
+
+---
+
+We can use the logic illustrated in  @fig-devs to calculate the relevant sums of squares, and the proportion  variance explained by the model, $r^2$: 
+
+```{r}
+ss_site_model <- clarkia_hz |>
+  mutate(grand_mean = mean(admix_proportion))|>
+  group_by(site)|>
+  mutate(y_hat = mean(admix_proportion))|>
+  ungroup()|>
+  summarise( ss_model = sum((y_hat - grand_mean)^2),
+             ss_error = sum((admix_proportion - y_hat)^2),
+             ss_total = sum((admix_proportion - grand_mean)^2),
+             r2       = ss_model /  ss_total,
+             n        = n(),
+             n_groups = n_distinct(site))
+```
+
+
+```{r}
+#| echo: false
+ss_site_model |>
+  mutate_at(1:4, round, digits = 4)|> kable()
+```
+
+
+Knowing that $\text{DF}_\text{model} = n_\text{groups}-1$, and  $\text{DF}_\text{error} = n- n_\text{groups}$, we can find mean squares, $F$ and our p-value: 
+
+
+:::aside
+`pf()` looks up our F alue on the F distribution with df1 = df_groups, and df_2 = df_error. Recall that F is a one tailed test -- we only want the upper tail (`lower.tail = FALSE`)
+:::
+
+```{r}
+anova_results <- ss_site_model |>
+  mutate(ms_model =  ss_model / (n_groups - 1),
+         ms_error =  ss_error / (n - n_groups),
+         F_value   =  ms_model / ms_error,
+         p_value  = pf(F_value , n_groups - 1, n - n_groups, lower.tail = FALSE))
+```
+
+```{r}
+#| echo: false
+anova_results |> 
+  mutate_at(1:4, round, digits = 4) |>
+  select(ms_model,
+         ms_error,
+         F_value)|>
+  mutate(p_value = "3.2 x 10^-25")|>
+  kable()
+```
+
+## ANOVA in R
+
+Of course R can do these calculations for us, with either the `aov() |> summary()` pipeline, or the `lm() |> anova()` pipeline. both approaches yield the same result as our manual calculation above.
+
+### `aov() |> summary()`
+
+```{r}
+aov(admix_proportion ~ site, data = clarkia_hz)
+```
+
+```{r}
+aov(admix_proportion ~ site, data = clarkia_hz)|>
+  summary()
+```
+
+
+### `lm() |> anova()`
+
+```{r}
+lm(admix_proportion ~ site, data = clarkia_hz)
+```
+
+
+```{r}
+lm(admix_proportion ~ site, data = clarkia_hz)|>
+  anova()
+```

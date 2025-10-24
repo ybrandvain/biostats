@@ -1,0 +1,234 @@
+# 🧠 Knowledge Base: Chapter 19 — “>2 Categories (ANOVA)”
+
+---
+
+## 📘 Chapter Overview
+
+This chapter builds directly on the previous section about the two-sample *t-test* and introduces ANOVA as a **unified framework** for comparing more than two group means.
+It integrates **variance partitioning**, **linear-model framing**, and **post-hoc comparisons**, emphasizing conceptual continuity (e.g., mean squares error as pooled variance).
+Throughout, students work with *Clarkia xantiana parviflora* hybrid-zone data on admixture proportion and petal area.
+
+### 🌱 Overarching Learning Goals
+
+By the end of this chapter, students should be able to:
+
+1. Explain why conducting multiple pairwise *t*-tests inflates false positives and why ANOVA provides a single, well-calibrated test.
+2. Interpret ANOVA as a **linear model**, linking sums of squares, mean squares, F-ratios, and p-values.
+3. Check ANOVA assumptions (independence, normality, homoscedasticity, random sampling) and choose appropriate alternatives.
+4. Conduct ANOVA and post-hoc tests in R, interpret results, and summarize findings with significance groups.
+5. Communicate results clearly and avoid misleading overinterpretation of p-values.
+
+---
+
+## 🧩 Section-by-Section Context
+
+### **Section: Multiple Testing Problem**
+
+**Motivation:** Why not just run many *t*-tests?
+**Learning Goals:**
+
+* Describe how running many independent tests inflates the experiment-wise Type I error rate.
+* Derive how $1-(1-\alpha)^{n_\text{pairs}}$ increases with number of comparisons.
+* Explain how ANOVA reframes the problem as a single null hypothesis: all group means equal.
+* Recognize other corrections (Bonferroni, FDR) and their logic.
+
+**Tutor context:**
+
+* Use the jelly-bean xkcd comic or the Clarkia violin plots to illustrate the danger of “fishing” for significance.
+* Common misconception: students think a few *t*-tests are fine — emphasize exponential error inflation.
+* Equations: $n_\text{pairs} = \frac{n(n-1)}{2}$; overall $\alpha = 1-(1-\alpha_\text{per test})^{n_\text{pairs}}$.
+
+**Key figures:**
+
+* *Six pairwise comparisons* (Fig. sixcomps)
+* *Inflation of false positives with group number* (Fig. mutltest)
+
+---
+
+### **Section: ANOVA as a Linear Model**
+
+**Motivation:** Connect to the linear model students already know.
+**Learning Goals:**
+
+* Recognize that ANOVA is just a linear model with categorical predictors.
+* Interpret coefficients: intercept = mean of reference level; slopes = differences from reference.
+* Compute predicted means manually; understand `.fitted` and `.resid` in `broom::augment()`.
+* Re-level factors using `forcats::fct_relevel()` to choose a meaningful reference.
+
+**Tutor context:**
+
+* Reinforce the connection: “the mean is the simplest linear model.”
+* Help students write out model equations, e.g.
+  $\hat{Y_i} = a + b_1 \text{Group1}_i + b_2 \text{Group2}_i + …$
+* Clarify that dummy variables (0/1) encode group membership.
+* R outputs from `lm(admix_proportion ~ site)` show these contrasts explicitly.
+* Emphasize *residuals* = individual deviation from group mean.
+
+**Key R functions / pipelines:**
+
+* `lm()`, `summary()`, `broom::augment()`, `forcats::fct_relevel()`, `%>%`
+* Visual diagnostics: residual lines figure (`fig-resid`).
+
+---
+
+### **Section: ANOVA Assumptions**
+
+**Motivation:** Before testing, check your footing.
+**Learning Goals:**
+
+* List and evaluate ANOVA’s assumptions:
+
+  1. Independence
+  2. Random sampling
+  3. Equal variance (homoscedasticity)
+  4. Normality of residuals within groups
+* Diagnose violations via Q–Q plots and residual histograms.
+* Choose among remedies: Welch’s ANOVA, data transformation, rank-based tests, or robust methods.
+
+**Tutor context:**
+
+* Visual diagnostics: Fig. notnormal (Q–Q + histograms).
+* Routines to summarize variance:
+
+  ```r
+  clarkia_hz |> group_by(site) |> summarise(var(admix_proportion))
+  ```
+* Emphasize conceptual trade-offs: clarity vs “statistical purity.”
+* Highlight that permutation tests may worsen variance inequality (students often misunderstand this).
+* Introduce `oneway.test()` for Welch’s ANOVA (handles unequal variances).
+
+**Key R functions / pipelines:**
+
+* `oneway.test()`, `ggplot2::geom_qq()`, `facet_wrap()`, `broom`, `summarise()`.
+
+---
+
+### **Section: ANOVA Example**
+
+**Motivation:** See the mechanics behind F.
+**Learning Goals:**
+
+* Compute sums of squares manually:
+
+  * SS_total = total variability
+  * SS_model = between-group variability
+  * SS_error = within-group variability
+* Derive mean squares (MS = SS/df), compute F = MS_model / MS_error.
+* Use `pf()` to find the p-value from the F distribution.
+* Connect to variance partitioning visuals (total = model + error).
+* Confirm R’s results from `aov()` and `lm() |> anova()` pipelines.
+
+**Tutor context:**
+
+* Reinforce that MS_error = pooled variance from *t*-test logic.
+* Encourage linking this section to earlier “variance partitioning” and “sum of squares” exercises.
+* Tutor should prompt students to explain why ANOVA is one-tailed (F ≥ 0).
+
+**Key R functions / pipelines:**
+
+* `lm() |> anova()`, `aov() |> summary()`, `pf()`, `summarise()`, `mutate()`
+* Emphasize equivalence between manual and automated computations.
+
+**Figures:**
+
+* Fig. devs (partitioning variance diagram, A–C panels)
+
+---
+
+### **Section: Post-hoc Tests**
+
+**Motivation:** ANOVA says “groups differ” — now find which ones.
+**Learning Goals:**
+
+* Distinguish between planned and unplanned (post hoc) comparisons.
+* Understand why p-values from `lm() |> summary()` are misleading in multi-group settings.
+* Conduct post-hoc tests using `TukeyHSD()` (for equal variances) or `glht()` (from `multcomp`).
+* Use `games_howell_test()` (from `rstatix`) when variances differ.
+* Avoid running post-hoc tests when you fail to reject ANOVA’s null hypothesis.
+
+**Tutor context:**
+
+* Students often think `summary(lm())` is enough — clarify why its p-values are invalid.
+* Encourage interpreting direction, magnitude, and biological meaning of pairwise differences.
+* Use plain language: “ANOVA shows that *somewhere* there’s a difference; post-hoc tests show *where*.”
+* Provide conceptual parallel: post-hoc = adjusted *t*-tests under ANOVA logic.
+
+**Key R functions / pipelines:**
+
+* `aov() |> TukeyHSD()`
+* `lm() |> glht(linfct = mcp(factor = "Tukey"))`
+* `rstatix::games_howell_test()`
+* Packages: `multcomp`, `rstatix`
+
+NOTE glht requires the x to be a factor, so student my need  to mutate(x = factor(x)) 
+---
+
+### **Section: Significance Groups**
+
+**Motivation:** Communicate complex pairwise results simply.
+**Learning Goals:**
+
+* Assign groups with shared or distinct significance letters (“a”, “b”, “a,b”).
+* Interpret overlaps correctly (overlapping letters = not significantly different).
+* Visualize significance letters clearly on plots.
+
+**Tutor context:**
+
+* Reinforce logic: *same letter = not significantly different; different letters = significant difference.*
+* Demonstrate automating with `cld()` (compact letter display) from `multcomp`.
+* Connect back to clear data storytelling and accessibility goals (e.g., letter labels on ggplot).
+
+**Key R functions / pipelines:**
+
+* `glht() |> cld()`, `mutate(case_when())`, `geom_text()`
+
+**Example pattern for tutor:**
+
+```r
+lm(admix_proportion ~ site, data = clarkia_hz) |>
+  glht(linfct = mcp(site = "Tukey")) |>
+  cld()
+```
+
+---
+
+## 💡 Conceptual Connections
+
+* **ANOVA generalizes the t-test:** when comparing two groups, F = t².
+* **Mean Squares Error (MS_error)** = pooled within-group variance — the same denominator as in a two-sample t-test.
+* **F statistic logic:**
+  $$ F = \frac{\text{variance among group means}}{\text{variance within groups}} $$
+  Large F → group means differ more than expected by chance.
+* **Assumptions ≈ Linear Model Family:** ANOVA shares the same framework as regression (normal residuals, independent errors, equal variance).
+* **Interpretation caution:** “Significant” ≠ “biologically important.” Emphasize effect size and variance explained (R²).
+
+---
+
+## 🧰 R Functions and Packages Used
+
+| Package                             | Key Functions                                                     | Purpose                                         |
+| ----------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------- |
+| **dplyr**                           | `mutate()`, `summarise()`, `filter()`, `group_by()`, `%>%`        | Data wrangling                                  |
+| **ggplot2 / ggforce / patchwork**   | `geom_violin()`, `geom_sina()`, `geom_errorbar()`, `facet_wrap()` | Visualization                                   |
+| **broom**                           | `augment()`                                                       | Extract fitted/residual values                  |
+| **forcats**                         | `fct_reorder()`, `fct_relevel()`                                  | Manage factor levels                            |
+| **stats**                           | `aov()`, `lm()`, `anova()`, `oneway.test()`, `pf()`               | ANOVA & Welch’s ANOVA                           |
+| **multcomp**                        | `glht()`, `cld()`                                                 | Post-hoc pairwise tests, compact letter display |
+| **rstatix**                         | `games_howell_test()`                                             | Variance-unequal post-hoc test                  |
+| **webexercises**                    | `longmcq()`, `fitb()`                                             | Interactive exercises                           |
+| **janitor**, **readr**, **stringr** | Cleaning and import utilities                                     |                                                 |
+
+---
+
+## 🗣️ Tutor Guidance
+
+When responding to students:
+
+* Use a **conversational, Socratic tone** (“What does F compare?” / “How is MS_error similar to pooled variance?”).
+* **Encourage reasoning before revealing results**; remind students to check assumptions before interpreting.
+* Keep responses short (1–3 sentences), with longer follow-ups only for conceptual clarification.
+* Use analogies (e.g., “ANOVA asks one big question instead of many small ones”).
+* Draw connections between visual intuition and equations (“Each vertical line in the plot shows a deviation contributing to SS_error”).
+* When code questions arise, remind students of tidyverse idioms first before base R alternatives.
+* Avoid math overload — emphasize meaning and biological interpretation.
+
