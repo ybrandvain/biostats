@@ -1,0 +1,2436 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>21. Two predictors – Applied Biostatistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../references.html" rel="next">
+<link href="../book_sections/linear_regression.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-710ea84994903bc41163d01235b9627e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-82a15b99bf7720207ddddc281aa6ceca.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="../site_libs/htmltools-fill/fill.css" rel="stylesheet">
+<script src="../site_libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="../site_libs/datatables-css/datatables-crosstalk.css" rel="stylesheet">
+<script src="../site_libs/datatables-binding/datatables.js"></script>
+<script src="../site_libs/jquery/jquery-3.6.0.min.js"></script>
+<link href="../site_libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="../site_libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="../site_libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="../site_libs/crosstalk/css/crosstalk.min.css" rel="stylesheet">
+<script src="../site_libs/crosstalk/js/crosstalk.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../assets/sticky-notes.css">
+<link rel="stylesheet" href="../assets/table-styles.css">
+<link rel="stylesheet" href="../assets/webex.css">
+</head>
+
+<body class="nav-sidebar floating fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book_sections/two_predictors.html">21. Two predictors</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../figs/fun_figs/stamp.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Applied Biostatistics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/clarkia_and_its_data/clarkia_and_its_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motivating biology and datasets</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/example_mini/varType.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Types of Variables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/intro2r_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SECTION I: Intro to R</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/getting_started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Getting started with R</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/getting_started/functions_and_vectors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Functions and vectors</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/getting_started/loading_packages_and_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Load packages and data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/getting_started/data_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Data types in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/getting_started/rstudio_orientation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Orientation to RStudio</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/getting_started/getting_started_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Getting started summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/data_in_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Data in R</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_in_R/add_vars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Adding columns w mutate</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_in_R/select_vars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Selecting columns</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_in_R/summarize_vars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Summarizing columns</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_in_R/choose_rows.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Choose rows</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_in_R/data_in_R_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Data in R summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Introduction to ggplot</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/intro_to_ggplot/one_continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. A continuous variable</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/intro_to_ggplot/saving_ggplots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Saving a ggplot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/intro_to_ggplot/cont_cat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Continuous y/categorical x</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/intro_to_ggplot/two_categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Two categorical variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/intro_to_ggplot/two_continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Two continuous variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/intro_to_ggplot/many_explanatory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Many explanatory vars</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/intro_to_ggplot/ggplot_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. ggplot summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/reproducible_science.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Reproducible Science</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/reproducible_science/collecting_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 4. Collecting data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/reproducible_science/reproducible_analyses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 4. Reproducible analyses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/reproducible_science/reproducible_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 4. Reproducibility summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/summarizing_data_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section II: Summarizing data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/univariate_summaries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5. Simple Summaries</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/univariate_summaries/summarizing_shape.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Summarizing shape</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/univariate_summaries/changing_shape.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Changing shape</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/univariate_summaries/summarizing_center.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Summarizing the center</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/univariate_summaries/summarizing_variability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Summarizing variability</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/univariate_summaries/summarizing_summaries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Summarizing summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/associations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6. Associations</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/associations/cat_cont.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 6. Categorical + numeric</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/associations/two_categorical_vars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 6. Two categorical vars</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/associations/cont_cont.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 6. Two numeric vars</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/associations/summarizing_associations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 6. Association Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/linear_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7. Linear Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/linear_models/mean.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Mean</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/linear_models/lm_cat_pred.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Categorical predictor</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/linear_models/regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Linear regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/linear_models/two_predictors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Two predictors</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/linear_models/lm_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Linear model summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/ordination.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">8. Ordination</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/ordination/pca.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. PCA quick start</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/ordination/pcaII.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. PCA deeper dive</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/ordination/pcaIII.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. PCA – Gotchas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/ordination/pcalternatives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. PCAlternatives</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/ordination/ordination_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. Ordination summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/data_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">9. Better Figures</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_viz/audience&amp;delivery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Audience &amp; Format</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_viz/honest_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Honest plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_viz/transparent_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Transparent plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_viz/clear_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Clear plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_viz/avoid_distractions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Avoid Distractions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_viz/accessible_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Accessible Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_viz/writing_about_figures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Writing about plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_viz/dataviz_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Dataviz Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/betteR_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">10. Better Figures in R</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/betteR_plots/plotting_tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 10. Tools for BetteR plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/betteR_plots/cleaR_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 10. Making cleaR plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/betteR_plots/plots_foR_medium.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 10. Plots for the medium</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/betteR_plots/betteR_plots_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 10. Better ggplots summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/stats_foundation_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section III: Stats Foundations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/sampling_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">11. Intro to Sampling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/sampling/sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/sampling/sampling_error.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Error</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/sampling/sampling_bias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Bias</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/sampling/nonindependence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Non-independence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/sampling/better_sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Better</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/sampling/sampling_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/uncertainty.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">12. Uncertainty</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/uncertainty/bootstrap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 12. Bootstrap</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/uncertainty/ci.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 12. Confidence Intervals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/uncertainty/boot_infer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 12. Bootstrapping w/<code>infer</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/uncertainty/boot_gotchas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 12. Gotchas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/uncertainty/uncertainty_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 12. Uncertainty summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/nhst.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">13. Null Hypothesis Significance Testing</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/nhst/statistical_hypotheses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. Statistical Hypotheses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/nhst/p_values.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. P Values</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/nhst/statistical_significance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. Statistical Significance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/nhst/nhst_gotchas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. Considerations for NHST</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/nhst/nhst_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. NHST summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/shuffling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">14. Shuffling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/shuffling/the_frogs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. The frogs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/shuffling/permute.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Permute</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/shuffling/permute_nonindependent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Structured Permutation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/shuffling/shuffling_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Shuffling summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/chi2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">14-B. χ2</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/chi2/expectations_and_differences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. What to expect</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/chi2/associations_between_catvars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> Two Cats</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/chi2/chi2_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> distribution</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/chi2/chi2_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/stats_4_linear_models_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section IV: Stats for Linear Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/normal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">15. Normal distribution</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/normal_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/normal_properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Properties</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/noRmal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Simulations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/p_norm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Math</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/is_it_normal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Is It Normal?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/clt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. The Normal is Common</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Make It Normal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/normal_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">16. The t distribution</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/t/t_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. t: Example Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/t/summaries_4_t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Data summaries for t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/t/t_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Assumptions of t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/t/t_CI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Uncertain-t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/t/one_sample_t_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. One sample t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/t/one_sample_t_test_in_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. One sample t-test in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/t/paired_t_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. The “Paired” t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/t/t_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. t Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/two_ts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">17. A binary explanatory variable</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/two_ts/2t_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 17. Two-t Assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/two_ts/2t_calcs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 17. Two-t Calculations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/two_ts/uncertain2t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 17. Uncertain-2t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/two_ts/nhs2t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 17. Two-sample t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/two_ts/2t_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 17. Two t Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/f.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">18. F this!</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/f/from_sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. F the ratio of variance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/f/f_calcs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. F Calculations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/f/FR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. F and anova in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/f/Finding_connections.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. F-inding connecTions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/f/f_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. F (ANOVA) summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">19. &gt;2 Categories</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/anova/multiple_testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. Multiple testing problem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/anova/anova_lm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA: a linear model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/anova/anova_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/anova/anova_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA Example</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/anova/post_hoc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. Post hoc tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/anova/sig_groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. Significance groups</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/anova/Ranova_pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. R ANOVA pipeline</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/anova/anova_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">20. Linear Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/two_predictors.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">21. Two predictors</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="anova" class="quarto-section-identifier">21. Two predictors</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><span style="color: Blue;font-size:22px;"> Motivating scenarios: </span> <span style="color: Black;font-size:18px;"> We have numerous explanatory variables and want to develop an synthetic model. </span></p>
+<p><strong>Learning goals: By the end of this chapter you should be able to</strong></p>
+<ul>
+<li>Write down and interpret longer and more complex linear models.<br>
+</li>
+<li>Interpret a polynomial regression and run one in R.<br>
+</li>
+<li>Interpret and run two factor ANOVAs in R.<br>
+</li>
+<li>Calculate TYPE I sums of squares.</li>
+</ul>
+<section id="review-of-linear-models" class="level2">
+<h2 class="anchored" data-anchor-id="review-of-linear-models">Review of Linear Models</h2>
+<p>A linear model predicts the response variable, as <span class="math inline">\(\widehat{Y_i}\)</span> by adding up all components of the model.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/other-stats-artwork/dragon_predict_mlr.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="float:right;padding-left: 5px;width:50.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span class="math display">\[\begin{equation}
+\hat{Y_i} = a + b_1  y_{1,i} + b_2 y_{2,i} + \dots{}
+(\#eq:predlong)
+\end{equation}\]</span></p>
+<p>Linear models we have seen</p>
+<ul>
+<li>One sample t-tests: <span class="math inline">\(\widehat{Y} = \mu\)</span><br>
+</li>
+<li>Two sample t-tests: <span class="math inline">\(\widehat{Y_i} = \mu + A_i\)</span> <span style="color: LightGrey;">(<span class="math inline">\(A_i\)</span> can take 1 of 2 values)</span><br>
+</li>
+<li>ANOVA: <span class="math inline">\(\widehat{Y_i} = \mu + A_i\)</span> <span style="color: LightGrey;">(<span class="math inline">\(A_i\)</span> can take one of more than two values)</span><br>
+</li>
+<li>Regression <span class="math inline">\(\widehat{Y_i} = \mu + X_i\)</span> <span style="color: LightGrey;">(<span class="math inline">\(X_i\)</span> is continuous)</span></li>
+</ul>
+<p>So far we’ve mainly modeled a continuous response variable as a function of one explanatory variable. But linear models can include multiple predictors – for example, we can predict Dragon Weight as a function of both a categorical (spotted: yes/no) and continuous variable in the same model.</p>
+<section id="test-statistics-for-a-linear-model" class="level3">
+<h3 class="anchored" data-anchor-id="test-statistics-for-a-linear-model">Test statistics for a linear model</h3>
+<ul>
+<li><strong>The <span class="math inline">\(t\)</span> value</strong> describes how many standard errors an estimate is from its null value.<br>
+</li>
+<li><strong>The <span class="math inline">\(F\)</span> value</strong> quantifies the ratio of variation in a response variable associated with a focal explanatory variable (<span class="math inline">\(MS_{model}\)</span>), relative to the variation that is not attributable to this variable (<span class="math inline">\(MS_{error}\)</span>).</li>
+</ul>
+</section>
+<section id="assumptions-of-a-linear-model" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions-of-a-linear-model">Assumptions of a linear model</h3>
+<p>Remember that linear models assume</p>
+<ul>
+<li><strong>Linearity:</strong> That observations are appropriately modeled by adding up all predictions in our equation.<br>
+</li>
+<li><strong>Homoscedasticity:</strong> The variance of residuals is independent of the predicted value, <span class="math inline">\(\hat{Y_i}\)</span> is the same for any value of X.<br>
+</li>
+<li><strong>Independence:</strong> Observations are independent of each other (aside from the predictors in the model).<br>
+</li>
+<li><strong>Normality:</strong> That residual values are normally distributed.<br>
+</li>
+<li><strong>Data are collected without bias</strong> as usual.</li>
+</ul>
+</section>
+</section>
+<section id="polynomial-regression-example" class="level2">
+<h2 class="anchored" data-anchor-id="polynomial-regression-example">Polynomial regression example</h2>
+<p>We note that linear models can include e.g.&nbsp;squared, and geometric functions too, so long as we get out predictions by adding up all the components of the model.</p>
+<p>A classic example of a linear model is a <strong>polynomial regression</strong>, in which we predict some response variable as a function of a predictor and higher order terms of the predictor. The most common polynomial regression includes the explanatory variable and its square value @ref(eq:polynomial).</p>
+<p><span class="math display">\[\begin{equation}
+\begin{split}
+\widehat{Y_i} = a + b_1 \times y_{1,i} + b_2 \times X_{2,i}\\ \\
+\text{ where } X_{2,i} = X_{1,i}^2
+\end{split}
+(\#eq:polynomial)
+\end{equation}\]</span></p>
+<div class="cell" data-layout-align="center" type="rmdwarning">
+
+<div class="rmdwarning">
+Often including a cubic, or even a quadratic term is useful – but be thoughtful before adding too many in – each additional term takes away from our degrees of freedom, complicates interpretation, and may overfit the data. Let your biological intuition and statistical reasoning guide you.
+</div>
+</div>
+<section id="polynomial-regression-example-1" class="level3">
+<h3 class="anchored" data-anchor-id="polynomial-regression-example-1">Polynomial regression example</h3>
+<p>Let’s revisit our example polynomial regression example predicting the number of species from the productivity of the plot to work through these ideas. Recall that</p>
+<ul>
+<li>A simple linear regression did not fit the data well AND violated assumptions of a regression, as residuals were large and positive for intermediate predictions and large and negative for large or small predictions.<br>
+</li>
+<li>Including a squared term improved the model fit and had the data meet assumptions.</li>
+</ul>
+<p>Let’s write a descriptive equation for each model</p>
+<p><span class="math display">\[\text{N.SPECIES = CONSTANT + PRODUCTIVITY}\]</span> <span class="math display">\[\text{N.SPECIES = CONSTANT + PRODUCTIVITY + PRODUCTIVITY}^2\]</span></p>
+<p>We present these models in Figure @ref(fig:bmasslinsq). See that we can add a polynomial fit to our ggplot by typing <code>formula =  y ~ poly(x, 2, raw = TRUE)</code> into the <code>geom_smooth</code> function.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>bmass <span class="ot">&lt;-</span> <span class="fu">tibble</span>( <span class="at">Biomass =</span> <span class="fu">c</span>(<span class="fl">192.982</span>,<span class="fl">308.772</span>,<span class="fl">359.064</span>,<span class="fl">377.778</span>,<span class="fl">163.743</span>,<span class="fl">168.421</span>,<span class="fl">128.655</span>,<span class="fl">98.246</span>,<span class="fl">107.602</span>,<span class="fl">93.567</span>,<span class="fl">83.041</span>,<span class="fl">33.918</span>,<span class="fl">63.158</span>,<span class="fl">139.181</span>,<span class="fl">148.538</span>,<span class="fl">133.333</span>,<span class="fl">127.485</span>,<span class="fl">88.889</span>,<span class="fl">138.012</span>),   <span class="at">n.species =</span> <span class="fu">c</span>(<span class="fl">25.895</span>,<span class="fl">12.729</span>,<span class="fl">8.342</span>,<span class="fl">2.885</span>,<span class="fl">21.504</span>,<span class="fl">20.434</span>,<span class="fl">18.293</span>,<span class="fl">16.046</span>,<span class="fl">16.046</span>,<span class="fl">11.655</span>,<span class="fl">12.725</span>,<span class="fl">9.515</span>,<span class="fl">7.16</span>,<span class="fl">16.042</span>,<span class="fl">16.042</span>,<span class="fl">11.655</span>,<span class="fl">12.725</span>,<span class="fl">2.88</span>,<span class="fl">8.338</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>base_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(bmass, <span class="fu">aes</span>(<span class="at">x =</span> Biomass, <span class="at">y =</span>  n.species))<span class="sc">+</span>  <span class="fu">geom_point</span>()<span class="sc">+</span>  <span class="fu">xlab</span>(<span class="st">"Productivity (g/15 Days)"</span> )</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>linear_plot <span class="ot">&lt;-</span> base_plot <span class="sc">+</span>   <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Linear term"</span>) <span class="sc">+</span>  </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">'lm'</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>polynomial_plot <span class="ot">&lt;-</span> base_plot <span class="sc">+</span>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Linear and squared term"</span>) <span class="sc">+</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">'lm'</span>,<span class="at">formula =</span>  y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">2</span>, <span class="at">raw =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(linear_plot, polynomial_plot, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"a"</span>,<span class="st">"b"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="two_predictors_files/figure-html/bmasslinsq-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+<figcaption>(A) Fitting a linear regression to predict the number of plant species from prodcutivity of a plot. (B) A Adding a squared term to our linear regression.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="fitting-polynomial-regressions-in-r" class="level4">
+<h4 class="anchored" data-anchor-id="fitting-polynomial-regressions-in-r">Fitting polynomial regressions in R</h4>
+<p>Fitting a model with a linear term in R should look familiar to you. <code>linear_term &lt;- lm(n.species  ~ Biomass, bmass)</code></p>
+<p>There are a bunch of ways to add a polynomial term.</p>
+<ul>
+<li><code>lm(n.species  ~ poly(Biomass, degree = 2, raw = TRUE), bmass)</code> Is what we typed into our <code>geom_smooth</code> function above. If we typed <code>degree = 3</code>, the model would include a cubed term as well.<br>
+</li>
+<li><code>lm(n.species  ~ Biomass + I(Biomass^2), bmass)</code> Is a more explicit way to do this. When doing math to variables in our linear model we need to wrap them in <code>I()</code> or R gets confused and does weird things.<br>
+</li>
+<li><code>lm(n.species  ~ Biomass + Biomass2, bmass %&gt;% mutate(Biomass2 = Biomass^2))</code> Or we can <code>mutate</code> to add a squared transform the data before making our model. <span style="color: LightGrey;">NOTE: I did not pipe the mutate into <code>lm()</code>. That’s because <code>lm()</code> does take things from the standard <code>%&gt;%</code> pipe. If you want to pipe into <code>lm()</code>, you will need the <code>magrittr</code> package and then you can use a special pipe, %$%, so… <code>bmass %&gt;% mutate(Biomass2 = Biomass^2) %$% lm(n.species  ~ Biomass + Biomass2)</code> will work.</span></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>linear_term <span class="ot">&lt;-</span> <span class="fu">lm</span>(n.species  <span class="sc">~</span> Biomass, bmass)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>poly_term   <span class="ot">&lt;-</span> <span class="fu">lm</span>(n.species  <span class="sc">~</span> Biomass <span class="sc">+</span> Biomass2, bmass <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Biomass2 =</span> Biomass<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="interpretting-the-output-of-a-polynomial-regression-model-coefficents" class="level4">
+<h4 class="anchored" data-anchor-id="interpretting-the-output-of-a-polynomial-regression-model-coefficents">Interpretting the output of a polynomial regression – model coefficents</h4>
+<p>So, let’s look at this polynomial regression</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary.lm</span>(poly_term)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = n.species ~ Biomass + Biomass2, data = bmass %&gt;% 
+    mutate(Biomass2 = Biomass^2))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-8.9394 -1.4605 -0.3453  2.5914  7.3527 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -2.2887063  4.4420728  -0.515 0.613435    
+Biomass      0.2020729  0.0511573   3.950 0.001146 ** 
+Biomass2    -0.0004878  0.0001161  -4.200 0.000678 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.384 on 16 degrees of freedom
+Multiple R-squared:  0.5316,    Adjusted R-squared:  0.473 
+F-statistic: 9.078 on 2 and 16 DF,  p-value: 0.002318</code></pre>
+</div>
+</div>
+<p>The output of this model should look familiar. Our rows are</p>
+<ul>
+<li><code>(Intercept)</code> – the number of species we would have if we followed our curve to 0 productivity. That this value is -2.2.9 highlights the idea that we should not make predictions outside of the range of our data. Of course, we wouldn’t predict a negative number of species ever…<br>
+</li>
+<li><code>Biomass</code> – This describes how the number of species changes with a linear increase in productivity. It’s critical to see that this DOES not mean that the number of species always increase with productivity. That’s because of the next term,<br>
+</li>
+<li><code>Biomass2</code> – This describes how the number of species changes with productivity squared. The negative sign means that the number of species decreases with the square of productivity. Polynomial regressions are often used in these cases where intermediate values are largest or smallest, so it’s normal to see contrasting signs for the linear and squared terms.</li>
+</ul>
+<p>Writing down this equation, we predict species number as</p>
+<p><span class="math display">\[\widehat{n.species}_i = -2.29 + 0.202 \times Biomass_i -0.000488 \times Biomass_i^2\]</span> So, for example if we had a plot with a productivity of 250 g/15 Days, we would predict it had <span class="math display">\[\begin{equation}
+\begin{split}
+\widehat{n.specie}{s_{|Biomass=250}} &amp;= -2.29  +0.202 \times 250  -0.000488 \times 250^2\\
+&amp;= 17.71
+\end{split}
+(\#eq:polynomial)
+\end{equation}\]</span></p>
+<p>A value which makes sense, as it seems to be where out curve intersects with 250 in Figure @ref(figbmasslinsq)B.</p>
+<p>Our columns, <code>Estimate</code>, <code>Std. Error</code>, <code>t value</code>, and <code>Pr(&gt;|t|)</code> should also feel familiar, all interpretations are the same as usual. The standard error describes the uncertainty in the estimate, the t describes how many standard errors away from zero the estimate is, and the p-value describes the probability that a value this many standard errors away from zero would arise if the null where true. One thing though</p>
+<p><strong>The p-values in this output do not describe the statistical significance of the predictors!! DO NOT INTERPRET THESE P-VALUES AS SUCH</strong></p>
+<p>One way to think about this is to just look at our simple linear model which shows basically no association between biomass and species number (and the association it shows it slightly negative).</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(linear_term)                                                                                      <span class="sc">%&gt;%</span> <span class="fu">mutate_at</span>(<span class="at">.vars =</span> <span class="fu">c</span>(<span class="st">"estimate"</span>), round, <span class="at">digits =</span> <span class="dv">4</span> ) <span class="sc">%&gt;%</span><span class="fu">mutate_at</span>(<span class="at">.vars =</span> <span class="fu">c</span>(<span class="st">"std.error"</span>), round, <span class="at">digits =</span> <span class="dv">3</span> ) <span class="sc">%&gt;%</span> <span class="fu">mutate_at</span>(<span class="at">.vars =</span> <span class="fu">c</span>(<span class="st">"statistic"</span>), round, <span class="at">digits =</span> <span class="dv">4</span> )<span class="sc">%&gt;%</span> <span class="fu">mutate_at</span>(<span class="at">.vars =</span> <span class="fu">c</span>(<span class="st">"p.value"</span>), round, <span class="at">digits =</span> <span class="dv">5</span> ) <span class="sc">%&gt;%</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">14.4251</td>
+<td style="text-align: right;">2.777</td>
+<td style="text-align: right;">5.1942</td>
+<td style="text-align: right;">0.00007</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Biomass</td>
+<td style="text-align: right;">-0.0078</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">-0.5102</td>
+<td style="text-align: right;">0.61648</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>Note</strong> The <code>summary.lm()</code> output still usefully provides our estimates and uncertinaty in them – so don’t ignore it!</p>
+</section>
+<section id="an-anova-approach" class="level4">
+<h4 class="anchored" data-anchor-id="an-anova-approach">An ANOVA approach</h4>
+<p>So how do we get significance of each term? We look at the ANOVA output!</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(poly_term)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: n.species
+          Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+Biomass    1   9.90    9.90  0.5151 0.4832884    
+Biomass2   1 339.02  339.02 17.6417 0.0006782 ***
+Residuals 16 307.47   19.22                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>We now conclude that the association between n.species and the linear term of Biomass would be quite expected from the null. How do we square these ideas? I think of the significance of the linear term as how weird it would be to see a non-zero linear estimate in the absence of a squared term. However, this is not fully correct, as this P-value differs from the one above with just the linear term. To make sense of this, let’s dig into how we calculate the sums of squares for these larger models.</p>
+<p><strong>“Sequential” Type I Sums of squares</strong></p>
+<p>We’ll see in this and the next section that there’s a real issue in which variable we attribute our sums of squares to in larger linear models.</p>
+<p>In many cases (see below) Sequential “Type I” sums of squares make the most sense. Here we</p>
+<ul>
+<li>Calculate <span class="math inline">\(SS_{error}\)</span> and <span class="math inline">\(SS_{total}\)</span> as we always do! (Figure @ref(fig:sspoly)A,D)</li>
+<li>Calculate the <span class="math inline">\(SS_{thing1}\)</span> (in this case Biomass), as if it where the only thing in the model, <span class="math inline">\(\widehat{Y_{i|bmass}}\)</span>. (Figure @ref(fig:sspoly)B).<br>
+</li>
+<li>Calculate the <span class="math inline">\(SS_{thing2}\)</span> (in this case <span class="math inline">\(Biomass^2\)</span>), as the deviation of predicted values from a model with both things in it, <span class="math inline">\(\widehat{Y_{i|bmass,bmass^2}}\)</span>, minus predictions from a model with just thing1 in it, <span class="math inline">\(\widehat{Y_{i|bmass}}\)</span> (Figure @ref(fig:sspoly)C).</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="two_predictors_files/figure-html/sspoly-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+<figcaption>Calculating <em>sequential</em> sums of squares for our model. <strong>a</strong> Total deviations, as usual. <strong>b</strong> Deviations from predicted values of Biomass alone without considering the squared term (red line) – this makes up <span class="math inline">\(SS_{Biomass}\)</span>. <strong>c</strong> Deviations of predictions from <span class="math inline">\(Biomass + Biomass^2\)</span> (blue line) away from predictions of Biomass alone (red line) – this makes up <span class="math inline">\(SS_{Biomass^2}\)</span>. <strong>d</strong> Deviation of data points from full model (blue line) – this makes up <span class="math inline">\(SS_{error}\)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can calculate these sums of squares in R as follows, and then compute mean squares and p-values. Before I do this, I make a tibble with prediction from both the simple linear model with just a linear term, and the fuller linear model with the linear and squared term.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>combine_models <span class="ot">&lt;-</span> <span class="fu">full_join</span>(<span class="fu">augment</span>(linear_term) <span class="sc">%&gt;%</span>   </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>            dplyr<span class="sc">::</span><span class="fu">select</span>(n.species, Biomass, <span class="at">.fitted_lin =</span> .fitted,  <span class="at">.resid_lin =</span> .resid),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">augment</span>(poly_term) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>            dplyr<span class="sc">::</span><span class="fu">select</span>(n.species, Biomass, <span class="at">.fitted_full =</span> .fitted, <span class="at">.resid_full=</span> .resid),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"n.species"</span>, <span class="st">"Biomass"</span>))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>combine_models <span class="sc">%&gt;%</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">ss_tot    =</span> <span class="fu">sum</span>( (n.species    <span class="sc">-</span> <span class="fu">mean</span>(n.species))<span class="sc">^</span><span class="dv">2</span> ),</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">ss_bmass  =</span> <span class="fu">sum</span>( (.fitted_lin  <span class="sc">-</span> <span class="fu">mean</span>(n.species))<span class="sc">^</span><span class="dv">2</span> ),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">ss_bmass2 =</span> <span class="fu">sum</span>( (.fitted_full <span class="sc">-</span> .fitted_lin )<span class="sc">^</span><span class="dv">2</span> ),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">ss_error  =</span> <span class="fu">sum</span>( (n.species    <span class="sc">-</span> .fitted_full)<span class="sc">^</span><span class="dv">2</span> ),</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>            <span class="co">#df</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">df_bmass  =</span> <span class="dv">1</span>,     <span class="at">df_bmass2 =</span> <span class="dv">1</span>,     <span class="at">df_error  =</span> <span class="fu">n</span>() <span class="sc">-</span> <span class="dv">3</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>            <span class="co">#</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">ms_bmass  =</span> ss_bmass  <span class="sc">/</span> df_bmass ,</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">ms_bmass2 =</span> ss_bmass2 <span class="sc">/</span> df_bmass2 ,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">ms_error  =</span> ss_error  <span class="sc">/</span> df_error,</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>            <span class="co">#</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">F_bmass   =</span> ms_bmass <span class="sc">/</span> ms_error,     <span class="at">F_bmass2  =</span> ms_bmass2<span class="sc">/</span> ms_error,</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_bmass    =</span> <span class="fu">pf</span>(<span class="at">q =</span> F_bmass,  <span class="at">df1 =</span> df_bmass,  <span class="at">df2 =</span> df_error, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_bmass2   =</span> <span class="fu">pf</span>(<span class="at">q =</span> F_bmass2, <span class="at">df1 =</span> df_bmass2, <span class="at">df2 =</span> df_error, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>))                                                                   <span class="sc">%&gt;%</span> <span class="fu">mutate_all</span>(round,<span class="at">digits =</span> <span class="dv">4</span>) <span class="sc">%&gt;%</span>DT<span class="sc">::</span><span class="fu">datatable</span>( <span class="at">options =</span> <span class="fu">list</span>( <span class="at">scrollX=</span><span class="st">'400px'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-05318c7c11d4b0e6784a" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-05318c7c11d4b0e6784a">{"x":{"filter":"none","vertical":false,"data":[["1"],[656.3904],[9.8986],[339.0203],[307.4714],[1],[1],[16],[9.8986],[339.0203],[19.217],[0.5151],[17.6417],[0.4833],[0.0007]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ss_tot<\/th>\n      <th>ss_bmass<\/th>\n      <th>ss_bmass2<\/th>\n      <th>ss_error<\/th>\n      <th>df_bmass<\/th>\n      <th>df_bmass2<\/th>\n      <th>df_error<\/th>\n      <th>ms_bmass<\/th>\n      <th>ms_bmass2<\/th>\n      <th>ms_error<\/th>\n      <th>F_bmass<\/th>\n      <th>F_bmass2<\/th>\n      <th>p_bmass<\/th>\n      <th>p_bmass2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"400px","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11,12,13,14]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ss_tot","targets":1},{"name":"ss_bmass","targets":2},{"name":"ss_bmass2","targets":3},{"name":"ss_error","targets":4},{"name":"df_bmass","targets":5},{"name":"df_bmass2","targets":6},{"name":"df_error","targets":7},{"name":"ms_bmass","targets":8},{"name":"ms_bmass2","targets":9},{"name":"ms_error","targets":10},{"name":"F_bmass","targets":11},{"name":"F_bmass2","targets":12},{"name":"p_bmass","targets":13},{"name":"p_bmass2","targets":14}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>You can scroll through the output above to see that our calculations match what <code>anova()</code> tells us!!!</p>
+</section>
+</section>
+</section>
+<section id="type-i-sums-of-squares-and-others" class="level2">
+<h2 class="anchored" data-anchor-id="type-i-sums-of-squares-and-others">Type I Sums of Squares (and others)</h2>
+<p>Calculating Sums of Squares sequentially, as we did in Figure @ref(fig:sspoly), is the default way R does things.</p>
+<p>Sequential <em>Type I</em> sums of squares calculate the sums of squares for the first thing in your model first, then the second thing, then the third thing etc… This means that while our</p>
+<ul>
+<li>Sums of square, Mean squares, F values, and p-values might change, depending on the order in which variables are entered into our model.<br>
+</li>
+<li>Parameter estimates and uncertainty in them will not change with order.</li>
+</ul>
+<p>In general sequential sums of squares make the most sense when</p>
+<ul>
+<li>We are not interested in the significance of the earlier terms in our model, which we want to take account of, but don’t really care about their statistical significance.<br>
+</li>
+<li>Designs are “balanced” (Figure @ref(fig:balance)), as in these cases, we get the same SS, F and P values regardless of the order that we put terms into the model.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.statisticshowto.com/wp-content/uploads/2016/11/balanced-and-unbalanced-design.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>Examples of balanced and unbalanced statistical designs, from <a href="https://www.statisticshowto.com/balanced-and-unbalanced-designs/">statistics how to</a>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In the next class, we will look into other ways to calculate the sums of squares.</p>
+</section>
+<section id="two-categorical-variables-without-an-interaction" class="level2">
+<h2 class="anchored" data-anchor-id="two-categorical-variables-without-an-interaction">Two categorical variables without an interaction</h2>
+<p>We saw that paired t-tests increase our power because they control for extraneous variation impacting each pair. We often want to use a similar study design for a study with more than two explanatory variables.</p>
+<p>For example, in a randomized “<em>Controlled Blocked Design</em>” each “block” gets all treatments, and by including treatment in our model we can explain variability associated with block unrelated to our main question. In such models we don’t care about the statistical significance of the block, we just want to use block to explain as much variation as possible before considering treatment.</p>
+<p>In the study below, researchers wanted to know if the presence of a fish predator impacted diversity pf the marine zooplankton in the area. To find out they introduced the zooplankton with no, some, or a lot of fish, in mesh bags in a stream. Each stream got three such bags – one with no, one with some, and the other with many fish. This was replicated at five streams, so each stream is a “Block”.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../figs/old/predpray.jpeg" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>The prey and none, some or lots of its predator are put in mesh bags in five streams</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="two_predictors_files/figure-html/randblock-2.png" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>The prey and none, some or lots of its predator are put in mesh bags in five streams</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="estimation-and-uncertainty" class="level3">
+<h3 class="anchored" data-anchor-id="estimation-and-uncertainty">Estimation and Uncertainty</h3>
+<p>The raw data are presented below, with means for treatments in the final column.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">treatment</th>
+<th style="text-align: right;">Block: 1</th>
+<th style="text-align: right;">Block: 2</th>
+<th style="text-align: right;">Block: 3</th>
+<th style="text-align: right;">Block: 4</th>
+<th style="text-align: right;">Block: 5</th>
+<th style="text-align: right;">mean_diversity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">control</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">3.2</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">2.3</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">3.02</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">low</td>
+<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">2.4</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">1.3</td>
+<td style="text-align: right;">2.6</td>
+<td style="text-align: right;">2.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">high</td>
+<td style="text-align: right;">1.3</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">1.38</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We can conceive of this as a linear model, in which we predict diversity as a function of block and treatment</p>
+<p><span class="math display">\[DIVERSITY = BLOCK + TREATMENT\]</span> We enter the model into R as follows</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fish_dat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://whitlockschluter3e.zoology.ubc.ca/Data/chapter18/chap18e2ZooplanktonDepredation.csv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">treatment =</span> <span class="fu">fct_relevel</span>(treatment, <span class="fu">c</span>(<span class="st">"control"</span>, <span class="st">"low"</span>, <span class="st">"high"</span>)))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>wrong_fish_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(diversity <span class="sc">~</span> block <span class="sc">+</span> treatment, <span class="at">data =</span> fish_dat)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(wrong_fish_lm)                                                                                       <span class="sc">%&gt;%</span> <span class="fu">mutate_at</span>(<span class="at">.vars =</span> <span class="fu">c</span>(<span class="st">"estimate"</span>), round, <span class="at">digits =</span> <span class="dv">3</span> ) <span class="sc">%&gt;%</span><span class="fu">mutate_at</span>(<span class="at">.vars =</span> <span class="fu">c</span>(<span class="st">"std.error"</span>), round, <span class="at">digits =</span> <span class="dv">3</span> ) <span class="sc">%&gt;%</span> <span class="fu">mutate_at</span>(<span class="at">.vars =</span> <span class="fu">c</span>(<span class="st">"statistic"</span>), round, <span class="at">digits =</span> <span class="dv">3</span> )<span class="sc">%&gt;%</span> <span class="fu">mutate_at</span>(<span class="at">.vars =</span> <span class="fu">c</span>(<span class="st">"p.value"</span>), round, <span class="at">digits =</span> <span class="dv">7</span> ) <span class="sc">%&gt;%</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">3.50</td>
+<td style="text-align: right;">0.384</td>
+<td style="text-align: right;">9.109</td>
+<td style="text-align: right;">0.0000019</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">block</td>
+<td style="text-align: right;">-0.16</td>
+<td style="text-align: right;">0.099</td>
+<td style="text-align: right;">-1.613</td>
+<td style="text-align: right;">0.1350936</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">treatmentlow</td>
+<td style="text-align: right;">-1.02</td>
+<td style="text-align: right;">0.344</td>
+<td style="text-align: right;">-2.968</td>
+<td style="text-align: right;">0.0127918</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">treatmenthigh</td>
+<td style="text-align: right;">-1.64</td>
+<td style="text-align: right;">0.344</td>
+<td style="text-align: right;">-4.772</td>
+<td style="text-align: right;">0.0005788</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>NOTE</strong> Uhhohh. Something went wrong here. Why is there only one value for <code>block</code>, when there are five? It’s because R thought bock was a number and ran a regression. Let’s clarify this for R by mutating black to be a factor.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fish_dat <span class="ot">&lt;-</span> <span class="fu">mutate</span>(fish_dat, <span class="at">block =</span> <span class="fu">factor</span>(block))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>fish_lm   <span class="ot">&lt;-</span> <span class="fu">lm</span>(diversity <span class="sc">~</span> block <span class="sc">+</span> treatment, <span class="at">data =</span> fish_dat)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fish_lm)                                                                                          <span class="sc">%&gt;%</span> <span class="fu">mutate_at</span>(<span class="at">.vars =</span> <span class="fu">c</span>(<span class="st">"estimate"</span>), round, <span class="at">digits =</span> <span class="dv">3</span> ) <span class="sc">%&gt;%</span><span class="fu">mutate_at</span>(<span class="at">.vars =</span> <span class="fu">c</span>(<span class="st">"std.error"</span>), round, <span class="at">digits =</span> <span class="dv">3</span> ) <span class="sc">%&gt;%</span> <span class="fu">mutate_at</span>(<span class="at">.vars =</span> <span class="fu">c</span>(<span class="st">"statistic"</span>), round, <span class="at">digits =</span> <span class="dv">3</span> )<span class="sc">%&gt;%</span> <span class="fu">mutate_at</span>(<span class="at">.vars =</span> <span class="fu">c</span>(<span class="st">"p.value"</span>), round, <span class="at">digits =</span> <span class="dv">6</span> ) <span class="sc">%&gt;%</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">3.42</td>
+<td style="text-align: right;">0.313</td>
+<td style="text-align: right;">10.938</td>
+<td style="text-align: right;">0.000004</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">block2</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.374</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">1.000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">block3</td>
+<td style="text-align: right;">-0.70</td>
+<td style="text-align: right;">0.374</td>
+<td style="text-align: right;">-1.873</td>
+<td style="text-align: right;">0.097945</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">block4</td>
+<td style="text-align: right;">-1.00</td>
+<td style="text-align: right;">0.374</td>
+<td style="text-align: right;">-2.676</td>
+<td style="text-align: right;">0.028108</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">block5</td>
+<td style="text-align: right;">-0.30</td>
+<td style="text-align: right;">0.374</td>
+<td style="text-align: right;">-0.803</td>
+<td style="text-align: right;">0.445316</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">treatmentlow</td>
+<td style="text-align: right;">-1.02</td>
+<td style="text-align: right;">0.289</td>
+<td style="text-align: right;">-3.524</td>
+<td style="text-align: right;">0.007805</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">treatmenthigh</td>
+<td style="text-align: right;">-1.64</td>
+<td style="text-align: right;">0.289</td>
+<td style="text-align: right;">-5.665</td>
+<td style="text-align: right;">0.000473</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We take these estimates and uncertainty about them seriously, but fully ignore the t and p-values, as above. From here we predict diversity in</p>
+<ul>
+<li><em>Control predation in block one</em> is just the intercept: <span class="math inline">\(3.42  -   0  - 0 = 3.42\)</span>.<br>
+</li>
+<li><em>Control predation in block three</em> is the intercept minus the mean difference between block three and block one: <span class="math inline">\(3.42  -   0.70  - 0 = 2.72\)</span>.<br>
+</li>
+<li><em>High predation in block one</em> is the intercept minus the mean difference between high predation and the control, <span class="math inline">\(3.42  -   0  - 1.64 = 1.79\)</span>.<br>
+</li>
+<li><em>Low predation in block four</em> is the intercept, minus the mean difference between block four and block one, minus the mean difference between low predation and the control treatment: 3.42 - 1.00 - 1.02 = 1.40.</li>
+</ul>
+</section>
+<section id="hypothesis-testing-with-two-categorical-predictors" class="level3">
+<h3 class="anchored" data-anchor-id="hypothesis-testing-with-two-categorical-predictors">Hypothesis testing with two categorical predictors</h3>
+<p>In this model, the null and alternative hypotheses are</p>
+<ul>
+<li><span class="math inline">\(H_0:\)</span> There is no association between predator treatment and zooplankton diversity – i.e.&nbsp;Under the null, we predict zooplankton diversity in this experiment as the intercept plus the deviation associated with stream (Figure @ref(fig:h0hazoo)a).<br>
+</li>
+<li><span class="math inline">\(H_A:\)</span> There is an association between predator treatment and zooplankton diversity – i.e.&nbsp;Under the alternative, we predict zooplankton diversity in this experiment as the intercept plus and the deviation associated with stream plus the effect of one or more treatments (Figure @ref(fig:h0hazoo)b).</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="two_predictors_files/figure-html/h0hazoo-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+<figcaption>Null (<strong>a</strong>) and alternative (<strong>b</strong>) hypotheses for our blocked predation experiment.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Again we test these hypotheses in an ANOVA framework</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fish_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: diversity
+          Df Sum Sq Mean Sq F value   Pr(&gt;F)   
+block      4 2.3400  0.5850  2.7924 0.101031   
+treatment  2 6.8573  3.4287 16.3660 0.001488 **
+Residuals  8 1.6760  0.2095                    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>We conclude that predation treatment impacts zooplankton diversity, with diversity decrease as there are more predators. Because this is an experimental manipulation, we can conclude that predation decreased diversity.</p>
+<section id="calcualating-sums-of-squares" class="level4">
+<h4 class="anchored" data-anchor-id="calcualating-sums-of-squares">Calcualating sums of squares</h4>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="two_predictors_files/figure-html/sstwoanov-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+<figcaption>Calculating <em>sequential</em> sums of squares for our zooplankton model. <strong>a</strong> Total deviations, as usual. <strong>b</strong> Deviations from predicted values of Block alone without considering the treatment – this makes up <span class="math inline">\(SS_{block}\)</span>. <strong>c</strong> Deviations of predictions from <span class="math inline">\(block + treatment\)</span> away from predictions of block alone – this makes up <span class="math inline">\(SS_{treatment}\)</span>. <strong>d</strong> Deviation of data points from full model (blue line) – this makes up <span class="math inline">\(SS_{error}\)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We again use the sequential method to calculate sums of squares because we first want to account for block. The code below shows you how <code>anova()</code> got its answer. But in our case we ignore the F-value and significance of <code>block</code>, as it’s in the model to soak up shared variation, not to be tested.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>block_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(diversity <span class="sc">~</span> block, fish_dat)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>full_model  <span class="ot">&lt;-</span> <span class="fu">lm</span>(diversity <span class="sc">~</span> block <span class="sc">+</span> treatment, fish_dat)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>combine_models <span class="ot">&lt;-</span> <span class="fu">full_join</span>(<span class="fu">augment</span>(block_model ) <span class="sc">%&gt;%</span>   </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>            dplyr<span class="sc">::</span><span class="fu">select</span>(diversity, block, <span class="at">.fitted_block =</span> .fitted,  <span class="at">.resid_block =</span> .resid),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">augment</span>(full_model) <span class="sc">%&gt;%</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>            dplyr<span class="sc">::</span><span class="fu">select</span>(diversity, block, treatment, <span class="at">.fitted_full =</span> .fitted, <span class="at">.resid_full=</span> .resid),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"diversity"</span>, <span class="st">"block"</span>))</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>combine_models <span class="sc">%&gt;%</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">ss_tot    =</span> <span class="fu">sum</span>( (diversity      <span class="sc">-</span> <span class="fu">mean</span>(diversity))<span class="sc">^</span><span class="dv">2</span> ),</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">ss_block  =</span> <span class="fu">sum</span>( (.fitted_block  <span class="sc">-</span> <span class="fu">mean</span>(diversity))<span class="sc">^</span><span class="dv">2</span> ),</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">ss_treat =</span> <span class="fu">sum</span>( (.fitted_full    <span class="sc">-</span> .fitted_block)<span class="sc">^</span><span class="dv">2</span> ),</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">ss_error  =</span> <span class="fu">sum</span>( (diversity      <span class="sc">-</span> .fitted_full)<span class="sc">^</span><span class="dv">2</span> ),</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>            <span class="co">#df</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">df_block  =</span> <span class="fu">n_distinct</span>(block) <span class="sc">-</span> <span class="dv">1</span>,  <span class="at">df_treat =</span> <span class="fu">n_distinct</span>(treatment) <span class="sc">-</span><span class="dv">1</span>,  </span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">df_error  =</span> <span class="fu">n</span>() <span class="sc">-</span> <span class="dv">1</span>,</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>            <span class="co">#</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">ms_block  =</span> ss_block  <span class="sc">/</span> df_block,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">ms_treat  =</span> ss_treat <span class="sc">/</span> df_treat ,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">ms_error  =</span> ss_error  <span class="sc">/</span> df_error,</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>            <span class="co">#</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">F_treat   =</span> ms_treat <span class="sc">/</span> ms_error,</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_bmass2   =</span> <span class="fu">pf</span>(<span class="at">q =</span> F_treat, <span class="at">df1 =</span> df_treat, <span class="at">df2 =</span> df_error, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>))                                                                  <span class="sc">%&gt;%</span> <span class="fu">mutate_all</span>(round,<span class="at">digits =</span> <span class="dv">4</span>) <span class="sc">%&gt;%</span>DT<span class="sc">::</span><span class="fu">datatable</span>( <span class="at">options =</span> <span class="fu">list</span>( <span class="at">scrollX=</span><span class="st">'400px'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-3114c105179183ad2a08" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-3114c105179183ad2a08">{"x":{"filter":"none","vertical":false,"data":[["1"],[10.8733],[2.34],[6.8573],[1.676],[4],[2],[14],[0.585],[3.4287],[0.1197],[28.6404],[0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ss_tot<\/th>\n      <th>ss_block<\/th>\n      <th>ss_treat<\/th>\n      <th>ss_error<\/th>\n      <th>df_block<\/th>\n      <th>df_treat<\/th>\n      <th>df_error<\/th>\n      <th>ms_block<\/th>\n      <th>ms_treat<\/th>\n      <th>ms_error<\/th>\n      <th>F_treat<\/th>\n      <th>p_bmass2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"400px","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11,12]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ss_tot","targets":1},{"name":"ss_block","targets":2},{"name":"ss_treat","targets":3},{"name":"ss_error","targets":4},{"name":"df_block","targets":5},{"name":"df_treat","targets":6},{"name":"df_error","targets":7},{"name":"ms_block","targets":8},{"name":"ms_treat","targets":9},{"name":"ms_error","targets":10},{"name":"F_treat","targets":11},{"name":"p_bmass2","targets":12}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+</section>
+<section id="post-hoc-tests-for-bigger-linear-models" class="level3">
+<h3 class="anchored" data-anchor-id="post-hoc-tests-for-bigger-linear-models">Post-hoc tests for bigger linear models</h3>
+<p>So we rejected the null hypothesis and conclude that predator abundance impacts zooplankton diversity. Which treatments differ? Again we, conduct a post-hoc test.</p>
+<p>Instead of using the <code>aov()</code> function and piping the output to <code>TukeyHSD()</code>, here I’ll show you how to conduct a posthoc test with the <a href="http://finzi.psych.upenn.edu/R/library/multcomp/html/glht.html"><code>glht()</code></a> function in the <a href="https://cran.r-project.org/web/packages/multcomp/vignettes/multcomp-examples.pdf">multcomp package</a>.</p>
+<p>In the code below, I say I want to look at all pairwise comparisons between treatments, using the Tukey-Kramer method from Chapter @ref(anova).</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multcomp)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glht</span>(full_model, <span class="at">linfct =</span> <span class="fu">mcp</span>(<span class="at">treatment =</span> <span class="st">"Tukey"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+     Simultaneous Tests for General Linear Hypotheses
+
+Multiple Comparisons of Means: Tukey Contrasts
+
+
+Fit: lm(formula = diversity ~ block + treatment, data = fish_dat)
+
+Linear Hypotheses:
+                    Estimate Std. Error t value Pr(&gt;|t|)   
+low - control == 0   -1.0200     0.2895  -3.524   0.0190 * 
+high - control == 0  -1.6400     0.2895  -5.665   0.0015 **
+high - low == 0      -0.6200     0.2895  -2.142   0.1421   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+(Adjusted p values reported -- single-step method)</code></pre>
+</div>
+</div>
+<p>We conclude that diversity in both low and high predation differ significantly from both the control, no predation treatment, treatment. But we fail to reject the hypothesis that low and high predation treatments differ.</p>
+</section>
+</section>
+<section id="quiz" class="level2">
+<h2 class="anchored" data-anchor-id="quiz">Quiz</h2>
+<p><a href="https://brandvain.shinyapps.io/twofactreg/">link</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  update_total_correct();
+}
+
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../book_sections/linear_regression.html" class="pagination-link" aria-label="20. Linear Regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">20. Linear Regression</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

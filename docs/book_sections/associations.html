@@ -1119,6 +1119,18 @@ window.Quarto = {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../book_sections/linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">20. Linear Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/two_predictors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">21. Two predictors</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -1182,7 +1194,7 @@ You’re curious to know the extent to which two variables are associated and ne
 </div>
 <div class="cell page-columns page-full" data-layout-align="center" data-cap-location="margin">
 <div class="cell-output-display page-columns page-full">
-<div id="fig-allcor" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="A matrix of plots showing pairwise relationships among variables in the Clarkia xantiana dataset. The matrix includes bar plots for categorical variables, histograms and density plots for distributions, scatterplots for continuous variables, and boxplots comparing continuous and categorical variables. Correlation coefficients are displayed in the upper triangle for numeric pairs. The figure visually summarizes a range of associations among traits such as petal color, pollinator visitation, petal area, anther–stigma distance, and hybridization rate." data-cap-location="margin" data-fig-align="center">
+<div id="fig-allcor" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="A matrix of plots showing pairwise relationships among variables in the Clarkia xantiana dataset. The matrix includes bar plots for categorical variables, histograms and density plots for distributions, scatterplots for continuous variables, and boxplots comparing continuous and categorical variables. Correlation coefficients are displayed in the upper triangle for numeric pairs. The figure visually summarizes a range of associations among traits such as petal color, pollinator visitation, petal area, anther–stigma distance, and hybridization rate." data-fig-align="center" data-cap-location="margin">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-allcor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="associations_files/figure-html/fig-allcor-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A matrix of plots showing pairwise relationships among variables in the Clarkia xantiana dataset. The matrix includes bar plots for categorical variables, histograms and density plots for distributions, scatterplots for continuous variables, and boxplots comparing continuous and categorical variables. Correlation coefficients are displayed in the upper triangle for numeric pairs. The figure visually summarizes a range of associations among traits such as petal color, pollinator visitation, petal area, anther–stigma distance, and hybridization rate.">
@@ -1275,7 +1287,7 @@ Figure&nbsp;3: <strong>Potential confounding</strong> in parviflora RILs. The ob
 <div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-switchx" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two bar plots showing the relationship between petal color (pink or white) and pollinator visitation (visited or not visited). The left plot places visit status on the x-axis and shows the proportion of pink and white flowers within each visit category. The right plot reverses this, placing petal color on the x-axis and showing the proportion of flowers that were visited or not. Both plots show that pink flowers are more likely to be visited, but the choice of x-axis can influence how we interpret the relationship, emphasizing the importance of considering — but not assuming — causal direction." data-fig-align="center">
+<div id="fig-switchx" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two bar plots showing the relationship between petal color (pink or white) and pollinator visitation (visited or not visited). The left plot places visit status on the x-axis and shows the proportion of pink and white flowers within each visit category. The right plot reverses this, placing petal color on the x-axis and showing the proportion of flowers that were visited or not. Both plots show that pink flowers are more likely to be visited, but the choice of x-axis can influence how we interpret the relationship, emphasizing the importance of considering — but not assuming — causal direction.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-switchx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="associations_files/figure-html/fig-switchx-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="Two bar plots showing the relationship between petal color (pink or white) and pollinator visitation (visited or not visited). The left plot places visit status on the x-axis and shows the proportion of pink and white flowers within each visit category. The right plot reverses this, placing petal color on the x-axis and showing the proportion of flowers that were visited or not. Both plots show that pink flowers are more likely to be visited, but the choice of x-axis can influence how we interpret the relationship, emphasizing the importance of considering — but not assuming — causal direction.">
@@ -1317,7 +1329,7 @@ Making things independent
 <div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-VORP" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatterplot showing NBA players' height (x-axis) versus their Value Over Replacement Player (VORP) (y-axis). Each point represents a player. A faint blue regression line runs slightly upward but remains almost flat, illustrating a very weak positive association between height and VORP. Notable players are labeled: Shai Gilgeous-Alexander (6'4.5&quot;), Giannis Antetokounmpo (6'11&quot;), and Nikola Jokić (6'11.5&quot;). The plot visually emphasizes that despite differences in height, there is little to no clear relationship between a player’s height and their value contribution above replacement level." data-fig-align="center">
+<div id="fig-VORP" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Scatterplot showing NBA players' height (x-axis) versus their Value Over Replacement Player (VORP) (y-axis). Each point represents a player. A faint blue regression line runs slightly upward but remains almost flat, illustrating a very weak positive association between height and VORP. Notable players are labeled: Shai Gilgeous-Alexander (6'4.5&quot;), Giannis Antetokounmpo (6'11&quot;), and Nikola Jokić (6'11.5&quot;). The plot visually emphasizes that despite differences in height, there is little to no clear relationship between a player’s height and their value contribution above replacement level.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-VORP-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="associations_files/figure-html/fig-VORP-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="Scatterplot showing NBA players' height (x-axis) versus their Value Over Replacement Player (VORP) (y-axis). Each point represents a player. A faint blue regression line runs slightly upward but remains almost flat, illustrating a very weak positive association between height and VORP. Notable players are labeled: Shai Gilgeous-Alexander (6'4.5&quot;), Giannis Antetokounmpo (6'11&quot;), and Nikola Jokić (6'11.5&quot;). The plot visually emphasizes that despite differences in height, there is little to no clear relationship between a player’s height and their value contribution above replacement level.">

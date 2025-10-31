@@ -1,0 +1,2619 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>20. Linear Regression – Applied Biostatistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../book_sections/two_predictors.html" rel="next">
+<link href="../book_sections/anova/anova_summary.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-710ea84994903bc41163d01235b9627e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-82a15b99bf7720207ddddc281aa6ceca.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="../site_libs/htmltools-fill/fill.css" rel="stylesheet">
+<script src="../site_libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="../site_libs/datatables-css/datatables-crosstalk.css" rel="stylesheet">
+<script src="../site_libs/datatables-binding/datatables.js"></script>
+<script src="../site_libs/jquery/jquery-3.6.0.min.js"></script>
+<link href="../site_libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="../site_libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="../site_libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="../site_libs/crosstalk/css/crosstalk.min.css" rel="stylesheet">
+<script src="../site_libs/crosstalk/js/crosstalk.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../assets/sticky-notes.css">
+<link rel="stylesheet" href="../assets/table-styles.css">
+<link rel="stylesheet" href="../assets/webex.css">
+</head>
+
+<body class="nav-sidebar floating fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book_sections/linear_regression.html">20. Linear Regression</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../figs/fun_figs/stamp.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Applied Biostatistics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/clarkia_and_its_data/clarkia_and_its_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motivating biology and datasets</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/example_mini/varType.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Types of Variables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/intro2r_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SECTION I: Intro to R</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/getting_started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Getting started with R</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/getting_started/functions_and_vectors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Functions and vectors</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/getting_started/loading_packages_and_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Load packages and data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/getting_started/data_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Data types in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/getting_started/rstudio_orientation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Orientation to RStudio</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/getting_started/getting_started_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 1. Getting started summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/data_in_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Data in R</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_in_R/add_vars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Adding columns w mutate</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_in_R/select_vars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Selecting columns</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_in_R/summarize_vars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Summarizing columns</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_in_R/choose_rows.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Choose rows</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_in_R/data_in_R_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 2. Data in R summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/intro_to_ggplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Introduction to ggplot</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/intro_to_ggplot/one_continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. A continuous variable</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/intro_to_ggplot/saving_ggplots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Saving a ggplot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/intro_to_ggplot/cont_cat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Continuous y/categorical x</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/intro_to_ggplot/two_categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Two categorical variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/intro_to_ggplot/two_continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Two continuous variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/intro_to_ggplot/many_explanatory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. Many explanatory vars</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/intro_to_ggplot/ggplot_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 3. ggplot summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/reproducible_science.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Reproducible Science</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/reproducible_science/collecting_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 4. Collecting data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/reproducible_science/reproducible_analyses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 4. Reproducible analyses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/reproducible_science/reproducible_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 4. Reproducibility summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/summarizing_data_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section II: Summarizing data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/univariate_summaries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5. Simple Summaries</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/univariate_summaries/summarizing_shape.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Summarizing shape</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/univariate_summaries/changing_shape.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Changing shape</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/univariate_summaries/summarizing_center.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Summarizing the center</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/univariate_summaries/summarizing_variability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Summarizing variability</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/univariate_summaries/summarizing_summaries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 5. Summarizing summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/associations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6. Associations</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/associations/cat_cont.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 6. Categorical + numeric</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/associations/two_categorical_vars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 6. Two categorical vars</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/associations/cont_cont.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 6. Two numeric vars</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/associations/summarizing_associations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 6. Association Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/linear_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7. Linear Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/linear_models/mean.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Mean</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/linear_models/lm_cat_pred.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Categorical predictor</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/linear_models/regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Linear regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/linear_models/two_predictors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Two predictors</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/linear_models/lm_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 7. Linear model summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/ordination.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">8. Ordination</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/ordination/pca.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. PCA quick start</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/ordination/pcaII.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. PCA deeper dive</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/ordination/pcaIII.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. PCA – Gotchas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/ordination/pcalternatives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. PCAlternatives</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/ordination/ordination_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 8. Ordination summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/data_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">9. Better Figures</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_viz/audience&amp;delivery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Audience &amp; Format</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_viz/honest_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Honest plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_viz/transparent_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Transparent plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_viz/clear_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Clear plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_viz/avoid_distractions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Avoid Distractions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_viz/accessible_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Accessible Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_viz/writing_about_figures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Writing about plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/data_viz/dataviz_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 9. Dataviz Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/betteR_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">10. Better Figures in R</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/betteR_plots/plotting_tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 10. Tools for BetteR plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/betteR_plots/cleaR_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 10. Making cleaR plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/betteR_plots/plots_foR_medium.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 10. Plots for the medium</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/betteR_plots/betteR_plots_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 10. Better ggplots summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/stats_foundation_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section III: Stats Foundations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/sampling_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">11. Intro to Sampling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/sampling/sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/sampling/sampling_error.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Error</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/sampling/sampling_bias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Bias</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/sampling/nonindependence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Non-independence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/sampling/better_sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling Better</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/sampling/sampling_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 11. Sampling summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/uncertainty.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">12. Uncertainty</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/uncertainty/bootstrap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 12. Bootstrap</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/uncertainty/ci.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 12. Confidence Intervals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/uncertainty/boot_infer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 12. Bootstrapping w/<code>infer</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/uncertainty/boot_gotchas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 12. Gotchas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/uncertainty/uncertainty_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 12. Uncertainty summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/nhst.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">13. Null Hypothesis Significance Testing</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/nhst/statistical_hypotheses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. Statistical Hypotheses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/nhst/p_values.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. P Values</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/nhst/statistical_significance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. Statistical Significance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/nhst/nhst_gotchas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. Considerations for NHST</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/nhst/nhst_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 13. NHST summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/shuffling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">14. Shuffling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/shuffling/the_frogs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. The frogs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/shuffling/permute.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Permute</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/shuffling/permute_nonindependent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Structured Permutation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/shuffling/shuffling_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14. Shuffling summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/chi2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">14-B. χ2</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/chi2/expectations_and_differences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. What to expect</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/chi2/associations_between_catvars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> Two Cats</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/chi2/chi2_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> distribution</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/chi2/chi2_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 14B. <span class="math inline">\(\chi^2\)</span> summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/filler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">—————————————</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/stats_4_linear_models_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section IV: Stats for Linear Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/normal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">15. Normal distribution</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/normal_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/normal_properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Properties</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/noRmal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Simulations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/p_norm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Math</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/is_it_normal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Is It Normal?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/clt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. The Normal is Common</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Make It Normal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/normal/normal_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 15. Normal Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">16. The t distribution</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/t/t_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. t: Example Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/t/summaries_4_t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Data summaries for t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/t/t_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Assumptions of t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/t/t_CI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. Uncertain-t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/t/one_sample_t_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. One sample t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/t/one_sample_t_test_in_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. One sample t-test in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/t/paired_t_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. The “Paired” t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/t/t_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 16. t Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/two_ts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">17. A binary explanatory variable</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/two_ts/2t_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 17. Two-t Assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/two_ts/2t_calcs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 17. Two-t Calculations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/two_ts/uncertain2t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 17. Uncertain-2t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/two_ts/nhs2t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 17. Two-sample t-test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/two_ts/2t_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 17. Two t Summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/f.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">18. F this!</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/f/from_sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. F the ratio of variance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/f/f_calcs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. F Calculations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/f/FR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. F and anova in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/f/Finding_connections.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. F-inding connecTions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/f/f_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 18. F (ANOVA) summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../book_sections/anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">19. &gt;2 Categories</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/anova/multiple_testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. Multiple testing problem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/anova/anova_lm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA: a linear model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/anova/anova_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/anova/anova_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA Example</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/anova/post_hoc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. Post hoc tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/anova/sig_groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. Significance groups</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/anova/Ranova_pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. R ANOVA pipeline</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/anova/anova_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">• 19. ANOVA summary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/linear_regression.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">20. Linear Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book_sections/two_predictors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">21. Two predictors</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="anova" class="quarto-section-identifier">20. Linear Regression</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><span style="color: Blue;font-size:22px;"> Motivating scenarios: </span> <span style="color: Black;font-size:18px;"> We are interested in predicting one continuous variable based on the value of another, and to estimate the uncertainty and significance of this prediction. </span></p>
+<p><strong>Learning goals: By the end of this chapter you should be able to</strong></p>
+<ul>
+<li><p>Use a regression equation to predict the value of a continuous response variable from a continuous explanatory variable.</p></li>
+<li><p>Use equations to find the line of “best” fit.<br>
+</p></li>
+<li><p>Calculate <em>t</em> values for the slope, estimate uncertainty in them, and test the null hypothesis that this differs from zero.<br>
+</p></li>
+<li><p>Make a linear regression and analyze it with the <code>lm()</code>, <code>summary.lm()</code>, and <code>anova()</code> functions in R.<br>
+</p></li>
+<li><p>Calculate sums of squares for a linear regression to calculate F and test the null hypothesis.<br>
+</p></li>
+<li><p>Recognize the assumptions and limitations of linear regression.</p></li>
+</ul>
+<section id="review" class="level1">
+<h1>Review</h1>
+<p><a href="https://bookdown.org/ybrandvain/Applied_Biostats_2024/06-associations.html">Earlier</a> we explored how to describe associations between continuous variables. Here we review that material and the integrate this into our linear model framework.</p>
+<section id="review-describing-associations" class="level2">
+<h2 class="anchored" data-anchor-id="review-describing-associations">Review: Describing Associations</h2>
+<p>There are three common and closely related ways to describe the association between two continuous variables, ( x ) and ( y ): covariance, correlation, and slope.</p>
+<ul>
+<li><p><strong>Covariance</strong> describes how ( X ) and ( Y ) vary together across individuals: [ = ]</p></li>
+<li><p><strong>Correlation</strong> (( r )) describes the strength and reliability of the joint variation between ( X ) and ( Y ). It is the covariance divided by the product of the standard deviations of ( x ) and ( y ), ( s_x ) and ( s_y ), respectively: [ r = ]</p></li>
+<li><p><strong>Slope</strong> (( b )) indicates the amount by which ( Y ) changes for each unit increase in ( X ). It is the covariance divided by the variance of ( x ), ( s_x^2 ): [ b = ]</p></li>
+</ul>
+</section>
+<section id="review-linear-models" class="level2">
+<h2 class="anchored" data-anchor-id="review-linear-models">Review: Linear Models</h2>
+<p><a href="https://bookdown.org/ybrandvain/Applied_Biostats_2024/07-linear_models.html">As introduced previously</a>, linear models predict one response variable from one or more explanatory variables.</p>
+<p>[ = f(_i) ]</p>
+<p>Naturally, observations do not perfectly match predictions. The residual, ( _i ), describes the difference between the observed value of the ( i^{} ) observation, ( Y_i ), and its predicted value, ( ).</p>
+<p>[ _i = Y_i - ]</p>
+<p>Linear models typically include an intercept (( a )) and an effect (( b )) of each explanatory variable (( x )) on the response. For t-tests and ANOVAs, the intercept represents the mean of the “reference category,” and the effect describes the difference between the mean of individuals in category ( j ) and the mean of the reference category. In a simple linear regression, ( b ) is the slope (as defined above), and ( x_i ) is the value of ( x ) for individual ( i ).</p>
+<p>[ Y_i = a + b x_i + _i ]</p>
+<section id="review-the-regression-as-a-linear-model" class="level3">
+<h3 class="anchored" data-anchor-id="review-the-regression-as-a-linear-model">Review: The regression as a linear model</h3>
+<p>For a simple linear regression with one explanatory and one response variable,</p>
+<p><span class="math display">\[\begin{equation}
+\begin{split}
+Y_i &amp;=  a + b  x_{i}  
+\end{split}
+(\#eq:linreg)
+\end{equation}\]</span></p>
+<p>Where</p>
+<ul>
+<li><span class="math inline">\(a\)</span> is the intercept,<br>
+</li>
+<li><span class="math inline">\(b\)</span> is the slope, and<br>
+</li>
+<li><span class="math inline">\(X_i\)</span> is the <span class="math inline">\(i^{th}\)</span> individual’s observed value for the explanatory variable, <span class="math inline">\(X\)</span></li>
+</ul>
+<p>In simple regression, the intercept can be found as</p>
+<p><span class="math display">\[a = \bar{Y} - b \times \bar{X}\]</span></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../figs/old/regressiondrag.png" class="img-fluid figure-img" style="width:95.0%"></p>
+<figcaption><strong>A</strong> Visualizing different slopes in a regression. <strong>B</strong> Making predictions from a linear model.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="review-statistical-evaluation-of-linear-models." class="level2">
+<h2 class="anchored" data-anchor-id="review-statistical-evaluation-of-linear-models.">Review: Statistical evaluation of linear models.</h2>
+<p>Statistical analyses of linear models allow us to describe uncertainty in our estimates and conduct null hypothesis significance testing. Of course, we can also do this with bootstrapping and permuting <a href="https://bookdown.org/ybrandvain/Applied_Biostats_2024/18-permute_II_associate.html">as explored previously</a>, however compared to permuting and bootstrapping, a linear model is nice because it is fast, you always get the same answers, and is based on an actual model.</p>
+<section id="uncertainty-in-linear-models" class="level3">
+<h3 class="anchored" data-anchor-id="uncertainty-in-linear-models">Uncertainty in Linear Models</h3>
+<p>When working with real-world data, it almost always represents an estimate from a sample rather than a true population parameter. This means we can think of an estimate as a single sample drawn from the (unknown) population sampling distribution—the distribution of estimates we would obtain from repeated sampling of a population. However, since we only have one sample, we cannot know the true sampling distribution, but we can approximate it.</p>
+<ul>
+<li><p><strong>Bootstrapping (i.e., resampling observations with replacement):</strong> uses our data to approximate the sampling distribution.</p>
+<ul>
+<li>In bootstrapping, we describe uncertainty with the bootstrap standard error (the standard deviation of the bootstrap distribution) and the 95% bootstrap confidence interval—the values between the upper and lower 2.5% tails of our bootstrapped distribution.</li>
+</ul></li>
+<li><p><strong>The</strong> <strong><em>z</em></strong> <strong>and</strong> <strong><em>t</em></strong> <strong>distributions:</strong> provide mathematical approximations of a sampling distribution for normally distributed random variables. Both distributions consider our estimate in units of standard errors away from the center o its distribution. The <em>t</em> distribution is more applicable to real-world data because it incorporates uncertainty in the estimate of the standard deviation, in contrast to the <em>z</em> distribution, which assumes we know the true standard deviation. As sample sizes increase, these distributions become more similar because our estimate of the standard error improves.</p>
+<ul>
+<li>With the <em>t</em> and <em>z</em> distributions, we estimate the standard error through a mathematical formula and describe the 95% confidence interval as the mean ± the standard error multiplied by the critical value, which captures the upper and lower 2.5% of these distributions.</li>
+</ul></li>
+</ul>
+<p>These are two approaches to estimating the same thing, so they usualy provide similar results.</p>
+</section>
+<section id="nhst-for-a-linear-model" class="level3">
+<h3 class="anchored" data-anchor-id="nhst-for-a-linear-model">NHST for a Linear Model</h3>
+<p>In linear models, we test the null hypothesis that ( y_i ) is independent of our predictors.</p>
+<p><strong>We can test the null by permutation:</strong> This involves randomly reassigning explanatory variables to response values and estimating our parameter under this random shuffling. Repeating this process multiple times approximates the sampling distribution under the null hypothesis of no association. We test the null by assessing the proportion of this null sampling distribution that is as extreme or more extreme than our observed estimate. If this proportion is low (typically less than 0.05), we reject the null hypothesis.</p>
+<p><strong>We can also test the null by using standard mathematical distributions like the ( Z ), ( t ), and ( F ) distributions:</strong> If our test statistic falls in the extreme tail (i.e., only 5% of the distribution is as or more extreme), we reject the null. Recall: - <em>t</em> and <em>z</em> distributions describe estimates of individual parameters in units of standard errors away from the null value of zero, and we consider both tails of these distributions. - <em>F</em> tests compare the variability explained by our model to the residual variation. Under the null, <em>F</em> equals one, and we examine only the upper tail when testing the null hypothesis.</p>
+<p>Permutation tests and mathematical tests aim to achieve the same goal and, therefore, often yield similar results.</p>
+</section>
+<section id="assumptions-of-linear-models" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions-of-linear-models">Assumptions of Linear Models</h3>
+<p>These methods offer benefits but come with assumptions—linear models rely on particular assumptions about the distribution of residuals. In addition to standard assumptions of independence and unbiased sampling, <strong>single-factor linear models assume</strong>:</p>
+<ul>
+<li>Residuals are normally distributed.</li>
+<li>Residuals are independent of the predicted values.</li>
+<li>Variance in residuals is independent of the predicted values.</li>
+</ul>
+<p>When these assumptions are not met, other approaches (e.g., permutation and bootstrapping methods, models that better account for residual patterns, nonparametric models, etc.) are more appropriate. However, the magic of the central limit theorem means that most linear models are fairly robust to modest violations of these assumptions.</p>
+</section>
+</section>
+</section>
+<section id="linear-regression-example" class="level1">
+<h1>Linear regression example:</h1>
+<section id="the-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="the-dataset">The dataset</h2>
+<p>How do snakes heat up when they eat? To find out, <span class="citation" data-cites="tattersall2004">Tattersall et al. (<a href="../references.html#ref-tattersall2004" role="doc-biblioref">2004</a>)</span> noted the temperature of snakes as a function of their prey size (Fig. @ref(fig:snakeregression)).</p>
+<p>The prey size of the <span class="math inline">\(X\)</span> axis of Figure @ref(fig:snakeregression)C is in units of percent of a snake’s body weight, and the temperature on the Y axis of Figure @ref(fig:snakeregression)C, is the degrees Celcius increase in a snake’s body temperature two days after eating.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="linear_regression_files/figure-html/snakeregression-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+<figcaption>Infrared thermal image of a rattlesnake (<strong>A</strong>) before feeding and (<strong>B</strong>) two days after eating 32% of its body mass, <strong>C</strong> shows the association between meal size and change in temperature. images <strong>A</strong>, and <strong>B</strong>, and data from <a href="https://jeb.biologists.org/content/207/4/579"><span class="citation" data-cites="tattersall2004">(<span>Tattersall et al., 2004</span>)</span></a>. data <a href="https://whitlockschluter3e.zoology.ubc.ca/Data/chapter17/chap17q11RattlesnakeDigestion.csv">here</a>. code <a href="https://raw.githubusercontent.com/ybrandvain/3272-book-code/refs/heads/main/snake_plot.R">here</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="a-quick-summary-of-the-associtations." class="level3">
+<h3 class="anchored" data-anchor-id="a-quick-summary-of-the-associtations.">A quick summary of the associtations.</h3>
+<p>A quick data summary shows a very tight correlation – temp change is reliably associated with meal size (r = 0.899). We interpret our slop to mean that in this study, a snakes temperature increases, on average, by 0.0274 degrees Celsius for every increase in meal size (measured as percent of a snake’s mass) in addition to the baseline increase in temperature of 0.32 degrees Celsius, on average, that all snakes experienced, regardless of their meal size.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>snake_data <span class="ot">&lt;-</span>  <span class="fu">read_csv</span>(<span class="st">"https://whitlockschluter3e.zoology.ubc.ca/Data/chapter17/chap17q11RattlesnakeDigestion.csv"</span>)<span class="sc">%&gt;%</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">meal_size =</span> mealSize, <span class="at">body_temp =</span> tempChange)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>snake_data  <span class="sc">%&gt;%</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n               =</span> <span class="fu">n</span>(),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">snake_cov       =</span> <span class="fu">cov</span>(meal_size, body_temp),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">snake_cor       =</span> <span class="fu">cor</span>(meal_size, body_temp),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">snake_slope     =</span> snake_cov <span class="sc">/</span><span class="fu">var</span>(meal_size),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">snake_intercept =</span> <span class="fu">mean</span>(body_temp) <span class="sc">-</span> snake_slope <span class="sc">*</span> <span class="fu">mean</span>(meal_size))     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 5
+      n snake_cov snake_cor snake_slope snake_intercept
+  &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;
+1    17      5.28     0.899      0.0274           0.320</code></pre>
+</div>
+</div>
+<section id="a-linear-regression-in-r." class="level4">
+<h4 class="anchored" data-anchor-id="a-linear-regression-in-r.">A linear regression in R.</h4>
+<p>We can easily build a linear model in R with the lm() function.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>snake_regression <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_temp <span class="sc">~</span> meal_size, <span class="at">data =</span> snake_data)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(snake_regression)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)   meal_size 
+ 0.31955925  0.02738402 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="uncertainty-in-parameter-estimates" class="level3">
+<h3 class="anchored" data-anchor-id="uncertainty-in-parameter-estimates">Uncertainty in parameter estimates</h3>
+<section id="bootstrap-based-uncertainty" class="level4">
+<h4 class="anchored" data-anchor-id="bootstrap-based-uncertainty">Bootstrap based uncertainty</h4>
+<p>As described above, we can approximate the sampling distirbuiont by bootsrapping. Here we can visualize the uncertainty:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>snake_boot <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="at">simplify =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">slice_sample</span>(snake_data, <span class="at">prop=</span><span class="dv">1</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">lm</span>(body_temp <span class="sc">~</span> meal_size, <span class="at">data =</span> .)<span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">coef</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="linear_regression_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+<figcaption>Visualizing bootstrap based uncertainty in the linear model (<strong>A</strong>), and the slope and intercept (<strong>B</strong>). Red denotes the estimate. code <a href="https://raw.githubusercontent.com/ybrandvain/3272-book-code/refs/heads/main/snake_boot_plot.R">here</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can also generate traditional summaries of uncertainty</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>snake_boot<span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">SE_slope =</span> <span class="fu">sd</span>(meal_size), </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">lower_CI_slope =</span> <span class="fu">quantile</span>(meal_size, <span class="at">prob =</span> <span class="fl">0.025</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">upper_CI_slope =</span> <span class="fu">quantile</span>(meal_size, <span class="at">prob =</span> <span class="fl">0.975</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">SE_intercept =</span> <span class="fu">sd</span>(<span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span>), </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">lower_CI_intercept =</span> <span class="fu">quantile</span>(<span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span>, <span class="at">prob =</span> <span class="fl">0.025</span>),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">upper_CI_intercept =</span> <span class="fu">quantile</span>(<span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span>, <span class="at">prob =</span> <span class="fl">0.975</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">SE</th>
+<th style="text-align: right;">lower_CI</th>
+<th style="text-align: right;">upper_CI</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">intercept</td>
+<td style="text-align: right;">0.1078</td>
+<td style="text-align: right;">0.1763</td>
+<td style="text-align: right;">0.5852</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">slope</td>
+<td style="text-align: right;">0.0047</td>
+<td style="text-align: right;">0.0175</td>
+<td style="text-align: right;">0.0362</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="math-based-uncertainty-and-nhst." class="level4">
+<h4 class="anchored" data-anchor-id="math-based-uncertainty-and-nhst.">Math-based uncertainty and NHST.</h4>
+<section id="math-based-uncertainty-and-nhst-for-the-slope" class="level5">
+<h5 class="anchored" data-anchor-id="math-based-uncertainty-and-nhst-for-the-slope">Math-based uncertainty and NHST for the slope</h5>
+<p>Alternatively we can estimate the standard error in the slope mathematically, <span style="color: LightGrey;">which may be preferable for this modest sample size,</span> following equation @ref(eq:seb):</p>
+<p><span class="math display">\[\begin{equation}
+\begin{split}
+SE_b  &amp;= \sqrt{\frac{\text{MS}_\text{resid}}{\sum(X_i-\overline{X})^2}}  =  \sqrt{\frac{\Sigma(\epsilon_i^2) / \text{df}_{b}}{\sum(X_i-\overline{X})^2}}    =  \sqrt{\frac{\sum(Y_i-\widehat{Y_i})^2 /  (n-2) }{\sum(X_i-\overline{X})^2}}   \\
+\end{split}
+(\#eq:seb)
+\end{equation}\]</span></p>
+<p>Where <span class="math inline">\(\text{df}_b\)</span> is the degrees of freedom for the slope, which equals the sample size minus two (one for the slope, and one for the intercept).</p>
+<p>Equation @ref(eq:seb) might look, at first blush, a bit different than most equations for the standard error we’ve seen before, but it actually is pretty familiar. The numerator i the difference between an observations and its mean value <span style="color: LightGrey;">(conditional, on X, which is a good way to think of <span class="math inline">\(\widehat{Y_i}\)</span>)</span> divided by the degrees of freedom, which is basically the sample variance in the residuals. We estimate the standard error of the slope by taking the square root of this variance, after dividing through by the sum of square in our predictor X.</p>
+<p>We can calculate this in R using the <a href="https://generics.r-lib.org/reference/augment.html"><code>augment()</code></a> function from the <a href="https://broom.tidymodels.org/"><code>broom</code></a> package. While we’re at it,</p>
+<ul>
+<li><strong>We can include 95% confidence intervals</strong> in the standard way—by adding and subtracting the product of the standard error and our critical t-value from the estimate.<br>
+</li>
+<li><strong>We can also calculate a p-value</strong> – testing the null of a slope of zero, by calculating <em>t</em> and looking this up from the t-distribution.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>snake_math_uncertainty_slope <span class="ot">&lt;-</span> <span class="fu">augment</span>(snake_regression) <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">df_slope =</span> <span class="fu">n</span>() <span class="sc">-</span><span class="dv">2</span>, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">numer =</span>  <span class="fu">sum</span>(.resid<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(df_slope),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">denom =</span> <span class="fu">sum</span>((meal_size<span class="sc">-</span><span class="fu">mean</span>(meal_size))<span class="sc">^</span><span class="dv">2</span> ),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">estimate =</span> <span class="fu">coef</span>(snake_regression)[[<span class="st">"meal_size"</span>]],</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">se_slope =</span> <span class="fu">sqrt</span>(numer<span class="sc">/</span>denom),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">t_slope =</span>  estimate <span class="sc">/</span> se_slope, </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">t_crit =</span> <span class="fu">qt</span>(<span class="fl">0.025</span>,<span class="at">df=</span> df_slope, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">lower_CI =</span> estimate <span class="sc">-</span> se_slope <span class="sc">*</span>  t_crit,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">upper_CI =</span> estimate <span class="sc">+</span> se_slope <span class="sc">*</span>  t_crit,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_slope =</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="at">q =</span> t_slope , <span class="at">df =</span> df_slope, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>))  <span class="sc">%&gt;%</span> </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(df_slope, se_slope, estimate, lower_CI, upper_CI, p_slope)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">df_slope</th>
+<th style="text-align: right;">se_slope</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">lower_CI</th>
+<th style="text-align: right;">upper_CI</th>
+<th style="text-align: left;">p_value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0.0034</td>
+<td style="text-align: right;">0.0274</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.0347</td>
+<td style="text-align: left;">9.381e-07</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>From these results, we observe:</p>
+<ul>
+<li>Uncertainty estimates comparable to those achieved through bootstrapping.</li>
+<li>An extremely low p-value, indicating a very strong association that would be highly unlikely if there were no actual association. Given how low this p-value is, and because I’ve dithered enough, I won’t generate a permutation-based p-value (which would also likely be close to zero).</li>
+</ul>
+</section>
+<section id="math-based-uncertainty-and-nhst-for-the-intercept" class="level5">
+<h5 class="anchored" data-anchor-id="math-based-uncertainty-and-nhst-for-the-intercept">Math-based uncertainty and NHST for the intercept</h5>
+<p>We can similarly find the standard error for the intercept. Calculating the intercept’s uncertainty requires accounting for the overall spread of our predictor values, which may be especially useful when (X) values are far from zero.</p>
+[
+<span class="math display">\[\begin{split}
+SE_{\text{intercept}} &amp;= \sqrt{\frac{\text{MS}_\text{resid}}{n} + \frac{\overline{X}^2 \, \text{MS}_\text{resid}}{\sum (X_i - \overline{X})^2}} \\
+\end{split}\]</span>
+<p>(#eq:sei) ]</p>
+<p>Here, (<em>) (residual mean square) comes from dividing the sum of squared residuals by the degrees of freedom for error, which is (n-2). This equation for (SE</em>{}) might look a bit different, but it’s quite intuitive. The term () represents baseline variance around zero, while () adjusts for any offset in (), accounting for how spread in (X) increases uncertainty in the intercept.</p>
+<p>We can calculate this in R using <code>augment()</code> from the <code>broom</code> package. While we’re at it, lets Include a 95% confidence interval by adding and subtracting the product of the standard error and critical t-value. But we wont calculate a p-value for the intercept. The null hypothesis of an intercept of zero is not particularly interesting in this case.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>snake_math_uncertainty_intercept <span class="ot">&lt;-</span> <span class="fu">augment</span>(snake_regression) <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">df_intercept =</span> <span class="fu">n</span>() <span class="sc">-</span> <span class="dv">2</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_X =</span> <span class="fu">mean</span>(meal_size),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">MS_resid =</span> <span class="fu">sum</span>(.resid<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> df_intercept,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">estimate_intercept =</span> <span class="fu">coef</span>(snake_regression)[[<span class="st">"(Intercept)"</span>]],</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">se_intercept =</span> <span class="fu">sqrt</span>((MS_resid <span class="sc">/</span> <span class="fu">n</span>()) <span class="sc">+</span> </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                                  (mean_X<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> MS_resid <span class="sc">/</span> <span class="fu">sum</span>((meal_size <span class="sc">-</span> mean_X)<span class="sc">^</span><span class="dv">2</span>))),</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">t_intercept =</span> estimate_intercept <span class="sc">/</span> se_intercept,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">t_crit =</span> <span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df =</span> df_intercept, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">lower_CI_intercept =</span> estimate_intercept <span class="sc">-</span> se_intercept <span class="sc">*</span> t_crit,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">upper_CI_intercept =</span> estimate_intercept <span class="sc">+</span> se_intercept <span class="sc">*</span> t_crit) <span class="sc">%&gt;%</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(df_intercept, se_intercept, estimate_intercept, lower_CI_intercept, upper_CI_intercept)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">df_intercept</th>
+<th style="text-align: right;">se_intercept</th>
+<th style="text-align: right;">estimate_intercept</th>
+<th style="text-align: right;">lower_CI_intercept</th>
+<th style="text-align: right;">upper_CI_intercept</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0.091</td>
+<td style="text-align: right;">0.3196</td>
+<td style="text-align: right;">0.1256</td>
+<td style="text-align: right;">0.5135</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Again, results resmble our esimtated uncertainty from the bootstrap distribution.</p>
+</section>
+</section>
+<section id="r-based-uncertainty-and-nhst." class="level4">
+<h4 class="anchored" data-anchor-id="r-based-uncertainty-and-nhst.">R-based uncertainty and NHST.</h4>
+<p>We can use the also use the <code>[confint()</code>](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/confint.html) function to find 95% confidence intervals in <code>R</code> as follows.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(snake_regression, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 2.5 %     97.5 %
+(Intercept) 0.12564557 0.51347293
+meal_size   0.02003708 0.03473096</code></pre>
+</div>
+</div>
+<p>We can test the null and get standard errors with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/summary.lm.html"><code>summary()</code></a> function or the <a href="https://broom.tidymodels.org/reference/tidy.lm.html"><code>tidy()</code></a> function from the <a href="https://broom.tidymodels.org/"><code>broom</code></a> package to extract this information from our linear model. Here I just show the output from <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/summary.lm.html"><code>summary()</code></a>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(snake_regression)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = body_temp ~ meal_size, data = snake_data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.39971 -0.11663 -0.04817  0.17535  0.27252 
+
+Coefficients:
+            Estimate Std. Error t value    Pr(&gt;|t|)    
+(Intercept) 0.319559   0.090977   3.513     0.00314 ** 
+meal_size   0.027384   0.003447   7.944 0.000000938 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1914 on 15 degrees of freedom
+Multiple R-squared:  0.808, Adjusted R-squared:  0.7952 
+F-statistic: 63.11 on 1 and 15 DF,  p-value: 0.0000009381</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="uncertainty-in-predictions" class="level3">
+<h3 class="anchored" data-anchor-id="uncertainty-in-predictions">Uncertainty in predictions</h3>
+<p>We think of the line of a regression as “Predicting” the value of the response variable, given the value of the explanatory variable, <span class="math inline">\(\widehat{Y_i}\)</span>. What does this mean? Well it’s our estimate of the prediction for the population mean value of Y, given it had this value of X Figure @ref(fig:predictionregression)A.</p>
+<p>We can acknowledge the uncertainty in this prediction by including a standard error on our regression line as in Figure @ref(fig:predictionregression)B.</p>
+<p>But this is a prediction for the expected mean <span class="math inline">\(\widehat{Y_i}\)</span>, we might want bands to predict the range of 95% of observations. This is called the prediction interval and is presented in maroon in Figure @ref(fig:predictionregression)C. We can get this prediction interval with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/predict.html"><code>predict()</code></a>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>snake_regression <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(<span class="at">interval =</span> <span class="st">"predict"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stderr">
+<pre class="red-warning"><code>Warning in predict.lm(., interval = "predict"): predictions on current data refer to _future_ responses</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-256bac29a861b600c3b5" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-256bac29a861b600c3b5">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17"],[0.3196,0.3196,0.3196,0.6482,0.7166,0.9576,1.0617,1.1219,0.8891,0.9275,0.9603,1.3136,1.2698,1.1849,1.1246,1.1657,1.6997],[-0.1321,-0.1321,-0.1321,0.2211,0.2926,0.5377999999999999,0.6407,0.6994,0.4692,0.5077,0.5406,0.8821,0.8409,0.7601,0.702,0.7417,1.2332],[0.7712,0.7712,0.7712,1.0752,1.1407,1.3774,1.4827,1.5445,1.3091,1.3473,1.3801,1.7451,1.6987,1.6097,1.5473,1.5898,2.1662]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>fit<\/th>\n      <th>lwr<\/th>\n      <th>upr<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":5,"lengthMenu":[5,25,50],"columnDefs":[{"targets":1,"class":"dt-right"},{"width":"20px","targets":1},{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"fit","targets":1},{"name":"lwr","targets":2},{"name":"upr","targets":3}],"order":[],"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>We can visualize these different summaries of uncertainty.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="linear_regression_files/figure-html/predictionregression-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+<figcaption>Predictions from a linear regression (lines). <strong>B</strong> Shows our uncertainty in the predicted value, <span class="math inline">\(\widehat{Y_i}\)</span>, as the 95% confidence interval. <strong>C</strong> Shows the expected variability in observations, as capture by the 95% prediction interval. Code <a href="https://raw.githubusercontent.com/ybrandvain/3272-book-code/refs/heads/main/snake_intervals.R">here</a>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>No need to know the equations underlying these – just know (1) they exist, (2) they are different (3) The prediction interval is always wider than the confidence interval (4) the different goals of each</strong></p>
+</section>
+</section>
+</section>
+<section id="linear-regression-as-anova" class="level1">
+<h1>Linear Regression as ANOVA</h1>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="linear_regression_files/figure-html/varpartregression-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+<figcaption>An ANOVA framework for a linear regression. <strong>A</strong> shows the difference between each observation, <span class="math inline">\(Y_i\)</span>, and the mean, <span class="math inline">\(\overline{Y}\)</span>, which is the basis for calculating <span class="math inline">\(MS_{total}\)</span>. <strong>B</strong> shows the difference between each predicted value <span class="math inline">\(\widehat{Y_i}\)</span> and the mean, <span class="math inline">\(\overline{Y}\)</span>, the basis for calculating <span class="math inline">\(MS_{model}\)</span>. <strong>C</strong> shows the difference between each observation, <span class="math inline">\(Y_i\)</span>, and its predicted value <span class="math inline">\(\widehat{Y_i}\)</span>, which is used to calculate <span class="math inline">\(MS_{error}\)</span>. Code <a href="https://raw.githubusercontent.com/ybrandvain/3272-book-code/refs/heads/main/snake_ANOVA.R">here</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can view a linear regression as an ANOVA, where we partition variance as we have in the ANOVA. The concepts remain the same: (SS_{total}) represents the distance between observations and the mean, (SS_{model}) represents the distance between predictions and the mean, and (SS_{error}) represents the distance between observations and predictions. However, the mathematical notation differs slightly. Here, we have:</p>
+<ul>
+<li>(SS_{total} = (Y_i - )^2)<br>
+</li>
+<li>(SS_{model} = ( - )^2)<br>
+</li>
+<li>(SS_{error} = (Y_i - )^2)<br>
+</li>
+<li>(MS_{model} = SS_{model} / df_{model})<br>
+</li>
+<li>(MS_{error} = SS_{error} / df_{error})<br>
+</li>
+<li>(df_{model} = 1)<br>
+</li>
+<li>(df_{error} = n - 2)<br>
+</li>
+<li>(F = )</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(snake_regression) <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">ss_total =</span> <span class="fu">sum</span>((body_temp <span class="sc">-</span> <span class="fu">mean</span>(body_temp))<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">ss_model =</span> <span class="fu">sum</span>((.fitted <span class="sc">-</span> <span class="fu">mean</span>(body_temp))<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">ss_error =</span> <span class="fu">sum</span>((body_temp <span class="sc">-</span> .fitted)<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">r2 =</span> ss_model <span class="sc">/</span> ss_total,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>            <span class="co">#</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">df_model =</span> <span class="dv">1</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">df_error =</span> <span class="fu">n</span>() <span class="sc">-</span> <span class="dv">2</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>            <span class="co">#</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">ms_model =</span> ss_model <span class="sc">/</span> df_model,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">ms_error =</span> ss_error <span class="sc">/</span> df_error,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">F_val =</span> ms_model <span class="sc">/</span> ms_error,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_value =</span> <span class="fu">pf</span>(F_val, <span class="at">df1 =</span> df_model, <span class="at">df2 =</span> df_error, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>df_model, <span class="sc">-</span>df_error) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p_value =</span> <span class="fu">paste</span>(<span class="fu">round</span>(p_value <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">7</span>, <span class="at">digits =</span> <span class="dv">1</span>), <span class="st">"x10^-7"</span>, <span class="at">sep =</span> <span class="st">""</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 8%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 11%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">ss_total</th>
+<th style="text-align: right;">ss_model</th>
+<th style="text-align: right;">ss_error</th>
+<th style="text-align: right;">r2</th>
+<th style="text-align: right;">ms_model</th>
+<th style="text-align: right;">ms_error</th>
+<th style="text-align: right;">F_val</th>
+<th style="text-align: left;">p_value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2.8612</td>
+<td style="text-align: right;">2.3118</td>
+<td style="text-align: right;">0.5494</td>
+<td style="text-align: right;">0.808</td>
+<td style="text-align: right;">2.3118</td>
+<td style="text-align: right;">0.0366</td>
+<td style="text-align: right;">63.1148</td>
+<td style="text-align: left;">9.4x10^-7</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Or use the <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/anova.lm.html"><code>anova</code></a> function:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(snake_regression)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: body_temp
+          Df  Sum Sq Mean Sq F value       Pr(&gt;F)    
+meal_size  1 2.31176 2.31176  63.115 0.0000009381 ***
+Residuals 15 0.54942 0.03663                         
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<section id="the-squared-correlation-and-proportion-of-variance-explained" class="level3">
+<h3 class="anchored" data-anchor-id="the-squared-correlation-and-proportion-of-variance-explained">The Squared Correlation and Proportion of Variance Explained</h3>
+<p>We previously referred to (r^2 = ) as the “proportion of variance explained.” In this example, we find (r^2 = = 0.808). Note also that the correlation, (r), squared equals <span class="math inline">\(r^2\)</span>. In this case the correlation equals 0.8989, and (0.8989^2 = 0.808). So, we can calculate the proportion of variance explained either as (r^2 = ) or as (r^2 = ()^2); they are equivalent!</p>
+</section>
+</section>
+<section id="caveats-and-considerations-for-linear-regression" class="level1">
+<h1>Caveats and considerations for linear regression</h1>
+<p>Linear regression is a super useful tool. So it’s important to recognize its limitations before gettting carried away!!!</p>
+<section id="effect-of-measurement-error-on-estimated-slopes" class="level2">
+<h2 class="anchored" data-anchor-id="effect-of-measurement-error-on-estimated-slopes">Effect of Measurement Error on Estimated Slopes</h2>
+<p>We rarely measure all values of (X) and (Y) perfectly. How does measurement error in (X) and/or (Y) affect our estimated correlations and slopes?</p>
+<ul>
+<li><p><strong>For correlation, measurement error in (X) and/or (Y)</strong> both increases the variance of residuals and biases the correlation closer to zero, pulling it away from its true value.</p></li>
+<li><p><strong>For the slope, measurement error in (X)</strong> increases the variance of residuals and similarly biases the slope closer to zero, moving it away from its true value.</p></li>
+<li><p><strong>For the slope, measurement error in (Y)</strong> does not systematically increase or decrease the slope estimate. However, it tends to increase the standard error, the residual variance, and the p-value.</p></li>
+</ul>
+<section id="demonstrating-attenuation" class="level4">
+<h4 class="anchored" data-anchor-id="demonstrating-attenuation">Demonstrating Attenuation</h4>
+<p>Let’s see attenuation in action with a simulation! We’ll start with our snake dataset, where the actual slope is approximately <code>round(coef(snake_regression)[2], digits = 4)</code>, and treat this as our “true” population slope.</p>
+<p>Using the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/jitter.html"><code>jitter()</code></a> function, we’ll add:</p>
+<ol type="1">
+<li>Random noise in (X) (<code>meal_size</code>).</li>
+<li>Random noise in (Y) (<code>body_temp</code>).</li>
+<li>Random noise in both (X) and (Y).</li>
+</ol>
+<p>We’ll then compare these noisy estimates to the true slope and intercept values. Specifically, we’ll add random noise equal to one standard deviation to (X), (Y), or both, estimate the slope and correlation each time, and repeat this simulation many times.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>n_reps <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate noisy data for X, estimate slope and correlation</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>noisy_x <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_reps, <span class="at">simplify =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">expr =</span> snake_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">meal_size =</span> <span class="fu">jitter</span>(meal_size, <span class="at">amount =</span> <span class="fu">sd</span>(meal_size))) <span class="sc">%&gt;%</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">est_slope =</span> <span class="fu">cov</span>(meal_size, body_temp) <span class="sc">/</span> <span class="fu">var</span>(meal_size),</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">est_cor =</span> <span class="fu">cor</span>(meal_size, body_temp))) <span class="sc">%&gt;%</span> <span class="fu">bind_rows</span>() <span class="sc">%&gt;%</span><span class="fu">mutate</span>(<span class="at">noisy =</span> <span class="st">"Noisy: X"</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate noisy data for Y, estimate slope and correlation</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>noisy_y <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_reps, <span class="at">simplify =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">expr =</span> snake_data <span class="sc">%&gt;%</span>  <span class="fu">mutate</span>(<span class="at">body_temp =</span> <span class="fu">jitter</span>(body_temp, <span class="at">amount =</span> <span class="fu">sd</span>(body_temp))) <span class="sc">%&gt;%</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">est_slope =</span> <span class="fu">cov</span>(meal_size, body_temp) <span class="sc">/</span> <span class="fu">var</span>(meal_size), <span class="at">est_cor =</span> <span class="fu">cor</span>(meal_size, body_temp))) <span class="sc">%&gt;%</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_rows</span>() <span class="sc">%&gt;%</span>  <span class="fu">mutate</span>(<span class="at">noisy =</span> <span class="st">"Noisy: Y"</span>)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate noisy data for both X and Y, estimate slope and correlation</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>noisy_xy <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_reps, <span class="at">simplify =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">expr =</span> snake_data <span class="sc">%&gt;%</span> </span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">meal_size =</span> <span class="fu">jitter</span>(meal_size, <span class="at">amount =</span> <span class="fu">sd</span>(meal_size)),</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">body_temp =</span> <span class="fu">jitter</span>(body_temp, <span class="at">amount =</span> <span class="fu">sd</span>(body_temp))) <span class="sc">%&gt;%</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span>(<span class="at">est_slope =</span> <span class="fu">cov</span>(meal_size, body_temp) <span class="sc">/</span> <span class="fu">var</span>(meal_size),</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">est_cor =</span> <span class="fu">cor</span>(meal_size, body_temp))) <span class="sc">%&gt;%</span><span class="fu">bind_rows</span>() <span class="sc">%&gt;%</span>  <span class="fu">mutate</span>(<span class="at">noisy =</span> <span class="st">"Noisy: XY"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="linear_regression_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+<figcaption>A demonstration of the effect of measurement error on the estimated correlation (left panels) and slope (right panels). Each row represents a different scenario: <strong>1. Noisy: X</strong> shows the results when random noise is added only to the predictor variable. <strong>2. Noisy: Y</strong> shows the results when random noise is added only to the response variable, <strong>3. Noisy: XY</strong> shows the results when random noise is added to both variables. In each plot, the density curves illustrate the distribution of estimated slopes or correlations across 1,000 simulations. The black vertical line represents the true slope or correlation based on the original dataset without added noise. Colored vertical lines show the average estimated slope or correlation for each noise condition, highlighting the effect of attenuation, where added measurement error pulls estimates closer to zero.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="be-wary-of-extrapolation" class="level2">
+<h2 class="anchored" data-anchor-id="be-wary-of-extrapolation">Be Wary of Extrapolation</h2>
+<blockquote class="blockquote">
+<p>Det er vanskeligt at spaa, især naar det gælder Fremtiden.<br>
+It is difficult to predict, especially when it comes to the future.</p>
+</blockquote>
+<p>This quote nicely captures the central challenge in regression. <span style="color: LightGrey;">Its power is evident from how often it’s been incorrectly attributed to famous thinkers (e.g., Niels Bohr, Yogi Berra, Mark Twain, and even Nostradamus). This is an example of how “famous things that are said… tend to be attributed to even more famous people,” as <a href="https://grantbarrett.com/about/">Grant Barrett</a> discusses in the <a href="https://underunderstood.com/podcast/">Under Understood</a> episode <a href="https://underunderstood.com/podcast/episode/orange-door-hinge-rhyme/">The Origins of Oranges and Door Hinges</a>.</span></p>
+<blockquote class="blockquote">
+<p>It is difficult to predict from a linear regression, especially when it comes to data outside the model’s range.</p>
+<footer>
+— Me
+</footer>
+</blockquote>
+<p><span style="color: LightGrey;">In addition to the usual cautions about uncertainty, bias, nonindependence, and model assumptions,</span> predictions from a linear model are only reliable within the range of the explanatory variable used to build the model.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://imgs.xkcd.com/comics/extrapolating.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="example-of-extrapolation-risks" class="level4">
+<h4 class="anchored" data-anchor-id="example-of-extrapolation-risks">Example of Extrapolation Risks</h4>
+<p><em>Species-Area Relationship:</em> How does the number of fish species change with pool area? Data for small pools from <span class="citation" data-cites="kodricbrown1993">Kodric-Brown &amp; Brown (<a href="../references.html#ref-kodricbrown1993" role="doc-biblioref">1993</a>)</span> are shown in Figure @ref(fig:dontextrap)A, where we fit a linear model:</p>
+<p>[ = 1.79 + 3.55 ^{-4} ^2 ]</p>
+<p>Extrapolating this model to predict species in a 50,000 (m^2) pool, we estimate about 20 fish species (Figure @ref(fig:dontextrap)B). However, additional data shows this is a poor prediction for larger pools (Figure @ref(fig:dontextrap)C).</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="linear_regression_files/figure-html/dontextrap-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+<figcaption>Be wary of extrapolation. A regression fits data from small pools well (A). Extrapolation to larger pools (B) poorly predicts diversity in larger ponds (C). Data from <span class="citation" data-cites="kodricbrown1993">Kodric-Brown &amp; Brown (<a href="../references.html#ref-kodricbrown1993" role="doc-biblioref">1993</a>)</span> are available <a href="http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter17/chap17f5_3DesertPoolFish.csv">here</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>The number of fish species is poorly predicted by linear extrapolation based on small pools.</li>
+<li>The model built from small pools does not predict well for larger pools.</li>
+<li><strong>Lesson:</strong> Avoid extrapolation—predictions are only reliable within the range of (X) values used in the model.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="assumptions-of-linear-regression-and-addressing-violations" class="level1">
+<h1>Assumptions of Linear Regression and Addressing Violations</h1>
+<section id="assumptions-of-linear-regression" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions-of-linear-regression">Assumptions of Linear Regression</h3>
+<p>Recall from Section @ref(linmodasum), a linear model assumes:</p>
+<ul>
+<li><strong>Linearity</strong>: Observations are appropriately modeled by adding all predictors in our equation. We evaluate this by ensuring residuals are independent of predictors.<br>
+</li>
+<li><strong>Homoscedasticity</strong>: The variance of residuals is constant across all predicted values, <span class="math inline">\(\hat{Y_i}\)</span>, for any value of X.<br>
+</li>
+<li><strong>Independence</strong>: Observations are independent of one another (aside from the predictors in the model).<br>
+</li>
+<li><strong>Normality</strong>: Residuals are normally distributed.<br>
+</li>
+<li><strong>Unbiased Data Collection</strong>: Data is collected without bias, as usual.</li>
+</ul>
+<p>We can assess assumptions, such as normality of residuals and independence of predicted values, <span class="math inline">\(\widehat{Y_i}\)</span>, and residuals, <span class="math inline">\(e_i\)</span>, using the <a href="https://cran.r-project.org/web/packages/ggfortify/vignettes/plot_lm.html"><code>autoplot()</code></a> function in the <code>ggfortify</code> package.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(snake_regression, <span class="at">which =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">3</span>), <span class="at">ncol =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="linear_regression_files/figure-html/diaglinreg-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+<figcaption>Evaluating the normality of residuals (in the QQ plot) and independence of their values (Residual vs.&nbsp;Fitted plot) and variance (Scale-Location plot) relative to predicted values, <span class="math inline">\(\widehat{Y_i}\)</span>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Figure @ref(fig:diaglinreg) shows that the assumptions appear to be met, with the caveat that the observed value of the largest prediction, <span class="math inline">\(Y_{17} = 1.3\)</span>, is substantially smaller than its predicted value, <span class="math inline">\(\widehat{Y_{17}} = 1.70\)</span>.</p>
+</section>
+<section id="when-assumptions-arent-met" class="level3">
+<h3 class="anchored" data-anchor-id="when-assumptions-arent-met">When Assumptions Aren’t Met</h3>
+<p>If assumptions are violated, several options are available:</p>
+<ol type="1">
+<li>Ignore minor violations if they don’t substantially affect results.</li>
+<li>Use nonparametric approaches - For instance, we can rank values of x and y, compute a correlation of these ranks, and assess how unusual this correlation is under a null sampling distribution. This approach is known as <a href="https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient">“Spearman’s Rank correlation”</a>.</li>
+<li>Apply a transformation to the data.</li>
+<li>Build a better-fitting model.</li>
+</ol>
+<section id="transformation-example" class="level4">
+<h4 class="anchored" data-anchor-id="transformation-example">Transformation Example</h4>
+<p>When data violate test assumptions, an appropriate transformation not only meets the assumptions but often reveals a more meaningful model and natural scale.</p>
+<p>For example, returning to the full <a href="http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter17/chap17f5_3DesertPoolFish.csv">data</a> from <span class="citation" data-cites="kodricbrown1993">Kodric-Brown &amp; Brown (<a href="../references.html#ref-kodricbrown1993" role="doc-biblioref">1993</a>)</span> on the association between pond size and species diversity:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="linear_regression_files/figure-html/fullfpooldatlin-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+<figcaption>(A) Fitting a linear regression to predict the number of fish species from pool area. (B) A QQ-plot of the residuals of this model. (C) The relationship between predictions, <span class="math inline">\(\widehat{Y_i}\)</span>, and residuals, <span class="math inline">\(a_i\)</span>, from this model.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The raw data plot (Figure @ref(fig:fullfpooldatlin)A) shows a strong association between pool area and the number of fish species, with a substantial amount of variance explained (0.39), but diagnostics reveal that small values are too large and large values are too small (Figure @ref(fig:fullfpooldatlin)B,C).</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="linear_regression_files/figure-html/fullfpooldatlog10-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+<figcaption>(A) Fitting a linear regression to predict the number of fish species from <span class="math inline">\(log_{10}(pool area)\)</span>. (B) A QQ-plot of the residuals of this model. (C) The relationship between predictions, <span class="math inline">\(\widehat{Y_i}\)</span>, and residuals, <span class="math inline">\(a_i\)</span>, from this model.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Transforming the x-axis with <span class="math inline">\(log_{10}\)</span> (Figure @ref(fig:fullfpooldatlog10)A) strengthens the association between <span class="math inline">\(log_{10}\)</span> pool area and the number of fish species, nearly doubling the variance explained (<span class="math inline">\(r^2 = 0.74\)</span>). Besides better meeting test assumptions (Figure @ref(fig:fullfpooldatlin)B,C), this transformation represents a more natural model scale.</p>
+</section>
+</section>
+<section id="polynomial-regression-example" class="level3">
+<h3 class="anchored" data-anchor-id="polynomial-regression-example">Polynomial Regression Example</h3>
+<p>Violating assumptions often suggests the model might be biologically inappropriate. An example is predicting species number from plot productivity.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="linear_regression_files/figure-html/bmasslin-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+<figcaption>(A) Fitting a linear regression to predict the number of plant species from plot productivity. (B) A QQ-plot of the residuals of this model. (C) The relationship between predictions, <span class="math inline">\(\widehat{Y_i}\)</span>, and residuals, <span class="math inline">\(a_i\)</span>, from this model.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The raw data plot (Figure @ref(fig:bmasslin)A) shows little association between productivity and species count, with minimal variance explained (<span class="math inline">\(r^2 = 0.015\)</span>). Diagnostics indicate normal residuals (Figure @ref(fig:bmasslin)B), but intermediate values have high positive residuals (Figure @ref(fig:bmasslin)C).</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="linear_regression_files/figure-html/bmasspoly-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+<figcaption>(A) Fitting a polynomial regression to predict the number of plant species from plot productivity. (B) A QQ-plot of the residuals of this model. (C) The relationship between predictions, <span class="math inline">\(\widehat{Y_i}\)</span>, and residuals, <span class="math inline">\(a_i\)</span>, from this model.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A polynomial regression (Figure @ref(fig:bmasspoly)A) reveals a clear, strong association between productivity and species diversity, where diversity peaks at intermediate productivity. This model significantly increases the variance explained in species diversity (<span class="math inline">\(r^2 = 0.5316\)</span>), meeting test assumptions better and offering a more natural model. We will revisit polynomial regression later!</p>
+</section>
+</section>
+<section id="quiz" class="level1">
+<h1>Quiz</h1>
+<div class="cell" data-layout-align="center">
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLScMWdPMcm9eLvWbGmjuaF4N-PO6hRn6Hw_90Lkuqh1_KBhGww/viewform?showcase=0" width="95%" height="400px" data-external="1">
+</iframe>
+</div>
+</section>
+<section id="definitions-notation-and-equations" class="level1 unnumbered">
+<h1 class="unnumbered">Definitions, Notation, and Equations</h1>
+<div class="cell" data-layout-align="center" type="rmddef">
+
+<div class="rmddef">
+<p><strong>Linear Regression:</strong> A statistical approach for modeling the relationship between a continuous response variable (Y) and one or more continuous explanatory variables (X), where we predict (Y) based on (X) and assess the strength, uncertainty, and significance of this prediction.</p>
+<p>**Mean Squares Model ((_{model}))**: The average squared deviation between predicted values () (fitted by the regression model) and the overall mean (). This term reflects the variation explained by the model.</p>
+<p>**Mean Squares Error ((_{error}))**: The average squared deviation of each observed (Y_i) from its predicted value (). This term reflects the residual (or unexplained) variance within the data.</p>
+<p><strong>F-statistic for Regression</strong>: A ratio of the variance explained by the model to the residual variance, calculated as (). A larger (F) value indicates a stronger model fit relative to the residual error.</p>
+<p><strong>Null Hypothesis for Regression (H₀):</strong> The hypothesis that the slope is zero, meaning there is no significant association between (X) and (Y).</p>
+<p><strong>Alternative Hypothesis for Regression (H₁):</strong> The hypothesis that the slope differs from zero, indicating a significant association between (X) and (Y).</p>
+<strong>Degrees of Freedom in Regression:</strong> For simple linear regression, we use (df_{model} = 1) (for the slope) and (df_{error} = n - 2) (total observations minus two for the slope and intercept).
+</div>
+</div>
+<section id="r-functions-for-regression" class="level3">
+<h3 class="anchored" data-anchor-id="r-functions-for-regression">R Functions for Regression</h3>
+<div class="cell" data-layout-align="center" type="rmdcode">
+
+<div class="rmdcode">
+<p><strong>Regression and Model Functions</strong></p>
+<p><a href="https://rdrr.io/r/stats/lm.html"><code>lm()</code></a>: Fits a linear regression model, estimating the intercept and slope.</p>
+<p><a href="https://rdrr.io/r/stats/anova.html"><code>anova()</code></a>: Provides an ANOVA table for a linear model, which includes sums of squares, mean squares, and the F-statistic to assess model fit.</p>
+<p><a href="https://rdrr.io/r/base/summary.html"><code>summary()</code></a>: Summarizes the regression model, displaying coefficients, standard errors, t-values, p-values, R-squared, and F-statistic.</p>
+<p><a href="https://rdrr.io/r/stats/coef.html"><code>coef()</code></a>: Extracts the estimated coefficients (intercept and slope) from a linear model object.</p>
+<p><a href="https://rdrr.io/r/stats/predict.html"><code>predict()</code></a>: Generates predictions from a fitted model, either for the original data or new data. Can also calculate confidence and prediction intervals.</p>
+<p><strong>Functions from the <code>broom</code> Package</strong></p>
+<p><a href="https://broom.tidymodels.org/reference/augment.html"><code>augment()</code></a>: Adds columns to the original dataset containing fitted values, residuals, and additional diagnostics. Useful for examining the model fit for each observation.</p>
+<p><a href="https://broom.tidymodels.org/reference/tidy.html"><code>tidy()</code></a>: Summarizes model output in a tidy format, displaying coefficients, standard errors, t-statistics, and p-values in a data frame.</p>
+<p><a href="https://broom.tidymodels.org/reference/glance.html"><code>glance()</code></a>: Returns a single-row summary of the model, including statistics such as R-squared, adjusted R-squared, AIC, BIC, and F-statistic. This function is useful for an overall model assessment.</p>
+<p><strong>Diagnostics and Visualization</strong></p>
+<a href="https://ggplot2.tidyverse.org/reference/autoplot.lm.html"><code>autoplot()</code></a>: Generates diagnostic plots for a linear model, including residuals vs.&nbsp;fitted values, normal Q-Q plots, scale-location plots, and residuals vs.&nbsp;leverage. This helps assess model assumptions such as normality, homoscedasticity, and leverage points in a straightforward and visual way.
+</div>
+</div>
+</section>
+<section id="key-equations" class="level3">
+<h3 class="anchored" data-anchor-id="key-equations">Key Equations</h3>
+<ol type="1">
+<li><strong>Regression Equation</strong><br>
+[ Y_i = a + b X_i + _i ] where:
+<ul>
+<li>(a) is the intercept, representing the expected value of (Y) when (X = 0),</li>
+<li>(b) is the slope, indicating the change in (Y) for a one-unit increase in (X),</li>
+<li>(_i) is the residual error for observation (i).</li>
+</ul></li>
+<li><strong>Estimating the Slope</strong><br>
+The slope (b) is calculated as: [ b = ] where:
+<ul>
+<li>(X_i) and (Y_i) are the values of each observation,</li>
+<li>() and () are the means of (X) and (Y).</li>
+</ul></li>
+<li><strong>Estimating the Intercept</strong><br>
+The intercept (a) is calculated as: [ a = - b ] where:
+<ul>
+<li>(b) is the estimated slope,</li>
+<li>() and () are the means of (Y) and (X).</li>
+</ul></li>
+<li><strong>Standard Error of the Slope</strong><br>
+The standard error of the slope, (SE_b), is given by: [ SE_b = ] where:
+<ul>
+<li>(_{error}) is the mean squared error from the model.</li>
+</ul></li>
+<li><strong>Standard Error of the Intercept</strong><br>
+The standard error of the intercept, (SE_a), is calculated as: [ SE_a = ] where:
+<ul>
+<li>(n) is the number of observations,</li>
+<li>() is the mean of (X),</li>
+<li>(_{error}) is the mean squared error.</li>
+</ul></li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-kodricbrown1993" class="csl-entry" role="listitem">
+Kodric-Brown, A., &amp; Brown, J. H. (1993). Highly structured fish communities in australian desert springs. <em>Ecology</em>, <em>74</em>(6), 1847–1855. https://doi.org/<a href="https://doi.org/10.2307/1939942">https://doi.org/10.2307/1939942</a>
+</div>
+<div id="ref-tattersall2004" class="csl-entry" role="listitem">
+Tattersall, G. J., Milsom, W. K., Abe, A. S., Brito, S. P., &amp; Andrade, D. V. (2004). The thermogenesis of digestion in rattlesnakes. <em>Journal of Experimental Biology</em>, <em>207</em>(4), 579–585. <a href="https://doi.org/10.1242/jeb.00790">https://doi.org/10.1242/jeb.00790</a>
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  update_total_correct();
+}
+
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../book_sections/anova/anova_summary.html" class="pagination-link" aria-label="• 19. ANOVA summary">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">• 19. ANOVA summary</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../book_sections/two_predictors.html" class="pagination-link" aria-label="21. Two predictors">
+        <span class="nav-page-text">21. Two predictors</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
