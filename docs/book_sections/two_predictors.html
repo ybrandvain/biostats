@@ -150,7 +150,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../assets/webex.css">
 </head>
 
-<body class="nav-sidebar floating fullcontent quarto-light">
+<body class="nav-sidebar floating slimcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -1150,9 +1150,10 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -1184,18 +1185,18 @@ window.Quarto = {
 </li>
 <li>Calculate TYPE I sums of squares.</li>
 </ul>
-<section id="review-of-linear-models" class="level2">
+<section id="review-of-linear-models" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="review-of-linear-models">Review of Linear Models</h2>
 <p>A linear model predicts the response variable, as <span class="math inline">\(\widehat{Y_i}\)</span> by adding up all components of the model.</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
+<div class="cell page-columns page-full" data-layout-align="center">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/other-stats-artwork/dragon_predict_mlr.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="float:right;padding-left: 5px;width:50.0%"></p>
+<p><img src="https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/other-stats-artwork/dragon_predict_mlr.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="float:right;padding-left: 5px;width:95.0%"></p>
 </figure>
 </div>
-</div>
-</div>
+</div></div></div>
 <p><span class="math display">\[\begin{equation}
 \hat{Y_i} = a + b_1  y_{1,i} + b_2 y_{2,i} + \dots{}
 (\#eq:predlong)
@@ -1235,7 +1236,7 @@ window.Quarto = {
 </ul>
 </section>
 </section>
-<section id="polynomial-regression-example" class="level2">
+<section id="polynomial-regression-example" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="polynomial-regression-example">Polynomial regression example</h2>
 <p>We note that linear models can include e.g.&nbsp;squared, and geometric functions too, so long as we get out predictions by adding up all the components of the model.</p>
 <p>A classic example of a linear model is a <strong>polynomial regression</strong>, in which we predict some response variable as a function of a predictor and higher order terms of the predictor. The most common polynomial regression includes the explanatory variable and its square value @ref(eq:polynomial).</p>
@@ -1246,13 +1247,10 @@ window.Quarto = {
 \end{split}
 (\#eq:polynomial)
 \end{equation}\]</span></p>
-<div class="cell" data-layout-align="center" type="rmdwarning">
-
-<div class="rmdwarning">
-Often including a cubic, or even a quadratic term is useful – but be thoughtful before adding too many in – each additional term takes away from our degrees of freedom, complicates interpretation, and may overfit the data. Let your biological intuition and statistical reasoning guide you.
+<div class="warning">
+<p>Often including a cubic, or even a quadratic term is useful – but be thoughtful before adding too many in – each additional term takes away from our degrees of freedom, complicates interpretation, and may overfit the data. Let your biological intuition and statistical reasoning guide you.</p>
 </div>
-</div>
-<section id="polynomial-regression-example-1" class="level3">
+<section id="polynomial-regression-example-1" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="polynomial-regression-example-1">Polynomial regression example</h3>
 <p>Let’s revisit our example polynomial regression example predicting the number of species from the productivity of the plot to work through these ideas. Recall that</p>
 <ul>
@@ -1262,22 +1260,26 @@ Often including a cubic, or even a quadratic term is useful – but be thoughtfu
 </ul>
 <p>Let’s write a descriptive equation for each model</p>
 <p><span class="math display">\[\text{N.SPECIES = CONSTANT + PRODUCTIVITY}\]</span> <span class="math display">\[\text{N.SPECIES = CONSTANT + PRODUCTIVITY + PRODUCTIVITY}^2\]</span></p>
-<p>We present these models in Figure @ref(fig:bmasslinsq). See that we can add a polynomial fit to our ggplot by typing <code>formula =  y ~ poly(x, 2, raw = TRUE)</code> into the <code>geom_smooth</code> function.</p>
-<div class="cell" data-layout-align="center">
+<p>We present these models in <a href="#fig-bmasslinsq" class="quarto-xref">Figure&nbsp;<span>1</span></a>. See that we can add a polynomial fit to our ggplot by typing <code>formula =  y ~ poly(x, 2, raw = TRUE)</code> into the <code>geom_smooth</code> function.</p>
+<div class="cell page-columns page-full" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>bmass <span class="ot">&lt;-</span> <span class="fu">tibble</span>( <span class="at">Biomass =</span> <span class="fu">c</span>(<span class="fl">192.982</span>,<span class="fl">308.772</span>,<span class="fl">359.064</span>,<span class="fl">377.778</span>,<span class="fl">163.743</span>,<span class="fl">168.421</span>,<span class="fl">128.655</span>,<span class="fl">98.246</span>,<span class="fl">107.602</span>,<span class="fl">93.567</span>,<span class="fl">83.041</span>,<span class="fl">33.918</span>,<span class="fl">63.158</span>,<span class="fl">139.181</span>,<span class="fl">148.538</span>,<span class="fl">133.333</span>,<span class="fl">127.485</span>,<span class="fl">88.889</span>,<span class="fl">138.012</span>),   <span class="at">n.species =</span> <span class="fu">c</span>(<span class="fl">25.895</span>,<span class="fl">12.729</span>,<span class="fl">8.342</span>,<span class="fl">2.885</span>,<span class="fl">21.504</span>,<span class="fl">20.434</span>,<span class="fl">18.293</span>,<span class="fl">16.046</span>,<span class="fl">16.046</span>,<span class="fl">11.655</span>,<span class="fl">12.725</span>,<span class="fl">9.515</span>,<span class="fl">7.16</span>,<span class="fl">16.042</span>,<span class="fl">16.042</span>,<span class="fl">11.655</span>,<span class="fl">12.725</span>,<span class="fl">2.88</span>,<span class="fl">8.338</span>))</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>base_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(bmass, <span class="fu">aes</span>(<span class="at">x =</span> Biomass, <span class="at">y =</span>  n.species))<span class="sc">+</span>  <span class="fu">geom_point</span>()<span class="sc">+</span>  <span class="fu">xlab</span>(<span class="st">"Productivity (g/15 Days)"</span> )</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>linear_plot <span class="ot">&lt;-</span> base_plot <span class="sc">+</span>   <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Linear term"</span>) <span class="sc">+</span>  </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">'lm'</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">'lm'</span>)<span class="sc">+</span><span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>))</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>polynomial_plot <span class="ot">&lt;-</span> base_plot <span class="sc">+</span>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Linear and squared term"</span>) <span class="sc">+</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">'lm'</span>,<span class="at">formula =</span>  y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">2</span>, <span class="at">raw =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">'lm'</span>,<span class="at">formula =</span>  y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">2</span>, <span class="at">raw =</span> <span class="cn">TRUE</span>))<span class="sc">+</span><span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>), <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>))</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(linear_plot, polynomial_plot, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"a"</span>,<span class="st">"b"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="two_predictors_files/figure-html/bmasslinsq-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
-<figcaption>(A) Fitting a linear regression to predict the number of plant species from prodcutivity of a plot. (B) A Adding a squared term to our linear regression.</figcaption>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-bmasslinsq" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-bmasslinsq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
+<img src="two_predictors_files/figure-html/fig-bmasslinsq-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img column-page-right" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bmasslinsq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: (A) Fitting a linear regression to predict the number of plant species from prodcutivity of a plot. (B) A Adding a squared term to our linear regression.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -1342,7 +1344,7 @@ F-statistic: 9.078 on 2 and 16 DF,  p-value: 0.002318</code></pre>
 \end{split}
 (\#eq:polynomial)
 \end{equation}\]</span></p>
-<p>A value which makes sense, as it seems to be where out curve intersects with 250 in Figure @ref(figbmasslinsq)B.</p>
+<p>A value which makes sense, as it seems to be where out curve intersects with 250 in <a href="#fig-bmasslinsq" class="quarto-xref">Figure&nbsp;<span>1</span></a> B.</p>
 <p>Our columns, <code>Estimate</code>, <code>Std. Error</code>, <code>t value</code>, and <code>Pr(&gt;|t|)</code> should also feel familiar, all interpretations are the same as usual. The standard error describes the uncertainty in the estimate, the t describes how many standard errors away from zero the estimate is, and the p-value describes the probability that a value this many standard errors away from zero would arise if the null where true. One thing though</p>
 <p><strong>The p-values in this output do not describe the statistical significance of the predictors!! DO NOT INTERPRET THESE P-VALUES AS SUCH</strong></p>
 <p>One way to think about this is to just look at our simple linear model which shows basically no association between biomass and species number (and the association it shows it slightly negative).</p>
@@ -1378,9 +1380,11 @@ F-statistic: 9.078 on 2 and 16 DF,  p-value: 0.002318</code></pre>
 </table>
 </div>
 </div>
-<p><strong>Note</strong> The <code>summary.lm()</code> output still usefully provides our estimates and uncertinaty in them – so don’t ignore it!</p>
+<div class="note">
+<p>The <code>summary.lm()</code> output still usefully provides our estimates and uncertinaty in them – so don’t ignore it!</p>
+</div>
 </section>
-<section id="an-anova-approach" class="level4">
+<section id="an-anova-approach" class="level4 page-columns page-full">
 <h4 class="anchored" data-anchor-id="an-anova-approach">An ANOVA approach</h4>
 <p>So how do we get significance of each term? We look at the ANOVA output!</p>
 <div class="cell" data-layout-align="center">
@@ -1402,17 +1406,21 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>We’ll see in this and the next section that there’s a real issue in which variable we attribute our sums of squares to in larger linear models.</p>
 <p>In many cases (see below) Sequential “Type I” sums of squares make the most sense. Here we</p>
 <ul>
-<li>Calculate <span class="math inline">\(SS_{error}\)</span> and <span class="math inline">\(SS_{total}\)</span> as we always do! (Figure @ref(fig:sspoly)A,D)</li>
-<li>Calculate the <span class="math inline">\(SS_{thing1}\)</span> (in this case Biomass), as if it where the only thing in the model, <span class="math inline">\(\widehat{Y_{i|bmass}}\)</span>. (Figure @ref(fig:sspoly)B).<br>
+<li>Calculate <span class="math inline">\(SS_{error}\)</span> and <span class="math inline">\(SS_{total}\)</span> as we always do! (<a href="#fig-sspoly" class="quarto-xref">Figure&nbsp;<span>2</span></a> A, D)</li>
+<li>Calculate the <span class="math inline">\(SS_{thing1}\)</span> (in this case Biomass), as if it where the only thing in the model, <span class="math inline">\(\widehat{Y_{i|bmass}}\)</span>. (<a href="#fig-sspoly" class="quarto-xref">Figure&nbsp;<span>2</span></a> B).<br>
 </li>
-<li>Calculate the <span class="math inline">\(SS_{thing2}\)</span> (in this case <span class="math inline">\(Biomass^2\)</span>), as the deviation of predicted values from a model with both things in it, <span class="math inline">\(\widehat{Y_{i|bmass,bmass^2}}\)</span>, minus predictions from a model with just thing1 in it, <span class="math inline">\(\widehat{Y_{i|bmass}}\)</span> (Figure @ref(fig:sspoly)C).</li>
+<li>Calculate the <span class="math inline">\(SS_{thing2}\)</span> (in this case <span class="math inline">\(Biomass^2\)</span>), as the deviation of predicted values from a model with both things in it, <span class="math inline">\(\widehat{Y_{i|bmass,bmass^2}}\)</span>, minus predictions from a model with just thing1 in it, <span class="math inline">\(\widehat{Y_{i|bmass}}\)</span> (Figure <a href="#fig-sspoly" class="quarto-xref">Figure&nbsp;<span>2</span></a> C).</li>
 </ul>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="two_predictors_files/figure-html/sspoly-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
-<figcaption>Calculating <em>sequential</em> sums of squares for our model. <strong>a</strong> Total deviations, as usual. <strong>b</strong> Deviations from predicted values of Biomass alone without considering the squared term (red line) – this makes up <span class="math inline">\(SS_{Biomass}\)</span>. <strong>c</strong> Deviations of predictions from <span class="math inline">\(Biomass + Biomass^2\)</span> (blue line) away from predictions of Biomass alone (red line) – this makes up <span class="math inline">\(SS_{Biomass^2}\)</span>. <strong>d</strong> Deviation of data points from full model (blue line) – this makes up <span class="math inline">\(SS_{error}\)</span></figcaption>
+<div class="cell page-columns page-full" data-layout-align="center">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-sspoly" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-sspoly-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
+<img src="two_predictors_files/figure-html/fig-sspoly-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img column-page-right" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sspoly-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Calculating <em>sequential</em> sums of squares for our model. <strong>a</strong> Total deviations, as usual. <strong>b</strong> Deviations from predicted values of Biomass alone without considering the squared term (red line) – this makes up <span class="math inline">\(SS_{Biomass}\)</span>. <strong>c</strong> Deviations of predictions from <span class="math inline">\(Biomass + Biomass^2\)</span> (blue line) away from predictions of Biomass alone (red line) – this makes up <span class="math inline">\(SS_{Biomass^2}\)</span>. <strong>d</strong> Deviation of data points from full model (blue line) – this makes up <span class="math inline">\(SS_{error}\)</span>
+</figcaption>
 </figure>
 </div>
 </div>
@@ -1441,8 +1449,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_bmass    =</span> <span class="fu">pf</span>(<span class="at">q =</span> F_bmass,  <span class="at">df1 =</span> df_bmass,  <span class="at">df2 =</span> df_error, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>),</span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_bmass2   =</span> <span class="fu">pf</span>(<span class="at">q =</span> F_bmass2, <span class="at">df1 =</span> df_bmass2, <span class="at">df2 =</span> df_error, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>))                                                                   <span class="sc">%&gt;%</span> <span class="fu">mutate_all</span>(round,<span class="at">digits =</span> <span class="dv">4</span>) <span class="sc">%&gt;%</span>DT<span class="sc">::</span><span class="fu">datatable</span>( <span class="at">options =</span> <span class="fu">list</span>( <span class="at">scrollX=</span><span class="st">'400px'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-05318c7c11d4b0e6784a" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-05318c7c11d4b0e6784a">{"x":{"filter":"none","vertical":false,"data":[["1"],[656.3904],[9.8986],[339.0203],[307.4714],[1],[1],[16],[9.8986],[339.0203],[19.217],[0.5151],[17.6417],[0.4833],[0.0007]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ss_tot<\/th>\n      <th>ss_bmass<\/th>\n      <th>ss_bmass2<\/th>\n      <th>ss_error<\/th>\n      <th>df_bmass<\/th>\n      <th>df_bmass2<\/th>\n      <th>df_error<\/th>\n      <th>ms_bmass<\/th>\n      <th>ms_bmass2<\/th>\n      <th>ms_error<\/th>\n      <th>F_bmass<\/th>\n      <th>F_bmass2<\/th>\n      <th>p_bmass<\/th>\n      <th>p_bmass2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"400px","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11,12,13,14]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ss_tot","targets":1},{"name":"ss_bmass","targets":2},{"name":"ss_bmass2","targets":3},{"name":"ss_error","targets":4},{"name":"df_bmass","targets":5},{"name":"df_bmass2","targets":6},{"name":"df_error","targets":7},{"name":"ms_bmass","targets":8},{"name":"ms_bmass2","targets":9},{"name":"ms_error","targets":10},{"name":"F_bmass","targets":11},{"name":"F_bmass2","targets":12},{"name":"p_bmass","targets":13},{"name":"p_bmass2","targets":14}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-7c386df4582ecedd50c6" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-7c386df4582ecedd50c6">{"x":{"filter":"none","vertical":false,"data":[["1"],[656.3904],[9.8986],[339.0203],[307.4714],[1],[1],[16],[9.8986],[339.0203],[19.217],[0.5151],[17.6417],[0.4833],[0.0007]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ss_tot<\/th>\n      <th>ss_bmass<\/th>\n      <th>ss_bmass2<\/th>\n      <th>ss_error<\/th>\n      <th>df_bmass<\/th>\n      <th>df_bmass2<\/th>\n      <th>df_error<\/th>\n      <th>ms_bmass<\/th>\n      <th>ms_bmass2<\/th>\n      <th>ms_error<\/th>\n      <th>F_bmass<\/th>\n      <th>F_bmass2<\/th>\n      <th>p_bmass<\/th>\n      <th>p_bmass2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"400px","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11,12,13,14]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ss_tot","targets":1},{"name":"ss_bmass","targets":2},{"name":"ss_bmass2","targets":3},{"name":"ss_error","targets":4},{"name":"df_bmass","targets":5},{"name":"df_bmass2","targets":6},{"name":"df_error","targets":7},{"name":"ms_bmass","targets":8},{"name":"ms_bmass2","targets":9},{"name":"ms_error","targets":10},{"name":"F_bmass","targets":11},{"name":"F_bmass2","targets":12},{"name":"p_bmass","targets":13},{"name":"p_bmass2","targets":14}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>You can scroll through the output above to see that our calculations match what <code>anova()</code> tells us!!!</p>
@@ -1451,7 +1459,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section>
 <section id="type-i-sums-of-squares-and-others" class="level2">
 <h2 class="anchored" data-anchor-id="type-i-sums-of-squares-and-others">Type I Sums of Squares (and others)</h2>
-<p>Calculating Sums of Squares sequentially, as we did in Figure @ref(fig:sspoly), is the default way R does things.</p>
+<p>Calculating Sums of Squares sequentially, as we did in Figure <a href="#fig-sspoly" class="quarto-xref">Figure&nbsp;<span>2</span></a>, is the default way R does things.</p>
 <p>Sequential <em>Type I</em> sums of squares calculate the sums of squares for the first thing in your model first, then the second thing, then the third thing etc… This means that while our</p>
 <ul>
 <li>Sums of square, Mean squares, F values, and p-values might change, depending on the order in which variables are entered into our model.<br>
@@ -1462,14 +1470,18 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <ul>
 <li>We are not interested in the significance of the earlier terms in our model, which we want to take account of, but don’t really care about their statistical significance.<br>
 </li>
-<li>Designs are “balanced” (Figure @ref(fig:balance)), as in these cases, we get the same SS, F and P values regardless of the order that we put terms into the model.</li>
+<li>Designs are “balanced” (<a href="#fig-balance" class="quarto-xref">Figure&nbsp;<span>3</span></a>), as in these cases, we get the same SS, F and P values regardless of the order that we put terms into the model.</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://www.statisticshowto.com/wp-content/uploads/2016/11/balanced-and-unbalanced-design.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption>Examples of balanced and unbalanced statistical designs, from <a href="https://www.statisticshowto.com/balanced-and-unbalanced-designs/">statistics how to</a>.</figcaption>
+<div id="fig-balance" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-balance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figs/old/balanced.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-balance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Examples of balanced and unbalanced statistical designs, from <a href="https://www.statisticshowto.com/balanced-and-unbalanced-designs/">statistics how to</a>.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -1693,16 +1705,18 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h3 class="anchored" data-anchor-id="hypothesis-testing-with-two-categorical-predictors">Hypothesis testing with two categorical predictors</h3>
 <p>In this model, the null and alternative hypotheses are</p>
 <ul>
-<li><span class="math inline">\(H_0:\)</span> There is no association between predator treatment and zooplankton diversity – i.e.&nbsp;Under the null, we predict zooplankton diversity in this experiment as the intercept plus the deviation associated with stream (Figure @ref(fig:h0hazoo)a).<br>
-</li>
-<li><span class="math inline">\(H_A:\)</span> There is an association between predator treatment and zooplankton diversity – i.e.&nbsp;Under the alternative, we predict zooplankton diversity in this experiment as the intercept plus and the deviation associated with stream plus the effect of one or more treatments (Figure @ref(fig:h0hazoo)b).</li>
+<li><span class="math inline">\(H_A:\)</span> There is an association between predator treatment and zooplankton diversity – i.e.&nbsp;Under the alternative, we predict zooplankton diversity in this experiment as the intercept plus and the deviation associated with stream plus the effect of one or more treatments (<a href="#fig-h0hazoo" class="quarto-xref">Figure&nbsp;<span>4</span></a> b).</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="two_predictors_files/figure-html/h0hazoo-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
-<figcaption>Null (<strong>a</strong>) and alternative (<strong>b</strong>) hypotheses for our blocked predation experiment.</figcaption>
+<div id="fig-h0hazoo" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-h0hazoo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="two_predictors_files/figure-html/fig-h0hazoo-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-h0hazoo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Null (<strong>a</strong>) and alternative (<strong>b</strong>) hypotheses for our blocked predation experiment.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -1761,8 +1775,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">F_treat   =</span> ms_treat <span class="sc">/</span> ms_error,</span>
 <span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_bmass2   =</span> <span class="fu">pf</span>(<span class="at">q =</span> F_treat, <span class="at">df1 =</span> df_treat, <span class="at">df2 =</span> df_error, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>))                                                                  <span class="sc">%&gt;%</span> <span class="fu">mutate_all</span>(round,<span class="at">digits =</span> <span class="dv">4</span>) <span class="sc">%&gt;%</span>DT<span class="sc">::</span><span class="fu">datatable</span>( <span class="at">options =</span> <span class="fu">list</span>( <span class="at">scrollX=</span><span class="st">'400px'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-3114c105179183ad2a08" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-3114c105179183ad2a08">{"x":{"filter":"none","vertical":false,"data":[["1"],[10.8733],[2.34],[6.8573],[1.676],[4],[2],[14],[0.585],[3.4287],[0.1197],[28.6404],[0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ss_tot<\/th>\n      <th>ss_block<\/th>\n      <th>ss_treat<\/th>\n      <th>ss_error<\/th>\n      <th>df_block<\/th>\n      <th>df_treat<\/th>\n      <th>df_error<\/th>\n      <th>ms_block<\/th>\n      <th>ms_treat<\/th>\n      <th>ms_error<\/th>\n      <th>F_treat<\/th>\n      <th>p_bmass2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"400px","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11,12]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ss_tot","targets":1},{"name":"ss_block","targets":2},{"name":"ss_treat","targets":3},{"name":"ss_error","targets":4},{"name":"df_block","targets":5},{"name":"df_treat","targets":6},{"name":"df_error","targets":7},{"name":"ms_block","targets":8},{"name":"ms_treat","targets":9},{"name":"ms_error","targets":10},{"name":"F_treat","targets":11},{"name":"p_bmass2","targets":12}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-5e83445f7dbccdfa89fe" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-5e83445f7dbccdfa89fe">{"x":{"filter":"none","vertical":false,"data":[["1"],[10.8733],[2.34],[6.8573],[1.676],[4],[2],[14],[0.585],[3.4287],[0.1197],[28.6404],[0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ss_tot<\/th>\n      <th>ss_block<\/th>\n      <th>ss_treat<\/th>\n      <th>ss_error<\/th>\n      <th>df_block<\/th>\n      <th>df_treat<\/th>\n      <th>df_error<\/th>\n      <th>ms_block<\/th>\n      <th>ms_treat<\/th>\n      <th>ms_error<\/th>\n      <th>F_treat<\/th>\n      <th>p_bmass2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"400px","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11,12]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ss_tot","targets":1},{"name":"ss_block","targets":2},{"name":"ss_treat","targets":3},{"name":"ss_error","targets":4},{"name":"df_block","targets":5},{"name":"df_treat","targets":6},{"name":"df_error","targets":7},{"name":"ms_block","targets":8},{"name":"ms_treat","targets":9},{"name":"ms_error","targets":10},{"name":"F_treat","targets":11},{"name":"p_bmass2","targets":12}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -1787,9 +1801,9 @@ Fit: lm(formula = diversity ~ block + treatment, data = fish_dat)
 
 Linear Hypotheses:
                     Estimate Std. Error t value Pr(&gt;|t|)   
-low - control == 0   -1.0200     0.2895  -3.524   0.0190 * 
-high - control == 0  -1.6400     0.2895  -5.665   0.0015 **
-high - low == 0      -0.6200     0.2895  -2.142   0.1421   
+low - control == 0   -1.0200     0.2895  -3.524  0.01890 * 
+high - control == 0  -1.6400     0.2895  -5.665  0.00141 **
+high - low == 0      -0.6200     0.2895  -2.142  0.14225   
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 (Adjusted p values reported -- single-step method)</code></pre>

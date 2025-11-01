@@ -54,7 +54,8 @@ clarkia_hz <- read_csv(hz_link)|>
 A linear model predicts the response variable, as $\widehat{Y_i}$ by adding up all components of the model.  
 
 
-```{r, out.width="50%", echo=FALSE, out.extra='style="float:right;padding-left: 5px"'}
+```{r,  echo=FALSE, out.extra='style="float:right;padding-left: 5px"'}
+#| column: margin
 include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/other-stats-artwork/dragon_predict_mlr.png")
 ```
 
@@ -115,9 +116,9 @@ A classic example of a linear model is a **polynomial regression**, in which we 
 
 
 
-```{block2, type='rmdwarning'}
+:::warning
 Often including a cubic, or even a quadratic term is useful -- but be thoughtful before adding too many in -- each additional term takes away from our degrees of freedom, complicates interpretation, and may overfit the data.   Let your biological intuition and statistical reasoning guide you.
-```
+:::
 
 ### Polynomial regression example   
 
@@ -131,17 +132,19 @@ Let's write a descriptive equation for each model
 $$\text{N.SPECIES = CONSTANT + PRODUCTIVITY}$$
 $$\text{N.SPECIES = CONSTANT + PRODUCTIVITY + PRODUCTIVITY}^2$$
 
-We present these models in Figure \@ref(fig:bmasslinsq). See that we can add a polynomial fit to our ggplot by typing `formula =  y ~ poly(x, 2, raw = TRUE)` into the `geom_smooth` function.
+We present these models in @fig-bmasslinsq. See that we can add a polynomial fit to our ggplot by typing `formula =  y ~ poly(x, 2, raw = TRUE)` into the `geom_smooth` function.
 
-```{r bmasslinsq, fig.cap ="(A) Fitting a linear regression to predict the number of plant species from prodcutivity of a plot. (B) A Adding a squared term to our linear regression.", warning=FALSE, message=FALSE, fig.height=2, fig.width=5}
+```{r, fig.cap ="(A) Fitting a linear regression to predict the number of plant species from prodcutivity of a plot. (B) A Adding a squared term to our linear regression.", warning=FALSE, message=FALSE, fig.height=2, fig.width=5}
+#| label: fig-bmasslinsq
+#| column: page-right
 bmass <- tibble( Biomass = c(192.982,308.772,359.064,377.778,163.743,168.421,128.655,98.246,107.602,93.567,83.041,33.918,63.158,139.181,148.538,133.333,127.485,88.889,138.012),   n.species = c(25.895,12.729,8.342,2.885,21.504,20.434,18.293,16.046,16.046,11.655,12.725,9.515,7.16,16.042,16.042,11.655,12.725,2.88,8.338))
 base_plot <- ggplot(bmass, aes(x = Biomass, y =  n.species))+  geom_point()+  xlab("Productivity (g/15 Days)" )
 
 linear_plot <- base_plot +   labs(title = "Linear term") +  
-  geom_smooth(method = 'lm')
+  geom_smooth(method = 'lm')+theme(axis.text = element_text(size = 10),axis.title = element_text(size = 10),plot.title = element_text(size = 12))
 
 polynomial_plot <- base_plot +  labs(title = "Linear and squared term") +
-  geom_smooth(method = 'lm',formula =  y ~ poly(x, 2, raw = TRUE))
+  geom_smooth(method = 'lm',formula =  y ~ poly(x, 2, raw = TRUE))+theme(axis.text = element_text(size = 10),axis.title = element_text(size = 10), plot.title = element_text(size = 12))
 plot_grid(linear_plot, polynomial_plot, labels = c("a","b"))
 ```
 
@@ -191,7 +194,7 @@ So, for example if we had a plot with a productivity of 250 g/15 Days, we would 
 \end{equation}
 
 
-A value which makes sense, as it seems to be where out curve intersects with 250 in  Figure \@ref(figbmasslinsq)B.    
+A value which makes sense, as it seems to be where out curve intersects with 250 in  @fig-bmasslinsq B.    
 
 
 Our columns, `Estimate`, `Std. Error`, `t value`, and `Pr(>|t|)`  should also feel familiar, all interpretations are the same as usual. The standard error describes the uncertainty in the estimate, the t describes how many standard errors away from zero the estimate is, and the p-value describes the probability that a value this many standard errors away from zero would arise if the null where true.  One thing though
@@ -206,9 +209,9 @@ broom::tidy(linear_term)                                                        
 ```
 
 
-
-**Note** The `summary.lm()` output still usefully provides our estimates and uncertinaty in them -- so don't ignore it!
-
+::: note
+The `summary.lm()` output still usefully provides our estimates and uncertainty in them -- so don't ignore it!
+:::
 
 #### An ANOVA approach  
 
@@ -226,11 +229,15 @@ We'll see in this and the next section that there's a real issue in which variab
 
 In many cases (see below) Sequential "Type I" sums of squares make the most sense. Here we
 
-- Calculate $SS_{error}$ and $SS_{total}$ as we always do!   (Figure \@ref(fig:sspoly)A,D)
-- Calculate the $SS_{thing1}$ (in this case Biomass), as if it where the only thing in the model, $\widehat{Y_{i|bmass}}$. (Figure \@ref(fig:sspoly)B).     
-- Calculate the $SS_{thing2}$ (in this case $Biomass^2$), as the deviation of predicted values from a model with both things in it, $\widehat{Y_{i|bmass,bmass^2}}$, minus predictions from a model with just thing1 in it,  $\widehat{Y_{i|bmass}}$ (Figure \@ref(fig:sspoly)C).   
+- Calculate $SS_{error}$ and $SS_{total}$ as we always do!   (@fig-sspoly A, D)
+- Calculate the $SS_{thing1}$ (in this case Biomass), as if it where the only thing in the model, $\widehat{Y_{i|bmass}}$. (@fig-sspoly B).     
+- Calculate the $SS_{thing2}$ (in this case $Biomass^2$), as the deviation of predicted values from a model with both things in it, $\widehat{Y_{i|bmass,bmass^2}}$, minus predictions from a model with just thing1 in it,  $\widehat{Y_{i|bmass}}$ (Figure @fig-sspoly C).   
 
-```{r sspoly, fig.cap= "Calculating *sequential* sums of squares for our model. **a** Total deviations, as usual. **b** Deviations from predicted values of Biomass alone without considering the squared term (red line) -- this makes up $SS_{Biomass}$. **c** Deviations of  predictions from $Biomass + Biomass^2$ (blue line) away from predictions of Biomass alone (red line) -- this makes up $SS_{Biomass^2}$. **d** Deviation of data points from full model (blue line) -- this makes up $SS_{error}$", fig.height=2,fig.width=7.2, message=FALSE, warning=FALSE, echo=FALSE}
+```{r, fig.cap= "Calculating *sequential* sums of squares for our model. **a** Total deviations, as usual. **b** Deviations from predicted values of Biomass alone without considering the squared term (red line) -- this makes up $SS_{Biomass}$. **c** Deviations of  predictions from $Biomass + Biomass^2$ (blue line) away from predictions of Biomass alone (red line) -- this makes up $SS_{Biomass^2}$. **d** Deviation of data points from full model (blue line) -- this makes up $SS_{error}$",  message=FALSE, warning=FALSE, echo=FALSE}
+#| label: fig-sspoly
+#| column: page-right
+#| fig-width: 12
+#| fig-height: 3
 
 combine_models <- full_join(augment(linear_term) %>%   
             dplyr::select(n.species, Biomass, .fitted_lin = .fitted,  .resid_lin = .resid),
@@ -245,7 +252,7 @@ a <- ggplot(bmass%>% mutate(mean_n.species = mean(n.species)), aes(x = Biomass, 
                color = "black", alpha = .5)+
   labs(title = "Total deviation               = ")+
   xlab("Productivity" )+
-  theme(plot.title = element_text(size = 8))
+  theme(plot.title = element_text(size = 16))
 
 b <- ggplot(linear_term %>%augment()%>% mutate(mean_n.species = mean(n.species)), aes(x = Biomass, y =  n.species))+
   geom_point(alpha = .2)+  
@@ -255,7 +262,7 @@ b <- ggplot(linear_term %>%augment()%>% mutate(mean_n.species = mean(n.species))
   geom_line(aes(y = .fitted), alpha  = 2, color = "firebrick")+
   labs(title = "Bmass deviation             +")+
   xlab("Productivity" )+
-  theme(plot.title = element_text(size = 8))
+  theme(plot.title = element_text(size = 16))
 
 c <-  ggplot(combine_models%>% mutate(mean_n.species = mean(n.species)), aes(x = Biomass, y =  n.species))+
   geom_point(alpha = .2)+  
@@ -265,7 +272,7 @@ c <-  ggplot(combine_models%>% mutate(mean_n.species = mean(n.species)), aes(x =
   geom_smooth(method = "lm", formula = y ~ poly(x,2, raw = TRUE), se = FALSE,size = .5)+
   labs(title = expression(paste("Bmass&",Bmass^2," deviation+")))+
   xlab("Productivity" )+
-  theme(plot.title = element_text(size = 8))
+  theme(plot.title = element_text(size = 16))
 
 d <-  ggplot(poly_term%>%augment()%>% mutate(mean_n.species = mean(n.species)), aes(x = Biomass, y =  n.species))+
   geom_point(alpha = 2)+
@@ -274,7 +281,7 @@ d <-  ggplot(poly_term%>%augment()%>% mutate(mean_n.species = mean(n.species)), 
   geom_smooth(method = "lm", formula = y ~ poly(x,2, raw = TRUE), se = FALSE,size=.5)+
   labs(title = "Residual deviation")+
   xlab("Productivity" )+
-  theme(plot.title = element_text(size = 8))
+  theme(plot.title = element_text(size = 16))
 
 plot_grid(a,b,c,d, labels = c("a","b","c","d"), label_y = .9,ncol = 4)
 ```
@@ -311,7 +318,7 @@ You can scroll through the output above to see that our calculations match what 
 ## Type I  Sums of Squares (and others)   
 
 
-Calculating Sums of Squares sequentially, as we did in Figure \@ref(fig:sspoly), is the default way R does things.
+Calculating Sums of Squares sequentially, as we did in Figure @fig-sspoly, is the default way R does things.
 
 Sequential *Type I* sums of squares calculate the sums of squares for the first thing in your model first, then the second thing, then the third thing etc...  This means that while our   
 
@@ -321,10 +328,11 @@ Sequential *Type I* sums of squares calculate the sums of squares for the first 
 In general sequential sums of squares make the most sense when   
 
 - We are not interested in the significance of the earlier terms in our model, which we want to take account of, but don't really care about their statistical significance.    
-- Designs are "balanced" (Figure \@ref(fig:balance)), as in these cases, we get the  same SS, F and P values regardless of the order that we put terms into the model.
+- Designs are "balanced" (@fig-balance), as in these cases, we get the  same SS, F and P values regardless of the order that we put terms into the model.
 
-```{r balance, fig.cap = 'Examples of balanced and unbalanced statistical designs, from [statistics how to](https://www.statisticshowto.com/balanced-and-unbalanced-designs/).', echo=FALSE, out.width="50%"}
-include_graphics("https://www.statisticshowto.com/wp-content/uploads/2016/11/balanced-and-unbalanced-design.png")
+```{r, fig.cap = 'Examples of balanced and unbalanced statistical designs, from [statistics how to](https://www.statisticshowto.com/balanced-and-unbalanced-designs/).', echo=FALSE, out.width="50%"}
+#| label: fig-balance
+include_graphics("../figs/old/balanced.png")
 ```
 
 
@@ -461,12 +469,12 @@ We take these estimates and uncertainty about them seriously, but fully ignore t
 
 In this model, the null and alternative  hypotheses are   
 
-- $H_0:$ There is no association between predator treatment and zooplankton diversity -- i.e. Under the null, we predict zooplankton diversity in this experiment as the intercept plus the deviation associated with stream (Figure \@ref(fig:h0hazoo)a).      
-- $H_A:$ There is an association between predator treatment and zooplankton diversity -- i.e. Under the alternative, we predict zooplankton diversity in this experiment as the intercept plus and the deviation associated with stream plus the effect of one or more treatments (Figure \@ref(fig:h0hazoo)b).      
+- $H_A:$ There is an association between predator treatment and zooplankton diversity -- i.e. Under the alternative, we predict zooplankton diversity in this experiment as the intercept plus and the deviation associated with stream plus the effect of one or more treatments (@fig-h0hazoo b).      
 
 
 
-```{r h0hazoo, fig.cap="Null (**a**) and alternative (**b**) hypotheses for our blocked predation experiment.", fig.height=2.5, fig.width=6.5, warning=FALSE, echo=FALSE, message=FALSE}
+```{r, fig.cap="Null (**a**) and alternative (**b**) hypotheses for our blocked predation experiment.", fig.height=2.5, fig.width=6.5, warning=FALSE, echo=FALSE, message=FALSE}
+#| label: fig-h0hazoo
 pa <-ggplot(data = zoo %>%  mutate(x = as.numeric(treatment)-1+ (as.numeric(block) - 3)/40 ), aes(x = x, y = diversity, color = block,lty = block, label= block)) +
   geom_hline(data = zoo %>%
                group_by(block)  %>%
@@ -525,7 +533,7 @@ a <- ggplot(combine_models, aes(x = x, y =  diversity, color = block))+
   geom_hline(aes(yintercept = mean_diversity))+
   geom_segment(aes( xend = x, yend = mean_diversity, color = block), alpha = .5)+
   labs(title = "Total deviation               = ")+
-  theme(plot.title = element_text(size = 8))+
+  theme(plot.title = element_text(size = 16))+
   ylab("Diversity") +
   xlab("treatment")+
   scale_x_continuous(breaks = 0:2, labels = c("control","low","high"))+
@@ -537,7 +545,7 @@ b <- ggplot(combine_models, aes(x = x, y =  diversity, color = block))+
   geom_point(aes(  y = .fitted_block ), pch = "_",alpha =2, size =5)+
   geom_segment(aes(xend = x, y = mean_diversity, yend = .fitted_block), alpha  = 2)+
   labs(title = "Block deviation             +")+
-  theme(plot.title = element_text(size = 8))+
+  theme(plot.title = element_text(size = 16))+
   ylab("Diversity") +
   xlab("treatment")+
   scale_x_continuous(breaks = 0:2, labels = c("control","low","high"))+
@@ -549,7 +557,7 @@ c <-  ggplot(combine_models, aes(x = x, y =  diversity, color = block))+
   geom_point(aes(  y = .fitted_full ), pch = "^",alpha =2, size =5)+
   geom_segment(aes(xend = x, y = .fitted_full, yend = .fitted_block), alpha  = 2)+
   labs(title = "Block&Treat deviation   +")+
-  theme(plot.title = element_text(size = 8))+
+  theme(plot.title = element_text(size = 16))+
   ylab("Diversity") +
   xlab("treatment")+
   scale_x_continuous(breaks = 0:2, labels = c("control","low","high"))+
@@ -562,7 +570,7 @@ d <-   ggplot(combine_models, aes(x = x, y =  diversity, color = block))+
   geom_point(aes(  y = .fitted_full ), pch = "^",alpha =2, size =5)+
   geom_segment(aes(xend = x, yend = .fitted_full), alpha  = 2)+
   labs(title = "Residual deviation")+
-  theme(plot.title = element_text(size = 8))+
+  theme(plot.title = element_text(size = 16))+
   ylab("Diversity") +
   xlab("treatment")+
   scale_x_continuous(breaks = 0:2, labels = c("control","low","high"))+
