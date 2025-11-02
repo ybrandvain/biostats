@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../references.html" rel="next">
+<link href="../book_sections/multiple_regression.html" rel="next">
 <link href="../book_sections/linear_regression.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -1141,6 +1141,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../book_sections/multiple_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">22. Multiple Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -1381,7 +1387,7 @@ F-statistic: 9.078 on 2 and 16 DF,  p-value: 0.002318</code></pre>
 </div>
 </div>
 <div class="note">
-<p>The <code>summary.lm()</code> output still usefully provides our estimates and uncertinaty in them – so don’t ignore it!</p>
+<p>The <code>summary.lm()</code> output still usefully provides our estimates and uncertainty in them – so don’t ignore it!</p>
 </div>
 </section>
 <section id="an-anova-approach" class="level4 page-columns page-full">
@@ -1449,8 +1455,8 @@ Figure&nbsp;2: Calculating <em>sequential</em> sums of squares for our model. <s
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_bmass    =</span> <span class="fu">pf</span>(<span class="at">q =</span> F_bmass,  <span class="at">df1 =</span> df_bmass,  <span class="at">df2 =</span> df_error, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>),</span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_bmass2   =</span> <span class="fu">pf</span>(<span class="at">q =</span> F_bmass2, <span class="at">df1 =</span> df_bmass2, <span class="at">df2 =</span> df_error, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>))                                                                   <span class="sc">%&gt;%</span> <span class="fu">mutate_all</span>(round,<span class="at">digits =</span> <span class="dv">4</span>) <span class="sc">%&gt;%</span>DT<span class="sc">::</span><span class="fu">datatable</span>( <span class="at">options =</span> <span class="fu">list</span>( <span class="at">scrollX=</span><span class="st">'400px'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-7c386df4582ecedd50c6" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-7c386df4582ecedd50c6">{"x":{"filter":"none","vertical":false,"data":[["1"],[656.3904],[9.8986],[339.0203],[307.4714],[1],[1],[16],[9.8986],[339.0203],[19.217],[0.5151],[17.6417],[0.4833],[0.0007]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ss_tot<\/th>\n      <th>ss_bmass<\/th>\n      <th>ss_bmass2<\/th>\n      <th>ss_error<\/th>\n      <th>df_bmass<\/th>\n      <th>df_bmass2<\/th>\n      <th>df_error<\/th>\n      <th>ms_bmass<\/th>\n      <th>ms_bmass2<\/th>\n      <th>ms_error<\/th>\n      <th>F_bmass<\/th>\n      <th>F_bmass2<\/th>\n      <th>p_bmass<\/th>\n      <th>p_bmass2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"400px","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11,12,13,14]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ss_tot","targets":1},{"name":"ss_bmass","targets":2},{"name":"ss_bmass2","targets":3},{"name":"ss_error","targets":4},{"name":"df_bmass","targets":5},{"name":"df_bmass2","targets":6},{"name":"df_error","targets":7},{"name":"ms_bmass","targets":8},{"name":"ms_bmass2","targets":9},{"name":"ms_error","targets":10},{"name":"F_bmass","targets":11},{"name":"F_bmass2","targets":12},{"name":"p_bmass","targets":13},{"name":"p_bmass2","targets":14}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-4425ffba0d7528bccff3" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-4425ffba0d7528bccff3">{"x":{"filter":"none","vertical":false,"data":[["1"],[656.3904],[9.8986],[339.0203],[307.4714],[1],[1],[16],[9.8986],[339.0203],[19.217],[0.5151],[17.6417],[0.4833],[0.0007]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ss_tot<\/th>\n      <th>ss_bmass<\/th>\n      <th>ss_bmass2<\/th>\n      <th>ss_error<\/th>\n      <th>df_bmass<\/th>\n      <th>df_bmass2<\/th>\n      <th>df_error<\/th>\n      <th>ms_bmass<\/th>\n      <th>ms_bmass2<\/th>\n      <th>ms_error<\/th>\n      <th>F_bmass<\/th>\n      <th>F_bmass2<\/th>\n      <th>p_bmass<\/th>\n      <th>p_bmass2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"400px","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11,12,13,14]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ss_tot","targets":1},{"name":"ss_bmass","targets":2},{"name":"ss_bmass2","targets":3},{"name":"ss_error","targets":4},{"name":"df_bmass","targets":5},{"name":"df_bmass2","targets":6},{"name":"df_error","targets":7},{"name":"ms_bmass","targets":8},{"name":"ms_bmass2","targets":9},{"name":"ms_error","targets":10},{"name":"F_bmass","targets":11},{"name":"F_bmass2","targets":12},{"name":"p_bmass","targets":13},{"name":"p_bmass2","targets":14}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>You can scroll through the output above to see that our calculations match what <code>anova()</code> tells us!!!</p>
@@ -1775,8 +1781,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">F_treat   =</span> ms_treat <span class="sc">/</span> ms_error,</span>
 <span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_bmass2   =</span> <span class="fu">pf</span>(<span class="at">q =</span> F_treat, <span class="at">df1 =</span> df_treat, <span class="at">df2 =</span> df_error, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>))                                                                  <span class="sc">%&gt;%</span> <span class="fu">mutate_all</span>(round,<span class="at">digits =</span> <span class="dv">4</span>) <span class="sc">%&gt;%</span>DT<span class="sc">::</span><span class="fu">datatable</span>( <span class="at">options =</span> <span class="fu">list</span>( <span class="at">scrollX=</span><span class="st">'400px'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-5e83445f7dbccdfa89fe" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-5e83445f7dbccdfa89fe">{"x":{"filter":"none","vertical":false,"data":[["1"],[10.8733],[2.34],[6.8573],[1.676],[4],[2],[14],[0.585],[3.4287],[0.1197],[28.6404],[0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ss_tot<\/th>\n      <th>ss_block<\/th>\n      <th>ss_treat<\/th>\n      <th>ss_error<\/th>\n      <th>df_block<\/th>\n      <th>df_treat<\/th>\n      <th>df_error<\/th>\n      <th>ms_block<\/th>\n      <th>ms_treat<\/th>\n      <th>ms_error<\/th>\n      <th>F_treat<\/th>\n      <th>p_bmass2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"400px","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11,12]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ss_tot","targets":1},{"name":"ss_block","targets":2},{"name":"ss_treat","targets":3},{"name":"ss_error","targets":4},{"name":"df_block","targets":5},{"name":"df_treat","targets":6},{"name":"df_error","targets":7},{"name":"ms_block","targets":8},{"name":"ms_treat","targets":9},{"name":"ms_error","targets":10},{"name":"F_treat","targets":11},{"name":"p_bmass2","targets":12}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-b07341adfb466e417a32" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b07341adfb466e417a32">{"x":{"filter":"none","vertical":false,"data":[["1"],[10.8733],[2.34],[6.8573],[1.676],[4],[2],[14],[0.585],[3.4287],[0.1197],[28.6404],[0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ss_tot<\/th>\n      <th>ss_block<\/th>\n      <th>ss_treat<\/th>\n      <th>ss_error<\/th>\n      <th>df_block<\/th>\n      <th>df_treat<\/th>\n      <th>df_error<\/th>\n      <th>ms_block<\/th>\n      <th>ms_treat<\/th>\n      <th>ms_error<\/th>\n      <th>F_treat<\/th>\n      <th>p_bmass2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"400px","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11,12]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ss_tot","targets":1},{"name":"ss_block","targets":2},{"name":"ss_treat","targets":3},{"name":"ss_error","targets":4},{"name":"df_block","targets":5},{"name":"df_treat","targets":6},{"name":"df_error","targets":7},{"name":"ms_block","targets":8},{"name":"ms_treat","targets":9},{"name":"ms_error","targets":10},{"name":"F_treat","targets":11},{"name":"p_bmass2","targets":12}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -1801,9 +1807,9 @@ Fit: lm(formula = diversity ~ block + treatment, data = fish_dat)
 
 Linear Hypotheses:
                     Estimate Std. Error t value Pr(&gt;|t|)   
-low - control == 0   -1.0200     0.2895  -3.524  0.01890 * 
-high - control == 0  -1.6400     0.2895  -5.665  0.00141 **
-high - low == 0      -0.6200     0.2895  -2.142  0.14225   
+low - control == 0   -1.0200     0.2895  -3.524  0.01894 * 
+high - control == 0  -1.6400     0.2895  -5.665  0.00104 **
+high - low == 0      -0.6200     0.2895  -2.142  0.14216   
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 (Adjusted p values reported -- single-step method)</code></pre>
@@ -2437,8 +2443,8 @@ window.onload = function() {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../book_sections/multiple_regression.html" class="pagination-link" aria-label="22. Multiple Regression">
+        <span class="nav-page-text">22. Multiple Regression</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

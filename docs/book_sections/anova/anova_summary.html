@@ -2684,6 +2684,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../book_sections/multiple_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">22. Multiple Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -3055,8 +3061,8 @@ Explanation
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="exercises">
 <strong>Q2)</strong> Consider the plot above. Before running an ANOVA or posthoc test, which comparisons do you think is most lilely to be significantly different?
-<div id="radio_IMLGDKQYBQ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_IMLGDKQYBQ" value=""> <span>female x male major removed</span></label><label><input type="radio" autocomplete="off" name="radio_IMLGDKQYBQ" value="answer"> <span>female x male minor removed</span></label><label><input type="radio" autocomplete="off" name="radio_IMLGDKQYBQ" value=""> <span>intact x male major removed</span></label><label><input type="radio" autocomplete="off" name="radio_IMLGDKQYBQ" value=""> <span>intact x male minor removed</span></label><label><input type="radio" autocomplete="off" name="radio_IMLGDKQYBQ" value=""> <span>male major removed x male minor removed</span></label>
+<div id="radio_PCDERUQBYH" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_PCDERUQBYH" value=""> <span>female x male major removed</span></label><label><input type="radio" autocomplete="off" name="radio_PCDERUQBYH" value="answer"> <span>female x male minor removed</span></label><label><input type="radio" autocomplete="off" name="radio_PCDERUQBYH" value=""> <span>intact x male major removed</span></label><label><input type="radio" autocomplete="off" name="radio_PCDERUQBYH" value=""> <span>intact x male minor removed</span></label><label><input type="radio" autocomplete="off" name="radio_PCDERUQBYH" value=""> <span>male major removed x male minor removed</span></label>
 </div>
 </div>
 <hr>
@@ -3065,12 +3071,12 @@ Explanation
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="exercises">
 <strong>Q3)</strong> Compare the variance with in each treatment. What is the greatest fold difference in variance between treatments?
-<div id="radio_QLPVXCSESS" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_QLPVXCSESS" value=""> <span>It's exactly the same</span></label><label><input type="radio" autocomplete="off" name="radio_QLPVXCSESS" value="answer"> <span>Less than two-fold</span></label><label><input type="radio" autocomplete="off" name="radio_QLPVXCSESS" value=""> <span>Between two and five-fold</span></label><label><input type="radio" autocomplete="off" name="radio_QLPVXCSESS" value=""> <span>Between five and ten-fold</span></label><label><input type="radio" autocomplete="off" name="radio_QLPVXCSESS" value=""> <span>More than ten-fold</span></label>
+<div id="radio_NLWSTZOSOZ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_NLWSTZOSOZ" value=""> <span>It's exactly the same</span></label><label><input type="radio" autocomplete="off" name="radio_NLWSTZOSOZ" value="answer"> <span>Less than two-fold</span></label><label><input type="radio" autocomplete="off" name="radio_NLWSTZOSOZ" value=""> <span>Between two and five-fold</span></label><label><input type="radio" autocomplete="off" name="radio_NLWSTZOSOZ" value=""> <span>Between five and ten-fold</span></label><label><input type="radio" autocomplete="off" name="radio_NLWSTZOSOZ" value=""> <span>More than ten-fold</span></label>
 </div>
 <strong>Q4)</strong> With this difference in variance among groups, the assumption of homoscedasticity is
-<div id="radio_ECNRWTZNMO" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_ECNRWTZNMO" value="answer"> <span>Probably not a major concern</span></label><label><input type="radio" autocomplete="off" name="radio_ECNRWTZNMO" value=""> <span>Somewhat worrisome, but we can plow ahead anyways</span></label><label><input type="radio" autocomplete="off" name="radio_ECNRWTZNMO" value=""> <span>A big concern, we must transform or try a Welch's ANOVA</span></label>
+<div id="radio_FBBWBYTQAK" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_FBBWBYTQAK" value="answer"> <span>Probably not a major concern</span></label><label><input type="radio" autocomplete="off" name="radio_FBBWBYTQAK" value=""> <span>Somewhat worrisome, but we can plow ahead anyways</span></label><label><input type="radio" autocomplete="off" name="radio_FBBWBYTQAK" value=""> <span>A big concern, we must transform or try a Welch's ANOVA</span></label>
 </div>
 </div>
 <div class="cell page-columns page-full">
@@ -3106,34 +3112,34 @@ Explanation
 <hr>
 <div class="exercises">
 <strong>Q7.a)</strong> Why didn’t the code above work?
-<div id="radio_HRQVZBMANE" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_HRQVZBMANE" value=""> <span>We did not load the <em>broom</em> pacakge</span></label><label><input type="radio" autocomplete="off" name="radio_HRQVZBMANE" value=""> <span>We never generated <em>augmented_crab</em></span></label><label><input type="radio" autocomplete="off" name="radio_HRQVZBMANE" value=""> <span>you must use the original tibble, not <em>augment()</em> output to make a plot</span></label><label><input type="radio" autocomplete="off" name="radio_HRQVZBMANE" value="answer"> <span>geom_qq expects the aesthetic to be called <em>sample</em>, not <em>x</em></span></label>
+<div id="radio_EAJCRBVHPQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_EAJCRBVHPQ" value=""> <span>We did not load the <em>broom</em> pacakge</span></label><label><input type="radio" autocomplete="off" name="radio_EAJCRBVHPQ" value=""> <span>We never generated <em>augmented_crab</em></span></label><label><input type="radio" autocomplete="off" name="radio_EAJCRBVHPQ" value=""> <span>you must use the original tibble, not <em>augment()</em> output to make a plot</span></label><label><input type="radio" autocomplete="off" name="radio_EAJCRBVHPQ" value="answer"> <span>geom_qq expects the aesthetic to be called <em>sample</em>, not <em>x</em></span></label>
 </div>
 <strong>Q7.b)</strong> Fixing this error, which assumption are these plots meant evaluate?
-<div id="radio_SAKDGDJCUH" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_SAKDGDJCUH" value=""> <span>Equal variance among groups</span></label><label><input type="radio" autocomplete="off" name="radio_SAKDGDJCUH" value="answer"> <span>Normal distirbutions of residuals</span></label><label><input type="radio" autocomplete="off" name="radio_SAKDGDJCUH" value=""> <span>Independence</span></label><label><input type="radio" autocomplete="off" name="radio_SAKDGDJCUH" value=""> <span>Unbiased data</span></label>
+<div id="radio_BQSNYRXDIN" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_BQSNYRXDIN" value=""> <span>Equal variance among groups</span></label><label><input type="radio" autocomplete="off" name="radio_BQSNYRXDIN" value="answer"> <span>Normal distirbutions of residuals</span></label><label><input type="radio" autocomplete="off" name="radio_BQSNYRXDIN" value=""> <span>Independence</span></label><label><input type="radio" autocomplete="off" name="radio_BQSNYRXDIN" value=""> <span>Unbiased data</span></label>
 </div>
 <strong>Q7.c)</strong> Which wo of the plots are reasonable ways to evaluate this assumption. Fixing this error, which assumption are these plots meant evaluate?
-<div id="radio_YIDGQSWINS" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_YIDGQSWINS" value=""> <span>Plot 1 and Plot 2</span></label><label><input type="radio" autocomplete="off" name="radio_YIDGQSWINS" value=""> <span>Plot 1 and Plot 3</span></label><label><input type="radio" autocomplete="off" name="radio_YIDGQSWINS" value="answer"> <span>Plot 1 and Plot 4</span></label><label><input type="radio" autocomplete="off" name="radio_YIDGQSWINS" value=""> <span>Plot 2 and Plot 3</span></label><label><input type="radio" autocomplete="off" name="radio_YIDGQSWINS" value=""> <span>Plot 2 and Plot 4</span></label><label><input type="radio" autocomplete="off" name="radio_YIDGQSWINS" value=""> <span>Plot 3 and Plot 4</span></label>
+<div id="radio_DCCMTMUWIT" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_DCCMTMUWIT" value=""> <span>Plot 1 and Plot 2</span></label><label><input type="radio" autocomplete="off" name="radio_DCCMTMUWIT" value=""> <span>Plot 1 and Plot 3</span></label><label><input type="radio" autocomplete="off" name="radio_DCCMTMUWIT" value="answer"> <span>Plot 1 and Plot 4</span></label><label><input type="radio" autocomplete="off" name="radio_DCCMTMUWIT" value=""> <span>Plot 2 and Plot 3</span></label><label><input type="radio" autocomplete="off" name="radio_DCCMTMUWIT" value=""> <span>Plot 2 and Plot 4</span></label><label><input type="radio" autocomplete="off" name="radio_DCCMTMUWIT" value=""> <span>Plot 3 and Plot 4</span></label>
 </div>
 <hr>
 <p><strong>Q8)</strong> In the context of an ANOVA, which R command gives you:</p>
 <strong>Q8.a)</strong> Estimates of model coefficients ONLY?
-<div id="radio_AWEJGEQTII" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_AWEJGEQTII" value=""> <span><em>lm(y ~ x) |&gt; anova()</em> OR <em>aov(y ~ x) |&gt; summary()</em></span></label><label><input type="radio" autocomplete="off" name="radio_AWEJGEQTII" value=""> <span><em>aov(y ~ x) |&gt; TukeyHSD()</em></span></label><label><input type="radio" autocomplete="off" name="radio_AWEJGEQTII" value=""> <span><em>lm(y ~ x)|&gt; summary()</em> </span></label><label><input type="radio" autocomplete="off" name="radio_AWEJGEQTII" value="answer"> <span><em>lm(y ~ x)</em></span></label>
+<div id="radio_OYJOAXPSTQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_OYJOAXPSTQ" value=""> <span><em>lm(y ~ x) |&gt; anova()</em> OR <em>aov(y ~ x) |&gt; summary()</em></span></label><label><input type="radio" autocomplete="off" name="radio_OYJOAXPSTQ" value=""> <span><em>aov(y ~ x) |&gt; TukeyHSD()</em></span></label><label><input type="radio" autocomplete="off" name="radio_OYJOAXPSTQ" value=""> <span><em>lm(y ~ x)|&gt; summary()</em> </span></label><label><input type="radio" autocomplete="off" name="radio_OYJOAXPSTQ" value="answer"> <span><em>lm(y ~ x)</em></span></label>
 </div>
 <strong>Q8.b)</strong> An ANOVA table
-<div id="radio_NCPCQMZBVZ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_NCPCQMZBVZ" value="answer"> <span><em>lm(y ~ x) |&gt; anova()</em> OR <em>aov(y ~ x) |&gt; summary()</em></span></label><label><input type="radio" autocomplete="off" name="radio_NCPCQMZBVZ" value=""> <span>aov(y ~ x) |&gt; TukeyHSD()</span></label><label><input type="radio" autocomplete="off" name="radio_NCPCQMZBVZ" value=""> <span>lm(y ~ x)|&gt; summary()</span></label><label><input type="radio" autocomplete="off" name="radio_NCPCQMZBVZ" value=""> <span><em>lm(y ~ x)</em></span></label>
+<div id="radio_ONXNAPLUVE" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ONXNAPLUVE" value="answer"> <span><em>lm(y ~ x) |&gt; anova()</em> OR <em>aov(y ~ x) |&gt; summary()</em></span></label><label><input type="radio" autocomplete="off" name="radio_ONXNAPLUVE" value=""> <span>aov(y ~ x) |&gt; TukeyHSD()</span></label><label><input type="radio" autocomplete="off" name="radio_ONXNAPLUVE" value=""> <span>lm(y ~ x)|&gt; summary()</span></label><label><input type="radio" autocomplete="off" name="radio_ONXNAPLUVE" value=""> <span><em>lm(y ~ x)</em></span></label>
 </div>
 <strong>Q8.c)</strong> Results of post-hoc tests
-<div id="radio_QBCLIEIOJJ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_QBCLIEIOJJ" value=""> <span><em>lm(y ~ x) |&gt; anova()</em> OR <em>aov(y ~ x) |&gt; summary()</em></span></label><label><input type="radio" autocomplete="off" name="radio_QBCLIEIOJJ" value="answer"> <span>aov(y ~ x) |&gt; TukeyHSD()</span></label><label><input type="radio" autocomplete="off" name="radio_QBCLIEIOJJ" value=""> <span>lm(y ~ x)|&gt; summary() </span></label><label><input type="radio" autocomplete="off" name="radio_QBCLIEIOJJ" value=""> <span><em>lm(y ~ x)</em></span></label>
+<div id="radio_CWGTPKYHCJ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_CWGTPKYHCJ" value=""> <span><em>lm(y ~ x) |&gt; anova()</em> OR <em>aov(y ~ x) |&gt; summary()</em></span></label><label><input type="radio" autocomplete="off" name="radio_CWGTPKYHCJ" value="answer"> <span>aov(y ~ x) |&gt; TukeyHSD()</span></label><label><input type="radio" autocomplete="off" name="radio_CWGTPKYHCJ" value=""> <span>lm(y ~ x)|&gt; summary() </span></label><label><input type="radio" autocomplete="off" name="radio_CWGTPKYHCJ" value=""> <span><em>lm(y ~ x)</em></span></label>
 </div>
 <strong>Q8.d)</strong> Model coefficients and standard errors, plus numerous potentially misleading p-values and t-values that should largely be ignored
-<div id="radio_NFYLNCTWVY" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_NFYLNCTWVY" value=""> <span><em>lm(y ~ x) |&gt; anova()</em> OR <em>aov(y ~ x) |&gt; summary()</em></span></label><label><input type="radio" autocomplete="off" name="radio_NFYLNCTWVY" value=""> <span>aov(y ~ x) |&gt; TukeyHSD()</span></label><label><input type="radio" autocomplete="off" name="radio_NFYLNCTWVY" value="answer"> <span>lm(y ~ x)|&gt; summary() </span></label><label><input type="radio" autocomplete="off" name="radio_NFYLNCTWVY" value=""> <span><em>lm(y ~ x)</em></span></label>
+<div id="radio_RRVRRUECMZ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_RRVRRUECMZ" value=""> <span><em>lm(y ~ x) |&gt; anova()</em> OR <em>aov(y ~ x) |&gt; summary()</em></span></label><label><input type="radio" autocomplete="off" name="radio_RRVRRUECMZ" value=""> <span>aov(y ~ x) |&gt; TukeyHSD()</span></label><label><input type="radio" autocomplete="off" name="radio_RRVRRUECMZ" value="answer"> <span>lm(y ~ x)|&gt; summary() </span></label><label><input type="radio" autocomplete="off" name="radio_RRVRRUECMZ" value=""> <span><em>lm(y ~ x)</em></span></label>
 </div>
 </div>
 <hr>
