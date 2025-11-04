@@ -1137,6 +1137,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../book_sections/interactions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">23. Interactions</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -1315,7 +1321,7 @@ Figure&nbsp;1: Simulation-derived null distribution of χ² distribution for our
 <span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>plot_a <span class="sc">+</span>plot_b<span class="sc">+</span><span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">"A"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-gofpermvchisq" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two side-by-side plots labeled A and B. **Panel A** shows a histogram of simulated χ² values (x-axis: χ², y-axis: probability) peaking near 9, with a smooth red curve overlaid representing the theoretical χ² distribution with 9 degrees of freedom. **Panel B shows** χ² values on the x-axis and corresponding p-values on the y-axis, forming a steeply declining curve from 1.0 at χ² = 0 to near 0 as χ² increases. A red theoretical line overlaps closely with the simulated data, showing that larger χ² values correspond to smaller p-values.">
+<div id="fig-gofpermvchisq" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two side-by-side plots labeled A and B. **Panel A** shows a histogram of simulated χ² values (x-axis: χ², y-axis: probability) peaking near 9, with a smooth red curve overlaid representing the theoretical χ² distribution with 9 degrees of freedom. **Panel B shows** χ² values on the x-axis and corresponding p-values on the y-axis, forming a steeply declining curve from 1.0 at χ² = 0 to near 0 as χ² increases. A red theoretical line overlaps closely with the simulated data, showing that larger χ² values correspond to smaller p-values." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gofpermvchisq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="chi2_dist_files/figure-html/fig-gofpermvchisq-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="Two side-by-side plots labeled A and B. **Panel A** shows a histogram of simulated χ² values (x-axis: χ², y-axis: probability) peaking near 9, with a smooth red curve overlaid representing the theoretical χ² distribution with 9 degrees of freedom. **Panel B shows** χ² values on the x-axis and corresponding p-values on the y-axis, forming a steeply declining curve from 1.0 at χ² = 0 to near 0 as χ² increases. A red theoretical line overlaps closely with the simulated data, showing that larger χ² values correspond to smaller p-values.">
@@ -1409,7 +1415,7 @@ X-squared = 10.463, df = 9, p-value = 0.3143</code></pre>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size =</span><span class="dv">16</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-contingencypermvchisq" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A plot showing p-values on the y-axis and χ² values on the x-axis. Black points connected by a dashed line form a downward stepwise curve from p = 1 at χ² = 0 to near p = 0 at χ² ≈ 10. Overlaid is a smooth red declining curve representing the theoretical χ² distribution with one degree of freedom. The two curves align closely, illustrating that permutation-based and theoretical χ² p-values behave similarly.">
+<div id="fig-contingencypermvchisq" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A plot showing p-values on the y-axis and χ² values on the x-axis. Black points connected by a dashed line form a downward stepwise curve from p = 1 at χ² = 0 to near p = 0 at χ² ≈ 10. Overlaid is a smooth red declining curve representing the theoretical χ² distribution with one degree of freedom. The two curves align closely, illustrating that permutation-based and theoretical χ² p-values behave similarly." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-contingencypermvchisq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="chi2_dist_files/figure-html/fig-contingencypermvchisq-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A plot showing p-values on the y-axis and χ² values on the x-axis. Black points connected by a dashed line form a downward stepwise curve from p = 1 at χ² = 0 to near p = 0 at χ² ≈ 10. Overlaid is a smooth red declining curve representing the theoretical χ² distribution with one degree of freedom. The two curves align closely, illustrating that permutation-based and theoretical χ² p-values behave similarly.">
