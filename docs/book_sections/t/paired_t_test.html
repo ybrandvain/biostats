@@ -1143,6 +1143,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../book_sections/model_evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">24. Model Evaluation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -1210,7 +1216,7 @@ window.Quarto = {
 <p><strong>The next chapter introduces the two-sample t-test.</strong> Although the two-sample t-test is less powerful than the paired t-test it is useful because it can be applied when data are not paired.</p>
 </div></div><div class="cell page-columns page-full" data-layout-align="center">
 <div class="cell-output-display page-columns page-full">
-<div id="fig-paired1" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-align="center" alt="A three panel figure comparing hybridization proportions of *Clarkia parviflora* lines at two sites. **Panel A (Unpaired):** Dots show hybridization at LB and SR; black points with error bars mark site means and confidence intervals. **Panel B (Paired):** Each RIL is connected by a line across sites; red lines indicate higher hybridization at LB, green at SR, blue ties. **Panel C:** Histogram of within-RIL differences (SR – LB). A red confidence interval bar narrowly overlapps zero.”">
+<div id="fig-paired1" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="A three panel figure comparing hybridization proportions of *Clarkia parviflora* lines at two sites. **Panel A (Unpaired):** Dots show hybridization at LB and SR; black points with error bars mark site means and confidence intervals. **Panel B (Paired):** Each RIL is connected by a line across sites; red lines indicate higher hybridization at LB, green at SR, blue ties. **Panel C:** Histogram of within-RIL differences (SR – LB). A red confidence interval bar narrowly overlapps zero.”" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-paired1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
 <img src="paired_t_test_files/figure-html/fig-paired1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img column-page-right" style="width:95.0%" alt="A three panel figure comparing hybridization proportions of *Clarkia parviflora* lines at two sites. **Panel A (Unpaired):** Dots show hybridization at LB and SR; black points with error bars mark site means and confidence intervals. **Panel B (Paired):** Each RIL is connected by a line across sites; red lines indicate higher hybridization at LB, green at SR, blue ties. **Panel C:** Histogram of within-RIL differences (SR – LB). A red confidence interval bar narrowly overlapps zero.”">
@@ -1245,7 +1251,7 @@ Figure&nbsp;1: <strong>(A)</strong> Unpaired view: Hybridization proportion for 
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Theoretical quantile"</span>, <span class="at">y=</span> <span class="st">"Observed (SR - LB)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-qq_diffs" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A quantile-quantile plot with theoretical quantiles on the x-axis and observed quantiles of within-RIL hybridization differences on the y-axis. Most points fall close to the straight reference line, suggesting that the differences are approximately normal.">
+<div id="fig-qq_diffs" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A quantile-quantile plot with theoretical quantiles on the x-axis and observed quantiles of within-RIL hybridization differences on the y-axis. Most points fall close to the straight reference line, suggesting that the differences are approximately normal." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-qq_diffs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="paired_t_test_files/figure-html/fig-qq_diffs-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="A quantile-quantile plot with theoretical quantiles on the x-axis and observed quantiles of within-RIL hybridization differences on the y-axis. Most points fall close to the straight reference line, suggesting that the differences are approximately normal.">
@@ -1274,23 +1280,23 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="rwuxkrynng" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rwuxkrynng table {
+<div id="zshdptdqlr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zshdptdqlr table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#rwuxkrynng thead, #rwuxkrynng tbody, #rwuxkrynng tfoot, #rwuxkrynng tr, #rwuxkrynng td, #rwuxkrynng th {
+#zshdptdqlr thead, #zshdptdqlr tbody, #zshdptdqlr tfoot, #zshdptdqlr tr, #zshdptdqlr td, #zshdptdqlr th {
   border-style: none;
 }
 
-#rwuxkrynng p {
+#zshdptdqlr p {
   margin: 0;
   padding: 0;
 }
 
-#rwuxkrynng .gt_table {
+#zshdptdqlr .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1316,12 +1322,12 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-left-color: #D3D3D3;
 }
 
-#rwuxkrynng .gt_caption {
+#zshdptdqlr .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rwuxkrynng .gt_title {
+#zshdptdqlr .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1333,7 +1339,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-bottom-width: 0;
 }
 
-#rwuxkrynng .gt_subtitle {
+#zshdptdqlr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1345,7 +1351,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-top-width: 0;
 }
 
-#rwuxkrynng .gt_heading {
+#zshdptdqlr .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1357,13 +1363,13 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-right-color: #D3D3D3;
 }
 
-#rwuxkrynng .gt_bottom_border {
+#zshdptdqlr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rwuxkrynng .gt_col_headings {
+#zshdptdqlr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1378,7 +1384,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-right-color: #D3D3D3;
 }
 
-#rwuxkrynng .gt_col_heading {
+#zshdptdqlr .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1398,7 +1404,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   overflow-x: hidden;
 }
 
-#rwuxkrynng .gt_column_spanner_outer {
+#zshdptdqlr .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1410,15 +1416,15 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   padding-right: 4px;
 }
 
-#rwuxkrynng .gt_column_spanner_outer:first-child {
+#zshdptdqlr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rwuxkrynng .gt_column_spanner_outer:last-child {
+#zshdptdqlr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rwuxkrynng .gt_column_spanner {
+#zshdptdqlr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1430,11 +1436,11 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   width: 100%;
 }
 
-#rwuxkrynng .gt_spanner_row {
+#zshdptdqlr .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#rwuxkrynng .gt_group_heading {
+#zshdptdqlr .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1460,7 +1466,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   text-align: left;
 }
 
-#rwuxkrynng .gt_empty_group_heading {
+#zshdptdqlr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1475,15 +1481,15 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   vertical-align: middle;
 }
 
-#rwuxkrynng .gt_from_md > :first-child {
+#zshdptdqlr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rwuxkrynng .gt_from_md > :last-child {
+#zshdptdqlr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rwuxkrynng .gt_row {
+#zshdptdqlr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1502,7 +1508,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   overflow-x: hidden;
 }
 
-#rwuxkrynng .gt_stub {
+#zshdptdqlr .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1515,7 +1521,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   padding-right: 5px;
 }
 
-#rwuxkrynng .gt_stub_row_group {
+#zshdptdqlr .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1529,15 +1535,15 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   vertical-align: top;
 }
 
-#rwuxkrynng .gt_row_group_first td {
+#zshdptdqlr .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rwuxkrynng .gt_row_group_first th {
+#zshdptdqlr .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#rwuxkrynng .gt_summary_row {
+#zshdptdqlr .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1547,16 +1553,16 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   padding-right: 5px;
 }
 
-#rwuxkrynng .gt_first_summary_row {
+#zshdptdqlr .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rwuxkrynng .gt_first_summary_row.thick {
+#zshdptdqlr .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rwuxkrynng .gt_last_summary_row {
+#zshdptdqlr .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1566,7 +1572,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-bottom-color: #D3D3D3;
 }
 
-#rwuxkrynng .gt_grand_summary_row {
+#zshdptdqlr .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1576,7 +1582,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   padding-right: 5px;
 }
 
-#rwuxkrynng .gt_first_grand_summary_row {
+#zshdptdqlr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1586,7 +1592,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-top-color: #D3D3D3;
 }
 
-#rwuxkrynng .gt_last_grand_summary_row_top {
+#zshdptdqlr .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1596,11 +1602,11 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-bottom-color: #D3D3D3;
 }
 
-#rwuxkrynng .gt_striped {
+#zshdptdqlr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rwuxkrynng .gt_table_body {
+#zshdptdqlr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1609,7 +1615,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-bottom-color: #D3D3D3;
 }
 
-#rwuxkrynng .gt_footnotes {
+#zshdptdqlr .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1623,7 +1629,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-right-color: #D3D3D3;
 }
 
-#rwuxkrynng .gt_footnote {
+#zshdptdqlr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1632,7 +1638,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   padding-right: 5px;
 }
 
-#rwuxkrynng .gt_sourcenotes {
+#zshdptdqlr .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1646,7 +1652,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-right-color: #D3D3D3;
 }
 
-#rwuxkrynng .gt_sourcenote {
+#zshdptdqlr .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1654,72 +1660,72 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   padding-right: 5px;
 }
 
-#rwuxkrynng .gt_left {
+#zshdptdqlr .gt_left {
   text-align: left;
 }
 
-#rwuxkrynng .gt_center {
+#zshdptdqlr .gt_center {
   text-align: center;
 }
 
-#rwuxkrynng .gt_right {
+#zshdptdqlr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rwuxkrynng .gt_font_normal {
+#zshdptdqlr .gt_font_normal {
   font-weight: normal;
 }
 
-#rwuxkrynng .gt_font_bold {
+#zshdptdqlr .gt_font_bold {
   font-weight: bold;
 }
 
-#rwuxkrynng .gt_font_italic {
+#zshdptdqlr .gt_font_italic {
   font-style: italic;
 }
 
-#rwuxkrynng .gt_super {
+#zshdptdqlr .gt_super {
   font-size: 65%;
 }
 
-#rwuxkrynng .gt_footnote_marks {
+#zshdptdqlr .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#rwuxkrynng .gt_asterisk {
+#zshdptdqlr .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rwuxkrynng .gt_indent_1 {
+#zshdptdqlr .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rwuxkrynng .gt_indent_2 {
+#zshdptdqlr .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rwuxkrynng .gt_indent_3 {
+#zshdptdqlr .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rwuxkrynng .gt_indent_4 {
+#zshdptdqlr .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rwuxkrynng .gt_indent_5 {
+#zshdptdqlr .gt_indent_5 {
   text-indent: 25px;
 }
 
-#rwuxkrynng .katex-display {
+#zshdptdqlr .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#rwuxkrynng div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zshdptdqlr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1772,23 +1778,23 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
 <div class="cell page-columns page-full" data-layout-align="center">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fugwgjpyns" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fugwgjpyns table {
+<div id="xgubleasqo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xgubleasqo table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fugwgjpyns thead, #fugwgjpyns tbody, #fugwgjpyns tfoot, #fugwgjpyns tr, #fugwgjpyns td, #fugwgjpyns th {
+#xgubleasqo thead, #xgubleasqo tbody, #xgubleasqo tfoot, #xgubleasqo tr, #xgubleasqo td, #xgubleasqo th {
   border-style: none;
 }
 
-#fugwgjpyns p {
+#xgubleasqo p {
   margin: 0;
   padding: 0;
 }
 
-#fugwgjpyns .gt_table {
+#xgubleasqo .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1814,12 +1820,12 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-left-color: #D3D3D3;
 }
 
-#fugwgjpyns .gt_caption {
+#xgubleasqo .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fugwgjpyns .gt_title {
+#xgubleasqo .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1831,7 +1837,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-bottom-width: 0;
 }
 
-#fugwgjpyns .gt_subtitle {
+#xgubleasqo .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1843,7 +1849,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-top-width: 0;
 }
 
-#fugwgjpyns .gt_heading {
+#xgubleasqo .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1855,13 +1861,13 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-right-color: #D3D3D3;
 }
 
-#fugwgjpyns .gt_bottom_border {
+#xgubleasqo .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fugwgjpyns .gt_col_headings {
+#xgubleasqo .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1876,7 +1882,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-right-color: #D3D3D3;
 }
 
-#fugwgjpyns .gt_col_heading {
+#xgubleasqo .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1896,7 +1902,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   overflow-x: hidden;
 }
 
-#fugwgjpyns .gt_column_spanner_outer {
+#xgubleasqo .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1908,15 +1914,15 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   padding-right: 4px;
 }
 
-#fugwgjpyns .gt_column_spanner_outer:first-child {
+#xgubleasqo .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fugwgjpyns .gt_column_spanner_outer:last-child {
+#xgubleasqo .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fugwgjpyns .gt_column_spanner {
+#xgubleasqo .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1928,11 +1934,11 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   width: 100%;
 }
 
-#fugwgjpyns .gt_spanner_row {
+#xgubleasqo .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fugwgjpyns .gt_group_heading {
+#xgubleasqo .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1958,7 +1964,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   text-align: left;
 }
 
-#fugwgjpyns .gt_empty_group_heading {
+#xgubleasqo .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1973,15 +1979,15 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   vertical-align: middle;
 }
 
-#fugwgjpyns .gt_from_md > :first-child {
+#xgubleasqo .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fugwgjpyns .gt_from_md > :last-child {
+#xgubleasqo .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fugwgjpyns .gt_row {
+#xgubleasqo .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2000,7 +2006,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   overflow-x: hidden;
 }
 
-#fugwgjpyns .gt_stub {
+#xgubleasqo .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2013,7 +2019,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   padding-right: 5px;
 }
 
-#fugwgjpyns .gt_stub_row_group {
+#xgubleasqo .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2027,15 +2033,15 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   vertical-align: top;
 }
 
-#fugwgjpyns .gt_row_group_first td {
+#xgubleasqo .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fugwgjpyns .gt_row_group_first th {
+#xgubleasqo .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fugwgjpyns .gt_summary_row {
+#xgubleasqo .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2045,16 +2051,16 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   padding-right: 5px;
 }
 
-#fugwgjpyns .gt_first_summary_row {
+#xgubleasqo .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fugwgjpyns .gt_first_summary_row.thick {
+#xgubleasqo .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fugwgjpyns .gt_last_summary_row {
+#xgubleasqo .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2064,7 +2070,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-bottom-color: #D3D3D3;
 }
 
-#fugwgjpyns .gt_grand_summary_row {
+#xgubleasqo .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2074,7 +2080,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   padding-right: 5px;
 }
 
-#fugwgjpyns .gt_first_grand_summary_row {
+#xgubleasqo .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2084,7 +2090,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-top-color: #D3D3D3;
 }
 
-#fugwgjpyns .gt_last_grand_summary_row_top {
+#xgubleasqo .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2094,11 +2100,11 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-bottom-color: #D3D3D3;
 }
 
-#fugwgjpyns .gt_striped {
+#xgubleasqo .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fugwgjpyns .gt_table_body {
+#xgubleasqo .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2107,7 +2113,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-bottom-color: #D3D3D3;
 }
 
-#fugwgjpyns .gt_footnotes {
+#xgubleasqo .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2121,7 +2127,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-right-color: #D3D3D3;
 }
 
-#fugwgjpyns .gt_footnote {
+#xgubleasqo .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2130,7 +2136,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   padding-right: 5px;
 }
 
-#fugwgjpyns .gt_sourcenotes {
+#xgubleasqo .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2144,7 +2150,7 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   border-right-color: #D3D3D3;
 }
 
-#fugwgjpyns .gt_sourcenote {
+#xgubleasqo .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2152,72 +2158,72 @@ Figure&nbsp;2: QQ-plot of differences in hybridization (Sawmill Road – Lower B
   padding-right: 5px;
 }
 
-#fugwgjpyns .gt_left {
+#xgubleasqo .gt_left {
   text-align: left;
 }
 
-#fugwgjpyns .gt_center {
+#xgubleasqo .gt_center {
   text-align: center;
 }
 
-#fugwgjpyns .gt_right {
+#xgubleasqo .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fugwgjpyns .gt_font_normal {
+#xgubleasqo .gt_font_normal {
   font-weight: normal;
 }
 
-#fugwgjpyns .gt_font_bold {
+#xgubleasqo .gt_font_bold {
   font-weight: bold;
 }
 
-#fugwgjpyns .gt_font_italic {
+#xgubleasqo .gt_font_italic {
   font-style: italic;
 }
 
-#fugwgjpyns .gt_super {
+#xgubleasqo .gt_super {
   font-size: 65%;
 }
 
-#fugwgjpyns .gt_footnote_marks {
+#xgubleasqo .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fugwgjpyns .gt_asterisk {
+#xgubleasqo .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fugwgjpyns .gt_indent_1 {
+#xgubleasqo .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fugwgjpyns .gt_indent_2 {
+#xgubleasqo .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fugwgjpyns .gt_indent_3 {
+#xgubleasqo .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fugwgjpyns .gt_indent_4 {
+#xgubleasqo .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fugwgjpyns .gt_indent_5 {
+#xgubleasqo .gt_indent_5 {
   text-indent: 25px;
 }
 
-#fugwgjpyns .katex-display {
+#xgubleasqo .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#fugwgjpyns div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#xgubleasqo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2312,8 +2318,8 @@ mean difference
 <p><strong>Because our p-value exceeds 0.05 we fail to reject the null.</strong></p>
 <div class="exercises">
 <p><strong>Concept check:</strong> We failed to reject the null. This means</p>
-<div id="radio_IJPYFHFURE" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_IJPYFHFURE" value=""> <span>The null is true</span></label><label><input type="radio" autocomplete="off" name="radio_IJPYFHFURE" value=""> <span>The null is false</span></label><label><input type="radio" autocomplete="off" name="radio_IJPYFHFURE" value=""> <span>The null is more likely to be true than false</span></label><label><input type="radio" autocomplete="off" name="radio_IJPYFHFURE" value=""> <span>There is a p = 0.19 chance that the null is false</span></label><label><input type="radio" autocomplete="off" name="radio_IJPYFHFURE" value=""> <span>There is a p = 0.19 chance that our results are due to sampling error</span></label><label><input type="radio" autocomplete="off" name="radio_IJPYFHFURE" value="answer"> <span>Our sample did not provide strong evidence against the null hypothesis.</span></label>
+<div id="radio_YUMCUAHKGI" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_YUMCUAHKGI" value=""> <span>The null is true</span></label><label><input type="radio" autocomplete="off" name="radio_YUMCUAHKGI" value=""> <span>The null is false</span></label><label><input type="radio" autocomplete="off" name="radio_YUMCUAHKGI" value=""> <span>The null is more likely to be true than false</span></label><label><input type="radio" autocomplete="off" name="radio_YUMCUAHKGI" value=""> <span>There is a p = 0.19 chance that the null is false</span></label><label><input type="radio" autocomplete="off" name="radio_YUMCUAHKGI" value=""> <span>There is a p = 0.19 chance that our results are due to sampling error</span></label><label><input type="radio" autocomplete="off" name="radio_YUMCUAHKGI" value="answer"> <span>Our sample did not provide strong evidence against the null hypothesis.</span></label>
 </div>
 </div>
 

@@ -1148,6 +1148,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../book_sections/model_evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">24. Model Evaluation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -1216,7 +1222,7 @@ Figure&nbsp;1: A fun picture of a normal (orange) and non-normal (blue) distribu
 <section id="quantile-quantile-plots-and-the-eye-test" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="quantile-quantile-plots-and-the-eye-test">“Quantile-Quantile” plots and the eye test</h2>
 <p>A <a href="https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot">QQ (aka “quantile-quantile”) plot</a> is a useful tool to help us visually evaluate if data are roughly normal. It does so by comparing the quantiles of your data against the theoretical quantiles you would expect if your data came from some an ideal version of a specified distribution (in this case a normal distribution). If your data normal, the points will fall along a straight line.</p>
-<p>The QQ-plot of petal area in <em>parviflora</em> RILs planted at site GC (<a href="#fig-qq" class="quarto-xref">Figure&nbsp;<span>2</span></a>) reveals that the points are fairly close to the predicted line, although both the small and large values are slightly larger than expected. Is this a big deal? Is this deviation surprising? To answer that, we need to understand the variability we expect from a normal distribution.</p>
+<p>The QQ-plot of petal area in <em>parviflora</em> RILs planted at site GC (<a href="../model_evaluation.html#fig-qq" class="quarto-xref">Figure&nbsp;<span>2.3</span></a>) reveals that the points are fairly close to the predicted line, although both the small and large values are slightly larger than expected. Is this a big deal? Is this deviation surprising? To answer that, we need to understand the variability we expect from a normal distribution.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gc_rils <span class="sc">|&gt;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> petal_area_mm))<span class="sc">+</span></span>
