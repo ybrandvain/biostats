@@ -284,9 +284,9 @@ nba_link <- "../data/nba_2024_2025.txt"
 Rba_data <- readr::read_csv(nba_link) 
 library(ggrepel);
 library(readxl)
-a<- read_xlsx("~/Desktop/nba.xlsx", "Sheet1")|>
+a<- read_xlsx("../data/nba.xlsx", "Sheet1")|>
   filter(MP > 500)
-b<-read_xlsx("~/Desktop/nba.xlsx", "Sheet2")
+b<-read_xlsx("../data/nba.xlsx", "Sheet2")
 
 left_join(a,b)|> ggplot(aes(x = height , y =`VORP`))+
     geom_smooth(method = "lm", se = F)+
