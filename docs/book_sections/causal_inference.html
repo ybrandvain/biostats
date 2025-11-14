@@ -1229,7 +1229,7 @@ window.Quarto = {
 <section id="when-correlation-is-not-good-enough" class="level2">
 <h2 class="anchored" data-anchor-id="when-correlation-is-not-good-enough">When Correlation Is (Not) Good Enough</h2>
 <p><strong>We don’t always need to know causation.</strong> We can build a multiple regression model and use it to predict outcomes without needing to know the underlying causes. For example, if I want to buy good corn, I can go to a farm stand that reliably sells tasty corn without needing to know if its quality comes from the soil, sunlight, or the farmers playing Taylor Swift each morning to “excite” the corn. Similarly, if I were selling insurance, I would only need to predict who is likely to develop lung cancer, not the underlying cause.</p>
-<p><strong>We need to understand causation when we want to intervene (or make causal claims).</strong> If I want to grow my own tasty corn, I’d need to know what specifically makes the farm’s corn delicious. No need to fertilize the soil if corn just need some T-Swiz tunes. Similarly, I would need to know that smoking causes cancer to credibly recommend that people quit smoking to reduce their risk of lung cancer.</p>
+<p><strong>We need to understand causation when we want to intervene (or make causal claims).</strong> If I want to grow my own tasty corn, I’d need to know what specifically makes the farm’s corn delicious. No need to fertilize the soil if corn just need some T-Swizzle tunes. Similarly, I would need to know that smoking causes cancer to credibly recommend that people quit smoking to reduce their risk of lung cancer.</p>
 <p>This chapter provides us with the tools to bring causal thinking into statistical analyses.</p>
 </section>
 <section id="dags-confounds-and-experiments" class="level2">
@@ -1289,7 +1289,7 @@ Figure&nbsp;1.1: R.A. Fisher—a pipe enthusiast, notorious asshole, eugenicist,
 <p>DAGs make these structures explicit so we can decide which variables belong—and which don’t—in our statistical models.</p>
 <div class="cell page-columns page-full" data-layout-align="center" data-cap-location="margin">
 <div class="cell-output-display page-columns page-full">
-<div id="fig-cancerDAGs" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-cap-location="margin" data-fig-align="center" alt="DAGs showig potential causal relationships among Genes, Smoke, Environment, and Cancer, with Cancer shown in red. Panel A shows Smoke → Cancer. Panel B shows Genes → Smoke and Genes → Cancer (a confounder). Panel C shows Genes → Smoke → Cancer (a mediator). Panel D shows Genes → Cancer and Smoke → Cancer (a collider). Panel E shows a more complex network: Genes → Smoke, Environment → Smoke, Genes → Cancer, Environment → Cancer, and Smoke → Cancer.">
+<div id="fig-cancerDAGs" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="DAGs showig potential causal relationships among Genes, Smoke, Environment, and Cancer, with Cancer shown in red. Panel A shows Smoke → Cancer. Panel B shows Genes → Smoke and Genes → Cancer (a confounder). Panel C shows Genes → Smoke → Cancer (a mediator). Panel D shows Genes → Cancer and Smoke → Cancer (a collider). Panel E shows a more complex network: Genes → Smoke, Environment → Smoke, Genes → Cancer, Environment → Cancer, and Smoke → Cancer." data-fig-align="center" data-cap-location="margin">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-cancerDAGs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="../figs/old/dag.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="DAGs showig potential causal relationships among Genes, Smoke, Environment, and Cancer, with Cancer shown in red. Panel A shows Smoke → Cancer. Panel B shows Genes → Smoke and Genes → Cancer (a confounder). Panel C shows Genes → Smoke → Cancer (a mediator). Panel D shows Genes → Cancer and Smoke → Cancer (a collider). Panel E shows a more complex network: Genes → Smoke, Environment → Smoke, Genes → Cancer, Environment → Cancer, and Smoke → Cancer.">
@@ -1358,26 +1358,26 @@ Figure&nbsp;2.1: Confounds are confounding.
 </figure>
 </div>
 </div></div></div>
-<p>We can build a simple linear model predicting the number of fish eggs as a function of fish length. We can see that the prediction is good, and makes sense – egg number reliably increases (0.054) with fish length (slope = 0.315, df = (1,98), F = 5.65, p-value = 0.0194). But we know this is not a causal relationship (because we didn’t have this cause in our simulation).</p>
+<p>We can build a simple linear model predicting the number of fish eggs as a function of fish length. We can see that the prediction is good, and makes sense – egg number reliably increases (0.032) with fish length (slope = 0.226, df = (1,98), F = 3.21, p-value = 0.0763). But we know this is not a causal relationship (because we didn’t have this cause in our simulation).</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="ysptqaotjw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ysptqaotjw table {
+<div id="wqqsrjduab" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wqqsrjduab table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ysptqaotjw thead, #ysptqaotjw tbody, #ysptqaotjw tfoot, #ysptqaotjw tr, #ysptqaotjw td, #ysptqaotjw th {
+#wqqsrjduab thead, #wqqsrjduab tbody, #wqqsrjduab tfoot, #wqqsrjduab tr, #wqqsrjduab td, #wqqsrjduab th {
   border-style: none;
 }
 
-#ysptqaotjw p {
+#wqqsrjduab p {
   margin: 0;
   padding: 0;
 }
 
-#ysptqaotjw .gt_table {
+#wqqsrjduab .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1403,12 +1403,12 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-left-color: #D3D3D3;
 }
 
-#ysptqaotjw .gt_caption {
+#wqqsrjduab .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ysptqaotjw .gt_title {
+#wqqsrjduab .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1420,7 +1420,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-bottom-width: 0;
 }
 
-#ysptqaotjw .gt_subtitle {
+#wqqsrjduab .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1432,7 +1432,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-top-width: 0;
 }
 
-#ysptqaotjw .gt_heading {
+#wqqsrjduab .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1444,13 +1444,13 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-right-color: #D3D3D3;
 }
 
-#ysptqaotjw .gt_bottom_border {
+#wqqsrjduab .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ysptqaotjw .gt_col_headings {
+#wqqsrjduab .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1465,7 +1465,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-right-color: #D3D3D3;
 }
 
-#ysptqaotjw .gt_col_heading {
+#wqqsrjduab .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1485,7 +1485,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   overflow-x: hidden;
 }
 
-#ysptqaotjw .gt_column_spanner_outer {
+#wqqsrjduab .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1497,15 +1497,15 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 4px;
 }
 
-#ysptqaotjw .gt_column_spanner_outer:first-child {
+#wqqsrjduab .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ysptqaotjw .gt_column_spanner_outer:last-child {
+#wqqsrjduab .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ysptqaotjw .gt_column_spanner {
+#wqqsrjduab .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1517,11 +1517,11 @@ Figure&nbsp;2.1: Confounds are confounding.
   width: 100%;
 }
 
-#ysptqaotjw .gt_spanner_row {
+#wqqsrjduab .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ysptqaotjw .gt_group_heading {
+#wqqsrjduab .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1547,7 +1547,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   text-align: left;
 }
 
-#ysptqaotjw .gt_empty_group_heading {
+#wqqsrjduab .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1562,15 +1562,15 @@ Figure&nbsp;2.1: Confounds are confounding.
   vertical-align: middle;
 }
 
-#ysptqaotjw .gt_from_md > :first-child {
+#wqqsrjduab .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ysptqaotjw .gt_from_md > :last-child {
+#wqqsrjduab .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ysptqaotjw .gt_row {
+#wqqsrjduab .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1589,7 +1589,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   overflow-x: hidden;
 }
 
-#ysptqaotjw .gt_stub {
+#wqqsrjduab .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1602,7 +1602,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#ysptqaotjw .gt_stub_row_group {
+#wqqsrjduab .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1616,15 +1616,15 @@ Figure&nbsp;2.1: Confounds are confounding.
   vertical-align: top;
 }
 
-#ysptqaotjw .gt_row_group_first td {
+#wqqsrjduab .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ysptqaotjw .gt_row_group_first th {
+#wqqsrjduab .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ysptqaotjw .gt_summary_row {
+#wqqsrjduab .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1634,16 +1634,16 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#ysptqaotjw .gt_first_summary_row {
+#wqqsrjduab .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ysptqaotjw .gt_first_summary_row.thick {
+#wqqsrjduab .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ysptqaotjw .gt_last_summary_row {
+#wqqsrjduab .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1653,7 +1653,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-bottom-color: #D3D3D3;
 }
 
-#ysptqaotjw .gt_grand_summary_row {
+#wqqsrjduab .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1663,7 +1663,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#ysptqaotjw .gt_first_grand_summary_row {
+#wqqsrjduab .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1673,7 +1673,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-top-color: #D3D3D3;
 }
 
-#ysptqaotjw .gt_last_grand_summary_row_top {
+#wqqsrjduab .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1683,11 +1683,11 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-bottom-color: #D3D3D3;
 }
 
-#ysptqaotjw .gt_striped {
+#wqqsrjduab .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ysptqaotjw .gt_table_body {
+#wqqsrjduab .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1696,7 +1696,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-bottom-color: #D3D3D3;
 }
 
-#ysptqaotjw .gt_footnotes {
+#wqqsrjduab .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1710,7 +1710,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-right-color: #D3D3D3;
 }
 
-#ysptqaotjw .gt_footnote {
+#wqqsrjduab .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1719,7 +1719,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#ysptqaotjw .gt_sourcenotes {
+#wqqsrjduab .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1733,7 +1733,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-right-color: #D3D3D3;
 }
 
-#ysptqaotjw .gt_sourcenote {
+#wqqsrjduab .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1741,72 +1741,72 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#ysptqaotjw .gt_left {
+#wqqsrjduab .gt_left {
   text-align: left;
 }
 
-#ysptqaotjw .gt_center {
+#wqqsrjduab .gt_center {
   text-align: center;
 }
 
-#ysptqaotjw .gt_right {
+#wqqsrjduab .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ysptqaotjw .gt_font_normal {
+#wqqsrjduab .gt_font_normal {
   font-weight: normal;
 }
 
-#ysptqaotjw .gt_font_bold {
+#wqqsrjduab .gt_font_bold {
   font-weight: bold;
 }
 
-#ysptqaotjw .gt_font_italic {
+#wqqsrjduab .gt_font_italic {
   font-style: italic;
 }
 
-#ysptqaotjw .gt_super {
+#wqqsrjduab .gt_super {
   font-size: 65%;
 }
 
-#ysptqaotjw .gt_footnote_marks {
+#wqqsrjduab .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ysptqaotjw .gt_asterisk {
+#wqqsrjduab .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ysptqaotjw .gt_indent_1 {
+#wqqsrjduab .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ysptqaotjw .gt_indent_2 {
+#wqqsrjduab .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ysptqaotjw .gt_indent_3 {
+#wqqsrjduab .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ysptqaotjw .gt_indent_4 {
+#wqqsrjduab .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ysptqaotjw .gt_indent_5 {
+#wqqsrjduab .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ysptqaotjw .katex-display {
+#wqqsrjduab .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ysptqaotjw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#wqqsrjduab div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1830,10 +1830,10 @@ Figure&nbsp;2.1: Confounds are confounding.
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="term">fish_length</td>
-<td class="gt_row gt_right" headers="estimate">0.315</td>
-<td class="gt_row gt_right" headers="std.error">0.133</td>
-<td class="gt_row gt_right" headers="statistic">2.376</td>
-<td class="gt_row gt_right" headers="p.value">0.019</td>
+<td class="gt_row gt_right" headers="estimate">0.226</td>
+<td class="gt_row gt_right" headers="std.error">0.126</td>
+<td class="gt_row gt_right" headers="statistic">1.792</td>
+<td class="gt_row gt_right" headers="p.value">0.076</td>
 </tr>
 </tbody>
 </table>
@@ -1854,23 +1854,23 @@ Figure&nbsp;2.1: Confounds are confounding.
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="vebqcnmbhm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vebqcnmbhm table {
+<div id="vnzwgnwjxl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vnzwgnwjxl table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vebqcnmbhm thead, #vebqcnmbhm tbody, #vebqcnmbhm tfoot, #vebqcnmbhm tr, #vebqcnmbhm td, #vebqcnmbhm th {
+#vnzwgnwjxl thead, #vnzwgnwjxl tbody, #vnzwgnwjxl tfoot, #vnzwgnwjxl tr, #vnzwgnwjxl td, #vnzwgnwjxl th {
   border-style: none;
 }
 
-#vebqcnmbhm p {
+#vnzwgnwjxl p {
   margin: 0;
   padding: 0;
 }
 
-#vebqcnmbhm .gt_table {
+#vnzwgnwjxl .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1896,12 +1896,12 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-left-color: #D3D3D3;
 }
 
-#vebqcnmbhm .gt_caption {
+#vnzwgnwjxl .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vebqcnmbhm .gt_title {
+#vnzwgnwjxl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1913,7 +1913,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-bottom-width: 0;
 }
 
-#vebqcnmbhm .gt_subtitle {
+#vnzwgnwjxl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1925,7 +1925,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-top-width: 0;
 }
 
-#vebqcnmbhm .gt_heading {
+#vnzwgnwjxl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1937,13 +1937,13 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-right-color: #D3D3D3;
 }
 
-#vebqcnmbhm .gt_bottom_border {
+#vnzwgnwjxl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vebqcnmbhm .gt_col_headings {
+#vnzwgnwjxl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1958,7 +1958,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-right-color: #D3D3D3;
 }
 
-#vebqcnmbhm .gt_col_heading {
+#vnzwgnwjxl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1978,7 +1978,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   overflow-x: hidden;
 }
 
-#vebqcnmbhm .gt_column_spanner_outer {
+#vnzwgnwjxl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1990,15 +1990,15 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 4px;
 }
 
-#vebqcnmbhm .gt_column_spanner_outer:first-child {
+#vnzwgnwjxl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vebqcnmbhm .gt_column_spanner_outer:last-child {
+#vnzwgnwjxl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vebqcnmbhm .gt_column_spanner {
+#vnzwgnwjxl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2010,11 +2010,11 @@ Figure&nbsp;2.1: Confounds are confounding.
   width: 100%;
 }
 
-#vebqcnmbhm .gt_spanner_row {
+#vnzwgnwjxl .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vebqcnmbhm .gt_group_heading {
+#vnzwgnwjxl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2040,7 +2040,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   text-align: left;
 }
 
-#vebqcnmbhm .gt_empty_group_heading {
+#vnzwgnwjxl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2055,15 +2055,15 @@ Figure&nbsp;2.1: Confounds are confounding.
   vertical-align: middle;
 }
 
-#vebqcnmbhm .gt_from_md > :first-child {
+#vnzwgnwjxl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vebqcnmbhm .gt_from_md > :last-child {
+#vnzwgnwjxl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vebqcnmbhm .gt_row {
+#vnzwgnwjxl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2082,7 +2082,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   overflow-x: hidden;
 }
 
-#vebqcnmbhm .gt_stub {
+#vnzwgnwjxl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2095,7 +2095,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#vebqcnmbhm .gt_stub_row_group {
+#vnzwgnwjxl .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2109,15 +2109,15 @@ Figure&nbsp;2.1: Confounds are confounding.
   vertical-align: top;
 }
 
-#vebqcnmbhm .gt_row_group_first td {
+#vnzwgnwjxl .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vebqcnmbhm .gt_row_group_first th {
+#vnzwgnwjxl .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vebqcnmbhm .gt_summary_row {
+#vnzwgnwjxl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2127,16 +2127,16 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#vebqcnmbhm .gt_first_summary_row {
+#vnzwgnwjxl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vebqcnmbhm .gt_first_summary_row.thick {
+#vnzwgnwjxl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vebqcnmbhm .gt_last_summary_row {
+#vnzwgnwjxl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2146,7 +2146,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-bottom-color: #D3D3D3;
 }
 
-#vebqcnmbhm .gt_grand_summary_row {
+#vnzwgnwjxl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2156,7 +2156,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#vebqcnmbhm .gt_first_grand_summary_row {
+#vnzwgnwjxl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2166,7 +2166,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-top-color: #D3D3D3;
 }
 
-#vebqcnmbhm .gt_last_grand_summary_row_top {
+#vnzwgnwjxl .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2176,11 +2176,11 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-bottom-color: #D3D3D3;
 }
 
-#vebqcnmbhm .gt_striped {
+#vnzwgnwjxl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vebqcnmbhm .gt_table_body {
+#vnzwgnwjxl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2189,7 +2189,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-bottom-color: #D3D3D3;
 }
 
-#vebqcnmbhm .gt_footnotes {
+#vnzwgnwjxl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2203,7 +2203,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-right-color: #D3D3D3;
 }
 
-#vebqcnmbhm .gt_footnote {
+#vnzwgnwjxl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2212,7 +2212,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#vebqcnmbhm .gt_sourcenotes {
+#vnzwgnwjxl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2226,7 +2226,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-right-color: #D3D3D3;
 }
 
-#vebqcnmbhm .gt_sourcenote {
+#vnzwgnwjxl .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2234,72 +2234,72 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#vebqcnmbhm .gt_left {
+#vnzwgnwjxl .gt_left {
   text-align: left;
 }
 
-#vebqcnmbhm .gt_center {
+#vnzwgnwjxl .gt_center {
   text-align: center;
 }
 
-#vebqcnmbhm .gt_right {
+#vnzwgnwjxl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vebqcnmbhm .gt_font_normal {
+#vnzwgnwjxl .gt_font_normal {
   font-weight: normal;
 }
 
-#vebqcnmbhm .gt_font_bold {
+#vnzwgnwjxl .gt_font_bold {
   font-weight: bold;
 }
 
-#vebqcnmbhm .gt_font_italic {
+#vnzwgnwjxl .gt_font_italic {
   font-style: italic;
 }
 
-#vebqcnmbhm .gt_super {
+#vnzwgnwjxl .gt_super {
   font-size: 65%;
 }
 
-#vebqcnmbhm .gt_footnote_marks {
+#vnzwgnwjxl .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vebqcnmbhm .gt_asterisk {
+#vnzwgnwjxl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vebqcnmbhm .gt_indent_1 {
+#vnzwgnwjxl .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vebqcnmbhm .gt_indent_2 {
+#vnzwgnwjxl .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vebqcnmbhm .gt_indent_3 {
+#vnzwgnwjxl .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vebqcnmbhm .gt_indent_4 {
+#vnzwgnwjxl .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vebqcnmbhm .gt_indent_5 {
+#vnzwgnwjxl .gt_indent_5 {
   text-indent: 25px;
 }
 
-#vebqcnmbhm .katex-display {
+#vnzwgnwjxl .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#vebqcnmbhm div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#vnzwgnwjxl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2323,21 +2323,21 @@ Figure&nbsp;2.1: Confounds are confounding.
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="term">env_quality</td>
-<td class="gt_row gt_right" headers="sumsq">87.222</td>
+<td class="gt_row gt_right" headers="sumsq">167.527</td>
 <td class="gt_row gt_right" headers="df">1</td>
-<td class="gt_row gt_right" headers="F_value">2.040</td>
-<td class="gt_row gt_right" headers="P_value">0.156</td>
+<td class="gt_row gt_right" headers="F_value">4.104</td>
+<td class="gt_row gt_right" headers="P_value">0.046</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="term">fish_length</td>
-<td class="gt_row gt_right" headers="sumsq">6.660</td>
+<td class="gt_row gt_right" headers="sumsq">59.827</td>
 <td class="gt_row gt_right" headers="df">1</td>
-<td class="gt_row gt_right" headers="F_value">0.156</td>
-<td class="gt_row gt_right" headers="P_value">0.694</td>
+<td class="gt_row gt_right" headers="F_value">1.466</td>
+<td class="gt_row gt_right" headers="P_value">0.229</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="term">Residuals</td>
-<td class="gt_row gt_right" headers="sumsq">4146.587</td>
+<td class="gt_row gt_right" headers="sumsq">3959.408</td>
 <td class="gt_row gt_right" headers="df">97</td>
 <td class="gt_row gt_right" headers="F_value">NA</td>
 <td class="gt_row gt_right" headers="P_value">NA</td>
@@ -2348,23 +2348,23 @@ Figure&nbsp;2.1: Confounds are confounding.
 </div>
 </div>
 <div class="cell-output-display">
-<div id="bhpnflcksy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bhpnflcksy table {
+<div id="oltpzhmihg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#oltpzhmihg table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bhpnflcksy thead, #bhpnflcksy tbody, #bhpnflcksy tfoot, #bhpnflcksy tr, #bhpnflcksy td, #bhpnflcksy th {
+#oltpzhmihg thead, #oltpzhmihg tbody, #oltpzhmihg tfoot, #oltpzhmihg tr, #oltpzhmihg td, #oltpzhmihg th {
   border-style: none;
 }
 
-#bhpnflcksy p {
+#oltpzhmihg p {
   margin: 0;
   padding: 0;
 }
 
-#bhpnflcksy .gt_table {
+#oltpzhmihg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2390,12 +2390,12 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-left-color: #D3D3D3;
 }
 
-#bhpnflcksy .gt_caption {
+#oltpzhmihg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bhpnflcksy .gt_title {
+#oltpzhmihg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2407,7 +2407,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-bottom-width: 0;
 }
 
-#bhpnflcksy .gt_subtitle {
+#oltpzhmihg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2419,7 +2419,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-top-width: 0;
 }
 
-#bhpnflcksy .gt_heading {
+#oltpzhmihg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2431,13 +2431,13 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-right-color: #D3D3D3;
 }
 
-#bhpnflcksy .gt_bottom_border {
+#oltpzhmihg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bhpnflcksy .gt_col_headings {
+#oltpzhmihg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2452,7 +2452,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-right-color: #D3D3D3;
 }
 
-#bhpnflcksy .gt_col_heading {
+#oltpzhmihg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2472,7 +2472,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   overflow-x: hidden;
 }
 
-#bhpnflcksy .gt_column_spanner_outer {
+#oltpzhmihg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2484,15 +2484,15 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 4px;
 }
 
-#bhpnflcksy .gt_column_spanner_outer:first-child {
+#oltpzhmihg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bhpnflcksy .gt_column_spanner_outer:last-child {
+#oltpzhmihg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bhpnflcksy .gt_column_spanner {
+#oltpzhmihg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2504,11 +2504,11 @@ Figure&nbsp;2.1: Confounds are confounding.
   width: 100%;
 }
 
-#bhpnflcksy .gt_spanner_row {
+#oltpzhmihg .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bhpnflcksy .gt_group_heading {
+#oltpzhmihg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2534,7 +2534,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   text-align: left;
 }
 
-#bhpnflcksy .gt_empty_group_heading {
+#oltpzhmihg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2549,15 +2549,15 @@ Figure&nbsp;2.1: Confounds are confounding.
   vertical-align: middle;
 }
 
-#bhpnflcksy .gt_from_md > :first-child {
+#oltpzhmihg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bhpnflcksy .gt_from_md > :last-child {
+#oltpzhmihg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bhpnflcksy .gt_row {
+#oltpzhmihg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2576,7 +2576,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   overflow-x: hidden;
 }
 
-#bhpnflcksy .gt_stub {
+#oltpzhmihg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2589,7 +2589,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#bhpnflcksy .gt_stub_row_group {
+#oltpzhmihg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2603,15 +2603,15 @@ Figure&nbsp;2.1: Confounds are confounding.
   vertical-align: top;
 }
 
-#bhpnflcksy .gt_row_group_first td {
+#oltpzhmihg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bhpnflcksy .gt_row_group_first th {
+#oltpzhmihg .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#bhpnflcksy .gt_summary_row {
+#oltpzhmihg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2621,16 +2621,16 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#bhpnflcksy .gt_first_summary_row {
+#oltpzhmihg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bhpnflcksy .gt_first_summary_row.thick {
+#oltpzhmihg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bhpnflcksy .gt_last_summary_row {
+#oltpzhmihg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2640,7 +2640,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-bottom-color: #D3D3D3;
 }
 
-#bhpnflcksy .gt_grand_summary_row {
+#oltpzhmihg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2650,7 +2650,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#bhpnflcksy .gt_first_grand_summary_row {
+#oltpzhmihg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2660,7 +2660,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-top-color: #D3D3D3;
 }
 
-#bhpnflcksy .gt_last_grand_summary_row_top {
+#oltpzhmihg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2670,11 +2670,11 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-bottom-color: #D3D3D3;
 }
 
-#bhpnflcksy .gt_striped {
+#oltpzhmihg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bhpnflcksy .gt_table_body {
+#oltpzhmihg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2683,7 +2683,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-bottom-color: #D3D3D3;
 }
 
-#bhpnflcksy .gt_footnotes {
+#oltpzhmihg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2697,7 +2697,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-right-color: #D3D3D3;
 }
 
-#bhpnflcksy .gt_footnote {
+#oltpzhmihg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2706,7 +2706,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#bhpnflcksy .gt_sourcenotes {
+#oltpzhmihg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2720,7 +2720,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-right-color: #D3D3D3;
 }
 
-#bhpnflcksy .gt_sourcenote {
+#oltpzhmihg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2728,72 +2728,72 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#bhpnflcksy .gt_left {
+#oltpzhmihg .gt_left {
   text-align: left;
 }
 
-#bhpnflcksy .gt_center {
+#oltpzhmihg .gt_center {
   text-align: center;
 }
 
-#bhpnflcksy .gt_right {
+#oltpzhmihg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bhpnflcksy .gt_font_normal {
+#oltpzhmihg .gt_font_normal {
   font-weight: normal;
 }
 
-#bhpnflcksy .gt_font_bold {
+#oltpzhmihg .gt_font_bold {
   font-weight: bold;
 }
 
-#bhpnflcksy .gt_font_italic {
+#oltpzhmihg .gt_font_italic {
   font-style: italic;
 }
 
-#bhpnflcksy .gt_super {
+#oltpzhmihg .gt_super {
   font-size: 65%;
 }
 
-#bhpnflcksy .gt_footnote_marks {
+#oltpzhmihg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#bhpnflcksy .gt_asterisk {
+#oltpzhmihg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bhpnflcksy .gt_indent_1 {
+#oltpzhmihg .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bhpnflcksy .gt_indent_2 {
+#oltpzhmihg .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bhpnflcksy .gt_indent_3 {
+#oltpzhmihg .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bhpnflcksy .gt_indent_4 {
+#oltpzhmihg .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bhpnflcksy .gt_indent_5 {
+#oltpzhmihg .gt_indent_5 {
   text-indent: 25px;
 }
 
-#bhpnflcksy .katex-display {
+#oltpzhmihg .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#bhpnflcksy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#oltpzhmihg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2818,19 +2818,19 @@ Figure&nbsp;2.1: Confounds are confounding.
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="variable">env_quality</td>
-<td class="gt_row gt_right" headers="slope">0.503</td>
-<td class="gt_row gt_right" headers="SE">0.352</td>
+<td class="gt_row gt_right" headers="slope">0.691</td>
+<td class="gt_row gt_right" headers="SE">0.341</td>
 <td class="gt_row gt_right" headers="df">97</td>
-<td class="gt_row gt_right" headers="lower.CL">-0.196</td>
-<td class="gt_row gt_right" headers="upper.CL">1.201</td>
+<td class="gt_row gt_right" headers="lower.CL">0.014</td>
+<td class="gt_row gt_right" headers="upper.CL">1.367</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="variable">fish_length</td>
-<td class="gt_row gt_right" headers="slope">-0.135</td>
-<td class="gt_row gt_right" headers="SE">0.342</td>
+<td class="gt_row gt_right" headers="slope">-0.408</td>
+<td class="gt_row gt_right" headers="SE">0.337</td>
 <td class="gt_row gt_right" headers="df">97</td>
-<td class="gt_row gt_right" headers="lower.CL">-0.813</td>
-<td class="gt_row gt_right" headers="upper.CL">0.543</td>
+<td class="gt_row gt_right" headers="lower.CL">-1.076</td>
+<td class="gt_row gt_right" headers="upper.CL">0.261</td>
 </tr>
 </tbody>
 </table>
@@ -2861,23 +2861,23 @@ Figure&nbsp;2.1: Confounds are confounding.
 <p>The right thing to do in is to model the confounder (e.g.&nbsp;with an ANCOVA or multiple regression).</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="akniwgyzat" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#akniwgyzat table {
+<div id="psphwxtoea" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#psphwxtoea table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#akniwgyzat thead, #akniwgyzat tbody, #akniwgyzat tfoot, #akniwgyzat tr, #akniwgyzat td, #akniwgyzat th {
+#psphwxtoea thead, #psphwxtoea tbody, #psphwxtoea tfoot, #psphwxtoea tr, #psphwxtoea td, #psphwxtoea th {
   border-style: none;
 }
 
-#akniwgyzat p {
+#psphwxtoea p {
   margin: 0;
   padding: 0;
 }
 
-#akniwgyzat .gt_table {
+#psphwxtoea .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2903,12 +2903,12 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-left-color: #D3D3D3;
 }
 
-#akniwgyzat .gt_caption {
+#psphwxtoea .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#akniwgyzat .gt_title {
+#psphwxtoea .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2920,7 +2920,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-bottom-width: 0;
 }
 
-#akniwgyzat .gt_subtitle {
+#psphwxtoea .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2932,7 +2932,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-top-width: 0;
 }
 
-#akniwgyzat .gt_heading {
+#psphwxtoea .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2944,13 +2944,13 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-right-color: #D3D3D3;
 }
 
-#akniwgyzat .gt_bottom_border {
+#psphwxtoea .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#akniwgyzat .gt_col_headings {
+#psphwxtoea .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2965,7 +2965,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-right-color: #D3D3D3;
 }
 
-#akniwgyzat .gt_col_heading {
+#psphwxtoea .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2985,7 +2985,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   overflow-x: hidden;
 }
 
-#akniwgyzat .gt_column_spanner_outer {
+#psphwxtoea .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2997,15 +2997,15 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 4px;
 }
 
-#akniwgyzat .gt_column_spanner_outer:first-child {
+#psphwxtoea .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#akniwgyzat .gt_column_spanner_outer:last-child {
+#psphwxtoea .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#akniwgyzat .gt_column_spanner {
+#psphwxtoea .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3017,11 +3017,11 @@ Figure&nbsp;2.1: Confounds are confounding.
   width: 100%;
 }
 
-#akniwgyzat .gt_spanner_row {
+#psphwxtoea .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#akniwgyzat .gt_group_heading {
+#psphwxtoea .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3047,7 +3047,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   text-align: left;
 }
 
-#akniwgyzat .gt_empty_group_heading {
+#psphwxtoea .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3062,15 +3062,15 @@ Figure&nbsp;2.1: Confounds are confounding.
   vertical-align: middle;
 }
 
-#akniwgyzat .gt_from_md > :first-child {
+#psphwxtoea .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#akniwgyzat .gt_from_md > :last-child {
+#psphwxtoea .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#akniwgyzat .gt_row {
+#psphwxtoea .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3089,7 +3089,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   overflow-x: hidden;
 }
 
-#akniwgyzat .gt_stub {
+#psphwxtoea .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3102,7 +3102,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#akniwgyzat .gt_stub_row_group {
+#psphwxtoea .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3116,15 +3116,15 @@ Figure&nbsp;2.1: Confounds are confounding.
   vertical-align: top;
 }
 
-#akniwgyzat .gt_row_group_first td {
+#psphwxtoea .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#akniwgyzat .gt_row_group_first th {
+#psphwxtoea .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#akniwgyzat .gt_summary_row {
+#psphwxtoea .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3134,16 +3134,16 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#akniwgyzat .gt_first_summary_row {
+#psphwxtoea .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#akniwgyzat .gt_first_summary_row.thick {
+#psphwxtoea .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#akniwgyzat .gt_last_summary_row {
+#psphwxtoea .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3153,7 +3153,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-bottom-color: #D3D3D3;
 }
 
-#akniwgyzat .gt_grand_summary_row {
+#psphwxtoea .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3163,7 +3163,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#akniwgyzat .gt_first_grand_summary_row {
+#psphwxtoea .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3173,7 +3173,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-top-color: #D3D3D3;
 }
 
-#akniwgyzat .gt_last_grand_summary_row_top {
+#psphwxtoea .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3183,11 +3183,11 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-bottom-color: #D3D3D3;
 }
 
-#akniwgyzat .gt_striped {
+#psphwxtoea .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#akniwgyzat .gt_table_body {
+#psphwxtoea .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3196,7 +3196,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-bottom-color: #D3D3D3;
 }
 
-#akniwgyzat .gt_footnotes {
+#psphwxtoea .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3210,7 +3210,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-right-color: #D3D3D3;
 }
 
-#akniwgyzat .gt_footnote {
+#psphwxtoea .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3219,7 +3219,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#akniwgyzat .gt_sourcenotes {
+#psphwxtoea .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3233,7 +3233,7 @@ Figure&nbsp;2.1: Confounds are confounding.
   border-right-color: #D3D3D3;
 }
 
-#akniwgyzat .gt_sourcenote {
+#psphwxtoea .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3241,72 +3241,72 @@ Figure&nbsp;2.1: Confounds are confounding.
   padding-right: 5px;
 }
 
-#akniwgyzat .gt_left {
+#psphwxtoea .gt_left {
   text-align: left;
 }
 
-#akniwgyzat .gt_center {
+#psphwxtoea .gt_center {
   text-align: center;
 }
 
-#akniwgyzat .gt_right {
+#psphwxtoea .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#akniwgyzat .gt_font_normal {
+#psphwxtoea .gt_font_normal {
   font-weight: normal;
 }
 
-#akniwgyzat .gt_font_bold {
+#psphwxtoea .gt_font_bold {
   font-weight: bold;
 }
 
-#akniwgyzat .gt_font_italic {
+#psphwxtoea .gt_font_italic {
   font-style: italic;
 }
 
-#akniwgyzat .gt_super {
+#psphwxtoea .gt_super {
   font-size: 65%;
 }
 
-#akniwgyzat .gt_footnote_marks {
+#psphwxtoea .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#akniwgyzat .gt_asterisk {
+#psphwxtoea .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#akniwgyzat .gt_indent_1 {
+#psphwxtoea .gt_indent_1 {
   text-indent: 5px;
 }
 
-#akniwgyzat .gt_indent_2 {
+#psphwxtoea .gt_indent_2 {
   text-indent: 10px;
 }
 
-#akniwgyzat .gt_indent_3 {
+#psphwxtoea .gt_indent_3 {
   text-indent: 15px;
 }
 
-#akniwgyzat .gt_indent_4 {
+#psphwxtoea .gt_indent_4 {
   text-indent: 20px;
 }
 
-#akniwgyzat .gt_indent_5 {
+#psphwxtoea .gt_indent_5 {
   text-indent: 25px;
 }
 
-#akniwgyzat .katex-display {
+#psphwxtoea .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#akniwgyzat div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#psphwxtoea div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3330,10 +3330,10 @@ Figure&nbsp;2.1: Confounds are confounding.
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="term">env_quality</td>
-<td class="gt_row gt_right" headers="estimate">0.375</td>
-<td class="gt_row gt_right" headers="std.error">0.135</td>
-<td class="gt_row gt_right" headers="statistic">2.767</td>
-<td class="gt_row gt_right" headers="p.value">0.007</td>
+<td class="gt_row gt_right" headers="estimate">0.307</td>
+<td class="gt_row gt_right" headers="std.error">0.126</td>
+<td class="gt_row gt_right" headers="statistic">2.434</td>
+<td class="gt_row gt_right" headers="p.value">0.017</td>
 </tr>
 </tbody>
 </table>
@@ -3391,26 +3391,26 @@ Figure&nbsp;2.2: Pipes are fun.
 <p><strong>Thinking about cause:</strong> In a real way you could say that environmental quality was a cause here. If we did an experiment and changed environmental quality we would get more eggs. Of course, we would get more eggs because fish length increased with environmental quality and this increase in length would be the cause of more eggs. If we could somehow increase fish length other means (e.g., selective breeding) without improving environmental quality, or if environmental quality improved but length remained constant, we would not – according to this DAG – see an increase in egg numbers.</p>
 </div>
 <p><strong>Our Statistical Analysis Cannot Prove Causation</strong></p>
-<p>We can fit a simple linear model predicting egg count based solely on environmental quality. This model will show a positive and reliable association (slope = 0.6362; <span class="math inline">\(r^2 =\)</span> 0.234) —- egg count appears to increase with environmental quality. Of course, this is not a causal relationship, as we did not model environmental quality as a direct cause of egg production.</p>
+<p>We can fit a simple linear model predicting egg count based solely on environmental quality. This model will show a positive and reliable association (slope = 0.6003; <span class="math inline">\(r^2 =\)</span> 0.28) —- egg count appears to increase with environmental quality. Of course, this is not a causal relationship, as we did not model environmental quality as a direct cause of egg production.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="gusnubzqic" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gusnubzqic table {
+<div id="lvognofdav" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#lvognofdav table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gusnubzqic thead, #gusnubzqic tbody, #gusnubzqic tfoot, #gusnubzqic tr, #gusnubzqic td, #gusnubzqic th {
+#lvognofdav thead, #lvognofdav tbody, #lvognofdav tfoot, #lvognofdav tr, #lvognofdav td, #lvognofdav th {
   border-style: none;
 }
 
-#gusnubzqic p {
+#lvognofdav p {
   margin: 0;
   padding: 0;
 }
 
-#gusnubzqic .gt_table {
+#lvognofdav .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3436,12 +3436,12 @@ Figure&nbsp;2.2: Pipes are fun.
   border-left-color: #D3D3D3;
 }
 
-#gusnubzqic .gt_caption {
+#lvognofdav .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gusnubzqic .gt_title {
+#lvognofdav .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3453,7 +3453,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-width: 0;
 }
 
-#gusnubzqic .gt_subtitle {
+#lvognofdav .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3465,7 +3465,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-top-width: 0;
 }
 
-#gusnubzqic .gt_heading {
+#lvognofdav .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3477,13 +3477,13 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#gusnubzqic .gt_bottom_border {
+#lvognofdav .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gusnubzqic .gt_col_headings {
+#lvognofdav .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3498,7 +3498,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#gusnubzqic .gt_col_heading {
+#lvognofdav .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3518,7 +3518,7 @@ Figure&nbsp;2.2: Pipes are fun.
   overflow-x: hidden;
 }
 
-#gusnubzqic .gt_column_spanner_outer {
+#lvognofdav .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3530,15 +3530,15 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 4px;
 }
 
-#gusnubzqic .gt_column_spanner_outer:first-child {
+#lvognofdav .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gusnubzqic .gt_column_spanner_outer:last-child {
+#lvognofdav .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gusnubzqic .gt_column_spanner {
+#lvognofdav .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3550,11 +3550,11 @@ Figure&nbsp;2.2: Pipes are fun.
   width: 100%;
 }
 
-#gusnubzqic .gt_spanner_row {
+#lvognofdav .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gusnubzqic .gt_group_heading {
+#lvognofdav .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3580,7 +3580,7 @@ Figure&nbsp;2.2: Pipes are fun.
   text-align: left;
 }
 
-#gusnubzqic .gt_empty_group_heading {
+#lvognofdav .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3595,15 +3595,15 @@ Figure&nbsp;2.2: Pipes are fun.
   vertical-align: middle;
 }
 
-#gusnubzqic .gt_from_md > :first-child {
+#lvognofdav .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gusnubzqic .gt_from_md > :last-child {
+#lvognofdav .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gusnubzqic .gt_row {
+#lvognofdav .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3622,7 +3622,7 @@ Figure&nbsp;2.2: Pipes are fun.
   overflow-x: hidden;
 }
 
-#gusnubzqic .gt_stub {
+#lvognofdav .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3635,7 +3635,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#gusnubzqic .gt_stub_row_group {
+#lvognofdav .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3649,15 +3649,15 @@ Figure&nbsp;2.2: Pipes are fun.
   vertical-align: top;
 }
 
-#gusnubzqic .gt_row_group_first td {
+#lvognofdav .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gusnubzqic .gt_row_group_first th {
+#lvognofdav .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gusnubzqic .gt_summary_row {
+#lvognofdav .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3667,16 +3667,16 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#gusnubzqic .gt_first_summary_row {
+#lvognofdav .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gusnubzqic .gt_first_summary_row.thick {
+#lvognofdav .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gusnubzqic .gt_last_summary_row {
+#lvognofdav .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3686,7 +3686,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#gusnubzqic .gt_grand_summary_row {
+#lvognofdav .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3696,7 +3696,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#gusnubzqic .gt_first_grand_summary_row {
+#lvognofdav .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3706,7 +3706,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-top-color: #D3D3D3;
 }
 
-#gusnubzqic .gt_last_grand_summary_row_top {
+#lvognofdav .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3716,11 +3716,11 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#gusnubzqic .gt_striped {
+#lvognofdav .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gusnubzqic .gt_table_body {
+#lvognofdav .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3729,7 +3729,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#gusnubzqic .gt_footnotes {
+#lvognofdav .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3743,7 +3743,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#gusnubzqic .gt_footnote {
+#lvognofdav .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3752,7 +3752,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#gusnubzqic .gt_sourcenotes {
+#lvognofdav .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3766,7 +3766,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#gusnubzqic .gt_sourcenote {
+#lvognofdav .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3774,72 +3774,72 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#gusnubzqic .gt_left {
+#lvognofdav .gt_left {
   text-align: left;
 }
 
-#gusnubzqic .gt_center {
+#lvognofdav .gt_center {
   text-align: center;
 }
 
-#gusnubzqic .gt_right {
+#lvognofdav .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gusnubzqic .gt_font_normal {
+#lvognofdav .gt_font_normal {
   font-weight: normal;
 }
 
-#gusnubzqic .gt_font_bold {
+#lvognofdav .gt_font_bold {
   font-weight: bold;
 }
 
-#gusnubzqic .gt_font_italic {
+#lvognofdav .gt_font_italic {
   font-style: italic;
 }
 
-#gusnubzqic .gt_super {
+#lvognofdav .gt_super {
   font-size: 65%;
 }
 
-#gusnubzqic .gt_footnote_marks {
+#lvognofdav .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gusnubzqic .gt_asterisk {
+#lvognofdav .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gusnubzqic .gt_indent_1 {
+#lvognofdav .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gusnubzqic .gt_indent_2 {
+#lvognofdav .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gusnubzqic .gt_indent_3 {
+#lvognofdav .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gusnubzqic .gt_indent_4 {
+#lvognofdav .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gusnubzqic .gt_indent_5 {
+#lvognofdav .gt_indent_5 {
   text-indent: 25px;
 }
 
-#gusnubzqic .katex-display {
+#lvognofdav .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#gusnubzqic div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#lvognofdav div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3863,9 +3863,9 @@ Figure&nbsp;2.2: Pipes are fun.
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="term">env_quality</td>
-<td class="gt_row gt_right" headers="estimate">0.636</td>
-<td class="gt_row gt_right" headers="std.error">0.116</td>
-<td class="gt_row gt_right" headers="statistic">5.469</td>
+<td class="gt_row gt_right" headers="estimate">0.6</td>
+<td class="gt_row gt_right" headers="std.error">0.097</td>
+<td class="gt_row gt_right" headers="statistic">6.177</td>
 <td class="gt_row gt_right" headers="p.value">0</td>
 </tr>
 </tbody>
@@ -3885,23 +3885,23 @@ Figure&nbsp;2.2: Pipes are fun.
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="lxulmjncxk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#lxulmjncxk table {
+<div id="zzfczkzmrt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zzfczkzmrt table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#lxulmjncxk thead, #lxulmjncxk tbody, #lxulmjncxk tfoot, #lxulmjncxk tr, #lxulmjncxk td, #lxulmjncxk th {
+#zzfczkzmrt thead, #zzfczkzmrt tbody, #zzfczkzmrt tfoot, #zzfczkzmrt tr, #zzfczkzmrt td, #zzfczkzmrt th {
   border-style: none;
 }
 
-#lxulmjncxk p {
+#zzfczkzmrt p {
   margin: 0;
   padding: 0;
 }
 
-#lxulmjncxk .gt_table {
+#zzfczkzmrt .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3927,12 +3927,12 @@ Figure&nbsp;2.2: Pipes are fun.
   border-left-color: #D3D3D3;
 }
 
-#lxulmjncxk .gt_caption {
+#zzfczkzmrt .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#lxulmjncxk .gt_title {
+#zzfczkzmrt .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3944,7 +3944,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-width: 0;
 }
 
-#lxulmjncxk .gt_subtitle {
+#zzfczkzmrt .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3956,7 +3956,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-top-width: 0;
 }
 
-#lxulmjncxk .gt_heading {
+#zzfczkzmrt .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3968,13 +3968,13 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#lxulmjncxk .gt_bottom_border {
+#zzfczkzmrt .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#lxulmjncxk .gt_col_headings {
+#zzfczkzmrt .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3989,7 +3989,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#lxulmjncxk .gt_col_heading {
+#zzfczkzmrt .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4009,7 +4009,7 @@ Figure&nbsp;2.2: Pipes are fun.
   overflow-x: hidden;
 }
 
-#lxulmjncxk .gt_column_spanner_outer {
+#zzfczkzmrt .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4021,15 +4021,15 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 4px;
 }
 
-#lxulmjncxk .gt_column_spanner_outer:first-child {
+#zzfczkzmrt .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#lxulmjncxk .gt_column_spanner_outer:last-child {
+#zzfczkzmrt .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#lxulmjncxk .gt_column_spanner {
+#zzfczkzmrt .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4041,11 +4041,11 @@ Figure&nbsp;2.2: Pipes are fun.
   width: 100%;
 }
 
-#lxulmjncxk .gt_spanner_row {
+#zzfczkzmrt .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#lxulmjncxk .gt_group_heading {
+#zzfczkzmrt .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4071,7 +4071,7 @@ Figure&nbsp;2.2: Pipes are fun.
   text-align: left;
 }
 
-#lxulmjncxk .gt_empty_group_heading {
+#zzfczkzmrt .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4086,15 +4086,15 @@ Figure&nbsp;2.2: Pipes are fun.
   vertical-align: middle;
 }
 
-#lxulmjncxk .gt_from_md > :first-child {
+#zzfczkzmrt .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#lxulmjncxk .gt_from_md > :last-child {
+#zzfczkzmrt .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#lxulmjncxk .gt_row {
+#zzfczkzmrt .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4113,7 +4113,7 @@ Figure&nbsp;2.2: Pipes are fun.
   overflow-x: hidden;
 }
 
-#lxulmjncxk .gt_stub {
+#zzfczkzmrt .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4126,7 +4126,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#lxulmjncxk .gt_stub_row_group {
+#zzfczkzmrt .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4140,15 +4140,15 @@ Figure&nbsp;2.2: Pipes are fun.
   vertical-align: top;
 }
 
-#lxulmjncxk .gt_row_group_first td {
+#zzfczkzmrt .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#lxulmjncxk .gt_row_group_first th {
+#zzfczkzmrt .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#lxulmjncxk .gt_summary_row {
+#zzfczkzmrt .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4158,16 +4158,16 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#lxulmjncxk .gt_first_summary_row {
+#zzfczkzmrt .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#lxulmjncxk .gt_first_summary_row.thick {
+#zzfczkzmrt .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#lxulmjncxk .gt_last_summary_row {
+#zzfczkzmrt .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4177,7 +4177,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#lxulmjncxk .gt_grand_summary_row {
+#zzfczkzmrt .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4187,7 +4187,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#lxulmjncxk .gt_first_grand_summary_row {
+#zzfczkzmrt .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4197,7 +4197,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-top-color: #D3D3D3;
 }
 
-#lxulmjncxk .gt_last_grand_summary_row_top {
+#zzfczkzmrt .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4207,11 +4207,11 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#lxulmjncxk .gt_striped {
+#zzfczkzmrt .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#lxulmjncxk .gt_table_body {
+#zzfczkzmrt .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4220,7 +4220,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#lxulmjncxk .gt_footnotes {
+#zzfczkzmrt .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4234,7 +4234,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#lxulmjncxk .gt_footnote {
+#zzfczkzmrt .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -4243,7 +4243,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#lxulmjncxk .gt_sourcenotes {
+#zzfczkzmrt .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4257,7 +4257,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#lxulmjncxk .gt_sourcenote {
+#zzfczkzmrt .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -4265,72 +4265,72 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#lxulmjncxk .gt_left {
+#zzfczkzmrt .gt_left {
   text-align: left;
 }
 
-#lxulmjncxk .gt_center {
+#zzfczkzmrt .gt_center {
   text-align: center;
 }
 
-#lxulmjncxk .gt_right {
+#zzfczkzmrt .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#lxulmjncxk .gt_font_normal {
+#zzfczkzmrt .gt_font_normal {
   font-weight: normal;
 }
 
-#lxulmjncxk .gt_font_bold {
+#zzfczkzmrt .gt_font_bold {
   font-weight: bold;
 }
 
-#lxulmjncxk .gt_font_italic {
+#zzfczkzmrt .gt_font_italic {
   font-style: italic;
 }
 
-#lxulmjncxk .gt_super {
+#zzfczkzmrt .gt_super {
   font-size: 65%;
 }
 
-#lxulmjncxk .gt_footnote_marks {
+#zzfczkzmrt .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#lxulmjncxk .gt_asterisk {
+#zzfczkzmrt .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#lxulmjncxk .gt_indent_1 {
+#zzfczkzmrt .gt_indent_1 {
   text-indent: 5px;
 }
 
-#lxulmjncxk .gt_indent_2 {
+#zzfczkzmrt .gt_indent_2 {
   text-indent: 10px;
 }
 
-#lxulmjncxk .gt_indent_3 {
+#zzfczkzmrt .gt_indent_3 {
   text-indent: 15px;
 }
 
-#lxulmjncxk .gt_indent_4 {
+#zzfczkzmrt .gt_indent_4 {
   text-indent: 20px;
 }
 
-#lxulmjncxk .gt_indent_5 {
+#zzfczkzmrt .gt_indent_5 {
   text-indent: 25px;
 }
 
-#lxulmjncxk .katex-display {
+#zzfczkzmrt .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#lxulmjncxk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zzfczkzmrt div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -4354,21 +4354,21 @@ Figure&nbsp;2.2: Pipes are fun.
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="term">fish_length</td>
-<td class="gt_row gt_right" headers="sumsq">74.198</td>
+<td class="gt_row gt_right" headers="sumsq">11.703</td>
 <td class="gt_row gt_right" headers="df">1</td>
-<td class="gt_row gt_right" headers="F_value">2.771</td>
-<td class="gt_row gt_right" headers="P_value">0.099</td>
+<td class="gt_row gt_right" headers="F_value">0.457</td>
+<td class="gt_row gt_right" headers="P_value">0.501</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="term">env_quality</td>
-<td class="gt_row gt_right" headers="sumsq">9.211</td>
+<td class="gt_row gt_right" headers="sumsq">39.005</td>
 <td class="gt_row gt_right" headers="df">1</td>
-<td class="gt_row gt_right" headers="F_value">0.344</td>
-<td class="gt_row gt_right" headers="P_value">0.559</td>
+<td class="gt_row gt_right" headers="F_value">1.522</td>
+<td class="gt_row gt_right" headers="P_value">0.220</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="term">Residuals</td>
-<td class="gt_row gt_right" headers="sumsq">2597.302</td>
+<td class="gt_row gt_right" headers="sumsq">2486.635</td>
 <td class="gt_row gt_right" headers="df">97</td>
 <td class="gt_row gt_right" headers="F_value">NA</td>
 <td class="gt_row gt_right" headers="P_value">NA</td>
@@ -4379,23 +4379,23 @@ Figure&nbsp;2.2: Pipes are fun.
 </div>
 </div>
 <div class="cell-output-display">
-<div id="hdycjtzjsv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#hdycjtzjsv table {
+<div id="einivtlzgg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#einivtlzgg table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#hdycjtzjsv thead, #hdycjtzjsv tbody, #hdycjtzjsv tfoot, #hdycjtzjsv tr, #hdycjtzjsv td, #hdycjtzjsv th {
+#einivtlzgg thead, #einivtlzgg tbody, #einivtlzgg tfoot, #einivtlzgg tr, #einivtlzgg td, #einivtlzgg th {
   border-style: none;
 }
 
-#hdycjtzjsv p {
+#einivtlzgg p {
   margin: 0;
   padding: 0;
 }
 
-#hdycjtzjsv .gt_table {
+#einivtlzgg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -4421,12 +4421,12 @@ Figure&nbsp;2.2: Pipes are fun.
   border-left-color: #D3D3D3;
 }
 
-#hdycjtzjsv .gt_caption {
+#einivtlzgg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#hdycjtzjsv .gt_title {
+#einivtlzgg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -4438,7 +4438,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-width: 0;
 }
 
-#hdycjtzjsv .gt_subtitle {
+#einivtlzgg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4450,7 +4450,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-top-width: 0;
 }
 
-#hdycjtzjsv .gt_heading {
+#einivtlzgg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -4462,13 +4462,13 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#hdycjtzjsv .gt_bottom_border {
+#einivtlzgg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hdycjtzjsv .gt_col_headings {
+#einivtlzgg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4483,7 +4483,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#hdycjtzjsv .gt_col_heading {
+#einivtlzgg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4503,7 +4503,7 @@ Figure&nbsp;2.2: Pipes are fun.
   overflow-x: hidden;
 }
 
-#hdycjtzjsv .gt_column_spanner_outer {
+#einivtlzgg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4515,15 +4515,15 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 4px;
 }
 
-#hdycjtzjsv .gt_column_spanner_outer:first-child {
+#einivtlzgg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hdycjtzjsv .gt_column_spanner_outer:last-child {
+#einivtlzgg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hdycjtzjsv .gt_column_spanner {
+#einivtlzgg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4535,11 +4535,11 @@ Figure&nbsp;2.2: Pipes are fun.
   width: 100%;
 }
 
-#hdycjtzjsv .gt_spanner_row {
+#einivtlzgg .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#hdycjtzjsv .gt_group_heading {
+#einivtlzgg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4565,7 +4565,7 @@ Figure&nbsp;2.2: Pipes are fun.
   text-align: left;
 }
 
-#hdycjtzjsv .gt_empty_group_heading {
+#einivtlzgg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4580,15 +4580,15 @@ Figure&nbsp;2.2: Pipes are fun.
   vertical-align: middle;
 }
 
-#hdycjtzjsv .gt_from_md > :first-child {
+#einivtlzgg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hdycjtzjsv .gt_from_md > :last-child {
+#einivtlzgg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hdycjtzjsv .gt_row {
+#einivtlzgg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4607,7 +4607,7 @@ Figure&nbsp;2.2: Pipes are fun.
   overflow-x: hidden;
 }
 
-#hdycjtzjsv .gt_stub {
+#einivtlzgg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4620,7 +4620,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#hdycjtzjsv .gt_stub_row_group {
+#einivtlzgg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4634,15 +4634,15 @@ Figure&nbsp;2.2: Pipes are fun.
   vertical-align: top;
 }
 
-#hdycjtzjsv .gt_row_group_first td {
+#einivtlzgg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#hdycjtzjsv .gt_row_group_first th {
+#einivtlzgg .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#hdycjtzjsv .gt_summary_row {
+#einivtlzgg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4652,16 +4652,16 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#hdycjtzjsv .gt_first_summary_row {
+#einivtlzgg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#hdycjtzjsv .gt_first_summary_row.thick {
+#einivtlzgg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#hdycjtzjsv .gt_last_summary_row {
+#einivtlzgg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4671,7 +4671,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#hdycjtzjsv .gt_grand_summary_row {
+#einivtlzgg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4681,7 +4681,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#hdycjtzjsv .gt_first_grand_summary_row {
+#einivtlzgg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4691,7 +4691,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-top-color: #D3D3D3;
 }
 
-#hdycjtzjsv .gt_last_grand_summary_row_top {
+#einivtlzgg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4701,11 +4701,11 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#hdycjtzjsv .gt_striped {
+#einivtlzgg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hdycjtzjsv .gt_table_body {
+#einivtlzgg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4714,7 +4714,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#hdycjtzjsv .gt_footnotes {
+#einivtlzgg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4728,7 +4728,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#hdycjtzjsv .gt_footnote {
+#einivtlzgg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -4737,7 +4737,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#hdycjtzjsv .gt_sourcenotes {
+#einivtlzgg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4751,7 +4751,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#hdycjtzjsv .gt_sourcenote {
+#einivtlzgg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -4759,72 +4759,72 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#hdycjtzjsv .gt_left {
+#einivtlzgg .gt_left {
   text-align: left;
 }
 
-#hdycjtzjsv .gt_center {
+#einivtlzgg .gt_center {
   text-align: center;
 }
 
-#hdycjtzjsv .gt_right {
+#einivtlzgg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hdycjtzjsv .gt_font_normal {
+#einivtlzgg .gt_font_normal {
   font-weight: normal;
 }
 
-#hdycjtzjsv .gt_font_bold {
+#einivtlzgg .gt_font_bold {
   font-weight: bold;
 }
 
-#hdycjtzjsv .gt_font_italic {
+#einivtlzgg .gt_font_italic {
   font-style: italic;
 }
 
-#hdycjtzjsv .gt_super {
+#einivtlzgg .gt_super {
   font-size: 65%;
 }
 
-#hdycjtzjsv .gt_footnote_marks {
+#einivtlzgg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#hdycjtzjsv .gt_asterisk {
+#einivtlzgg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#hdycjtzjsv .gt_indent_1 {
+#einivtlzgg .gt_indent_1 {
   text-indent: 5px;
 }
 
-#hdycjtzjsv .gt_indent_2 {
+#einivtlzgg .gt_indent_2 {
   text-indent: 10px;
 }
 
-#hdycjtzjsv .gt_indent_3 {
+#einivtlzgg .gt_indent_3 {
   text-indent: 15px;
 }
 
-#hdycjtzjsv .gt_indent_4 {
+#einivtlzgg .gt_indent_4 {
   text-indent: 20px;
 }
 
-#hdycjtzjsv .gt_indent_5 {
+#einivtlzgg .gt_indent_5 {
   text-indent: 25px;
 }
 
-#hdycjtzjsv .katex-display {
+#einivtlzgg .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#hdycjtzjsv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#einivtlzgg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -4849,19 +4849,19 @@ Figure&nbsp;2.2: Pipes are fun.
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="variable">fish_length</td>
-<td class="gt_row gt_right" headers="slope">0.478</td>
-<td class="gt_row gt_right" headers="SE">0.287</td>
+<td class="gt_row gt_right" headers="slope">0.210</td>
+<td class="gt_row gt_right" headers="SE">0.311</td>
 <td class="gt_row gt_right" headers="df">97</td>
-<td class="gt_row gt_right" headers="lower.CL">-0.092</td>
-<td class="gt_row gt_right" headers="upper.CL">1.047</td>
+<td class="gt_row gt_right" headers="lower.CL">-0.407</td>
+<td class="gt_row gt_right" headers="upper.CL">0.827</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="variable">env_quality</td>
-<td class="gt_row gt_right" headers="slope">0.176</td>
-<td class="gt_row gt_right" headers="SE">0.300</td>
+<td class="gt_row gt_right" headers="slope">0.395</td>
+<td class="gt_row gt_right" headers="SE">0.320</td>
 <td class="gt_row gt_right" headers="df">97</td>
-<td class="gt_row gt_right" headers="lower.CL">-0.419</td>
-<td class="gt_row gt_right" headers="upper.CL">0.771</td>
+<td class="gt_row gt_right" headers="lower.CL">-0.240</td>
+<td class="gt_row gt_right" headers="upper.CL">1.029</td>
 </tr>
 </tbody>
 </table>
@@ -4883,23 +4883,23 @@ Figure&nbsp;2.2: Pipes are fun.
 <p>The right thing to do in this case is to just build a model with the fish length.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="vvdomhbtoo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vvdomhbtoo table {
+<div id="qxfpyrdsxb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qxfpyrdsxb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vvdomhbtoo thead, #vvdomhbtoo tbody, #vvdomhbtoo tfoot, #vvdomhbtoo tr, #vvdomhbtoo td, #vvdomhbtoo th {
+#qxfpyrdsxb thead, #qxfpyrdsxb tbody, #qxfpyrdsxb tfoot, #qxfpyrdsxb tr, #qxfpyrdsxb td, #qxfpyrdsxb th {
   border-style: none;
 }
 
-#vvdomhbtoo p {
+#qxfpyrdsxb p {
   margin: 0;
   padding: 0;
 }
 
-#vvdomhbtoo .gt_table {
+#qxfpyrdsxb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -4925,12 +4925,12 @@ Figure&nbsp;2.2: Pipes are fun.
   border-left-color: #D3D3D3;
 }
 
-#vvdomhbtoo .gt_caption {
+#qxfpyrdsxb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vvdomhbtoo .gt_title {
+#qxfpyrdsxb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -4942,7 +4942,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-width: 0;
 }
 
-#vvdomhbtoo .gt_subtitle {
+#qxfpyrdsxb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4954,7 +4954,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-top-width: 0;
 }
 
-#vvdomhbtoo .gt_heading {
+#qxfpyrdsxb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -4966,13 +4966,13 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#vvdomhbtoo .gt_bottom_border {
+#qxfpyrdsxb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vvdomhbtoo .gt_col_headings {
+#qxfpyrdsxb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4987,7 +4987,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#vvdomhbtoo .gt_col_heading {
+#qxfpyrdsxb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5007,7 +5007,7 @@ Figure&nbsp;2.2: Pipes are fun.
   overflow-x: hidden;
 }
 
-#vvdomhbtoo .gt_column_spanner_outer {
+#qxfpyrdsxb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5019,15 +5019,15 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 4px;
 }
 
-#vvdomhbtoo .gt_column_spanner_outer:first-child {
+#qxfpyrdsxb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vvdomhbtoo .gt_column_spanner_outer:last-child {
+#qxfpyrdsxb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vvdomhbtoo .gt_column_spanner {
+#qxfpyrdsxb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -5039,11 +5039,11 @@ Figure&nbsp;2.2: Pipes are fun.
   width: 100%;
 }
 
-#vvdomhbtoo .gt_spanner_row {
+#qxfpyrdsxb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vvdomhbtoo .gt_group_heading {
+#qxfpyrdsxb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5069,7 +5069,7 @@ Figure&nbsp;2.2: Pipes are fun.
   text-align: left;
 }
 
-#vvdomhbtoo .gt_empty_group_heading {
+#qxfpyrdsxb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -5084,15 +5084,15 @@ Figure&nbsp;2.2: Pipes are fun.
   vertical-align: middle;
 }
 
-#vvdomhbtoo .gt_from_md > :first-child {
+#qxfpyrdsxb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vvdomhbtoo .gt_from_md > :last-child {
+#qxfpyrdsxb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vvdomhbtoo .gt_row {
+#qxfpyrdsxb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5111,7 +5111,7 @@ Figure&nbsp;2.2: Pipes are fun.
   overflow-x: hidden;
 }
 
-#vvdomhbtoo .gt_stub {
+#qxfpyrdsxb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5124,7 +5124,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#vvdomhbtoo .gt_stub_row_group {
+#qxfpyrdsxb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5138,15 +5138,15 @@ Figure&nbsp;2.2: Pipes are fun.
   vertical-align: top;
 }
 
-#vvdomhbtoo .gt_row_group_first td {
+#qxfpyrdsxb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vvdomhbtoo .gt_row_group_first th {
+#qxfpyrdsxb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vvdomhbtoo .gt_summary_row {
+#qxfpyrdsxb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5156,16 +5156,16 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#vvdomhbtoo .gt_first_summary_row {
+#qxfpyrdsxb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vvdomhbtoo .gt_first_summary_row.thick {
+#qxfpyrdsxb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vvdomhbtoo .gt_last_summary_row {
+#qxfpyrdsxb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5175,7 +5175,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#vvdomhbtoo .gt_grand_summary_row {
+#qxfpyrdsxb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5185,7 +5185,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#vvdomhbtoo .gt_first_grand_summary_row {
+#qxfpyrdsxb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5195,7 +5195,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-top-color: #D3D3D3;
 }
 
-#vvdomhbtoo .gt_last_grand_summary_row_top {
+#qxfpyrdsxb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5205,11 +5205,11 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#vvdomhbtoo .gt_striped {
+#qxfpyrdsxb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vvdomhbtoo .gt_table_body {
+#qxfpyrdsxb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5218,7 +5218,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#vvdomhbtoo .gt_footnotes {
+#qxfpyrdsxb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5232,7 +5232,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#vvdomhbtoo .gt_footnote {
+#qxfpyrdsxb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -5241,7 +5241,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#vvdomhbtoo .gt_sourcenotes {
+#qxfpyrdsxb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5255,7 +5255,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#vvdomhbtoo .gt_sourcenote {
+#qxfpyrdsxb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -5263,72 +5263,72 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#vvdomhbtoo .gt_left {
+#qxfpyrdsxb .gt_left {
   text-align: left;
 }
 
-#vvdomhbtoo .gt_center {
+#qxfpyrdsxb .gt_center {
   text-align: center;
 }
 
-#vvdomhbtoo .gt_right {
+#qxfpyrdsxb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vvdomhbtoo .gt_font_normal {
+#qxfpyrdsxb .gt_font_normal {
   font-weight: normal;
 }
 
-#vvdomhbtoo .gt_font_bold {
+#qxfpyrdsxb .gt_font_bold {
   font-weight: bold;
 }
 
-#vvdomhbtoo .gt_font_italic {
+#qxfpyrdsxb .gt_font_italic {
   font-style: italic;
 }
 
-#vvdomhbtoo .gt_super {
+#qxfpyrdsxb .gt_super {
   font-size: 65%;
 }
 
-#vvdomhbtoo .gt_footnote_marks {
+#qxfpyrdsxb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vvdomhbtoo .gt_asterisk {
+#qxfpyrdsxb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vvdomhbtoo .gt_indent_1 {
+#qxfpyrdsxb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vvdomhbtoo .gt_indent_2 {
+#qxfpyrdsxb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vvdomhbtoo .gt_indent_3 {
+#qxfpyrdsxb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vvdomhbtoo .gt_indent_4 {
+#qxfpyrdsxb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vvdomhbtoo .gt_indent_5 {
+#qxfpyrdsxb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#vvdomhbtoo .katex-display {
+#qxfpyrdsxb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#vvdomhbtoo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#qxfpyrdsxb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -5352,9 +5352,9 @@ Figure&nbsp;2.2: Pipes are fun.
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="term">fish_length</td>
-<td class="gt_row gt_right" headers="estimate">0.633</td>
-<td class="gt_row gt_right" headers="std.error">0.11</td>
-<td class="gt_row gt_right" headers="statistic">5.753</td>
+<td class="gt_row gt_right" headers="estimate">0.575</td>
+<td class="gt_row gt_right" headers="std.error">0.095</td>
+<td class="gt_row gt_right" headers="statistic">6.056</td>
 <td class="gt_row gt_right" headers="p.value">0</td>
 </tr>
 </tbody>
@@ -5403,23 +5403,23 @@ Figure&nbsp;2.2: Pipes are fun.
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="mfplpdwmap" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mfplpdwmap table {
+<div id="reuqnjozzy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#reuqnjozzy table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mfplpdwmap thead, #mfplpdwmap tbody, #mfplpdwmap tfoot, #mfplpdwmap tr, #mfplpdwmap td, #mfplpdwmap th {
+#reuqnjozzy thead, #reuqnjozzy tbody, #reuqnjozzy tfoot, #reuqnjozzy tr, #reuqnjozzy td, #reuqnjozzy th {
   border-style: none;
 }
 
-#mfplpdwmap p {
+#reuqnjozzy p {
   margin: 0;
   padding: 0;
 }
 
-#mfplpdwmap .gt_table {
+#reuqnjozzy .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -5445,12 +5445,12 @@ Figure&nbsp;2.2: Pipes are fun.
   border-left-color: #D3D3D3;
 }
 
-#mfplpdwmap .gt_caption {
+#reuqnjozzy .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mfplpdwmap .gt_title {
+#reuqnjozzy .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -5462,7 +5462,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-width: 0;
 }
 
-#mfplpdwmap .gt_subtitle {
+#reuqnjozzy .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -5474,7 +5474,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-top-width: 0;
 }
 
-#mfplpdwmap .gt_heading {
+#reuqnjozzy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -5486,13 +5486,13 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#mfplpdwmap .gt_bottom_border {
+#reuqnjozzy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mfplpdwmap .gt_col_headings {
+#reuqnjozzy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5507,7 +5507,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#mfplpdwmap .gt_col_heading {
+#reuqnjozzy .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5527,7 +5527,7 @@ Figure&nbsp;2.2: Pipes are fun.
   overflow-x: hidden;
 }
 
-#mfplpdwmap .gt_column_spanner_outer {
+#reuqnjozzy .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5539,15 +5539,15 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 4px;
 }
 
-#mfplpdwmap .gt_column_spanner_outer:first-child {
+#reuqnjozzy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mfplpdwmap .gt_column_spanner_outer:last-child {
+#reuqnjozzy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mfplpdwmap .gt_column_spanner {
+#reuqnjozzy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -5559,11 +5559,11 @@ Figure&nbsp;2.2: Pipes are fun.
   width: 100%;
 }
 
-#mfplpdwmap .gt_spanner_row {
+#reuqnjozzy .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mfplpdwmap .gt_group_heading {
+#reuqnjozzy .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5589,7 +5589,7 @@ Figure&nbsp;2.2: Pipes are fun.
   text-align: left;
 }
 
-#mfplpdwmap .gt_empty_group_heading {
+#reuqnjozzy .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -5604,15 +5604,15 @@ Figure&nbsp;2.2: Pipes are fun.
   vertical-align: middle;
 }
 
-#mfplpdwmap .gt_from_md > :first-child {
+#reuqnjozzy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mfplpdwmap .gt_from_md > :last-child {
+#reuqnjozzy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mfplpdwmap .gt_row {
+#reuqnjozzy .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5631,7 +5631,7 @@ Figure&nbsp;2.2: Pipes are fun.
   overflow-x: hidden;
 }
 
-#mfplpdwmap .gt_stub {
+#reuqnjozzy .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5644,7 +5644,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#mfplpdwmap .gt_stub_row_group {
+#reuqnjozzy .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5658,15 +5658,15 @@ Figure&nbsp;2.2: Pipes are fun.
   vertical-align: top;
 }
 
-#mfplpdwmap .gt_row_group_first td {
+#reuqnjozzy .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mfplpdwmap .gt_row_group_first th {
+#reuqnjozzy .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mfplpdwmap .gt_summary_row {
+#reuqnjozzy .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5676,16 +5676,16 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#mfplpdwmap .gt_first_summary_row {
+#reuqnjozzy .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mfplpdwmap .gt_first_summary_row.thick {
+#reuqnjozzy .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mfplpdwmap .gt_last_summary_row {
+#reuqnjozzy .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5695,7 +5695,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#mfplpdwmap .gt_grand_summary_row {
+#reuqnjozzy .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5705,7 +5705,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#mfplpdwmap .gt_first_grand_summary_row {
+#reuqnjozzy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5715,7 +5715,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-top-color: #D3D3D3;
 }
 
-#mfplpdwmap .gt_last_grand_summary_row_top {
+#reuqnjozzy .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5725,11 +5725,11 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#mfplpdwmap .gt_striped {
+#reuqnjozzy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mfplpdwmap .gt_table_body {
+#reuqnjozzy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5738,7 +5738,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#mfplpdwmap .gt_footnotes {
+#reuqnjozzy .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5752,7 +5752,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#mfplpdwmap .gt_footnote {
+#reuqnjozzy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -5761,7 +5761,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#mfplpdwmap .gt_sourcenotes {
+#reuqnjozzy .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5775,7 +5775,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#mfplpdwmap .gt_sourcenote {
+#reuqnjozzy .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -5783,72 +5783,72 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#mfplpdwmap .gt_left {
+#reuqnjozzy .gt_left {
   text-align: left;
 }
 
-#mfplpdwmap .gt_center {
+#reuqnjozzy .gt_center {
   text-align: center;
 }
 
-#mfplpdwmap .gt_right {
+#reuqnjozzy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mfplpdwmap .gt_font_normal {
+#reuqnjozzy .gt_font_normal {
   font-weight: normal;
 }
 
-#mfplpdwmap .gt_font_bold {
+#reuqnjozzy .gt_font_bold {
   font-weight: bold;
 }
 
-#mfplpdwmap .gt_font_italic {
+#reuqnjozzy .gt_font_italic {
   font-style: italic;
 }
 
-#mfplpdwmap .gt_super {
+#reuqnjozzy .gt_super {
   font-size: 65%;
 }
 
-#mfplpdwmap .gt_footnote_marks {
+#reuqnjozzy .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mfplpdwmap .gt_asterisk {
+#reuqnjozzy .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mfplpdwmap .gt_indent_1 {
+#reuqnjozzy .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mfplpdwmap .gt_indent_2 {
+#reuqnjozzy .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mfplpdwmap .gt_indent_3 {
+#reuqnjozzy .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mfplpdwmap .gt_indent_4 {
+#reuqnjozzy .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mfplpdwmap .gt_indent_5 {
+#reuqnjozzy .gt_indent_5 {
   text-indent: 25px;
 }
 
-#mfplpdwmap .katex-display {
+#reuqnjozzy .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#mfplpdwmap div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#reuqnjozzy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -5872,21 +5872,21 @@ Figure&nbsp;2.2: Pipes are fun.
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="term">fish_length</td>
-<td class="gt_row gt_right" headers="sumsq">4263.762</td>
+<td class="gt_row gt_right" headers="sumsq">4320.417</td>
 <td class="gt_row gt_right" headers="df">1</td>
-<td class="gt_row gt_right" headers="F_value">1071.242</td>
+<td class="gt_row gt_right" headers="F_value">1076.696</td>
 <td class="gt_row gt_right" headers="P_value">0</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="term">env_quality</td>
-<td class="gt_row gt_right" headers="sumsq">3606.550</td>
+<td class="gt_row gt_right" headers="sumsq">4098.740</td>
 <td class="gt_row gt_right" headers="df">1</td>
-<td class="gt_row gt_right" headers="F_value">906.122</td>
+<td class="gt_row gt_right" headers="F_value">1021.452</td>
 <td class="gt_row gt_right" headers="P_value">0</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="term">Residuals</td>
-<td class="gt_row gt_right" headers="sumsq">3968.265</td>
+<td class="gt_row gt_right" headers="sumsq">4000.624</td>
 <td class="gt_row gt_right" headers="df">997</td>
 <td class="gt_row gt_right" headers="F_value">NA</td>
 <td class="gt_row gt_right" headers="P_value">NA</td>
@@ -5897,23 +5897,23 @@ Figure&nbsp;2.2: Pipes are fun.
 </div>
 </div>
 <div class="cell-output-display">
-<div id="fafmfkeuci" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fafmfkeuci table {
+<div id="xxwwdqtnrp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xxwwdqtnrp table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fafmfkeuci thead, #fafmfkeuci tbody, #fafmfkeuci tfoot, #fafmfkeuci tr, #fafmfkeuci td, #fafmfkeuci th {
+#xxwwdqtnrp thead, #xxwwdqtnrp tbody, #xxwwdqtnrp tfoot, #xxwwdqtnrp tr, #xxwwdqtnrp td, #xxwwdqtnrp th {
   border-style: none;
 }
 
-#fafmfkeuci p {
+#xxwwdqtnrp p {
   margin: 0;
   padding: 0;
 }
 
-#fafmfkeuci .gt_table {
+#xxwwdqtnrp .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -5939,12 +5939,12 @@ Figure&nbsp;2.2: Pipes are fun.
   border-left-color: #D3D3D3;
 }
 
-#fafmfkeuci .gt_caption {
+#xxwwdqtnrp .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fafmfkeuci .gt_title {
+#xxwwdqtnrp .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -5956,7 +5956,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-width: 0;
 }
 
-#fafmfkeuci .gt_subtitle {
+#xxwwdqtnrp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -5968,7 +5968,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-top-width: 0;
 }
 
-#fafmfkeuci .gt_heading {
+#xxwwdqtnrp .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -5980,13 +5980,13 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#fafmfkeuci .gt_bottom_border {
+#xxwwdqtnrp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fafmfkeuci .gt_col_headings {
+#xxwwdqtnrp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -6001,7 +6001,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#fafmfkeuci .gt_col_heading {
+#xxwwdqtnrp .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -6021,7 +6021,7 @@ Figure&nbsp;2.2: Pipes are fun.
   overflow-x: hidden;
 }
 
-#fafmfkeuci .gt_column_spanner_outer {
+#xxwwdqtnrp .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -6033,15 +6033,15 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 4px;
 }
 
-#fafmfkeuci .gt_column_spanner_outer:first-child {
+#xxwwdqtnrp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fafmfkeuci .gt_column_spanner_outer:last-child {
+#xxwwdqtnrp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fafmfkeuci .gt_column_spanner {
+#xxwwdqtnrp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -6053,11 +6053,11 @@ Figure&nbsp;2.2: Pipes are fun.
   width: 100%;
 }
 
-#fafmfkeuci .gt_spanner_row {
+#xxwwdqtnrp .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fafmfkeuci .gt_group_heading {
+#xxwwdqtnrp .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6083,7 +6083,7 @@ Figure&nbsp;2.2: Pipes are fun.
   text-align: left;
 }
 
-#fafmfkeuci .gt_empty_group_heading {
+#xxwwdqtnrp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -6098,15 +6098,15 @@ Figure&nbsp;2.2: Pipes are fun.
   vertical-align: middle;
 }
 
-#fafmfkeuci .gt_from_md > :first-child {
+#xxwwdqtnrp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fafmfkeuci .gt_from_md > :last-child {
+#xxwwdqtnrp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fafmfkeuci .gt_row {
+#xxwwdqtnrp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6125,7 +6125,7 @@ Figure&nbsp;2.2: Pipes are fun.
   overflow-x: hidden;
 }
 
-#fafmfkeuci .gt_stub {
+#xxwwdqtnrp .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -6138,7 +6138,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#fafmfkeuci .gt_stub_row_group {
+#xxwwdqtnrp .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -6152,15 +6152,15 @@ Figure&nbsp;2.2: Pipes are fun.
   vertical-align: top;
 }
 
-#fafmfkeuci .gt_row_group_first td {
+#xxwwdqtnrp .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fafmfkeuci .gt_row_group_first th {
+#xxwwdqtnrp .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fafmfkeuci .gt_summary_row {
+#xxwwdqtnrp .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -6170,16 +6170,16 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#fafmfkeuci .gt_first_summary_row {
+#xxwwdqtnrp .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fafmfkeuci .gt_first_summary_row.thick {
+#xxwwdqtnrp .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fafmfkeuci .gt_last_summary_row {
+#xxwwdqtnrp .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6189,7 +6189,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#fafmfkeuci .gt_grand_summary_row {
+#xxwwdqtnrp .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -6199,7 +6199,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#fafmfkeuci .gt_first_grand_summary_row {
+#xxwwdqtnrp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6209,7 +6209,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-top-color: #D3D3D3;
 }
 
-#fafmfkeuci .gt_last_grand_summary_row_top {
+#xxwwdqtnrp .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6219,11 +6219,11 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#fafmfkeuci .gt_striped {
+#xxwwdqtnrp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fafmfkeuci .gt_table_body {
+#xxwwdqtnrp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -6232,7 +6232,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#fafmfkeuci .gt_footnotes {
+#xxwwdqtnrp .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -6246,7 +6246,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#fafmfkeuci .gt_footnote {
+#xxwwdqtnrp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -6255,7 +6255,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#fafmfkeuci .gt_sourcenotes {
+#xxwwdqtnrp .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -6269,7 +6269,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#fafmfkeuci .gt_sourcenote {
+#xxwwdqtnrp .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -6277,72 +6277,72 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#fafmfkeuci .gt_left {
+#xxwwdqtnrp .gt_left {
   text-align: left;
 }
 
-#fafmfkeuci .gt_center {
+#xxwwdqtnrp .gt_center {
   text-align: center;
 }
 
-#fafmfkeuci .gt_right {
+#xxwwdqtnrp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fafmfkeuci .gt_font_normal {
+#xxwwdqtnrp .gt_font_normal {
   font-weight: normal;
 }
 
-#fafmfkeuci .gt_font_bold {
+#xxwwdqtnrp .gt_font_bold {
   font-weight: bold;
 }
 
-#fafmfkeuci .gt_font_italic {
+#xxwwdqtnrp .gt_font_italic {
   font-style: italic;
 }
 
-#fafmfkeuci .gt_super {
+#xxwwdqtnrp .gt_super {
   font-size: 65%;
 }
 
-#fafmfkeuci .gt_footnote_marks {
+#xxwwdqtnrp .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fafmfkeuci .gt_asterisk {
+#xxwwdqtnrp .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fafmfkeuci .gt_indent_1 {
+#xxwwdqtnrp .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fafmfkeuci .gt_indent_2 {
+#xxwwdqtnrp .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fafmfkeuci .gt_indent_3 {
+#xxwwdqtnrp .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fafmfkeuci .gt_indent_4 {
+#xxwwdqtnrp .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fafmfkeuci .gt_indent_5 {
+#xxwwdqtnrp .gt_indent_5 {
   text-indent: 25px;
 }
 
-#fafmfkeuci .katex-display {
+#xxwwdqtnrp .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#fafmfkeuci div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#xxwwdqtnrp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -6367,19 +6367,19 @@ Figure&nbsp;2.2: Pipes are fun.
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="variable">fish_length</td>
-<td class="gt_row gt_right" headers="slope">0.250</td>
+<td class="gt_row gt_right" headers="slope">0.258</td>
 <td class="gt_row gt_right" headers="SE">0.008</td>
 <td class="gt_row gt_right" headers="df">997</td>
-<td class="gt_row gt_right" headers="lower.CL">0.235</td>
-<td class="gt_row gt_right" headers="upper.CL">0.265</td>
+<td class="gt_row gt_right" headers="lower.CL">0.242</td>
+<td class="gt_row gt_right" headers="upper.CL">0.273</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="variable">env_quality</td>
-<td class="gt_row gt_right" headers="slope">0.237</td>
+<td class="gt_row gt_right" headers="slope">0.252</td>
 <td class="gt_row gt_right" headers="SE">0.008</td>
 <td class="gt_row gt_right" headers="df">997</td>
-<td class="gt_row gt_right" headers="lower.CL">0.222</td>
-<td class="gt_row gt_right" headers="upper.CL">0.253</td>
+<td class="gt_row gt_right" headers="lower.CL">0.236</td>
+<td class="gt_row gt_right" headers="upper.CL">0.267</td>
 </tr>
 </tbody>
 </table>
@@ -6409,23 +6409,23 @@ Figure&nbsp;2.2: Pipes are fun.
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="nwuuifdubo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#nwuuifdubo table {
+<div id="bnzrqfayim" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#bnzrqfayim table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#nwuuifdubo thead, #nwuuifdubo tbody, #nwuuifdubo tfoot, #nwuuifdubo tr, #nwuuifdubo td, #nwuuifdubo th {
+#bnzrqfayim thead, #bnzrqfayim tbody, #bnzrqfayim tfoot, #bnzrqfayim tr, #bnzrqfayim td, #bnzrqfayim th {
   border-style: none;
 }
 
-#nwuuifdubo p {
+#bnzrqfayim p {
   margin: 0;
   padding: 0;
 }
 
-#nwuuifdubo .gt_table {
+#bnzrqfayim .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -6451,12 +6451,12 @@ Figure&nbsp;2.2: Pipes are fun.
   border-left-color: #D3D3D3;
 }
 
-#nwuuifdubo .gt_caption {
+#bnzrqfayim .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#nwuuifdubo .gt_title {
+#bnzrqfayim .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -6468,7 +6468,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-width: 0;
 }
 
-#nwuuifdubo .gt_subtitle {
+#bnzrqfayim .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -6480,7 +6480,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-top-width: 0;
 }
 
-#nwuuifdubo .gt_heading {
+#bnzrqfayim .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -6492,13 +6492,13 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#nwuuifdubo .gt_bottom_border {
+#bnzrqfayim .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#nwuuifdubo .gt_col_headings {
+#bnzrqfayim .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -6513,7 +6513,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#nwuuifdubo .gt_col_heading {
+#bnzrqfayim .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -6533,7 +6533,7 @@ Figure&nbsp;2.2: Pipes are fun.
   overflow-x: hidden;
 }
 
-#nwuuifdubo .gt_column_spanner_outer {
+#bnzrqfayim .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -6545,15 +6545,15 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 4px;
 }
 
-#nwuuifdubo .gt_column_spanner_outer:first-child {
+#bnzrqfayim .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#nwuuifdubo .gt_column_spanner_outer:last-child {
+#bnzrqfayim .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#nwuuifdubo .gt_column_spanner {
+#bnzrqfayim .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -6565,11 +6565,11 @@ Figure&nbsp;2.2: Pipes are fun.
   width: 100%;
 }
 
-#nwuuifdubo .gt_spanner_row {
+#bnzrqfayim .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#nwuuifdubo .gt_group_heading {
+#bnzrqfayim .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6595,7 +6595,7 @@ Figure&nbsp;2.2: Pipes are fun.
   text-align: left;
 }
 
-#nwuuifdubo .gt_empty_group_heading {
+#bnzrqfayim .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -6610,15 +6610,15 @@ Figure&nbsp;2.2: Pipes are fun.
   vertical-align: middle;
 }
 
-#nwuuifdubo .gt_from_md > :first-child {
+#bnzrqfayim .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#nwuuifdubo .gt_from_md > :last-child {
+#bnzrqfayim .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#nwuuifdubo .gt_row {
+#bnzrqfayim .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6637,7 +6637,7 @@ Figure&nbsp;2.2: Pipes are fun.
   overflow-x: hidden;
 }
 
-#nwuuifdubo .gt_stub {
+#bnzrqfayim .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -6650,7 +6650,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#nwuuifdubo .gt_stub_row_group {
+#bnzrqfayim .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -6664,15 +6664,15 @@ Figure&nbsp;2.2: Pipes are fun.
   vertical-align: top;
 }
 
-#nwuuifdubo .gt_row_group_first td {
+#bnzrqfayim .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#nwuuifdubo .gt_row_group_first th {
+#bnzrqfayim .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#nwuuifdubo .gt_summary_row {
+#bnzrqfayim .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -6682,16 +6682,16 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#nwuuifdubo .gt_first_summary_row {
+#bnzrqfayim .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#nwuuifdubo .gt_first_summary_row.thick {
+#bnzrqfayim .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#nwuuifdubo .gt_last_summary_row {
+#bnzrqfayim .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6701,7 +6701,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#nwuuifdubo .gt_grand_summary_row {
+#bnzrqfayim .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -6711,7 +6711,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#nwuuifdubo .gt_first_grand_summary_row {
+#bnzrqfayim .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6721,7 +6721,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-top-color: #D3D3D3;
 }
 
-#nwuuifdubo .gt_last_grand_summary_row_top {
+#bnzrqfayim .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6731,11 +6731,11 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#nwuuifdubo .gt_striped {
+#bnzrqfayim .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#nwuuifdubo .gt_table_body {
+#bnzrqfayim .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -6744,7 +6744,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-bottom-color: #D3D3D3;
 }
 
-#nwuuifdubo .gt_footnotes {
+#bnzrqfayim .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -6758,7 +6758,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#nwuuifdubo .gt_footnote {
+#bnzrqfayim .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -6767,7 +6767,7 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#nwuuifdubo .gt_sourcenotes {
+#bnzrqfayim .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -6781,7 +6781,7 @@ Figure&nbsp;2.2: Pipes are fun.
   border-right-color: #D3D3D3;
 }
 
-#nwuuifdubo .gt_sourcenote {
+#bnzrqfayim .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -6789,72 +6789,72 @@ Figure&nbsp;2.2: Pipes are fun.
   padding-right: 5px;
 }
 
-#nwuuifdubo .gt_left {
+#bnzrqfayim .gt_left {
   text-align: left;
 }
 
-#nwuuifdubo .gt_center {
+#bnzrqfayim .gt_center {
   text-align: center;
 }
 
-#nwuuifdubo .gt_right {
+#bnzrqfayim .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#nwuuifdubo .gt_font_normal {
+#bnzrqfayim .gt_font_normal {
   font-weight: normal;
 }
 
-#nwuuifdubo .gt_font_bold {
+#bnzrqfayim .gt_font_bold {
   font-weight: bold;
 }
 
-#nwuuifdubo .gt_font_italic {
+#bnzrqfayim .gt_font_italic {
   font-style: italic;
 }
 
-#nwuuifdubo .gt_super {
+#bnzrqfayim .gt_super {
   font-size: 65%;
 }
 
-#nwuuifdubo .gt_footnote_marks {
+#bnzrqfayim .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#nwuuifdubo .gt_asterisk {
+#bnzrqfayim .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#nwuuifdubo .gt_indent_1 {
+#bnzrqfayim .gt_indent_1 {
   text-indent: 5px;
 }
 
-#nwuuifdubo .gt_indent_2 {
+#bnzrqfayim .gt_indent_2 {
   text-indent: 10px;
 }
 
-#nwuuifdubo .gt_indent_3 {
+#bnzrqfayim .gt_indent_3 {
   text-indent: 15px;
 }
 
-#nwuuifdubo .gt_indent_4 {
+#bnzrqfayim .gt_indent_4 {
   text-indent: 20px;
 }
 
-#nwuuifdubo .gt_indent_5 {
+#bnzrqfayim .gt_indent_5 {
   text-indent: 25px;
 }
 
-#nwuuifdubo .katex-display {
+#bnzrqfayim .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#nwuuifdubo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#bnzrqfayim div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -6878,9 +6878,9 @@ Figure&nbsp;2.2: Pipes are fun.
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="term">env_quality</td>
-<td class="gt_row gt_right" headers="estimate">-0.581</td>
-<td class="gt_row gt_right" headers="std.error">0.099</td>
-<td class="gt_row gt_right" headers="statistic">-5.859</td>
+<td class="gt_row gt_right" headers="estimate">-0.364</td>
+<td class="gt_row gt_right" headers="std.error">0.083</td>
+<td class="gt_row gt_right" headers="statistic">-4.391</td>
 <td class="gt_row gt_right" headers="p.value">0</td>
 </tr>
 </tbody>
