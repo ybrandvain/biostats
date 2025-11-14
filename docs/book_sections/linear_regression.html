@@ -1185,6 +1185,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../book_sections/causal_inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">26. Cause</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -1413,15 +1419,15 @@ Y_i &amp;=  a + b  x_{i}
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">intercept</td>
-<td style="text-align: right;">0.1074</td>
-<td style="text-align: right;">0.1692</td>
-<td style="text-align: right;">0.5745</td>
+<td style="text-align: right;">0.1052</td>
+<td style="text-align: right;">0.1687</td>
+<td style="text-align: right;">0.5611</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">slope</td>
 <td style="text-align: right;">0.0047</td>
-<td style="text-align: right;">0.0182</td>
-<td style="text-align: right;">0.0360</td>
+<td style="text-align: right;">0.0192</td>
+<td style="text-align: right;">0.0361</td>
 </tr>
 </tbody>
 </table>
@@ -1602,8 +1608,8 @@ F-statistic: 63.11 on 1 and 15 DF,  p-value: 0.0000009381</code></pre>
 <pre class="red-warning"><code>Warning in predict.lm(., interval = "predict"): predictions on current data refer to _future_ responses</code></pre>
 </div>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-bebda9a29d73dccfc4ed" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-bebda9a29d73dccfc4ed">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17"],[0.3196,0.3196,0.3196,0.6482,0.7166,0.9576,1.0617,1.1219,0.8891,0.9275,0.9603,1.3136,1.2698,1.1849,1.1246,1.1657,1.6997],[-0.1321,-0.1321,-0.1321,0.2211,0.2926,0.5377999999999999,0.6407,0.6994,0.4692,0.5077,0.5406,0.8821,0.8409,0.7601,0.702,0.7417,1.2332],[0.7712,0.7712,0.7712,1.0752,1.1407,1.3774,1.4827,1.5445,1.3091,1.3473,1.3801,1.7451,1.6987,1.6097,1.5473,1.5898,2.1662]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>fit<\/th>\n      <th>lwr<\/th>\n      <th>upr<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":5,"lengthMenu":[5,25,50],"columnDefs":[{"targets":1,"class":"dt-right"},{"width":"20px","targets":1},{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"fit","targets":1},{"name":"lwr","targets":2},{"name":"upr","targets":3}],"order":[],"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-55c3660a15cc5984c543" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-55c3660a15cc5984c543">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17"],[0.3196,0.3196,0.3196,0.6482,0.7166,0.9576,1.0617,1.1219,0.8891,0.9275,0.9603,1.3136,1.2698,1.1849,1.1246,1.1657,1.6997],[-0.1321,-0.1321,-0.1321,0.2211,0.2926,0.5377999999999999,0.6407,0.6994,0.4692,0.5077,0.5406,0.8821,0.8409,0.7601,0.702,0.7417,1.2332],[0.7712,0.7712,0.7712,1.0752,1.1407,1.3774,1.4827,1.5445,1.3091,1.3473,1.3801,1.7451,1.6987,1.6097,1.5473,1.5898,2.1662]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>fit<\/th>\n      <th>lwr<\/th>\n      <th>upr<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":5,"lengthMenu":[5,25,50],"columnDefs":[{"targets":1,"class":"dt-right"},{"width":"20px","targets":1},{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"fit","targets":1},{"name":"lwr","targets":2},{"name":"upr","targets":3}],"order":[],"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>We can visualize these different summaries of uncertainty.</p>
