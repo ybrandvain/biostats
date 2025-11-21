@@ -1163,6 +1163,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../book_sections/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">27. Probability and Likelihood</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -1247,23 +1253,23 @@ window.Quarto = {
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Petal.Length <span class="sc">~</span> Sepal.Width, <span class="at">data =</span> iris) <span class="sc">%&gt;%</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()                                                                                                                                  <span class="sc">%&gt;%</span> <span class="fu">mutate_at</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>, round,<span class="at">digits=</span><span class="dv">3</span>)<span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">p.value =</span> p.value<span class="sc">*</span> <span class="fu">c</span>(<span class="dv">10</span><span class="sc">^</span><span class="dv">17</span>,<span class="dv">10</span><span class="sc">^</span><span class="dv">8</span>), <span class="at">p.value =</span><span class="fu">round</span>(p.value, <span class="at">digits =</span> <span class="dv">2</span>), <span class="at">p.value =</span> <span class="fu">paste</span>(p.value,<span class="fu">c</span>(<span class="st">"x 10^-17"</span>, <span class="st">"x 10^-8"</span>)))<span class="sc">%&gt;%</span> <span class="fu">gt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="rtxbeolrpv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rtxbeolrpv table {
+<div id="wusuhddbrw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wusuhddbrw table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#rtxbeolrpv thead, #rtxbeolrpv tbody, #rtxbeolrpv tfoot, #rtxbeolrpv tr, #rtxbeolrpv td, #rtxbeolrpv th {
+#wusuhddbrw thead, #wusuhddbrw tbody, #wusuhddbrw tfoot, #wusuhddbrw tr, #wusuhddbrw td, #wusuhddbrw th {
   border-style: none;
 }
 
-#rtxbeolrpv p {
+#wusuhddbrw p {
   margin: 0;
   padding: 0;
 }
 
-#rtxbeolrpv .gt_table {
+#wusuhddbrw .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1289,12 +1295,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#rtxbeolrpv .gt_caption {
+#wusuhddbrw .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rtxbeolrpv .gt_title {
+#wusuhddbrw .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1306,7 +1312,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#rtxbeolrpv .gt_subtitle {
+#wusuhddbrw .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1318,7 +1324,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#rtxbeolrpv .gt_heading {
+#wusuhddbrw .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1330,13 +1336,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#rtxbeolrpv .gt_bottom_border {
+#wusuhddbrw .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rtxbeolrpv .gt_col_headings {
+#wusuhddbrw .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1351,7 +1357,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#rtxbeolrpv .gt_col_heading {
+#wusuhddbrw .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1371,7 +1377,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#rtxbeolrpv .gt_column_spanner_outer {
+#wusuhddbrw .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1383,15 +1389,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#rtxbeolrpv .gt_column_spanner_outer:first-child {
+#wusuhddbrw .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rtxbeolrpv .gt_column_spanner_outer:last-child {
+#wusuhddbrw .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rtxbeolrpv .gt_column_spanner {
+#wusuhddbrw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1403,11 +1409,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#rtxbeolrpv .gt_spanner_row {
+#wusuhddbrw .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#rtxbeolrpv .gt_group_heading {
+#wusuhddbrw .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1433,7 +1439,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#rtxbeolrpv .gt_empty_group_heading {
+#wusuhddbrw .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1448,15 +1454,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#rtxbeolrpv .gt_from_md > :first-child {
+#wusuhddbrw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rtxbeolrpv .gt_from_md > :last-child {
+#wusuhddbrw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rtxbeolrpv .gt_row {
+#wusuhddbrw .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1475,7 +1481,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#rtxbeolrpv .gt_stub {
+#wusuhddbrw .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1488,7 +1494,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#rtxbeolrpv .gt_stub_row_group {
+#wusuhddbrw .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1502,15 +1508,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#rtxbeolrpv .gt_row_group_first td {
+#wusuhddbrw .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rtxbeolrpv .gt_row_group_first th {
+#wusuhddbrw .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#rtxbeolrpv .gt_summary_row {
+#wusuhddbrw .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1520,16 +1526,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#rtxbeolrpv .gt_first_summary_row {
+#wusuhddbrw .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rtxbeolrpv .gt_first_summary_row.thick {
+#wusuhddbrw .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rtxbeolrpv .gt_last_summary_row {
+#wusuhddbrw .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1539,7 +1545,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#rtxbeolrpv .gt_grand_summary_row {
+#wusuhddbrw .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1549,7 +1555,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#rtxbeolrpv .gt_first_grand_summary_row {
+#wusuhddbrw .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1559,7 +1565,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#rtxbeolrpv .gt_last_grand_summary_row_top {
+#wusuhddbrw .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1569,11 +1575,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#rtxbeolrpv .gt_striped {
+#wusuhddbrw .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rtxbeolrpv .gt_table_body {
+#wusuhddbrw .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1582,7 +1588,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#rtxbeolrpv .gt_footnotes {
+#wusuhddbrw .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1596,7 +1602,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#rtxbeolrpv .gt_footnote {
+#wusuhddbrw .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1605,7 +1611,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#rtxbeolrpv .gt_sourcenotes {
+#wusuhddbrw .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1619,7 +1625,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#rtxbeolrpv .gt_sourcenote {
+#wusuhddbrw .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1627,72 +1633,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#rtxbeolrpv .gt_left {
+#wusuhddbrw .gt_left {
   text-align: left;
 }
 
-#rtxbeolrpv .gt_center {
+#wusuhddbrw .gt_center {
   text-align: center;
 }
 
-#rtxbeolrpv .gt_right {
+#wusuhddbrw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rtxbeolrpv .gt_font_normal {
+#wusuhddbrw .gt_font_normal {
   font-weight: normal;
 }
 
-#rtxbeolrpv .gt_font_bold {
+#wusuhddbrw .gt_font_bold {
   font-weight: bold;
 }
 
-#rtxbeolrpv .gt_font_italic {
+#wusuhddbrw .gt_font_italic {
   font-style: italic;
 }
 
-#rtxbeolrpv .gt_super {
+#wusuhddbrw .gt_super {
   font-size: 65%;
 }
 
-#rtxbeolrpv .gt_footnote_marks {
+#wusuhddbrw .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#rtxbeolrpv .gt_asterisk {
+#wusuhddbrw .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rtxbeolrpv .gt_indent_1 {
+#wusuhddbrw .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rtxbeolrpv .gt_indent_2 {
+#wusuhddbrw .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rtxbeolrpv .gt_indent_3 {
+#wusuhddbrw .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rtxbeolrpv .gt_indent_4 {
+#wusuhddbrw .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rtxbeolrpv .gt_indent_5 {
+#wusuhddbrw .gt_indent_5 {
   text-indent: 25px;
 }
 
-#rtxbeolrpv .katex-display {
+#wusuhddbrw .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#rtxbeolrpv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#wusuhddbrw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2051,23 +2057,23 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>admixture <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/ybrandvain/datasets/refs/heads/master/admix_sites.csv"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(admixture_prop <span class="sc">~</span> northing , <span class="at">data =</span>admixture)  <span class="sc">%&gt;%</span>   <span class="fu">Anova</span>(<span class="at">type =</span> <span class="st">"II"</span>)                                                                                                                                                                                               <span class="sc">%&gt;%</span> <span class="fu">tidy</span>()<span class="sc">%&gt;%</span> <span class="fu">mutate_at</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>, round, <span class="at">digits=</span><span class="dv">4</span>) <span class="sc">%&gt;%</span>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"admixture_prop ~ northing"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="plodksxrcq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#plodksxrcq table {
+<div id="pfxskvnqax" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pfxskvnqax table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#plodksxrcq thead, #plodksxrcq tbody, #plodksxrcq tfoot, #plodksxrcq tr, #plodksxrcq td, #plodksxrcq th {
+#pfxskvnqax thead, #pfxskvnqax tbody, #pfxskvnqax tfoot, #pfxskvnqax tr, #pfxskvnqax td, #pfxskvnqax th {
   border-style: none;
 }
 
-#plodksxrcq p {
+#pfxskvnqax p {
   margin: 0;
   padding: 0;
 }
 
-#plodksxrcq .gt_table {
+#pfxskvnqax .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2093,12 +2099,12 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-left-color: #D3D3D3;
 }
 
-#plodksxrcq .gt_caption {
+#pfxskvnqax .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#plodksxrcq .gt_title {
+#pfxskvnqax .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2110,7 +2116,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-bottom-width: 0;
 }
 
-#plodksxrcq .gt_subtitle {
+#pfxskvnqax .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2122,7 +2128,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-top-width: 0;
 }
 
-#plodksxrcq .gt_heading {
+#pfxskvnqax .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2134,13 +2140,13 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-right-color: #D3D3D3;
 }
 
-#plodksxrcq .gt_bottom_border {
+#pfxskvnqax .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#plodksxrcq .gt_col_headings {
+#pfxskvnqax .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2155,7 +2161,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-right-color: #D3D3D3;
 }
 
-#plodksxrcq .gt_col_heading {
+#pfxskvnqax .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2175,7 +2181,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   overflow-x: hidden;
 }
 
-#plodksxrcq .gt_column_spanner_outer {
+#pfxskvnqax .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2187,15 +2193,15 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 4px;
 }
 
-#plodksxrcq .gt_column_spanner_outer:first-child {
+#pfxskvnqax .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#plodksxrcq .gt_column_spanner_outer:last-child {
+#pfxskvnqax .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#plodksxrcq .gt_column_spanner {
+#pfxskvnqax .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2207,11 +2213,11 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   width: 100%;
 }
 
-#plodksxrcq .gt_spanner_row {
+#pfxskvnqax .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#plodksxrcq .gt_group_heading {
+#pfxskvnqax .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2237,7 +2243,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   text-align: left;
 }
 
-#plodksxrcq .gt_empty_group_heading {
+#pfxskvnqax .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2252,15 +2258,15 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   vertical-align: middle;
 }
 
-#plodksxrcq .gt_from_md > :first-child {
+#pfxskvnqax .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#plodksxrcq .gt_from_md > :last-child {
+#pfxskvnqax .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#plodksxrcq .gt_row {
+#pfxskvnqax .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2279,7 +2285,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   overflow-x: hidden;
 }
 
-#plodksxrcq .gt_stub {
+#pfxskvnqax .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2292,7 +2298,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 5px;
 }
 
-#plodksxrcq .gt_stub_row_group {
+#pfxskvnqax .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2306,15 +2312,15 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   vertical-align: top;
 }
 
-#plodksxrcq .gt_row_group_first td {
+#pfxskvnqax .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#plodksxrcq .gt_row_group_first th {
+#pfxskvnqax .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#plodksxrcq .gt_summary_row {
+#pfxskvnqax .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2324,16 +2330,16 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 5px;
 }
 
-#plodksxrcq .gt_first_summary_row {
+#pfxskvnqax .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#plodksxrcq .gt_first_summary_row.thick {
+#pfxskvnqax .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#plodksxrcq .gt_last_summary_row {
+#pfxskvnqax .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2343,7 +2349,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-bottom-color: #D3D3D3;
 }
 
-#plodksxrcq .gt_grand_summary_row {
+#pfxskvnqax .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2353,7 +2359,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 5px;
 }
 
-#plodksxrcq .gt_first_grand_summary_row {
+#pfxskvnqax .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2363,7 +2369,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-top-color: #D3D3D3;
 }
 
-#plodksxrcq .gt_last_grand_summary_row_top {
+#pfxskvnqax .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2373,11 +2379,11 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-bottom-color: #D3D3D3;
 }
 
-#plodksxrcq .gt_striped {
+#pfxskvnqax .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#plodksxrcq .gt_table_body {
+#pfxskvnqax .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2386,7 +2392,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-bottom-color: #D3D3D3;
 }
 
-#plodksxrcq .gt_footnotes {
+#pfxskvnqax .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2400,7 +2406,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-right-color: #D3D3D3;
 }
 
-#plodksxrcq .gt_footnote {
+#pfxskvnqax .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2409,7 +2415,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 5px;
 }
 
-#plodksxrcq .gt_sourcenotes {
+#pfxskvnqax .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2423,7 +2429,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-right-color: #D3D3D3;
 }
 
-#plodksxrcq .gt_sourcenote {
+#pfxskvnqax .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2431,72 +2437,72 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 5px;
 }
 
-#plodksxrcq .gt_left {
+#pfxskvnqax .gt_left {
   text-align: left;
 }
 
-#plodksxrcq .gt_center {
+#pfxskvnqax .gt_center {
   text-align: center;
 }
 
-#plodksxrcq .gt_right {
+#pfxskvnqax .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#plodksxrcq .gt_font_normal {
+#pfxskvnqax .gt_font_normal {
   font-weight: normal;
 }
 
-#plodksxrcq .gt_font_bold {
+#pfxskvnqax .gt_font_bold {
   font-weight: bold;
 }
 
-#plodksxrcq .gt_font_italic {
+#pfxskvnqax .gt_font_italic {
   font-style: italic;
 }
 
-#plodksxrcq .gt_super {
+#pfxskvnqax .gt_super {
   font-size: 65%;
 }
 
-#plodksxrcq .gt_footnote_marks {
+#pfxskvnqax .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#plodksxrcq .gt_asterisk {
+#pfxskvnqax .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#plodksxrcq .gt_indent_1 {
+#pfxskvnqax .gt_indent_1 {
   text-indent: 5px;
 }
 
-#plodksxrcq .gt_indent_2 {
+#pfxskvnqax .gt_indent_2 {
   text-indent: 10px;
 }
 
-#plodksxrcq .gt_indent_3 {
+#pfxskvnqax .gt_indent_3 {
   text-indent: 15px;
 }
 
-#plodksxrcq .gt_indent_4 {
+#pfxskvnqax .gt_indent_4 {
   text-indent: 20px;
 }
 
-#plodksxrcq .gt_indent_5 {
+#pfxskvnqax .gt_indent_5 {
   text-indent: 25px;
 }
 
-#plodksxrcq .katex-display {
+#pfxskvnqax .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#plodksxrcq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#pfxskvnqax div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2536,23 +2542,23 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(admixture_prop <span class="sc">~</span> precip_spring_var, <span class="at">data =</span>admixture) <span class="sc">%&gt;%</span>  <span class="fu">Anova</span>(<span class="at">type =</span> <span class="st">"II"</span>)                                                                                                                                                               <span class="sc">%&gt;%</span> <span class="fu">tidy</span>()<span class="sc">%&gt;%</span> <span class="fu">mutate_at</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>, round, <span class="at">digits=</span><span class="dv">4</span>) <span class="sc">%&gt;%</span>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"admixture_prop ~ precip_spring_var"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="byoctiscil" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#byoctiscil table {
+<div id="natcuuntpm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#natcuuntpm table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#byoctiscil thead, #byoctiscil tbody, #byoctiscil tfoot, #byoctiscil tr, #byoctiscil td, #byoctiscil th {
+#natcuuntpm thead, #natcuuntpm tbody, #natcuuntpm tfoot, #natcuuntpm tr, #natcuuntpm td, #natcuuntpm th {
   border-style: none;
 }
 
-#byoctiscil p {
+#natcuuntpm p {
   margin: 0;
   padding: 0;
 }
 
-#byoctiscil .gt_table {
+#natcuuntpm .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2578,12 +2584,12 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-left-color: #D3D3D3;
 }
 
-#byoctiscil .gt_caption {
+#natcuuntpm .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#byoctiscil .gt_title {
+#natcuuntpm .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2595,7 +2601,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-bottom-width: 0;
 }
 
-#byoctiscil .gt_subtitle {
+#natcuuntpm .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2607,7 +2613,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-top-width: 0;
 }
 
-#byoctiscil .gt_heading {
+#natcuuntpm .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2619,13 +2625,13 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-right-color: #D3D3D3;
 }
 
-#byoctiscil .gt_bottom_border {
+#natcuuntpm .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#byoctiscil .gt_col_headings {
+#natcuuntpm .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2640,7 +2646,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-right-color: #D3D3D3;
 }
 
-#byoctiscil .gt_col_heading {
+#natcuuntpm .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2660,7 +2666,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   overflow-x: hidden;
 }
 
-#byoctiscil .gt_column_spanner_outer {
+#natcuuntpm .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2672,15 +2678,15 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 4px;
 }
 
-#byoctiscil .gt_column_spanner_outer:first-child {
+#natcuuntpm .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#byoctiscil .gt_column_spanner_outer:last-child {
+#natcuuntpm .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#byoctiscil .gt_column_spanner {
+#natcuuntpm .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2692,11 +2698,11 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   width: 100%;
 }
 
-#byoctiscil .gt_spanner_row {
+#natcuuntpm .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#byoctiscil .gt_group_heading {
+#natcuuntpm .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2722,7 +2728,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   text-align: left;
 }
 
-#byoctiscil .gt_empty_group_heading {
+#natcuuntpm .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2737,15 +2743,15 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   vertical-align: middle;
 }
 
-#byoctiscil .gt_from_md > :first-child {
+#natcuuntpm .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#byoctiscil .gt_from_md > :last-child {
+#natcuuntpm .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#byoctiscil .gt_row {
+#natcuuntpm .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2764,7 +2770,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   overflow-x: hidden;
 }
 
-#byoctiscil .gt_stub {
+#natcuuntpm .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2777,7 +2783,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 5px;
 }
 
-#byoctiscil .gt_stub_row_group {
+#natcuuntpm .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2791,15 +2797,15 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   vertical-align: top;
 }
 
-#byoctiscil .gt_row_group_first td {
+#natcuuntpm .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#byoctiscil .gt_row_group_first th {
+#natcuuntpm .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#byoctiscil .gt_summary_row {
+#natcuuntpm .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2809,16 +2815,16 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 5px;
 }
 
-#byoctiscil .gt_first_summary_row {
+#natcuuntpm .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#byoctiscil .gt_first_summary_row.thick {
+#natcuuntpm .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#byoctiscil .gt_last_summary_row {
+#natcuuntpm .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2828,7 +2834,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-bottom-color: #D3D3D3;
 }
 
-#byoctiscil .gt_grand_summary_row {
+#natcuuntpm .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2838,7 +2844,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 5px;
 }
 
-#byoctiscil .gt_first_grand_summary_row {
+#natcuuntpm .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2848,7 +2854,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-top-color: #D3D3D3;
 }
 
-#byoctiscil .gt_last_grand_summary_row_top {
+#natcuuntpm .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2858,11 +2864,11 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-bottom-color: #D3D3D3;
 }
 
-#byoctiscil .gt_striped {
+#natcuuntpm .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#byoctiscil .gt_table_body {
+#natcuuntpm .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2871,7 +2877,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-bottom-color: #D3D3D3;
 }
 
-#byoctiscil .gt_footnotes {
+#natcuuntpm .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2885,7 +2891,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-right-color: #D3D3D3;
 }
 
-#byoctiscil .gt_footnote {
+#natcuuntpm .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2894,7 +2900,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 5px;
 }
 
-#byoctiscil .gt_sourcenotes {
+#natcuuntpm .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2908,7 +2914,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-right-color: #D3D3D3;
 }
 
-#byoctiscil .gt_sourcenote {
+#natcuuntpm .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2916,72 +2922,72 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 5px;
 }
 
-#byoctiscil .gt_left {
+#natcuuntpm .gt_left {
   text-align: left;
 }
 
-#byoctiscil .gt_center {
+#natcuuntpm .gt_center {
   text-align: center;
 }
 
-#byoctiscil .gt_right {
+#natcuuntpm .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#byoctiscil .gt_font_normal {
+#natcuuntpm .gt_font_normal {
   font-weight: normal;
 }
 
-#byoctiscil .gt_font_bold {
+#natcuuntpm .gt_font_bold {
   font-weight: bold;
 }
 
-#byoctiscil .gt_font_italic {
+#natcuuntpm .gt_font_italic {
   font-style: italic;
 }
 
-#byoctiscil .gt_super {
+#natcuuntpm .gt_super {
   font-size: 65%;
 }
 
-#byoctiscil .gt_footnote_marks {
+#natcuuntpm .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#byoctiscil .gt_asterisk {
+#natcuuntpm .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#byoctiscil .gt_indent_1 {
+#natcuuntpm .gt_indent_1 {
   text-indent: 5px;
 }
 
-#byoctiscil .gt_indent_2 {
+#natcuuntpm .gt_indent_2 {
   text-indent: 10px;
 }
 
-#byoctiscil .gt_indent_3 {
+#natcuuntpm .gt_indent_3 {
   text-indent: 15px;
 }
 
-#byoctiscil .gt_indent_4 {
+#natcuuntpm .gt_indent_4 {
   text-indent: 20px;
 }
 
-#byoctiscil .gt_indent_5 {
+#natcuuntpm .gt_indent_5 {
   text-indent: 25px;
 }
 
-#byoctiscil .katex-display {
+#natcuuntpm .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#byoctiscil div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#natcuuntpm div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3021,23 +3027,23 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(admixture_prop <span class="sc">~</span> northing <span class="sc">+</span> precip_spring_var, <span class="at">data =</span>admixture) <span class="sc">%&gt;%</span>  <span class="fu">Anova</span>(<span class="at">type=</span> <span class="st">"II"</span>)                                                                                                                                                                       <span class="sc">%&gt;%</span> <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> <span class="fu">mutate_at</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>, round, <span class="at">digits=</span><span class="dv">4</span>) <span class="sc">%&gt;%</span> <span class="fu">gt</span>() <span class="sc">%&gt;%</span>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"admixture_prop ~ northing + precip_spring_var"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="seqsirylzn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#seqsirylzn table {
+<div id="lhppuxtumb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#lhppuxtumb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#seqsirylzn thead, #seqsirylzn tbody, #seqsirylzn tfoot, #seqsirylzn tr, #seqsirylzn td, #seqsirylzn th {
+#lhppuxtumb thead, #lhppuxtumb tbody, #lhppuxtumb tfoot, #lhppuxtumb tr, #lhppuxtumb td, #lhppuxtumb th {
   border-style: none;
 }
 
-#seqsirylzn p {
+#lhppuxtumb p {
   margin: 0;
   padding: 0;
 }
 
-#seqsirylzn .gt_table {
+#lhppuxtumb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3063,12 +3069,12 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-left-color: #D3D3D3;
 }
 
-#seqsirylzn .gt_caption {
+#lhppuxtumb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#seqsirylzn .gt_title {
+#lhppuxtumb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3080,7 +3086,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-bottom-width: 0;
 }
 
-#seqsirylzn .gt_subtitle {
+#lhppuxtumb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3092,7 +3098,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-top-width: 0;
 }
 
-#seqsirylzn .gt_heading {
+#lhppuxtumb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3104,13 +3110,13 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-right-color: #D3D3D3;
 }
 
-#seqsirylzn .gt_bottom_border {
+#lhppuxtumb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#seqsirylzn .gt_col_headings {
+#lhppuxtumb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3125,7 +3131,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-right-color: #D3D3D3;
 }
 
-#seqsirylzn .gt_col_heading {
+#lhppuxtumb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3145,7 +3151,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   overflow-x: hidden;
 }
 
-#seqsirylzn .gt_column_spanner_outer {
+#lhppuxtumb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3157,15 +3163,15 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 4px;
 }
 
-#seqsirylzn .gt_column_spanner_outer:first-child {
+#lhppuxtumb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#seqsirylzn .gt_column_spanner_outer:last-child {
+#lhppuxtumb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#seqsirylzn .gt_column_spanner {
+#lhppuxtumb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3177,11 +3183,11 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   width: 100%;
 }
 
-#seqsirylzn .gt_spanner_row {
+#lhppuxtumb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#seqsirylzn .gt_group_heading {
+#lhppuxtumb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3207,7 +3213,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   text-align: left;
 }
 
-#seqsirylzn .gt_empty_group_heading {
+#lhppuxtumb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3222,15 +3228,15 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   vertical-align: middle;
 }
 
-#seqsirylzn .gt_from_md > :first-child {
+#lhppuxtumb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#seqsirylzn .gt_from_md > :last-child {
+#lhppuxtumb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#seqsirylzn .gt_row {
+#lhppuxtumb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3249,7 +3255,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   overflow-x: hidden;
 }
 
-#seqsirylzn .gt_stub {
+#lhppuxtumb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3262,7 +3268,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 5px;
 }
 
-#seqsirylzn .gt_stub_row_group {
+#lhppuxtumb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3276,15 +3282,15 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   vertical-align: top;
 }
 
-#seqsirylzn .gt_row_group_first td {
+#lhppuxtumb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#seqsirylzn .gt_row_group_first th {
+#lhppuxtumb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#seqsirylzn .gt_summary_row {
+#lhppuxtumb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3294,16 +3300,16 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 5px;
 }
 
-#seqsirylzn .gt_first_summary_row {
+#lhppuxtumb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#seqsirylzn .gt_first_summary_row.thick {
+#lhppuxtumb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#seqsirylzn .gt_last_summary_row {
+#lhppuxtumb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3313,7 +3319,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-bottom-color: #D3D3D3;
 }
 
-#seqsirylzn .gt_grand_summary_row {
+#lhppuxtumb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3323,7 +3329,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 5px;
 }
 
-#seqsirylzn .gt_first_grand_summary_row {
+#lhppuxtumb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3333,7 +3339,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-top-color: #D3D3D3;
 }
 
-#seqsirylzn .gt_last_grand_summary_row_top {
+#lhppuxtumb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3343,11 +3349,11 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-bottom-color: #D3D3D3;
 }
 
-#seqsirylzn .gt_striped {
+#lhppuxtumb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#seqsirylzn .gt_table_body {
+#lhppuxtumb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3356,7 +3362,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-bottom-color: #D3D3D3;
 }
 
-#seqsirylzn .gt_footnotes {
+#lhppuxtumb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3370,7 +3376,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-right-color: #D3D3D3;
 }
 
-#seqsirylzn .gt_footnote {
+#lhppuxtumb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3379,7 +3385,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 5px;
 }
 
-#seqsirylzn .gt_sourcenotes {
+#lhppuxtumb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3393,7 +3399,7 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   border-right-color: #D3D3D3;
 }
 
-#seqsirylzn .gt_sourcenote {
+#lhppuxtumb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3401,72 +3407,72 @@ Figure&nbsp;3.1: Two models predicting Petal length in the iris data set.
   padding-right: 5px;
 }
 
-#seqsirylzn .gt_left {
+#lhppuxtumb .gt_left {
   text-align: left;
 }
 
-#seqsirylzn .gt_center {
+#lhppuxtumb .gt_center {
   text-align: center;
 }
 
-#seqsirylzn .gt_right {
+#lhppuxtumb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#seqsirylzn .gt_font_normal {
+#lhppuxtumb .gt_font_normal {
   font-weight: normal;
 }
 
-#seqsirylzn .gt_font_bold {
+#lhppuxtumb .gt_font_bold {
   font-weight: bold;
 }
 
-#seqsirylzn .gt_font_italic {
+#lhppuxtumb .gt_font_italic {
   font-style: italic;
 }
 
-#seqsirylzn .gt_super {
+#lhppuxtumb .gt_super {
   font-size: 65%;
 }
 
-#seqsirylzn .gt_footnote_marks {
+#lhppuxtumb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#seqsirylzn .gt_asterisk {
+#lhppuxtumb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#seqsirylzn .gt_indent_1 {
+#lhppuxtumb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#seqsirylzn .gt_indent_2 {
+#lhppuxtumb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#seqsirylzn .gt_indent_3 {
+#lhppuxtumb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#seqsirylzn .gt_indent_4 {
+#lhppuxtumb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#seqsirylzn .gt_indent_5 {
+#lhppuxtumb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#seqsirylzn .katex-display {
+#lhppuxtumb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#seqsirylzn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#lhppuxtumb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
